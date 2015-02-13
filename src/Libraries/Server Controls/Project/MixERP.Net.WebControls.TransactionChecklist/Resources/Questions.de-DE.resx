@@ -120,4 +120,7 @@
   <data name="AreYouSure" xml:space="preserve">
     <value>Sind Sie sicher, Sie wissen, was du tust?</value>
   </data>
+  <data name="WithdrawalReason" xml:space="preserve">
+    <value>Waarom wil je om deze transactie te trekken?</value>
+  </data>
 </root>

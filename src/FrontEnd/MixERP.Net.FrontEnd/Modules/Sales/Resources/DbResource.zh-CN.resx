@@ -117,43 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="party" xml:space="preserve">
+    <value>党</value>
+  </data>
+  <data name="office" xml:space="preserve">
+    <value>办公室</value>
+  </data>
+  <data name="reference_number" xml:space="preserve">
+    <value>参考号码</value>
+  </data>
   <data name="actions" xml:space="preserve">
     <value>行动</value>
   </data>
+  <data name="statement_reference" xml:space="preserve">
+    <value>声明参考</value>
+  </data>
   <data name="transaction_ts" xml:space="preserve">
     <value>交易时间戳</value>
+  </data>
+  <data name="user" xml:space="preserve">
+    <value>用户</value>
+  </data>
+  <data name="flag_background_color" xml:space="preserve">
+    <value>旗背景颜色</value>
+  </data>
+  <data name="currency" xml:space="preserve">
+    <value>货币</value>
+  </data>
+  <data name="value_date" xml:space="preserve">
+    <value>起息日</value>
+  </data>
+  <data name="amount" xml:space="preserve">
+    <value>量</value>
   </data>
   <data name="flag_foreground_color" xml:space="preserve">
     <value>标志前景色</value>
   </data>
   <data name="id" xml:space="preserve">
     <value>登录</value>
-  </data>
-  <data name="office" xml:space="preserve">
-    <value>办公室</value>
-  </data>
-  <data name="amount" xml:space="preserve">
-    <value>量</value>
-  </data>
-  <data name="reference_number" xml:space="preserve">
-    <value>参考号码</value>
-  </data>
-  <data name="value_date" xml:space="preserve">
-    <value>起息日</value>
-  </data>
-  <data name="user" xml:space="preserve">
-    <value>用户</value>
-  </data>
-  <data name="currency" xml:space="preserve">
-    <value>货币</value>
-  </data>
-  <data name="statement_reference" xml:space="preserve">
-    <value>声明参考</value>
-  </data>
-  <data name="flag_background_color" xml:space="preserve">
-    <value>旗背景颜色</value>
-  </data>
-  <data name="party" xml:space="preserve">
-    <value>党</value>
   </data>
 </root>

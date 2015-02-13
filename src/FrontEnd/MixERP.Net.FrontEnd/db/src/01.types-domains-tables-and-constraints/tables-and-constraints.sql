@@ -29,6 +29,7 @@ CREATE TABLE office.users
 (
     user_id                                 SERIAL PRIMARY KEY,
     role_id                                 integer NOT NULL,
+    department_id                           integer NOT NULL,
     office_id                               integer NOT NULL,
     user_name                               national character varying(50) NOT NULL,
     full_name                               national character varying(100) NOT NULL,
@@ -89,6 +90,10 @@ CREATE TABLE office.departments
                                             DEFAULT(NOW())
 );
 
+ALTER TABLE office.users
+ADD CONSTRAINT users_departments_fk 
+FOREIGN KEY(department_id)
+REFERENCES office.departments(department_id);
 
 CREATE TABLE core.flag_types
 (
@@ -2280,3 +2285,19 @@ CREATE TABLE office.configuration
     audit_ts                                TIMESTAMP WITH TIME ZONE NULL   
                                             DEFAULT(NOW())    
 );
+
+CREATE TABLE core.widgets
+(
+    widget_id           SERIAL NOT NULL PRIMARY KEY,
+    widget_name         text,
+    widget_source       text NOT NULL,
+    row_number          integer NOT NULL,
+    column_number       integer NOT NULL
+);
+
+CREATE UNIQUE INDEX widgets_widget_name_uix
+ON core.widgets(UPPER(widget_name));
+
+CREATE UNIQUE INDEX widgets_widget_source_uix
+ON core.widgets(UPPER(widget_source));
+

@@ -120,10 +120,10 @@
   <data name="BothSidesCannotHaveValue" xml:space="preserve">
     <value>Tanto débito y crédito no pueden tener valores.</value>
   </data>
-  <data name="NoTransactionToPost" xml:space="preserve">
-    <value>Ninguna transacción para enviar.</value>
-  </data>
   <data name="ReferencingSidesNotEqual" xml:space="preserve">
     <value>Los lados que hacen referencia no son iguales.</value>
+  </data>
+  <data name="NoTransactionToPost" xml:space="preserve">
+    <value>Ninguna transacción para enviar.</value>
   </data>
 </root>

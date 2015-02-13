@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="NewPasswordCannotBeOldPassword" xml:space="preserve">
+    <value>Nouveau mot de passe ne peut pas être ancien mot de passe.</value>
+  </data>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Cet établissement ne permet pas l'affichage de la transaction.</value>
+  </data>
+  <data name="NotAuthorized" xml:space="preserve">
+    <value>Vous n'êtes pas autorisé à accéder à ces ressources à ce moment.</value>
+  </data>
+  <data name="NothingSelected" xml:space="preserve">
+    <value>Rien sélectionné.</value>
+  </data>
+  <data name="PleaseEnterCurrentPassword" xml:space="preserve">
+    <value>Se il vous plaît entrer votre mot de passe actuel.</value>
+  </data>
+  <data name="PleaseEnterNewPassword" xml:space="preserve">
+    <value>Se il vous plaît entrer un nouveau mot de passe.</value>
+  </data>
+  <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
+    <value>Identifiant d'utilisateur ou mot de passe incorrect.</value>
+  </data>
   <data name="AccessIsDenied" xml:space="preserve">
     <value>L'accès est refusé.</value>
   </data>
@@ -134,26 +155,5 @@
   </data>
   <data name="InvalidDate" xml:space="preserve">
     <value>Ce ne est pas une date valide.</value>
-  </data>
-  <data name="NewPasswordCannotBeOldPassword" xml:space="preserve">
-    <value>Nouveau mot de passe ne peut pas être ancien mot de passe.</value>
-  </data>
-  <data name="NotAuthorized" xml:space="preserve">
-    <value>Vous n'êtes pas autorisé à accéder à ces ressources à ce moment.</value>
-  </data>
-  <data name="NothingSelected" xml:space="preserve">
-    <value>Rien sélectionné.</value>
-  </data>
-  <data name="PleaseEnterCurrentPassword" xml:space="preserve">
-    <value>Se il vous plaît entrer votre mot de passe actuel.</value>
-  </data>
-  <data name="PleaseEnterNewPassword" xml:space="preserve">
-    <value>Se il vous plaît entrer un nouveau mot de passe.</value>
-  </data>
-  <data name="RestrictedTransactionMode" xml:space="preserve">
-    <value>Cet établissement ne permet pas l'affichage de la transaction.</value>
-  </data>
-  <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
-    <value>Identifiant d'utilisateur ou mot de passe incorrect.</value>
   </data>
 </root>

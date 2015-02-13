@@ -117,19 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NoRecordFound" xml:space="preserve">
-    <value>sorry, geen record gevonden.</value>
-  </data>
   <data name="DateMustBeGreaterThan" xml:space="preserve">
     <value>Ongeldige datum. Moet groter zijn dan "{0}".</value>
   </data>
   <data name="InvalidDate" xml:space="preserve">
     <value>Dit is geen geldige datum.</value>
   </data>
-  <data name="RequiredField" xml:space="preserve">
-    <value>Dit is een verplicht veld.</value>
-  </data>
   <data name="DateMustBeLessThan" xml:space="preserve">
     <value>Ongeldige datum. Moet kleiner zijn dan "{0}".</value>
+  </data>
+  <data name="NoRecordFound" xml:space="preserve">
+    <value>sorry, geen record gevonden.</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Dit is een verplicht veld.</value>
   </data>
 </root>

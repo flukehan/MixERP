@@ -117,137 +117,134 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PreferredSupplierIdAbbreviated" xml:space="preserve">
-    <value>Identificador de proveedor preferido</value>
-  </data>
-  <data name="Check" xml:space="preserve">
-    <value>Comprobar</value>
-  </data>
-  <data name="ViewThisInvoice" xml:space="preserve">
-    <value>Ver este Factura</value>
-  </data>
-  <data name="ReorderLevel" xml:space="preserve">
-    <value>Nivel de Reabastecimiento</value>
-  </data>
-  <data name="TranId" xml:space="preserve">
-    <value>identificador de transacción</value>
-  </data>
-  <data name="OtherDetails" xml:space="preserve">
-    <value>otros detalles</value>
-  </data>
-  <data name="ExchangeRate" xml:space="preserve">
-    <value>Tipo De Cambio</value>
-  </data>
-  <data name="PurchaseReturn" xml:space="preserve">
-    <value>Compra de Retorno</value>
-  </data>
-  <data name="Tax" xml:space="preserve">
-    <value>impuesto</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>usuario</value>
-  </data>
-  <data name="EmailThisInvoice" xml:space="preserve">
-    <value>Enviar esta factura</value>
-  </data>
-  <data name="ItemId" xml:space="preserve">
-    <value>Identificador de artículo</value>
-  </data>
-  <data name="ReorderQuantityAbbreviated" xml:space="preserve">
-    <value>Reordenar Cantidad</value>
-  </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>Elaborado sobre</value>
-  </data>
-  <data name="TransactionDate" xml:space="preserve">
-    <value>Fecha de Transacción</value>
-  </data>
-  <data name="ViewThisNote" xml:space="preserve">
-    <value>Ver Esta Nota</value>
-  </data>
-  <data name="ViewThisOrder" xml:space="preserve">
-    <value>Ver Esta Orden</value>
-  </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>Nombre del artículo</value>
-  </data>
-  <data name="EmailThisNote" xml:space="preserve">
-    <value>Enlaces a esta Nota</value>
-  </data>
-  <data name="CostCenter" xml:space="preserve">
-    <value>Centro de Costo</value>
-  </data>
-  <data name="Price" xml:space="preserve">
-    <value>precio</value>
-  </data>
-  <data name="SelectSupplier" xml:space="preserve">
-    <value>Seleccionar proveedor</value>
-  </data>
-  <data name="TransactionStatus" xml:space="preserve">
-    <value>situación de la operación</value>
-  </data>
-  <data name="Fax" xml:space="preserve">
-    <value>fax</value>
-  </data>
-  <data name="EmailThisReturn" xml:space="preserve">
-    <value>Enviar esto Volver</value>
-  </data>
-  <data name="Office" xml:space="preserve">
-    <value>oficina</value>
-  </data>
-  <data name="PurchaseInvoice" xml:space="preserve">
-    <value>Compra factura</value>
-  </data>
-  <data name="Phone" xml:space="preserve">
-    <value>teléfono</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>Declaración de Referencia</value>
-  </data>
-  <data name="UnitId" xml:space="preserve">
-    <value>identificador de la unidad</value>
-  </data>
-  <data name="PurchaseType" xml:space="preserve">
-    <value>Compra Tipo</value>
-  </data>
-  <data name="TaxRate" xml:space="preserve">
-    <value>Tasa de Impuesto</value>
-  </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>Fecha Valor</value>
-  </data>
-  <data name="DefaultReorderQuantityAbbreviated" xml:space="preserve">
-    <value>Por defecto Reordenar Cantidad</value>
-  </data>
-  <data name="GoodsReceiptNote" xml:space="preserve">
-    <value>Entrada de mercancías Nota</value>
-  </data>
-  <data name="PlaceReorderRequests" xml:space="preserve">
-    <value>Coloque Solicitudes Reordenar</value>
-  </data>
   <data name="QuantityOnHandAbbreviated" xml:space="preserve">
     <value>Cantidad (en la mano)</value>
-  </data>
-  <data name="Tel" xml:space="preserve">
-    <value>teléfono</value>
-  </data>
-  <data name="VerificationReason" xml:space="preserve">
-    <value>Verificación Razón</value>
   </data>
   <data name="PurchaseOrder" xml:space="preserve">
     <value>Orden De Compra</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>Correo electrónico</value>
+  <data name="Fax" xml:space="preserve">
+    <value>fax</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>precio</value>
+  </data>
+  <data name="PriceType" xml:space="preserve">
+    <value>Precio Tipo</value>
+  </data>
+  <data name="PurchaseInvoice" xml:space="preserve">
+    <value>Compra factura</value>
+  </data>
+  <data name="PurchaseReturn" xml:space="preserve">
+    <value>Compra de Retorno</value>
+  </data>
+  <data name="PurchaseType" xml:space="preserve">
+    <value>Compra Tipo</value>
+  </data>
+  <data name="EmailThisInvoice" xml:space="preserve">
+    <value>Enviar esta factura</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>Nombre del proveedor</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Número de referencia</value>
+  </data>
+  <data name="ReorderLevel" xml:space="preserve">
+    <value>Nivel de Reabastecimiento</value>
+  </data>
+  <data name="ReorderQuantityAbbreviated" xml:space="preserve">
+    <value>Reordenar Cantidad</value>
+  </data>
+  <data name="SelectSupplier" xml:space="preserve">
+    <value>Seleccionar proveedor</value>
+  </data>
+  <data name="SelectUnit" xml:space="preserve">
+    <value>Seleccionar unidad</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>Declaración de Referencia</value>
+  </data>
+  <data name="TaxRate" xml:space="preserve">
+    <value>Tasa de Impuesto</value>
+  </data>
+  <data name="EmailThisNote" xml:space="preserve">
+    <value>Enlaces a esta Nota</value>
+  </data>
+  <data name="Tax" xml:space="preserve">
+    <value>impuesto</value>
+  </data>
+  <data name="Tel" xml:space="preserve">
+    <value>teléfono</value>
+  </data>
+  <data name="TranCode" xml:space="preserve">
+    <value>Código de transacción</value>
+  </data>
+  <data name="TranId" xml:space="preserve">
+    <value>identificador de transacción</value>
+  </data>
+  <data name="TransactionDate" xml:space="preserve">
+    <value>Fecha de Transacción</value>
+  </data>
+  <data name="TransactionStatus" xml:space="preserve">
+    <value>situación de la operación</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>unidad</value>
+  </data>
+  <data name="InvoiceDetails" xml:space="preserve">
+    <value>detalles de la factura</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>Fecha Valor</value>
+  </data>
+  <data name="ViewThisOrder" xml:space="preserve">
+    <value>Ver Esta Orden</value>
+  </data>
+  <data name="ViewThisNote" xml:space="preserve">
+    <value>Ver Esta Nota</value>
+  </data>
+  <data name="UnitId" xml:space="preserve">
+    <value>identificador de la unidad</value>
   </data>
   <data name="EmailThisOrder" xml:space="preserve">
     <value>Enlaces a esta Orden</value>
   </data>
-  <data name="ItemsBelowReorderLevel" xml:space="preserve">
-    <value>Artículos abajo Nivel de Reabastecimiento</value>
+  <data name="Url" xml:space="preserve">
+    <value>Localizador de recursos uniforme</value>
   </data>
-  <data name="SelectUnit" xml:space="preserve">
-    <value>Seleccionar unidad</value>
+  <data name="User" xml:space="preserve">
+    <value>usuario</value>
+  </data>
+  <data name="ExchangeRate" xml:space="preserve">
+    <value>Tipo De Cambio</value>
+  </data>
+  <data name="VerificationReason" xml:space="preserve">
+    <value>Verificación Razón</value>
+  </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>Por  verificado</value>
+  </data>
+  <data name="ViewThisInvoice" xml:space="preserve">
+    <value>Ver este Factura</value>
+  </data>
+  <data name="EmailThisReturn" xml:space="preserve">
+    <value>Enviar esto Volver</value>
+  </data>
+  <data name="ViewThisReturn" xml:space="preserve">
+    <value>Ver esto Volver</value>
+  </data>
+  <data name="Check" xml:space="preserve">
+    <value>Comprobar</value>
+  </data>
+  <data name="DirectPurchase" xml:space="preserve">
+    <value>Compra Directa</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Correo electrónico</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Código del artículo</value>
   </data>
   <data name="CashRepository" xml:space="preserve">
     <value>Repositorio Efectivo</value>
@@ -255,43 +252,46 @@
   <data name="EnteredBy" xml:space="preserve">
     <value>Entró Por</value>
   </data>
+  <data name="CostCenter" xml:space="preserve">
+    <value>Centro de Costo</value>
+  </data>
+  <data name="DefaultReorderQuantityAbbreviated" xml:space="preserve">
+    <value>Por defecto Reordenar Cantidad</value>
+  </data>
+  <data name="GoodsReceiptNote" xml:space="preserve">
+    <value>Entrada de mercancías Nota</value>
+  </data>
+  <data name="ItemId" xml:space="preserve">
+    <value>Identificador de artículo</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Nombre del artículo</value>
+  </data>
+  <data name="ItemsBelowReorderLevel" xml:space="preserve">
+    <value>Artículos abajo Nivel de Reabastecimiento</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>oficina</value>
+  </data>
   <data name="OfficeCode" xml:space="preserve">
     <value>Código de oficina</value>
   </data>
-  <data name="Unit" xml:space="preserve">
-    <value>unidad</value>
+  <data name="OtherDetails" xml:space="preserve">
+    <value>otros detalles</value>
   </data>
-  <data name="SupplierName" xml:space="preserve">
-    <value>Nombre del proveedor</value>
+  <data name="Phone" xml:space="preserve">
+    <value>teléfono</value>
   </data>
-  <data name="Url" xml:space="preserve">
-    <value>Localizador de recursos uniforme</value>
-  </data>
-  <data name="DirectPurchase" xml:space="preserve">
-    <value>Compra Directa</value>
-  </data>
-  <data name="InvoiceDetails" xml:space="preserve">
-    <value>detalles de la factura</value>
+  <data name="PlaceReorderRequests" xml:space="preserve">
+    <value>Coloque Solicitudes Reordenar</value>
   </data>
   <data name="PreferredSupplier" xml:space="preserve">
     <value>Proveedor preferido</value>
   </data>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>Número de referencia</value>
+  <data name="PreferredSupplierIdAbbreviated" xml:space="preserve">
+    <value>Identificador de proveedor preferido</value>
   </data>
-  <data name="TranCode" xml:space="preserve">
-    <value>Código de transacción</value>
-  </data>
-  <data name="VerifiedBy" xml:space="preserve">
-    <value>Por  verificado</value>
-  </data>
-  <data name="ItemCode" xml:space="preserve">
-    <value>Código del artículo</value>
-  </data>
-  <data name="ViewThisReturn" xml:space="preserve">
-    <value>Ver esto Volver</value>
-  </data>
-  <data name="PriceType" xml:space="preserve">
-    <value>Precio Tipo</value>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>Elaborado sobre</value>
   </data>
 </root>

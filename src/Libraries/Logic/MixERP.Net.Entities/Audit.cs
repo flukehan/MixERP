@@ -217,6 +217,36 @@ namespace MixERP.Net.Entities.Audit
         public bool StatementOnly { get; set; }
 
     }
+
+    [FunctionName("get_office_information_model")]
+    [ExplicitColumns]
+    public class DbGetOfficeInformationModelResult : PetaPocoDB.Record<DbGetOfficeInformationModelResult> 
+    {
+        [Column("office")] 
+        public string Office { get; set; }
+
+        [Column("logged_in_to")] 
+        public string LoggedInTo { get; set; }
+
+        [Column("last_login_ip")] 
+        public string LastLoginIp { get; set; }
+
+        [Column("last_login_on")] 
+        public DateTime LastLoginOn { get; set; }
+
+        [Column("current_ip")] 
+        public string CurrentIp { get; set; }
+
+        [Column("current_login_on")] 
+        public DateTime CurrentLoginOn { get; set; }
+
+        [Column("role")] 
+        public string Role { get; set; }
+
+        [Column("department")] 
+        public string Department { get; set; }
+
+    }
 }
 
 

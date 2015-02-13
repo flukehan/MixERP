@@ -117,95 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CashTransaction" xml:space="preserve">
-    <value>сделка за наличный расчет</value>
-  </data>
-  <data name="SubTotal" xml:space="preserve">
-    <value>Промежуточный итог</value>
-  </data>
-  <data name="ShippingCompany" xml:space="preserve">
-    <value>Транспортная Компания</value>
-  </data>
-  <data name="SalesType" xml:space="preserve">
-    <value>Тип продажи</value>
-  </data>
-  <data name="Discount" xml:space="preserve">
-    <value>скидка</value>
-  </data>
-  <data name="TaxTotal" xml:space="preserve">
-    <value>Налоговый Всего</value>
-  </data>
   <data name="SelectStore" xml:space="preserve">
     <value>Выберите магазин</value>
-  </data>
-  <data name="SelectParty" xml:space="preserve">
-    <value>Выберите партию</value>
-  </data>
-  <data name="Price" xml:space="preserve">
-    <value>цена</value>
-  </data>
-  <data name="PriceType" xml:space="preserve">
-    <value>Цена Тип</value>
-  </data>
-  <data name="CashRepository" xml:space="preserve">
-    <value>Денежные средства Repository</value>
-  </data>
-  <data name="ShippingAddress" xml:space="preserve">
-    <value>Адрес Доставки</value>
-  </data>
-  <data name="QuantityAbbreviated" xml:space="preserve">
-    <value>количество</value>
-  </data>
-  <data name="NonTaxableSales" xml:space="preserve">
-    <value>необлагаемый продаж</value>
-  </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>Название товара</value>
-  </data>
-  <data name="TaxForm" xml:space="preserve">
-    <value>Налоговый Форма</value>
-  </data>
-  <data name="ReferenceNumberAbbreviated" xml:space="preserve">
-    <value>Ссылка #</value>
-  </data>
-  <data name="Unit" xml:space="preserve">
-    <value>блок</value>
-  </data>
-  <data name="AttachmentsPlus" xml:space="preserve">
-    <value>Оснастка (+)</value>
-  </data>
-  <data name="Action" xml:space="preserve">
-    <value>действие</value>
-  </data>
-  <data name="Tax" xml:space="preserve">
-    <value>налог</value>
-  </data>
-  <data name="Amount" xml:space="preserve">
-    <value>количество</value>
-  </data>
-  <data name="ShippingCharge" xml:space="preserve">
-    <value>Плата за доставку</value>
-  </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>Дата валютирования</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>общий</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>добавлять</value>
   </data>
-  <data name="Rate" xml:space="preserve">
-    <value>ставка</value>
+  <data name="ShippingCompany" xml:space="preserve">
+    <value>Транспортная Компания</value>
   </data>
   <data name="GrandTotal" xml:space="preserve">
     <value>Общий Итог</value>
   </data>
+  <data name="TaxForm" xml:space="preserve">
+    <value>Налоговый Форма</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Название товара</value>
+  </data>
   <data name="StatementReference" xml:space="preserve">
     <value>О себе Ссылка</value>
   </data>
-  <data name="CashRepositoryBalance" xml:space="preserve">
-    <value>Остатки денежных средств репозиторий</value>
+  <data name="Tax" xml:space="preserve">
+    <value>налог</value>
+  </data>
+  <data name="Salesperson" xml:space="preserve">
+    <value>продавец</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>действие</value>
+  </data>
+  <data name="CashTransaction" xml:space="preserve">
+    <value>сделка за наличный расчет</value>
+  </data>
+  <data name="Discount" xml:space="preserve">
+    <value>скидка</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>Дата валютирования</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
@@ -213,16 +162,67 @@
   <data name="TaxableSales" xml:space="preserve">
     <value>Налогооблагаемая продаж</value>
   </data>
-  <data name="Salesperson" xml:space="preserve">
-    <value>продавец</value>
+  <data name="ReferenceNumberAbbreviated" xml:space="preserve">
+    <value>Ссылка #</value>
   </data>
-  <data name="CostCenter" xml:space="preserve">
-    <value>Центр Стоимость</value>
+  <data name="NonTaxableSales" xml:space="preserve">
+    <value>необлагаемый продаж</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>блок</value>
+  </data>
+  <data name="ShippingAddress" xml:space="preserve">
+    <value>Адрес Доставки</value>
+  </data>
+  <data name="AttachmentsPlus" xml:space="preserve">
+    <value>Оснастка (+)</value>
+  </data>
+  <data name="SelectParty" xml:space="preserve">
+    <value>Выберите партию</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>цена</value>
   </data>
   <data name="RunningTotal" xml:space="preserve">
     <value>Запуск Всего</value>
   </data>
+  <data name="QuantityAbbreviated" xml:space="preserve">
+    <value>количество</value>
+  </data>
+  <data name="SalesType" xml:space="preserve">
+    <value>Тип продажи</value>
+  </data>
   <data name="ItemCode" xml:space="preserve">
     <value>Код товара</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>количество</value>
+  </data>
+  <data name="CostCenter" xml:space="preserve">
+    <value>Центр Стоимость</value>
+  </data>
+  <data name="SubTotal" xml:space="preserve">
+    <value>Промежуточный итог</value>
+  </data>
+  <data name="PriceType" xml:space="preserve">
+    <value>Цена Тип</value>
+  </data>
+  <data name="CashRepositoryBalance" xml:space="preserve">
+    <value>Остатки денежных средств репозиторий</value>
+  </data>
+  <data name="TaxTotal" xml:space="preserve">
+    <value>Налоговый Всего</value>
+  </data>
+  <data name="ShippingCharge" xml:space="preserve">
+    <value>Плата за доставку</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>ставка</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>общий</value>
+  </data>
+  <data name="CashRepository" xml:space="preserve">
+    <value>Денежные средства Repository</value>
   </data>
 </root>

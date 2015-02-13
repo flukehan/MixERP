@@ -117,40 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ValueDate" xml:space="preserve">
+    <value>date de valeur</value>
+  </data>
   <data name="Action" xml:space="preserve">
     <value>action</value>
   </data>
   <data name="Unit" xml:space="preserve">
     <value>unité</value>
   </data>
-  <data name="ItemCode" xml:space="preserve">
-    <value>Code de l'article</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>déclaration de référence</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Enregistrer</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>ajouter</value>
-  </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>date de valeur</value>
+  <data name="Quantity" xml:space="preserve">
+    <value>quantité</value>
   </data>
   <data name="ItemName" xml:space="preserve">
     <value>Nom de l'article</value>
   </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Code de l'article</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>type</value>
   </data>
-  <data name="RefererenceNumberAbbreviated" xml:space="preserve">
-    <value>Référence #</value>
+  <data name="Add" xml:space="preserve">
+    <value>ajouter</value>
   </data>
-  <data name="Quantity" xml:space="preserve">
-    <value>quantité</value>
+  <data name="StatementReference" xml:space="preserve">
+    <value>déclaration de référence</value>
   </data>
   <data name="Store" xml:space="preserve">
     <value>magasin</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="RefererenceNumberAbbreviated" xml:space="preserve">
+    <value>Référence #</value>
   </data>
 </root>

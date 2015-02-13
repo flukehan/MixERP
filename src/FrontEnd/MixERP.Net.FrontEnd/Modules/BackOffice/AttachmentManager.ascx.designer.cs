@@ -13,6 +13,15 @@ namespace MixERP.Net.Core.Modules.BackOffice {
     public partial class AttachmentManager {
         
         /// <summary>
+        /// TitleLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal TitleLiteral;
+        
+        /// <summary>
         /// Placeholder1 control.
         /// </summary>
         /// <remarks>
@@ -22,12 +31,21 @@ namespace MixERP.Net.Core.Modules.BackOffice {
         protected global::System.Web.UI.WebControls.PlaceHolder Placeholder1;
         
         /// <summary>
-        /// TitleLiteral control.
+        /// SubTitleLiteral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal TitleLiteral;
+        protected global::System.Web.UI.WebControls.Literal SubTitleLiteral;
+        
+        /// <summary>
+        /// OKLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal OKLiteral;
     }
 }

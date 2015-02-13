@@ -37,7 +37,9 @@ namespace MixERP.Net.Core.Modules.BackOffice
             }
 
             this.RegisterJavascript();
-            this.TitleLiteral.Text = Titles.ViewAttachments;
+            this.TitleLiteral.Text = Titles.UploadAttachments;
+            this.SubTitleLiteral.Text = Titles.ViewAttachments;
+            this.OKLiteral.Text = Titles.OK;
             this.SetOverridePath();
             
         }

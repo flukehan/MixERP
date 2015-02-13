@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PartySummary" xml:space="preserve">
-    <value>partij Samenvatting</value>
+  <data name="Go" xml:space="preserve">
+    <value>gaan</value>
+  </data>
+  <data name="AddressAndContactInfo" xml:space="preserve">
+    <value>Adres &amp; Contact Informatie</value>
   </data>
   <data name="SelectCustomer" xml:space="preserve">
     <value>Selecteer Klant</value>
@@ -126,13 +129,10 @@
   <data name="TransactionSummary" xml:space="preserve">
     <value>Samenvatting transactie</value>
   </data>
-  <data name="AddressAndContactInfo" xml:space="preserve">
-    <value>Adres &amp; Contact Informatie</value>
-  </data>
   <data name="Home" xml:space="preserve">
     <value>huis</value>
   </data>
-  <data name="Go" xml:space="preserve">
-    <value>gaan</value>
+  <data name="PartySummary" xml:space="preserve">
+    <value>partij Samenvatting</value>
   </data>
 </root>

@@ -120,20 +120,17 @@
   <data name="Action" xml:space="preserve">
     <value>actie</value>
   </data>
-  <data name="Unit" xml:space="preserve">
-    <value>eenheid</value>
+  <data name="ValueDate" xml:space="preserve">
+    <value>valutadatum</value>
   </data>
   <data name="ItemCode" xml:space="preserve">
     <value>artikelcode</value>
   </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>verklaring verwijzing</value>
-  </data>
   <data name="Save" xml:space="preserve">
     <value>Opslaan</value>
   </data>
-  <data name="Add" xml:space="preserve">
-    <value>toevoegen</value>
+  <data name="Quantity" xml:space="preserve">
+    <value>hoeveelheid</value>
   </data>
   <data name="ItemName" xml:space="preserve">
     <value>Naam van het punt</value>
@@ -141,16 +138,19 @@
   <data name="Type" xml:space="preserve">
     <value>Type</value>
   </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>valutadatum</value>
+  <data name="StatementReference" xml:space="preserve">
+    <value>verklaring verwijzing</value>
   </data>
-  <data name="RefererenceNumberAbbreviated" xml:space="preserve">
-    <value>verwijzing #</value>
+  <data name="Add" xml:space="preserve">
+    <value>toevoegen</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>eenheid</value>
   </data>
   <data name="Store" xml:space="preserve">
     <value>winkel</value>
   </data>
-  <data name="Quantity" xml:space="preserve">
-    <value>hoeveelheid</value>
+  <data name="RefererenceNumberAbbreviated" xml:space="preserve">
+    <value>verwijzing #</value>
   </data>
 </root>

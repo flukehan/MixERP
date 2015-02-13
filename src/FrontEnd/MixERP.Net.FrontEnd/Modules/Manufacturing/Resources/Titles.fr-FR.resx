@@ -123,16 +123,16 @@
   <data name="Url" xml:space="preserve">
     <value>Uniform Resource Locator</value>
   </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>préparé Sur</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>email</value>
-  </data>
   <data name="User" xml:space="preserve">
     <value>utilisateur</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>fax</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>préparé Sur</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>email</value>
   </data>
 </root>

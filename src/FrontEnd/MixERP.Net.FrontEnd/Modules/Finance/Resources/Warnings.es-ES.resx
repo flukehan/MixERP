@@ -117,28 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidData" xml:space="preserve">
-    <value>Los datos no válidos.</value>
-  </data>
-  <data name="InvalidCashRepository" xml:space="preserve">
-    <value>Depósito de efectivo no es válida.</value>
-  </data>
-  <data name="CompareDaysErrorMessage" xml:space="preserve">
-    <value>De día no debe ser mayor que el a día.</value>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>Acceso denegado.</value>
   </data>
   <data name="NegativeValueSupplied" xml:space="preserve">
     <value>Valor negativo suministra.</value>
   </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>Acceso denegado.</value>
+  <data name="CompareDaysErrorMessage" xml:space="preserve">
+    <value>De día no debe ser mayor que el a día.</value>
   </data>
   <data name="InsufficientBalanceInCashRepository" xml:space="preserve">
     <value>No hay saldo suficiente en el depósito de dinero en efectivo para procesar esta transacción.</value>
   </data>
+  <data name="InvalidAccount" xml:space="preserve">
+    <value>Cuenta inválida.</value>
+  </data>
+  <data name="InvalidData" xml:space="preserve">
+    <value>Los datos no válidos.</value>
+  </data>
   <data name="ReferencingSidesNotEqual" xml:space="preserve">
     <value>Los lados que hacen referencia no son iguales.</value>
   </data>
-  <data name="InvalidAccount" xml:space="preserve">
-    <value>Cuenta inválida.</value>
+  <data name="InvalidCashRepository" xml:space="preserve">
+    <value>Depósito de efectivo no es válida.</value>
   </data>
 </root>

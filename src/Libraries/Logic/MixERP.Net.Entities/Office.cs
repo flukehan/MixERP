@@ -1173,6 +1173,9 @@ namespace MixERP.Net.Entities.Office
         [Column("audit_ts")] 
         public DateTime? AuditTs { get; set; }
 
+        [Column("department_id")] 
+        public int? DepartmentId { get; set; }
+
     }
 
     [FunctionName("get_offices")]

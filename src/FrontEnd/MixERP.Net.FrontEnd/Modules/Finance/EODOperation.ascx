@@ -18,95 +18,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="EODOperation.ascx.cs" Inherits="MixERP.Net.Core.Modules.Finance.EODOperation" %>
 
-<div>
-    <h1>End of Day Operation
-    <asp:Literal runat="server" ID="ValueDateLiteral"></asp:Literal></h1>
-    <div class="ui divider"></div>
+<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
-    <div class="ui buttons">
-        <button
-            id="InitializeButton"
-            runat="server"
-            class="disabled"
-            onclick="return(false);"
-            data-popup=".initialize">
-            <i class="icon alarm"></i>
-            Initialize Day End
-        </button>
-        <button
-            id="PerformEODButton"
-            runat="server"
-            class="disabled"
-            onclick="return(false);"
-            data-popup=".eod">
-            <i class="icon wizard"></i>
-            Perform EOD Operation
-        </button>
-    </div>
 
-    <div class="ui large popup initialize">
-        <div class="ui blue header">
-            <i class="icon alarm"></i>
-            <div class="content">
-                About Initializing Day End
-            </div>
-        </div>
-        <div class="ui divider"></div>
-        <div class="content">
-            <p>
-                When you initialize day-end operation, the already logged-in application users
-            including you are logged off on 120 seconds.
-            </p>
-            <p>
-                During the day-end period, only users having elevated privilege are allowed to log-in.
-            </p>
-            <h4 class="ui horizontal red header divider">
-                <i class="warning sign icon"></i>
-                Warning
-            </h4>
-            <p class="error-message">
-                Please do not close this window or navigate away from this page during initialization.
-            </p>
-
-            <button class="ui blue loading disabled button" onclick="return false" id="StartButton">Start</button>
-        </div>
-    </div>
-
-    <div class="ui large popup eod">
-        <div class="ui red header">
-            <i class="icon alarm"></i>
-            <div class="content">
-                Performing EOD Operation
-            </div>
-        </div>
-        <div class="ui divider"></div>
-        <div class="content">
-            <p>
-                When you perform EOD operation for a particular date, no transaction on that date or before can be
-            altered, changed, or deleted.
-            </p>
-            <p>
-                During EOD operation, routine tasks such as interest calculation, settlements, and report generation are performed.
-            </p>
-            <p>
-                This process is irreversible.
-            </p>
-
-            <button type="button" id="OKButton" class="ui small red loading disabled button" onclick="return (false);">OK</button>
-        </div>
-    </div>
-
-    <div class="ui teal progress">
-        <div class="bar">
-            <div class="progress"></div>
-        </div>
-    </div>
-
-    <h2 class="ui blue header initially hidden">EOD Console</h2>
-    <div class="ui celled list">
-    </div>
-</div>
 <script type="text/javascript">
+    if (typeof accessIsDeniedLocalized === "undefined") {
+        accessIsDeniedLocalized = "Access is denied.";
+    };
+
     var counter = 120;
     var interval;
     var url;

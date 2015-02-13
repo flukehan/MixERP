@@ -117,19 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="YourPasswordWasChanged" xml:space="preserve">
-    <value>您的密码已更改。</value>
-  </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>任务成功完成。</value>
-  </data>
-  <data name="UserGreeting" xml:space="preserve">
-    <value>喜{0}！</value>
   </data>
   <data name="DaysLowerCase" xml:space="preserve">
     <value>天</value>
   </data>
   <data name="JustAMomentPlease" xml:space="preserve">
     <value>请稍等片刻！</value>
+  </data>
+  <data name="UserGreeting" xml:space="preserve">
+    <value>喜{0}！</value>
+  </data>
+  <data name="YourPasswordWasChanged" xml:space="preserve">
+    <value>您的密码已更改。</value>
   </data>
 </root>

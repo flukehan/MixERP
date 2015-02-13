@@ -111,21 +111,7 @@ namespace MixERP.Net.Entities.Localization
 
     }
 
-    [TableName("localization.cultures")]
-    [PrimaryKey("culture_code", autoIncrement=false)]
-    [ExplicitColumns]
-    public class Culture : PetaPocoDB.Record<Culture> 
-    {
-        [Column("culture_code")] 
-        public string CultureCode { get; set; }
-
-        [Column("culture_name")] 
-        public string CultureName { get; set; }
-
-    }
-
     [TableName("localization.localized_resources")]
-    [PrimaryKey("id")]
     [ExplicitColumns]
     public class LocalizedResource : PetaPocoDB.Record<LocalizedResource> 
     {
@@ -140,6 +126,88 @@ namespace MixERP.Net.Entities.Localization
 
         [Column("value")] 
         public string Value { get; set; }
+
+        [Column("localization_id")] 
+        public int LocalizationId { get; set; }
+
+    }
+
+    [TableName("localization.cultures")]
+    [PrimaryKey("culture_code", autoIncrement=false)]
+    [ExplicitColumns]
+    public class Culture : PetaPocoDB.Record<Culture> 
+    {
+        [Column("culture_code")] 
+        public string CultureCode { get; set; }
+
+        [Column("culture_name")] 
+        public string CultureName { get; set; }
+
+    }
+
+    [TableName("localization.localized_resources_view")]
+    [ExplicitColumns]
+    public class LocalizedResourcesView : PetaPocoDB.Record<LocalizedResourcesView> 
+    {
+        [Column("resource")] 
+        public string Resource { get; set; }
+
+        [Column("key")] 
+        public string Key { get; set; }
+
+        [Column("culture_code")] 
+        public string CultureCode { get; set; }
+
+        [Column("value")] 
+        public string Value { get; set; }
+
+    }
+
+    [TableName("localization.localization_view")]
+    [ExplicitColumns]
+    public class LocalizationView : PetaPocoDB.Record<LocalizationView> 
+    {
+        [Column("path")] 
+        public string Path { get; set; }
+
+        [Column("culture_code")] 
+        public string CultureCode { get; set; }
+
+        [Column("key")] 
+        public string Key { get; set; }
+
+        [Column("value")] 
+        public string Value { get; set; }
+
+    }
+
+    [TableName("localization.missing_localization_view")]
+    [ExplicitColumns]
+    public class MissingLocalizationView : PetaPocoDB.Record<MissingLocalizationView> 
+    {
+        [Column("path")] 
+        public string Path { get; set; }
+
+        [Column("culture_code")] 
+        public string CultureCode { get; set; }
+
+        [Column("key")] 
+        public string Key { get; set; }
+
+        [Column("value")] 
+        public string Value { get; set; }
+
+    }
+
+    [TableName("localization.missing_key_view")]
+    [ExplicitColumns]
+    public class MissingKeyView : PetaPocoDB.Record<MissingKeyView> 
+    {
+        [Column("culture_code")] 
+        public string CultureCode { get; set; }
+
+        [Column("key")] 
+        public string Key { get; set; }
 
     }
 

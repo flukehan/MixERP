@@ -117,44 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Unit" xml:space="preserve">
-    <value>eenheid</value>
-  </data>
-  <data name="UncheckAll" xml:space="preserve">
-    <value>Deselecteer alles</value>
-  </data>
-  <data name="SelectUser" xml:space="preserve">
-    <value>Kies een gebruiker</value>
-  </data>
-  <data name="DatabaseStatistics" xml:space="preserve">
-    <value>Database statistieken</value>
-  </data>
-  <data name="OfficeSetup" xml:space="preserve">
-    <value>Office Setup</value>
-  </data>
   <data name="TaxAuthorities" xml:space="preserve">
     <value>Belastingdienst</value>
-  </data>
-  <data name="ViewBackups" xml:space="preserve">
-    <value>Backups anzeigen</value>
   </data>
   <data name="Counties" xml:space="preserve">
     <value>provincies</value>
   </data>
-  <data name="MenuText" xml:space="preserve">
-    <value>Menu Text</value>
-  </data>
-  <data name="OpeningInventory" xml:space="preserve">
-    <value>Het openen van de inventaris</value>
-  </data>
-  <data name="CashRepositories" xml:space="preserve">
-    <value>Cash Vindplaatsen</value>
-  </data>
   <data name="Frequencies" xml:space="preserve">
     <value>frequenties</value>
   </data>
+  <data name="OfficeSetup" xml:space="preserve">
+    <value>Office Setup</value>
+  </data>
+  <data name="DatabaseStatistics" xml:space="preserve">
+    <value>Database statistieken</value>
+  </data>
   <data name="SalesTaxTypes" xml:space="preserve">
     <value>omzetbelasting types</value>
+  </data>
+  <data name="Departments" xml:space="preserve">
+    <value>afdelingen</value>
   </data>
   <data name="VacuumFullDatabase" xml:space="preserve">
     <value>Vacuüm-database (volledige)</value>
@@ -162,35 +144,14 @@
   <data name="Close" xml:space="preserve">
     <value>dicht</value>
   </data>
-  <data name="Access" xml:space="preserve">
-    <value>toegang</value>
-  </data>
-  <data name="Amount" xml:space="preserve">
-    <value>bedrag</value>
-  </data>
-  <data name="Execute" xml:space="preserve">
-    <value>uitvoeren</value>
-  </data>
-  <data name="SalesTaxDetails" xml:space="preserve">
-    <value>omzetbelasting informatie</value>
-  </data>
-  <data name="Tel" xml:space="preserve">
-    <value>telefoon</value>
-  </data>
-  <data name="BackupConsole" xml:space="preserve">
-    <value>backup Console</value>
-  </data>
-  <data name="Industries" xml:space="preserve">
-    <value>industrieën</value>
-  </data>
-  <data name="Departments" xml:space="preserve">
-    <value>afdelingen</value>
-  </data>
-  <data name="EnterNewPassword" xml:space="preserve">
-    <value>Voer een nieuw wachtwoord</value>
-  </data>
   <data name="PreparedOn" xml:space="preserve">
     <value>opgesteld op</value>
+  </data>
+  <data name="AnalyzeDatabse" xml:space="preserve">
+    <value>Analyseer Database</value>
+  </data>
+  <data name="FiscalYear" xml:space="preserve">
+    <value>fiscaal Jaar</value>
   </data>
   <data name="TaxExemptTypes" xml:space="preserve">
     <value>ax Exempt Types</value>
@@ -198,65 +159,8 @@
   <data name="Countries" xml:space="preserve">
     <value>landen</value>
   </data>
-  <data name="RowNumber" xml:space="preserve">
-    <value>rijnummer</value>
-  </data>
-  <data name="Quantity" xml:space="preserve">
-    <value>hoeveelheid</value>
-  </data>
-  <data name="MenuAccessPolicy" xml:space="preserve">
-    <value>Menu toegangsbeleid</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>totaal</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>e-mail</value>
-  </data>
-  <data name="Clear" xml:space="preserve">
-    <value>duidelijk</value>
-  </data>
-  <data name="GoToTop" xml:space="preserve">
-    <value>Ga naar de top.</value>
-  </data>
-  <data name="Entities" xml:space="preserve">
-    <value>entiteiten</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Opslaan</value>
-  </data>
-  <data name="VoucherVerificationPolicy" xml:space="preserve">
-    <value>Gutschein Verification Politik</value>
-  </data>
-  <data name="Roles" xml:space="preserve">
-    <value>Rollen</value>
-  </data>
-  <data name="DatabaseBackups" xml:space="preserve">
-    <value>Database Backups</value>
-  </data>
-  <data name="MenuCode" xml:space="preserve">
-    <value>Menu code</value>
-  </data>
-  <data name="ItemCode" xml:space="preserve">
-    <value>artikelcode</value>
-  </data>
-  <data name="TaxMaster" xml:space="preserve">
-    <value>fiscale meester</value>
-  </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>Verander Wachtwoord</value>
-  </data>
-  <data name="CheckAll" xml:space="preserve">
-    <value>Alle controleren</value>
-  </data>
-  <data name="StoreName" xml:space="preserve">
-    <value>naam van de winkel</value>
-  </data>
-  <data name="AnalyzeDatabse" xml:space="preserve">
-    <value>Analyseer Database</value>
-  </data>
-  <data name="FiscalYear" xml:space="preserve">
-    <value>fiscaal Jaar</value>
+  <data name="BackupConsole" xml:space="preserve">
+    <value>backup Console</value>
   </data>
   <data name="SalesTaxExemptDetails" xml:space="preserve">
     <value>omzetbelasting vrijgesteld informatie</value>
@@ -267,44 +171,65 @@
   <data name="BackupDatabase" xml:space="preserve">
     <value>reservekopie van de database</value>
   </data>
-  <data name="Users" xml:space="preserve">
-    <value>gebruikers</value>
+  <data name="Email" xml:space="preserve">
+    <value>e-mail</value>
   </data>
-  <data name="MenuId" xml:space="preserve">
-    <value>Menu Identifier</value>
+  <data name="Entities" xml:space="preserve">
+    <value>entiteiten</value>
   </data>
-  <data name="Counters" xml:space="preserve">
-    <value>tellers</value>
+  <data name="Roles" xml:space="preserve">
+    <value>Rollen</value>
   </data>
-  <data name="StateSalesTaxes" xml:space="preserve">
-    <value>Verkoop rijksbelastingen</value>
+  <data name="SelectUser" xml:space="preserve">
+    <value>Kies een gebruiker</value>
   </data>
-  <data name="EnterBackupName" xml:space="preserve">
-    <value>Voer Backup Naam</value>
+  <data name="TaxMaster" xml:space="preserve">
+    <value>fiscale meester</value>
   </data>
-  <data name="CountySalesTaxes" xml:space="preserve">
-    <value>County Sales Belastingen</value>
+  <data name="CashRepositories" xml:space="preserve">
+    <value>Cash Vindplaatsen</value>
   </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>Naam van het punt</value>
+  <data name="Save" xml:space="preserve">
+    <value>Opslaan</value>
   </data>
-  <data name="Load" xml:space="preserve">
-    <value>belasting</value>
+  <data name="Clear" xml:space="preserve">
+    <value>duidelijk</value>
   </data>
-  <data name="AutoVerificationPolicy" xml:space="preserve">
-    <value>Autoverification beleid</value>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Verander Wachtwoord</value>
   </data>
-  <data name="Flags" xml:space="preserve">
-    <value>vlaggen</value>
+  <data name="GoToTop" xml:space="preserve">
+    <value>Ga naar de top.</value>
   </data>
-  <data name="SalesTaxExempts" xml:space="preserve">
-    <value>omzetbelasting kaderleden</value>
+  <data name="ViewBackups" xml:space="preserve">
+    <value>Bekijk Backups</value>
   </data>
-  <data name="VacuumDatabase" xml:space="preserve">
-    <value>vacuüm-database</value>
+  <data name="Alerts" xml:space="preserve">
+    <value>alerts</value>
   </data>
-  <data name="BackupNow" xml:space="preserve">
-    <value>nu back-up</value>
+  <data name="VoucherVerificationPolicy" xml:space="preserve">
+    <value>Voucher Verificatie Beleid</value>
+  </data>
+  <data name="Documentation" xml:space="preserve">
+    <value>documentatie</value>
+  </data>
+  <data name="DownloadSourceCode" xml:space="preserve">
+    <value>Broncode downloaden</value>
+  </data>
+  <data name="MixERPLinks" xml:space="preserve">
+    <value>MixERP Links</value>
+  </data>
+  <data name="DatabaseBackups" xml:space="preserve">
+    <value>Database Backups</value>
+  </data>
+  <data name="MixERPOnFacebook" xml:space="preserve">
+    <value>MixERP op Facebook</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>uitzicht</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>fax</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>-update</value>
@@ -312,22 +237,163 @@
   <data name="Action" xml:space="preserve">
     <value>actie</value>
   </data>
-  <data name="Fax" xml:space="preserve">
-    <value>fax</value>
-  </data>
   <data name="SalesTaxes" xml:space="preserve">
     <value>omzetbelasting</value>
   </data>
   <data name="Url" xml:space="preserve">
     <value>uniform resource locator</value>
   </data>
+  <data name="SalesTaxExempts" xml:space="preserve">
+    <value>omzetbelasting kaderleden</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>verwijderen</value>
+  </data>
   <data name="States" xml:space="preserve">
     <value>Staten</value>
+  </data>
+  <data name="BackupNow" xml:space="preserve">
+    <value>nu back-up</value>
+  </data>
+  <data name="MenuCode" xml:space="preserve">
+    <value>Menu code</value>
   </data>
   <data name="PasswordUpdated" xml:space="preserve">
     <value>Wachtwoord is bijgewerkt.</value>
   </data>
+  <data name="Support" xml:space="preserve">
+    <value>ondersteuning</value>
+  </data>
+  <data name="VacuumDatabase" xml:space="preserve">
+    <value>vacuüm-database</value>
+  </data>
+  <data name="CheckAll" xml:space="preserve">
+    <value>Alle controleren</value>
+  </data>
+  <data name="Flags" xml:space="preserve">
+    <value>vlaggen</value>
+  </data>
+  <data name="MenuText" xml:space="preserve">
+    <value>Menu Text</value>
+  </data>
+  <data name="Counters" xml:space="preserve">
+    <value>tellers</value>
+  </data>
+  <data name="RowNumber" xml:space="preserve">
+    <value>rijnummer</value>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>belasting</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>hoeveelheid</value>
+  </data>
+  <data name="StateSalesTaxes" xml:space="preserve">
+    <value>Verkoop rijksbelastingen</value>
+  </data>
+  <data name="CountySalesTaxes" xml:space="preserve">
+    <value>County Sales Belastingen</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>artikelcode</value>
+  </data>
+  <data name="MenuAccessPolicy" xml:space="preserve">
+    <value>Menu toegangsbeleid</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>totaal</value>
+  </data>
+  <data name="EnterBackupName" xml:space="preserve">
+    <value>Voer Backup Naam</value>
+  </data>
+  <data name="CurrentIP" xml:space="preserve">
+    <value>Het huidige IP-</value>
+  </data>
+  <data name="CurrentLoginOn" xml:space="preserve">
+    <value>Huidige Log On</value>
+  </data>
+  <data name="LoggedInTo" xml:space="preserve">
+    <value>Aangemeld bij</value>
+  </data>
+  <data name="AutoVerificationPolicy" xml:space="preserve">
+    <value>Autoverification beleid</value>
+  </data>
+  <data name="Execute" xml:space="preserve">
+    <value>uitvoeren</value>
+  </data>
+  <data name="SalesTaxDetails" xml:space="preserve">
+    <value>omzetbelasting informatie</value>
+  </data>
+  <data name="Tel" xml:space="preserve">
+    <value>telefoon</value>
+  </data>
+  <data name="MenuId" xml:space="preserve">
+    <value>Menu Identifier</value>
+  </data>
+  <data name="Industries" xml:space="preserve">
+    <value>industrieën</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Naam van het punt</value>
+  </data>
+  <data name="ViewAttachments" xml:space="preserve">
+    <value>Bekijk Bijlagen</value>
+  </data>
+  <data name="EnterNewPassword" xml:space="preserve">
+    <value>Voer een nieuw wachtwoord</value>
+  </data>
+  <data name="StoreName" xml:space="preserve">
+    <value>naam van de winkel</value>
+  </data>
+  <data name="OpeningInventory" xml:space="preserve">
+    <value>Het openen van de inventaris</value>
+  </data>
+  <data name="SubmitBugs" xml:space="preserve">
+    <value>Bugs indienen</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Access" xml:space="preserve">
+    <value>toegang</value>
+  </data>
+  <data name="OfficeInformation" xml:space="preserve">
+    <value>kantoor informatie</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>afdeling</value>
+  </data>
+  <data name="LastLoginIP" xml:space="preserve">
+    <value>Laatst ingelogd IP</value>
+  </data>
+  <data name="YourOffice" xml:space="preserve">
+    <value>uw Office</value>
+  </data>
+  <data name="LastLoginOn" xml:space="preserve">
+    <value>Laatst ingelogd On</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>bedrag</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>rol</value>
+  </data>
+  <data name="UncheckAll" xml:space="preserve">
+    <value>Deselecteer alles</value>
+  </data>
   <data name="Show" xml:space="preserve">
     <value>tonen</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>eenheid</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>gebruikers</value>
+  </data>
+  <data name="UploadAttachments" xml:space="preserve">
+    <value>Upload Bijlagen</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>oK</value>
   </data>
 </root>

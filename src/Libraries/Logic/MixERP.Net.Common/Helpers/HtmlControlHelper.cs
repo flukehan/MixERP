@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
 using System.Globalization;
 using System.Web.UI.HtmlControls;
 
@@ -26,11 +27,11 @@ namespace MixERP.Net.Common.Helpers
     {
         public static HtmlGenericControl GetDivider()
         {
-            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            using (HtmlGenericControl divider = new HtmlGenericControl("div"))
             {
-                field.Attributes.Add("class", "ui divider");
+                divider.Attributes.Add("class", "ui divider");
 
-                return field;
+                return divider;
             }
         }
 
@@ -166,12 +167,12 @@ namespace MixERP.Net.Common.Helpers
 
         public static string GetLabelHtml(string text)
         {
-            return string.Format(CultureInfo.InvariantCulture, "<label>{0}</label>", text);
+            return String.Format(CultureInfo.InvariantCulture, "<label>{0}</label>", text);
         }
 
         public static string GetLabelHtml(string text, string targetControlId)
         {
-            return string.Format(CultureInfo.InvariantCulture, "<label for='{1}'>{0}</label>", text, targetControlId);
+            return String.Format(CultureInfo.InvariantCulture, "<label for='{1}'>{0}</label>", text, targetControlId);
         }
 
         public static HtmlGenericControl GetLeftIconInput()
@@ -203,6 +204,17 @@ namespace MixERP.Net.Common.Helpers
                 return field;
             }
         }
+
+        public static void AddListItem(HtmlGenericControl container, string key, object value)
+        {
+            using (HtmlGenericControl li = new HtmlGenericControl("li"))
+            {
+                li.InnerText = key + " : " + value;
+                container.Controls.Add(li);
+            }
+
+        }
+
 
         public static HtmlGenericControl GetToggleCheckBox()
         {

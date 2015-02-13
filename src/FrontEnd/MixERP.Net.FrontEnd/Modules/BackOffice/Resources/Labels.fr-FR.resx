@@ -120,14 +120,14 @@
   <data name="ClickHereToDownload" xml:space="preserve">
     <value>Cliquez ici pour télécharger.</value>
   </data>
+  <data name="OpeningInventoryAlreadyEntered" xml:space="preserve">
+    <value>Stock d'ouverture a déjà été saisi pour cette fonction.</value>
+  </data>
   <data name="DatabaseBackupSuccessful" xml:space="preserve">
     <value>La sauvegarde de base de données a réussi.</value>
   </data>
   <data name="NumRowsAffected" xml:space="preserve">
     <value>{0} lignes affectées.</value>
-  </data>
-  <data name="OpeningInventoryAlreadyEntered" xml:space="preserve">
-    <value>Stock d'ouverture a déjà été saisi pour cette fonction.</value>
   </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>La tâche a été achevée avec succès.</value>

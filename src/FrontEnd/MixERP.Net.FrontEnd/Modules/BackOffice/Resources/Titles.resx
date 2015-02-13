@@ -342,4 +342,58 @@
   <data name="ViewAttachments" xml:space="preserve">
     <value>View Attachments</value>
   </data>
+  <data name="OfficeInformation" xml:space="preserve">
+    <value>Office Information</value>
+  </data>
+  <data name="CurrentIP" xml:space="preserve">
+    <value>Current IP</value>
+  </data>
+  <data name="CurrentLoginOn" xml:space="preserve">
+    <value>Current Login On</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="LastLoginIP" xml:space="preserve">
+    <value>Last Login IP</value>
+  </data>
+  <data name="LastLoginOn" xml:space="preserve">
+    <value>Last Login On</value>
+  </data>
+  <data name="LoggedInTo" xml:space="preserve">
+    <value>Logged in to</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="YourOffice" xml:space="preserve">
+    <value>Your Office</value>
+  </data>
+  <data name="Alerts" xml:space="preserve">
+    <value>Alerts</value>
+  </data>
+  <data name="Documentation" xml:space="preserve">
+    <value>Documentation</value>
+  </data>
+  <data name="DownloadSourceCode" xml:space="preserve">
+    <value>Download Source Code</value>
+  </data>
+  <data name="MixERPLinks" xml:space="preserve">
+    <value>MixERP Links</value>
+  </data>
+  <data name="MixERPOnFacebook" xml:space="preserve">
+    <value>MixERP on Facebook</value>
+  </data>
+  <data name="SubmitBugs" xml:space="preserve">
+    <value>Submit Bugs</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="UploadAttachments" xml:space="preserve">
+    <value>Upload Attachments</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
 </root>

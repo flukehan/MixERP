@@ -117,70 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TranId" xml:space="preserve">
-    <value>Transaction-Identifier</value>
-  </data>
-  <data name="Approve" xml:space="preserve">
-    <value>genehmigen</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>Anweisungsreferenz</value>
-  </data>
   <data name="Flag" xml:space="preserve">
     <value>Flagge</value>
-  </data>
-  <data name="Actions" xml:space="preserve">
-    <value>Aktionen</value>
-  </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>Wert Datum</value>
-  </data>
-  <data name="TranCode" xml:space="preserve">
-    <value>Transaktionscode</value>
-  </data>
-  <data name="Book" xml:space="preserve">
-    <value>Buch</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>drucken</value>
-  </data>
-  <data name="TransactionTimestamp" xml:space="preserve">
-    <value>Transaktionszeitstempel</value>
-  </data>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>Referenz-Nr #</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>anzeigen</value>
-  </data>
-  <data name="Reject" xml:space="preserve">
-    <value>Ablehnen</value>
-  </data>
-  <data name="Office" xml:space="preserve">
-    <value>Büro</value>
-  </data>
-  <data name="Id" xml:space="preserve">
-    <value>Identifikation</value>
-  </data>
-  <data name="PostedBy" xml:space="preserve">
-    <value>Erstellt von</value>
-  </data>
-  <data name="VerifiedOn" xml:space="preserve">
-    <value>überprüft auf</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>wählen</value>
   </data>
   <data name="AddNew" xml:space="preserve">
     <value>Neu hinzufügen</value>
   </data>
-  <data name="Reason" xml:space="preserve">
-    <value>Grund</value>
+  <data name="StatementReference" xml:space="preserve">
+    <value>Anweisungsreferenz</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Ablehnen</value>
+  </data>
+  <data name="VerifiedOn" xml:space="preserve">
+    <value>überprüft auf</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>genehmigen</value>
+  </data>
+  <data name="PostedBy" xml:space="preserve">
+    <value>Erstellt von</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Aktionen</value>
+  </data>
+  <data name="TranId" xml:space="preserve">
+    <value>Transaction-Identifier</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Referenz-Nr #</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>Büro</value>
   </data>
   <data name="VerifiedBy" xml:space="preserve">
     <value>indem überprüft</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>drucken</value>
+  </data>
+  <data name="TranCode" xml:space="preserve">
+    <value>Transaktionscode</value>
+  </data>
+  <data name="TransactionTimestamp" xml:space="preserve">
+    <value>Transaktionszeitstempel</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Identifikation</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Grund</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>Wert Datum</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>wählen</value>
+  </data>
+  <data name="Book" xml:space="preserve">
+    <value>Buch</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>anzeigen</value>
   </data>
 </root>

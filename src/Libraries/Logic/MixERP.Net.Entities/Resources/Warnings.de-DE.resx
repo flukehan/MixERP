@@ -117,26 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
-    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Inventar Receipt"</value>
-  </data>
-  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
-    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Sales Transfer"</value>
-  </data>
   <data name="InvalidSubTranBookInventoryQuotation" xml:space="preserve">
     <value>Ungültige Tochtergesellschaft Transaktionen Buch "Inventar Zitat"</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
+    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Kauf Lieferung"</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryDelivery" xml:space="preserve">
+    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Inventar Lieferservice"</value>
   </data>
   <data name="InvalidSubTranBookPurchaseSuspense" xml:space="preserve">
     <value>Ungültige Tochtergesellschaft Transaktionen Buch "Kauf Suspense"</value>
   </data>
-  <data name="InvalidSubTranBookInventoryInvoice" xml:space="preserve">
-    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Inventar Rechnung"</value>
-  </data>
-  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
-    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Sales Vergütung"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryDelivery" xml:space="preserve">
-    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Inventar Lieferservice"</value>
+  <data name="InvalidSubTranBookSalesSuspense" xml:space="preserve">
+    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Sales Suspense"</value>
   </data>
   <data name="InvalidSubTranBookInventoryPayment" xml:space="preserve">
     <value>Ungültige Tochtergesellschaft Transaktionen Buch "Inventar Vergütung"</value>
@@ -144,22 +138,28 @@
   <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
     <value>Ungültige Tochtergesellschaft Transaktionen Buch "Inventar Return"</value>
   </data>
+  <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
+    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Inventar Receipt"</value>
+  </data>
+  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
+    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Sales Transfer"</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
+    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Kauf Zitat"</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryInvoice" xml:space="preserve">
+    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Inventar Rechnung"</value>
+  </data>
   <data name="InvalidSubTranBookInventoryDirect" xml:space="preserve">
     <value>Ungültige Tochtergesellschaft Transaktionen Buch "Inventar Direct"</value>
   </data>
-  <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
-    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Kauf Transfer"</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
-    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Kauf Lieferung"</value>
+  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
+    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Sales Vergütung"</value>
   </data>
   <data name="InvalidSubTranBookInventoryOrder" xml:space="preserve">
     <value>Ungültige Tochtergesellschaft Transaktionen Buch "Inventar Order"</value>
   </data>
-  <data name="InvalidSubTranBookSalesSuspense" xml:space="preserve">
-    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Sales Suspense"</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
-    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Kauf Zitat"</value>
+  <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
+    <value>Ungültige Tochtergesellschaft Transaktionen Buch "Kauf Transfer"</value>
   </data>
 </root>

@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="NewPasswordCannotBeOldPassword" xml:space="preserve">
+    <value>Nueva contraseña no puede ser antigua contraseña.</value>
+  </data>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Este establecimiento no permite la publicación de transacciones.</value>
+  </data>
+  <data name="NotAuthorized" xml:space="preserve">
+    <value>No tiene permisos para acceder a este recurso en este momento.</value>
+  </data>
+  <data name="NothingSelected" xml:space="preserve">
+    <value>Nada seleccionado.</value>
+  </data>
+  <data name="PleaseEnterCurrentPassword" xml:space="preserve">
+    <value>Introduzca su contraseña actual.</value>
+  </data>
+  <data name="PleaseEnterNewPassword" xml:space="preserve">
+    <value>Por favor, introduzca una nueva contraseña.</value>
+  </data>
+  <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
+    <value>Identificador de usuario o contraseña incorrecta.</value>
+  </data>
   <data name="AccessIsDenied" xml:space="preserve">
     <value>Acceso denegado.</value>
   </data>
@@ -134,26 +155,5 @@
   </data>
   <data name="InvalidDate" xml:space="preserve">
     <value>Fecha no válida.</value>
-  </data>
-  <data name="NewPasswordCannotBeOldPassword" xml:space="preserve">
-    <value>Nueva contraseña no puede ser antigua contraseña.</value>
-  </data>
-  <data name="NotAuthorized" xml:space="preserve">
-    <value>No tiene permisos para acceder a este recurso en este momento.</value>
-  </data>
-  <data name="NothingSelected" xml:space="preserve">
-    <value>Nada seleccionado.</value>
-  </data>
-  <data name="PleaseEnterCurrentPassword" xml:space="preserve">
-    <value>Introduzca su contraseña actual.</value>
-  </data>
-  <data name="PleaseEnterNewPassword" xml:space="preserve">
-    <value>Por favor, introduzca una nueva contraseña.</value>
-  </data>
-  <data name="RestrictedTransactionMode" xml:space="preserve">
-    <value>Este establecimiento no permite la publicación de transacciones.</value>
-  </data>
-  <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
-    <value>Identificador de usuario o contraseña incorrecta.</value>
   </data>
 </root>

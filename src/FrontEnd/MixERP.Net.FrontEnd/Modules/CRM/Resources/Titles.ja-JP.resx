@@ -117,17 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="User" xml:space="preserve">
-    <value>ユーザー</value>
+  <data name="Email" xml:space="preserve">
+    <value>メール</value>
   </data>
   <data name="OpportunityStages" xml:space="preserve">
     <value>オポチュニティステージ</value>
   </data>
-  <data name="Fax" xml:space="preserve">
-    <value>ファックス</value>
+  <data name="User" xml:space="preserve">
+    <value>ユーザー</value>
   </data>
   <data name="PreparedOn" xml:space="preserve">
     <value>上に用意</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>ファックス</value>
+  </data>
+  <data name="LeadStatuses" xml:space="preserve">
+    <value>リードステータス</value>
   </data>
   <data name="Url" xml:space="preserve">
     <value>ユニフォームリソースロケータ</value>
@@ -137,11 +143,5 @@
   </data>
   <data name="Tel" xml:space="preserve">
     <value>テレフォン</value>
-  </data>
-  <data name="LeadStatuses" xml:space="preserve">
-    <value>リードステータス</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>メール</value>
   </data>
 </root>

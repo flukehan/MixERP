@@ -61,6 +61,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About Initializing Day End.
+        /// </summary>
+        internal static string AboutInitializingDayEnd {
+            get {
+                return ResourceManager.GetString("AboutInitializingDayEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
         internal static string Account {
@@ -187,6 +196,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Approved Transactions.
+        /// </summary>
+        internal static string ApprovedTransactions {
+            get {
+                return ResourceManager.GetString("ApprovedTransactions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Approve This Transaction.
         /// </summary>
         internal static string ApproveThisTransaction {
@@ -201,6 +219,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string AttachmentsPlus {
             get {
                 return ResourceManager.GetString("AttachmentsPlus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically Approved by Workflow.
+        /// </summary>
+        internal static string AutomaticallyApprovedByWorkflow {
+            get {
+                return ResourceManager.GetString("AutomaticallyApprovedByWorkflow", resourceCulture);
             }
         }
         
@@ -309,6 +336,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string ChartOfAccounts {
             get {
                 return ResourceManager.GetString("ChartOfAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closed Transactions.
+        /// </summary>
+        internal static string ClosedTransactions {
+            get {
+                return ResourceManager.GetString("ClosedTransactions", resourceCulture);
             }
         }
         
@@ -511,11 +547,29 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End of Day Operation.
+        /// </summary>
+        internal static string EndOfDayOperation {
+            get {
+                return ResourceManager.GetString("EndOfDayOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entered By.
         /// </summary>
         internal static string EnteredBy {
             get {
                 return ResourceManager.GetString("EnteredBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EOD Console.
+        /// </summary>
+        internal static string EODConsole {
+            get {
+                return ResourceManager.GetString("EODConsole", resourceCulture);
             }
         }
         
@@ -565,6 +619,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flagged Transactions.
+        /// </summary>
+        internal static string FlaggedTransactions {
+            get {
+                return ResourceManager.GetString("FlaggedTransactions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to From.
         /// </summary>
         internal static string From {
@@ -606,6 +669,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string IncludeZeroBalanceAccounts {
             get {
                 return ResourceManager.GetString("IncludeZeroBalanceAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initialize Day End.
+        /// </summary>
+        internal static string InitializeDayEnd {
+            get {
+                return ResourceManager.GetString("InitializeDayEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In Verification Stack.
+        /// </summary>
+        internal static string InVerificationStack {
+            get {
+                return ResourceManager.GetString("InVerificationStack", resourceCulture);
             }
         }
         
@@ -727,6 +808,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        internal static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Other Details.
         /// </summary>
         internal static string OtherDetails {
@@ -750,6 +840,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string PartyName {
             get {
                 return ResourceManager.GetString("PartyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perform EOD Operation.
+        /// </summary>
+        internal static string PerformEODOperation {
+            get {
+                return ResourceManager.GetString("PerformEODOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Performing EOD Operation.
+        /// </summary>
+        internal static string PerformingEODOperation {
+            get {
+                return ResourceManager.GetString("PerformingEODOperation", resourceCulture);
             }
         }
         
@@ -889,6 +997,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rejected Transactions.
+        /// </summary>
+        internal static string RejectedTransactions {
+            get {
+                return ResourceManager.GetString("RejectedTransactions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reject This Transaction.
         /// </summary>
         internal static string RejectThisTransaction {
@@ -957,6 +1074,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string ShowCompact {
             get {
                 return ResourceManager.GetString("ShowCompact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        internal static string Start {
+            get {
+                return ResourceManager.GetString("Start", resourceCulture);
             }
         }
         
@@ -1191,6 +1317,33 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string VoucherVerification {
             get {
                 return ResourceManager.GetString("VoucherVerification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        internal static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Withdrawn Transactions.
+        /// </summary>
+        internal static string WithdrawnTransactions {
+            get {
+                return ResourceManager.GetString("WithdrawnTransactions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workflow.
+        /// </summary>
+        internal static string Workflow {
+            get {
+                return ResourceManager.GetString("Workflow", resourceCulture);
             }
         }
     }

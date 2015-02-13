@@ -82,14 +82,19 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\Messages.de-DE.resx" />
     <EmbeddedResource Include="Resources\Messages.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Messages.fil-PH.resx" />
     <EmbeddedResource Include="Resources\Messages.fr-FR.resx" />
+    <EmbeddedResource Include="Resources\Messages.id-ID.resx" />
     <EmbeddedResource Include="Resources\Messages.ja-JP.resx" />
+    <EmbeddedResource Include="Resources\Messages.ms-MY.resx" />
     <EmbeddedResource Include="Resources\Messages.nl-NL.resx" />
+    <EmbeddedResource Include="Resources\Messages.pt-PT.resx" />
     <EmbeddedResource Include="Resources\Messages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Messages.ru-RU.resx" />
+    <EmbeddedResource Include="Resources\Messages.sv-SE.resx" />
     <EmbeddedResource Include="Resources\Messages.zh-CN.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

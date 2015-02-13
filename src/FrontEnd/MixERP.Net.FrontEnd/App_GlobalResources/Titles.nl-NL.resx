@@ -117,53 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>Verander Wachtwoord</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>geen</value>
-  </data>
-  <data name="BackToPreviousPage" xml:space="preserve">
-    <value>Terug naar de vorige pagina</value>
-  </data>
-  <data name="Update" xml:space="preserve">
-    <value>-update</value>
-  </data>
-  <data name="Notifications" xml:space="preserve">
-    <value>Bekendmakingen</value>
-  </data>
-  <data name="ConfirmPassword" xml:space="preserve">
-    <value>Bevestig Wachtwoord</value>
-  </data>
-  <data name="OfficeCode" xml:space="preserve">
-    <value>office-code</value>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Dit etablissement staat niet toe dat de transactie posting.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>wachtwoord</value>
   </data>
-  <data name="CurrentPassword" xml:space="preserve">
-    <value>Huidig Wachtwoord</value>
+  <data name="BackToPreviousPage" xml:space="preserve">
+    <value>Terug naar de vorige pagina</value>
   </data>
   <data name="Phone" xml:space="preserve">
     <value>telefoon</value>
   </data>
+  <data name="Update" xml:space="preserve">
+    <value>-update</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Huidig Wachtwoord</value>
+  </data>
   <data name="PreparedOn" xml:space="preserve">
     <value>opgesteld op</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>e-mail</value>
   </data>
   <data name="RememberMe" xml:space="preserve">
     <value>Onthoud Me</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>e-mail</value>
+  </data>
   <data name="Select" xml:space="preserve">
     <value>kiezen</value>
   </data>
-  <data name="Fax" xml:space="preserve">
-    <value>fax</value>
-  </data>
   <data name="SelectLanguage" xml:space="preserve">
     <value>Taal selecteren</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>fax</value>
   </data>
   <data name="SelectYourBranch" xml:space="preserve">
     <value>Selecteer uw branche</value>
@@ -171,14 +159,14 @@
   <data name="SignIn" xml:space="preserve">
     <value>Aanmelden</value>
   </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>Toegang is geweigerd.</value>
-  </data>
   <data name="ManageProfile" xml:space="preserve">
     <value>Profiel beheren</value>
   </data>
   <data name="SigningIn" xml:space="preserve">
     <value>aanmelden</value>
+  </data>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>Toegang is geweigerd.</value>
   </data>
   <data name="SignOut" xml:space="preserve">
     <value>uitloggen</value>
@@ -195,14 +183,14 @@
   <data name="NewPassword" xml:space="preserve">
     <value>nieuw Wachtwoord</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>annuleren</value>
-  </data>
   <data name="UserId" xml:space="preserve">
     <value>gebruiker Identifier</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>gebruikersnaam</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>annuleren</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>geen</value>
@@ -210,7 +198,19 @@
   <data name="Yes" xml:space="preserve">
     <value>ja</value>
   </data>
-  <data name="RestrictedTransactionMode" xml:space="preserve">
-    <value>Dit etablissement staat niet toe dat de transactie posting.</value>
+  <data name="None" xml:space="preserve">
+    <value>geen</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Verander Wachtwoord</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Bekendmakingen</value>
+  </data>
+  <data name="OfficeCode" xml:space="preserve">
+    <value>office-code</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Bevestig Wachtwoord</value>
   </data>
 </root>

@@ -117,41 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
+    <value>无效的子公司交易书“购机送”</value>
+  </data>
   <data name="InvalidSubTranBookInventoryQuotation" xml:space="preserve">
     <value>无效的子公司交易书“清单报价”</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
-    <value>无效的子公司交易书“库存归来”</value>
   </data>
   <data name="InvalidSubTranBookInventoryDelivery" xml:space="preserve">
     <value>无效的子公司交易书“库存交货”</value>
   </data>
-  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
-    <value>无效的子公司交易书“销售支付”</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryInvoice" xml:space="preserve">
-    <value>无效的子公司交易书“库存发票”</value>
-  </data>
   <data name="InvalidSubTranBookPurchaseSuspense" xml:space="preserve">
     <value>无效的子公司交易书“购买悬念”</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryPayment" xml:space="preserve">
-    <value>无效的子公司交易书“库存付款”</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryDirect" xml:space="preserve">
-    <value>无效的子公司交易书“库存直营”</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
-    <value>无效的子公司交易书“购买传送”</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
-    <value>无效的子公司交易书“购机送”</value>
-  </data>
-  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
-    <value>无效的子公司交易书“销售转移”</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
-    <value>无效的子公司交易书“库存收据”</value>
   </data>
   <data name="InvalidSubTranBookInventoryOrder" xml:space="preserve">
     <value>无效的子公司交易书“库存令”</value>
@@ -161,5 +137,29 @@
   </data>
   <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
     <value>无效的子公司交易书“购买报价”</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryPayment" xml:space="preserve">
+    <value>无效的子公司交易书“库存付款”</value>
+  </data>
+  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
+    <value>无效的子公司交易书“销售转移”</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
+    <value>无效的子公司交易书“库存归来”</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
+    <value>无效的子公司交易书“库存收据”</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryInvoice" xml:space="preserve">
+    <value>无效的子公司交易书“库存发票”</value>
+  </data>
+  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
+    <value>无效的子公司交易书“销售支付”</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryDirect" xml:space="preserve">
+    <value>无效的子公司交易书“库存直营”</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
+    <value>无效的子公司交易书“购买传送”</value>
   </data>
 </root>

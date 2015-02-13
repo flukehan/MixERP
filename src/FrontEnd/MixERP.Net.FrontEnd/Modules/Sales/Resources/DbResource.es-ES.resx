@@ -117,35 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="actions" xml:space="preserve">
-    <value>acciones</value>
-  </data>
-  <data name="transaction_ts" xml:space="preserve">
-    <value>Marca de tiempo de transacción</value>
-  </data>
-  <data name="flag_foreground_color" xml:space="preserve">
-    <value>Bandera Color de primer plano</value>
-  </data>
-  <data name="id" xml:space="preserve">
-    <value>identificador</value>
-  </data>
   <data name="office" xml:space="preserve">
     <value>oficina</value>
-  </data>
-  <data name="amount" xml:space="preserve">
-    <value>cantidad</value>
-  </data>
-  <data name="user" xml:space="preserve">
-    <value>usuario</value>
   </data>
   <data name="reference_number" xml:space="preserve">
     <value>Número de referencia</value>
   </data>
-  <data name="currency" xml:space="preserve">
-    <value>moneda</value>
+  <data name="actions" xml:space="preserve">
+    <value>acciones</value>
   </data>
-  <data name="value_date" xml:space="preserve">
-    <value>Fecha Valor</value>
+  <data name="party" xml:space="preserve">
+    <value>partido</value>
+  </data>
+  <data name="transaction_ts" xml:space="preserve">
+    <value>Marca de tiempo de transacción</value>
   </data>
   <data name="statement_reference" xml:space="preserve">
     <value>Declaración de Referencia</value>
@@ -153,7 +138,22 @@
   <data name="flag_background_color" xml:space="preserve">
     <value>Fondo de la bandera del color</value>
   </data>
-  <data name="party" xml:space="preserve">
-    <value>partido</value>
+  <data name="user" xml:space="preserve">
+    <value>usuario</value>
+  </data>
+  <data name="value_date" xml:space="preserve">
+    <value>Fecha Valor</value>
+  </data>
+  <data name="currency" xml:space="preserve">
+    <value>moneda</value>
+  </data>
+  <data name="amount" xml:space="preserve">
+    <value>cantidad</value>
+  </data>
+  <data name="flag_foreground_color" xml:space="preserve">
+    <value>Bandera Color de primer plano</value>
+  </data>
+  <data name="id" xml:space="preserve">
+    <value>identificador</value>
   </data>
 </root>

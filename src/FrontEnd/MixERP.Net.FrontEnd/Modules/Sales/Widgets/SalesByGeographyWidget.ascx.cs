@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using MixERP.Net.Common;
@@ -56,11 +55,11 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
         {
             using (HtmlGenericControl widget = new HtmlGenericControl("div"))
             {
+                widget.ID = "SalesByGeographyWidget";
                 widget.Attributes.Add("class", "sixteen wide column widget");
 
                 using (HtmlGenericControl segment = HtmlControlHelper.GetSegment())
                 {
-
                     using (HtmlGenericControl header = new HtmlGenericControl("h2"))
                     {
                         header.Attributes.Add("class", "ui purple header");

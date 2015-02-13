@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
-    <value>Неверный Вспомогательные Сделки Книга "Передача по продажам"</value>
+  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
+    <value>Неверный Вспомогательные Сделки Книга "Покупка Доставка"</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseSuspense" xml:space="preserve">
+    <value>Недействительные сделки Вспомогательные Книга "Покупка Триллер"</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryDelivery" xml:space="preserve">
+    <value>Неверный Вспомогательные Сделки Книга «Инвентаризация Доставка"</value>
+  </data>
+  <data name="InvalidSubTranBookInventoryOrder" xml:space="preserve">
+    <value>Неверный Вспомогательные Сделки Книга "инвентаризации заказ"</value>
+  </data>
+  <data name="InvalidSubTranBookSalesSuspense" xml:space="preserve">
+    <value>Неверный Вспомогательные Сделки Книга "Триллер Продажи"</value>
   </data>
   <data name="InvalidSubTranBookInventoryPayment" xml:space="preserve">
     <value>Неверный Вспомогательные Сделки Книга «Инвентаризация Оплата"</value>
+  </data>
+  <data name="InvalidSubTranBookSalesTransfer" xml:space="preserve">
+    <value>Неверный Вспомогательные Сделки Книга "Передача по продажам"</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
+    <value>Недействительные сделки Вспомогательные Книга "Покупка цитаты"</value>
   </data>
   <data name="InvalidSubTranBookInventoryQuotation" xml:space="preserve">
     <value>Неверный Вспомогательные Сделки Книга «Инвентаризация цитаты"</value>
@@ -132,34 +150,16 @@
   <data name="InvalidSubTranBookInventoryInvoice" xml:space="preserve">
     <value>Неверный Вспомогательные Сделки Книга «Инвентаризация Счет"</value>
   </data>
-  <data name="InvalidSubTranBookPurchaseSuspense" xml:space="preserve">
-    <value>Недействительные сделки Вспомогательные Книга "Покупка Триллер"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryDelivery" xml:space="preserve">
-    <value>Неверный Вспомогательные Сделки Книга «Инвентаризация Доставка"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
-    <value>Неверный Вспомогательные Сделки Книга «Инвентаризация Возвращение"</value>
-  </data>
-  <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
-    <value>Неверный Вспомогательные Сделки Книга «Инвентаризация Получение"</value>
-  </data>
   <data name="InvalidSubTranBookInventoryDirect" xml:space="preserve">
     <value>Недействительные сделки Вспомогательные Книга "Склад Прямая"</value>
   </data>
   <data name="InvalidSubTranBookPurchaseTransfer" xml:space="preserve">
     <value>Неверный Вспомогательные Сделки Книга "Покупка Transfer"</value>
   </data>
-  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
-    <value>Неверный Вспомогательные Сделки Книга "Покупка Доставка"</value>
+  <data name="InvalidSubTranBookInventoryReceipt" xml:space="preserve">
+    <value>Неверный Вспомогательные Сделки Книга «Инвентаризация Получение"</value>
   </data>
-  <data name="InvalidSubTranBookInventoryOrder" xml:space="preserve">
-    <value>Неверный Вспомогательные Сделки Книга "инвентаризации заказ"</value>
-  </data>
-  <data name="InvalidSubTranBookSalesSuspense" xml:space="preserve">
-    <value>Неверный Вспомогательные Сделки Книга "Триллер Продажи"</value>
-  </data>
-  <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
-    <value>Недействительные сделки Вспомогательные Книга "Покупка цитаты"</value>
+  <data name="InvalidSubTranBookInventoryReturn" xml:space="preserve">
+    <value>Неверный Вспомогательные Сделки Книга «Инвентаризация Возвращение"</value>
   </data>
 </root>

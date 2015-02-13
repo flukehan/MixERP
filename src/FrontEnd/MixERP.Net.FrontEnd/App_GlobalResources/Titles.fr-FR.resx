@@ -117,32 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="None" xml:space="preserve">
-    <value>aucun</value>
-  </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>Changer Le Mot De Passe</value>
-  </data>
-  <data name="BackToPreviousPage" xml:space="preserve">
-    <value>Retour à la page précédente</value>
-  </data>
-  <data name="Update" xml:space="preserve">
-    <value>mettre à jour</value>
-  </data>
-  <data name="Notifications" xml:space="preserve">
-    <value>Notifications</value>
-  </data>
-  <data name="OfficeCode" xml:space="preserve">
-    <value>Code de bureau</value>
-  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirmez Le Mot De Passe</value>
+  </data>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Cet établissement ne permet pas l'affichage de la transaction.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>mot de passe</value>
   </data>
+  <data name="BackToPreviousPage" xml:space="preserve">
+    <value>Retour à la page précédente</value>
+  </data>
   <data name="Phone" xml:space="preserve">
     <value>téléphone</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>mettre à jour</value>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
     <value>monnaie</value>
@@ -150,11 +141,11 @@
   <data name="PreparedOn" xml:space="preserve">
     <value>préparé Sur</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>email</value>
-  </data>
   <data name="RememberMe" xml:space="preserve">
     <value>Souviens-Toi De Moi</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>email</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>sélectionner</value>
@@ -177,11 +168,11 @@
   <data name="SigningIn" xml:space="preserve">
     <value>En signant</value>
   </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>L'accès est refusé.</value>
-  </data>
   <data name="SignOut" xml:space="preserve">
     <value>Se Déconnecter</value>
+  </data>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>L'accès est refusé.</value>
   </data>
   <data name="MixERPDocumentation" xml:space="preserve">
     <value>MixERP Documentation</value>
@@ -192,14 +183,14 @@
   <data name="User" xml:space="preserve">
     <value>utilisateur</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>annuler</value>
-  </data>
   <data name="NewPassword" xml:space="preserve">
     <value>Nouveau Mot De Passe</value>
   </data>
   <data name="UserId" xml:space="preserve">
     <value>Identifiant utilisateur</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>annuler</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Nom d'utilisateur</value>
@@ -210,7 +201,16 @@
   <data name="Yes" xml:space="preserve">
     <value>oui</value>
   </data>
-  <data name="RestrictedTransactionMode" xml:space="preserve">
-    <value>Cet établissement ne permet pas l'affichage de la transaction.</value>
+  <data name="None" xml:space="preserve">
+    <value>aucun</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Changer Le Mot De Passe</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="OfficeCode" xml:space="preserve">
+    <value>Code de bureau</value>
   </data>
 </root>

@@ -120,31 +120,31 @@
   <data name="UploadAttachmentsForThisTransaction" xml:space="preserve">
     <value>Загружать вложения по данной сделке</value>
   </data>
-  <data name="ReturnToView" xml:space="preserve">
-    <value>Вернуться Просмотр</value>
-  </data>
-  <data name="OK" xml:space="preserve">
-    <value>хОРОШО</value>
-  </data>
-  <data name="PrintReceipt" xml:space="preserve">
-    <value>Распечатать Получение</value>
-  </data>
-  <data name="Checklists" xml:space="preserve">
-    <value>Контрольные</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>назад</value>
-  </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>Добавить новый</value>
-  </data>
   <data name="PrintGlEntry" xml:space="preserve">
     <value>Распечатать общую запись ГК</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>отменить</value>
   </data>
+  <data name="PrintReceipt" xml:space="preserve">
+    <value>Распечатать Получение</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>Добавить новый</value>
+  </data>
+  <data name="ReturnToView" xml:space="preserve">
+    <value>Вернуться Просмотр</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>назад</value>
+  </data>
+  <data name="Checklists" xml:space="preserve">
+    <value>Контрольные</value>
+  </data>
   <data name="WithdrawTransaction" xml:space="preserve">
     <value>Вывод сделка</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>хОРОШО</value>
   </data>
 </root>

@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NoTransactionToPost" xml:space="preserve">
-    <value>后无交易。</value>
+  <data name="BothSidesCannotHaveValue" xml:space="preserve">
+    <value>双方借贷不能有值。</value>
   </data>
   <data name="ReferencingSidesNotEqual" xml:space="preserve">
     <value>引用双方不相等。</value>
   </data>
-  <data name="BothSidesCannotHaveValue" xml:space="preserve">
-    <value>双方借贷不能有值。</value>
+  <data name="NoTransactionToPost" xml:space="preserve">
+    <value>后无交易。</value>
   </data>
 </root>

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>アクセスが拒否されました。</value>
+  </data>
   <data name="DateErrorMessage" xml:space="preserve">
     <value>選択した日付が範囲外です。</value>
   </data>
@@ -126,6 +129,9 @@
   <data name="InvalidUser" xml:space="preserve">
     <value>無効なユーザー。</value>
   </data>
+  <data name="ConfigurationError" xml:space="preserve">
+    <value>タスクを続行できません。構成の問題を修正してください。</value>
+  </data>
   <data name="PasswordCannotBeEmpty" xml:space="preserve">
     <value>パスワードが空にすることはできません。</value>
   </data>
@@ -134,11 +140,5 @@
   </data>
   <data name="NoFileSpecified" xml:space="preserve">
     <value>いいえファイルが指定されていません。</value>
-  </data>
-  <data name="ConfigurationError" xml:space="preserve">
-    <value>タスクを続行できません。構成の問題を修正してください。</value>
-  </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>アクセスが拒否されました。</value>
   </data>
 </root>

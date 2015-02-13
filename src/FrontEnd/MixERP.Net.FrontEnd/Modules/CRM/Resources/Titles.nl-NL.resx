@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="User" xml:space="preserve">
-    <value>gebruiker</value>
+  <data name="Email" xml:space="preserve">
+    <value>e-mail</value>
   </data>
   <data name="OpportunityStages" xml:space="preserve">
     <value>gelegenheid stadia</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>gebruiker</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>fax</value>
@@ -129,19 +132,16 @@
   <data name="PreparedOn" xml:space="preserve">
     <value>opgesteld op</value>
   </data>
+  <data name="LeadStatuses" xml:space="preserve">
+    <value>lead statussen</value>
+  </data>
   <data name="Url" xml:space="preserve">
     <value>uniform resource locator</value>
   </data>
   <data name="LeadSources" xml:space="preserve">
     <value>leadbronnen</value>
   </data>
-  <data name="LeadStatuses" xml:space="preserve">
-    <value>lead statussen</value>
-  </data>
   <data name="Tel" xml:space="preserve">
     <value>telefoon</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>e-mail</value>
   </data>
 </root>

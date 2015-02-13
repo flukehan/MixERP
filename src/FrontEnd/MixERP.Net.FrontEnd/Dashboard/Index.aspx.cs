@@ -18,9 +18,15 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Web.UI;
+using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models;
+using MixERP.Net.Entities.Core;
 using MixERP.Net.FrontEnd.Base;
 
 namespace MixERP.Net.FrontEnd.Dashboard
@@ -29,66 +35,44 @@ namespace MixERP.Net.FrontEnd.Dashboard
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Todo:Store this in database.
-            Collection<WidgetModel> models = new Collection<WidgetModel>
-            {
-                new WidgetModel
-                {
-                    RowNumber = 1,
-                    ColumnNumber = 1,
-                    WidgetSource = "~/Modules/Sales/Widgets/SalesByGeographyWidget.ascx"
-                },
-                new WidgetModel
-                {
-                    RowNumber = 2,
-                    ColumnNumber = 1,
-                    WidgetSource = "~/Modules/Sales/Widgets/SalesByOfficeWidget.ascx"
-                },
-                new WidgetModel
-                {
-                    RowNumber = 2,
-                    ColumnNumber = 2,
-                    WidgetSource = "~/Modules/Sales/Widgets/CurrentOfficeSalesByMonthWidget.ascx"
-                },
-                new WidgetModel
-                {
-                    RowNumber = 3,
-                    ColumnNumber = 4,
-                    WidgetSource = "~/UserControls/Widgets/WorkflowWidget.ascx"
-                },
-                new WidgetModel
-                {
-                    RowNumber = 3,
-                    ColumnNumber = 1,
-                    WidgetSource = "~/UserControls/Widgets/OfficeInformationWidget.ascx"
-                },
-                new WidgetModel
-                {
-                    RowNumber = 3,
-                    ColumnNumber = 3,
-                    WidgetSource = "~/UserControls/Widgets/AlertsWidget.ascx"
-                },
-                new WidgetModel
-                {
-                    RowNumber = 3,
-                    ColumnNumber = 2,
-                    WidgetSource = "~/UserControls/Widgets/LinksWidget.ascx"
-                },
-                new WidgetModel
-                {
-                    RowNumber = 4,
-                    ColumnNumber = 1,
-                    WidgetSource = "~/Modules/Sales/Widgets/TopSellingProductOfAllTimeWidget.ascx"
-                },
-                new WidgetModel
-                {
-                    RowNumber = 4,
-                    ColumnNumber = 2,
-                    WidgetSource = "~/Modules/Sales/Widgets/TopSellingProductOfAllTimeCurrentWidget.ascx"
-                }
-            };
-
-            WidgetHelper.LoadWidgets(models, this.WidgetPlaceholder, this.Page);
+            IEnumerable<Widget> widgets = Data.Core.Widget.GetWidgets();
+            this.LoadWidgets(widgets, this.WidgetPlaceholder, this.Page);
         }
+
+        public void LoadWidgets(IEnumerable<Widget> widgetModels, Control placeholder, TemplateControl page)
+        {
+            if (placeholder == null)
+            {
+                return;
+            }
+
+            if (page == null)
+            {
+                return;
+            }
+
+            if (widgetModels == null)
+            {
+                return;
+            }
+
+            var groups = widgetModels.OrderBy(x => x.RowNumber).ThenBy(x => x.ColumnNumber).GroupBy(x => new { x.RowNumber });
+
+            foreach (var group in groups)
+            {
+                foreach (Widget item in group)
+                {
+                    using (MixERPWidgetBase widget = page.LoadControl(item.WidgetSource) as MixERPWidgetBase)
+                    {
+                        if (widget != null)
+                        {
+                            placeholder.Controls.Add(widget);
+                            widget.OnControlLoad(widget, new EventArgs());
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

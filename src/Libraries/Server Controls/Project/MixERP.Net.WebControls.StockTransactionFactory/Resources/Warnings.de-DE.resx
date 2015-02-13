@@ -117,8 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InvalidCostCenter" xml:space="preserve">
+    <value>Ongeldige kostenplaats.</value>
+  </data>
+  <data name="InvalidShippingCompany" xml:space="preserve">
+    <value>Ongeldige rederij.</value>
+  </data>
   <data name="InsufficientStockWarning" xml:space="preserve">
     <value>Nur {0} {1} von {2} auf Lager.</value>
+  </data>
+  <data name="InvalidPaymentTerm" xml:space="preserve">
+    <value>Ongeldige betalingstermijn.</value>
+  </data>
+  <data name="InvalidPriceType" xml:space="preserve">
+    <value>Ongeldige prijs type.</value>
+  </data>
+  <data name="InvalidStore" xml:space="preserve">
+    <value>Ongeldige winkel.</value>
+  </data>
+  <data name="InvalidSalesPerson" xml:space="preserve">
+    <value>Ongeldige verkoper.</value>
   </data>
   <data name="InvalidParty" xml:space="preserve">
     <value>Ungültige Partei. Diese Partei ist mit dieser Transaktion zugeordnet ist.</value>

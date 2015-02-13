@@ -117,26 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CompareDaysErrorMessage" xml:space="preserve">
-    <value>日から日へのより大きくてはならない。</value>
-  </data>
   <data name="NegativeValueSupplied" xml:space="preserve">
     <value>負の値は、供給される。</value>
-  </data>
-  <data name="ReferencingSidesNotEqual" xml:space="preserve">
-    <value>参照辺が等しくない。</value>
-  </data>
-  <data name="InvalidData" xml:space="preserve">
-    <value>無効なデータ。</value>
-  </data>
-  <data name="InvalidCashRepository" xml:space="preserve">
-    <value>無効な現金リポジトリ。</value>
   </data>
   <data name="AccessIsDenied" xml:space="preserve">
     <value>アクセスが拒否されました。</value>
   </data>
+  <data name="CompareDaysErrorMessage" xml:space="preserve">
+    <value>日から日へのより大きくてはならない。</value>
+  </data>
   <data name="InsufficientBalanceInCashRepository" xml:space="preserve">
     <value>このトランザクションを処理するためのキャッシュ·リポジトリには十分な残高がありません。</value>
+  </data>
+  <data name="InvalidData" xml:space="preserve">
+    <value>無効なデータ。</value>
+  </data>
+  <data name="ReferencingSidesNotEqual" xml:space="preserve">
+    <value>参照辺が等しくない。</value>
+  </data>
+  <data name="InvalidCashRepository" xml:space="preserve">
+    <value>無効な現金リポジトリ。</value>
   </data>
   <data name="InvalidAccount" xml:space="preserve">
     <value>無効なアカウント。</value>

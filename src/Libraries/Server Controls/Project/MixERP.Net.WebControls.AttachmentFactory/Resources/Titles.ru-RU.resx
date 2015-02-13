@@ -117,11 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Browse" xml:space="preserve">
-    <value>просматривать</value>
-  </data>
   <data name="Undo" xml:space="preserve">
     <value>аннулировать</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>комментарий</value>
@@ -129,10 +129,13 @@
   <data name="Upload" xml:space="preserve">
     <value>Загрузить</value>
   </data>
+  <data name="Browse" xml:space="preserve">
+    <value>просматривать</value>
+  </data>
+  <data name="FilePath" xml:space="preserve">
+    <value>Путь к файлу</value>
+  </data>
   <data name="Progress" xml:space="preserve">
     <value>прогресс</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Сохранить</value>
   </data>
 </root>

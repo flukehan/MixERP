@@ -117,35 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="RestrictedTransactionMode" xml:space="preserve">
-    <value>Este establecimiento no permite la publicación de transacciones.</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>ninguno</value>
-  </data>
-  <data name="BackToPreviousPage" xml:space="preserve">
-    <value>Volver a la página anterior</value>
-  </data>
-  <data name="Update" xml:space="preserve">
-    <value>actualización</value>
-  </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>Cambiar La Contraseña</value>
-  </data>
-  <data name="Notifications" xml:space="preserve">
-    <value>Notificaciones</value>
-  </data>
-  <data name="OfficeCode" xml:space="preserve">
-    <value>Código de oficina</value>
-  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>confirmar Contraseña</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>contraseña</value>
   </data>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Este establecimiento no permite la publicación de transacciones.</value>
+  </data>
+  <data name="BackToPreviousPage" xml:space="preserve">
+    <value>Volver a la página anterior</value>
+  </data>
   <data name="Phone" xml:space="preserve">
     <value>teléfono</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>actualización</value>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
     <value>Contraseña Actual</value>
@@ -201,16 +189,28 @@
   <data name="UserId" xml:space="preserve">
     <value>Identificador de Usuario</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>cancelar</value>
-  </data>
   <data name="Username" xml:space="preserve">
     <value>Nombre de usuario</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>cancelar</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>no</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>sí</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>ninguno</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Cambiar La Contraseña</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notificaciones</value>
+  </data>
+  <data name="OfficeCode" xml:space="preserve">
+    <value>Código de oficina</value>
   </data>
 </root>

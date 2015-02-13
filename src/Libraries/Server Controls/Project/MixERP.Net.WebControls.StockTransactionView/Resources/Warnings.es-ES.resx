@@ -117,28 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CannotMergeUrlNull" xml:space="preserve">
-    <value>No se puede fusionar transacciones. No se proporcionó el url de combinación.</value>
-  </data>
-  <data name="NothingSelected" xml:space="preserve">
-    <value>Nada seleccionado.</value>
+  <data name="CannotMergeIncompatibleTax" xml:space="preserve">
+    <value>No se puede fusionar las transacciones que tienen tipos impositivos incompatibles. Por favor, vuelva a intentarlo.</value>
   </data>
   <data name="CannotCreateFlagTransactionTableNull" xml:space="preserve">
     <value>No se puede crear o actualizar bandera. No se proporcionó tabla de transacciones.</value>
   </data>
+  <data name="NothingSelected" xml:space="preserve">
+    <value>Nada seleccionado.</value>
+  </data>
   <data name="CannotCreateFlagTransactionTablePrimaryKeyNull" xml:space="preserve">
     <value>No se puede crear o actualizar bandera. No se proporcionó la clave principal tabla de transacciones.</value>
+  </data>
+  <data name="CannotMergeUrlNull" xml:space="preserve">
+    <value>No se puede fusionar transacciones. No se proporcionó el url de combinación.</value>
   </data>
   <data name="ReturnButtonUrlNull" xml:space="preserve">
     <value>No se puede volver esta entrada. No se proporcionó el url de retorno.</value>
   </data>
-  <data name="CannotMergeAlreadyMerged" xml:space="preserve">
-    <value>Las transacciones seleccionadas contienen elementos que ya se han fusionado. Por favor, vuelva a intentarlo.</value>
-  </data>
-  <data name="CannotMergeIncompatibleTax" xml:space="preserve">
-    <value>No se puede fusionar las transacciones que tienen tipos impositivos incompatibles. Por favor, vuelva a intentarlo.</value>
-  </data>
   <data name="CannotMergeDifferentPartyTransaction" xml:space="preserve">
     <value>No se puede fusionar las operaciones de los distintos partidos en un solo lote. Por favor, vuelva a intentarlo.</value>
+  </data>
+  <data name="CannotMergeAlreadyMerged" xml:space="preserve">
+    <value>Las transacciones seleccionadas contienen elementos que ya se han fusionado. Por favor, vuelva a intentarlo.</value>
   </data>
 </root>

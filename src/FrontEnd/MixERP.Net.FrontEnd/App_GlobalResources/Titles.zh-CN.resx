@@ -120,32 +120,20 @@
   <data name="RestrictedTransactionMode" xml:space="preserve">
     <value>这个成立不允许交易张贴。</value>
   </data>
-  <data name="None" xml:space="preserve">
-    <value>无</value>
-  </data>
-  <data name="BackToPreviousPage" xml:space="preserve">
-    <value>返回上一页</value>
-  </data>
-  <data name="Update" xml:space="preserve">
-    <value>更新</value>
-  </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>更改密码</value>
-  </data>
-  <data name="Notifications" xml:space="preserve">
-    <value>通知</value>
-  </data>
-  <data name="OfficeCode" xml:space="preserve">
-    <value>办公代码</value>
-  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>确认密码</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>
   </data>
+  <data name="BackToPreviousPage" xml:space="preserve">
+    <value>返回上一页</value>
+  </data>
   <data name="Phone" xml:space="preserve">
     <value>电话</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>更新</value>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
     <value>当前密码</value>
@@ -207,10 +195,22 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>没有</value>
+  </data>
   <data name="Yes" xml:space="preserve">
     <value>是的</value>
   </data>
-  <data name="No" xml:space="preserve">
-    <value>没有</value>
+  <data name="None" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>更改密码</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="OfficeCode" xml:space="preserve">
+    <value>办公代码</value>
   </data>
 </root>

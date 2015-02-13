@@ -117,25 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Undo" xml:space="preserve">
-    <value>rückgängig machen</value>
+  <data name="FilePath" xml:space="preserve">
+    <value>Dateipfad</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
   </data>
   <data name="Browse" xml:space="preserve">
     <value>blättern</value>
   </data>
-  <data name="FilePath" xml:space="preserve">
-    <value>Dateipfad</value>
-  </data>
-  <data name="Upload" xml:space="preserve">
-    <value>hochladen</value>
-  </data>
   <data name="Progress" xml:space="preserve">
     <value>Fortschritt</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>rückgängig machen</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>Kommentar</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>Speichern</value>
+  <data name="Upload" xml:space="preserve">
+    <value>hochladen</value>
   </data>
 </root>

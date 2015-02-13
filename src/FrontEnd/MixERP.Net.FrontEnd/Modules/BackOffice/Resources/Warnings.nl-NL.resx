@@ -117,14 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>Toegang is geweigerd.</value>
+  </data>
   <data name="DateErrorMessage" xml:space="preserve">
     <value>Geselecteerde datum valt buiten het bereik.</value>
+  </data>
+  <data name="InvalidUser" xml:space="preserve">
+    <value>Ongeldige gebruikersnaam.</value>
   </data>
   <data name="CannotCreateABackup" xml:space="preserve">
     <value>Sorry, kan niet een database back-up op dit moment te maken.</value>
   </data>
-  <data name="InvalidUser" xml:space="preserve">
-    <value>Ongeldige gebruikersnaam.</value>
+  <data name="ComparePriceErrorMessage" xml:space="preserve">
+    <value>Prijs vanaf moet minder dan de prijs te zijn.</value>
   </data>
   <data name="ConfigurationError" xml:space="preserve">
     <value>annot verder de taak. Corrigeer problemen met de configuratie.</value>
@@ -132,13 +138,7 @@
   <data name="PasswordCannotBeEmpty" xml:space="preserve">
     <value>Wachtwoord kan niet leeg zijn.</value>
   </data>
-  <data name="ComparePriceErrorMessage" xml:space="preserve">
-    <value>Prijs vanaf moet minder dan de prijs te zijn.</value>
-  </data>
   <data name="NoFileSpecified" xml:space="preserve">
     <value>Geen bestand gespecificeerd.</value>
-  </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>Toegang is geweigerd.</value>
   </data>
 </root>

@@ -117,17 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="actions" xml:space="preserve">
-    <value>株式</value>
-  </data>
-  <data name="transaction_ts" xml:space="preserve">
-    <value>トランザクションタイムスタンプ</value>
-  </data>
-  <data name="flag_foreground_color" xml:space="preserve">
-    <value>旗前景色</value>
-  </data>
-  <data name="id" xml:space="preserve">
-    <value>識別する</value>
+  <data name="party" xml:space="preserve">
+    <value>パーティー</value>
   </data>
   <data name="office" xml:space="preserve">
     <value>オフィス</value>
@@ -135,11 +126,20 @@
   <data name="reference_number" xml:space="preserve">
     <value>参照番号</value>
   </data>
-  <data name="amount" xml:space="preserve">
-    <value>額</value>
+  <data name="actions" xml:space="preserve">
+    <value>株式</value>
+  </data>
+  <data name="statement_reference" xml:space="preserve">
+    <value>ステートメントリファレンス</value>
+  </data>
+  <data name="transaction_ts" xml:space="preserve">
+    <value>トランザクションタイムスタンプ</value>
   </data>
   <data name="value_date" xml:space="preserve">
     <value>実行日</value>
+  </data>
+  <data name="flag_background_color" xml:space="preserve">
+    <value>旗の背景色</value>
   </data>
   <data name="user" xml:space="preserve">
     <value>ユーザー</value>
@@ -147,13 +147,13 @@
   <data name="currency" xml:space="preserve">
     <value>通貨</value>
   </data>
-  <data name="statement_reference" xml:space="preserve">
-    <value>ステートメントリファレンス</value>
+  <data name="amount" xml:space="preserve">
+    <value>額</value>
   </data>
-  <data name="party" xml:space="preserve">
-    <value>パーティー</value>
+  <data name="flag_foreground_color" xml:space="preserve">
+    <value>旗前景色</value>
   </data>
-  <data name="flag_background_color" xml:space="preserve">
-    <value>旗の背景色</value>
+  <data name="id" xml:space="preserve">
+    <value>識別する</value>
   </data>
 </root>

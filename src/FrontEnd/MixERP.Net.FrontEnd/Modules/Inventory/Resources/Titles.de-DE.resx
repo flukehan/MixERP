@@ -117,74 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Items" xml:space="preserve">
-    <value>Angebote</value>
+  <data name="SelectStore" xml:space="preserve">
+    <value>Wählen Sie Speicher</value>
   </data>
-  <data name="EnteredBy" xml:space="preserve">
-    <value>eingetragen von</value>
+  <data name="PartyTypes" xml:space="preserve">
+    <value>Partei-Typen</value>
   </data>
-  <data name="Tel" xml:space="preserve">
-    <value>Telefon</value>
+  <data name="User" xml:space="preserve">
+    <value>Benutzer</value>
   </data>
-  <data name="Fax" xml:space="preserve">
-    <value>Fax</value>
+  <data name="TransactionDate" xml:space="preserve">
+    <value>Transaktionsdatum</value>
   </data>
-  <data name="TransactionStatement" xml:space="preserve">
-    <value>Transaktionserklärung</value>
+  <data name="StoreTypes" xml:space="preserve">
+    <value>Shop Typen</value>
   </data>
-  <data name="Phone" xml:space="preserve">
-    <value>Telefon</value>
+  <data name="AccountStatement" xml:space="preserve">
+    <value>Kontoauszug</value>
   </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>Artikelname</value>
+  <data name="From" xml:space="preserve">
+    <value>von</value>
   </data>
-  <data name="Book" xml:space="preserve">
-    <value>Buch</value>
-  </data>
-  <data name="InventoryAdvice" xml:space="preserve">
-    <value>Inventar Beratung</value>
-  </data>
-  <data name="ItemGroups" xml:space="preserve">
-    <value>Artikelgruppen</value>
-  </data>
-  <data name="ItemSellingPrices" xml:space="preserve">
-    <value>Artikel Verkaufs Preise</value>
-  </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>vorbereitet auf</value>
-  </data>
-  <data name="Office" xml:space="preserve">
-    <value>Büro</value>
-  </data>
-  <data name="Brand" xml:space="preserve">
-    <value>Marke</value>
-  </data>
-  <data name="Definition" xml:space="preserve">
-    <value>Definition</value>
+  <data name="ReorderUnitName" xml:space="preserve">
+    <value>Nachbestellung Einheit Name</value>
   </data>
   <data name="Shippers" xml:space="preserve">
     <value>Verlader</value>
   </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>Anweisungsreferenz</value>
-  </data>
   <data name="StockTransferJournal" xml:space="preserve">
     <value>Umlagerung Blatt</value>
   </data>
-  <data name="UnitId" xml:space="preserve">
-    <value>Einheiten- kennung</value>
+  <data name="Definition" xml:space="preserve">
+    <value>Definition</value>
   </data>
   <data name="TransactionStatus" xml:space="preserve">
     <value>Transaktionsstatus</value>
-  </data>
-  <data name="SelectStore" xml:space="preserve">
-    <value>Wählen Sie Speicher</value>
-  </data>
-  <data name="Credit" xml:space="preserve">
-    <value>Kredit</value>
-  </data>
-  <data name="ItemType" xml:space="preserve">
-    <value>Produkttyp</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Speichern</value>
@@ -192,14 +159,8 @@
   <data name="ItemGroup" xml:space="preserve">
     <value>Artikelgruppe</value>
   </data>
-  <data name="StoreTypes" xml:space="preserve">
-    <value>Shop Typen</value>
-  </data>
   <data name="UnitName" xml:space="preserve">
     <value>Einheit Name</value>
-  </data>
-  <data name="AccountStatement" xml:space="preserve">
-    <value>Kontoauszug</value>
   </data>
   <data name="ShippingAddressMaintenance" xml:space="preserve">
     <value>Versandadresse Wartung</value>
@@ -210,11 +171,11 @@
   <data name="Type" xml:space="preserve">
     <value>Art</value>
   </data>
-  <data name="TransferDetails" xml:space="preserve">
-    <value>Überweisung</value>
-  </data>
   <data name="ListItems" xml:space="preserve">
     <value>Listenelemente</value>
+  </data>
+  <data name="TransferDetails" xml:space="preserve">
+    <value>Überweisung</value>
   </data>
   <data name="ItemOverview" xml:space="preserve">
     <value>Artikelübersicht</value>
@@ -225,35 +186,41 @@
   <data name="Store" xml:space="preserve">
     <value>Speicher</value>
   </data>
-  <data name="To" xml:space="preserve">
-    <value>bis Zur</value>
+  <data name="ItemGroups" xml:space="preserve">
+    <value>Artikelgruppen</value>
   </data>
-  <data name="StockAdjustment" xml:space="preserve">
-    <value>Auf Einstellung</value>
+  <data name="ViewThisTransfer" xml:space="preserve">
+    <value>Bekijk deze overdracht</value>
   </data>
-  <data name="ItemCostPrices" xml:space="preserve">
-    <value>Artikelkosten Preise</value>
+  <data name="Email" xml:space="preserve">
+    <value>E-Mail</value>
   </data>
-  <data name="CompoundItems" xml:space="preserve">
-    <value>Compound Artikel</value>
+  <data name="OfficeCode" xml:space="preserve">
+    <value>Büro-Code</value>
   </data>
-  <data name="VerifiedBy" xml:space="preserve">
-    <value>indem überprüft</value>
+  <data name="ItemId" xml:space="preserve">
+    <value>Artikel-Nummer</value>
   </data>
-  <data name="ItemCode" xml:space="preserve">
-    <value>Item Code</value>
+  <data name="ViewThisAdjustment" xml:space="preserve">
+    <value>Bekijk deze aanpassing</value>
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="BaseUnitName" xml:space="preserve">
+    <value>Base Unit-Name</value>
+  </data>
+  <data name="VerificationReason" xml:space="preserve">
+    <value>Überprüfung Begründung</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>wählen</value>
   </data>
-  <data name="Days" xml:space="preserve">
-    <value>Tage</value>
-  </data>
-  <data name="ReorderUnitName" xml:space="preserve">
-    <value>Nachbestellung Einheit Name</value>
-  </data>
   <data name="UnitsOfMeasure" xml:space="preserve">
     <value>Maßeinheiten</value>
+  </data>
+  <data name="Tel" xml:space="preserve">
+    <value>Telefon</value>
   </data>
   <data name="ReferenceNumber" xml:space="preserve">
     <value>Referenz-Nr #</value>
@@ -270,53 +237,17 @@
   <data name="LeadTime" xml:space="preserve">
     <value>Vorlaufzeit</value>
   </data>
-  <data name="CompoundUnitsOfMeasure" xml:space="preserve">
-    <value>Verbindung Maßeinheiten</value>
-  </data>
-  <data name="From" xml:space="preserve">
-    <value>von</value>
+  <data name="Parties" xml:space="preserve">
+    <value>Parteien</value>
   </data>
   <data name="ValueDate" xml:space="preserve">
     <value>Wert Datum</value>
   </data>
-  <data name="CompoundItemDetails" xml:space="preserve">
-    <value>Verbindung Einzelteil-Details</value>
-  </data>
-  <data name="VerificationReason" xml:space="preserve">
-    <value>Überprüfung Begründung</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>anzeigen</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>drucken</value>
-  </data>
-  <data name="RunningTotal" xml:space="preserve">
-    <value>Laufende Summe</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>E-Mail</value>
-  </data>
-  <data name="BaseUnitName" xml:space="preserve">
-    <value>Base Unit-Name</value>
-  </data>
-  <data name="ItemId" xml:space="preserve">
-    <value>Artikel-Nummer</value>
-  </data>
-  <data name="OfficeCode" xml:space="preserve">
-    <value>Büro-Code</value>
-  </data>
-  <data name="Balance" xml:space="preserve">
-    <value>Balance</value>
-  </data>
-  <data name="Parties" xml:space="preserve">
-    <value>Parteien</value>
-  </data>
   <data name="Url" xml:space="preserve">
     <value>Uniform Resource Locator</value>
   </data>
-  <data name="PreferredSupplier" xml:space="preserve">
-    <value>Bevorzugter Lieferant</value>
+  <data name="Show" xml:space="preserve">
+    <value>anzeigen</value>
   </data>
   <data name="TranCode" xml:space="preserve">
     <value>Transaktionscode</value>
@@ -330,13 +261,88 @@
   <data name="Flag" xml:space="preserve">
     <value>Flagge</value>
   </data>
-  <data name="TransactionDate" xml:space="preserve">
-    <value>Transaktionsdatum</value>
+  <data name="PreferredSupplier" xml:space="preserve">
+    <value>Bevorzugter Lieferant</value>
   </data>
-  <data name="PartyTypes" xml:space="preserve">
-    <value>Partei-Typen</value>
+  <data name="TransactionStatement" xml:space="preserve">
+    <value>Transaktionserklärung</value>
   </data>
-  <data name="User" xml:space="preserve">
-    <value>Benutzer</value>
+  <data name="Print" xml:space="preserve">
+    <value>drucken</value>
+  </data>
+  <data name="CompoundItems" xml:space="preserve">
+    <value>Compound Artikel</value>
+  </data>
+  <data name="ItemCostPrices" xml:space="preserve">
+    <value>Artikelkosten Preise</value>
+  </data>
+  <data name="StockAdjustment" xml:space="preserve">
+    <value>Auf Einstellung</value>
+  </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>indem überprüft</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Item Code</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>bis Zur</value>
+  </data>
+  <data name="RunningTotal" xml:space="preserve">
+    <value>Laufende Summe</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Tage</value>
+  </data>
+  <data name="Book" xml:space="preserve">
+    <value>Buch</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Angebote</value>
+  </data>
+  <data name="EnteredBy" xml:space="preserve">
+    <value>eingetragen von</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Artikelname</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>Marke</value>
+  </data>
+  <data name="InventoryAdvice" xml:space="preserve">
+    <value>Inventar Beratung</value>
+  </data>
+  <data name="ItemSellingPrices" xml:space="preserve">
+    <value>Artikel Verkaufs Preise</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>vorbereitet auf</value>
+  </data>
+  <data name="ItemType" xml:space="preserve">
+    <value>Produkttyp</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>Büro</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>Anweisungsreferenz</value>
+  </data>
+  <data name="UnitId" xml:space="preserve">
+    <value>Einheiten- kennung</value>
+  </data>
+  <data name="Credit" xml:space="preserve">
+    <value>Kredit</value>
+  </data>
+  <data name="CompoundUnitsOfMeasure" xml:space="preserve">
+    <value>Verbindung Maßeinheiten</value>
+  </data>
+  <data name="CompoundItemDetails" xml:space="preserve">
+    <value>Verbindung Einzelteil-Details</value>
   </data>
 </root>

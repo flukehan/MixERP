@@ -20,7 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     CodeBehind="CurrentOfficeSalesByMonthWidget.ascx.cs"
     Inherits="MixERP.Net.Core.Modules.Sales.Widgets.CurrentOfficeSalesByMonthWidget" %>
 
-<div class="eight wide column widget">
+<div class="eight wide column widget" id="CurrentOfficeSalesByMonthWidget">
     <div class="ui segment">
         <h2 class="ui purple header">
             <asp:Literal runat="server" ID="TitleLiteral" />

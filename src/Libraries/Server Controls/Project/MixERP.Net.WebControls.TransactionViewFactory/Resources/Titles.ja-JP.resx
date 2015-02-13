@@ -117,41 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Reject" xml:space="preserve">
-    <value>拒否する</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>選択する</value>
-  </data>
-  <data name="Office" xml:space="preserve">
-    <value>オフィス</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>ステートメントリファレンス</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>ショー</value>
-  </data>
-  <data name="TranId" xml:space="preserve">
-    <value>トランザクション識別子</value>
-  </data>
-  <data name="VerifiedOn" xml:space="preserve">
-    <value>確認済みで、</value>
-  </data>
-  <data name="Book" xml:space="preserve">
-    <value>ブック</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>ステータス</value>
-  </data>
   <data name="Flag" xml:space="preserve">
     <value>フラグ</value>
   </data>
   <data name="AddNew" xml:space="preserve">
     <value>新しい追加</value>
   </data>
-  <data name="TransactionTimestamp" xml:space="preserve">
-    <value>トランザクションタイムスタンプ</value>
+  <data name="Reject" xml:space="preserve">
+    <value>拒否する</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>承認する</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>選択する</value>
+  </data>
+  <data name="VerifiedOn" xml:space="preserve">
+    <value>確認済みで、</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>ステートメントリファレンス</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>アクション</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>リファレンス＃</value>
+  </data>
+  <data name="TranId" xml:space="preserve">
+    <value>トランザクション識別子</value>
+  </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>によって検証</value>
   </data>
   <data name="PostedBy" xml:space="preserve">
     <value>投稿者</value>
@@ -159,28 +156,31 @@
   <data name="Reason" xml:space="preserve">
     <value>理由</value>
   </data>
-  <data name="TranCode" xml:space="preserve">
-    <value>トランザクションコード</value>
-  </data>
-  <data name="Actions" xml:space="preserve">
-    <value>アクション</value>
-  </data>
-  <data name="VerifiedBy" xml:space="preserve">
-    <value>によって検証</value>
-  </data>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>リファレンス＃</value>
-  </data>
   <data name="Print" xml:space="preserve">
     <value>印刷</value>
   </data>
-  <data name="Approve" xml:space="preserve">
-    <value>承認する</value>
+  <data name="Office" xml:space="preserve">
+    <value>オフィス</value>
+  </data>
+  <data name="TranCode" xml:space="preserve">
+    <value>トランザクションコード</value>
+  </data>
+  <data name="TransactionTimestamp" xml:space="preserve">
+    <value>トランザクションタイムスタンプ</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>イド</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>ステータス</value>
+  </data>
   <data name="ValueDate" xml:space="preserve">
     <value>実行日</value>
+  </data>
+  <data name="Book" xml:space="preserve">
+    <value>ブック</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>ショー</value>
   </data>
 </root>

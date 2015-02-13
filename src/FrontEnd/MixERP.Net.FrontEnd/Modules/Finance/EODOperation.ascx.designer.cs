@@ -13,30 +13,12 @@ namespace MixERP.Net.Core.Modules.Finance {
     public partial class EODOperation {
         
         /// <summary>
-        /// ValueDateLiteral control.
+        /// Placeholder1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ValueDateLiteral;
-        
-        /// <summary>
-        /// InitializeButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton InitializeButton;
-        
-        /// <summary>
-        /// PerformEODButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton PerformEODButton;
+        protected global::System.Web.UI.WebControls.PlaceHolder Placeholder1;
     }
 }

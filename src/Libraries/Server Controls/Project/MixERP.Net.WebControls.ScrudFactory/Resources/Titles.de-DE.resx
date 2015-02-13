@@ -117,100 +117,115 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Use" xml:space="preserve">
-    <value>Verwendung</value>
+  <data name="RequiredFieldDetails" xml:space="preserve">
+    <value>Die mit Stern (*) gekennzeichneten Felder sind Pflichtfelder.</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Rückgängig Machen</value>
+  <data name="UnknownError" xml:space="preserve">
+    <value>Operation fehlgeschlagen aufgrund eines unbekannten Fehlers.</value>
   </data>
-  <data name="FirstPage" xml:space="preserve">
-    <value>erste Seite</value>
-  </data>
-  <data name="PageN" xml:space="preserve">
-    <value>Seite {0}</value>
-  </data>
-  <data name="ShowCompact" xml:space="preserve">
-    <value>Compact anzeigen</value>
-  </data>
-  <data name="InvalidDate" xml:space="preserve">
-    <value>Dies ist kein gültiges Datum aus.</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>drucken</value>
-  </data>
-  <data name="No" xml:space="preserve">
-    <value>keine</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Speichern</value>
-  </data>
-  <data name="PreviousPage" xml:space="preserve">
-    <value>Vorherige Seite</value>
-  </data>
-  <data name="OnlyNumbersAllowed" xml:space="preserve">
-    <value>Bitte geben Sie eine gültige Zahl.</value>
-  </data>
-  <data name="TableSchemaEmptyExceptionMessage" xml:space="preserve">
-    <value>Die Eigenschaft "Table 'kann nicht leer bleiben.</value>
-  </data>
-  <data name="InvalidImage" xml:space="preserve">
-    <value>Dies ist kein gültiges Bild.</value>
-  </data>
-  <data name="TableEmptyExceptionMessage" xml:space="preserve">
-    <value>Die Eigenschaft "Tabelle" kann nicht leer bleiben.</value>
-  </data>
-  <data name="AccessIsDenied" xml:space="preserve">
+  <data name="AccessDenied" xml:space="preserve">
     <value>Zugriff wird verweigert.</value>
-  </data>
-  <data name="LastPage" xml:space="preserve">
-    <value>Letzte Seite</value>
-  </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>Neu hinzufügen</value>
-  </data>
-  <data name="EditSelected" xml:space="preserve">
-    <value>Ausgewählte bearbeiten</value>
-  </data>
-  <data name="AreYouSure" xml:space="preserve">
-    <value>Sind Sie sicher, Sie wissen, was du tust?</value>
-  </data>
-  <data name="NextPage" xml:space="preserve">
-    <value>Nächste Seite</value>
-  </data>
-  <data name="Reset" xml:space="preserve">
-    <value>rücksetzen</value>
   </data>
   <data name="DeleteSelected" xml:space="preserve">
     <value>Ausgewählte löschen</value>
   </data>
-  <data name="RequiredField" xml:space="preserve">
-    <value>Dies ist ein Pflichtfeld.</value>
-  </data>
-  <data name="TaskCompletedSuccessfully" xml:space="preserve">
-    <value>Die Aufgabe wurde erfolgreich abgeschlossen.</value>
-  </data>
-  <data name="Go" xml:space="preserve">
-    <value>gehen</value>
-  </data>
-  <data name="ShowAll" xml:space="preserve">
-    <value>alle anzeigen</value>
-  </data>
-  <data name="RequiredFieldDetails" xml:space="preserve">
-    <value>Die mit Stern (*) gekennzeichneten Felder sind Pflichtfelder.</value>
-  </data>
   <data name="NothingSelected" xml:space="preserve">
     <value>Nichts ausgewählt.</value>
   </data>
-  <data name="Select" xml:space="preserve">
-    <value>wählen</value>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Dies ist ein Pflichtfeld.</value>
   </data>
-  <data name="RequiredFieldIndicator" xml:space="preserve">
-    <value>*</value>
+  <data name="ShowCompact" xml:space="preserve">
+    <value>Compact anzeigen</value>
+  </data>
+  <data name="TableSchemaEmptyExceptionMessage" xml:space="preserve">
+    <value>Die Eigenschaft "Table 'kann nicht leer bleiben.</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>keine</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>drucken</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>rücksetzen</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Sind Sie sicher, Sie wissen, was du tust?</value>
   </data>
   <data name="KeyColumnEmptyExceptionMessage" xml:space="preserve">
     <value>Die Eigenschaft "KeyColumn 'kann nicht leer bleiben.</value>
   </data>
-  <data name="UnknownError" xml:space="preserve">
-    <value>Operation fehlgeschlagen aufgrund eines unbekannten Fehlers.</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>Rückgängig Machen</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>wählen</value>
+  </data>
+  <data name="ShowAll" xml:space="preserve">
+    <value>alle anzeigen</value>
+  </data>
+  <data name="FirstPage" xml:space="preserve">
+    <value>erste Seite</value>
+  </data>
+  <data name="ViewEmptyExceptionMessage" xml:space="preserve">
+    <value>Het pand 'View' kan niet leeg worden gelaten.</value>
+  </data>
+  <data name="Go" xml:space="preserve">
+    <value>gehen</value>
+  </data>
+  <data name="TaskCompletedSuccessfully" xml:space="preserve">
+    <value>Die Aufgabe wurde erfolgreich abgeschlossen.</value>
+  </data>
+  <data name="InvalidImage" xml:space="preserve">
+    <value>Dies ist kein gültiges Bild.</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>Neu hinzufügen</value>
+  </data>
+  <data name="OnlyNumbersAllowed" xml:space="preserve">
+    <value>Bitte geben Sie eine gültige Zahl.</value>
+  </data>
+  <data name="TableEmptyExceptionMessage" xml:space="preserve">
+    <value>Die Eigenschaft "Tabelle" kann nicht leer bleiben.</value>
+  </data>
+  <data name="LastPage" xml:space="preserve">
+    <value>Letzte Seite</value>
+  </data>
+  <data name="InvalidDate" xml:space="preserve">
+    <value>Dies ist kein gültiges Datum aus.</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>ja</value>
+  </data>
+  <data name="ViewSchemaEmptyExceptionMessage" xml:space="preserve">
+    <value>Het pand 'ViewSchema' kan niet leeg worden gelaten.</value>
+  </data>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>Zugriff wird verweigert.</value>
+  </data>
+  <data name="NextPage" xml:space="preserve">
+    <value>Nächste Seite</value>
+  </data>
+  <data name="YesNo" xml:space="preserve">
+    <value>Yes, No</value>
+  </data>
+  <data name="PageN" xml:space="preserve">
+    <value>Seite {0}</value>
+  </data>
+  <data name="Use" xml:space="preserve">
+    <value>Verwendung</value>
+  </data>
+  <data name="EditSelected" xml:space="preserve">
+    <value>Ausgewählte bearbeiten</value>
+  </data>
+  <data name="PreviousPage" xml:space="preserve">
+    <value>Vorherige Seite</value>
+  </data>
+  <data name="RequiredFieldIndicator" xml:space="preserve">
+    <value>*</value>
   </data>
 </root>

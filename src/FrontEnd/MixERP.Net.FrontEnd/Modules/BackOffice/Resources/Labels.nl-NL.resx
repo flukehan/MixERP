@@ -120,14 +120,14 @@
   <data name="ClickHereToDownload" xml:space="preserve">
     <value>Klik hier om te downloaden.</value>
   </data>
+  <data name="OpeningInventoryAlreadyEntered" xml:space="preserve">
+    <value>Het openen van de inventaris heeft al voor deze functie is ingevoerd.</value>
+  </data>
   <data name="DatabaseBackupSuccessful" xml:space="preserve">
     <value>De database back-up was succesvol.</value>
   </data>
   <data name="NumRowsAffected" xml:space="preserve">
     <value>{0} rijen beïnvloed.</value>
-  </data>
-  <data name="OpeningInventoryAlreadyEntered" xml:space="preserve">
-    <value>Het openen van de inventaris heeft al voor deze functie is ingevoerd.</value>
   </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>De taak werd met succes afgerond.</value>

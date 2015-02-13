@@ -18,7 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SalesByOfficeWidget.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Widgets.SalesByOfficeWidget" %>
 
-<div class="eight wide column widget">
+<div class="eight wide column widget" id="SalesByOfficeWidget">
     <div class="ui segment">
         <h2 class="ui purple header">
             <asp:Literal runat="server" ID="TitleLiteral" />

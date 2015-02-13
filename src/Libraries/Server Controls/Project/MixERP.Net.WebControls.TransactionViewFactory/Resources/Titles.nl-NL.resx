@@ -117,70 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="StatementReference" xml:space="preserve">
-    <value>verklaring verwijzing</value>
-  </data>
-  <data name="Reason" xml:space="preserve">
-    <value>reden</value>
-  </data>
-  <data name="TranId" xml:space="preserve">
-    <value>identifier transactie</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>kiezen</value>
-  </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>valutadatum</value>
-  </data>
-  <data name="Book" xml:space="preserve">
-    <value>boek</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>toestand</value>
+  <data name="Approve" xml:space="preserve">
+    <value>goedkeuren</value>
   </data>
   <data name="Flag" xml:space="preserve">
     <value>vlag</value>
   </data>
-  <data name="Approve" xml:space="preserve">
-    <value>goedkeuren</value>
-  </data>
   <data name="AddNew" xml:space="preserve">
     <value>Nieuwe toevoegen</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>afdruk</value>
-  </data>
-  <data name="Actions" xml:space="preserve">
-    <value>acties</value>
-  </data>
-  <data name="PostedBy" xml:space="preserve">
-    <value>geplaatst door</value>
-  </data>
-  <data name="TransactionTimestamp" xml:space="preserve">
-    <value>transactie Tijdstempel</value>
-  </data>
-  <data name="Office" xml:space="preserve">
-    <value>kantoor</value>
-  </data>
-  <data name="VerifiedBy" xml:space="preserve">
-    <value>geverifieerd door</value>
-  </data>
-  <data name="VerifiedOn" xml:space="preserve">
-    <value>geverifieerd op</value>
-  </data>
-  <data name="TranCode" xml:space="preserve">
-    <value>transactiecode</value>
   </data>
   <data name="Reject" xml:space="preserve">
     <value>verwerpen</value>
   </data>
-  <data name="Show" xml:space="preserve">
-    <value>tonen</value>
+  <data name="VerifiedOn" xml:space="preserve">
+    <value>geverifieerd op</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>acties</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>verklaring verwijzing</value>
+  </data>
+  <data name="PostedBy" xml:space="preserve">
+    <value>geplaatst door</value>
+  </data>
+  <data name="TranId" xml:space="preserve">
+    <value>identifier transactie</value>
   </data>
   <data name="ReferenceNumber" xml:space="preserve">
     <value>verwijzing #</value>
   </data>
-  <data name="Id" xml:space="preserve">
-    <value>Id</value>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>geverifieerd door</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>kantoor</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>afdruk</value>
+  </data>
+  <data name="TranCode" xml:space="preserve">
+    <value>transactiecode</value>
+  </data>
+  <data name="TransactionTimestamp" xml:space="preserve">
+    <value>transactie Tijdstempel</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>reden</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>toestand</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>valutadatum</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>kiezen</value>
+  </data>
+  <data name="Book" xml:space="preserve">
+    <value>boek</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>tonen</value>
   </data>
 </root>

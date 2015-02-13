@@ -117,19 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DaysLowerCase" xml:space="preserve">
-    <value>日数</value>
-  </data>
-  <data name="TaskCompletedSuccessfully" xml:space="preserve">
-    <value>タスクが正常に完了した。</value>
-  </data>
   <data name="JustAMomentPlease" xml:space="preserve">
     <value>ちょっと待って、してください！</value>
   </data>
   <data name="UserGreeting" xml:space="preserve">
     <value>こんにちは{0}！</value>
   </data>
+  <data name="DaysLowerCase" xml:space="preserve">
+    <value>日数</value>
+  </data>
   <data name="YourPasswordWasChanged" xml:space="preserve">
     <value>あなたのパスワードが変更されました。</value>
+  </data>
+  <data name="TaskCompletedSuccessfully" xml:space="preserve">
+    <value>タスクが正常に完了した。</value>
   </data>
 </root>

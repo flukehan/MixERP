@@ -307,6 +307,28 @@ namespace MixERP.Net.Entities.Core
 
     }
 
+    [TableName("core.widgets")]
+    [PrimaryKey("widget_id")]
+    [ExplicitColumns]
+    public class Widget : PetaPocoDB.Record<Widget> 
+    {
+        [Column("widget_id")] 
+        public int WidgetId { get; set; }
+
+        [Column("widget_name")] 
+        public string WidgetName { get; set; }
+
+        [Column("widget_source")] 
+        public string WidgetSource { get; set; }
+
+        [Column("row_number")] 
+        public int RowNumber { get; set; }
+
+        [Column("column_number")] 
+        public int ColumnNumber { get; set; }
+
+    }
+
     [TableName("core.menu_locale")]
     [PrimaryKey("menu_locale_id")]
     [ExplicitColumns]
@@ -1122,7 +1144,7 @@ namespace MixERP.Net.Entities.Core
         public int SalesTaxExemptDetailId { get; set; }
 
         [Column("sales_tax_exempt_id")] 
-        public int? SalesTaxExemptId { get; set; }
+        public int SalesTaxExemptId { get; set; }
 
         [Column("entity_id")] 
         public int? EntityId { get; set; }
@@ -1810,8 +1832,8 @@ namespace MixERP.Net.Entities.Core
         [Column("account_id")] 
         public long? AccountId { get; set; }
 
-        [Column("account_master_code")] 
-        public string AccountMasterCode { get; set; }
+        [Column("account_master")] 
+        public string AccountMaster { get; set; }
 
         [Column("account_number")] 
         public string AccountNumber { get; set; }
@@ -1819,14 +1841,20 @@ namespace MixERP.Net.Entities.Core
         [Column("external_code")] 
         public string ExternalCode { get; set; }
 
+        [Column("currency")] 
+        public string Currency { get; set; }
+
         [Column("account_name")] 
         public string AccountName { get; set; }
+
+        [Column("description")] 
+        public string Description { get; set; }
 
         [Column("confidential")] 
         public bool? Confidential { get; set; }
 
-        [Column("description")] 
-        public string Description { get; set; }
+        [Column("is_transaction_node")] 
+        public bool? IsTransactionNode { get; set; }
 
         [Column("sys_type")] 
         public bool? SysType { get; set; }
@@ -1834,8 +1862,23 @@ namespace MixERP.Net.Entities.Core
         [Column("parent")] 
         public string Parent { get; set; }
 
-        [Column("has_child")] 
-        public bool? HasChild { get; set; }
+    }
+
+    [TableName("core.ageing_slab_scrud_view")]
+    [ExplicitColumns]
+    public class AgeingSlabScrudView : PetaPocoDB.Record<AgeingSlabScrudView> 
+    {
+        [Column("ageing_slab_id")] 
+        public int? AgeingSlabId { get; set; }
+
+        [Column("ageing_slab_name")] 
+        public string AgeingSlabName { get; set; }
+
+        [Column("from_days")] 
+        public int? FromDays { get; set; }
+
+        [Column("to_days")] 
+        public int? ToDays { get; set; }
 
     }
 
@@ -2115,6 +2158,24 @@ namespace MixERP.Net.Entities.Core
 
         [Column("ends_on")] 
         public DateTime? EndsOn { get; set; }
+
+    }
+
+    [TableName("core.flag_type_scrud_view")]
+    [ExplicitColumns]
+    public class FlagTypeScrudView : PetaPocoDB.Record<FlagTypeScrudView> 
+    {
+        [Column("flag_type_id")] 
+        public int? FlagTypeId { get; set; }
+
+        [Column("flag_type_name")] 
+        public string FlagTypeName { get; set; }
+
+        [Column("background_color")] 
+        public string BackgroundColor { get; set; }
+
+        [Column("foreground_color")] 
+        public string ForegroundColor { get; set; }
 
     }
 
@@ -2928,6 +2989,36 @@ namespace MixERP.Net.Entities.Core
 
     }
 
+    [TableName("core.state_sales_tax_scrud_view")]
+    [ExplicitColumns]
+    public class StateSalesTaxScrudView : PetaPocoDB.Record<StateSalesTaxScrudView> 
+    {
+        [Column("state_sales_tax_id")] 
+        public int? StateSalesTaxId { get; set; }
+
+        [Column("state_sales_tax_code")] 
+        public string StateSalesTaxCode { get; set; }
+
+        [Column("state_sales_tax_name")] 
+        public string StateSalesTaxName { get; set; }
+
+        [Column("state")] 
+        public string State { get; set; }
+
+        [Column("entity_name")] 
+        public string EntityName { get; set; }
+
+        [Column("industry_name")] 
+        public string IndustryName { get; set; }
+
+        [Column("item_group")] 
+        public string ItemGroup { get; set; }
+
+        [Column("rate")] 
+        public decimal? Rate { get; set; }
+
+    }
+
     [TableName("core.state_scrud_view")]
     [ExplicitColumns]
     public class StateScrudView : PetaPocoDB.Record<StateScrudView> 
@@ -3520,11 +3611,17 @@ namespace MixERP.Net.Entities.Core
         [Column("price_type_name")] 
         public string PriceTypeName { get; set; }
 
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
+    }
 
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
+    [TableName("core.rounding_method_selector_view")]
+    [ExplicitColumns]
+    public class RoundingMethodSelectorView : PetaPocoDB.Record<RoundingMethodSelectorView> 
+    {
+        [Column("rounding_method_code")] 
+        public string RoundingMethodCode { get; set; }
+
+        [Column("rounding_method_name")] 
+        public string RoundingMethodName { get; set; }
 
     }
 
@@ -3625,12 +3722,6 @@ namespace MixERP.Net.Entities.Core
         [Column("shipping_mail_type_name")] 
         public string ShippingMailTypeName { get; set; }
 
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
     }
 
     [TableName("core.shipping_package_shape_selector_view")]
@@ -3649,12 +3740,6 @@ namespace MixERP.Net.Entities.Core
         [Column("is_rectangular")] 
         public bool? IsRectangular { get; set; }
 
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
     }
 
     [TableName("core.supplier_selector_view")]
@@ -3666,6 +3751,12 @@ namespace MixERP.Net.Entities.Core
 
         [Column("party_type_id")] 
         public int? PartyTypeId { get; set; }
+
+        [Column("is_supplier")] 
+        public bool? IsSupplier { get; set; }
+
+        [Column("party_type")] 
+        public string PartyType { get; set; }
 
         [Column("party_code")] 
         public string PartyCode { get; set; }
@@ -3682,21 +3773,6 @@ namespace MixERP.Net.Entities.Core
         [Column("party_name")] 
         public string PartyName { get; set; }
 
-        [Column("date_of_birth")] 
-        public DateTime? DateOfBirth { get; set; }
-
-        [Column("entity_id")] 
-        public int? EntityId { get; set; }
-
-        [Column("industry_id")] 
-        public int? IndustryId { get; set; }
-
-        [Column("country_id")] 
-        public int? CountryId { get; set; }
-
-        [Column("state_id")] 
-        public int? StateId { get; set; }
-
         [Column("zip_code")] 
         public string ZipCode { get; set; }
 
@@ -3711,6 +3787,30 @@ namespace MixERP.Net.Entities.Core
 
         [Column("city")] 
         public string City { get; set; }
+
+        [Column("state")] 
+        public string State { get; set; }
+
+        [Column("country")] 
+        public string Country { get; set; }
+
+        [Column("allow_credit")] 
+        public bool? AllowCredit { get; set; }
+
+        [Column("maximum_credit_period")] 
+        public short? MaximumCreditPeriod { get; set; }
+
+        [Column("maximum_credit_amount")] 
+        public decimal? MaximumCreditAmount { get; set; }
+
+        [Column("pan_number")] 
+        public string PanNumber { get; set; }
+
+        [Column("sst_number")] 
+        public string SstNumber { get; set; }
+
+        [Column("cst_number")] 
+        public string CstNumber { get; set; }
 
         [Column("phone")] 
         public string Phone { get; set; }
@@ -3727,35 +3827,38 @@ namespace MixERP.Net.Entities.Core
         [Column("url")] 
         public string Url { get; set; }
 
-        [Column("pan_number")] 
-        public string PanNumber { get; set; }
-
-        [Column("sst_number")] 
-        public string SstNumber { get; set; }
-
-        [Column("cst_number")] 
-        public string CstNumber { get; set; }
-
-        [Column("currency_code")] 
-        public string CurrencyCode { get; set; }
-
-        [Column("allow_credit")] 
-        public bool? AllowCredit { get; set; }
-
-        [Column("maximum_credit_period")] 
-        public short? MaximumCreditPeriod { get; set; }
-
-        [Column("maximum_credit_amount")] 
-        public decimal? MaximumCreditAmount { get; set; }
-
         [Column("account_id")] 
         public long? AccountId { get; set; }
 
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
+        [Column("account_number")] 
+        public string AccountNumber { get; set; }
 
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
+        [Column("gl_head")] 
+        public string GlHead { get; set; }
+
+    }
+
+    [TableName("core.tax_base_amount_type_selector_view")]
+    [ExplicitColumns]
+    public class TaxBaseAmountTypeSelectorView : PetaPocoDB.Record<TaxBaseAmountTypeSelectorView> 
+    {
+        [Column("tax_base_amount_type_code")] 
+        public string TaxBaseAmountTypeCode { get; set; }
+
+        [Column("tax_base_amount_type_name")] 
+        public string TaxBaseAmountTypeName { get; set; }
+
+    }
+
+    [TableName("core.tax_rate_type_selector_view")]
+    [ExplicitColumns]
+    public class TaxRateTypeSelectorView : PetaPocoDB.Record<TaxRateTypeSelectorView> 
+    {
+        [Column("tax_rate_type_code")] 
+        public string TaxRateTypeCode { get; set; }
+
+        [Column("tax_rate_type_name")] 
+        public string TaxRateTypeName { get; set; }
 
     }
 
@@ -4772,6 +4875,33 @@ namespace MixERP.Net.Entities.Core
 
         [Column("audit_ts")] 
         public DateTime? AuditTs { get; set; }
+
+    }
+
+    [FunctionName("get_workflow_model")]
+    [ExplicitColumns]
+    public class DbGetWorkflowModelResult : PetaPocoDB.Record<DbGetWorkflowModelResult> 
+    {
+        [Column("flagged_transactions")] 
+        public string FlaggedTransactions { get; set; }
+
+        [Column("in_verification_stack")] 
+        public string InVerificationStack { get; set; }
+
+        [Column("auto_approved")] 
+        public string AutoApproved { get; set; }
+
+        [Column("approved")] 
+        public string Approved { get; set; }
+
+        [Column("rejected")] 
+        public string Rejected { get; set; }
+
+        [Column("closed")] 
+        public string Closed { get; set; }
+
+        [Column("withdrawn")] 
+        public string Withdrawn { get; set; }
 
     }
 

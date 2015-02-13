@@ -117,29 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="office" xml:space="preserve">
+    <value>bureau</value>
+  </data>
+  <data name="reference_number" xml:space="preserve">
+    <value>Numéro de référence</value>
+  </data>
+  <data name="party" xml:space="preserve">
+    <value>partie</value>
+  </data>
   <data name="actions" xml:space="preserve">
     <value>actes</value>
+  </data>
+  <data name="statement_reference" xml:space="preserve">
+    <value>déclaration de référence</value>
   </data>
   <data name="transaction_ts" xml:space="preserve">
     <value>transaction Timestamp</value>
   </data>
-  <data name="flag_foreground_color" xml:space="preserve">
-    <value>Drapeau Couleur de premier plan</value>
-  </data>
-  <data name="id" xml:space="preserve">
-    <value>identifiant</value>
-  </data>
-  <data name="office" xml:space="preserve">
-    <value>bureau</value>
-  </data>
-  <data name="amount" xml:space="preserve">
-    <value>montant</value>
-  </data>
-  <data name="user" xml:space="preserve">
-    <value>utilisateur</value>
-  </data>
-  <data name="reference_number" xml:space="preserve">
-    <value>Numéro de référence</value>
+  <data name="flag_background_color" xml:space="preserve">
+    <value>Drapeau Couleur de fond</value>
   </data>
   <data name="currency" xml:space="preserve">
     <value>monnaie</value>
@@ -147,10 +144,16 @@
   <data name="value_date" xml:space="preserve">
     <value>date de valeur</value>
   </data>
-  <data name="statement_reference" xml:space="preserve">
-    <value>déclaration de référence</value>
+  <data name="amount" xml:space="preserve">
+    <value>montant</value>
   </data>
-  <data name="party" xml:space="preserve">
-    <value>partie</value>
+  <data name="user" xml:space="preserve">
+    <value>utilisateur</value>
+  </data>
+  <data name="flag_foreground_color" xml:space="preserve">
+    <value>Drapeau Couleur de premier plan</value>
+  </data>
+  <data name="id" xml:space="preserve">
+    <value>identifiant</value>
   </data>
 </root>

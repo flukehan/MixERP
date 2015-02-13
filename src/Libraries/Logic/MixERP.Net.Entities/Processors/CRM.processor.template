@@ -570,6 +570,7 @@ class PostGreSqlSchemaReader : SchemaReader
 
             case "time":
             case "timetz":
+            case "timestamp with time zone":
             case "timestamp":
             case "timestamptz":    
             case "date":    

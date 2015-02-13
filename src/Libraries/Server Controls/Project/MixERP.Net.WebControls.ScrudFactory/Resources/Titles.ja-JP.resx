@@ -117,95 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="No" xml:space="preserve">
-    <value>ノー</value>
-  </data>
-  <data name="FirstPage" xml:space="preserve">
-    <value>先頭ページ</value>
-  </data>
-  <data name="PageN" xml:space="preserve">
-    <value>ページ{0}</value>
-  </data>
-  <data name="ShowCompact" xml:space="preserve">
-    <value>ショーコンパクト</value>
-  </data>
-  <data name="InvalidDate" xml:space="preserve">
-    <value>これは有効な日付ではありません。</value>
-  </data>
-  <data name="PreviousPage" xml:space="preserve">
-    <value>前ページ</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>印刷</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>キャンセル</value>
-  </data>
-  <data name="TableSchemaEmptyExceptionMessage" xml:space="preserve">
-    <value>プロパティ 'テーブルスキーマは、「空のままにすることはできません。</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>保存</value>
-  </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>新しい追加</value>
-  </data>
-  <data name="LastPage" xml:space="preserve">
-    <value>最終ページ</value>
-  </data>
-  <data name="OnlyNumbersAllowed" xml:space="preserve">
-    <value>有効な番号を入力してください。</value>
-  </data>
-  <data name="RequiredFieldIndicator" xml:space="preserve">
-    <value>*</value>
-  </data>
-  <data name="EditSelected" xml:space="preserve">
-    <value>編集選択</value>
-  </data>
-  <data name="AreYouSure" xml:space="preserve">
-    <value>あなたは何をやっている知っているあなたはよろしいですか？</value>
-  </data>
-  <data name="NextPage" xml:space="preserve">
-    <value>次のページへ</value>
-  </data>
-  <data name="Reset" xml:space="preserve">
-    <value>リセット</value>
-  </data>
-  <data name="AccessIsDenied" xml:space="preserve">
+  <data name="AccessDenied" xml:space="preserve">
     <value>アクセスが拒否されました。</value>
-  </data>
-  <data name="ViewEmptyExceptionMessage" xml:space="preserve">
-    <value>プロパティ '表示'を空のままにすることはできません。</value>
-  </data>
-  <data name="Go" xml:space="preserve">
-    <value>行く</value>
-  </data>
-  <data name="Use" xml:space="preserve">
-    <value>使用</value>
-  </data>
-  <data name="InvalidImage" xml:space="preserve">
-    <value>これは有効なイメージではありません。</value>
-  </data>
-  <data name="RequiredField" xml:space="preserve">
-    <value>これは、必須フィールドです。</value>
-  </data>
-  <data name="TaskCompletedSuccessfully" xml:space="preserve">
-    <value>タスクが正常に完了した。</value>
-  </data>
-  <data name="TableEmptyExceptionMessage" xml:space="preserve">
-    <value>プロパティ '表」は空のままにすることはできません。</value>
-  </data>
-  <data name="ShowAll" xml:space="preserve">
-    <value>すべて表示</value>
-  </data>
-  <data name="ViewSchemaEmptyExceptionMessage" xml:space="preserve">
-    <value>プロパティ 'ビュースキーマは、「空のままにすることはできません。</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>選択する</value>
-  </data>
-  <data name="RequiredFieldDetails" xml:space="preserve">
-    <value>アスタリスク（*）の付いたフィールドは必須です。</value>
   </data>
   <data name="DeleteSelected" xml:space="preserve">
     <value>選択項目の削除]</value>
@@ -213,13 +126,106 @@
   <data name="NothingSelected" xml:space="preserve">
     <value>何も選択されていません。</value>
   </data>
-  <data name="Yes" xml:space="preserve">
-    <value>はい</value>
+  <data name="ShowCompact" xml:space="preserve">
+    <value>ショーコンパクト</value>
+  </data>
+  <data name="RequiredFieldDetails" xml:space="preserve">
+    <value>アスタリスク（*）の付いたフィールドは必須です。</value>
+  </data>
+  <data name="Go" xml:space="preserve">
+    <value>行く</value>
+  </data>
+  <data name="UnknownError" xml:space="preserve">
+    <value>操作が原因不明のエラーのために失敗しました。</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>ノー</value>
+  </data>
+  <data name="TableSchemaEmptyExceptionMessage" xml:space="preserve">
+    <value>プロパティ 'テーブルスキーマは、「空のままにすることはできません。</value>
+  </data>
+  <data name="FirstPage" xml:space="preserve">
+    <value>先頭ページ</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>印刷</value>
+  </data>
+  <data name="ShowAll" xml:space="preserve">
+    <value>すべて表示</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>あなたは何をやっている知っているあなたはよろしいですか？</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>キャンセル</value>
   </data>
   <data name="KeyColumnEmptyExceptionMessage" xml:space="preserve">
     <value>プロパティ 'キー列は、「空のままにすることはできません。</value>
   </data>
-  <data name="UnknownError" xml:space="preserve">
-    <value>操作が原因不明のエラーのために失敗しました。</value>
+  <data name="RequiredField" xml:space="preserve">
+    <value>これは、必須フィールドです。</value>
+  </data>
+  <data name="InvalidImage" xml:space="preserve">
+    <value>これは有効なイメージではありません。</value>
+  </data>
+  <data name="TaskCompletedSuccessfully" xml:space="preserve">
+    <value>タスクが正常に完了した。</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>リセット</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>新しい追加</value>
+  </data>
+  <data name="OnlyNumbersAllowed" xml:space="preserve">
+    <value>有効な番号を入力してください。</value>
+  </data>
+  <data name="TableEmptyExceptionMessage" xml:space="preserve">
+    <value>プロパティ '表」は空のままにすることはできません。</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>選択する</value>
+  </data>
+  <data name="InvalidDate" xml:space="preserve">
+    <value>これは有効な日付ではありません。</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>はい</value>
+  </data>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>アクセスが拒否されました。</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="LastPage" xml:space="preserve">
+    <value>最終ページ</value>
+  </data>
+  <data name="NextPage" xml:space="preserve">
+    <value>次のページへ</value>
+  </data>
+  <data name="PageN" xml:space="preserve">
+    <value>ページ{0}</value>
+  </data>
+  <data name="ViewSchemaEmptyExceptionMessage" xml:space="preserve">
+    <value>プロパティ 'ビュースキーマは、「空のままにすることはできません。</value>
+  </data>
+  <data name="YesNo" xml:space="preserve">
+    <value>Yes, No</value>
+  </data>
+  <data name="ViewEmptyExceptionMessage" xml:space="preserve">
+    <value>プロパティ '表示'を空のままにすることはできません。</value>
+  </data>
+  <data name="EditSelected" xml:space="preserve">
+    <value>編集選択</value>
+  </data>
+  <data name="Use" xml:space="preserve">
+    <value>使用</value>
+  </data>
+  <data name="RequiredFieldIndicator" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="PreviousPage" xml:space="preserve">
+    <value>前ページ</value>
   </data>
 </root>

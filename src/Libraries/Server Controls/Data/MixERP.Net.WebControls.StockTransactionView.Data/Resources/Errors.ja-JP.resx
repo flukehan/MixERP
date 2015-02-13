@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
-    <value>無効な子会社との取引ブック」」...</value>
+  <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
+    <value>無効な子会社との取引帳「購入配信」」</value>
   </data>
   <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
     <value>無効な子会社との取引帳「販売支払い」</value>
   </data>
-  <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
-    <value>無効な子会社との取引帳「購入配信」」</value>
-  </data>
   <data name="InvalidSubTranBookPurchaseReceipt" xml:space="preserve">
     <value>無効な子会社との取引帳」購入時の領収書」」</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
+    <value>無効な子会社との取引ブック」」...</value>
   </data>
 </root>

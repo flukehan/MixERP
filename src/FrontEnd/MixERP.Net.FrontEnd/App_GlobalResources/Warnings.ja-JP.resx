@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>彼の設立は、取引の投稿を許可していません。</value>
+  </data>
+  <data name="NotAuthorized" xml:space="preserve">
+    <value>この時点で、このリソースにアクセスする権限がありません。</value>
+  </data>
+  <data name="NothingSelected" xml:space="preserve">
+    <value>何も選択されていません。</value>
+  </data>
+  <data name="PleaseEnterCurrentPassword" xml:space="preserve">
+    <value>現在のパスワードを入力してください。</value>
+  </data>
+  <data name="PleaseEnterNewPassword" xml:space="preserve">
+    <value>新しいパスワードを入力してください。</value>
+  </data>
+  <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
+    <value>ユーザ識別子またはパスワードが正しくない。</value>
+  </data>
   <data name="AccessIsDenied" xml:space="preserve">
     <value>アクセスが拒否されました。</value>
   </data>
@@ -137,23 +155,5 @@
   </data>
   <data name="NewPasswordCannotBeOldPassword" xml:space="preserve">
     <value>新しいパスワードが古いパスワードにすることはできません。</value>
-  </data>
-  <data name="NotAuthorized" xml:space="preserve">
-    <value>この時点で、このリソースにアクセスする権限がありません。</value>
-  </data>
-  <data name="NothingSelected" xml:space="preserve">
-    <value>何も選択されていません。</value>
-  </data>
-  <data name="PleaseEnterCurrentPassword" xml:space="preserve">
-    <value>現在のパスワードを入力してください。</value>
-  </data>
-  <data name="PleaseEnterNewPassword" xml:space="preserve">
-    <value>新しいパスワードを入力してください。</value>
-  </data>
-  <data name="RestrictedTransactionMode" xml:space="preserve">
-    <value>彼の設立は、取引の投稿を許可していません。</value>
-  </data>
-  <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
-    <value>ユーザ識別子またはパスワードが正しくない。</value>
   </data>
 </root>

@@ -117,17 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NoRecordFound" xml:space="preserve">
-    <value>Désolé, aucun enregistrement n'a été trouvé.</value>
-  </data>
   <data name="DateMustBeGreaterThan" xml:space="preserve">
     <value>date non valide. Doit être supérieur à "{0}".</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Ce est un champ obligatoire.</value>
   </data>
   <data name="InvalidDate" xml:space="preserve">
     <value>Ce ne est pas une date valide.</value>
   </data>
-  <data name="RequiredField" xml:space="preserve">
-    <value>Ce est un champ obligatoire.</value>
+  <data name="NoRecordFound" xml:space="preserve">
+    <value>Désolé, aucun enregistrement n'a été trouvé.</value>
   </data>
   <data name="DateMustBeLessThan" xml:space="preserve">
     <value>Date non valide. Doit être inférieure à "{0}".</value>

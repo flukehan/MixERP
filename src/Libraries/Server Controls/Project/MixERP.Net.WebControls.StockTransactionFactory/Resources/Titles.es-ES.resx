@@ -117,53 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Salesperson" xml:space="preserve">
-    <value>Vendedor</value>
-  </data>
-  <data name="Discount" xml:space="preserve">
-    <value>descuento</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Guardar</value>
-  </data>
-  <data name="QuantityAbbreviated" xml:space="preserve">
-    <value>cantidad</value>
-  </data>
-  <data name="SelectParty" xml:space="preserve">
-    <value>Seleccionar partido</value>
-  </data>
-  <data name="Rate" xml:space="preserve">
-    <value>tarifa</value>
-  </data>
-  <data name="CashRepository" xml:space="preserve">
-    <value>Repositorio Efectivo</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>añadir</value>
-  </data>
-  <data name="AttachmentsPlus" xml:space="preserve">
-    <value>Adjuntos (+)</value>
-  </data>
-  <data name="ShippingAddress" xml:space="preserve">
-    <value>Dirección De Envío</value>
-  </data>
-  <data name="NonTaxableSales" xml:space="preserve">
-    <value>Ventas Tributables</value>
-  </data>
-  <data name="Unit" xml:space="preserve">
-    <value>unidad</value>
-  </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>Nombre del artículo</value>
+  <data name="ShippingCompany" xml:space="preserve">
+    <value>compañía naviera</value>
   </data>
   <data name="TaxForm" xml:space="preserve">
     <value>Formulario de impuestos</value>
   </data>
-  <data name="ReferenceNumberAbbreviated" xml:space="preserve">
-    <value>Referencia #</value>
+  <data name="GrandTotal" xml:space="preserve">
+    <value>Gran Total</value>
   </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>Fecha Valor</value>
+  <data name="ItemName" xml:space="preserve">
+    <value>Nombre del artículo</value>
+  </data>
+  <data name="SelectParty" xml:space="preserve">
+    <value>Seleccionar partido</value>
   </data>
   <data name="StatementReference" xml:space="preserve">
     <value>Declaración de Referencia</value>
@@ -171,14 +138,77 @@
   <data name="Tax" xml:space="preserve">
     <value>impuesto</value>
   </data>
+  <data name="Salesperson" xml:space="preserve">
+    <value>Vendedor</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>añadir</value>
+  </data>
   <data name="Action" xml:space="preserve">
     <value>acción</value>
+  </data>
+  <data name="CostCenter" xml:space="preserve">
+    <value>Centro de Costo</value>
+  </data>
+  <data name="Discount" xml:space="preserve">
+    <value>descuento</value>
+  </data>
+  <data name="SubTotal" xml:space="preserve">
+    <value>Total parcial</value>
+  </data>
+  <data name="SelectStore" xml:space="preserve">
+    <value>Seleccionar tienda</value>
   </data>
   <data name="CashTransaction" xml:space="preserve">
     <value>transacción en efectivo</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="ReferenceNumberAbbreviated" xml:space="preserve">
+    <value>Referencia #</value>
+  </data>
+  <data name="CashRepository" xml:space="preserve">
+    <value>Repositorio Efectivo</value>
+  </data>
+  <data name="NonTaxableSales" xml:space="preserve">
+    <value>Ventas Tributables</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>Fecha Valor</value>
+  </data>
+  <data name="QuantityAbbreviated" xml:space="preserve">
+    <value>cantidad</value>
+  </data>
+  <data name="ShippingAddress" xml:space="preserve">
+    <value>Dirección De Envío</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>unidad</value>
+  </data>
+  <data name="AttachmentsPlus" xml:space="preserve">
+    <value>Adjuntos (+)</value>
+  </data>
+  <data name="RunningTotal" xml:space="preserve">
+    <value>Asistente de total</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>cantidad</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>precio</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Código del artículo</value>
+  </data>
   <data name="PriceType" xml:space="preserve">
     <value>Precio Tipo</value>
+  </data>
+  <data name="CashRepositoryBalance" xml:space="preserve">
+    <value>Equilibrio Repositorio Efectivo</value>
+  </data>
+  <data name="SalesType" xml:space="preserve">
+    <value>Tipo de las ventas</value>
   </data>
   <data name="TaxTotal" xml:space="preserve">
     <value>Impuesto Total</value>
@@ -186,43 +216,13 @@
   <data name="Total" xml:space="preserve">
     <value>Total</value>
   </data>
-  <data name="SubTotal" xml:space="preserve">
-    <value>Total parcial</value>
-  </data>
-  <data name="CashRepositoryBalance" xml:space="preserve">
-    <value>Equilibrio Repositorio Efectivo</value>
-  </data>
-  <data name="Price" xml:space="preserve">
-    <value>precio</value>
-  </data>
   <data name="ShippingCharge" xml:space="preserve">
     <value>La carga de envío</value>
   </data>
+  <data name="Rate" xml:space="preserve">
+    <value>tarifa</value>
+  </data>
   <data name="TaxableSales" xml:space="preserve">
     <value>Ventas tributables</value>
-  </data>
-  <data name="SalesType" xml:space="preserve">
-    <value>Tipo de las ventas</value>
-  </data>
-  <data name="ShippingCompany" xml:space="preserve">
-    <value>compañía naviera</value>
-  </data>
-  <data name="CostCenter" xml:space="preserve">
-    <value>Centro de Costo</value>
-  </data>
-  <data name="SelectStore" xml:space="preserve">
-    <value>Seleccionar tienda</value>
-  </data>
-  <data name="RunningTotal" xml:space="preserve">
-    <value>Asistente de total</value>
-  </data>
-  <data name="GrandTotal" xml:space="preserve">
-    <value>Gran Total</value>
-  </data>
-  <data name="Amount" xml:space="preserve">
-    <value>cantidad</value>
-  </data>
-  <data name="ItemCode" xml:space="preserve">
-    <value>Código del artículo</value>
   </data>
 </root>

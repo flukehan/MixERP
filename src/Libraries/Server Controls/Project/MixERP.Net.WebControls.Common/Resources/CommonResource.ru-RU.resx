@@ -120,16 +120,16 @@
   <data name="DateMustBeGreaterThan" xml:space="preserve">
     <value>Неправильная дата. Должно быть больше, чем "{0}".</value>
   </data>
-  <data name="NoRecordFound" xml:space="preserve">
-    <value>К сожалению, никаких записей не найдено.</value>
-  </data>
-  <data name="InvalidDate" xml:space="preserve">
-    <value>Это не действительной датой.</value>
-  </data>
   <data name="RequiredField" xml:space="preserve">
     <value>Это обязательное поле.</value>
   </data>
   <data name="DateMustBeLessThan" xml:space="preserve">
     <value>Неправильная дата. Должна быть меньше, чем "{0}".</value>
+  </data>
+  <data name="InvalidDate" xml:space="preserve">
+    <value>Это не действительной датой.</value>
+  </data>
+  <data name="NoRecordFound" xml:space="preserve">
+    <value>К сожалению, никаких записей не найдено.</value>
   </data>
 </root>

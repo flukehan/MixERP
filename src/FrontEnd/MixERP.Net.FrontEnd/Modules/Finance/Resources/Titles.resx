@@ -496,4 +496,55 @@
   <data name="Verify" xml:space="preserve">
     <value>Verify</value>
   </data>
+  <data name="AboutInitializingDayEnd" xml:space="preserve">
+    <value>About Initializing Day End</value>
+  </data>
+  <data name="EndOfDayOperation" xml:space="preserve">
+    <value>End of Day Operation</value>
+  </data>
+  <data name="EODConsole" xml:space="preserve">
+    <value>EOD Console</value>
+  </data>
+  <data name="InitializeDayEnd" xml:space="preserve">
+    <value>Initialize Day End</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="PerformEODOperation" xml:space="preserve">
+    <value>Perform EOD Operation</value>
+  </data>
+  <data name="PerformingEODOperation" xml:space="preserve">
+    <value>Performing EOD Operation</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="ApprovedTransactions" xml:space="preserve">
+    <value>Approved Transactions</value>
+  </data>
+  <data name="AutomaticallyApprovedByWorkflow" xml:space="preserve">
+    <value>Automatically Approved by Workflow</value>
+  </data>
+  <data name="ClosedTransactions" xml:space="preserve">
+    <value>Closed Transactions</value>
+  </data>
+  <data name="InVerificationStack" xml:space="preserve">
+    <value>In Verification Stack</value>
+  </data>
+  <data name="RejectedTransactions" xml:space="preserve">
+    <value>Rejected Transactions</value>
+  </data>
+  <data name="WithdrawnTransactions" xml:space="preserve">
+    <value>Withdrawn Transactions</value>
+  </data>
+  <data name="Workflow" xml:space="preserve">
+    <value>Workflow</value>
+  </data>
+  <data name="FlaggedTransactions" xml:space="preserve">
+    <value>Flagged Transactions</value>
+  </data>
 </root>

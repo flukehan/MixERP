@@ -120,47 +120,50 @@
   <data name="AddNew" xml:space="preserve">
     <value>Agregar nuevo</value>
   </data>
-  <data name="FlagForegroundColor" xml:space="preserve">
-    <value>Bandera Color de primer plano</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>Mostrar</value>
-  </data>
-  <data name="Preview" xml:space="preserve">
-    <value>preestreno</value>
-  </data>
-  <data name="Amount" xml:space="preserve">
-    <value>cantidad</value>
-  </data>
-  <data name="TransactionTimestamp" xml:space="preserve">
-    <value>Marca de tiempo de transacción</value>
-  </data>
-  <data name="MergeBatchToSalesDelivery" xml:space="preserve">
-    <value>Fusionar lotes para entrega Ventas</value>
-  </data>
-  <data name="FlagBackgroundColor" xml:space="preserve">
-    <value>Fondo de la bandera del color</value>
-  </data>
-  <data name="Party" xml:space="preserve">
-    <value>partido</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>usuario</value>
+  <data name="MergeBatchToSalesOrder" xml:space="preserve">
+    <value>Fusionar lotes para órdenes de venta</value>
   </data>
   <data name="StatementReference" xml:space="preserve">
     <value>Declaración de Referencia</value>
   </data>
-  <data name="MergeBatchToSalesOrder" xml:space="preserve">
-    <value>Fusionar lotes para órdenes de venta</value>
+  <data name="Actions" xml:space="preserve">
+    <value>acciones</value>
   </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>Fecha Valor</value>
+  <data name="FlagBackgroundColor" xml:space="preserve">
+    <value>Fondo de la bandera del color</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>impresión</value>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>bandera</value>
+  </data>
+  <data name="PriceType" xml:space="preserve">
+    <value>Precio Tipo</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Número de referencia</value>
+  </data>
+  <data name="MergeBatchToSalesDelivery" xml:space="preserve">
+    <value>Fusionar lotes para entrega Ventas</value>
+  </data>
+  <data name="TransactionTimestamp" xml:space="preserve">
+    <value>Marca de tiempo de transacción</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Mostrar</value>
   </data>
   <data name="Office" xml:space="preserve">
     <value>oficina</value>
   </data>
-  <data name="MergeBatchToGRN" xml:space="preserve">
-    <value>Fusionar lotes de mercancías Nota</value>
+  <data name="FlagForegroundColor" xml:space="preserve">
+    <value>Bandera Color de primer plano</value>
+  </data>
+  <data name="Party" xml:space="preserve">
+    <value>partido</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>cantidad</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>identificación</value>
@@ -168,25 +171,22 @@
   <data name="Return" xml:space="preserve">
     <value>retorno</value>
   </data>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>Número de referencia</value>
+  <data name="User" xml:space="preserve">
+    <value>usuario</value>
   </data>
-  <data name="PriceType" xml:space="preserve">
-    <value>Precio Tipo</value>
-  </data>
-  <data name="Flag" xml:space="preserve">
-    <value>bandera</value>
-  </data>
-  <data name="Book" xml:space="preserve">
-    <value>libro</value>
-  </data>
-  <data name="Actions" xml:space="preserve">
-    <value>acciones</value>
+  <data name="MergeBatchToGRN" xml:space="preserve">
+    <value>Fusionar lotes de mercancías Nota</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>seleccionar</value>
   </data>
-  <data name="Print" xml:space="preserve">
-    <value>impresión</value>
+  <data name="Book" xml:space="preserve">
+    <value>libro</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>preestreno</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>Fecha Valor</value>
   </data>
 </root>

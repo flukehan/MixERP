@@ -117,26 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="lead_status_id" xml:space="preserve">
+    <value>Leadstatus Identifier</value>
+  </data>
+  <data name="lead_source_code" xml:space="preserve">
+    <value>Source Code leiden</value>
+  </data>
+  <data name="lead_status_code" xml:space="preserve">
+    <value>Lead Status Code</value>
+  </data>
   <data name="audit_ts" xml:space="preserve">
-    <value>Prüfungszeitstempel</value>
+    <value>audit Tijdstempel</value>
+  </data>
+  <data name="lead_status_name" xml:space="preserve">
+    <value>Leadstatus Naam</value>
   </data>
   <data name="opportunity_stage_name" xml:space="preserve">
     <value>Gelegenheid artiestennaam</value>
   </data>
-  <data name="Select" xml:space="preserve">
-    <value>kiezen</value>
-  </data>
   <data name="audit_user_id" xml:space="preserve">
-    <value>Audit User Identifier</value>
-  </data>
-  <data name="lead_status_id" xml:space="preserve">
-    <value>Leadstatus Identifier</value>
+    <value>Audit Gebruiker Identifier</value>
   </data>
   <data name="lead_source_id" xml:space="preserve">
     <value>Bron Identifier leiden</value>
   </data>
-  <data name="lead_status_name" xml:space="preserve">
-    <value>Leadstatus Naam</value>
+  <data name="Select" xml:space="preserve">
+    <value>kiezen</value>
   </data>
   <data name="opportunity_stage_id" xml:space="preserve">
     <value>Gelegenheid Stage Identifier</value>
@@ -146,11 +152,5 @@
   </data>
   <data name="opportunity_stage_code" xml:space="preserve">
     <value>Gelegenheid Stage Code</value>
-  </data>
-  <data name="lead_status_code" xml:space="preserve">
-    <value>Lead Status Code</value>
-  </data>
-  <data name="lead_source_code" xml:space="preserve">
-    <value>Source Code leiden</value>
   </data>
 </root>

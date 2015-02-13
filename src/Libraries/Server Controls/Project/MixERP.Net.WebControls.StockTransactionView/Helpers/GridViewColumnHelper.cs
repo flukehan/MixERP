@@ -88,18 +88,33 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Helpers
                 this.checkListAnchor.ID = "ChecklistAnchor";
                 this.checkListAnchor.ClientIDMode = ClientIDMode.Predictable;
                 this.checkListAnchor.Title = Labels.GoToChecklistWindow;
-                this.checkListAnchor.InnerHtml = "<img src='" + PageUtility.ResolveUrl("~/Resource/Icons/checklist-16.png") + "' />"; //Todo: embed these icons.
+
+                using (HtmlGenericControl icon = new HtmlGenericControl("i"))
+                {
+                    icon.Attributes.Add("class", "list icon");
+                    this.checkListAnchor.Controls.Add(icon);
+                }
 
                 this.printAnchor = new HtmlAnchor();
                 this.printAnchor.ID = "PrintAnchor";
                 this.printAnchor.ClientIDMode = ClientIDMode.Predictable;
                 this.printAnchor.Title = Titles.Print;
-                this.printAnchor.InnerHtml = "<img src='" + PageUtility.ResolveUrl("~/Resource/Icons/print-16.png") + "' />";
+                
+                using (HtmlGenericControl icon = new HtmlGenericControl("i"))
+                {
+                    icon.Attributes.Add("class", "print icon");
+                    this.printAnchor.Controls.Add(icon);
+                }
 
                 this.goToTopAnchor = new HtmlAnchor();
                 this.goToTopAnchor.Title = Labels.GoToTop;
                 this.goToTopAnchor.Attributes.Add("onclick", "window.scroll(0);");
-                this.goToTopAnchor.InnerHtml = "<img src='" + PageUtility.ResolveUrl("~/Resource/Icons/top-16.png") + "' />";
+
+                using (HtmlGenericControl icon = new HtmlGenericControl("i"))
+                {
+                    icon.Attributes.Add("class", "arrow up icon");
+                    this.goToTopAnchor.Controls.Add(icon);
+                }
 
                 container.Controls.Add(this.checkListAnchor);
                 container.Controls.Add(this.printAnchor);

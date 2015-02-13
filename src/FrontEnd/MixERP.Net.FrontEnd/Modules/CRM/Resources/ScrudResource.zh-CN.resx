@@ -117,23 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="lead_status_id" xml:space="preserve">
+    <value>铅状态标识</value>
+  </data>
+  <data name="lead_source_code" xml:space="preserve">
+    <value>导致源代码</value>
+  </data>
   <data name="audit_ts" xml:space="preserve">
     <value>审计时间戳</value>
+  </data>
+  <data name="lead_status_name" xml:space="preserve">
+    <value>铅状态名称</value>
+  </data>
+  <data name="lead_status_code" xml:space="preserve">
+    <value>铅状态代码</value>
   </data>
   <data name="opportunity_stage_name" xml:space="preserve">
     <value>机会阶段名称</value>
   </data>
-  <data name="audit_user_id" xml:space="preserve">
-    <value>审计用户标识符</value>
-  </data>
-  <data name="lead_status_id" xml:space="preserve">
-    <value>铅状态标识</value>
+  <data name="Select" xml:space="preserve">
+    <value>选择</value>
   </data>
   <data name="lead_source_id" xml:space="preserve">
     <value>铅源标识符</value>
   </data>
-  <data name="lead_status_name" xml:space="preserve">
-    <value>铅状态名称</value>
+  <data name="audit_user_id" xml:space="preserve">
+    <value>审计用户标识符</value>
   </data>
   <data name="opportunity_stage_id" xml:space="preserve">
     <value>机会阶段标识符</value>
@@ -143,14 +152,5 @@
   </data>
   <data name="opportunity_stage_code" xml:space="preserve">
     <value>机会阶段代码</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>选择</value>
-  </data>
-  <data name="lead_status_code" xml:space="preserve">
-    <value>铅状态代码</value>
-  </data>
-  <data name="lead_source_code" xml:space="preserve">
-    <value>导致源代码</value>
   </data>
 </root>

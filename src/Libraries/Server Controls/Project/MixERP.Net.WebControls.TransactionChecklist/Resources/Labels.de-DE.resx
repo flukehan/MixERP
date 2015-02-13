@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EmailBody" xml:space="preserve">
-    <value>&lt;h2&gt; Hallo, &lt;/ h2&gt; &lt;p&gt; Hier finden Sie das angehängte Dokument. &lt;/ p&gt; &lt;p&gt; Danke. &lt;br /&gt; MixERP &lt;/ p&gt;</value>
+  <data name="TransactionWithdrawalInformation" xml:space="preserve">
+    <value>Wenn Sie eine Transaktion zurückziehen, wird es nicht in die Workflow-Modul weitergeleitet. Das bedeutet, dass Sie Ihre Transaktionen zurückgenommen werden abgelehnt und bedürfen keiner weiteren Überprüfung. Allerdings werden Sie nicht in der Lage, diese Transaktion später unwithdraw sein.</value>
   </data>
-  <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
-    <value>Kann nicht zurücktreten Transaktion. Dies ist ein nicht gültiger Hauptbuch-Transaktion.</value>
+  <data name="TransactionClosedDetails" xml:space="preserve">
+    <value>Diese Transaktion wurde von {0} um {1} geschlossen. Grund: "{2}".</value>
+  </data>
+  <data name="TransactionWithdrawnDetails" xml:space="preserve">
+    <value>Diese Transaktion wurde von {0} um {1} zurückgezogen. Grund: "{2}".</value>
+  </data>
+  <data name="CannotWithdrawTransaction" xml:space="preserve">
+    <value>Kann nicht zurücktreten Transaktion.</value>
   </data>
   <data name="TransactionAutoApprovedDetails" xml:space="preserve">
     <value>Diese Transaktion wurde automatisch von {0} um {1} zugelassen.</value>
@@ -129,34 +135,28 @@
   <data name="TransactionAwaitingVerification" xml:space="preserve">
     <value>Diese Transaktion wird wartet auf Bestätigung eines Administrators.</value>
   </data>
-  <data name="TransactionWithdrawnDetails" xml:space="preserve">
-    <value>Diese Transaktion wurde von {0} um {1} zurückgezogen. Grund: "{2}".</value>
+  <data name="TransactionRejectedDetails" xml:space="preserve">
+    <value>Diese Transaktion wurde von {0} um {1} abgelehnt. Grund: "{2}".</value>
+  </data>
+  <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
+    <value>Kann nicht zurücktreten Transaktion. Dies ist ein nicht gültiger Hauptbuch-Transaktion.</value>
   </data>
   <data name="TransactionApprovedDetails" xml:space="preserve">
     <value>Diese Transaktion wurde von {0} um {1} zugelassen.</value>
   </data>
-  <data name="TransactionClosedDetails" xml:space="preserve">
-    <value>Diese Transaktion wurde von {0} um {1} geschlossen. Grund: "{2}".</value>
-  </data>
-  <data name="TransactionWithdrawnMessage" xml:space="preserve">
-    <value>Die Transaktion wurde erfolgreich zurückgezogen. Darüber hinaus wird diese Aktion die alle am und nach dem "{0}" erstellten Berichte beeinflussen.</value>
-  </data>
-  <data name="TransactionWithdrawalInformation" xml:space="preserve">
-    <value>Wenn Sie eine Transaktion zurückziehen, wird es nicht in die Workflow-Modul weitergeleitet. Das bedeutet, dass Sie Ihre Transaktionen zurückgenommen werden abgelehnt und bedürfen keiner weiteren Überprüfung. Allerdings werden Sie nicht in der Lage, diese Transaktion später unwithdraw sein.</value>
-  </data>
-  <data name="TransactionPostedSuccessfully" xml:space="preserve">
-    <value>Die Transaktion wurde erfolgreich gebucht.</value>
+  <data name="EmailSentConfirmation" xml:space="preserve">
+    <value>Eine E-Mail an {0} gesendet.</value>
   </data>
   <data name="ThisFieldIsRequired" xml:space="preserve">
     <value>Dieses Feld ist erforderlich.</value>
   </data>
-  <data name="EmailSentConfirmation" xml:space="preserve">
-    <value>Eine E-Mail an {0} gesendet.</value>
+  <data name="TransactionWithdrawnMessage" xml:space="preserve">
+    <value>Die Transaktion wurde erfolgreich zurückgezogen. Darüber hinaus wird diese Aktion die alle am und nach dem "{0}" erstellten Berichte beeinflussen.</value>
   </data>
-  <data name="TransactionRejectedDetails" xml:space="preserve">
-    <value>Diese Transaktion wurde von {0} um {1} abgelehnt. Grund: "{2}".</value>
+  <data name="EmailBody" xml:space="preserve">
+    <value>&lt;h2&gt; Hallo, &lt;/ h2&gt; &lt;p&gt; Hier finden Sie das angehängte Dokument. &lt;/ p&gt; &lt;p&gt; Danke. &lt;br /&gt; MixERP &lt;/ p&gt;</value>
   </data>
-  <data name="CannotWithdrawTransaction" xml:space="preserve">
-    <value>Kann nicht zurücktreten Transaktion.</value>
+  <data name="TransactionPostedSuccessfully" xml:space="preserve">
+    <value>Die Transaktion wurde erfolgreich gebucht.</value>
   </data>
 </root>

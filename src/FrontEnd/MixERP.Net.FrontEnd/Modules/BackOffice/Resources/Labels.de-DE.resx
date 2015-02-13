@@ -120,14 +120,14 @@
   <data name="ClickHereToDownload" xml:space="preserve">
     <value>Klicken Sie hier zum Download.</value>
   </data>
+  <data name="OpeningInventoryAlreadyEntered" xml:space="preserve">
+    <value>Anfangsbestand bereits für dieses Amt eingetragen.</value>
+  </data>
   <data name="DatabaseBackupSuccessful" xml:space="preserve">
     <value>Der Datenbank-Backup war erfolgreich.</value>
   </data>
   <data name="NumRowsAffected" xml:space="preserve">
     <value>{0} Zeilen betroffen.</value>
-  </data>
-  <data name="OpeningInventoryAlreadyEntered" xml:space="preserve">
-    <value>Anfangsbestand bereits für dieses Amt eingetragen.</value>
   </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>Die Aufgabe wurde erfolgreich abgeschlossen.</value>

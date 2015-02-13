@@ -117,86 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TaxTotal" xml:space="preserve">
-    <value>belasting totaal</value>
-  </data>
-  <data name="Salesperson" xml:space="preserve">
-    <value>verkoop persoon</value>
-  </data>
-  <data name="SubTotal" xml:space="preserve">
-    <value>subtotaal</value>
-  </data>
-  <data name="Discount" xml:space="preserve">
-    <value>korting</value>
-  </data>
-  <data name="SelectStore" xml:space="preserve">
-    <value>Selecteer winkel</value>
-  </data>
-  <data name="CashTransaction" xml:space="preserve">
-    <value>contante transactie</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>verklaring verwijzing</value>
-  </data>
-  <data name="ShippingAddress" xml:space="preserve">
-    <value>verzendadres</value>
-  </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>Naam van het punt</value>
-  </data>
-  <data name="SelectParty" xml:space="preserve">
-    <value>Kies een partij</value>
-  </data>
-  <data name="SalesType" xml:space="preserve">
-    <value>sales soort</value>
-  </data>
-  <data name="RunningTotal" xml:space="preserve">
-    <value>Voorlopig totaal</value>
-  </data>
-  <data name="TaxableSales" xml:space="preserve">
-    <value>belastbare verkoop</value>
-  </data>
-  <data name="CashRepository" xml:space="preserve">
-    <value>Cash Vindplaats</value>
-  </data>
-  <data name="QuantityAbbreviated" xml:space="preserve">
-    <value>hoeveelheid</value>
-  </data>
-  <data name="NonTaxableSales" xml:space="preserve">
-    <value>zonder BTW verkoop</value>
+  <data name="Add" xml:space="preserve">
+    <value>toevoegen</value>
   </data>
   <data name="TaxForm" xml:space="preserve">
     <value>Vorm van de belasting</value>
   </data>
-  <data name="AttachmentsPlus" xml:space="preserve">
-    <value>Bijlagen (+)</value>
+  <data name="GrandTotal" xml:space="preserve">
+    <value>algemeen totaal</value>
   </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>valutadatum</value>
+  <data name="ItemName" xml:space="preserve">
+    <value>Naam van het punt</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>verklaring verwijzing</value>
+  </data>
+  <data name="SelectParty" xml:space="preserve">
+    <value>Kies een partij</value>
+  </data>
+  <data name="Salesperson" xml:space="preserve">
+    <value>verkoop persoon</value>
   </data>
   <data name="Tax" xml:space="preserve">
     <value>belasting</value>
   </data>
-  <data name="Unit" xml:space="preserve">
-    <value>eenheid</value>
-  </data>
   <data name="Action" xml:space="preserve">
     <value>actie</value>
   </data>
-  <data name="Add" xml:space="preserve">
-    <value>toevoegen</value>
+  <data name="Discount" xml:space="preserve">
+    <value>korting</value>
   </data>
-  <data name="CashRepositoryBalance" xml:space="preserve">
-    <value>Cash Repository Balance</value>
+  <data name="CostCenter" xml:space="preserve">
+    <value>kostenplaats</value>
   </data>
-  <data name="PriceType" xml:space="preserve">
-    <value>Prijs Type</value>
-  </data>
-  <data name="Price" xml:space="preserve">
-    <value>prijs</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>totaal</value>
+  <data name="CashTransaction" xml:space="preserve">
+    <value>contante transactie</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Opslaan</value>
@@ -204,25 +159,70 @@
   <data name="ReferenceNumberAbbreviated" xml:space="preserve">
     <value>verwijzing #</value>
   </data>
-  <data name="ShippingCharge" xml:space="preserve">
-    <value>verzendkosten</value>
+  <data name="CashRepository" xml:space="preserve">
+    <value>Cash Vindplaats</value>
   </data>
-  <data name="Rate" xml:space="preserve">
-    <value>tarief</value>
+  <data name="ValueDate" xml:space="preserve">
+    <value>valutadatum</value>
   </data>
-  <data name="GrandTotal" xml:space="preserve">
-    <value>algemeen totaal</value>
+  <data name="QuantityAbbreviated" xml:space="preserve">
+    <value>hoeveelheid</value>
   </data>
-  <data name="ShippingCompany" xml:space="preserve">
-    <value>rederij</value>
+  <data name="Unit" xml:space="preserve">
+    <value>eenheid</value>
   </data>
-  <data name="ItemCode" xml:space="preserve">
-    <value>artikelcode</value>
+  <data name="AttachmentsPlus" xml:space="preserve">
+    <value>Bijlagen (+)</value>
+  </data>
+  <data name="ShippingAddress" xml:space="preserve">
+    <value>verzendadres</value>
+  </data>
+  <data name="RunningTotal" xml:space="preserve">
+    <value>Voorlopig totaal</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>bedrag</value>
   </data>
-  <data name="CostCenter" xml:space="preserve">
-    <value>kostenplaats</value>
+  <data name="NonTaxableSales" xml:space="preserve">
+    <value>zonder BTW verkoop</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>artikelcode</value>
+  </data>
+  <data name="PriceType" xml:space="preserve">
+    <value>Prijs Type</value>
+  </data>
+  <data name="ShippingCompany" xml:space="preserve">
+    <value>rederij</value>
+  </data>
+  <data name="SubTotal" xml:space="preserve">
+    <value>subtotaal</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>prijs</value>
+  </data>
+  <data name="CashRepositoryBalance" xml:space="preserve">
+    <value>Cash Repository Balance</value>
+  </data>
+  <data name="SelectStore" xml:space="preserve">
+    <value>Selecteer winkel</value>
+  </data>
+  <data name="SalesType" xml:space="preserve">
+    <value>sales soort</value>
+  </data>
+  <data name="TaxTotal" xml:space="preserve">
+    <value>belasting totaal</value>
+  </data>
+  <data name="ShippingCharge" xml:space="preserve">
+    <value>verzendkosten</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>totaal</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>tarief</value>
+  </data>
+  <data name="TaxableSales" xml:space="preserve">
+    <value>belastbare verkoop</value>
   </data>
 </root>

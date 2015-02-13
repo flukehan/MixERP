@@ -117,38 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="item_name" xml:space="preserve">
-    <value>Naam van het punt</value>
-  </data>
-  <data name="price" xml:space="preserve">
-    <value>prijs</value>
-  </data>
   <data name="tax" xml:space="preserve">
     <value>belasting</value>
   </data>
   <data name="total" xml:space="preserve">
     <value>totaal</value>
   </data>
-  <data name="discount" xml:space="preserve">
-    <value>korting</value>
-  </data>
-  <data name="item_id" xml:space="preserve">
-    <value>Item Identifier</value>
-  </data>
-  <data name="sub_total" xml:space="preserve">
-    <value>Subtotaal</value>
-  </data>
   <data name="amount" xml:space="preserve">
-    <value>Höhe</value>
+    <value>bedrag</value>
   </data>
   <data name="unit_name" xml:space="preserve">
     <value>unit Naam</value>
   </data>
-  <data name="item_code" xml:space="preserve">
-    <value>Item Code</value>
+  <data name="item_name" xml:space="preserve">
+    <value>Naam van het punt</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>kiezen</value>
+  </data>
+  <data name="sub_total" xml:space="preserve">
+    <value>Subtotaal</value>
+  </data>
+  <data name="discount" xml:space="preserve">
+    <value>korting</value>
+  </data>
+  <data name="item_code" xml:space="preserve">
+    <value>Item Code</value>
+  </data>
+  <data name="price" xml:space="preserve">
+    <value>prijs</value>
+  </data>
+  <data name="item_id" xml:space="preserve">
+    <value>Item Identifier</value>
   </data>
   <data name="quantity" xml:space="preserve">
     <value>hoeveelheid</value>

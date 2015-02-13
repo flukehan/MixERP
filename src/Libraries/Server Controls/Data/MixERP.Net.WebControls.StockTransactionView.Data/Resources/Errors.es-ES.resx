@@ -120,11 +120,11 @@
   <data name="InvalidSubTranBookPurchaseDelivery" xml:space="preserve">
     <value>Inválido Transacciones Subsidiarios libro "Compra de Entrega"</value>
   </data>
-  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
-    <value>Transacciones Subsidiarios válida libro "de venta"</value>
-  </data>
   <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
     <value>Transacciones Subsidiarios no válidos libro "Cita de Compra"</value>
+  </data>
+  <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
+    <value>Transacciones Subsidiarios válida libro "de venta"</value>
   </data>
   <data name="InvalidSubTranBookPurchaseReceipt" xml:space="preserve">
     <value>Inválido Transacciones Subsidiarios libro "recibo de compra"</value>

@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DateErrorMessage" xml:space="preserve">
-    <value>选定的日期超出范围。</value>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>访问被拒绝。</value>
   </data>
   <data name="CannotCreateABackup" xml:space="preserve">
     <value>抱歉，无法在此时创建一个数据库备份。</value>
+  </data>
+  <data name="DateErrorMessage" xml:space="preserve">
+    <value>选定的日期超出范围。</value>
+  </data>
+  <data name="ComparePriceErrorMessage" xml:space="preserve">
+    <value>以上的价格应低于价格。</value>
+  </data>
+  <data name="ConfigurationError" xml:space="preserve">
+    <value>无法继续任务。请更正配置问题。</value>
   </data>
   <data name="InvalidUser" xml:space="preserve">
     <value>无效的用户。</value>
@@ -129,16 +138,7 @@
   <data name="PasswordCannotBeEmpty" xml:space="preserve">
     <value>密码不能为空。</value>
   </data>
-  <data name="ComparePriceErrorMessage" xml:space="preserve">
-    <value>以上的价格应低于价格。</value>
-  </data>
   <data name="NoFileSpecified" xml:space="preserve">
     <value>没有文件指定。</value>
-  </data>
-  <data name="ConfigurationError" xml:space="preserve">
-    <value>无法继续任务。请更正配置问题。</value>
-  </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>访问被拒绝。</value>
   </data>
 </root>

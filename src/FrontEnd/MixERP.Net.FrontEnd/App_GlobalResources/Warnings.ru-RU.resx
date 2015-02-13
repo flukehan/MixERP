@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Это учреждение не позволяет объявление транзакций.</value>
+  </data>
+  <data name="NotAuthorized" xml:space="preserve">
+    <value>Вы не авторизованы для доступа к этой ресурсы в настоящее время.</value>
+  </data>
+  <data name="NothingSelected" xml:space="preserve">
+    <value>Ничего не выбрано.</value>
+  </data>
+  <data name="PleaseEnterCurrentPassword" xml:space="preserve">
+    <value>Пожалуйста, введите ваш текущий пароль.</value>
+  </data>
+  <data name="PleaseEnterNewPassword" xml:space="preserve">
+    <value>Пожалуйста, введите новый пароль.</value>
+  </data>
+  <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
+    <value>Идентификатор пользователя или пароль неверен.</value>
+  </data>
   <data name="AccessIsDenied" xml:space="preserve">
     <value>Отказано в доступе.</value>
   </data>
@@ -137,23 +155,5 @@
   </data>
   <data name="NewPasswordCannotBeOldPassword" xml:space="preserve">
     <value>Новый пароль не может быть старый пароль.</value>
-  </data>
-  <data name="NotAuthorized" xml:space="preserve">
-    <value>Вы не авторизованы для доступа к этой ресурсы в настоящее время.</value>
-  </data>
-  <data name="NothingSelected" xml:space="preserve">
-    <value>Ничего не выбрано.</value>
-  </data>
-  <data name="PleaseEnterCurrentPassword" xml:space="preserve">
-    <value>Пожалуйста, введите ваш текущий пароль.</value>
-  </data>
-  <data name="PleaseEnterNewPassword" xml:space="preserve">
-    <value>Пожалуйста, введите новый пароль.</value>
-  </data>
-  <data name="RestrictedTransactionMode" xml:space="preserve">
-    <value>Это учреждение не позволяет объявление транзакций.</value>
-  </data>
-  <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
-    <value>Идентификатор пользователя или пароль неверен.</value>
   </data>
 </root>

@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>L'accès est refusé.</value>
+  </data>
   <data name="DateErrorMessage" xml:space="preserve">
     <value>La date sélectionnée est hors de portée.</value>
+  </data>
+  <data name="ComparePriceErrorMessage" xml:space="preserve">
+    <value>Prix à partir devrait être inférieur au prix de.</value>
   </data>
   <data name="CannotCreateABackup" xml:space="preserve">
     <value>Désolé, ne peut pas créer une sauvegarde de base de données à ce moment.</value>
@@ -126,19 +132,13 @@
   <data name="InvalidUser" xml:space="preserve">
     <value>Utilisateur non valide.</value>
   </data>
-  <data name="PasswordCannotBeEmpty" xml:space="preserve">
-    <value>Mot de passe ne peut pas être vide.</value>
-  </data>
-  <data name="ComparePriceErrorMessage" xml:space="preserve">
-    <value>Prix à partir devrait être inférieur au prix de.</value>
-  </data>
-  <data name="NoFileSpecified" xml:space="preserve">
-    <value>Aucun fichier spécifié.</value>
-  </data>
   <data name="ConfigurationError" xml:space="preserve">
     <value>Impossible de continuer la tâche. Se il vous plaît corriger les problèmes de configuration.</value>
   </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>L'accès est refusé.</value>
+  <data name="PasswordCannotBeEmpty" xml:space="preserve">
+    <value>Mot de passe ne peut pas être vide.</value>
+  </data>
+  <data name="NoFileSpecified" xml:space="preserve">
+    <value>Aucun fichier spécifié.</value>
   </data>
 </root>

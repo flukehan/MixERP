@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="RestrictedTransactionMode" xml:space="preserve">
+    <value>Diese Einrichtung erlaubt keine Transaktions Beitrag.</value>
+  </data>
+  <data name="NewPasswordCannotBeOldPassword" xml:space="preserve">
+    <value>Neues Passwort kann nicht das alte Kennwort ist.</value>
+  </data>
+  <data name="NotAuthorized" xml:space="preserve">
+    <value>Sie sind nicht berechtigt, um diese Ressourcen zu diesem Zeitpunkt zugreifen.</value>
+  </data>
+  <data name="NothingSelected" xml:space="preserve">
+    <value>Nichts ausgewählt.</value>
+  </data>
+  <data name="PleaseEnterCurrentPassword" xml:space="preserve">
+    <value>Bitte geben Sie Ihr aktuelles Kennwort ein.</value>
+  </data>
+  <data name="PleaseEnterNewPassword" xml:space="preserve">
+    <value>Bitte geben Sie ein neues Kennwort ein.</value>
+  </data>
+  <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
+    <value>Benutzerkennung oder Passwort falsch.</value>
+  </data>
   <data name="AccessIsDenied" xml:space="preserve">
     <value>Zugriff wird verweigert.</value>
   </data>
@@ -134,26 +155,5 @@
   </data>
   <data name="InvalidDate" xml:space="preserve">
     <value>Dies ist kein gültiges Datum aus.</value>
-  </data>
-  <data name="NewPasswordCannotBeOldPassword" xml:space="preserve">
-    <value>Neues Passwort kann nicht das alte Kennwort ist.</value>
-  </data>
-  <data name="NotAuthorized" xml:space="preserve">
-    <value>Sie sind nicht berechtigt, um diese Ressourcen zu diesem Zeitpunkt zugreifen.</value>
-  </data>
-  <data name="NothingSelected" xml:space="preserve">
-    <value>Nichts ausgewählt.</value>
-  </data>
-  <data name="PleaseEnterCurrentPassword" xml:space="preserve">
-    <value>Bitte geben Sie Ihr aktuelles Kennwort ein.</value>
-  </data>
-  <data name="PleaseEnterNewPassword" xml:space="preserve">
-    <value>Bitte geben Sie ein neues Kennwort ein.</value>
-  </data>
-  <data name="RestrictedTransactionMode" xml:space="preserve">
-    <value>Diese Einrichtung erlaubt keine Transaktions Beitrag.</value>
-  </data>
-  <data name="UserIdOrPasswordIncorrect" xml:space="preserve">
-    <value>Benutzerkennung oder Passwort falsch.</value>
   </data>
 </root>

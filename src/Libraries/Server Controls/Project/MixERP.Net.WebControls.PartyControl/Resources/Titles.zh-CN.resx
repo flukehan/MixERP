@@ -117,22 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PartySummary" xml:space="preserve">
-    <value>党总结</value>
-  </data>
-  <data name="AddressAndContactInfo" xml:space="preserve">
-    <value>地址及联系方式</value>
+  <data name="Go" xml:space="preserve">
+    <value>去</value>
   </data>
   <data name="TransactionSummary" xml:space="preserve">
     <value>交易概要</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>家</value>
+  <data name="AddressAndContactInfo" xml:space="preserve">
+    <value>地址及联系方式</value>
+  </data>
+  <data name="PartySummary" xml:space="preserve">
+    <value>党总结</value>
   </data>
   <data name="SelectCustomer" xml:space="preserve">
     <value>选择客户</value>
   </data>
-  <data name="Go" xml:space="preserve">
-    <value>去</value>
+  <data name="Home" xml:space="preserve">
+    <value>家</value>
   </data>
 </root>

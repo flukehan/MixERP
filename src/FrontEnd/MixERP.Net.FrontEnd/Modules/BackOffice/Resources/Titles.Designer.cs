@@ -79,6 +79,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alerts.
+        /// </summary>
+        internal static string Alerts {
+            get {
+                return ResourceManager.GetString("Alerts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Amount.
         /// </summary>
         internal static string Amount {
@@ -214,6 +223,24 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current IP.
+        /// </summary>
+        internal static string CurrentIP {
+            get {
+                return ResourceManager.GetString("CurrentIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Login On.
+        /// </summary>
+        internal static string CurrentLoginOn {
+            get {
+                return ResourceManager.GetString("CurrentLoginOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database Backups.
         /// </summary>
         internal static string DatabaseBackups {
@@ -241,6 +268,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Department.
+        /// </summary>
+        internal static string Department {
+            get {
+                return ResourceManager.GetString("Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Departments.
         /// </summary>
         internal static string Departments {
@@ -250,11 +286,29 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Documentation.
+        /// </summary>
+        internal static string Documentation {
+            get {
+                return ResourceManager.GetString("Documentation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download.
         /// </summary>
         internal static string Download {
             get {
                 return ResourceManager.GetString("Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download Source Code.
+        /// </summary>
+        internal static string DownloadSourceCode {
+            get {
+                return ResourceManager.GetString("DownloadSourceCode", resourceCulture);
             }
         }
         
@@ -376,11 +430,38 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last Login IP.
+        /// </summary>
+        internal static string LastLoginIP {
+            get {
+                return ResourceManager.GetString("LastLoginIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Login On.
+        /// </summary>
+        internal static string LastLoginOn {
+            get {
+                return ResourceManager.GetString("LastLoginOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Load.
         /// </summary>
         internal static string Load {
             get {
                 return ResourceManager.GetString("Load", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logged in to.
+        /// </summary>
+        internal static string LoggedInTo {
+            get {
+                return ResourceManager.GetString("LoggedInTo", resourceCulture);
             }
         }
         
@@ -421,11 +502,47 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MixERP Links.
+        /// </summary>
+        internal static string MixERPLinks {
+            get {
+                return ResourceManager.GetString("MixERPLinks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MixERP on Facebook.
+        /// </summary>
+        internal static string MixERPOnFacebook {
+            get {
+                return ResourceManager.GetString("MixERPOnFacebook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Office Information.
+        /// </summary>
+        internal static string OfficeInformation {
+            get {
+                return ResourceManager.GetString("OfficeInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Office Setup.
         /// </summary>
         internal static string OfficeSetup {
             get {
                 return ResourceManager.GetString("OfficeSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        internal static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
             }
         }
         
@@ -462,6 +579,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string Quantity {
             get {
                 return ResourceManager.GetString("Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        internal static string Role {
+            get {
+                return ResourceManager.GetString("Role", resourceCulture);
             }
         }
         
@@ -583,6 +709,24 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Submit Bugs.
+        /// </summary>
+        internal static string SubmitBugs {
+            get {
+                return ResourceManager.GetString("SubmitBugs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Support.
+        /// </summary>
+        internal static string Support {
+            get {
+                return ResourceManager.GetString("Support", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tax Authorities.
         /// </summary>
         internal static string TaxAuthorities {
@@ -651,6 +795,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string Update {
             get {
                 return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Attachments.
+        /// </summary>
+        internal static string UploadAttachments {
+            get {
+                return ResourceManager.GetString("UploadAttachments", resourceCulture);
             }
         }
         
@@ -732,6 +885,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string VoucherVerificationPolicy {
             get {
                 return ResourceManager.GetString("VoucherVerificationPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Office.
+        /// </summary>
+        internal static string YourOffice {
+            get {
+                return ResourceManager.GetString("YourOffice", resourceCulture);
             }
         }
     }

@@ -117,28 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CannotMergeUrlNull" xml:space="preserve">
-    <value>Невозможно объединить операции. Слияние гиперссылка, не было.</value>
-  </data>
-  <data name="ReturnButtonUrlNull" xml:space="preserve">
-    <value>Не может вернуться на эту запись.URL возврата не было.</value>
-  </data>
-  <data name="CannotCreateFlagTransactionTableNull" xml:space="preserve">
-    <value>Невозможно создать или обновить флаг. Таблицу транзакций не было.</value>
-  </data>
-  <data name="NothingSelected" xml:space="preserve">
-    <value>Ничего не выбрано.</value>
-  </data>
-  <data name="CannotMergeIncompatibleTax" xml:space="preserve">
-    <value>Невозможно объединить операции, имеющие несовместимые типы налогов. Пожалуйста, попробуйте еще раз.</value>
-  </data>
-  <data name="CannotMergeDifferentPartyTransaction" xml:space="preserve">
-    <value>Невозможно объединить операции различных партий в единую партию. Пожалуйста, попробуйте еще раз.</value>
-  </data>
   <data name="CannotMergeAlreadyMerged" xml:space="preserve">
     <value>Выбранные операции содержат элементы, которые уже были объединены. Пожалуйста, попробуйте еще раз.</value>
   </data>
   <data name="CannotCreateFlagTransactionTablePrimaryKeyNull" xml:space="preserve">
     <value>Невозможно создать или обновить флаг. Таблицу транзакций первичный ключ не был обеспечен.</value>
+  </data>
+  <data name="CannotMergeUrlNull" xml:space="preserve">
+    <value>Невозможно объединить операции. Слияние гиперссылка, не было.</value>
+  </data>
+  <data name="CannotCreateFlagTransactionTableNull" xml:space="preserve">
+    <value>Невозможно создать или обновить флаг. Таблицу транзакций не было.</value>
+  </data>
+  <data name="ReturnButtonUrlNull" xml:space="preserve">
+    <value>Не может вернуться на эту запись.URL возврата не было.</value>
+  </data>
+  <data name="NothingSelected" xml:space="preserve">
+    <value>Ничего не выбрано.</value>
+  </data>
+  <data name="CannotMergeDifferentPartyTransaction" xml:space="preserve">
+    <value>Невозможно объединить операции различных партий в единую партию. Пожалуйста, попробуйте еще раз.</value>
+  </data>
+  <data name="CannotMergeIncompatibleTax" xml:space="preserve">
+    <value>Невозможно объединить операции, имеющие несовместимые типы налогов. Пожалуйста, попробуйте еще раз.</value>
   </data>
 </root>

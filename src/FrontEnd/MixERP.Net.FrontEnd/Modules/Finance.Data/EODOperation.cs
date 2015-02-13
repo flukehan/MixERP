@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data
                     {
                         EODStatus status = new EODStatus();
                         status.ValueDate = Conversion.TryCastDate(table.Rows[0]["value_date"]);
-                        status.Initialized = Conversion.TryCastBoolean(table.Rows[0]["eod_initialized"]);
+                        status.IsInitialized = Conversion.TryCastBoolean(table.Rows[0]["eod_initialized"]);
                         return status;
                     }
                 }
@@ -126,7 +126,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data
 
     public class EODStatus
     {
-        public Boolean Initialized { get; set; }
+        public Boolean IsInitialized { get; set; }
         public DateTime ValueDate { get; set; }
     }
 }

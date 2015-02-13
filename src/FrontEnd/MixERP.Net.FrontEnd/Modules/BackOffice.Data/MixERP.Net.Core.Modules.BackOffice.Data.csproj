@@ -66,6 +66,7 @@
     <Compile Include="Admin\QueryTool.cs" />
     <Compile Include="Admin\User.cs" />
     <Compile Include="Attachments.cs" />
+    <Compile Include="Audit.cs" />
     <Compile Include="OpeningInventory.cs" />
     <Compile Include="Policy\Menu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

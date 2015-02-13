@@ -117,31 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Checklists" xml:space="preserve">
+    <value>Checklisten</value>
+  </data>
+  <data name="PrintGlEntry" xml:space="preserve">
+    <value>drucken Hauptbucheintrag</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Rückgängig Machen</value>
+  </data>
+  <data name="PrintReceipt" xml:space="preserve">
+    <value>Quittung drucken</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>Neu hinzufügen</value>
+  </data>
+  <data name="UploadAttachmentsForThisTransaction" xml:space="preserve">
+    <value>Anhänge hochladen für diese Transaktion</value>
+  </data>
   <data name="ReturnToView" xml:space="preserve">
     <value>Zurück zur Seite anzeigen</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>Der Rücken</value>
   </data>
-  <data name="PrintReceipt" xml:space="preserve">
-    <value>Quittung drucken</value>
-  </data>
-  <data name="PrintGlEntry" xml:space="preserve">
-    <value>drucken Hauptbucheintrag</value>
-  </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
-  <data name="Checklists" xml:space="preserve">
-    <value>Checklisten</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Rückgängig Machen</value>
-  </data>
-  <data name="UploadAttachmentsForThisTransaction" xml:space="preserve">
-    <value>Anhänge hochladen für diese Transaktion</value>
-  </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>Neu hinzufügen</value>
+  <data name="WithdrawTransaction" xml:space="preserve">
+    <value>intrekken transactie</value>
   </data>
 </root>

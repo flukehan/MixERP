@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Menu.cs" />
+    <Compile Include="Core\Widget.cs" />
     <Compile Include="Helpers\ServerConnectivity.cs" />
     <Compile Include="Office\Offices.cs" />
     <Compile Include="Office\Users.cs" />

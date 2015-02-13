@@ -117,29 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ValueDate" xml:space="preserve">
+    <value>Wert Datum</value>
+  </data>
   <data name="Action" xml:space="preserve">
     <value>Aktion</value>
   </data>
   <data name="Unit" xml:space="preserve">
     <value>Einheit</value>
   </data>
-  <data name="ItemCode" xml:space="preserve">
-    <value>Item Code</value>
+  <data name="Quantity" xml:space="preserve">
+    <value>Menge</value>
   </data>
-  <data name="Add" xml:space="preserve">
-    <value>hinzufügen</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>Anweisungsreferenz</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Speichern</value>
+  <data name="ItemName" xml:space="preserve">
+    <value>Artikelname</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Art</value>
   </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>Wert Datum</value>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Item Code</value>
+  </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>Anweisungsreferenz</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>hinzufügen</value>
   </data>
   <data name="Store" xml:space="preserve">
     <value>Speicher</value>
@@ -147,10 +150,7 @@
   <data name="RefererenceNumberAbbreviated" xml:space="preserve">
     <value>Referenz-Nr #</value>
   </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>Artikelname</value>
-  </data>
-  <data name="Quantity" xml:space="preserve">
-    <value>Menge</value>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
   </data>
 </root>

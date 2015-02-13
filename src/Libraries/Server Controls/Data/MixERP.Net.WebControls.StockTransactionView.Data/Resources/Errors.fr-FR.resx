@@ -123,10 +123,10 @@
   <data name="InvalidSubTranBookSalesPayment" xml:space="preserve">
     <value>Transactions non valide subsidiaires livre «Paiement des ventes"</value>
   </data>
-  <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
-    <value>Transactions subsidiaires invalides livre "Achat Citation"</value>
-  </data>
   <data name="InvalidSubTranBookPurchaseReceipt" xml:space="preserve">
     <value>Transactions non valide subsidiaires livre "reçu d'achat"</value>
+  </data>
+  <data name="InvalidSubTranBookPurchaseQuotation" xml:space="preserve">
+    <value>Transactions subsidiaires invalides livre "Achat Citation"</value>
   </data>
 </root>

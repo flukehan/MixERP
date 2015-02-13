@@ -123,16 +123,16 @@
   <data name="Url" xml:space="preserve">
     <value>统一资源定位符</value>
   </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>编制</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>电子邮件</value>
-  </data>
   <data name="User" xml:space="preserve">
     <value>用户</value>
   </data>
   <data name="Fax" xml:space="preserve">
     <value>Fax</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>编制</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>电子邮件</value>
   </data>
 </root>

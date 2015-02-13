@@ -117,76 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>Référence #</value>
-  </data>
-  <data name="FlagForegroundColor" xml:space="preserve">
-    <value>Drapeau Couleur de premier plan</value>
-  </data>
-  <data name="MergeBatchToSalesDelivery" xml:space="preserve">
-    <value>Fusionner lots pour Vente Livraison</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>spectacle</value>
-  </data>
-  <data name="TransactionTimestamp" xml:space="preserve">
-    <value>Transaction horodatage</value>
-  </data>
-  <data name="Book" xml:space="preserve">
-    <value>livre</value>
-  </data>
-  <data name="Party" xml:space="preserve">
-    <value>partie</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>utilisateur</value>
-  </data>
-  <data name="Preview" xml:space="preserve">
-    <value>avant-première</value>
-  </data>
-  <data name="MergeBatchToGRN" xml:space="preserve">
-    <value>Fusionner lots pour la réception des marchandises Note</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>déclaration de référence</value>
-  </data>
-  <data name="Id" xml:space="preserve">
-    <value>ça</value>
+  <data name="Actions" xml:space="preserve">
+    <value>actes</value>
   </data>
   <data name="AddNew" xml:space="preserve">
     <value>Ajouter un nouveau</value>
   </data>
-  <data name="FlagBackgroundColor" xml:space="preserve">
-    <value>Drapeau Couleur de fond</value>
+  <data name="MergeBatchToSalesOrder" xml:space="preserve">
+    <value>Fusionner lots pour des commandes clients</value>
   </data>
-  <data name="Return" xml:space="preserve">
-    <value>retour</value>
-  </data>
-  <data name="Amount" xml:space="preserve">
-    <value>montant</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>imprimer</value>
-  </data>
-  <data name="Office" xml:space="preserve">
-    <value>bureau</value>
-  </data>
-  <data name="PriceType" xml:space="preserve">
-    <value>Type de Prix</value>
+  <data name="StatementReference" xml:space="preserve">
+    <value>déclaration de référence</value>
   </data>
   <data name="Flag" xml:space="preserve">
     <value>drapeau</value>
   </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>date de valeur</value>
+  <data name="FlagForegroundColor" xml:space="preserve">
+    <value>Drapeau Couleur de premier plan</value>
   </data>
-  <data name="MergeBatchToSalesOrder" xml:space="preserve">
-    <value>Fusionner lots pour des commandes clients</value>
+  <data name="FlagBackgroundColor" xml:space="preserve">
+    <value>Drapeau Couleur de fond</value>
   </data>
-  <data name="Actions" xml:space="preserve">
-    <value>actes</value>
+  <data name="Print" xml:space="preserve">
+    <value>imprimer</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>Référence #</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>bureau</value>
+  </data>
+  <data name="MergeBatchToSalesDelivery" xml:space="preserve">
+    <value>Fusionner lots pour Vente Livraison</value>
+  </data>
+  <data name="PriceType" xml:space="preserve">
+    <value>Type de Prix</value>
+  </data>
+  <data name="TransactionTimestamp" xml:space="preserve">
+    <value>Transaction horodatage</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>spectacle</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>ça</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>montant</value>
+  </data>
+  <data name="Party" xml:space="preserve">
+    <value>partie</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>retour</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>utilisateur</value>
+  </data>
+  <data name="MergeBatchToGRN" xml:space="preserve">
+    <value>Fusionner lots pour la réception des marchandises Note</value>
+  </data>
+  <data name="Book" xml:space="preserve">
+    <value>livre</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>sélectionner</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>avant-première</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>date de valeur</value>
   </data>
 </root>

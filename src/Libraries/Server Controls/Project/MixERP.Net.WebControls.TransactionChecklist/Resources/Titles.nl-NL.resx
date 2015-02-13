@@ -117,34 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PrintGlEntry" xml:space="preserve">
-    <value>grootboek binnenkomst af te drukken</value>
-  </data>
   <data name="UploadAttachmentsForThisTransaction" xml:space="preserve">
     <value>Upload bijlagen voor deze transactie</value>
   </data>
-  <data name="OK" xml:space="preserve">
-    <value>oK</value>
-  </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>Nieuwe toevoegen</value>
+  <data name="PrintGlEntry" xml:space="preserve">
+    <value>grootboek binnenkomst af te drukken</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>annuleren</value>
   </data>
-  <data name="WithdrawTransaction" xml:space="preserve">
-    <value>Ziehen Sie Transaktions</value>
+  <data name="ReturnToView" xml:space="preserve">
+    <value>Terug te bekijken</value>
   </data>
   <data name="PrintReceipt" xml:space="preserve">
     <value>afdrukken Ontvangst</value>
   </data>
-  <data name="ReturnToView" xml:space="preserve">
-    <value>Terug te bekijken</value>
+  <data name="AddNew" xml:space="preserve">
+    <value>Nieuwe toevoegen</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>terug</value>
   </data>
   <data name="Checklists" xml:space="preserve">
     <value>checklists</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>oK</value>
+  </data>
+  <data name="WithdrawTransaction" xml:space="preserve">
+    <value>Waarom wil je om deze transactie te trekken?...</value>
   </data>
 </root>

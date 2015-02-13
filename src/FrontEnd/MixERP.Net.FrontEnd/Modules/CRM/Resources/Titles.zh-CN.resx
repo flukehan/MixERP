@@ -117,17 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="User" xml:space="preserve">
-    <value>用户</value>
+  <data name="Email" xml:space="preserve">
+    <value>电子邮件</value>
   </data>
   <data name="OpportunityStages" xml:space="preserve">
     <value>机会阶段</value>
   </data>
-  <data name="Fax" xml:space="preserve">
-    <value>Fax</value>
+  <data name="LeadStatuses" xml:space="preserve">
+    <value>铅状态</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>用户</value>
   </data>
   <data name="PreparedOn" xml:space="preserve">
     <value>编制</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
   </data>
   <data name="Url" xml:space="preserve">
     <value>统一资源定位符</value>
@@ -137,11 +143,5 @@
   </data>
   <data name="Tel" xml:space="preserve">
     <value>电话</value>
-  </data>
-  <data name="LeadStatuses" xml:space="preserve">
-    <value>铅状态</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>电子邮件</value>
   </data>
 </root>

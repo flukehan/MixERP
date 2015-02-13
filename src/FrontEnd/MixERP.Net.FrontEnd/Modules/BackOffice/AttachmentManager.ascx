@@ -26,12 +26,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     }
 </style>
 
-<div class="ui massive teal header">Upload Attachments</div>
+<div class="ui massive teal header">
+    <asp:Literal ID="TitleLiteral" runat="server" />
+</div>
 
 <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
 <div class="ui massive teal header">
-    <asp:Literal ID="TitleLiteral" runat="server"/>
+    <asp:Literal ID="SubTitleLiteral" runat="server"/>
 </div>
 
 <div id="images">
@@ -51,7 +53,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
         <div class="actions">
             <div class="ui teal button">
-                Okay
+                <asp:Literal ID="OKLiteral" runat="server"/>
             </div>
         </div>
     </div>

@@ -117,28 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ReturnButtonUrlNull" xml:space="preserve">
+    <value>Vous ne pouvez pas retourner cette entrée. L'URL de retour n'a pas été fourni.</value>
+  </data>
+  <data name="CannotCreateFlagTransactionTablePrimaryKeyNull" xml:space="preserve">
+    <value>Impossible de créer ou mettre à jour drapeau. Table de Transaction clé primaire n'a pas été fourni.</value>
+  </data>
   <data name="CannotCreateFlagTransactionTableNull" xml:space="preserve">
     <value>Impossible de créer ou mettre à jour drapeau. Table de transaction n'a pas été fourni.</value>
   </data>
   <data name="CannotMergeUrlNull" xml:space="preserve">
     <value>Vous ne pouvez pas fusionner les transactions. L'URL de fusion n'a pas été fourni.</value>
   </data>
-  <data name="CannotMergeAlreadyMerged" xml:space="preserve">
-    <value>Les opérations sélectionnées contiennent des éléments qui ont déjà été fusionnées. Se il vous plaît essayer à nouveau.</value>
-  </data>
-  <data name="CannotMergeDifferentPartyTransaction" xml:space="preserve">
-    <value>Vous ne pouvez pas fusionner les opérations des différentes parties en un seul lot. Se il vous plaît essayer à nouveau.</value>
-  </data>
-  <data name="ReturnButtonUrlNull" xml:space="preserve">
-    <value>Vous ne pouvez pas retourner cette entrée. L'URL de retour n'a pas été fourni.</value>
-  </data>
   <data name="NothingSelected" xml:space="preserve">
     <value>Rien sélectionné.</value>
   </data>
-  <data name="CannotCreateFlagTransactionTablePrimaryKeyNull" xml:space="preserve">
-    <value>Impossible de créer ou mettre à jour drapeau. Table de Transaction clé primaire n'a pas été fourni.</value>
+  <data name="CannotMergeAlreadyMerged" xml:space="preserve">
+    <value>Les opérations sélectionnées contiennent des éléments qui ont déjà été fusionnées. Se il vous plaît essayer à nouveau.</value>
   </data>
   <data name="CannotMergeIncompatibleTax" xml:space="preserve">
     <value>Vous ne pouvez pas fusionner les transactions ayant des types d'impôts incompatibles. Se il vous plaît essayer à nouveau.</value>
+  </data>
+  <data name="CannotMergeDifferentPartyTransaction" xml:space="preserve">
+    <value>Vous ne pouvez pas fusionner les opérations des différentes parties en un seul lot. Se il vous plaît essayer à nouveau.</value>
   </data>
 </root>

@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CouldNotDetermineVirtualPathError" xml:space="preserve">
-    <value>No se pudo determinar ruta virtual para crear una imagen.</value>
-  </data>
   <data name="TempDirectoryNullError" xml:space="preserve">
     <value>No se puede crear una imagen cuando el directorio temporal es nulo.</value>
+  </data>
+  <data name="CouldNotDetermineVirtualPathError" xml:space="preserve">
+    <value>No se pudo determinar ruta virtual para crear una imagen.</value>
   </data>
 </root>

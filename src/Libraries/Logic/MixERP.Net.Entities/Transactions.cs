@@ -1103,13 +1103,13 @@ namespace MixERP.Net.Entities.Transactions
         public string VerifiedBy { get; set; }
 
         [Column("verified_on")] 
-        public string VerifiedOn { get; set; }
+        public DateTime VerifiedOn { get; set; }
 
         [Column("reason")] 
         public string Reason { get; set; }
 
         [Column("transaction_ts")] 
-        public string TransactionTs { get; set; }
+        public DateTime TransactionTs { get; set; }
 
         [Column("flag_bg")] 
         public string FlagBg { get; set; }
@@ -1157,7 +1157,7 @@ namespace MixERP.Net.Entities.Transactions
         public string ItemName { get; set; }
 
         [Column("posted_on")] 
-        public string PostedOn { get; set; }
+        public DateTime PostedOn { get; set; }
 
         [Column("posted_by")] 
         public string PostedBy { get; set; }
@@ -1244,7 +1244,7 @@ namespace MixERP.Net.Entities.Transactions
         public decimal Amount { get; set; }
 
         [Column("transaction_ts")] 
-        public string TransactionTs { get; set; }
+        public DateTime TransactionTs { get; set; }
 
         [Column("user")] 
         public string User { get; set; }
@@ -1427,7 +1427,7 @@ namespace MixERP.Net.Entities.Transactions
         public string Account { get; set; }
 
         [Column("posted_on")] 
-        public string PostedOn { get; set; }
+        public DateTime PostedOn { get; set; }
 
         [Column("posted_by")] 
         public string PostedBy { get; set; }
@@ -1556,7 +1556,7 @@ namespace MixERP.Net.Entities.Transactions
         public string Account { get; set; }
 
         [Column("posted_on")] 
-        public string PostedOn { get; set; }
+        public DateTime PostedOn { get; set; }
 
         [Column("posted_by")] 
         public string PostedBy { get; set; }
@@ -1718,7 +1718,7 @@ namespace MixERP.Net.Entities.Transactions
         public string Amount { get; set; }
 
         [Column("transaction_ts")] 
-        public string TransactionTs { get; set; }
+        public DateTime TransactionTs { get; set; }
 
         [Column("flag_background_color")] 
         public string FlagBackgroundColor { get; set; }
@@ -1778,7 +1778,7 @@ namespace MixERP.Net.Entities.Transactions
         public decimal Amount { get; set; }
 
         [Column("transaction_ts")] 
-        public string TransactionTs { get; set; }
+        public DateTime TransactionTs { get; set; }
 
         [Column("user")] 
         public string User { get; set; }

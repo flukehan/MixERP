@@ -117,10 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InsufficientStockWarning" xml:space="preserve">
-    <value>Sólo {0} {1} de {2} dejados en la acción.</value>
+  <data name="InvalidCostCenter" xml:space="preserve">
+    <value>Centro de costos no es válida.</value>
   </data>
   <data name="InvalidParty" xml:space="preserve">
     <value>Partido válido. Este partido no se asocia con esta transacción.</value>
+  </data>
+  <data name="InvalidShippingCompany" xml:space="preserve">
+    <value>Naviera no válida.</value>
+  </data>
+  <data name="InvalidStore" xml:space="preserve">
+    <value>Tienda no válida.</value>
+  </data>
+  <data name="InvalidPaymentTerm" xml:space="preserve">
+    <value>Plazo de pago válido.</value>
+  </data>
+  <data name="InsufficientStockWarning" xml:space="preserve">
+    <value>Sólo {0} {1} de {2} dejados en la acción.</value>
+  </data>
+  <data name="InvalidPriceType" xml:space="preserve">
+    <value>Tipo Precio incorrecto.</value>
+  </data>
+  <data name="InvalidSalesPerson" xml:space="preserve">
+    <value>Vendedor no válida.</value>
   </data>
 </root>

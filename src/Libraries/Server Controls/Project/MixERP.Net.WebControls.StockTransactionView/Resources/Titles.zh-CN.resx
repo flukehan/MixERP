@@ -117,14 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PriceType" xml:space="preserve">
-    <value>价格类型</value>
+  <data name="Print" xml:space="preserve">
+    <value>打印</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>行动</value>
+  </data>
+  <data name="MergeBatchToSalesOrder" xml:space="preserve">
+    <value>合并批量销售订单</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>添加新</value>
   </data>
   <data name="StatementReference" xml:space="preserve">
     <value>声明参考</value>
   </data>
+  <data name="FlagBackgroundColor" xml:space="preserve">
+    <value>旗背景颜色</value>
+  </data>
+  <data name="FlagForegroundColor" xml:space="preserve">
+    <value>标志前景色</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>参考号码</value>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>旗</value>
+  </data>
   <data name="Show" xml:space="preserve">
     <value>演出</value>
+  </data>
+  <data name="PriceType" xml:space="preserve">
+    <value>价格类型</value>
   </data>
   <data name="MergeBatchToSalesDelivery" xml:space="preserve">
     <value>合并到批量销售出库单</value>
@@ -132,20 +156,14 @@
   <data name="TransactionTimestamp" xml:space="preserve">
     <value>交易时间戳</value>
   </data>
-  <data name="Preview" xml:space="preserve">
-    <value>预览</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>用户</value>
-  </data>
-  <data name="MergeBatchToSalesOrder" xml:space="preserve">
-    <value>合并批量销售订单</value>
-  </data>
   <data name="Office" xml:space="preserve">
     <value>办公室</value>
   </data>
-  <data name="MergeBatchToGRN" xml:space="preserve">
-    <value>合并批到好收货注意事项</value>
+  <data name="Party" xml:space="preserve">
+    <value>党</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>量</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>识别码</value>
@@ -153,40 +171,22 @@
   <data name="Return" xml:space="preserve">
     <value>回报</value>
   </data>
-  <data name="FlagBackgroundColor" xml:space="preserve">
-    <value>旗背景颜色</value>
+  <data name="MergeBatchToGRN" xml:space="preserve">
+    <value>合并批到好收货注意事项</value>
   </data>
-  <data name="Print" xml:space="preserve">
-    <value>打印</value>
-  </data>
-  <data name="Flag" xml:space="preserve">
-    <value>旗</value>
-  </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>添加新</value>
-  </data>
-  <data name="Book" xml:space="preserve">
-    <value>书</value>
-  </data>
-  <data name="Amount" xml:space="preserve">
-    <value>量</value>
-  </data>
-  <data name="Actions" xml:space="preserve">
-    <value>行动</value>
-  </data>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>参考号码</value>
+  <data name="User" xml:space="preserve">
+    <value>用户</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>选择</value>
   </data>
+  <data name="Book" xml:space="preserve">
+    <value>书</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>预览</value>
+  </data>
   <data name="ValueDate" xml:space="preserve">
     <value>起息日</value>
-  </data>
-  <data name="FlagForegroundColor" xml:space="preserve">
-    <value>标志前景色</value>
-  </data>
-  <data name="Party" xml:space="preserve">
-    <value>党</value>
   </data>
 </root>

@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
@@ -38,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
 
             this.TitleLiteral.Text = Resources.Titles.SalesByMonthInThousands;
 
-            //this.SalesByMonthGridView.Attributes.Add("style", "display:none;");
+            this.SalesByMonthGridView.Attributes.Add("style", "display:none;");
             this.SalesByMonthGridView.DataSource = Data.Reports.SalesByMonth.GetSalesByOffice(officeId);
             this.SalesByMonthGridView.DataBind();
         }

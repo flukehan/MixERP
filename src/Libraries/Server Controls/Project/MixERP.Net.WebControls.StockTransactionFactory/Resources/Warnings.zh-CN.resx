@@ -117,10 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InsufficientStockWarning" xml:space="preserve">
-    <value>只有{0}{1}{2}留在股市。</value>
+  <data name="InvalidPaymentTerm" xml:space="preserve">
+    <value>无效的付款条件。</value>
+  </data>
+  <data name="InvalidCostCenter" xml:space="preserve">
+    <value>无效的成本中心。</value>
+  </data>
+  <data name="InvalidShippingCompany" xml:space="preserve">
+    <value>无效的货运公司。</value>
   </data>
   <data name="InvalidParty" xml:space="preserve">
     <value>无效的一方。</value>
+  </data>
+  <data name="InvalidPriceType" xml:space="preserve">
+    <value>价格无效类型。</value>
+  </data>
+  <data name="InvalidStore" xml:space="preserve">
+    <value>无效的商店。</value>
+  </data>
+  <data name="InsufficientStockWarning" xml:space="preserve">
+    <value>只有{0}{1}{2}留在股市。</value>
+  </data>
+  <data name="InvalidSalesPerson" xml:space="preserve">
+    <value>无效的推销员。</value>
   </data>
 </root>

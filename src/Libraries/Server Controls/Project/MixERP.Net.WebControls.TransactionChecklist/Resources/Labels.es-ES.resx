@@ -117,20 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TransactionApprovedDetails" xml:space="preserve">
-    <value>Esta operación fue aprobada por {0} del {1}.</value>
+  <data name="CannotWithdrawTransaction" xml:space="preserve">
+    <value>No se puede retirar transacción.</value>
   </data>
-  <data name="TransactionPostedSuccessfully" xml:space="preserve">
-    <value>La transacción se registró con éxito.</value>
+  <data name="TransactionClosedDetails" xml:space="preserve">
+    <value>Esta operación se ha cerrado por {0} del {1}. Motivo: "{2}".</value>
   </data>
-  <data name="TransactionWithdrawnMessage" xml:space="preserve">
-    <value>La transacción fue retirado con éxito. Además, esta acción afectará a los todos los informes producidos en y después de "{0}".</value>
+  <data name="TransactionWithdrawalInformation" xml:space="preserve">
+    <value>Cuando usted retira una transacción, no se enviará al módulo de flujo de trabajo. Esto significa que sus transacciones retirados son rechazados y no requieren mayor verificación. Sin embargo, usted no será capaz de unwithdraw esta transacción después.</value>
   </data>
-  <data name="EmailBody" xml:space="preserve">
-    <value>h2&gt; Hola, &lt;/ h2&gt; &lt;p&gt; Por favor, encontrar el documento adjunto. &lt;/ p&gt; &lt;p&gt; Gracias. &lt;br /&gt; MixERP &lt;/ p&gt;</value>
+  <data name="TransactionWithdrawnDetails" xml:space="preserve">
+    <value>Esta transacción fue retirado por {0} del {1}. Motivo: "{2}".</value>
   </data>
   <data name="TransactionAwaitingVerification" xml:space="preserve">
     <value>Esta transacción está pendiente de verificación por parte de un administrador.</value>
+  </data>
+  <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
+    <value>No se puede retirar transacción. Esto es un no una transacción de libro mayor validez.</value>
+  </data>
+  <data name="ThisFieldIsRequired" xml:space="preserve">
+    <value>Este campo es obligatorio.</value>
+  </data>
+  <data name="TransactionApprovedDetails" xml:space="preserve">
+    <value>Esta operación fue aprobada por {0} del {1}.</value>
   </data>
   <data name="TransactionAutoApprovedDetails" xml:space="preserve">
     <value>Esta operación fue aprobada automáticamente por {0} del {1}.</value>
@@ -138,25 +147,16 @@
   <data name="EmailSentConfirmation" xml:space="preserve">
     <value>Un correo electrónico fue enviado a {0}.</value>
   </data>
-  <data name="TransactionClosedDetails" xml:space="preserve">
-    <value>Esta operación se ha cerrado por {0} del {1}. Motivo: "{2}".</value>
+  <data name="TransactionWithdrawnMessage" xml:space="preserve">
+    <value>La transacción fue retirado con éxito. Además, esta acción afectará a los todos los informes producidos en y después de "{0}".</value>
+  </data>
+  <data name="EmailBody" xml:space="preserve">
+    <value>h2&gt; Hola, &lt;/ h2&gt; &lt;p&gt; Por favor, encontrar el documento adjunto. &lt;/ p&gt; &lt;p&gt; Gracias. &lt;br /&gt; MixERP &lt;/ p&gt;</value>
+  </data>
+  <data name="TransactionPostedSuccessfully" xml:space="preserve">
+    <value>La transacción se registró con éxito.</value>
   </data>
   <data name="TransactionRejectedDetails" xml:space="preserve">
     <value>Esta transacción fue rechazada por {0} del {1}. Motivo: "{2}".</value>
-  </data>
-  <data name="TransactionWithdrawnDetails" xml:space="preserve">
-    <value>Esta transacción fue retirado por {0} del {1}. Motivo: "{2}".</value>
-  </data>
-  <data name="CannotWithdrawTransaction" xml:space="preserve">
-    <value>No se puede retirar transacción.</value>
-  </data>
-  <data name="TransactionWithdrawalInformation" xml:space="preserve">
-    <value>Cuando usted retira una transacción, no se enviará al módulo de flujo de trabajo. Esto significa que sus transacciones retirados son rechazados y no requieren mayor verificación. Sin embargo, usted no será capaz de unwithdraw esta transacción después.</value>
-  </data>
-  <data name="ThisFieldIsRequired" xml:space="preserve">
-    <value>Este campo es obligatorio.</value>
-  </data>
-  <data name="CannotWithdrawNotValidGLTransaction" xml:space="preserve">
-    <value>No se puede retirar transacción. Esto es un no una transacción de libro mayor validez.</value>
   </data>
 </root>

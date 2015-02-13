@@ -117,70 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNew" xml:space="preserve">
+    <value>添加新</value>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>旗</value>
+  </data>
   <data name="Reject" xml:space="preserve">
     <value>拒绝</value>
   </data>
   <data name="Approve" xml:space="preserve">
     <value>批准</value>
   </data>
-  <data name="Status" xml:space="preserve">
-    <value>状态</value>
-  </data>
-  <data name="TranId" xml:space="preserve">
-    <value>事务标识符</value>
-  </data>
-  <data name="Book" xml:space="preserve">
-    <value>书</value>
-  </data>
-  <data name="PostedBy" xml:space="preserve">
-    <value>发布者</value>
-  </data>
-  <data name="Office" xml:space="preserve">
-    <value>办公室</value>
-  </data>
-  <data name="ValueDate" xml:space="preserve">
-    <value>起息日</value>
-  </data>
-  <data name="Reason" xml:space="preserve">
-    <value>原因</value>
-  </data>
-  <data name="StatementReference" xml:space="preserve">
-    <value>声明参考</value>
-  </data>
-  <data name="TransactionTimestamp" xml:space="preserve">
-    <value>交易时间戳</value>
-  </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>添加新</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>演出</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>选择</value>
-  </data>
-  <data name="ReferenceNumber" xml:space="preserve">
-    <value>参考号码</value>
-  </data>
   <data name="VerifiedOn" xml:space="preserve">
     <value>检定</value>
-  </data>
-  <data name="Flag" xml:space="preserve">
-    <value>旗</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>打印</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>识别码</value>
   </data>
+  <data name="StatementReference" xml:space="preserve">
+    <value>声明参考</value>
+  </data>
   <data name="Actions" xml:space="preserve">
     <value>行动</value>
+  </data>
+  <data name="PostedBy" xml:space="preserve">
+    <value>发布者</value>
+  </data>
+  <data name="TranId" xml:space="preserve">
+    <value>事务标识符</value>
+  </data>
+  <data name="ReferenceNumber" xml:space="preserve">
+    <value>参考号码</value>
+  </data>
+  <data name="VerifiedBy" xml:space="preserve">
+    <value>验证通过</value>
+  </data>
+  <data name="ValueDate" xml:space="preserve">
+    <value>起息日</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>办公室</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>打印</value>
   </data>
   <data name="TranCode" xml:space="preserve">
     <value>陈典</value>
   </data>
-  <data name="VerifiedBy" xml:space="preserve">
-    <value>验证通过</value>
+  <data name="Reason" xml:space="preserve">
+    <value>原因</value>
+  </data>
+  <data name="TransactionTimestamp" xml:space="preserve">
+    <value>交易时间戳</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="Book" xml:space="preserve">
+    <value>书</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>演出</value>
   </data>
 </root>

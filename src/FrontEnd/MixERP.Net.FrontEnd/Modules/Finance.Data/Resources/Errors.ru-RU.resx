@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NoTransactionToPost" xml:space="preserve">
-    <value>Сделка не чтобы оставлять сообщения.</value>
-  </data>
   <data name="BothSidesCannotHaveValue" xml:space="preserve">
     <value>И дебет и кредит не может иметь значения.</value>
   </data>
   <data name="ReferencingSidesNotEqual" xml:space="preserve">
     <value>Ссылающейся стороны не равны.</value>
+  </data>
+  <data name="NoTransactionToPost" xml:space="preserve">
+    <value>Сделка не чтобы оставлять сообщения.</value>
   </data>
 </root>

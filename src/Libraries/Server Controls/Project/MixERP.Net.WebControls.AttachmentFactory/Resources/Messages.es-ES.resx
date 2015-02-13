@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicateFile" xml:space="preserve">
-    <value>Los archivos duplicados!</value>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Estás seguro?</value>
   </data>
   <data name="UploadFilesDeleted" xml:space="preserve">
     <value>Los archivos subidos se eliminaron con éxito.</value>
   </data>
-  <data name="AreYouSure" xml:space="preserve">
-    <value>Estás seguro?</value>
-  </data>
   <data name="InvalidFile" xml:space="preserve">
     <value>Archivo no válido!</value>
+  </data>
+  <data name="DuplicateFile" xml:space="preserve">
+    <value>Los archivos duplicados!</value>
   </data>
 </root>

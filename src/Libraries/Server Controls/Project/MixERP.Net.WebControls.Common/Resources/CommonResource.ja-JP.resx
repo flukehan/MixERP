@@ -120,16 +120,16 @@
   <data name="DateMustBeGreaterThan" xml:space="preserve">
     <value>無効な日付。よりも大きくなければなりません"{0}"。</value>
   </data>
-  <data name="NoRecordFound" xml:space="preserve">
-    <value>申し訳ありませんが、レコードが見つかりませんでした。</value>
-  </data>
   <data name="InvalidDate" xml:space="preserve">
     <value>これは有効な日付ではありません。</value>
+  </data>
+  <data name="DateMustBeLessThan" xml:space="preserve">
+    <value>無効な日付。未満でなければなりません"{0}"。</value>
   </data>
   <data name="RequiredField" xml:space="preserve">
     <value>これは、必須フィールドです。</value>
   </data>
-  <data name="DateMustBeLessThan" xml:space="preserve">
-    <value>無効な日付。未満でなければなりません"{0}"。</value>
+  <data name="NoRecordFound" xml:space="preserve">
+    <value>申し訳ありませんが、レコードが見つかりませんでした。</value>
   </data>
 </root>

@@ -117,14 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InvalidCashRepository" xml:space="preserve">
-    <value>Invalid référentiel de trésorerie.</value>
+  <data name="NegativeValueSupplied" xml:space="preserve">
+    <value>Valeur négative fourni.</value>
+  </data>
+  <data name="AccessIsDenied" xml:space="preserve">
+    <value>L'accès est refusé.</value>
+  </data>
+  <data name="InsufficientBalanceInCashRepository" xml:space="preserve">
+    <value>Il n'y a pas un solde suffisant dans le référentiel de trésorerie pour effectuer cette opération.</value>
   </data>
   <data name="CompareDaysErrorMessage" xml:space="preserve">
     <value>De jour ne doit pas être supérieure à la à jour.</value>
-  </data>
-  <data name="NegativeValueSupplied" xml:space="preserve">
-    <value>Valeur négative fourni.</value>
   </data>
   <data name="InvalidData" xml:space="preserve">
     <value>Des données non valides.</value>
@@ -132,11 +135,8 @@
   <data name="ReferencingSidesNotEqual" xml:space="preserve">
     <value>Les côtés de référencement sont pas égaux.</value>
   </data>
-  <data name="InsufficientBalanceInCashRepository" xml:space="preserve">
-    <value>Il n'y a pas un solde suffisant dans le référentiel de trésorerie pour effectuer cette opération.</value>
-  </data>
-  <data name="AccessIsDenied" xml:space="preserve">
-    <value>L'accès est refusé.</value>
+  <data name="InvalidCashRepository" xml:space="preserve">
+    <value>Invalid référentiel de trésorerie.</value>
   </data>
   <data name="InvalidAccount" xml:space="preserve">
     <value>compte incorrect.</value>

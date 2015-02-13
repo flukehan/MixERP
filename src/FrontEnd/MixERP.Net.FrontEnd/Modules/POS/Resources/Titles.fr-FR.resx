@@ -117,31 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="StoreTypes" xml:space="preserve">
-    <value>Types de magasins</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>email</value>
-  </data>
   <data name="Url" xml:space="preserve">
     <value>Uniform Resource Locator</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>utilisateur</value>
   </data>
-  <data name="AssignCashier" xml:space="preserve">
-    <value>Attribuer Caissier</value>
+  <data name="StoreTypes" xml:space="preserve">
+    <value>Types de magasins</value>
+  </data>
+  <data name="PreparedOn" xml:space="preserve">
+    <value>préparé Sur</value>
   </data>
   <data name="Tel" xml:space="preserve">
     <value>téléphone</value>
   </data>
-  <data name="Fax" xml:space="preserve">
-    <value>fax</value>
+  <data name="AssignCashier" xml:space="preserve">
+    <value>Attribuer Caissier</value>
   </data>
   <data name="Stores" xml:space="preserve">
     <value>magasins</value>
   </data>
-  <data name="PreparedOn" xml:space="preserve">
-    <value>préparé Sur</value>
+  <data name="Email" xml:space="preserve">
+    <value>email</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>fax</value>
   </data>
 </root>

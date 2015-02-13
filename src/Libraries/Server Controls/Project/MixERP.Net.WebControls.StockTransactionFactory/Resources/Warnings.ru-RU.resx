@@ -120,7 +120,25 @@
   <data name="InsufficientStockWarning" xml:space="preserve">
     <value>Только {0} {1} {2} оставил в запасе.</value>
   </data>
+  <data name="InvalidShippingCompany" xml:space="preserve">
+    <value>Неверный судоходная компания.</value>
+  </data>
   <data name="InvalidParty" xml:space="preserve">
     <value>Неверный партия. Эта партия не связана с этой сделки.</value>
+  </data>
+  <data name="InvalidPriceType" xml:space="preserve">
+    <value>Неверный тип цена.</value>
+  </data>
+  <data name="InvalidStore" xml:space="preserve">
+    <value>Неверный магазин.</value>
+  </data>
+  <data name="InvalidSalesPerson" xml:space="preserve">
+    <value>Неверный продавцом.</value>
+  </data>
+  <data name="InvalidPaymentTerm" xml:space="preserve">
+    <value>Неверный срок оплаты.</value>
+  </data>
+  <data name="InvalidCostCenter" xml:space="preserve">
+    <value>Неверный МВЗ.</value>
   </data>
 </root>

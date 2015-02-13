@@ -123,11 +123,11 @@
   <data name="DateMustBeGreaterThan" xml:space="preserve">
     <value>Ungültiges Datum. Muss größer als sein "{0}".</value>
   </data>
-  <data name="InvalidDate" xml:space="preserve">
-    <value>Dies ist kein gültiges Datum aus.</value>
-  </data>
   <data name="RequiredField" xml:space="preserve">
     <value>Dies ist ein Pflichtfeld.</value>
+  </data>
+  <data name="InvalidDate" xml:space="preserve">
+    <value>Dies ist kein gültiges Datum aus.</value>
   </data>
   <data name="DateMustBeLessThan" xml:space="preserve">
     <value>Ungültiges Datum. Muss kleiner sein als "{0}".</value>
