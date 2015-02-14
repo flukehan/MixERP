@@ -1,7 +1,6 @@
-﻿using MixERP.Net.Common.Helpers;
+﻿using System.Globalization;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.StockAdjustmentFactory.Resources;
-using System.Globalization;
-using System.Text;
 
 namespace MixERP.Net.WebControls.StockAdjustmentFactory
 {
@@ -24,7 +23,7 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
 
         private void AddJavascript()
         {
-            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.StockAdjustmentFactory.FormView.js", "party_control", typeof(FormView));
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.StockAdjustmentFactory.FormView.js", "FormView", typeof (FormView));
         }
     }
 }

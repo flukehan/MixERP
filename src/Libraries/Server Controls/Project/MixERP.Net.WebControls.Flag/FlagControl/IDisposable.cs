@@ -23,10 +23,16 @@
             {
                 this.container.Dispose();
                 this.container = null;
+            }
 
+            if (this.flagDropDownlist != null)
+            {
                 this.flagDropDownlist.Dispose();
                 this.flagDropDownlist = null;
+            }
 
+            if (this.updateButton != null)
+            {
                 this.updateButton.Dispose();
                 this.updateButton = null;
             }

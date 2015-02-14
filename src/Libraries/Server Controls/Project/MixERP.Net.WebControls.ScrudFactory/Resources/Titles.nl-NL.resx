@@ -123,9 +123,6 @@
   <data name="UnknownError" xml:space="preserve">
     <value>Bewerking is mislukt vanwege een onbekende fout.</value>
   </data>
-  <data name="AccessDenied" xml:space="preserve">
-    <value>Toegang is geweigerd.</value>
-  </data>
   <data name="DeleteSelected" xml:space="preserve">
     <value>Verwijder geselecteerde</value>
   </data>
@@ -209,9 +206,6 @@
   </data>
   <data name="NextPage" xml:space="preserve">
     <value>Volgende pagina</value>
-  </data>
-  <data name="YesNo" xml:space="preserve">
-    <value>Yes, No</value>
   </data>
   <data name="FirstPage" xml:space="preserve">
     <value>eerste Pagina</value>

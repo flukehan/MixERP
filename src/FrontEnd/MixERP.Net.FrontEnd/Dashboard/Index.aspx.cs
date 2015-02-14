@@ -18,14 +18,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web.UI;
 using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.FrontEnd.Base;
 
@@ -56,7 +52,7 @@ namespace MixERP.Net.FrontEnd.Dashboard
                 return;
             }
 
-            var groups = widgetModels.OrderBy(x => x.RowNumber).ThenBy(x => x.ColumnNumber).GroupBy(x => new { x.RowNumber });
+            var groups = widgetModels.OrderBy(x => x.RowNumber).ThenBy(x => x.ColumnNumber).GroupBy(x => new {x.RowNumber});
 
             foreach (var group in groups)
             {
@@ -73,6 +69,5 @@ namespace MixERP.Net.FrontEnd.Dashboard
                 }
             }
         }
-
     }
 }

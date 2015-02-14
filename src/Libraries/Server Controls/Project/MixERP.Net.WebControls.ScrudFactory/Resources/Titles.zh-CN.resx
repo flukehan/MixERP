@@ -120,9 +120,6 @@
   <data name="RequiredFieldDetails" xml:space="preserve">
     <value>标有星号（*）的字段是必需的。</value>
   </data>
-  <data name="AccessDenied" xml:space="preserve">
-    <value>访问被拒绝。</value>
-  </data>
   <data name="DeleteSelected" xml:space="preserve">
     <value>删除所选</value>
   </data>
@@ -161,9 +158,6 @@
   </data>
   <data name="RequiredField" xml:space="preserve">
     <value>这是一个必填字段。</value>
-  </data>
-  <data name="YesNo" xml:space="preserve">
-    <value>是，否</value>
   </data>
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>任务成功完成。</value>

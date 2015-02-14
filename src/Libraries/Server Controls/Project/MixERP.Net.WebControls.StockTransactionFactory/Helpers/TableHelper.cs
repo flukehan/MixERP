@@ -16,11 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
@@ -48,7 +44,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
             }
         }
 
-        internal  static void CreateHeaderCell(TableRow row, string text, string targetControlId)
+        internal static void CreateHeaderCell(TableRow row, string text, string targetControlId)
         {
             using (TableHeaderCell cell = new TableHeaderCell())
             {
@@ -67,7 +63,5 @@ namespace MixERP.Net.WebControls.StockTransactionFactory.Helpers
                 row.Cells.Add(cell);
             }
         }
-
-
     }
 }

@@ -223,6 +223,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Created On.
+        /// </summary>
+        internal static string CreatedOn {
+            get {
+                return ResourceManager.GetString("CreatedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current IP.
         /// </summary>
         internal static string CurrentIP {
@@ -430,6 +439,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last Accessed On.
+        /// </summary>
+        internal static string LastAccessedOn {
+            get {
+                return ResourceManager.GetString("LastAccessedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Login IP.
         /// </summary>
         internal static string LastLoginIP {
@@ -444,6 +462,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string LastLoginOn {
             get {
                 return ResourceManager.GetString("LastLoginOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Written On.
+        /// </summary>
+        internal static string LastWrittenOn {
+            get {
+                return ResourceManager.GetString("LastWrittenOn", resourceCulture);
             }
         }
         
@@ -516,6 +543,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string MixERPOnFacebook {
             get {
                 return ResourceManager.GetString("MixERPOnFacebook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
             }
         }
         

@@ -17,10 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.WebControls.StockTransactionFactory
@@ -28,7 +26,6 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
     [ToolboxData("<{0}:StockTransactionForm runat=server></{0}:StockTransactionForm>")]
     public partial class StockTransactionForm : CompositeControl
     {
-
         protected override void CreateChildControls()
         {
             this.placeHolder = new PlaceHolder();
@@ -67,6 +64,5 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
             this.EnsureChildControls();
             this.placeHolder.RenderControl(writer);
         }
-
     }
 }

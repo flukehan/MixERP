@@ -29,7 +29,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     [ScriptService]
-    public class CurrencyData : System.Web.Services.WebService
+    public class CurrencyData : WebService
     {
         [WebMethod(EnableSession = true)]
         public IEnumerable<Currency> GetExchangeCurrencies()

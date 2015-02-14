@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Configuration;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using Npgsql;

@@ -35,7 +35,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
     {
         private void AddGridView(Control container)
         {
-            using (HtmlGenericControl gridSegment = new HtmlGenericControl())
+            using (HtmlGenericControl gridSegment = new HtmlGenericControl("div"))
             {
                 gridSegment.Attributes.Add("style", "width:100%;overflow:auto;");
 

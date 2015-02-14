@@ -17,13 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
-using MixERP.Net.DbFactory;
-using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using MixERP.Net.DbFactory;
+using Npgsql;
 
 namespace MixERP.Net.Tests.PgUnitTest.Helpers
 {
@@ -84,8 +83,14 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
 
         private static void RecursiveSearch(string directoryPath)
         {
-            if (string.IsNullOrWhiteSpace(directoryPath)) return;
-            if (!Directory.Exists(directoryPath)) return;
+            if (string.IsNullOrWhiteSpace(directoryPath))
+            {
+                return;
+            }
+            if (!Directory.Exists(directoryPath))
+            {
+                return;
+            }
 
             foreach (string subDirectory in Directory.GetDirectories(directoryPath))
             {
@@ -97,6 +102,5 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
                 RecursiveSearch(subDirectory);
             }
         }
-
     }
 }

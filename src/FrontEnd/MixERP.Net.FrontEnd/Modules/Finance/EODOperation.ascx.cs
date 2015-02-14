@@ -117,6 +117,7 @@ namespace MixERP.Net.Core.Modules.Finance
         {
             using (HtmlGenericControl console = new HtmlGenericControl("h2"))
             {
+                console.InnerText = Titles.EODConsole;
                 console.Attributes.Add("class", "ui blue header initially hidden");
                 container.Controls.Add(console);
             }

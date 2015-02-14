@@ -16,9 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-using Serilog;
+
 using System;
-using System.Configuration;
 using System.IO;
 using System.Threading;
 using System.Web;
@@ -26,7 +25,7 @@ using System.Web.Routing;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
-using Serilog.Configuration;
+using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 
@@ -113,10 +112,8 @@ namespace MixERP.Net.FrontEnd
             return filePath;
         }
 
-
         private LoggerConfiguration GetConfiguration()
         {
-
             string minimumLogLevel = ConfigurationHelper.GetMixERPParameter("MinimumLogLevel");
 
             LoggingLevelSwitch levelSwitch = new LoggingLevelSwitch();
@@ -129,10 +126,8 @@ namespace MixERP.Net.FrontEnd
             return new LoggerConfiguration().MinimumLevel.ControlledBy(levelSwitch).WriteTo.RollingFile(this.GetLogFileName());
         }
 
-
         private void IntializeLogger()
         {
-
             Log.Logger = this.GetConfiguration().CreateLogger();
 
             Log.Information("Application started.");

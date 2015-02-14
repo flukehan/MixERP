@@ -120,9 +120,6 @@
   <data name="UnknownError" xml:space="preserve">
     <value>L'opération a échoué en raison d'une erreur inconnue.</value>
   </data>
-  <data name="AccessDenied" xml:space="preserve">
-    <value>L'accès est refusé.</value>
-  </data>
   <data name="DeleteSelected" xml:space="preserve">
     <value>supprimer la sélection</value>
   </data>
@@ -215,9 +212,6 @@
   </data>
   <data name="EditSelected" xml:space="preserve">
     <value>Modifier la sélection</value>
-  </data>
-  <data name="YesNo" xml:space="preserve">
-    <value>Yes, No</value>
   </data>
   <data name="Use" xml:space="preserve">
     <value>utilisation</value>

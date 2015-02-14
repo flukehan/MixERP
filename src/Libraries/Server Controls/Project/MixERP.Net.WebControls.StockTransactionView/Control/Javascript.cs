@@ -31,7 +31,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
         [AspNetHostingPermission(SecurityAction.Demand, Level = AspNetHostingPermissionLevel.Minimal)]
         private void AddJavascript()
         {
-            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.StockTransactionViewFactory.StockTransactionView.js", "stock_transaction_view", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.StockTransactionViewFactory.StockTransactionView.js", "StockTransactionView", this.GetType());
         }
     }
 }

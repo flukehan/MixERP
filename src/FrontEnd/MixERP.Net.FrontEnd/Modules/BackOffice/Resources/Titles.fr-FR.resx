@@ -405,4 +405,16 @@
   <data name="ValueDate" xml:space="preserve">
     <value>date de valeur</value>
   </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>créé le</value>
+  </data>
+  <data name="LastAccessedOn" xml:space="preserve">
+    <value>La dernière utilisation</value>
+  </data>
+  <data name="LastWrittenOn" xml:space="preserve">
+    <value>Dernière Sur écrite</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>nom</value>
+  </data>
 </root>

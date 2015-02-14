@@ -24,6 +24,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <asp:Literal ID="MessageLiteral" runat="server" />
 
-<asp:Button ID="VacuumButton" runat="server" CssClass="btn btn-danger btn-sm" OnClick="VacuumButton_Click" />
-<asp:Button ID="FullVacuumButton" runat="server" CssClass="btn btn-danger btn-sm" OnClick="FullVacuumButton_Click" />
-<asp:Button ID="AnalyzeButton" runat="server" CssClass="btn btn-danger btn-sm" OnClick="AnalyzeButton_Click" />
+<asp:Button ID="VacuumButton" runat="server" CssClass="ui red button" OnClick="VacuumButton_Click" />
+<asp:Button ID="FullVacuumButton" runat="server" CssClass="ui red button" OnClick="FullVacuumButton_Click" />
+<asp:Button ID="AnalyzeButton" runat="server" CssClass="ui red button" OnClick="AnalyzeButton_Click" />

@@ -159,9 +159,6 @@
   <data name="BankAccounts" xml:space="preserve">
     <value>Bankkonton</value>
   </data>
-  <data name="CtrlAltC1" xml:space="preserve">
-    <value>Ctrl + Alt + C</value>
-  </data>
   <data name="RejectedTransactions" xml:space="preserve">
     <value>avvisade Transaktioner</value>
   </data>

@@ -17,9 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using MixERP.Net.WebControls.StockTransactionFactory.Resources;
 
@@ -27,7 +25,6 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
 {
     public partial class StockTransactionForm
     {
-
         private static void CreateHeaderRow(Table grid)
         {
             using (TableRow header = new TableRow())
@@ -49,7 +46,6 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
 
                 grid.Rows.Add(header);
             }
-
         }
     }
 }

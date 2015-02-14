@@ -16,16 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MixERP.Net.FrontEnd.Base;
+using System.Reflection;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.BackOffice.Resources;
-using System.Reflection;
+using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.Core.Modules.BackOffice
@@ -47,12 +44,10 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.DisplayViews = GetDisplayViews();
 
                 scrud.Text = Titles.Counters;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Counters));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Counters));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-
-
         }
 
         private static string GetDisplayFields()
@@ -70,6 +65,5 @@ namespace MixERP.Net.Core.Modules.BackOffice
             ScrudHelper.AddDisplayView(displayViews, "office.stores.store_id", "office.store_scrud_view");
             return string.Join(",", displayViews);
         }
-
     }
 }

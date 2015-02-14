@@ -162,9 +162,6 @@
   <data name="PerformingEODOperation" xml:space="preserve">
     <value>Realización de Fin de Día Operación</value>
   </data>
-  <data name="CtrlAltC1" xml:space="preserve">
-    <value>Ctrl + Alt + C</value>
-  </data>
   <data name="EODConsole" xml:space="preserve">
     <value>Al final del día Consola Operación</value>
   </data>

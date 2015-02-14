@@ -162,9 +162,6 @@
   <data name="TransactionTimestamp" xml:space="preserve">
     <value>Timestamp transaksi</value>
   </data>
-  <data name="CtrlAltC1" xml:space="preserve">
-    <value>Ctrl + Alt + C</value>
-  </data>
   <data name="InVerificationStack" xml:space="preserve">
     <value>Dalam Verifikasi Stack</value>
   </data>

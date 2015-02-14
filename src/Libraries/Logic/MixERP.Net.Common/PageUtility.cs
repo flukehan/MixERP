@@ -21,7 +21,6 @@ using System;
 using System.Configuration;
 using System.Globalization;
 using System.Net;
-using System.Threading;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
@@ -276,7 +275,7 @@ namespace MixERP.Net.Common
                 throw new InvalidOperationException(Resources.Warnings.CouldNotRegisterJavascript);
             }
 
-            ScriptManager.RegisterStartupScript(page, typeof(Page), key, javaScript, addScriptTags);
+            ScriptManager.RegisterStartupScript(page, typeof (Page), key, javaScript, addScriptTags);
         }
 
         public static string ResolveAbsoluteUrl(Page page, string relativeUrl)

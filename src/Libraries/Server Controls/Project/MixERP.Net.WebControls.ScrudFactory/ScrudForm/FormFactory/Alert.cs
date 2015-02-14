@@ -66,7 +66,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         }
         private void ResetForm()
         {
-            PageUtility.RegisterJavascript("resetForm", "$('#form1').each(function(){this.reset();});", this.Page, true);
+            PageUtility.RegisterJavascript("ScrudFormReset", "$('#form1').each(function(){this.reset();});", this.Page, true);
         }
     }
 }

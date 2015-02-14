@@ -52,7 +52,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
             js += JSUtility.GetVar("invalidSalesPersonWarningLocalized", Warnings.InvalidSalesPerson);
             js += JSUtility.GetVar("invalidPaymentTermLocalized", Warnings.InvalidPaymentTerm);
 
-            PageUtility.RegisterJavascript("StockTransactionFactory_Vars", js, this.Page, true);
+            PageUtility.RegisterJavascript("StockTransactionForm_Vars", js, this.Page, true);
         }
 
         public string GetTranBook()
@@ -68,7 +68,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
         [AspNetHostingPermission(SecurityAction.Demand, Level = AspNetHostingPermissionLevel.Minimal)]
         private void AddJavascript()
         {
-            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.StockTransactionFactory.Includes.Script.StockTransactionForm.js", "stock_transaction_form", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.StockTransactionFactory.Includes.Script.StockTransactionForm.js", "StockTransactionForm", this.GetType());
         }
     }
 }

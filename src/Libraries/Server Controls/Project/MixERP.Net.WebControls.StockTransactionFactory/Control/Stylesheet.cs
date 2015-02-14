@@ -18,23 +18,18 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Globalization;
 using System.Security.Permissions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities;
 
 [assembly: WebResource("MixERP.Net.WebControls.StockTransactionFactory.Includes.Style.StockTransactionFactory.css", "text/css", PerformSubstitution = true)]
+
 namespace MixERP.Net.WebControls.StockTransactionFactory
 {
     public partial class StockTransactionForm
     {
-
-        const string resource = "MixERP.Net.WebControls.StockTransactionFactory.Includes.Style.StockTransactionFactory.css";
+        private const string resource = "MixERP.Net.WebControls.StockTransactionFactory.Includes.Style.StockTransactionFactory.css";
 
         [AspNetHostingPermission(SecurityAction.Demand, Level = AspNetHostingPermissionLevel.Minimal)]
         private void AddStylesheet()
@@ -42,7 +37,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
             string href = this.Page.Request.Url.GetLeftPart(UriPartial.Authority) + this.Page.ClientScript.GetWebResourceUrl(this.GetType(), resource);
 
             using (HtmlLink link = new HtmlLink())
-            {                
+            {
                 link.Attributes.Add("rel", "stylesheet");
                 link.Attributes.Add("type", "text/css");
                 link.Href = href;
@@ -50,6 +45,5 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
                 this.Page.Header.Controls.Add(link);
             }
         }
-
     }
 }

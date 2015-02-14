@@ -174,9 +174,6 @@
   <data name="FlaggedTransactions" xml:space="preserve">
     <value>markeerde Transacties</value>
   </data>
-  <data name="CtrlAltC1" xml:space="preserve">
-    <value>Ctrl + Alt + C</value>
-  </data>
   <data name="Workflow" xml:space="preserve">
     <value>workflow</value>
   </data>

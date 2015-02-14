@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -62,8 +61,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.OneTimeSetup
                 long tranId = Conversion.TryCastLong(DbOperation.GetScalarValue(command));
                 return tranId;
             }
-
-
         }
 
         public static IEnumerable<NpgsqlParameter> AddOpeningStockParamter(Collection<OpeningStockType> details)
@@ -100,6 +97,5 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.OneTimeSetup
 
             return string.Join(",", detailCollection);
         }
-
     }
 }

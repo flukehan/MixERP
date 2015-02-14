@@ -123,9 +123,6 @@
   <data name="UnknownError" xml:space="preserve">
     <value>Operation fehlgeschlagen aufgrund eines unbekannten Fehlers.</value>
   </data>
-  <data name="AccessDenied" xml:space="preserve">
-    <value>Zugriff wird verweigert.</value>
-  </data>
   <data name="DeleteSelected" xml:space="preserve">
     <value>Ausgewählte löschen</value>
   </data>

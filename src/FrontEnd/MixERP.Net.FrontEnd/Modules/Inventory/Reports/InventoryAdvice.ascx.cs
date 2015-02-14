@@ -16,14 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reflection;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ReportEngine;
 
@@ -41,7 +38,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
                 report.AutoInitialize = true;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof(InventoryAdvice));
+                report.ResourceAssembly = Assembly.GetAssembly(typeof (InventoryAdvice));
                 report.Path = "~/Modules/Inventory/Reports/Source/Inventory.Advice.xml";
 
                 this.Controls.Add(report);

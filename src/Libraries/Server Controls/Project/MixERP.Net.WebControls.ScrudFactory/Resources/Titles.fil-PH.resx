@@ -120,9 +120,6 @@
   <data name="UnknownError" xml:space="preserve">
     <value>Hindi nagtagumpay ang operasyon dahil sa isang hindi kilalang error.</value>
   </data>
-  <data name="AccessDenied" xml:space="preserve">
-    <value>Tinanggihan ang access.</value>
-  </data>
   <data name="NothingSelected" xml:space="preserve">
     <value>Wala napili.</value>
   </data>
@@ -209,9 +206,6 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>oo</value>
-  </data>
-  <data name="YesNo" xml:space="preserve">
-    <value>Yes, No</value>
   </data>
   <data name="Go" xml:space="preserve">
     <value>pumunta</value>

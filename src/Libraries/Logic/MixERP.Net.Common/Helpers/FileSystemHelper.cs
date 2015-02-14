@@ -16,20 +16,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security;
 using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Hosting;
 
 namespace MixERP.Net.Common.Helpers
 {
     public static class FileSystemHelper
     {
-
         public static bool IsDirectoryWritable(string directory)
         {
             if (string.IsNullOrWhiteSpace(directory))

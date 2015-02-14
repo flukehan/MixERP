@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Data;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
@@ -30,7 +29,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
     {
         private void BindGridView()
         {
-
             var limit = 10;
             var offset = 0;
 
@@ -42,7 +40,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (this.Page.Request["page"] != null)
             {
-                offset = (Conversion.TryCastInteger(this.Page.Request["page"]) - 1) * limit;
+                offset = (Conversion.TryCastInteger(this.Page.Request["page"]) - 1)*limit;
             }
 
             using (DataTable table = FormHelper.GetView(this.ViewSchema, this.View, this.KeyColumn, limit, offset))

@@ -171,9 +171,6 @@
   <data name="Factor" xml:space="preserve">
     <value>faktor</value>
   </data>
-  <data name="CtrlAltC1" xml:space="preserve">
-    <value>Ctrl + Alt + C</value>
-  </data>
   <data name="TransactionTimestamp" xml:space="preserve">
     <value>transaksi Cap Masa</value>
   </data>

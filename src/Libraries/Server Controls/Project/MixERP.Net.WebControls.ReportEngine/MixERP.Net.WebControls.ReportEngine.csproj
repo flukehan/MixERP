@@ -74,7 +74,7 @@
     <Compile Include="Report\Intializer.cs" />
     <Compile Include="Report\Javascript.cs" />
     <Compile Include="Report\Properties.cs" />
-    <Compile Include="Report\RaisedEvents.cs" />
+    <Compile Include="Report\IDisposable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\mixerp.licenseheader">

@@ -25,28 +25,6 @@ namespace MixERP.Net.WebControls.ReportEngine
 {
     public partial class Report
     {
-        private Literal bodyContentsLiteral;
-
-        private Literal bottomSectionLiteral;
-
-        private PlaceHolder gridPlaceHolder;
-
-        private ReportHeader header;
-
-        /// <summary>
-        /// ReportBody is displayed below the CommandPanel and contains the following sections:
-        /// 1. Report Header
-        /// 2. Report Title
-        /// 3. Top Section
-        /// 4. Report Details (Grid)
-        /// 5. Bottom Section
-        /// </summary>
-        private Panel reportBody;
-
-        private string reportPath;
-        private Literal reportTitleLiteral;
-        private Literal topSectionLiteral;
-
         private void AddReportBody(Panel container)
         {
             this.reportBody = new Panel();

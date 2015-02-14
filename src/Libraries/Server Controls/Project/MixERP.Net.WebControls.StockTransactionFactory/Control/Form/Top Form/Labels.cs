@@ -18,10 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities.Core;
-using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using MixERP.Net.WebControls.StockTransactionFactory.Resources;
 
@@ -33,7 +30,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
         {
             using (HtmlTableRow header = new HtmlTableRow())
             {
-               TableHelper.AddCell(header, HtmlControlHelper.GetLabelHtml(Titles.ValueDate, "DateTextBox"));
+                TableHelper.AddCell(header, HtmlControlHelper.GetLabelHtml(Titles.ValueDate, "DateTextBox"));
 
                 if (this.ShowStore)
                 {
@@ -55,8 +52,5 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
                 table.Rows.Add(header);
             }
         }
-
-
-
     }
 }

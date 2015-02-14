@@ -69,7 +69,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
             javascript += JSUtility.GetVar("confirmationPasswordDoesNotMatchLocalized", Warnings.ConfirmationPasswordDoesNotMatch);
 
 
-            PageUtility.RegisterJavascript("ChangePassowrd_Localized", javascript, this.Page, true);
+            PageUtility.RegisterJavascript("ChangePassword", javascript, this.Page, true);
         }
 
         private void CreateMessage(Control container)
@@ -89,25 +89,25 @@ namespace MixERP.Net.FrontEnd.Site.Account
 
             if (string.IsNullOrWhiteSpace(currentPassword))
             {
-                this.errorMessage.InnerText = Resources.Warnings.PleaseEnterCurrentPassword;
+                this.errorMessage.InnerText = Warnings.PleaseEnterCurrentPassword;
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(newPassword))
             {
-                this.errorMessage.InnerText = Resources.Warnings.PleaseEnterNewPassword;
+                this.errorMessage.InnerText = Warnings.PleaseEnterNewPassword;
                 return;
             }
 
             if (currentPassword.Equals(newPassword))
             {
-                this.errorMessage.InnerText = Resources.Warnings.NewPasswordCannotBeOldPassword;
+                this.errorMessage.InnerText = Warnings.NewPasswordCannotBeOldPassword;
                 return;
             }
 
             if (!newPassword.Equals(confirmPassword))
             {
-                this.errorMessage.InnerText = Resources.Warnings.ConfirmationPasswordDoesNotMatch;
+                this.errorMessage.InnerText = Warnings.ConfirmationPasswordDoesNotMatch;
                 return;
             }
 
@@ -115,7 +115,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
             {
                 if (Data.Office.User.ChangePassword(userName, currentPassword, newPassword))
                 {
-                    this.ShowMessage(Resources.Labels.YourPasswordWasChanged, "ui large green header");
+                    this.ShowMessage(Labels.YourPasswordWasChanged, "ui large green header");
                 }
             }
             catch (MixERPException ex)
@@ -128,7 +128,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
         private void CreateButtons(HtmlGenericControl container)
         {
             this.changePasswordButton = new Button();
-            this.changePasswordButton.Text = Resources.Titles.ChangePassword;
+            this.changePasswordButton.Text = Titles.ChangePassword;
             this.changePasswordButton.CssClass = "ui pink button";
             this.changePasswordButton.OnClientClick = "return $('.form').form('validate form');";
             this.changePasswordButton.Click += this.ChangePasswordButton_Click;
@@ -138,7 +138,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
             {
                 cancelAnchor.Attributes.Add("class", "ui purple button");
                 cancelAnchor.HRef = "/";
-                cancelAnchor.InnerText = Resources.Titles.Cancel;
+                cancelAnchor.InnerText = Titles.Cancel;
 
                 container.Controls.Add(cancelAnchor);
             }
@@ -148,7 +148,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
         {
             using (HtmlGenericControl field = HtmlControlHelper.GetField())
             {
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Resources.Titles.ConfirmPassword, "ConfirmPasswordInputPassword"))
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.ConfirmPassword, "ConfirmPasswordInputPassword"))
                 {
                     field.Controls.Add(label);
                 }
@@ -175,7 +175,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
         {
             using (HtmlGenericControl field = HtmlControlHelper.GetField())
             {
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Resources.Titles.CurrentPassword, "PasswordInputPassword"))
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.CurrentPassword, "PasswordInputPassword"))
                 {
                     field.Controls.Add(label);
                 }
@@ -224,7 +224,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
         {
             using (HtmlGenericControl field = HtmlControlHelper.GetField())
             {
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Resources.Titles.NewPassword, "NewPasswordInputPassword"))
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.NewPassword, "NewPasswordInputPassword"))
                 {
                     field.Controls.Add(label);
                 }
@@ -251,7 +251,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
         {
             using (HtmlGenericControl field = HtmlControlHelper.GetField())
             {
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Resources.Titles.Username, "UserNameInputText"))
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.Username, "UserNameInputText"))
                 {
                     field.Controls.Add(label);
                 }

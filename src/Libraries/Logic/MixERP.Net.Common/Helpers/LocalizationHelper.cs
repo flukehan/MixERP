@@ -23,7 +23,6 @@ using System.ComponentModel.Design;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
-using System.Threading;
 using System.Web;
 using System.Web.Compilation;
 using Serilog;
@@ -117,7 +116,7 @@ namespace MixERP.Net.Common.Helpers
 
                 return string.Empty;
             }
-            catch(MissingManifestResourceException)
+            catch (MissingManifestResourceException)
             {
                 Log.Error("Resource could not be found for the {Key} on {Class}", key, className);
                 return className + "." + key + "::NotFound";

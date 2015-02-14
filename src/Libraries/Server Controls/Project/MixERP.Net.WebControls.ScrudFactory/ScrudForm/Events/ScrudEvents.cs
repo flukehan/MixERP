@@ -24,7 +24,6 @@ using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using System.Web.UI;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
@@ -155,7 +154,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 {
                     this.DisplayError(ex);
                 }
-
             }
             else
             {
@@ -166,7 +164,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         throw new MixERPException(Titles.AccessIsDenied);
                     }
 
-                    string[] exclusion = { "" };
+                    string[] exclusion = {""};
 
                     if (!string.IsNullOrWhiteSpace(this.ExcludeEdit))
                     {

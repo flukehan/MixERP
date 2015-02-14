@@ -122,6 +122,7 @@ saveButton.click(function () {
 
     var tableData = tableToJSON(transferGridView);
 
+    //Ignore resharper warning on this
     if (validateSides == true) {
         if (Validate(tableData)) {
             Callback();

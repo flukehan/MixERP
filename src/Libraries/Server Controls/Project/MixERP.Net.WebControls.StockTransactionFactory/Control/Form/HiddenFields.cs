@@ -19,13 +19,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 
 namespace MixERP.Net.WebControls.StockTransactionFactory
 {
     public partial class StockTransactionForm
     {
-
         private void CreateHiddenFields(Control container)
         {
             this.CreateItemCodeHidden(container);
@@ -155,6 +153,5 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
 
             container.Controls.Add(this.salesPersonIdHidden);
         }
-
     }
 }

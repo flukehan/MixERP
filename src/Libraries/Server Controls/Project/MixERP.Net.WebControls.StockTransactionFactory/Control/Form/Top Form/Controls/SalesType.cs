@@ -22,7 +22,6 @@ using System.Collections.ObjectModel;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using MixERP.Net.WebControls.StockTransactionFactory.Resources;
 
 namespace MixERP.Net.WebControls.StockTransactionFactory

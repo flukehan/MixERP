@@ -16,15 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-using System.Configuration;
+
 using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.Common.Models
 {
     public sealed class PostgreSQLServer
     {
-        private bool isValid;
-
         public PostgreSQLServer()
         {
             this.BinDirectory = ConfigurationHelper.GetDbServerParameter("PostgreSQLBinDirectory");
@@ -47,55 +45,46 @@ namespace MixERP.Net.Common.Models
         }
 
         public string BinDirectory { get; set; }
-
         public string DatabaseBackupDirectory { get; set; }
-
         public string DatabaseName { get; set; }
-
         public string HostName { get; set; }
-
-        public bool IsValid
-        {
-            get { return this.isValid; }
-        }
-
+        public bool IsValid { get; private set; }
         public string Password { get; set; }
-
         public int PortNumber { get; set; }
         public string UserId { get; set; }
+
         public void Validate()
         {
-            this.isValid = true;
+            this.IsValid = true;
 
             if (string.IsNullOrWhiteSpace(this.HostName))
             {
-                this.isValid = false;
+                this.IsValid = false;
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(this.DatabaseName))
             {
-                this.isValid = false;
+                this.IsValid = false;
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(this.UserId))
             {
-                this.isValid = false;
+                this.IsValid = false;
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(this.Password))
             {
-                this.isValid = false;
+                this.IsValid = false;
                 return;
             }
 
             if (this.PortNumber <= 0)
             {
-                this.isValid = false;
+                this.IsValid = false;
             }
-
         }
     }
 }

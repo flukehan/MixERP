@@ -168,9 +168,6 @@
   <data name="Account" xml:space="preserve">
     <value>conta</value>
   </data>
-  <data name="CtrlAltC1" xml:space="preserve">
-    <value>Ctrl + Alt + C</value>
-  </data>
   <data name="PreparedOn" xml:space="preserve">
     <value>preparado em</value>
   </data>

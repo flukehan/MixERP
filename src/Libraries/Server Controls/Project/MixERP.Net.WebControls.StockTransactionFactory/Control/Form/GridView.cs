@@ -22,6 +22,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Web.Script.Serialization;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Entities.Models.Transactions;
 
@@ -31,16 +32,25 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
     {
         private void CreateGrid(Control container)
         {
-            using (Table productGridView = new Table())
+            using (HtmlGenericControl div = new HtmlGenericControl("div"))
             {
-                productGridView.ID = "ProductGridView";
-                productGridView.CssClass = "ui table";
-                productGridView.Style.Add("max-width", "2000px");
+                div.Attributes.Add("style", "width:100%;overflow:auto;");
+                div.Attributes.Add("class", "vpad16");
 
-                CreateHeaderRow(productGridView);
-                this.CreateFooterRow(productGridView);
+                using (Table productGridView = new Table())
+                {
+                    productGridView.ID = "ProductGridView";
+                    productGridView.CssClass = "ui table";
+                    productGridView.Style.Add("min-width", "1200px");
+                    productGridView.Style.Add("max-width", "2000px");
 
-                container.Controls.Add(productGridView);
+                    CreateHeaderRow(productGridView);
+                    this.CreateFooterRow(productGridView);
+
+                    div.Controls.Add(productGridView);
+                }
+
+                container.Controls.Add(div);
             }
         }
 

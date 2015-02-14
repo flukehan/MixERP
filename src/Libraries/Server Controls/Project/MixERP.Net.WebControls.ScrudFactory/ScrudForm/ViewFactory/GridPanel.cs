@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
@@ -58,7 +57,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.lastValueHiddenTextBox.Style.Add("display", "none;");
             p.Controls.Add(this.lastValueHiddenTextBox);
         }
-
 
         private void CreateGridPanel()
         {

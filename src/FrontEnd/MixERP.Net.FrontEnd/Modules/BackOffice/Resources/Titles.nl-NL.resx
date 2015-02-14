@@ -405,4 +405,16 @@
   <data name="ValueDate" xml:space="preserve">
     <value>Value Date</value>
   </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>gemaakt op</value>
+  </data>
+  <data name="LastAccessedOn" xml:space="preserve">
+    <value>Laatst geraadpleegd op</value>
+  </data>
+  <data name="LastWrittenOn" xml:space="preserve">
+    <value>Laatste Geschreven Op</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>naam</value>
+  </data>
 </root>

@@ -94,7 +94,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Widgets
             using (HtmlGenericControl header = new HtmlGenericControl("h2"))
             {
                 header.Attributes.Add("class", "ui purple header");
-                header.InnerText = Resources.Titles.OfficeInformation;
+                header.InnerText = Titles.OfficeInformation;
                 container.Controls.Add(header);
             }
         }

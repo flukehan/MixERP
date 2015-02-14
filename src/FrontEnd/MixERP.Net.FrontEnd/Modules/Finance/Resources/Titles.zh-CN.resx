@@ -180,9 +180,6 @@
   <data name="RejectedTransactions" xml:space="preserve">
     <value>拒绝交易</value>
   </data>
-  <data name="CtrlAltC1" xml:space="preserve">
-    <value>Ctrl + Alt + C</value>
-  </data>
   <data name="Account" xml:space="preserve">
     <value>帐户</value>
   </data>

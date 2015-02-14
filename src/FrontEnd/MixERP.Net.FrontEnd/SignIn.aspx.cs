@@ -20,7 +20,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -46,7 +45,7 @@ namespace MixERP.Net.FrontEnd
 
             this.Session["Challenge"] = challenge;
 
-            PageUtility.RegisterJavascript("challenge", "var challenge = '" + challenge + "';", this.Page, true);
+            PageUtility.RegisterJavascript("SignInChallenge", "var challenge = '" + challenge + "';", this.Page, true);
         }
 
         private void CreateDimmer(Control container)
@@ -76,14 +75,14 @@ namespace MixERP.Net.FrontEnd
 
                             using (Literal literal = new Literal())
                             {
-                                literal.Text = Resources.Titles.SigningIn;
+                                literal.Text = Titles.SigningIn;
                                 header.Controls.Add(literal);
                             }
 
                             using (HtmlGenericControl subHeader = new HtmlGenericControl("div"))
                             {
                                 subHeader.Attributes.Add("class", "ui yellow sub header");
-                                subHeader.InnerText = Resources.Labels.JustAMomentPlease;
+                                subHeader.InnerText = Labels.JustAMomentPlease;
                                 header.Controls.Add(subHeader);
                             }
 

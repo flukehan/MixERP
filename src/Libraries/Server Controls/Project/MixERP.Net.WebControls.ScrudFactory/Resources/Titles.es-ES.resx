@@ -123,9 +123,6 @@
   <data name="RequiredField" xml:space="preserve">
     <value>Este es un campo obligatorio.</value>
   </data>
-  <data name="AccessDenied" xml:space="preserve">
-    <value>Acceso denegado.</value>
-  </data>
   <data name="DeleteSelected" xml:space="preserve">
     <value>eliminar seleccionados</value>
   </data>
@@ -191,9 +188,6 @@
   </data>
   <data name="InvalidDate" xml:space="preserve">
     <value>Fecha no válida.</value>
-  </data>
-  <data name="YesNo" xml:space="preserve">
-    <value>Sí, No</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>seleccionar</value>

@@ -165,9 +165,6 @@
   <data name="WithdrawnTransactions" xml:space="preserve">
     <value>-withdraw Transaksyon</value>
   </data>
-  <data name="CtrlAltC1" xml:space="preserve">
-    <value>Ctrl + Alt + C</value>
-  </data>
   <data name="Account" xml:space="preserve">
     <value>account</value>
   </data>

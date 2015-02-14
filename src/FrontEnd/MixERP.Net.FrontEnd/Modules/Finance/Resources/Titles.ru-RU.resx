@@ -177,9 +177,6 @@
   <data name="WithdrawnTransactions" xml:space="preserve">
     <value>Изъятые Сделки</value>
   </data>
-  <data name="CtrlAltC1" xml:space="preserve">
-    <value>Ctrl + Alt + C</value>
-  </data>
   <data name="InVerificationStack" xml:space="preserve">
     <value>В проверке стека</value>
   </data>

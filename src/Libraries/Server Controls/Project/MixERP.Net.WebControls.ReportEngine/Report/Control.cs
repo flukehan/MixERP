@@ -17,18 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common;
 using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {
     [ToolboxData("<{0}:Report runat=server></{0}:Report>")]
     public sealed partial class Report : CompositeControl
     {
-        private Panel reportContainer;
-
         protected override void CreateChildControls()
         {
             this.reportContainer = new Panel();
@@ -37,13 +35,14 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.AddReportBody(this.reportContainer);
             this.Controls.Add(this.reportContainer);
 
-            PageUtility.AddMeta(this.Page, "generator", Assembly.GetAssembly(typeof(Report)).GetName().Name);
+            PageUtility.AddMeta(this.Page, "generator", Assembly.GetAssembly(typeof (Report)).GetName().Name);
 
             if (this.AutoInitialize)
             {
                 this.InitializeReport();
             }
         }
+
 
         protected override void RecreateChildControls()
         {

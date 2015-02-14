@@ -17,7 +17,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
         {
             using (HtmlGenericControl gridPanel = new HtmlGenericControl("div"))
             {
-                gridPanel.Attributes.Add("style", "overflow:auto");
+                gridPanel.Attributes.Add("style", "width:100%;overflow:auto");
 
                 this.AddGridView(gridPanel);
 
@@ -32,6 +32,9 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
             this.transactionGridView.GridLines = GridLines.None;
             this.transactionGridView.AutoGenerateColumns = false;
             this.transactionGridView.CssClass = this.GridViewCssClass;
+
+            this.transactionGridView.Attributes.Add("style", "min-width:1200px;max-width:2000px;");
+
             this.transactionGridView.RowDataBound += this.TransactionGridView_RowDataBound;
             GridViewColumnHelper.AddColumns(this.transactionGridView);
 

@@ -16,15 +16,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Resources;
@@ -43,7 +40,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
             int storeId = Conversion.TryCastInteger(this.Page.Request["StoreId"]);
 
             int userId = CurrentSession.GetUserId();
-
 
 
             Collection<KeyValuePair<string, object>> parameter1 = new Collection<KeyValuePair<string, object>>();

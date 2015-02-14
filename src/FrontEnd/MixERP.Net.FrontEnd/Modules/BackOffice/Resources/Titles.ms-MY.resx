@@ -405,4 +405,16 @@
   <data name="ValueDate" xml:space="preserve">
     <value>nilai Tarikh</value>
   </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>dicipta</value>
+  </data>
+  <data name="LastAccessedOn" xml:space="preserve">
+    <value>Diakses Terakhir</value>
+  </data>
+  <data name="LastWrittenOn" xml:space="preserve">
+    <value>Ditulis Terakhir</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>nama</value>
+  </data>
 </root>

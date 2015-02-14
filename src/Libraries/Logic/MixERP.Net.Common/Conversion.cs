@@ -23,7 +23,6 @@ using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
@@ -60,7 +59,7 @@ namespace MixERP.Net.Common
                 {
                     string lang;
 
-                    if ((context.Session == null) || (context.Session["lang"] == null || string.IsNullOrWhiteSpace(context.Session["lang"] as string)))
+                    if ((context.Session == null) || string.IsNullOrWhiteSpace(context.Session["lang"] as string))
                     {
                         lang = "en-US";
                     }
@@ -117,7 +116,6 @@ namespace MixERP.Net.Common
             DateTime time = TimeZoneInfo.ConvertTimeFromUtc(utc, zone);
             return String.Format(LocalizationHelper.GetCurrentUICulture(), "{0} {1} {2}", time.ToLongDateString(), time.ToLongTimeString(), zone.DisplayName);
         }
-
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         public static string HashSha512Hex(string password, string salt)
@@ -235,7 +233,7 @@ namespace MixERP.Net.Common
 
                 if (value is DateTime)
                 {
-                    return (DateTime)value;
+                    return (DateTime) value;
                 }
 
 
@@ -261,7 +259,7 @@ namespace MixERP.Net.Common
             {
                 if (value is decimal)
                 {
-                    return (decimal)value;
+                    return (decimal) value;
                 }
 
                 string numberToParse = value.ToString();
@@ -284,7 +282,7 @@ namespace MixERP.Net.Common
             {
                 if (value is double)
                 {
-                    return (double)value;
+                    return (double) value;
                 }
 
                 string numberToParse = value.ToString();
@@ -314,7 +312,7 @@ namespace MixERP.Net.Common
 
                 if (value is int)
                 {
-                    return (int)value;
+                    return (int) value;
                 }
 
 
@@ -337,7 +335,7 @@ namespace MixERP.Net.Common
             {
                 if (value is long)
                 {
-                    return (long)value;
+                    return (long) value;
                 }
 
                 string numberToParse = value.ToString();
@@ -372,10 +370,9 @@ namespace MixERP.Net.Common
 
             if (value != null)
             {
-
                 if (value is short)
                 {
-                    return (short)value;
+                    return (short) value;
                 }
 
                 string numberToParse = value.ToString();
@@ -395,10 +392,9 @@ namespace MixERP.Net.Common
 
             if (value != null)
             {
-
                 if (value is float)
                 {
-                    return (float)value;
+                    return (float) value;
                 }
 
                 string numberToParse = value.ToString();
@@ -449,7 +445,7 @@ namespace MixERP.Net.Common
 
             if (value is Unit)
             {
-                return (Unit)value;
+                return (Unit) value;
             }
 
 

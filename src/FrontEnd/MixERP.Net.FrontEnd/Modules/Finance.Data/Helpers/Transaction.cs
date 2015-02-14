@@ -23,7 +23,6 @@ using System.Linq;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.DbFactory;
-using MixERP.Net.Entities.Audit;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
 using Npgsql;
@@ -101,8 +100,8 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             var decimalPlaces = LocalizationHelper.GetCurrencyDecimalPlaces();
 
             if ((from detail in details
-                 where Decimal.Round(detail.Credit * detail.ExchangeRate, decimalPlaces) != Decimal.Round(detail.LocalCurrencyCredit, decimalPlaces) || Decimal.Round(detail.Debit * detail.ExchangeRate, decimalPlaces) != Decimal.Round(detail.LocalCurrencyDebit, decimalPlaces)
-                 select detail).Any())
+                where Decimal.Round(detail.Credit*detail.ExchangeRate, decimalPlaces) != Decimal.Round(detail.LocalCurrencyCredit, decimalPlaces) || Decimal.Round(detail.Debit*detail.ExchangeRate, decimalPlaces) != Decimal.Round(detail.LocalCurrencyDebit, decimalPlaces)
+                select detail).Any())
             {
                 throw new InvalidOperationException(Resources.Errors.ReferencingSidesNotEqual);
             }

@@ -19,8 +19,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MixERPReportMaster.Master" CodeBehind="ReportViewer.aspx.cs" Inherits="MixERP.Net.FrontEnd.Reports.ReportViewer" ValidateRequest="false" %>
 
-<%@ Register TagPrefix="mixerp" Namespace="MixERP.Net.WebControls.ReportEngine" Assembly="MixERP.Net.WebControls.ReportEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a724a47a0879d02f" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
@@ -30,7 +28,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         <a href="#" onclick=" $('.report-parameter').toggle(500); " class="ui red button" style="float: right; padding: 4px;">Close This Form</a>
     </asp:Panel>
 
-    <div style="padding:12px">
+    <div style="padding: 12px">
         <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
     </div>
 

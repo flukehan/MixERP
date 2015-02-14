@@ -168,9 +168,6 @@
   <data name="PerformingEODOperation" xml:space="preserve">
     <value>Uitvoeren Einde Dag Operatie</value>
   </data>
-  <data name="CtrlAltC1" xml:space="preserve">
-    <value>Ctrl + Alt + C</value>
-  </data>
   <data name="Warning" xml:space="preserve">
     <value>waarschuwing</value>
   </data>

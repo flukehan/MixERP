@@ -396,13 +396,16 @@
   <data name="OK" xml:space="preserve">
     <value>Okay</value>
   </data>
-  <data name="String" xml:space="preserve">
-    <value>Fecha Valor</value>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>Creado el</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value>Número de referencia</value>
+  <data name="LastAccessedOn" xml:space="preserve">
+    <value>Último acceso el</value>
   </data>
-  <data name="String2" xml:space="preserve">
-    <value>Declaración de Referencia</value>
+  <data name="LastWrittenOn" xml:space="preserve">
+    <value>Última Escrito En</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>nombre</value>
   </data>
 </root>

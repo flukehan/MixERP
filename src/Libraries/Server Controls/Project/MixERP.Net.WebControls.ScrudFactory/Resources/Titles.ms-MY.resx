@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccessDenied" xml:space="preserve">
-    <value>Akses dinafikan.</value>
-  </data>
   <data name="DeleteSelected" xml:space="preserve">
     <value>Padam Terpilih</value>
   </data>
@@ -212,9 +209,6 @@
   </data>
   <data name="ViewSchemaEmptyExceptionMessage" xml:space="preserve">
     <value>Harta 'Lihat Skema' tidak boleh dibiarkan kosong.</value>
-  </data>
-  <data name="YesNo" xml:space="preserve">
-    <value>Yes, No</value>
   </data>
   <data name="EditSelected" xml:space="preserve">
     <value>Edit Terpilih</value>

@@ -185,13 +185,6 @@ namespace MixERP.Net.Core.Modules.Inventory
 
         #region Form
 
-        private void AddTemplateField(GridView g, string headerText)
-        {
-            TemplateField field = new TemplateField();
-            field.HeaderText = headerText;
-            g.Columns.Add(field);
-        }
-
         private void CreateReferenceNumberField(HtmlGenericControl container)
         {
             using (HtmlGenericControl field = HtmlControlHelper.GetField())

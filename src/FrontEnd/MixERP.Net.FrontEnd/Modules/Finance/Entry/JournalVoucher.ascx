@@ -45,108 +45,109 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <input type="hidden" id="TransactionGridViewHidden" />
 
-<table id="TransactionGridView" class="ui table">
-    <thead>
-        <tr>
-            <th style="width: 9%">
-                <label for="StatementReferenceInputText">
-                    <asp:Literal runat="server" ID="StatementReferenceLiteral" />
-                </label>
-            </th>
-            <th scope="col" style="width: 7%;">
-                <label for="AccountNumberInputText">
-                    <asp:Literal runat="server" ID="AccountNumberLiteral" />
-                </label>
-            </th>
-            <th style="width: 15%;">
-                <label for="AccountSelect">
-                    <asp:Literal runat="server" ID="AccountLiteral" />
-                </label>
-            </th>
-            <th style="width: 8%;">
-                <label for="CashRepositorySelect">
-                    <asp:Literal runat="server" ID="CashRepositoryLiteral" />
-                </label>
-            </th>
-            <th style="width: 8%;">
-                <label for="CurrencySelect">
-                    <asp:Literal runat="server" ID="CurrencyLiteral" />
-                </label>
-            </th>
-            <th class="text-right" style="width: 10%;">
-                <label for="DebitInputText">
-                    <asp:Literal runat="server" ID="DebitLiteral" />
-                </label>
-            </th>
-            <th class="text-right" style="width: 9%;">
-                <label for="CreditInputText">
-                    <asp:Literal runat="server" ID="CreditLiteral" />
-                </label>
-            </th>
-            <th class="text-right" style="width: 7%;">
-                <label for="ERInputText">
-                    <asp:Literal runat="server" ID="ERLiteral" />
-                </label>
-            </th>
-            <th class="text-right" style="width: 9%;">
-                <label for="LCDebitInputText">
-                    <asp:Literal runat="server" ID="LCDebitLiteral" />
-                </label>
-            </th>
-            <th class="text-right" style="width: 9%;">
-                <label for="LCCreditInputText">
-                    <asp:Literal runat="server" ID="LCCreditLiteral" />
-                </label>
-            </th>
-            <th style="width: 9%;">
-                <asp:Literal runat="server" ID="ActionLiteral" />
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr class="ui form footer-row">
-            <td>
-                <input type="text" id="StatementReferenceInputText" title='Ctrl + Alt +S' />
-            </td>
-            <td>
-                <input type="text" id="AccountNumberInputText" title='Ctrl + Alt + T' />
-            </td>
-            <td>
-                <select id="AccountSelect" title='Ctrl + Alt + A'></select>
-            </td>
-            <td>
-                <select id="CashRepositorySelect"></select>
-            </td>
-            <td>
-                <select id="CurrencySelect"></select>
-            </td>
-            <td>
-                <input type="text" id="DebitInputText" class="text-right currency" title='Ctrl + Alt + D' />
-            </td>
-            <td>
-                <input type="text" id="CreditInputText" class="text-right currency" title='Ctrl + Alt + C' />
-            </td>
-            <td>
-                <input type="text" id="ERInputText" class="text-right decimal" />
-            </td>
-            <td>
-                <input type="text" id="LCDebitInputText" class="text-right currency" readonly="readonly" title='Ctrl + Alt + D' />
-            </td>
-            <td>
-                <input type="text" id="LCCreditInputText" class="text-right currency" readonly="readonly" title='Ctrl + Alt + C' />
-            </td>
-            <td>
-                <input type="button" id="AddInputButton" runat="server" class="ui small blue button" title='Ctrl + Return' />
-            </td>
-        </tr>
-    </tbody>
-</table>
-
+<div style="width: 100%; overflow: auto;">
+    <table id="TransactionGridView" class="ui table" style="min-width: 1200px; max-width: 2000px;">
+        <thead>
+            <tr>
+                <th style="width: 9%">
+                    <label for="StatementReferenceInputText">
+                        <asp:Literal runat="server" ID="StatementReferenceLiteral" />
+                    </label>
+                </th>
+                <th scope="col" style="width: 7%;">
+                    <label for="AccountNumberInputText">
+                        <asp:Literal runat="server" ID="AccountNumberLiteral" />
+                    </label>
+                </th>
+                <th style="width: 15%;">
+                    <label for="AccountSelect">
+                        <asp:Literal runat="server" ID="AccountLiteral" />
+                    </label>
+                </th>
+                <th style="width: 8%;">
+                    <label for="CashRepositorySelect">
+                        <asp:Literal runat="server" ID="CashRepositoryLiteral" />
+                    </label>
+                </th>
+                <th style="width: 8%;">
+                    <label for="CurrencySelect">
+                        <asp:Literal runat="server" ID="CurrencyLiteral" />
+                    </label>
+                </th>
+                <th class="text-right" style="width: 10%;">
+                    <label for="DebitInputText">
+                        <asp:Literal runat="server" ID="DebitLiteral" />
+                    </label>
+                </th>
+                <th class="text-right" style="width: 9%;">
+                    <label for="CreditInputText">
+                        <asp:Literal runat="server" ID="CreditLiteral" />
+                    </label>
+                </th>
+                <th class="text-right" style="width: 7%;">
+                    <label for="ERInputText">
+                        <asp:Literal runat="server" ID="ERLiteral" />
+                    </label>
+                </th>
+                <th class="text-right" style="width: 9%;">
+                    <label for="LCDebitInputText">
+                        <asp:Literal runat="server" ID="LCDebitLiteral" />
+                    </label>
+                </th>
+                <th class="text-right" style="width: 9%;">
+                    <label for="LCCreditInputText">
+                        <asp:Literal runat="server" ID="LCCreditLiteral" />
+                    </label>
+                </th>
+                <th style="width: 9%;">
+                    <asp:Literal runat="server" ID="ActionLiteral" />
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="ui form footer-row">
+                <td>
+                    <input type="text" id="StatementReferenceInputText" title='Ctrl + Alt +S' />
+                </td>
+                <td>
+                    <input type="text" id="AccountNumberInputText" title='Ctrl + Alt + T' />
+                </td>
+                <td>
+                    <select id="AccountSelect" title='Ctrl + Alt + A'></select>
+                </td>
+                <td>
+                    <select id="CashRepositorySelect"></select>
+                </td>
+                <td>
+                    <select id="CurrencySelect"></select>
+                </td>
+                <td>
+                    <input type="text" id="DebitInputText" class="text-right currency" title='Ctrl + Alt + D' />
+                </td>
+                <td>
+                    <input type="text" id="CreditInputText" class="text-right currency" title='Ctrl + Alt + C' />
+                </td>
+                <td>
+                    <input type="text" id="ERInputText" class="text-right decimal" />
+                </td>
+                <td>
+                    <input type="text" id="LCDebitInputText" class="text-right currency" readonly="readonly" title='Ctrl + Alt + D' />
+                </td>
+                <td>
+                    <input type="text" id="LCCreditInputText" class="text-right currency" readonly="readonly" title='Ctrl + Alt + C' />
+                </td>
+                <td>
+                    <input type="button" id="AddInputButton" runat="server" class="ui small blue button" title='Ctrl + Return' />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <h4>
     <asp:Label ID="AttachmentLabel" runat="server" Text="Attachments" />
 </h4>
 <div id="AttachmentDiv" class="grey" style="display: none; padding-left: 24px;">
-<asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
+    <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 </div>
 
 <div class="ui tiny form segment">

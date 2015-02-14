@@ -405,4 +405,16 @@
   <data name="ValueDate" xml:space="preserve">
     <value>起息日</value>
   </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>创建于</value>
+  </data>
+  <data name="LastAccessedOn" xml:space="preserve">
+    <value>上次访问在</value>
+  </data>
+  <data name="LastWrittenOn" xml:space="preserve">
+    <value>最后写上</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>名字</value>
+  </data>
 </root>

@@ -17,48 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-
-/********************************************************************************
-Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
-
-This file is part of MixERP.
-
-MixERP is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-MixERP is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************************/
-
-using System.Text;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {
     public partial class Report
     {
-        /// <summary>
-        /// CommandPanel is displayed at the top of the report.
-        /// </summary>
-        private Panel commandPanel;
-
-        private ImageButton emailImageButton;
-        private ImageButton printImageButton;
-        private ImageButton excelImageButton;
-        private ImageButton wordImageButton;
-        private ImageButton goTopImageButton;
-        private ImageButton goBottomImageButton;
-        private ImageButton filterImageButton;
-        private ImageButton closeImageButton;
-
         private string GetImageButtonCssClass()
         {
             string cssClass = this.ImageButtonCssClass;
@@ -79,8 +44,6 @@ namespace MixERP.Net.WebControls.ReportEngine
 
             this.AddEmailImageButton(this.commandPanel);
             this.AddPrintImageButton(this.commandPanel);
-            this.AddExcelImageButton(this.commandPanel);
-            this.AddWordImageButton(this.commandPanel);
             this.AddGoTopImageButton(this.commandPanel);
             this.AddGoBottomImageButton(this.commandPanel);
             this.AddFilterImageButton(this.commandPanel);
@@ -108,30 +71,6 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.printImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("PrintIcon"));
 
             p.Controls.Add(this.printImageButton);
-        }
-
-        private void AddExcelImageButton(Panel p)
-        {
-            this.excelImageButton = new ImageButton();
-            this.excelImageButton.ID = "ExcelImageButton";
-            this.excelImageButton.CssClass = this.GetImageButtonCssClass();
-            this.excelImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("ExcelIcon"));
-            this.excelImageButton.Click += this.ExcelImageButton_Click;
-            this.excelImageButton.OnClientClick = this.GetReportHtmlScript();
-
-            p.Controls.Add(this.excelImageButton);
-        }
-
-        private void AddWordImageButton(Panel p)
-        {
-            this.wordImageButton = new ImageButton();
-            this.wordImageButton.ID = "WordImageButton";
-            this.wordImageButton.CssClass = this.GetImageButtonCssClass();
-            this.wordImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("WordIcon"));
-            this.wordImageButton.Click += this.WordImageButton_Click;
-            this.wordImageButton.OnClientClick = this.GetReportHtmlScript();
-
-            p.Controls.Add(this.wordImageButton);
         }
 
         private void AddGoTopImageButton(Panel p)
@@ -176,22 +115,6 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.closeImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("CloseIcon"));
 
             p.Controls.Add(this.closeImageButton);
-        }
-
-        private string GetReportHtmlScript()
-        {
-            this.EnsureChildControls();
-            StringBuilder s = new StringBuilder();
-            s.Append("$('#" + this.reportHidden.ClientID + "')");
-            s.Append(".val(");
-            s.Append("'<html>'");
-            s.Append("+");
-            s.Append("$('#report').html()");
-            s.Append("+");
-            s.Append("'</html>'");
-            s.Append(");");
-
-            return s.ToString();
         }
     }
 }

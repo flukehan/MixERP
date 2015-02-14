@@ -17,75 +17,20 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+
 using System;
 using System.Threading;
-using System.Web;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 
-/********************************************************************************
-Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
-
-This file is part of MixERP.
-
-MixERP is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-MixERP is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************************/
-
 namespace MixERP.Net.WebControls.ReportEngine
 {
-    public partial class Report //: CompositeControl
+    public partial class Report
     {
-        public void ExcelImageButton_Click(object sender, EventArgs e)
-        {
-            //EnsureChildControls();
-            string html = this.reportHidden.Value;
-            if (!string.IsNullOrWhiteSpace(html))
-            {
-                this.Page.Response.ContentType = "application/force-download";
-                this.Page.Response.AddHeader("content-disposition", "attachment; filename=" + this.reportTitleHidden.Value + ".xls");
-                this.Page.Response.Charset = "";
-                this.Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                this.Page.Response.ContentType = "application/vnd.ms-excel";
-                this.Page.Response.Write(html);
-                this.Page.Response.Flush();
-                this.Page.Response.Close();
-            }
-        }
-
-        public void WordImageButton_Click(object sender, EventArgs e)
-        {
-            //EnsureChildControls();
-            string html = this.reportHidden.Value;
-            if (!string.IsNullOrWhiteSpace(html))
-            {
-                this.Page.Response.ContentType = "application/force-download";
-                this.Page.Response.AddHeader("content-disposition", "attachment; filename=" + this.reportTitleHidden.Value + ".doc");
-                this.Page.Response.Charset = "";
-                this.Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                this.Page.Response.ContentType = "application/vnd.ms-word";
-                this.Page.Response.Write(html);
-                this.Page.Response.Flush();
-                this.Page.Response.Close();
-            }
-        }
-
-        #region GridView Events
-
         private void GridView_DataBound(object sender, EventArgs e)
         {
-            GridView grid = (GridView)sender;
+            GridView grid = (GridView) sender;
 
             int arg = Conversion.TryCastInteger(grid.ID.Replace("GridView", ""));
 
@@ -162,7 +107,7 @@ namespace MixERP.Net.WebControls.ReportEngine
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                GridView grid = (GridView)sender;
+                GridView grid = (GridView) sender;
                 int arg = Conversion.TryCastInteger(grid.ID.Replace("GridView", ""));
 
 
@@ -182,8 +127,5 @@ namespace MixERP.Net.WebControls.ReportEngine
                 }
             }
         }
-
-
-        #endregion GridView Events
     }
 }

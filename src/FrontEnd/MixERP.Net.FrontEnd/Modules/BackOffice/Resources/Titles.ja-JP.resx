@@ -390,7 +390,7 @@
   <data name="Quantity" xml:space="preserve">
     <value>数量</value>
   </data>
-  <data name="Upload Attachments" xml:space="preserve">
+  <data name="UploadAttachments" xml:space="preserve">
     <value>添付ファイルをアップロードする</value>
   </data>
   <data name="OK" xml:space="preserve">
@@ -404,5 +404,17 @@
   </data>
   <data name="ValueDate" xml:space="preserve">
     <value>実行日</value>
+  </data>
+  <data name="CreatedOn" xml:space="preserve">
+    <value>上で作成</value>
+  </data>
+  <data name="LastAccessedOn" xml:space="preserve">
+    <value>最終アクセスで</value>
+  </data>
+  <data name="LastWrittenOn" xml:space="preserve">
+    <value>最後に書き込まれた上で</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>名前</value>
   </data>
 </root>

@@ -11,12 +11,13 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
         {
             using (HtmlGenericControl gridPanel = new HtmlGenericControl("div"))
             {
-                gridPanel.Attributes.Add("style", "width: 1100px;");
+                gridPanel.Attributes.Add("style", "width: 100%;overflow:auto;");
 
                 using (Table table = new Table())
                 {
                     table.ID = "TransferGridView";
                     table.Attributes.Add("class", "ui table");
+                    table.Attributes.Add("style", "min-width:1000px;max-width:2000px;");
 
                     table.Rows.Add(this.GetHeaderRow());
                     table.Rows.Add(this.GetControlRow());

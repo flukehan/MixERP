@@ -21,7 +21,6 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls.WebParts;
 using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls
@@ -40,7 +39,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
         internal HtmlGenericControl GetPager()
         {
-            string title;
             if (this.PageSize.Equals(0))
             {
                 this.PageSize = this.BlockCount;
@@ -67,6 +65,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
 
                 //The previous page block
+                string title;
                 if (start - this.BlockCount > 0)
                 {
                     using (HtmlAnchor anchor = this.GetIconAnchor("icon item", "", start - 1))

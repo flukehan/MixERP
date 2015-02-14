@@ -17,12 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.FrontEnd.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -31,6 +29,7 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
+using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.Flag;
 
@@ -191,6 +190,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
         #endregion Tabs
 
         #region IDisposable
+
         private HiddenField selectedValuesHidden;
         private Button showButton;
         private MixERPGridView statementGridView;
@@ -283,7 +283,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
 
         #region Account Overview Panel
 
-
         private void CreateAccountOverviewPanel(HtmlGenericControl container)
         {
             container.Controls.Clear();
@@ -317,7 +316,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
 
         private void CreateTableBody(Table table)
         {
-
             if (this.itemCodeInputText == null)
             {
                 return;

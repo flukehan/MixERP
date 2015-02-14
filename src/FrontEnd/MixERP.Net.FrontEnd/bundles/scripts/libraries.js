@@ -47554,7 +47554,7 @@ function updateQueryString(key, value, url) {
             if (typeof hash[1] !== 'undefined' && hash[1] !== null)
                 url += '#' + hash[1];
             return url;
-        };
+        }
     }
     else {
         if (typeof value !== 'undefined' && value !== null) {
@@ -47567,6 +47567,6 @@ function updateQueryString(key, value, url) {
         }
         else
             return url;
-    };
+    }
 };
 

@@ -120,9 +120,6 @@
   <data name="ShowCompact" xml:space="preserve">
     <value>mostrar compacto</value>
   </data>
-  <data name="AccessDenied" xml:space="preserve">
-    <value>Acesso negado.</value>
-  </data>
   <data name="UnknownError" xml:space="preserve">
     <value>A operação falhou devido a um erro desconhecido.</value>
   </data>
@@ -200,9 +197,6 @@
   </data>
   <data name="NextPage" xml:space="preserve">
     <value>próxima Página</value>
-  </data>
-  <data name="YesNo" xml:space="preserve">
-    <value>Yes, No</value>
   </data>
   <data name="LastPage" xml:space="preserve">
     <value>Última Página</value>

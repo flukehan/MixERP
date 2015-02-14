@@ -23,9 +23,6 @@ namespace MixERP.Net.WebControls.ReportEngine
 {
     public partial class Report
     {
-        private HiddenField reportHidden;
-        private HiddenField reportTitleHidden;
-
         private void AddHiddenControls(Panel p)
         {
             this.reportHidden = new HiddenField();

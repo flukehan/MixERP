@@ -21,9 +21,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Web.Hosting;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models;
@@ -179,8 +181,22 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                         }
                     }
 
+                    this.grid.RowDataBound += this.Grid_RowDataBound;
                     this.grid.DataSource = files;
                     this.grid.DataBind();
+                }
+            }
+        }
+
+        private void Grid_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            Assembly ass = Assembly.GetAssembly(typeof (DatabaseBackup));
+
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                for (int i = 0; i < e.Row.Cells.Count; i++)
+                {
+                    e.Row.Cells[i].Text = LocalizationHelper.GetResourceString(ass, "MixERP.Net.Core.Modules.BackOffice.Resources.Titles", e.Row.Cells[i].Text);
                 }
             }
         }
@@ -291,6 +307,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 
             if (this.grid != null)
             {
+                this.grid.RowDataBound -= this.Grid_RowDataBound;
                 this.grid.Dispose();
                 this.grid = null;
             }

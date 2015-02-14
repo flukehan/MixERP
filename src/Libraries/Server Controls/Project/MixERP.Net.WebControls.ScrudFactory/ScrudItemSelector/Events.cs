@@ -30,7 +30,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
     {
         private void FilterSelectDataBound(object sender, EventArgs e)
         {
-            using (var dropDownList = sender as DropDownList)
+            using (DropDownList dropDownList = sender as DropDownList)
             {
                 if (dropDownList == null)
                 {
@@ -94,9 +94,10 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (e.Row.RowType == DataControlRowType.Header)
             {
-                for (var i = 0; i < e.Row.Cells.Count; i++)
+                for (int i = 1; i < e.Row.Cells.Count; i++)
                 {
-                    var cellText = e.Row.Cells[i].Text;
+                    string cellText = e.Row.Cells[i].Text;
+
                     if (!string.IsNullOrWhiteSpace(cellText))
                     {
                         cellText =

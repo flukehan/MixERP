@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.WebControls.Common;
@@ -27,7 +26,6 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
     public sealed partial class StockTransactionForm
     {
         private DateTextBox dateTextBox;
-
         private bool disposed;
         private HiddenField itemCodeHidden;
         private HiddenField itemIdHidden;
@@ -35,21 +33,21 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
         private HiddenField partyCodeHidden;
         private HtmlInputText partyCodeInputText;
         private HiddenField partyIdHidden;
+        private PlaceHolder placeHolder;
         private HiddenField priceTypeIdHidden;
         private HiddenField productGridViewDataHidden;
         private HtmlInputText referenceNumberInputText;
         private HiddenField salesPersonIdHidden;
         private HiddenField shipperIdHidden;
         private HiddenField shippingAddressCodeHidden;
+        private HtmlTextArea statementReferenceTextArea;
         private HiddenField storeIdHidden;
         private HtmlGenericControl title;
         private HiddenField tranIdCollectionHidden;
         private HiddenField unitIdHidden;
         private HiddenField unitNameHidden;
-        private HtmlTextArea statementReferenceTextArea;
-        private PlaceHolder placeHolder;
-        
-        public sealed override void Dispose()
+
+        public override void Dispose()
         {
             if (!this.disposed)
             {
@@ -57,7 +55,6 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
                 base.Dispose();
             }
         }
-
 
         private void Dispose(bool disposing)
         {
@@ -188,6 +185,5 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
 
             this.disposed = true;
         }
-
     }
 }

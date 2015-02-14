@@ -168,9 +168,6 @@
   <data name="PerformingEODOperation" xml:space="preserve">
     <value>Exécution fin de l'opération de jour</value>
   </data>
-  <data name="CtrlAltC1" xml:space="preserve">
-    <value>Ctrl + Alt + C</value>
-  </data>
   <data name="Account" xml:space="preserve">
     <value>compte</value>
   </data>

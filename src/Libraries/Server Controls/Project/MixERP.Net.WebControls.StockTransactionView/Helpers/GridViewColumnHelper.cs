@@ -21,7 +21,6 @@ using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities;
 using MixERP.Net.WebControls.StockTransactionViewFactory.Resources;
@@ -99,7 +98,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Helpers
                 this.printAnchor.ID = "PrintAnchor";
                 this.printAnchor.ClientIDMode = ClientIDMode.Predictable;
                 this.printAnchor.Title = Titles.Print;
-                
+
                 using (HtmlGenericControl icon = new HtmlGenericControl("i"))
                 {
                     icon.Attributes.Add("class", "print icon");

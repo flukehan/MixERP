@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using System.Reflection;
 using System.Security.Permissions;
 using System.Web;
@@ -8,8 +7,6 @@ using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.Services.Protocols;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities.Audit;
 
 namespace MixERP.Net.WebControls.AttachmentFactory.Handlers
 {
@@ -19,6 +16,24 @@ namespace MixERP.Net.WebControls.AttachmentFactory.Handlers
     [PermissionSet(SecurityAction.InheritanceDemand, Unrestricted = true)]
     public class UploadService : WebService, IHttpHandlerFactory
     {
+        public IHttpHandler GetHandler(HttpContext context, string requestType, string url, string pathTranslated)
+        {
+            WebServiceHandlerFactory factory = new WebServiceHandlerFactory();
+            MethodInfo method = typeof (WebServiceHandlerFactory).GetMethod("CoreGetHandler", BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] {typeof (Type), typeof (HttpContext), typeof (HttpRequest), typeof (HttpResponse)}, null);
+
+            return (IHttpHandler) method.Invoke(factory, new object[]
+            {
+                this.GetType(),
+                context,
+                context.Request,
+                context.Response
+            });
+        }
+
+        public void ReleaseHandler(IHttpHandler handler)
+        {
+        }
+
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Xml)]
         public bool UndoUpload(string uploadedFilesJson)
@@ -39,7 +54,6 @@ namespace MixERP.Net.WebControls.AttachmentFactory.Handlers
 
             return true;
         }
-
 
         public static Collection<Entities.Core.Attachment> GetAttachmentCollection(string json)
         {
@@ -62,25 +76,6 @@ namespace MixERP.Net.WebControls.AttachmentFactory.Handlers
             }
 
             return details;
-        }
-
-
-        public IHttpHandler GetHandler(HttpContext context, string requestType, string url, string pathTranslated)
-        {
-            WebServiceHandlerFactory factory = new WebServiceHandlerFactory();
-            MethodInfo method = typeof(WebServiceHandlerFactory).GetMethod("CoreGetHandler", BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(Type), typeof(HttpContext), typeof(HttpRequest), typeof(HttpResponse) }, null);
-
-            return (IHttpHandler)method.Invoke(factory, new object[]
-            {
-                this.GetType(),
-                context,
-                context.Request,
-                context.Response
-            });
-        }
-
-        public void ReleaseHandler(IHttpHandler handler)
-        {
         }
     }
 }
