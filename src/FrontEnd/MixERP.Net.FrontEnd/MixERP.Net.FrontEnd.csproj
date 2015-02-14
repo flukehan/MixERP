@@ -648,6 +648,7 @@
     <Content Include="bundles\scripts\master-page.min.js">
       <DependentUpon>master-page.js</DependentUpon>
     </Content>
+    <Content Include="db\beta-1\v1\mixerp.sql" />
     <Content Include="db\index.html" />
     <Content Include="MixERP.Installation.xml" />
     <Content Include="Modules\Default.aspx" />
@@ -1181,7 +1182,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="db\beta-1.r1\" />
     <Folder Include="Handlers\" />
     <Folder Include="Resource\Frameworks\" />
     <Folder Include="Resource\Logo\" />

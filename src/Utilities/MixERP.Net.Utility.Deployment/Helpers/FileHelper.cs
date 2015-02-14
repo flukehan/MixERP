@@ -91,6 +91,12 @@ namespace MixERP.Net.Utility.Installer.Helpers
 
             security.AddAccessRule(rule);
             info.SetAccessControl(security);
+
+            // Maybe, we are trying too much and too hard. 
+            // Windows 7 does not like this and would stop responding at times.
+            // IDK why, but for some weird reasons, sleeping the thread 
+            // solves "freezing" issues.
+            System.Threading.Thread.Sleep(1000);
         }
 
 

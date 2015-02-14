@@ -424,11 +424,11 @@ namespace MixERP.Net.FrontEnd
 
         private Collection<ListItem> GetLanguages()
         {
-            string[] c = ConfigurationManager.AppSettings["cultures"].Split(',');
+            string[] cultures = ConfigurationHelper.GetMixERPParameter("cultures").Split(',');
             Collection<ListItem> items = new Collection<ListItem>();
 
 
-            foreach (string culture in c)
+            foreach (string culture in cultures)
             {
                 string cultureName = culture.Trim();
 

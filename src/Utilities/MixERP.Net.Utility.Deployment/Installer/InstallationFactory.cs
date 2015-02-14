@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using MixERP.Net.Utility.Installer.Domains;
 using MixERP.Net.Utility.Installer.Helpers;
 
@@ -8,8 +6,7 @@ namespace MixERP.Net.Utility.Installer.Installer
 {
     public sealed class InstallationFactory
     {
-        private readonly string[] _sysdbs = { "postgres", "template0", "template1" };
-
+        private readonly string[] _sysdbs = {"postgres", "template0", "template1"};
         public string DatabaseName { get; set; }
         public string Password { get; set; }
         public string MixERPPassword { get; set; }
@@ -21,9 +18,8 @@ namespace MixERP.Net.Utility.Installer.Installer
         public string SiteHostName { get; set; }
         public bool IsValid { get; private set; }
         public Office Office { get; set; }
-
+        public bool InstallSample { get; set; }
         public Collection<IInstaller> Installers { get; private set; }
-
 
         private void Validate()
         {
@@ -66,14 +62,6 @@ namespace MixERP.Net.Utility.Installer.Installer
             });
 
 
-            installer.Add(new Database
-            {
-                DatabaseName = this.DatabaseName,
-                Password = this.Password,
-                MixERPPassword = this.MixERPPassword,
-                ReportUserPassword = this.ReportUserPassword
-            });
-
             installer.Add(new MixERP
             {
                 InstallDirectory = this.SiteDirectory,
@@ -91,9 +79,18 @@ namespace MixERP.Net.Utility.Installer.Installer
             });
 
 
+            installer.Add(new Database
+            {
+                DatabaseName = this.DatabaseName,
+                Password = this.Password,
+                MixERPPassword = this.MixERPPassword,
+                ReportUserPassword = this.ReportUserPassword
+            });
+
             installer.Add(new DbScript
             {
                 InstallerManifest = ConfigurationHelper.GetInstallerManifest(),
+                InstallSample = this.InstallSample,
                 ExtractDirectory = ConfigurationHelper.GetExtractDirectory(),
                 DatabaseName = this.DatabaseName,
                 Office = this.Office,

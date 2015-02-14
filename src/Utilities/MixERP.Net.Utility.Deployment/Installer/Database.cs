@@ -101,7 +101,7 @@ namespace MixERP.Net.Utility.Installer.Installer
 
         private void CreateDatabase()
         {
-            string sql = "CREATE DATABASE " + this.DatabaseName + ";";
+            string sql = "CREATE DATABASE " + this.DatabaseName + " ENCODING='UTF8' LC_COLLATE='C' LC_CTYPE='C' TEMPLATE=template0;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 DatabaseHelper helper = new DatabaseHelper(string.Empty, this.Password);

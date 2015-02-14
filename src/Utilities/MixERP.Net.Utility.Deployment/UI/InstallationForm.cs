@@ -121,6 +121,18 @@ namespace MixERP.Net.Utility.Installer.UI
             this.AdminNameTextBox.Text = ConfigurationHelper.ReadConfiguration("AdminName");
             this.AdminUserNameTextBox.Text = ConfigurationHelper.ReadConfiguration("UserName");
             this.RegistrationDatePicker.Text = ConfigurationHelper.ReadConfiguration("RegistrationDate");
+            this.InstallSampleCheckBox.Checked =
+                ConfigurationHelper.ReadConfiguration("InstallSample").ToUpperInvariant().Equals("TRUE");
+        }
+
+        private bool IsEmpty(string directory)
+        {
+            if (Directory.Exists(directory))
+            {
+                return !Directory.EnumerateFiles(directory).Any();
+            }
+
+            return true;
         }
 
         private void InstallButton_Click(object sender, EventArgs e)
@@ -135,7 +147,8 @@ namespace MixERP.Net.Utility.Installer.UI
             }
 
             string destination = this.InstallationDirectoryTextBox.Text;
-            bool isEmpty = !Directory.EnumerateFiles(destination).Any();
+
+            bool isEmpty = this.IsEmpty(destination);
 
             if (!isEmpty)
             {
@@ -164,6 +177,7 @@ namespace MixERP.Net.Utility.Installer.UI
             InstallationFactory factory = new InstallationFactory
             {
                 DatabaseName = this.DatabaseNameTextBox.Text,
+                InstallSample = this.InstallSampleCheckBox.Checked,
                 Office = this._office,
                 Password = this.PostgresPassword.Text,
                 MixERPPassword = this.MixERPPassword.Text,
@@ -185,7 +199,7 @@ namespace MixERP.Net.Utility.Installer.UI
 
             try
             {
-                this.StatusProgressLabel.Text = string.Format("0/{0} task completed.", installers.Count());
+                this.StatusProgressLabel.Text = string.Format("0/{0} tasks completed.", installers.Count());
 
                 Task.Run(() =>
                 {

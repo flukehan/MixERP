@@ -8,6 +8,8 @@ using Microsoft.Web.Administration;
 using MixERP.Net.Utility.Installer.Helpers;
 using Application = Microsoft.Web.Administration.Application;
 using Binding = Microsoft.Web.Administration.Binding;
+using System.Configuration;
+using System.Diagnostics;
 
 namespace MixERP.Net.Utility.Installer.Installer
 {
@@ -56,7 +58,34 @@ namespace MixERP.Net.Utility.Installer.Installer
             this.CreateApplication();
             this.WritePermission();
             this.CreateLogDirectory();
+            this.RegisterDotNetInIIS();
         }
+
+        private void RegisterDotNetInIIS()
+        {
+            var windowsPath = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+            string path = windowsPath + @"\Microsoft.NET\Framework\v4.0.30319\aspnet_regiis.exe";
+
+            if (Environment.Is64BitOperatingSystem)
+            {
+                path = windowsPath + @"\Microsoft.NET\Framework64\v4.0.30319\aspnet_regiis.exe";
+            }
+
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = path,
+                Arguments = " -i"
+            };
+
+            Process process = Process.Start(startInfo);
+
+            if (process != null)
+            {
+                process.WaitForExit();
+            }
+
+        }
+
 
         private void CreateLogDirectory()
         {
@@ -246,7 +275,9 @@ namespace MixERP.Net.Utility.Installer.Installer
                 extractTarget.Create();
             }
 
-            string archive = Directory.GetFiles(this.DownloadDirectory, "*.zip").FirstOrDefault();
+
+            string archive = ConfigurationManager.AppSettings["ArchiveName"];
+            archive = Path.Combine(this.DownloadDirectory, archive);
 
             if (!string.IsNullOrWhiteSpace(archive))
             {

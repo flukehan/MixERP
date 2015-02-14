@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using MixERP.Net.Utility.Installer.Helpers;
@@ -34,16 +35,16 @@ namespace MixERP.Net.Utility.Installer.Installer
             }
 
             string path = FileHelper.CombineWithBaseDirectory(this.InstallerDirectory);
-            this._installer = Directory.GetFiles(path, "*.exe").FirstOrDefault();
+            this._installer = "PostgreSQL.Server-" + this.GetOsPlatform() + ".exe";
 
-            this._installer = "\"" + this._installer + "\"";
-
-            if (this._installer == null)
+            if (!File.Exists(Path.Combine(path, this._installer)))
             {
                 Program.warn(
                     "Cannot install PostgreSQL Server because an installer was not found in the assets directory.");
                 return;
             }
+
+            this._installer = Path.Combine(path, this._installer);
 
             this.InstallPostgreSQLServer();
         }
@@ -53,6 +54,11 @@ namespace MixERP.Net.Utility.Installer.Installer
         public string Name
         {
             get { return "PostgreSQL Server"; }
+        }
+
+        private string GetOsPlatform()
+        {
+            return Environment.Is64BitOperatingSystem ? "x64" : "x86";
         }
 
         private void InstallPostgreSQLServer()

@@ -9,6 +9,7 @@ namespace MixERP.Net.Utility.Installer.Installer
 {
     public sealed class DbScript : IInstaller
     {
+        public bool InstallSample { get; set; }
         public string InstallerManifest { get; set; }
         public string ExtractDirectory { get; set; }
         public string DatabaseName { get; set; }
@@ -24,12 +25,22 @@ namespace MixERP.Net.Utility.Installer.Installer
 
             this.InstallerManifest = Path.Combine(this.ExtractDirectory, this.InstallerManifest);
 
-            string dbScript = ConfigurationHelper.GetConfigurationValues(this.InstallerManifest, "DatabaseInstallScript");
+            string dbScript = this.GetDbScript();
 
             this.RunDbScript(dbScript);
             this.AddOfficeScript();
             this.CreateOffice();
             this.DropOfficeScript();
+        }
+
+        private string GetDbScript()
+        {
+            if (this.InstallSample)
+            {
+                return ConfigurationHelper.GetConfigurationValues(this.InstallerManifest, "SampleDatabaseInstallScript");
+            }
+
+            return ConfigurationHelper.GetConfigurationValues(this.InstallerManifest, "DatabaseInstallScript");
         }
 
         private void DropOfficeScript()
