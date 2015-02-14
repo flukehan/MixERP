@@ -74,6 +74,14 @@ namespace MixERP.Net.FrontEnd
 
             Log.Error("Exception occurred. {Exception}.", ex);
 
+            var innerException = ex.InnerException as MixERPException;
+
+            if (innerException != null)
+            {
+                MixERPExceptionManager.HandleException(innerException);
+                return;
+            }
+
             if (ex.InnerException != null)
             {
                 Log.Error("Inner Exception. {InnerException}.", ex.InnerException);

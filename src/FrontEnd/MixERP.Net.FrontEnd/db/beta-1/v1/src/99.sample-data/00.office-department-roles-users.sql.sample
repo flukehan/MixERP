@@ -1,0 +1,27 @@
+DO
+$$
+BEGIN
+    IF(core.get_locale() = 'en-US') THEN
+        INSERT INTO office.offices(office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code, allow_transaction_posting)
+        SELECT 'MoF','Mix Open Foundation', 'MoF', '06/06/1989', 'Brooklyn','NY','','US','','','','info@mixof.org','http://mixof.org','0','0','NPR', false;
+
+        INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
+        SELECT 'MoF-NY-BK','Brooklyn Branch', 'MoF Brooklyn', '06/06/1989', 'Brooklyn','NY','12345555','US','','','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
+
+        INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
+        SELECT 'MoF-NY-RV','Rio Vista Branch', 'MoF Rio Vista', '06/06/1989', 'Rio Vista', 'CA','','US','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
+
+        INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
+        SELECT 'MoF-NP-KTM','Kathmandu Branch', 'MoF Kathmandu', '06/06/1989', 'Baneshwor', 'Kathmandu','Bagmati','NP','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
+
+        PERFORM office.create_user((SELECT role_id FROM office.roles WHERE role_code='SYST'),1,(SELECT office_id FROM office.offices WHERE office_code='MoF'),'sys','','System');
+        PERFORM office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),1,(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','binod','Binod', false);
+        PERFORM office.create_user((SELECT role_id FROM office.roles WHERE role_code='USER'),1,(SELECT office_id FROM office.offices WHERE office_code='MoF'),'demo','demo','Demo User', false);
+
+
+        UPDATE office.users SET can_change_password=false
+        WHERE user_name='binod';
+    END IF;
+END
+$$
+LANGUAGE plpgsql;

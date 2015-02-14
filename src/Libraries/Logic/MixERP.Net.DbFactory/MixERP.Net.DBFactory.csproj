@@ -74,6 +74,71 @@
     <Compile Include="DbConnection.cs" />
     <Compile Include="DbOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\DbErrors.zh.Designer.cs">
+      <DependentUpon>DbErrors.zh.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DbErrors.sv.Designer.cs">
+      <DependentUpon>DbErrors.sv.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DbErrors.ru.Designer.cs">
+      <DependentUpon>DbErrors.ru.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DbErrors.pt.Designer.cs">
+      <DependentUpon>DbErrors.pt.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DbErrors.nl.Designer.cs">
+      <DependentUpon>DbErrors.nl.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DbErrors.ms.Designer.cs">
+      <DependentUpon>DbErrors.ms.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DbErrors.ja.Designer.cs">
+      <DependentUpon>DbErrors.ja.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DbErrors.id.Designer.cs">
+      <DependentUpon>DbErrors.id.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DbErrors.fr.Designer.cs">
+      <DependentUpon>DbErrors.fr.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DbErrors.fil.Designer.cs">
+      <DependentUpon>DbErrors.fil.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DbErrors.es.Designer.cs">
+      <DependentUpon>DbErrors.es.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DbErrors.de.Designer.cs">
+      <DependentUpon>DbErrors.de.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DbErrors.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbErrors.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Warnings.Designer.cs">
       <DependentUpon>Warnings.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -95,22 +160,74 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Warnings.de-DE.resx" />
-    <EmbeddedResource Include="Resources\Warnings.es-ES.resx" />
-    <EmbeddedResource Include="Resources\Warnings.fil-PH.resx" />
-    <EmbeddedResource Include="Resources\Warnings.fr-FR.resx" />
-    <EmbeddedResource Include="Resources\Warnings.id-ID.resx" />
-    <EmbeddedResource Include="Resources\Warnings.ja-JP.resx" />
-    <EmbeddedResource Include="Resources\Warnings.ms-MY.resx" />
-    <EmbeddedResource Include="Resources\Warnings.nl-NL.resx" />
-    <EmbeddedResource Include="Resources\Warnings.pt-PT.resx" />
+    <EmbeddedResource Include="Resources\DbErrors.zh.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbErrors.zh.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DbErrors.sv.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbErrors.sv.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DbErrors.ru.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbErrors.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DbErrors.pt.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbErrors.pt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DbErrors.nl.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbErrors.nl.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DbErrors.ms.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbErrors.ms.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DbErrors.ja.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbErrors.ja.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DbErrors.id.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbErrors.id.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DbErrors.fr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbErrors.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DbErrors.fil.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbErrors.fil.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DbErrors.es.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbErrors.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DbErrors.de.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbErrors.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DbErrors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Warnings.de.resx" />
+    <EmbeddedResource Include="Resources\Warnings.es.resx" />
+    <EmbeddedResource Include="Resources\Warnings.fil.resx" />
+    <EmbeddedResource Include="Resources\Warnings.fr.resx" />
+    <EmbeddedResource Include="Resources\Warnings.id.resx" />
+    <EmbeddedResource Include="Resources\Warnings.ja.resx" />
+    <EmbeddedResource Include="Resources\Warnings.ms.resx" />
+    <EmbeddedResource Include="Resources\Warnings.nl.resx" />
+    <EmbeddedResource Include="Resources\Warnings.pt.resx" />
     <EmbeddedResource Include="Resources\Warnings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Warnings.ru-RU.resx" />
-    <EmbeddedResource Include="Resources\Warnings.sv-SE.resx" />
-    <EmbeddedResource Include="Resources\Warnings.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Warnings.ru.resx" />
+    <EmbeddedResource Include="Resources\Warnings.sv.resx" />
+    <EmbeddedResource Include="Resources\Warnings.zh.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

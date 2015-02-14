@@ -103,8 +103,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\Labels.de-DE.designer.cs">
-      <DependentUpon>Labels.de-DE.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Labels.de.designer.cs">
+      <DependentUpon>Labels.de.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -113,63 +113,63 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Labels.es-ES.designer.cs">
-      <DependentUpon>Labels.es-ES.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Labels.es.designer.cs">
+      <DependentUpon>Labels.es.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Labels.fil-PH.designer.cs">
+    <Compile Include="App_GlobalResources\Labels.fil.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.fil-PH.resx</DependentUpon>
+      <DependentUpon>Labels.fil.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Labels.fr-FR.designer.cs">
-      <DependentUpon>Labels.fr-FR.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.id-ID.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.id-ID.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.ja-JP.designer.cs">
-      <DependentUpon>Labels.ja-JP.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Labels.fr.designer.cs">
+      <DependentUpon>Labels.fr.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Labels.ms-MY.designer.cs">
+    <Compile Include="App_GlobalResources\Labels.id.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.ms-MY.resx</DependentUpon>
+      <DependentUpon>Labels.id.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Labels.nl-NL.designer.cs">
-      <DependentUpon>Labels.nl-NL.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.pt-PT.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.pt-PT.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.ru-RU.designer.cs">
-      <DependentUpon>Labels.ru-RU.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Labels.ja.designer.cs">
+      <DependentUpon>Labels.ja.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Labels.sv-SE.designer.cs">
+    <Compile Include="App_GlobalResources\Labels.ms.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.sv-SE.resx</DependentUpon>
+      <DependentUpon>Labels.ms.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Labels.zh-CN.designer.cs">
-      <DependentUpon>Labels.zh-CN.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Labels.nl.designer.cs">
+      <DependentUpon>Labels.nl.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Questions.de-DE.designer.cs">
-      <DependentUpon>Questions.de-DE.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Labels.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Labels.ru.designer.cs">
+      <DependentUpon>Labels.ru.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Labels.sv.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.sv.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Labels.zh.designer.cs">
+      <DependentUpon>Labels.zh.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Questions.de.designer.cs">
+      <DependentUpon>Questions.de.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -178,63 +178,63 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Questions.es-ES.designer.cs">
-      <DependentUpon>Questions.es-ES.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Questions.es.designer.cs">
+      <DependentUpon>Questions.es.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Questions.fil-PH.designer.cs">
+    <Compile Include="App_GlobalResources\Questions.fil.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Questions.fil-PH.resx</DependentUpon>
+      <DependentUpon>Questions.fil.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Questions.fr-FR.designer.cs">
-      <DependentUpon>Questions.fr-FR.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.id-ID.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Questions.id-ID.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.ja-JP.designer.cs">
-      <DependentUpon>Questions.ja-JP.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Questions.fr.designer.cs">
+      <DependentUpon>Questions.fr.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Questions.ms-MY.designer.cs">
+    <Compile Include="App_GlobalResources\Questions.id.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Questions.ms-MY.resx</DependentUpon>
+      <DependentUpon>Questions.id.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Questions.nl-NL.designer.cs">
-      <DependentUpon>Questions.nl-NL.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.pt-PT.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Questions.pt-PT.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.ru-RU.designer.cs">
-      <DependentUpon>Questions.ru-RU.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Questions.ja.designer.cs">
+      <DependentUpon>Questions.ja.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Questions.sv-SE.designer.cs">
+    <Compile Include="App_GlobalResources\Questions.ms.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Questions.sv-SE.resx</DependentUpon>
+      <DependentUpon>Questions.ms.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Questions.zh-CN.designer.cs">
-      <DependentUpon>Questions.zh-CN.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Questions.nl.designer.cs">
+      <DependentUpon>Questions.nl.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Titles.de-DE.designer.cs">
-      <DependentUpon>Titles.de-DE.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Questions.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Questions.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Questions.ru.designer.cs">
+      <DependentUpon>Questions.ru.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Questions.sv.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Questions.sv.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Questions.zh.designer.cs">
+      <DependentUpon>Questions.zh.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Titles.de.designer.cs">
+      <DependentUpon>Titles.de.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -243,63 +243,63 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Titles.es-ES.designer.cs">
-      <DependentUpon>Titles.es-ES.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Titles.es.designer.cs">
+      <DependentUpon>Titles.es.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Titles.fil-PH.designer.cs">
+    <Compile Include="App_GlobalResources\Titles.fil.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.fil-PH.resx</DependentUpon>
+      <DependentUpon>Titles.fil.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Titles.fr-FR.designer.cs">
-      <DependentUpon>Titles.fr-FR.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.id-ID.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.id-ID.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.ja-JP.designer.cs">
-      <DependentUpon>Titles.ja-JP.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Titles.fr.designer.cs">
+      <DependentUpon>Titles.fr.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Titles.ms-MY.designer.cs">
+    <Compile Include="App_GlobalResources\Titles.id.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.ms-MY.resx</DependentUpon>
+      <DependentUpon>Titles.id.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Titles.nl-NL.designer.cs">
-      <DependentUpon>Titles.nl-NL.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.pt-PT.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.pt-PT.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.ru-RU.designer.cs">
-      <DependentUpon>Titles.ru-RU.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Titles.ja.designer.cs">
+      <DependentUpon>Titles.ja.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Titles.sv-SE.designer.cs">
+    <Compile Include="App_GlobalResources\Titles.ms.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.sv-SE.resx</DependentUpon>
+      <DependentUpon>Titles.ms.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Titles.zh-CN.designer.cs">
-      <DependentUpon>Titles.zh-CN.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Titles.nl.designer.cs">
+      <DependentUpon>Titles.nl.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Warnings.de-DE.designer.cs">
-      <DependentUpon>Warnings.de-DE.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Titles.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Titles.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Titles.ru.designer.cs">
+      <DependentUpon>Titles.ru.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Titles.sv.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Titles.sv.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Titles.zh.designer.cs">
+      <DependentUpon>Titles.zh.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Warnings.de.designer.cs">
+      <DependentUpon>Warnings.de.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -308,58 +308,58 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Warnings.es-ES.designer.cs">
-      <DependentUpon>Warnings.es-ES.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Warnings.es.designer.cs">
+      <DependentUpon>Warnings.es.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Warnings.fil-PH.designer.cs">
+    <Compile Include="App_GlobalResources\Warnings.fil.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Warnings.fil-PH.resx</DependentUpon>
+      <DependentUpon>Warnings.fil.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Warnings.fr-FR.designer.cs">
-      <DependentUpon>Warnings.fr-FR.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.id-ID.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Warnings.id-ID.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.ja-JP.designer.cs">
-      <DependentUpon>Warnings.ja-JP.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Warnings.fr.designer.cs">
+      <DependentUpon>Warnings.fr.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Warnings.ms-MY.designer.cs">
+    <Compile Include="App_GlobalResources\Warnings.id.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Warnings.ms-MY.resx</DependentUpon>
+      <DependentUpon>Warnings.id.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Warnings.nl-NL.designer.cs">
-      <DependentUpon>Warnings.nl-NL.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.pt-PT.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Warnings.pt-PT.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.ru-RU.designer.cs">
-      <DependentUpon>Warnings.ru-RU.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Warnings.ja.designer.cs">
+      <DependentUpon>Warnings.ja.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="App_GlobalResources\Warnings.sv-SE.designer.cs">
+    <Compile Include="App_GlobalResources\Warnings.ms.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Warnings.sv-SE.resx</DependentUpon>
+      <DependentUpon>Warnings.ms.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Warnings.zh-CN.designer.cs">
-      <DependentUpon>Warnings.zh-CN.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Warnings.nl.designer.cs">
+      <DependentUpon>Warnings.nl.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Warnings.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Warnings.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Warnings.ru.designer.cs">
+      <DependentUpon>Warnings.ru.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_GlobalResources\Warnings.sv.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Warnings.sv.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Warnings.zh.designer.cs">
+      <DependentUpon>Warnings.zh.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -502,133 +502,133 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\Labels.de-DE.resx">
+    <Content Include="App_GlobalResources\Labels.de.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.de-DE.designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.de.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Labels.es-ES.resx">
+    <Content Include="App_GlobalResources\Labels.es.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.es-ES.designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.es.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Labels.fr-FR.resx">
+    <Content Include="App_GlobalResources\Labels.fr.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.fr-FR.designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.fr.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Labels.ja-JP.resx">
+    <Content Include="App_GlobalResources\Labels.ja.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.ja-JP.designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.ja.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Labels.nl-NL.resx">
+    <Content Include="App_GlobalResources\Labels.nl.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.nl-NL.designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.nl.designer.cs</LastGenOutput>
     </Content>
     <Content Include="App_GlobalResources\Labels.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Labels.ru-RU.resx">
+    <Content Include="App_GlobalResources\Labels.ru.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.ru-RU.designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.ru.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Labels.zh-CN.resx">
+    <Content Include="App_GlobalResources\Labels.zh.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.zh-CN.designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.zh.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Questions.de-DE.resx">
+    <Content Include="App_GlobalResources\Questions.de.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.de-DE.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.de.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Questions.es-ES.resx">
+    <Content Include="App_GlobalResources\Questions.es.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.es-ES.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.es.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Questions.fr-FR.resx">
+    <Content Include="App_GlobalResources\Questions.fr.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.fr-FR.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.fr.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Questions.ja-JP.resx">
+    <Content Include="App_GlobalResources\Questions.ja.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.ja-JP.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.ja.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Questions.nl-NL.resx">
+    <Content Include="App_GlobalResources\Questions.nl.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.nl-NL.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.nl.designer.cs</LastGenOutput>
     </Content>
     <Content Include="App_GlobalResources\Questions.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Questions.Designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Questions.ru-RU.resx">
+    <Content Include="App_GlobalResources\Questions.ru.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.ru-RU.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.ru.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Questions.zh-CN.resx">
+    <Content Include="App_GlobalResources\Questions.zh.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.zh-CN.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.zh.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Titles.de-DE.resx">
+    <Content Include="App_GlobalResources\Titles.de.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.de-DE.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.de.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Titles.es-ES.resx">
+    <Content Include="App_GlobalResources\Titles.es.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.es-ES.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.es.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Titles.fr-FR.resx">
+    <Content Include="App_GlobalResources\Titles.fr.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.fr-FR.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.fr.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Titles.ja-JP.resx">
+    <Content Include="App_GlobalResources\Titles.ja.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.ja-JP.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.ja.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Titles.nl-NL.resx">
+    <Content Include="App_GlobalResources\Titles.nl.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.nl-NL.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.nl.designer.cs</LastGenOutput>
     </Content>
     <Content Include="App_GlobalResources\Titles.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Titles.ru-RU.resx">
+    <Content Include="App_GlobalResources\Titles.ru.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.ru-RU.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.ru.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Titles.zh-CN.resx">
+    <Content Include="App_GlobalResources\Titles.zh.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.zh-CN.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.zh.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Warnings.de-DE.resx">
+    <Content Include="App_GlobalResources\Warnings.de.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.de-DE.designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.de.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Warnings.es-ES.resx">
+    <Content Include="App_GlobalResources\Warnings.es.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.es-ES.designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.es.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Warnings.fr-FR.resx">
+    <Content Include="App_GlobalResources\Warnings.fr.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.fr-FR.designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.fr.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Warnings.ja-JP.resx">
+    <Content Include="App_GlobalResources\Warnings.ja.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.ja-JP.designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.ja.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Warnings.nl-NL.resx">
+    <Content Include="App_GlobalResources\Warnings.nl.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.nl-NL.designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.nl.designer.cs</LastGenOutput>
     </Content>
     <Content Include="App_GlobalResources\Warnings.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Warnings.ru-RU.resx">
+    <Content Include="App_GlobalResources\Warnings.ru.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.ru-RU.designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.ru.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Warnings.zh-CN.resx">
+    <Content Include="App_GlobalResources\Warnings.zh.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.zh-CN.designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.zh.designer.cs</LastGenOutput>
     </Content>
     <Content Include="App_Themes\MixERP\mixerp.css">
       <DependentUpon>mixerp.less</DependentUpon>
@@ -649,9 +649,6 @@
       <DependentUpon>master-page.js</DependentUpon>
     </Content>
     <Content Include="db\index.html" />
-    <Content Include="db\mixerp.de-DE.sql" />
-    <Content Include="db\mixerp.en-US.sql" />
-    <Content Include="db\mixerp.fr-FR.sql" />
     <Content Include="MixERP.Installation.xml" />
     <Content Include="Modules\Default.aspx" />
     <Content Include="Resource\Backups\index.html" />
@@ -767,6 +764,96 @@
     <Content Include="Scripts\Datamaps\datamaps.all.min.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_flat_15_cd0a0a_40x100.png" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_glass_100_edb7f2_1x400.png" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_glass_50_67238B_1x400.png" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_glass_80_fcecfd_1x400.png" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_highlight-hard_100_fceefd_1x100.png" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_highlight-hard_70_000000_1x100.png" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_highlight-soft_100_efdef7_1x100.png" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_highlight-soft_25_ffef8f_1x100.png" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-icons_67238B_256x240.png" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-icons_72a7cf_256x240.png" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-icons_8b2abe_256x240.png" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\jquery-ui.css" />
+    <Content Include="Scripts\jquery-ui\css\custom-theme\jquery-ui.min.css" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-af.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-ar-DZ.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-ar.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-az.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-be.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-bg.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-bs.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-ca.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-cs.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-cy-GB.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-da.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-de.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-el.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-en-AU.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-en-GB.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-en-NZ.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-eo.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-es.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-et.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-eu.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-fa.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-fi.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-fo.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-fr-CA.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-fr-CH.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-fr.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-gl.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-he.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-hi.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-hr.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-hu.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-hy.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-id.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-is.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-it-CH.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-it.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-ja.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-ka.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-kk.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-km.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-ko.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-ky.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-lb.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-lt.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-lv.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-mk.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-ml.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-ms.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-nb.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-nl-BE.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-nl.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-nn.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-no.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-pl.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-pt-BR.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-pt.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-rm.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-ro.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-ru.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-sk.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-sl.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-sq.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-sr-SR.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-sr.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-sv.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-ta.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-th.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-tj.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-tr.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-uk.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-vi.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-zh-CN.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-zh-HK.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-zh-TW.js" />
     <Content Include="Scripts\jquery.address.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
@@ -778,6 +865,7 @@
     <Content Include="Scripts\jssha1.5\src\sha256.js" />
     <Content Include="Scripts\jssha1.5\src\sha512.js" />
     <Content Include="Scripts\jssha1.5\src\sha_dev.js" />
+    <Content Include="Scripts\mixerp\master-page\locale.js" />
     <Content Include="Scripts\mixerp\utitlities\country-codes.js" />
     <Content Include="Scripts\Pages\SignIn.aspx.js" />
     <Content Include="Scripts\mixerp.js" />
@@ -997,23 +1085,6 @@
     <Content Include="Scripts\date.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-ui.js" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\animated-overlay.gif" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_flat_10_000000_40x100.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_glass_100_f5cefd_1x400.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_glass_100_f6f6f6_1x400.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_glass_65_f5cefd_1x400.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_gloss-wave_35_c928f6_500x100.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_highlight-soft_100_ffffff_1x100.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-bg_highlight-soft_75_e588f8_1x100.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-icons_222222_256x240.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-icons_bb1bdc_256x240.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-icons_d408ef_256x240.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-icons_ffd27a_256x240.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\images\ui-icons_ffffff_256x240.png" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\jquery-ui-1.10.3.custom.css" />
-    <Content Include="Scripts\jquery-ui\css\custom-theme\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="Scripts\shortcut.js" />
     <Content Include="SignIn.aspx" />
     <Content Include="Resource\Static\images\spinner.gif" />
@@ -1110,6 +1181,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="db\beta-1.r1\" />
     <Folder Include="Handlers\" />
     <Folder Include="Resource\Frameworks\" />
     <Folder Include="Resource\Logo\" />
@@ -1173,85 +1245,85 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\Labels.fil-PH.resx">
+    <Content Include="App_GlobalResources\Labels.fil.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.fil-PH.designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.fil.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Labels.id-ID.resx">
+    <Content Include="App_GlobalResources\Labels.id.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.id-ID.designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.id.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Labels.ms-MY.resx">
+    <Content Include="App_GlobalResources\Labels.ms.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.ms-MY.designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.ms.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Labels.pt-PT.resx">
+    <Content Include="App_GlobalResources\Labels.pt.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.pt-PT.designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.pt.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Labels.sv-SE.resx">
+    <Content Include="App_GlobalResources\Labels.sv.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.sv-SE.designer.cs</LastGenOutput>
+      <LastGenOutput>Labels.sv.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Questions.fil-PH.resx">
+    <Content Include="App_GlobalResources\Questions.fil.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.fil-PH.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.fil.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Questions.id-ID.resx">
+    <Content Include="App_GlobalResources\Questions.id.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.id-ID.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.id.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Questions.ms-MY.resx">
+    <Content Include="App_GlobalResources\Questions.ms.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.ms-MY.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.ms.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Questions.pt-PT.resx">
+    <Content Include="App_GlobalResources\Questions.pt.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.pt-PT.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.pt.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Questions.sv-SE.resx">
+    <Content Include="App_GlobalResources\Questions.sv.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.sv-SE.designer.cs</LastGenOutput>
+      <LastGenOutput>Questions.sv.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Titles.fil-PH.resx">
+    <Content Include="App_GlobalResources\Titles.fil.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.fil-PH.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.fil.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Titles.id-ID.resx">
+    <Content Include="App_GlobalResources\Titles.id.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.id-ID.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.id.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Titles.ms-MY.resx">
+    <Content Include="App_GlobalResources\Titles.ms.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.ms-MY.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.ms.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Titles.pt-PT.resx">
+    <Content Include="App_GlobalResources\Titles.pt.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.pt-PT.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.pt.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Titles.sv-SE.resx">
+    <Content Include="App_GlobalResources\Titles.sv.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.sv-SE.designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.sv.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Warnings.fil-PH.resx">
+    <Content Include="App_GlobalResources\Warnings.fil.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.fil-PH.designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.fil.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Warnings.id-ID.resx">
+    <Content Include="App_GlobalResources\Warnings.id.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.id-ID.designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.id.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Warnings.ms-MY.resx">
+    <Content Include="App_GlobalResources\Warnings.ms.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.ms-MY.designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.ms.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Warnings.pt-PT.resx">
+    <Content Include="App_GlobalResources\Warnings.pt.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.pt-PT.designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.pt.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Warnings.sv-SE.resx">
+    <Content Include="App_GlobalResources\Warnings.sv.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.sv-SE.designer.cs</LastGenOutput>
+      <LastGenOutput>Warnings.sv.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <PropertyGroup>

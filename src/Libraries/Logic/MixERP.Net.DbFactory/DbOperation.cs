@@ -21,8 +21,10 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
+using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.DbFactory.Resources;
 using Npgsql;
@@ -38,118 +40,160 @@ namespace MixERP.Net.DbFactory
 
     public class DbOperation
     {
-
-
         public EventHandler<DbNotificationArgs> Listen;
 
         [CLSCompliant(false)]
         public static bool ExecuteNonQuery(NpgsqlCommand command)
         {
-            if (command != null)
+            try
             {
-                if (ValidateCommand(command))
+                if (command != null)
                 {
-                    using (var connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                    if (ValidateCommand(command))
                     {
-                        command.Connection = connection;
-                        connection.Open();
+                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                        {
+                            command.Connection = connection;
+                            connection.Open();
 
-                        command.ExecuteNonQuery();
-                        return true;
+                            command.ExecuteNonQuery();
+                            return true;
+                        }
                     }
                 }
-            }
 
-            return false;
+                return false;
+            }
+            catch (NpgsqlException ex)
+            {
+                string errorMessage = GetDBErrorResource(ex.Code);
+                throw new MixERPException(errorMessage, ex);
+            }
         }
 
-
+        private static string GetDBErrorResource(string key)
+        {
+            Assembly ass = Assembly.GetAssembly(typeof (DbOperation));
+            return LocalizationHelper.GetResourceString(ass, "MixERP.Net.DbFactory.Resources.DbErrors", key);
+        }
 
         [CLSCompliant(false)]
         public static NpgsqlDataAdapter GetDataAdapter(NpgsqlCommand command)
         {
-            if (command != null)
+            try
             {
-                if (ValidateCommand(command))
+                if (command != null)
                 {
-                    using (var connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                    if (ValidateCommand(command))
                     {
-                        command.Connection = connection;
-
-                        using (var adapter = new NpgsqlDataAdapter(command))
+                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
                         {
-                            return adapter;
+                            command.Connection = connection;
+
+                            using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
+                            {
+                                return adapter;
+                            }
                         }
                     }
                 }
-            }
 
-            return null;
+                return null;
+            }
+            catch (NpgsqlException ex)
+            {
+                string errorMessage = GetDBErrorResource(ex.Code);
+                throw new MixERPException(errorMessage, ex);
+            }
         }
 
         [CLSCompliant(false)]
         public static NpgsqlDataReader GetDataReader(NpgsqlCommand command)
         {
-            if (command != null)
+            try
             {
-                if (ValidateCommand(command))
+                if (command != null)
                 {
-                    using (var connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                    if (ValidateCommand(command))
                     {
-                        command.Connection = connection;
-                        command.Connection.Open();
-                        return command.ExecuteReader();
+                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                        {
+                            command.Connection = connection;
+                            command.Connection.Open();
+                            return command.ExecuteReader();
+                        }
                     }
                 }
-            }
 
-            return null;
+                return null;
+            }
+            catch (NpgsqlException ex)
+            {
+                string errorMessage = GetDBErrorResource(ex.Code);
+                throw new MixERPException(errorMessage, ex);
+            }
         }
 
         [CLSCompliant(false)]
         public static DataSet GetDataSet(NpgsqlCommand command)
         {
-            if (ValidateCommand(command))
+            try
             {
-                using (var adapter = GetDataAdapter(command))
+                if (ValidateCommand(command))
                 {
-                    using (var set = new DataSet())
+                    using (NpgsqlDataAdapter adapter = GetDataAdapter(command))
                     {
-                        adapter.Fill(set);
-                        set.Locale = CultureInfo.CurrentUICulture;
-                        return set;
+                        using (DataSet set = new DataSet())
+                        {
+                            adapter.Fill(set);
+                            set.Locale = CultureInfo.CurrentUICulture;
+                            return set;
+                        }
                     }
                 }
-            }
 
-            return null;
+                return null;
+            }
+            catch (NpgsqlException ex)
+            {
+                string errorMessage = GetDBErrorResource(ex.Code);
+                throw new MixERPException(errorMessage, ex);
+            }
         }
 
         [CLSCompliant(false)]
         public static DataTable GetDataTable(NpgsqlCommand command, string connectionString)
         {
-            if (command != null)
+            try
             {
-                if (ValidateCommand(command))
+                if (command != null)
                 {
-                    using (var connection = new NpgsqlConnection(connectionString))
+                    if (ValidateCommand(command))
                     {
-                        command.Connection = connection;
-
-                        using (var adapter = new NpgsqlDataAdapter(command))
+                        using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                         {
-                            using (var dataTable = new DataTable())
+                            command.Connection = connection;
+
+                            using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
                             {
-                                dataTable.Locale = Thread.CurrentThread.CurrentCulture;
-                                adapter.Fill(dataTable);
-                                return dataTable;
+                                using (DataTable dataTable = new DataTable())
+                                {
+                                    dataTable.Locale = Thread.CurrentThread.CurrentCulture;
+                                    adapter.Fill(dataTable);
+                                    return dataTable;
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            return null;
+                return null;
+            }
+            catch (NpgsqlException ex)
+            {
+                string errorMessage = GetDBErrorResource(ex.Code);
+                throw new MixERPException(errorMessage, ex);
+            }
         }
 
         [CLSCompliant(false)]
@@ -163,7 +207,7 @@ namespace MixERP.Net.DbFactory
         {
             if (ValidateCommand(command))
             {
-                using (var view = new DataView(GetDataTable(command)))
+                using (DataView view = new DataView(GetDataTable(command)))
                 {
                     return view;
                 }
@@ -175,20 +219,28 @@ namespace MixERP.Net.DbFactory
         [CLSCompliant(false)]
         public static object GetScalarValue(NpgsqlCommand command)
         {
-            if (command != null)
+            try
             {
-                if (ValidateCommand(command))
+                if (command != null)
                 {
-                    using (var connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                    if (ValidateCommand(command))
                     {
-                        command.Connection = connection;
-                        connection.Open();
-                        return command.ExecuteScalar();
+                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                        {
+                            command.Connection = connection;
+                            connection.Open();
+                            return command.ExecuteScalar();
+                        }
                     }
                 }
-            }
 
-            return null;
+                return null;
+            }
+            catch (NpgsqlException ex)
+            {
+                string errorMessage = GetDBErrorResource(ex.Code);
+                throw new MixERPException(errorMessage, ex);
+            }
         }
 
         public static bool IsServerAvailable()
@@ -212,51 +264,57 @@ namespace MixERP.Net.DbFactory
 
         public void ListenNonQuery(NpgsqlCommand command)
         {
-            if (command != null)
+            try
             {
-                if (ValidateCommand(command))
+                if (command != null)
                 {
-                    ThreadStart queryStart = delegate
+                    if (ValidateCommand(command))
                     {
-                        try
+                        ThreadStart queryStart = delegate
                         {
-                            using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                            try
                             {
-                                command.Connection = connection;
-                                connection.Notice += Connection_Notice;
-                                connection.Open();
-                                command.ExecuteNonQuery();
-                            }
-
-                        }
-                        catch (NpgsqlException ex)
-                        {
-                            var listen = this.Listen;
-
-                            if (listen != null)
-                            {
-                                DbNotificationArgs args = new DbNotificationArgs
+                                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
                                 {
-                                    Message = ex.Message
-                                };
-
-                                listen(this, args);
+                                    command.Connection = connection;
+                                    connection.Notice += Connection_Notice;
+                                    connection.Open();
+                                    command.ExecuteNonQuery();
+                                }
                             }
+                            catch (NpgsqlException ex)
+                            {
+                                EventHandler<DbNotificationArgs> listen = this.Listen;
 
-                        }
-                    };
+                                if (listen != null)
+                                {
+                                    DbNotificationArgs args = new DbNotificationArgs
+                                    {
+                                        Message = ex.Message
+                                    };
 
-                    queryStart += () => { Thread.Sleep(15000); };
+                                    listen(this, args);
+                                }
+                            }
+                        };
 
-                    Thread query = new Thread(queryStart) {IsBackground = true};
-                    query.Start();
+                        queryStart += () => { Thread.Sleep(15000); };
+
+                        Thread query = new Thread(queryStart) {IsBackground = true};
+                        query.Start();
+                    }
                 }
+            }
+            catch (NpgsqlException ex)
+            {
+                string errorMessage = GetDBErrorResource(ex.Code);
+                throw new MixERPException(errorMessage, ex);
             }
         }
 
         private static Collection<string> GetCommandTextParameterCollection(string commandText)
         {
-            var parameters = new Collection<string>();
+            Collection<string> parameters = new Collection<string>();
 
             foreach (Match match in Regex.Matches(commandText, @"@(\w+)"))
             {
@@ -273,13 +331,13 @@ namespace MixERP.Net.DbFactory
 
         private static bool ValidateParameters(NpgsqlCommand command)
         {
-            var commandTextParameters = GetCommandTextParameterCollection(command.CommandText);
+            Collection<string> commandTextParameters = GetCommandTextParameterCollection(command.CommandText);
 
             foreach (NpgsqlParameter npgsqlParameter in command.Parameters)
             {
-                var match = false;
+                bool match = false;
 
-                foreach (var commandTextParameter in commandTextParameters)
+                foreach (string commandTextParameter in commandTextParameters)
                 {
                     if (npgsqlParameter.ParameterName.Equals(commandTextParameter))
                     {
@@ -298,7 +356,7 @@ namespace MixERP.Net.DbFactory
 
         private void Connection_Notice(object sender, NpgsqlNoticeEventArgs e)
         {
-            var listen = this.Listen;
+            EventHandler<DbNotificationArgs> listen = this.Listen;
 
             if (listen != null)
             {

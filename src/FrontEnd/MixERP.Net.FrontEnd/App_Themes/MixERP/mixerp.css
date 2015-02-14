@@ -555,4 +555,7 @@ select option {
   font-weight: bold;
   font-size: 1.1rem;
 }
+.ui-widget-content {
+  z-index: 2!important;
+}
 /*# sourceMappingURL=mixerp.css.map */

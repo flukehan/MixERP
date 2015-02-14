@@ -13,6 +13,6 @@
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
     <file>/Scripts/colorbox/colorbox.css</file>
-    <file>/Scripts/jquery-ui/css/custom-theme/jquery-ui-1.10.3.custom.min.css</file>
+    <file>/Scripts/jquery-ui/css/custom-theme/jquery-ui.min.css</file>
   </files>
 </bundle>

@@ -14,6 +14,7 @@
     <file>/Scripts/mixerp/master-page/js-tree.js</file>
     <file>/Scripts/mixerp/master-page/keyboard.js</file>
     <file>/Scripts/mixerp/master-page/layout.js</file>
+    <file>/Scripts/mixerp/master-page/locale.js</file>
     <file>/Scripts/mixerp/master-page/scrud.js</file>
     <file>/Scripts/mixerp/master-page/sortable.js</file>
     <file>/Scripts/mixerp/master-page/semantic.js</file>

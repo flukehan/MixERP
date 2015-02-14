@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using Npgsql;
 using PetaPoco;
@@ -12,26 +16,62 @@ namespace MixERP.Net.Entities
 
         public static IEnumerable<T> Get<T>(string sql, params object[] args)
         {
-            using (Database db = new Database(GetConnectionString()))
+            try
             {
-                return db.Query<T>(sql, args);
+                using (Database db = new Database(GetConnectionString()))
+                {
+                    return db.Query<T>(sql, args);
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                string errorMessage = GetDBErrorResource(ex.Code);
+                throw new MixERPException(errorMessage, ex);
             }
         }
 
         public static T Scalar<T>(string sql, params object[] args)
         {
-            using (Database db = new Database(GetConnectionString()))
+            try
             {
-                return db.ExecuteScalar<T>(sql, args);
+                using (Database db = new Database(GetConnectionString()))
+                {
+                    return db.ExecuteScalar<T>(sql, args);
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                string errorMessage = GetDBErrorResource(ex.Code);
+                throw new MixERPException(errorMessage, ex);
             }
         }
 
         public static void NonQuery(string sql, params object[] args)
         {
-            using (Database db = new Database(GetConnectionString()))
+            try
             {
-                db.Execute(sql, args);
+                using (Database db = new Database(GetConnectionString()))
+                {
+                    db.Execute(sql, args);
+                }
             }
+            catch (NpgsqlException ex)
+            {
+                string errorMessage = GetDBErrorResource(ex.Code);
+                throw new MixERPException(errorMessage, ex);
+            }
+        }
+
+        private static string GetDBErrorResource(string key)
+        {
+            Assembly ass = GetAssemblyByName("MixERP.Net.DbFactory");
+            return LocalizationHelper.GetResourceString(ass, "MixERP.Net.DbFactory.Resources.DbErrors", key);
+        }
+
+        private static Assembly GetAssemblyByName(string name)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies().
+                   SingleOrDefault(assembly => assembly.GetName().Name == name);
         }
 
         private static string GetConnectionString()

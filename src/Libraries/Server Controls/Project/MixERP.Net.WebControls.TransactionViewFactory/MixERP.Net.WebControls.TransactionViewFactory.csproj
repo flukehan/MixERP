@@ -101,22 +101,22 @@
     <None Include="Mix Open Foundation.snk" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Titles.de-DE.resx" />
-    <EmbeddedResource Include="Resources\Titles.es-ES.resx" />
-    <EmbeddedResource Include="Resources\Titles.fil-PH.resx" />
-    <EmbeddedResource Include="Resources\Titles.fr-FR.resx" />
-    <EmbeddedResource Include="Resources\Titles.id-ID.resx" />
-    <EmbeddedResource Include="Resources\Titles.ja-JP.resx" />
-    <EmbeddedResource Include="Resources\Titles.ms-MY.resx" />
-    <EmbeddedResource Include="Resources\Titles.nl-NL.resx" />
-    <EmbeddedResource Include="Resources\Titles.pt-PT.resx" />
+    <EmbeddedResource Include="Resources\Titles.de.resx" />
+    <EmbeddedResource Include="Resources\Titles.es.resx" />
+    <EmbeddedResource Include="Resources\Titles.fil.resx" />
+    <EmbeddedResource Include="Resources\Titles.fr.resx" />
+    <EmbeddedResource Include="Resources\Titles.id.resx" />
+    <EmbeddedResource Include="Resources\Titles.ja.resx" />
+    <EmbeddedResource Include="Resources\Titles.ms.resx" />
+    <EmbeddedResource Include="Resources\Titles.nl.resx" />
+    <EmbeddedResource Include="Resources\Titles.pt.resx" />
     <EmbeddedResource Include="Resources\Titles.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Titles.ru-RU.resx" />
-    <EmbeddedResource Include="Resources\Titles.sv-SE.resx" />
-    <EmbeddedResource Include="Resources\Titles.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Titles.ru.resx" />
+    <EmbeddedResource Include="Resources\Titles.sv.resx" />
+    <EmbeddedResource Include="Resources\Titles.zh.resx" />
     <EmbeddedResource Include="TransactionViewFactory.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

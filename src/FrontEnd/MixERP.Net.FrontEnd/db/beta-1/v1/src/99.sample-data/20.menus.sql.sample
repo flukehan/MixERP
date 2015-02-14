@@ -1,0 +1,12 @@
+DO
+$$
+BEGIN
+    IF(core.get_locale() = 'en-US') THEN
+        INSERT INTO policy.menu_access(office_id, menu_id, user_id)
+        SELECT office.offices.office_id, core.menus.menu_id, office.users.user_id
+        FROM core.menus, office.offices, office.users
+        WHERE office.users.user_name <> 'sys';
+    END IF;
+END
+$$
+LANGUAGE plpgsql;

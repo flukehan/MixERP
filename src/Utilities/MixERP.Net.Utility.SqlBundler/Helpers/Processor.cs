@@ -100,6 +100,11 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
 
         private static string GetBundleFileName(string outputDirectory, string fileName, string language)
         {
+            if (string.IsNullOrWhiteSpace(language))
+            {
+                return outputDirectory + "/" + fileName + ".sql";
+            }
+
             return outputDirectory + "/" + fileName + "." + language + ".sql";
         }
     }

@@ -29,7 +29,7 @@ namespace MixERP.Net.Utility.SqlBundler.Helpers
     {
         public static void WriteBundles(string root, IEnumerable<SQLBundle> bundles)
         {
-            foreach (var bundle in bundles)
+            foreach (SQLBundle bundle in bundles)
             {
                 string filePath = Path.Combine(root, bundle.FileName);
                 Console.WriteLine(@"Writing bundle {0}", filePath);

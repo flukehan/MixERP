@@ -21,7 +21,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 <configuration>
   <appSettings>
-    <add key="MinimumLogLevel" value="Verbose" />    
+    <add key="MinimumLogLevel" value="Information" />    
     <!--Must be a physical path and application pool identity user must be able to write to it.-->
     <add key="ApplicationLogDirectory" value="C:\mixerp-logs" />
   </appSettings>

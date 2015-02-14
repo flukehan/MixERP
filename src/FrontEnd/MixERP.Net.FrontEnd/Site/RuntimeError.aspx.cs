@@ -75,7 +75,6 @@ namespace MixERP.Net.FrontEnd.Site
             if (ex != null)
             {
                 Log.Verbose("Getting the innermost exception.");
-                ex = this.GetInnerMostException(ex);
 
                 Log.Verbose("Exception displayed to user.");
 
@@ -86,16 +85,6 @@ namespace MixERP.Net.FrontEnd.Site
 
                 this.ExceptionLiteral.Text = s.ToString();
             }
-        }
-
-        private Exception GetInnerMostException(Exception ex)
-        {
-            if (ex.InnerException == null)
-            {
-                return ex;
-            }
-
-            return this.GetInnerMostException(ex.InnerException);
         }
     }
 }
