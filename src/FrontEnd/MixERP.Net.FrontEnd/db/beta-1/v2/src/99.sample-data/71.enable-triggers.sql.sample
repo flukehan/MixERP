@@ -1,0 +1,1 @@
+ALTER TABLE transactions.transaction_details ENABLE TRIGGER check_cash_balance_trigger;
