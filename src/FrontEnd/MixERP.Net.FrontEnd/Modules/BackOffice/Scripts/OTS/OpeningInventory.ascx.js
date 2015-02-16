@@ -175,6 +175,7 @@ addRowButton.click(function () {
 
 });
 
+
 function addRowToTable(itemCode, itemName, storeName, quantity, unitName, amount, total) {
     var grid = openingInventoryGridView;
     var rows = grid.find("tbody tr:not(:last-child)");
@@ -189,8 +190,8 @@ function addRowToTable(itemCode, itemName, storeName, quantity, unitName, amount
             getColumnText(row, 2) === storeName &&
             getColumnText(row, 4) === unitName &&
             parseFloat2(getColumnText(row, 5)) === amount) {
-            setColumnText(row, 3, getFormattedNumber(parseFloat2(getColumnText(row, 3)) + quantity));
-            setColumnText(row, 6, getFormattedNumber(parseFloat2(getColumnText(row, 6)) + result));
+            setColumnText(row, 3, getFormattedNumber(parseFloat2(parseFormattedNumber(getColumnText(row, 3))) + quantity));
+            setColumnText(row, 6, getFormattedNumber(parseFloat2(parseFormattedNumber(getColumnText(row, 6))) + result));
 
             addDanger(row);
 

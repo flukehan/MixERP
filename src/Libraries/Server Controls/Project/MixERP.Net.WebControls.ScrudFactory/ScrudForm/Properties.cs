@@ -160,6 +160,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string OfficeCode { get; set; }
+        public int OfficeId { get; set; }
 
         /// <summary>
         ///     The name of the primary key column.

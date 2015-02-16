@@ -29,6 +29,7 @@ namespace MixERP.Net.FrontEnd.Controls
             this.UserId = CurrentSession.GetUserId();
             this.UserName = CurrentSession.GetUserName();
             this.OfficeCode = CurrentSession.GetOfficeName();
+            this.OfficeId = CurrentSession.GetOfficeId();
         }
     }
 }
