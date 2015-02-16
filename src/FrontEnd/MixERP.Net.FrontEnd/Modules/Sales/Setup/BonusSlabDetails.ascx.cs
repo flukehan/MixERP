@@ -23,7 +23,7 @@ using System.Reflection;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.Sales.Setup
 {
@@ -31,7 +31,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.KeyColumn = "bonus_slab_detail_id";
                 scrud.TableSchema = "core";
@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.Text = Titles.BonusSlabDetails;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(BonusSlabDetails));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (BonusSlabDetails));
 
                 this.AddScrudCustomValidatorMessages();
 

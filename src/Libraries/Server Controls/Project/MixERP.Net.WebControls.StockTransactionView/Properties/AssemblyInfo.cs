@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MixERP.Net.WebControls.StockTransactionViewFactoryFactory")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
-[assembly: NeutralResourcesLanguage("en-US")]
+[assembly: NeutralResourcesLanguage("en")]
 
 
 // Setting ComVisible to false makes the types in this assembly not visible

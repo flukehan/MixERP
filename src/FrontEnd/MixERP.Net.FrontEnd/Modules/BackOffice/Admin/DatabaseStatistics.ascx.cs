@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Core.Modules.BackOffice.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Reflection;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Core.Modules.BackOffice.Data.Admin;
+using MixERP.Net.Core.Modules.BackOffice.Resources;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Admin
 {
@@ -31,10 +31,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
     {
         public override AccessLevel AccessLevel
         {
-            get
-            {
-                return AccessLevel.AdminOnly;
-            }
+            get { return AccessLevel.AdminOnly; }
         }
 
         public override void OnControlLoad(object sender, EventArgs e)
@@ -49,8 +46,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 
             this.AddScrud();
             LocalizeButtons();
-
-            
         }
 
         protected void AnalyzeButton_Click(object sender, EventArgs e)
@@ -85,7 +80,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 
         private void AddScrud()
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.DenyAdd = true;
                 scrud.DenyDelete = true;
@@ -100,7 +95,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                 scrud.View = "db_stat";
 
                 scrud.Text = Titles.DatabaseStatistics;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(DatabaseStatistics));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (DatabaseStatistics));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }

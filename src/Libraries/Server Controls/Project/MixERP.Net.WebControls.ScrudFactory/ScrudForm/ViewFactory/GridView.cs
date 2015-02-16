@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Data;
+using System.Globalization;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
@@ -69,11 +70,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.formGridView.Width = this.GetGridViewWidth();
             this.formGridView.Attributes.Add("style", "white-space: nowrap;");
 
-            string userNameSessionKey = ConfigurationHelper.GetScrudParameter("UserNameSessionKey");
-            string officeCodeSessionKey = ConfigurationHelper.GetScrudParameter("OfficeCodeSessionKey");
-
-            this.userIdHidden.Value = CurrentSession.GetSessionValueByKey(userNameSessionKey);
-            this.officeCodeHidden.Value = CurrentSession.GetSessionValueByKey(officeCodeSessionKey);
+            this.userIdHidden.Value = this.UserId.ToString(CultureInfo.InvariantCulture);
+            this.officeCodeHidden.Value = this.OfficeCode;
         }
     }
 }

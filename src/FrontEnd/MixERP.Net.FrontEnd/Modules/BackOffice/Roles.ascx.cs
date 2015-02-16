@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Reflection;
 using MixERP.Net.Common.Domains;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
@@ -29,15 +29,12 @@ namespace MixERP.Net.Core.Modules.BackOffice
     {
         public override AccessLevel AccessLevel
         {
-            get
-            {
-                return AccessLevel.AdminOnly;
-            }
+            get { return AccessLevel.AdminOnly; }
         }
 
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.KeyColumn = "role_id";
 
@@ -47,12 +44,10 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.View = "role_scrud_view";
 
                 scrud.Text = Resources.Titles.Roles;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Roles));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Roles));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-
-            
         }
     }
 }

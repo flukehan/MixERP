@@ -7,7 +7,7 @@ var menuContainer = $("#MenuContainer");
 var fullWidthContainer = $(".full.width");
 var topMenu = $("#TopMenu");
 var datepickerLanguagePath;
-
+var searchInput = $('#SearchInput');
 ///#source 1 1 /Scripts/mixerp/master-page/js-tree.js
 $(function () {
     var tree = $("#tree");

@@ -6,3 +6,4 @@ var menuContainer = $("#MenuContainer");
 var fullWidthContainer = $(".full.width");
 var topMenu = $("#TopMenu");
 var datepickerLanguagePath;
+var searchInput = $('#SearchInput');

@@ -22,6 +22,7 @@ using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Reflection;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
@@ -29,7 +30,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.KeyColumn = "industry_id";
                 scrud.TableSchema = "core";

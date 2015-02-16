@@ -23,7 +23,7 @@ using System.Reflection;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.Finance.Setup
 {
@@ -31,7 +31,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.KeyColumn = "cash_flow_setup_id";
                 scrud.TableSchema = "core";
@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(CashFlowSetup));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (CashFlowSetup));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }

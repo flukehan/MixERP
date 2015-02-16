@@ -109,18 +109,17 @@ namespace MixERP.Net.WebControls.ScrudFactory
         // ReSharper disable once UnusedParameter.Local
         private void Save(bool closeForm)
         {
-            string userIdSessionKey = ConfigurationHelper.GetScrudParameter("UserIdSessionKey");
+            int userId = this.UserId;
 
-            if (Conversion.TryCastInteger(CurrentSession.GetSessionValueByKey(userIdSessionKey)) <= 0)
+            if (userId <= 0)
             {
-                throw new InvalidOperationException("The user id session key is invalid or incorrectly configured.");
+                throw new InvalidOperationException(Errors.InvalidUserId);
             }
 
             Collection<KeyValuePair<string, object>> list = this.GetFormCollection(true);
             string id = this.GetSelectedValue();
             this.lastValueHiddenTextBox.Text = id;
 
-            int userId = Conversion.TryCastInteger(this.Page.Session[userIdSessionKey]);
 
             if (string.IsNullOrWhiteSpace(id))
             {

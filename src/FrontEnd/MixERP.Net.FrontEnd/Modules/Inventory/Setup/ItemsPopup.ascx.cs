@@ -23,16 +23,15 @@ using System.Reflection;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
     public partial class ItemsPopup : MixERPUserControl
     {
-        public override void OnControlLoad(object sender,
-            EventArgs e)
+        public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.KeyColumn = "item_id";
                 scrud.TableSchema = "core";
@@ -49,8 +48,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-
-            
         }
 
         private static string GetDisplayFields()

@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Sales.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.Sales.Resources;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.Sales.Setup
 {
@@ -31,7 +31,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.KeyColumn = "recurring_invoice_id";
                 scrud.TableSchema = "core";
@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(RecurringInvoices));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (RecurringInvoices));
 
                 this.AddScrudCustomValidatorErrorMessages();
 

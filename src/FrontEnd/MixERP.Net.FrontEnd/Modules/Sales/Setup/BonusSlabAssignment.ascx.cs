@@ -24,6 +24,7 @@ using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.Sales.Setup
 {
@@ -31,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.KeyColumn = "salesperson_bonus_setup_id";
                 scrud.TableSchema = "core";

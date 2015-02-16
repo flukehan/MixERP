@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
@@ -72,11 +73,11 @@ namespace MixERP.Net.WebControls.ScrudFactory
             //Bottom command panel.
             this.userIdHidden = new HiddenField();
             this.userIdHidden.ID = "UserIdHidden";
-            this.userIdHidden.Value = CurrentSession.GetUserName();
+            this.userIdHidden.Value = this.UserId.ToString(CultureInfo.InvariantCulture);
 
             this.officeCodeHidden = new HiddenField();
             this.officeCodeHidden.ID = "OfficeCodeHidden";
-            this.officeCodeHidden.Value = CurrentSession.GetOfficeName();
+            this.officeCodeHidden.Value = this.OfficeCode;
 
             this.updatePanel.ContentTemplateContainer.Controls.Add(this.userIdHidden);
             this.updatePanel.ContentTemplateContainer.Controls.Add(this.officeCodeHidden);

@@ -238,8 +238,13 @@ namespace MixERP.Net.DbFactory
             }
             catch (NpgsqlException ex)
             {
-                string errorMessage = GetDBErrorResource(ex.Code);
-                throw new MixERPException(errorMessage, ex);
+                if (ex.Code.StartsWith("P"))
+                {
+                    string errorMessage = GetDBErrorResource(ex.Code);
+                    throw new MixERPException(errorMessage, ex);
+                }
+
+                throw;
             }
         }
 

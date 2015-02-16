@@ -36,9 +36,7 @@ namespace MixERP.Net.FrontEnd.Base
 
         private void RegisterJavascript()
         {
-            string script = "var searchInput = $('#SearchInput');";
-
-            script += JSUtility.GetVar("culture", Thread.CurrentThread.CurrentCulture.Name);
+            string script = JSUtility.GetVar("culture", Thread.CurrentThread.CurrentCulture.Name);
             script += JSUtility.GetVar("language", Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName);
             script += JSUtility.GetVar("jqueryUIi18nPath", this.Page.ResolveUrl("~/Scripts/jquery-ui/i18n/"));
 

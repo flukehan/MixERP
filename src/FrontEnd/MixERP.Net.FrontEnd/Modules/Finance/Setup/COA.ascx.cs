@@ -23,7 +23,7 @@ using System.Reflection;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.Finance.Setup
 {
@@ -31,7 +31,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.TableSchema = "core";
                 scrud.Table = "accounts";
@@ -48,8 +48,6 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-
-            
         }
 
         private static string GetDisplayFields()

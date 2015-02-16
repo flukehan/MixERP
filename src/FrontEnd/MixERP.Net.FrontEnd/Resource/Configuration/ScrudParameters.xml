@@ -54,7 +54,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="ItemSelectorPath" value="~/General/ItemSelector.aspx" />
     <add key="ItemSelectorSelectAnchorCssClass" value="linkbutton" />
     <add key="ItemSeparator" value="," />
-    <add key="OfficeCodeSessionKey" value="OfficeCode" />
     <add key="PagerCssClass" value="ui pagination menu vmargin8" />
     <add key="PagerCurrentPageCssClass" value="active item" />
     <add key="PagerPageButtonCssClass" value="item" />
@@ -71,7 +70,5 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="UpdateProgressSpinnerImageCssClass" value="ajax-loader" />
     <add key="UpdateProgressSpinnerImagePath" value="~/Resource/Static/images/spinner.gif" />
     <add key="UpdateProgressTemplateCssClass" value="ajax-container" />
-    <add key="UserIdSessionKey" value="UserId" />
-    <add key="UserNameSessionKey" value="UserName" />
   </appSettings>
 </configuration>

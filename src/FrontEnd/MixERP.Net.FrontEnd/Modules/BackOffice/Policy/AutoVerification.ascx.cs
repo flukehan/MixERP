@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using MixERP.Net.Common.Domains;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Policy
 {
@@ -40,7 +41,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
 
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.DenyAdd = !CurrentSession.IsAdmin();
                 scrud.DenyEdit = !CurrentSession.IsAdmin();

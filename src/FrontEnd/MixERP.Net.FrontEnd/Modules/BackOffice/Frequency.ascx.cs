@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using MixERP.Net.Common.Domains;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.BackOffice.Resources;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
@@ -32,15 +32,12 @@ namespace MixERP.Net.Core.Modules.BackOffice
     {
         public override AccessLevel AccessLevel
         {
-            get
-            {
-                return AccessLevel.AdminOnly;
-            }
+            get { return AccessLevel.AdminOnly; }
         }
 
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.KeyColumn = "frequency_setup_id";
 
@@ -57,8 +54,6 @@ namespace MixERP.Net.Core.Modules.BackOffice
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-
-            
         }
 
         private static string GetDisplayFields()

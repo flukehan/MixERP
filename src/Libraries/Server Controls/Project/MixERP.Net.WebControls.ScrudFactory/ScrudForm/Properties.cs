@@ -153,9 +153,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// <summary>
         ///     Use this parameter to override "ItemSelectorPath" key in the configuration file.
         ///     ItemSelectorPath is a page which pops up on iframe and provides
-        ///     some basic serach functionalities for the dropdownlist control.
+        ///     some basic search functionalities for the dropdownlist control.
         /// </summary>
         public string ItemSelectorPath { get; set; }
+
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+        public string OfficeCode { get; set; }
 
         /// <summary>
         ///     The name of the primary key column.

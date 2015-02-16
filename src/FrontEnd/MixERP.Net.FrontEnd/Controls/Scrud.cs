@@ -17,35 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Core.Modules.Inventory.Resources;
-using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ScrudFactory;
-using System;
-using System.Reflection;
-using MixERP.Net.FrontEnd.Controls;
 
-namespace MixERP.Net.Core.Modules.Inventory.Setup
+namespace MixERP.Net.FrontEnd.Controls
 {
-    public partial class CompoundItems : MixERPUserControl
+    public sealed class Scrud : ScrudForm
     {
-        public override void OnControlLoad(object sender, EventArgs e)
+        public Scrud()
         {
-            using (Scrud scrud = new Scrud())
-            {
-                scrud.KeyColumn = "compound_item_id";
-
-                scrud.TableSchema = "core";
-                scrud.Table = "compound_items";
-                scrud.ViewSchema = "core";
-                scrud.View = "compound_item_scrud_view";
-
-                scrud.Text = Titles.CompoundItems;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(CompoundItems));
-
-                this.ScrudPlaceholder.Controls.Add(scrud);
-            }
-
-            
+            this.UserId = CurrentSession.GetUserId();
+            this.UserName = CurrentSession.GetUserName();
+            this.OfficeCode = CurrentSession.GetOfficeName();
         }
     }
 }

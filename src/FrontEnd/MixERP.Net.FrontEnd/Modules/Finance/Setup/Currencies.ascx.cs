@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Core.Modules.Finance.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Reflection;
+using MixERP.Net.Core.Modules.Finance.Resources;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.Finance.Setup
 {
@@ -29,7 +29,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.KeyColumn = "currency_code";
                 scrud.TableSchema = "core";
@@ -38,12 +38,10 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.View = "currency_scrud_view";
 
                 scrud.Text = Titles.Currencies;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Currencies));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Currencies));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-
-            
         }
     }
 }

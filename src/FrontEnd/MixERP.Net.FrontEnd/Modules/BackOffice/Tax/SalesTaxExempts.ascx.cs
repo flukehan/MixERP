@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.BackOffice.Resources;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Tax
 {
@@ -31,7 +31,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.KeyColumn = "sales_tax_exempt_id";
                 scrud.TableSchema = "core";
@@ -43,10 +43,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(SalesTaxExempts));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (SalesTaxExempts));
 
                 this.AddScrudCustomValidatorErrorMessages();
-                
+
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
@@ -57,7 +57,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
             javascript += JSUtility.GetVar("comparePriceErrorMessageLocalized", Warnings.ComparePriceErrorMessage);
 
             Common.PageUtility.RegisterJavascript("SalesTaxExempts_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
-
         }
 
         private static string GetDisplayFields()

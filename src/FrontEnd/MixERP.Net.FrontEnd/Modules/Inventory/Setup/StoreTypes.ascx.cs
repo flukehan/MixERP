@@ -21,7 +21,7 @@ using System;
 using System.Reflection;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
@@ -29,7 +29,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.KeyColumn = "store_type_id";
 
@@ -39,12 +39,10 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.View = "store_type_scrud_view";
 
                 scrud.Text = Titles.StoreTypes;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(StoreTypes));
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (StoreTypes));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-
-            
         }
     }
 }

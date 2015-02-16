@@ -23,6 +23,7 @@ using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Reflection;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.Finance.Setup
 {
@@ -30,7 +31,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.KeyColumn = "ageing_slab_id";
 

@@ -61,6 +61,15 @@ namespace MixERP.Net.WebControls.ScrudFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid user id..
+        /// </summary>
+        internal static string InvalidUserId {
+            get {
+                return ResourceManager.GetString("InvalidUserId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is a mismatching count of key/value items in this ListControl..
         /// </summary>
         internal static string KeyValueMismatch {

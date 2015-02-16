@@ -25,7 +25,7 @@ using System.Web.UI.WebControls;
 namespace MixERP.Net.WebControls.ScrudFactory
 {
     [ToolboxData("<{0}:ScrudForm runat=server></{0}:ScrudForm>")]
-    public sealed partial class ScrudForm
+    public partial class ScrudForm
     {
         private string imageColumn = string.Empty;
         private Panel scrudContainer;

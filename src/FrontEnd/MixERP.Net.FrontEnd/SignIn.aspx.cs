@@ -278,13 +278,23 @@ namespace MixERP.Net.FrontEnd
                     field.Controls.Add(label);
                 }
 
-                using (HtmlSelect languageSelect = new HtmlSelect())
+                using (DropDownList languageSelect = new DropDownList())
                 {
                     languageSelect.ID = "LanguageSelect";
                     languageSelect.DataTextField = "Text";
                     languageSelect.DataValueField = "Value";
                     languageSelect.DataSource = this.GetLanguages();
                     languageSelect.DataBind();
+
+
+                    for (int i = 0; i < languageSelect.Items.Count; i++)
+                    {
+                        if (languageSelect.Items[i].Value.Equals(CultureInfo.CurrentUICulture.Name))
+                        {
+                            languageSelect.Items[i].Selected = true;
+                            break;
+                        }
+                    }
 
 
                     field.Controls.Add(languageSelect);

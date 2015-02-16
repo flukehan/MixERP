@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.Core.Modules.Sales.Setup
@@ -35,7 +36,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
 
         protected void LoadControl()
         {
-            using (ScrudForm scrud = new ScrudForm())
+            using (Scrud scrud = new Scrud())
             {
                 scrud.KeyColumn = "salesperson_id";
                 scrud.TableSchema = "core";
