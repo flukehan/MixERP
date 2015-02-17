@@ -18,12 +18,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/MixERPMaster.Master" AutoEventWireup="true"
-    CodeBehind="Default.aspx.cs"
-    Inherits="MixERP.Net.FrontEnd.Modules.Default"
-    ValidateRequest="false" %>
+CodeBehind="Default.aspx.cs"
+Inherits="MixERP.Net.FrontEnd.Modules.Default" %>
 
 <asp:Content ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
     <div class="container">
-        <asp:PlaceHolder runat="server" ID="DefaultContentPlaceholder" />
+        <asp:PlaceHolder runat="server" ID="DefaultContentPlaceholder"/>
     </div>
 </asp:Content>

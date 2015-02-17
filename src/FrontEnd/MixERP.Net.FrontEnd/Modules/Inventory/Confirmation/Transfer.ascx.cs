@@ -23,7 +23,7 @@ using MixERP.Net.WebControls.TransactionChecklist;
 
 namespace MixERP.Net.Core.Modules.Inventory.Confirmation
 {
-    public partial class Transfer : MixERPUserControl
+    public partial class Transfer : TransactionCheckListControl
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {

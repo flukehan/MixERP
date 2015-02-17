@@ -24,7 +24,7 @@ using MixERP.Net.WebControls.TransactionChecklist;
 
 namespace MixERP.Net.Core.Modules.Inventory.Confirmation
 {
-    public partial class Adjustment : MixERPUserControl
+    public partial class Adjustment : TransactionCheckListControl
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {

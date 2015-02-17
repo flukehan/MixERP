@@ -1,5 +1,6 @@
 ﻿using MixERP.Net.Common.Helpers;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Threading;
 using TheArtOfDev.HtmlRenderer.WinForms;
 
@@ -13,7 +14,7 @@ namespace MixERP.Net.HtmlParser.ImageSerializer
             {
                 string path = imagePath + ImageHelper.GetFileExtension(this.ImageFormat);
 
-                Image image = HtmlRender.RenderToImageGdiPlus(this.Html);
+                Image image = HtmlRender.RenderToImage(this.Html);
 
                 image.Save(path, ImageHelper.GetEncoder(this.ImageFormat), null);
                 OnImageSaved(new ImageSavedEventArgs(path));

@@ -27,7 +27,7 @@ using MixERP.Net.WebControls.TransactionChecklist;
 
 namespace MixERP.Net.Core.Modules.Purchase.Confirmation
 {
-    public partial class GRN : MixERPUserControl
+    public partial class GRN : TransactionCheckListControl
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {

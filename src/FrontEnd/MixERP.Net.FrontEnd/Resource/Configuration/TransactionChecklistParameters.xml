@@ -22,6 +22,5 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <configuration>
   <appSettings>
     <add key="EmailImageExtension" value="png" />
-    <add key="EmailImageParserType" value="HtmlRenderer" />
   </appSettings>
 </configuration>

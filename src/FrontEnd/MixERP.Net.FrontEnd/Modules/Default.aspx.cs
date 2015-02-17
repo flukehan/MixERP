@@ -34,6 +34,7 @@ namespace MixERP.Net.FrontEnd.Modules
                 this.DefaultContentPlaceholder.Controls.Add(this.plugin);
 
                 this.plugin.Initialize();
+                this.ValidateRequestMode = plugin.ValidDateRequest;
 
                 if (!string.IsNullOrWhiteSpace(this.plugin.OverridePath))
                 {

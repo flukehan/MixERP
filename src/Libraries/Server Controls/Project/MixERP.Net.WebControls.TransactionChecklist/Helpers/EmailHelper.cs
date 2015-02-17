@@ -43,20 +43,8 @@ namespace MixERP.Net.WebControls.TransactionChecklist.Helpers
         internal string Subject { get; set; }
         internal void SendEmail()
         {
-            string type = this.GetEmailImageParserType();
-            if (string.IsNullOrWhiteSpace(type))
-            {
-                throw new MixERPException(Warnings.CouldNotDetermineEmailImageParserType);
-            }
 
             IHtmlImageSerializer serializer = new HtmlRendererImageSerializer();
-
-            switch (type)
-            {
-                case "IEWebBrowser":
-                    serializer = new WebBrowserImageSerializer();
-                    break;
-            }
 
             string extension = ConfigurationHelper.GetTransactionChecklistParameter("EmailImageExtension") ?? ".png";
 
@@ -67,10 +55,6 @@ namespace MixERP.Net.WebControls.TransactionChecklist.Helpers
             serializer.Serialize();
         }
 
-        private string GetEmailImageParserType()
-        {
-            return ConfigurationHelper.GetTransactionChecklistParameter("EmailImageParserType");
-        }
 
         private void Serializer_ImageSaved(object sender, ImageSavedEventArgs e)
         {

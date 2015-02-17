@@ -22,8 +22,8 @@ namespace MixERP.Net.HtmlParser.ImageSerializer
                     File.WriteAllText(tempPath, this.Html);
                     browser.Navigate(tempPath);
                     browser.ScriptErrorsSuppressed = true;
-                    browser.Width = 1024;
-                    browser.Height = 19999;
+                    //browser.Width = 1024;
+                    //browser.Height = 19999;
                     browser.Tag = imagePath;
 
                     browser.DocumentCompleted += DocumentCompleted;

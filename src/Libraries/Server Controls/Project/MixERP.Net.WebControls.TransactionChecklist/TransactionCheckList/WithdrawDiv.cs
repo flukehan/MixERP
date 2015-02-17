@@ -45,6 +45,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
         private void AddOkButton(HtmlGenericControl p)
         {
             this.okButton = new Button();
+            this.okButton.ID = "OKButton";
             this.okButton.CausesValidation = true;
             this.okButton.Text = Titles.OK;
             this.okButton.Attributes.Add("class", "ui red small submit button");

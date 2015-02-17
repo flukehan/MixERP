@@ -17,28 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
 using System.Web.UI;
-using MixERP.Net.Common.Domains;
 
-namespace MixERP.Net.Common.Base
+namespace MixERP.Net.FrontEnd.Base
 {
-    public abstract class MixERPUserControlBase : UserControl, IControl
+    public abstract class TransactionCheckListControl : MixERPUserControl
     {
-        public abstract AccessLevel AccessLevel { get; }
-        public abstract void OnControlLoad(object sender, EventArgs e);
-
-        public string MasterPageId { get; set; }
-        public bool RemoveTheme { get; set; }
-        public string OverridePath { get; set; }
-
-        private ValidateRequestMode validDateRequest = ValidateRequestMode.Inherit;
-
-        public ValidateRequestMode ValidDateRequest
+        protected TransactionCheckListControl()
         {
-            get { return this.validDateRequest; }
-            set { this.validDateRequest = value; }
+            this.ValidDateRequest = ValidateRequestMode.Disabled;
         }
-
     }
 }

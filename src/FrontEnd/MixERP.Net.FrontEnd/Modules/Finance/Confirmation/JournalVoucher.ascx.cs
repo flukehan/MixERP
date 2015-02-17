@@ -23,7 +23,7 @@ using System;
 
 namespace MixERP.Net.Core.Modules.Finance.Confirmation
 {
-    public partial class JournalVoucher : MixERPUserControl
+    public partial class JournalVoucher : TransactionCheckListControl
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {

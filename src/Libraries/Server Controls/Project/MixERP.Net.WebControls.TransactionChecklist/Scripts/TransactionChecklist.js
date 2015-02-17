@@ -3,6 +3,8 @@ var withdrawDiv = $("#WithdrawDiv");
 var withdrawAnchor = $("#WithdrawAnchor");
 var viewReportAnchor = $("#ViewReportAnchor");
 var emailHidden = $("#EmailHidden");
+var okButton = $("#OKButton");
+
 
 $(document).ready(function () {
     if (withdrawAnchor.length) {
@@ -26,6 +28,10 @@ $(document).ready(function () {
     if (url) {
         prepareEmail(url);
     };
+});
+
+okButton.click(function() {
+    emailHidden.val("");
 });
 
 cancelButton.click(function () {
