@@ -25,8 +25,13 @@ namespace MixERP.Net.Entities
             }
             catch (NpgsqlException ex)
             {
-                string errorMessage = GetDBErrorResource(ex.Code);
-                throw new MixERPException(errorMessage, ex);
+                if (ex.Code.StartsWith("P"))
+                {
+                    string errorMessage = GetDBErrorResource(ex.Code);
+                    throw new MixERPException(errorMessage, ex);
+                }
+
+                throw;
             }
         }
 
@@ -41,8 +46,13 @@ namespace MixERP.Net.Entities
             }
             catch (NpgsqlException ex)
             {
-                string errorMessage = GetDBErrorResource(ex.Code);
-                throw new MixERPException(errorMessage, ex);
+                if (ex.Code.StartsWith("P"))
+                {
+                    string errorMessage = GetDBErrorResource(ex.Code);
+                    throw new MixERPException(errorMessage, ex);
+                }
+
+                throw;
             }
         }
 
@@ -57,8 +67,13 @@ namespace MixERP.Net.Entities
             }
             catch (NpgsqlException ex)
             {
-                string errorMessage = GetDBErrorResource(ex.Code);
-                throw new MixERPException(errorMessage, ex);
+                if (ex.Code.StartsWith("P"))
+                {
+                    string errorMessage = GetDBErrorResource(ex.Code);
+                    throw new MixERPException(errorMessage, ex);
+                }
+
+                throw;
             }
         }
 

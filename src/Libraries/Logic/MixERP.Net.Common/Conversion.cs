@@ -24,7 +24,6 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
@@ -47,61 +46,6 @@ namespace MixERP.Net.Common
                 imageToConvert.Save(ms, formatOfImage);
                 return ms.ToArray();
             }
-        }
-
-        public static Uri GetBackEndUrl(HttpContext context, string relativePath)
-        {
-            string administrationDirectoryName = WebConfigurationManager.AppSettings["AdministrationDirectoryName"];
-
-            if (context != null)
-            {
-                if (!string.IsNullOrWhiteSpace(administrationDirectoryName))
-                {
-                    string lang;
-
-                    if ((context.Session == null) || string.IsNullOrWhiteSpace(context.Session["lang"] as string))
-                    {
-                        lang = "en-US";
-                    }
-                    else
-                    {
-                        lang = context.Session["lang"] as string;
-                    }
-
-                    CultureInfo culture = new CultureInfo(lang);
-                    if (culture.TwoLetterISOLanguageName == "iv")
-                    {
-                        culture = new CultureInfo("en-US");
-                    }
-
-                    string virtualDirectory = context.Request.ApplicationPath;
-                    bool isSecure = context.Request.IsSecureConnection;
-                    string domain = context.Request.Url.DnsSafeHost;
-                    int port = context.Request.Url.Port;
-                    string path;
-
-                    if (virtualDirectory == "/")
-                    {
-                        path = string.Format(CultureInfo.InvariantCulture, "{0}:{1}/{2}/{3}/{4}/", domain, port.ToString(CultureInfo.InvariantCulture), administrationDirectoryName, culture.TwoLetterISOLanguageName, relativePath);
-                    }
-                    else
-                    {
-                        path = string.Format(CultureInfo.InvariantCulture, "{0}:{1}{2}/{3}/{4}/{5}/", domain, port.ToString(CultureInfo.InvariantCulture), virtualDirectory, administrationDirectoryName, culture.TwoLetterISOLanguageName, relativePath);
-                    }
-
-                    if (isSecure)
-                    {
-                        path = "https://" + path;
-                    }
-                    else
-                    {
-                        path = "http://" + path;
-                    }
-
-                    return new Uri(path, UriKind.Absolute);
-                }
-            }
-            return new Uri("", UriKind.Relative);
         }
 
         public static DateTime GetLocalDateTime(string timeZone, DateTime utc)
@@ -149,7 +93,7 @@ namespace MixERP.Net.Common
         public static bool IsNumeric(string value)
         {
             double number;
-            return double.TryParse(value, NumberStyles.Any, CurrentSession.GetCulture(), out number);
+            return double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out number);
         }
 
         public static string MapPathReverse(string fullServerPath)
@@ -237,7 +181,7 @@ namespace MixERP.Net.Common
                 }
 
 
-                return Convert.ToDateTime(value, CurrentSession.GetCulture());
+                return Convert.ToDateTime(value, CultureInfo.CurrentCulture);
             }
             catch (FormatException)
             {
@@ -265,7 +209,7 @@ namespace MixERP.Net.Common
                 string numberToParse = value.ToString();
 
 
-                if (decimal.TryParse(numberToParse, NumberStyles.Any, CurrentSession.GetCulture(), out retVal))
+                if (decimal.TryParse(numberToParse, NumberStyles.Any, CultureInfo.CurrentCulture, out retVal))
                 {
                     return retVal;
                 }
@@ -287,7 +231,7 @@ namespace MixERP.Net.Common
 
                 string numberToParse = value.ToString();
 
-                if (double.TryParse(numberToParse, NumberStyles.Any, CurrentSession.GetCulture(), out retVal))
+                if (double.TryParse(numberToParse, NumberStyles.Any, CultureInfo.CurrentCulture, out retVal))
                 {
                     return retVal;
                 }
@@ -318,7 +262,7 @@ namespace MixERP.Net.Common
 
                 string numberToParse = value.ToString();
 
-                if (int.TryParse(numberToParse, NumberStyles.Any, CurrentSession.GetCulture(), out retVal))
+                if (int.TryParse(numberToParse, NumberStyles.Any, CultureInfo.CurrentCulture, out retVal))
                 {
                     return retVal;
                 }
@@ -340,28 +284,13 @@ namespace MixERP.Net.Common
 
                 string numberToParse = value.ToString();
 
-                if (long.TryParse(numberToParse, NumberStyles.Any, CurrentSession.GetCulture(), out retVal))
+                if (long.TryParse(numberToParse, NumberStyles.Any, CultureInfo.CurrentCulture, out retVal))
                 {
                     return retVal;
                 }
             }
 
             return retVal;
-        }
-
-        public static DateTime? TryCastNullableDate(object value)
-        {
-            if (value == null || value == DBNull.Value)
-            {
-                return null;
-            }
-
-            if (string.IsNullOrWhiteSpace(value.ToString()))
-            {
-                return null;
-            }
-
-            return Convert.ToDateTime(value, CurrentSession.GetCulture());
         }
 
         public static short TryCastShort(object value)
@@ -377,7 +306,7 @@ namespace MixERP.Net.Common
 
                 string numberToParse = value.ToString();
 
-                if (short.TryParse(numberToParse, NumberStyles.Any, CurrentSession.GetCulture(), out retVal))
+                if (short.TryParse(numberToParse, NumberStyles.Any, CultureInfo.CurrentCulture, out retVal))
                 {
                     return retVal;
                 }
@@ -399,7 +328,7 @@ namespace MixERP.Net.Common
 
                 string numberToParse = value.ToString();
 
-                if (float.TryParse(numberToParse, NumberStyles.Any, CurrentSession.GetCulture(), out retVal))
+                if (float.TryParse(numberToParse, NumberStyles.Any, CultureInfo.CurrentCulture, out retVal))
                 {
                     return retVal;
                 }
@@ -449,7 +378,22 @@ namespace MixERP.Net.Common
             }
 
 
-            return Unit.Parse(value.ToString(), CurrentSession.GetCulture());
+            return Unit.Parse(value.ToString(), CultureInfo.CurrentCulture);
+        }
+
+        public static DateTime? TryCastNullableDate(object value)
+        {
+            if (value == null || value == DBNull.Value)
+            {
+                return null;
+            }
+
+            if (string.IsNullOrWhiteSpace(value.ToString()))
+            {
+                return null;
+            }
+
+            return Convert.ToDateTime(value, CultureInfo.CurrentCulture);
         }
     }
 }

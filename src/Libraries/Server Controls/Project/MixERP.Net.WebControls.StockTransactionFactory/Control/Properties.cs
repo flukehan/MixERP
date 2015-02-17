@@ -24,8 +24,6 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
 {
     public partial class StockTransactionForm
     {
-        #region Properties
-
         /// <summary>
         ///     This property is used to temporarily store pre assigned instance of transactions for
         ///     merging transactions and creating a batch transactions. Some cases: Multiple Sales
@@ -102,6 +100,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
         /// </summary>
         public bool VerifyStock { get; set; }
 
-        #endregion Properties
+        public int OfficeId { get; set; }
+
     }
 }

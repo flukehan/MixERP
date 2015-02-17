@@ -21,7 +21,9 @@ using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Services.Admin
 {
@@ -34,7 +36,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services.Admin
         [WebMethod(EnableSession = true)]
         public void Save(string key, string value)
         {
-            int userId = CurrentSession.GetUserId();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
             if (userId.Equals(0))
             {
                 return;

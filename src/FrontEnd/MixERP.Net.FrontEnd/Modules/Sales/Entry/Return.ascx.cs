@@ -19,10 +19,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.StockTransactionFactory;
 
 namespace MixERP.Net.Core.Modules.Sales.Entry
@@ -45,6 +47,7 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
                 product.ShowPriceTypes = true;
                 product.ShowStore = true;
                 product.ShowSalesType = true;
+                product.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
 
                 this.Placeholder1.Controls.Add(product);

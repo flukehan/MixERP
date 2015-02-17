@@ -23,11 +23,12 @@ using System.Linq;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Finance.Data.Helpers;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
-using CollectionHelper = MixERP.Net.WebControls.StockTransactionFactory.Helpers.CollectionHelper;
+using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
@@ -40,9 +41,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public void Approve(long tranId, string reason)
         {
-            int officeId = CurrentSession.GetOfficeId();
-            int userId = CurrentSession.GetUserId();
-            long loginId = CurrentSession.GetLoginId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
             const int verificationStatusId = 2;
 
             Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
@@ -51,7 +52,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public decimal GetExchangeRate(string currencyCode)
         {
-            int officeId = CurrentSession.GetOfficeId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
             decimal exchangeRate = Transaction.GetExchangeRate(officeId, currencyCode);
 
             return exchangeRate;
@@ -60,9 +61,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public void Reject(long tranId, string reason)
         {
-            int officeId = CurrentSession.GetOfficeId();
-            int userId = CurrentSession.GetUserId();
-            long loginId = CurrentSession.GetLoginId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
             const int verificationStatusId = -3;
 
             Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
@@ -122,7 +123,11 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 throw new InvalidOperationException("Referencing sides are not equal.");
             }
 
-            return Transaction.Add(valueDate, referenceNumber, costCenterId, details, attachments);
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+
+            return Transaction.Add(valueDate, officeId, userId, loginId, costCenterId, referenceNumber, details, attachments);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
@@ -151,6 +156,5 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             return details;
         }
-
     }
 }

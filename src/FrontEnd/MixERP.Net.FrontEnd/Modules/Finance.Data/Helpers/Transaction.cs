@@ -32,12 +32,6 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
     public static class Transaction
     {
-        public static long Add(DateTime valueDate, string referenceNumber, int costCenterId, Collection<JournalDetail> details, Collection<Attachment> attachments)
-        {
-            long transactionMasterId = Add(valueDate, CurrentSession.GetOfficeId(), CurrentSession.GetUserId(), CurrentSession.GetLoginId(), costCenterId, referenceNumber, details, attachments);
-            return transactionMasterId;
-        }
-
         public static decimal GetExchangeRate(int officeId, string currencyCode)
         {
             const string sql = "SELECT transactions.get_exchange_rate(@OfficeId, @CurrencyCode);";
@@ -77,7 +71,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             }
         }
 
-        private static long Add(DateTime valueDate, int officeId, int userId, long loginId, int costCenterId, string referenceNumber, Collection<JournalDetail> details, Collection<Attachment> attachments)
+        public static long Add(DateTime valueDate, int officeId, int userId, long loginId, int costCenterId, string referenceNumber, Collection<JournalDetail> details, Collection<Attachment> attachments)
         {
             if (details == null)
             {

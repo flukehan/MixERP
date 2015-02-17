@@ -62,9 +62,8 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
                 throw new MixERPException(Warnings.CannotCreateFlagTransactionTablePrimaryKeyNull);
             }
 
-            int userId = CurrentSession.GetUserId();
 
-            Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues().Select(t => Conversion.TryCastString(t)).ToList().ToCollection());
+            Flags.CreateFlag(this.UserId, flagTypeId, resource, resourceKey, this.GetSelectedValues().Select(t => Conversion.TryCastString(t)).ToList().ToCollection());
 
             this.LoadGridView();
         }

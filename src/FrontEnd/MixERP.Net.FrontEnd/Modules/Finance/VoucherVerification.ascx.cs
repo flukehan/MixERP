@@ -23,8 +23,10 @@ using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.TransactionViewFactory;
 using System;
 using System.Web.UI.HtmlControls;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Contracts;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
@@ -47,7 +49,10 @@ namespace MixERP.Net.Core.Modules.Finance
                 view.DateToFrequencyType = FrequencyType.Today;
                 view.Status = "Unverified";
 
-                view.OfficeName = CurrentSession.GetOfficeName();
+                view.OfficeName = CurrentUser.GetSignInView().OfficeName;
+
+                view.UserId = CurrentUser.GetSignInView().UserId.ToInt();
+                view.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
                 this.Controls.Add(view);
             }

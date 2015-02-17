@@ -16,13 +16,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
@@ -35,13 +38,13 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public bool InitializeEODOperation()
         {
-            if (!CurrentSession.IsAdmin())
+            if (!CurrentUser.GetSignInView().IsAdmin.ToBool())
             {
                 return false;
             }
 
-            int userId = CurrentSession.GetUserId();
-            int officeId = CurrentSession.GetOfficeId();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             Data.EODOperation.Initialize(userId, officeId);
 
@@ -58,7 +61,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
         private void ForceLogOff(int officeId)
         {
-            Collection<ApplicationDateModel> applicationDates = ApplicationStateHelper.GetApplicationDates();
+            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates();
             DateTime forcedLogOffOn = DateTime.Now.AddMinutes(2);
 
             if (applicationDates != null)
@@ -67,28 +70,43 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
                 if (model != null)
                 {
-                    applicationDates.Add(new ApplicationDateModel(model.OfficeId, model.Today, model.MonthStartDate, model.MonthEndDate, model.QuarterStartDate, model.QuarterEndDate, model.FiscalHalfStartDate, model.FiscalHalfEndDate, model.FiscalYearStartDate, model.FiscalYearEndDate, false, forcedLogOffOn));
-                    applicationDates.Remove(model);
+                    ApplicationDateModel item = model.Clone() as ApplicationDateModel;
+                    if (item != null)
+                    {
+                        item.ForcedLogOffTimestamp = forcedLogOffOn;
+                        item.NewDayStarted = false;
 
-                    ApplicationStateHelper.SetApplicationDates(applicationDates);
+                        applicationDates.Add(item);
+                        applicationDates.Remove(model);
+                    }
+
+
+                    CacheFactory.SetApplicationDates(applicationDates);
                 }
             }
         }
 
         private void SuggestDateReload()
         {
-            int officeId = CurrentSession.GetOfficeId();
-            Collection<ApplicationDateModel> applicationDates = ApplicationStateHelper.GetApplicationDates();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates();
 
             if (applicationDates != null)
             {
                 ApplicationDateModel model = applicationDates.FirstOrDefault(c => c.OfficeId.Equals(officeId));
                 if (model != null)
                 {
-                    applicationDates.Add(new ApplicationDateModel(model.OfficeId, model.Today, model.MonthStartDate, model.MonthEndDate, model.QuarterStartDate, model.QuarterEndDate, model.FiscalHalfStartDate, model.FiscalHalfEndDate, model.FiscalYearStartDate, model.FiscalYearEndDate, true));
-                    applicationDates.Remove(model);
+                    ApplicationDateModel item = model.Clone() as ApplicationDateModel;
+                    if (item != null)
+                    {
+                        item.NewDayStarted = true;
 
-                    ApplicationStateHelper.SetApplicationDates(applicationDates);
+                        applicationDates.Add(item);
+                        applicationDates.Remove(model);
+                    }
+
+
+                    CacheFactory.SetApplicationDates(applicationDates);
                 }
             }
         }

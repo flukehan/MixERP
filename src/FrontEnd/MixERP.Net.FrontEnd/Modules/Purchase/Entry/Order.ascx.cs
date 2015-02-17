@@ -18,10 +18,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Purchase.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.StockTransactionFactory;
 
 namespace MixERP.Net.Core.Modules.Purchase.Entry
@@ -35,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Entry
                 product.Book = TranBook.Purchase;
                 product.SubBook = SubTranBook.Order;
                 product.Text = Titles.PurchaseOrder;
-
+                product.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
                 this.Placeholder1.Controls.Add(product);
             }

@@ -24,8 +24,10 @@ using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Transactions;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Services.OTS
 {
@@ -43,9 +45,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services.OTS
                 return 0;
             }
 
-            int userId = CurrentSession.GetUserId();
-            int officeId = CurrentSession.GetOfficeId();
-            long loginId = CurrentSession.GetLoginId();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
 
             Collection<OpeningStockType> details = this.GetStockDetails(jsonDetails);
 

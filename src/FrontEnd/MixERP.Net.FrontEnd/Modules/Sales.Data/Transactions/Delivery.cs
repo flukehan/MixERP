@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class Delivery
     {
-        public static long Add(DateTime valueDate, int storeId, string partyCode, int priceTypeId, int paymentTermId, Collection<StockDetail> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string referenceNumber, int agentId, string statementReference, Collection<int> transactionIdCollection, Collection<Attachment> attachments, bool nonTaxable)
+        public static long Add(int officeId, int userId, long loginId, DateTime valueDate, int storeId, string partyCode, int priceTypeId, int paymentTermId, Collection<StockDetail> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string referenceNumber, int agentId, string statementReference, Collection<int> transactionIdCollection, Collection<Attachment> attachments, bool nonTaxable)
         {
             StockMaster stockMaster = new StockMaster();
 
@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
             stockMaster.SalespersonId = agentId;
             stockMaster.StoreId = storeId;
 
-            long transactionMasterId = GlTransaction.Add("Sales.Delivery", valueDate, CurrentSession.GetOfficeId(), CurrentSession.GetUserId(), CurrentSession.GetLoginId(), costCenterId, referenceNumber, statementReference, stockMaster, details, attachments, nonTaxable);
+            long transactionMasterId = GlTransaction.Add("Sales.Delivery", valueDate, officeId, userId, loginId, costCenterId, referenceNumber, statementReference, stockMaster, details, attachments, nonTaxable);
 
 
             return transactionMasterId;

@@ -25,11 +25,13 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Base;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Data.Helpers;
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Office;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
@@ -66,7 +68,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             if (Switches.AllowParentAccountInGlTransaction())
             {
-                if (CurrentSession.IsAdmin())
+                if (CurrentUser.GetSignInView().IsAdmin.ToBool())
                 {
                     return GetValues(AccountHelper.GetAccounts());
                 }
@@ -75,7 +77,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 return GetValues(AccountHelper.GetNonConfidentialAccounts());
             }
 
-            if (CurrentSession.IsAdmin())
+            if (CurrentUser.GetSignInView().IsAdmin.ToBool())
             {
                 return GetValues(AccountHelper.GetChildAccounts());
             }
@@ -88,7 +90,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            int officeId = CurrentSession.GetOfficeId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(officeId))
             {
@@ -104,7 +106,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             if (AccountHelper.IsCashAccount(accountNumber))
             {
-                int officeId = CurrentSession.GetOfficeId();
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
                 foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(officeId))
                 {
                     values.Add(new ListItem(cashRepository.CashRepositoryName, cashRepository.CashRepositoryCode));
@@ -206,7 +208,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public Collection<ListItem> ListAccounts()
         {
-            if (CurrentSession.IsAdmin())
+            if (CurrentUser.GetSignInView().IsAdmin.ToBool())
             {
                 return GetValues(AccountHelper.GetAccounts());
             }

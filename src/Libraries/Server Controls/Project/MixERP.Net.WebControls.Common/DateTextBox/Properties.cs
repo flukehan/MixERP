@@ -88,7 +88,24 @@ namespace MixERP.Net.WebControls.Common
             {
                 this.EnsureChildControls();
                 this.mode = value;
-                this.InitializeDate(this.mode);
+                this.InitializeDate();
+            }
+        }
+
+        private int officeId;
+
+        public int OfficeId
+        {
+            get
+            {
+                this.EnsureChildControls();
+                return this.officeId;
+            }
+            set
+            {
+                this.EnsureChildControls();
+                this.officeId = value;
+                this.InitializeDate();
             }
         }
 

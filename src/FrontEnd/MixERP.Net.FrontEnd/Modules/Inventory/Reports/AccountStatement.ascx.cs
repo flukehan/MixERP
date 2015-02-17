@@ -25,11 +25,13 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.Flag;
 
@@ -115,7 +117,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
             const string resource = "account_statement";
             const string resourceKey = "transaction_code";
 
-            int userId = CurrentSession.GetUserId();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
 
             TransactionGovernor.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
 
@@ -443,6 +445,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
             this.fromDateTextBox = new DateTextBox();
             this.fromDateTextBox.ID = "FromDateTextBox";
             this.fromDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
+            this.fromDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             using (HtmlGenericControl field = this.GetDateField(Titles.From, this.fromDateTextBox))
             {
@@ -474,6 +477,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
         {
             this.toDateTextBox = new DateTextBox();
             this.toDateTextBox.ID = "ToDateTextBox";
+            this.toDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
             this.toDateTextBox.Mode = FrequencyType.FiscalYearEndDate;
 
             using (HtmlGenericControl field = this.GetDateField(Titles.To, this.toDateTextBox))
@@ -486,7 +490,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
         {
             DateTime from = Conversion.TryCastDate(this.fromDateTextBox.Text);
             DateTime to = Conversion.TryCastDate(this.toDateTextBox.Text);
-            int userId = CurrentSession.GetUserId();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
             string itemCode = this.itemCodeInputText.Value;
             int storeId = Conversion.TryCastInteger(this.storeIdHidden.Value);
 

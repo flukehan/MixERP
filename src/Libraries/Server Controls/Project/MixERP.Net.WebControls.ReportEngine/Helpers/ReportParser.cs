@@ -18,12 +18,15 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Web;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 
@@ -69,12 +72,37 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
             return expression;
         }
 
+        private static string GetDictionaryValue(string key)
+        {
+            string loginId = HttpContext.Current.User.Identity.Name;
+
+            if (!string.IsNullOrWhiteSpace(loginId))
+            {
+                string cacheKey = "Dictionary" + loginId;
+
+                Dictionary<string, object> dictionary = CacheFactory.GetFromDefaultCacheByKey(cacheKey) as Dictionary<string, object>;
+
+                if (dictionary != null)
+                {
+                    object value = dictionary[key];
+
+                    if (value != null)
+                    {
+                        return Conversion.TryCastString(value);
+                    }
+                }
+            }
+
+            return string.Empty;
+        }
+
         public static string ParseExpression(string expression, Collection<DataTable> dataTableCollection, Assembly assembly)
         {
             if (string.IsNullOrWhiteSpace(expression))
             {
                 return string.Empty;
             }
+
 
             string logo = ConfigurationHelper.GetReportParameter("LogoPath");
             expression = expression.Replace("{LogoPath}", PageUtility.GetCurrentDomainName() + PageUtility.ResolveUrl(logo)); //Or else logo will not be exported into excel.
@@ -84,13 +112,13 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
             {
                 string word = match.ToString();
 
-                if (word.StartsWith("{Session.", StringComparison.OrdinalIgnoreCase))
+                if (word.StartsWith("{CurrentOffice.", StringComparison.OrdinalIgnoreCase))
                 {
                     string sessionKey = RemoveBraces(word);
-                    sessionKey = sessionKey.Replace("Session.", "");
+                    sessionKey = sessionKey.Replace("CurrentOffice.", "");
                     sessionKey = sessionKey.Trim();
 
-                    string value = Conversion.TryCastString(SessionHelper.GetSessionKey(sessionKey));
+                    string value = GetDictionaryValue(sessionKey);
 
                     expression = expression.Replace(word, value);
                 }

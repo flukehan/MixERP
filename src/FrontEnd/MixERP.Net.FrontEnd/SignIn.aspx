@@ -29,6 +29,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <link href="/Scripts/semantic-ui/semantic.min.css" rel="stylesheet" />
 
     <title>Sign In</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body id="SignInBody">
     <form id="form1" runat="server">

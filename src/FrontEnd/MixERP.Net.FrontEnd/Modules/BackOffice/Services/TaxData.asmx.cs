@@ -22,8 +22,10 @@ using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.BackOffice.Data.Tax;
+using MixERP.Net.FrontEnd.Cache;
 
 
 namespace MixERP.Net.Core.Modules.BackOffice.Services
@@ -65,7 +67,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
         [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetSalesTaxes(string tranBook)
         {
-            int officeId = CurrentSession.GetOfficeId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             Collection<ListItem> values = new Collection<ListItem>();
 

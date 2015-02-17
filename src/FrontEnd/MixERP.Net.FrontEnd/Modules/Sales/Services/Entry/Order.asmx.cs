@@ -20,8 +20,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.ObjectModel;
 using System.Web.Services;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
@@ -48,7 +50,11 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                 }
             }
 
-            return Data.Transactions.Order.Add(valueDate, partyCode, priceTypeId, details, referenceNumber, statementReference, tranIds, attachments, nonTaxable, salespersonId, shipperId, shippingAddressCode, storeId);
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+
+            return Data.Transactions.Order.Add(officeId, userId, loginId, valueDate, partyCode, priceTypeId, details, referenceNumber, statementReference, tranIds, attachments, nonTaxable, salespersonId, shipperId, shippingAddressCode, storeId);
         }
     }
 }

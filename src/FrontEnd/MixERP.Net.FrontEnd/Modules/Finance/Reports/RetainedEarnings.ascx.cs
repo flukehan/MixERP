@@ -24,10 +24,12 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
@@ -198,6 +200,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.dateTextBox = new DateTextBox();
                 this.dateTextBox.ID = "DateTextBox";
                 this.dateTextBox.Mode = FrequencyType.FiscalYearEndDate;
+                this.dateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+
                 field.Controls.Add(this.dateTextBox);
 
                 container.Controls.Add(field);
@@ -247,7 +251,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             DateTime date = Conversion.TryCastDate(this.dateTextBox.Text);
             int factor = Conversion.TryCastInteger(this.factorInputText.Value);
-            int officeId = CurrentSession.GetOfficeId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             using (DataTable table = Data.Reports.RetainedEarnings.GetRetainedEarningStatementDataTable(date, officeId, factor))
             {

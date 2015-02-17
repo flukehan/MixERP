@@ -27,14 +27,14 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
     public static class Order
     {
-        public static long Add(string book, DateTime valueDate, string partyCode, int priceTypeId, Collection<StockDetail> details, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<Attachment> attachments)
+        public static long Add(int officeId, int userId, long loginId, string book, DateTime valueDate, string partyCode, int priceTypeId, Collection<StockDetail> details, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<Attachment> attachments)
         {
             StockMaster stockMaster = new StockMaster();
 
             stockMaster.PartyCode = partyCode;
             stockMaster.PriceTypeId = priceTypeId;
 
-            long nonGlStockMasterId = NonGlStockTransaction.Add(book, valueDate, CurrentSession.GetOfficeId(), CurrentSession.GetUserId(), CurrentSession.GetLoginId(), referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
+            long nonGlStockMasterId = NonGlStockTransaction.Add(book, valueDate, officeId, userId, loginId, referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
             return nonGlStockMasterId;
         }
     }

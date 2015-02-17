@@ -18,7 +18,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.TransactionChecklist;
 
 namespace MixERP.Net.Core.Modules.Inventory.Confirmation
@@ -39,6 +41,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Confirmation
                 checklist.ReportPath = "~/Modules/Inventory/Reports/InventoryTransferReport.mix";
                 checklist.ViewPath = "/Modules/Inventory/Transfer.mix";
                 checklist.AddNewPath = "/Modules/Inventory/Entry/Transfer.mix";
+                checklist.UserId = CurrentUser.GetSignInView().UserId.ToInt();
 
                 this.Placeholder1.Controls.Add(checklist);
             }

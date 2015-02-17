@@ -27,10 +27,12 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Domains;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models;
 using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Admin
@@ -112,7 +114,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                     backupNameInputText.ID = "BackupNameInputText";
                     if (this.server.IsValid)
                     {
-                        backupNameInputText.Value = string.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}.{3}", this.server.DatabaseName, CurrentSession.GetOfficeId(), CurrentSession.GetUserName(), DateTime.Now.ToFileTime());
+                        backupNameInputText.Value = string.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}.{3}", this.server.DatabaseName, CurrentUser.GetSignInView().OfficeId.ToInt(), CurrentUser.GetSignInView().UserName, DateTime.Now.ToFileTime());
                     }
 
                     field.Controls.Add(backupNameInputText);

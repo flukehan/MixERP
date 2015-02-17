@@ -23,9 +23,10 @@ using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Office;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 {
@@ -38,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetBankAccounts()
         {
-            int officeId = CurrentSession.GetOfficeId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
             Collection<ListItem> values = new Collection<ListItem>();
 
             foreach (BankAccount bankAccount in Data.Helpers.Accounts.GetBankAccounts(officeId))
@@ -52,7 +53,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetCashRepositories()
         {
-            int officeId = CurrentSession.GetOfficeId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
             Collection<ListItem> values = new Collection<ListItem>();
 
             foreach (CashRepository cashRepository in Data.Helpers.Accounts.GetCashRepositories(officeId))

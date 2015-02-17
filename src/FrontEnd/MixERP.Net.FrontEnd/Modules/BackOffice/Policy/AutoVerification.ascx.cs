@@ -25,6 +25,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using MixERP.Net.Common.Domains;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Policy
@@ -43,9 +45,11 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         {
             using (Scrud scrud = new Scrud())
             {
-                scrud.DenyAdd = !CurrentSession.IsAdmin();
-                scrud.DenyEdit = !CurrentSession.IsAdmin();
-                scrud.DenyDelete = !CurrentSession.IsAdmin();
+                bool denyToNonAdmins = !CurrentUser.GetSignInView().IsAdmin.ToBool();
+
+                scrud.DenyAdd = denyToNonAdmins;
+                scrud.DenyEdit = denyToNonAdmins;
+                scrud.DenyDelete = denyToNonAdmins;
 
                 scrud.KeyColumn = "user_id";
 

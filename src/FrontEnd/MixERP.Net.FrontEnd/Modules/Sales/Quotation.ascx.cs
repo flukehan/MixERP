@@ -18,9 +18,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.StockTransactionViewFactory;
 
 namespace MixERP.Net.Core.Modules.Sales
@@ -37,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Sales
                 view.AddNewUrl = "~/Modules/Sales/Entry/Quotation.mix";
                 view.PreviewUrl = "~/Modules/Sales/Reports/SalesQuotationReport.mix";
                 view.ChecklistUrl = "~/Modules/Sales/Confirmation/Quotation.mix";
-                
+
                 view.ShowMergeToOrderButton = true;
                 view.MergeToOrderButtonUrl = "~/Modules/Sales/Entry/Order.mix";
 
@@ -48,6 +50,9 @@ namespace MixERP.Net.Core.Modules.Sales
                 view.PrimaryKey = "non_gl_stock_master_id";
 
                 view.IsNonGlTransaction = true;
+
+                view.UserId = CurrentUser.GetSignInView().UserId.ToInt();
+                view.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
                 this.Placeholder1.Controls.Add(view);
             }

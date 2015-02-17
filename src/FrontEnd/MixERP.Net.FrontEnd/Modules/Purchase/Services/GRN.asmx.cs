@@ -21,8 +21,10 @@ using System;
 using System.Collections.ObjectModel;
 using System.Web.Services;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 
 namespace MixERP.Net.Core.Modules.Purchase.Services
@@ -54,7 +56,11 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
                 }
             }
 
-            return Data.Transactions.GRN.Add(valueDate, storeId, partyCode, details, costCenterId, referenceNumber, statementReference, tranIds, attachments);
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+
+            return Data.Transactions.GRN.Add(officeId, userId, loginId, valueDate, storeId, partyCode, details, costCenterId, referenceNumber, statementReference, tranIds, attachments);
         }
     }
 }

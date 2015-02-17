@@ -27,10 +27,11 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
 {
@@ -58,9 +59,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                 }
             }
 
-            int officeId = CurrentSession.GetOfficeId();
-            int userId = CurrentSession.GetUserId();
-            long loginId = CurrentSession.GetLoginId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
 
             return Data.Transactions.StockTransfer.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, stockTransferModels);
         }

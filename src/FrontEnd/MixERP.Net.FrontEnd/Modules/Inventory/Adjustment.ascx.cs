@@ -23,10 +23,12 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Inventory
@@ -279,7 +281,9 @@ namespace MixERP.Net.Core.Modules.Inventory
 
                 this.valueDateTextBox = new DateTextBox();
                 this.valueDateTextBox.ID = "ValueDateTextBox";
+                this.valueDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
                 this.valueDateTextBox.Mode = FrequencyType.Today;
+
                 field.Controls.Add(this.valueDateTextBox);
 
                 container.Controls.Add(field);

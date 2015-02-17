@@ -32,7 +32,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
     <h4>So, what went wrong was logged into the repository. You should notify the admin, case you feel this, an urgent issue.</h4>
     <br />
-    <a class="btn btn-danger btn-sm" href="javascript:history.go(-1);">Go Back to the Previous Page</a>
+    <a class="ui red button" href="javascript:history.go(-1);">Go Back to the Previous Page</a>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>

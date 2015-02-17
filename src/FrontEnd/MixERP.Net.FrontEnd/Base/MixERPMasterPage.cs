@@ -23,6 +23,7 @@ using System.Threading;
 using System.Web.UI;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.FrontEnd.Base
 {
@@ -43,8 +44,8 @@ namespace MixERP.Net.FrontEnd.Base
             script += JSUtility.GetVar("today", DateTime.Now.ToShortDateString());
             script += JSUtility.GetVar("now", DateTime.Now.ToString(CultureInfo.InvariantCulture));
 
-            script += JSUtility.GetVar("user", CurrentSession.GetUserName());
-            script += JSUtility.GetVar("office", CurrentSession.GetOfficeName());
+            script += JSUtility.GetVar("user", CurrentUser.GetSignInView().UserName);
+            script += JSUtility.GetVar("office", CurrentUser.GetSignInView().OfficeName);
 
             script += JSUtility.GetVar("shortDateFormat", LocalizationHelper.GetShortDateFormat());
             script += JSUtility.GetVar("longDateFormat", LocalizationHelper.GetLongDateFormat());

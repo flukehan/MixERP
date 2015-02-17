@@ -16,23 +16,26 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-using Serilog;
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.Common;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Security;
-using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models;
+using MixERP.Net.Entities.Office;
+using MixERP.Net.FrontEnd.Cache;
+using Serilog;
 
 namespace MixERP.Net.FrontEnd.Base
 {
@@ -53,7 +56,12 @@ namespace MixERP.Net.FrontEnd.Base
         {
             if (page != null)
             {
-                IEnumerable<Entities.Core.Menu> rootMenus = Data.Core.Menu.GetRootMenuCollection(path);
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                string culture = CurrentUser.GetSignInView().Culture;
+
+
+                IEnumerable<Entities.Core.Menu> rootMenus = Data.Core.Menu.GetRootMenuCollection(officeId, userId, culture, path);
 
                 string menu = "<ul>";
 
@@ -61,7 +69,7 @@ namespace MixERP.Net.FrontEnd.Base
                 {
                     string anchor = string.Format(Thread.CurrentThread.CurrentCulture, "<a href=\"javascript:void(0);\">{0}</a>", rootMenu.MenuText);
 
-                    IEnumerable<Entities.Core.Menu> childMenus = Data.Core.Menu.GetMenuCollection(rootMenu.MenuId, 2);
+                    IEnumerable<Entities.Core.Menu> childMenus = Data.Core.Menu.GetMenuCollection(officeId, userId, culture, rootMenu.MenuId, 2);
 
                     if (childMenus != null)
                     {
@@ -75,7 +83,6 @@ namespace MixERP.Net.FrontEnd.Base
 
                             if (childMenu.Url.Replace("~", "").Equals(currentPage))
                             {
-
                                 menu += string.Format(Thread.CurrentThread.CurrentCulture,
                                     "<li id='node{0}' class='expanded' data-selected='true' data-menucode='{1}' data-jstree='{{\"type\":\"active\"}}'><a id='anchorNode{0}' href='{2}' title='{3}'>{3}</a></li>",
                                     id, childMenu.MenuCode, page.ResolveUrl(childMenu.Url), childMenu.MenuText);
@@ -113,7 +120,7 @@ namespace MixERP.Net.FrontEnd.Base
         public static void RequestLogOnPage()
         {
             FormsAuthentication.SignOut();
-            Log.Information("User {UserName} was signed off.", CurrentSession.GetUserName());
+            Log.Information("User {UserName} was signed off.", CurrentUser.GetSignInView().UserName);
 
             Log.Debug("Clearing Http Cookies.");
             foreach (string cookie in HttpContext.Current.Request.Cookies.AllKeys)
@@ -160,71 +167,6 @@ namespace MixERP.Net.FrontEnd.Base
             //response.Redirect(FormsAuthentication.GetRedirectUrl(signInId.ToString(CultureInfo.InvariantCulture), rememberMe));
         }
 
-        public static bool SetSession(HttpSessionState session, long signInId)
-        {
-            if (session != null)
-            {
-                try
-                {
-                    if (signInId.Equals(0))
-                    {
-                        RequestLogOnPage();
-                        return false;
-                    }
-
-                    Entities.Office.SignInView signInView = Data.Office.User.GetSignInView(signInId);
-
-                    if (signInView == null || signInView.LoginId == null)
-                    {
-                        session.Remove("UserName");
-                        FormsAuthentication.SignOut();
-                        return false;
-                    }
-
-                    session["SignInTimestamp"] = DateTime.Now;
-                    session["LoginId"] = signInView.LoginId;
-                    session["UserId"] = signInView.UserId;
-                    session["Culture"] = signInView.Culture;
-                    session["UserName"] = signInView.UserName;
-                    session["FullUserName"] = signInView.FullName;
-                    session["Role"] = signInView.Role;
-                    session["IsSystem"] = signInView.IsSystem;
-                    session["IsAdmin"] = signInView.IsAdmin;
-                    session["OfficeCode"] = signInView.OfficeCode;
-                    session["OfficeId"] = signInView.OfficeId;
-                    session["NickName"] = signInView.NickName;
-                    session["OfficeName"] = signInView.OfficeName;
-                    session["RegistrationDate"] = signInView.RegistrationDate;
-                    session["CurrencyCode"] = signInView.CurrencyCode;
-                    session["RegistrationNumber"] = signInView.RegistrationNumber;
-                    session["PanNumber"] = signInView.PanNumber;
-                    session["AddressLine1"] = signInView.AddressLine1;
-                    session["AddressLine2"] = signInView.AddressLine2;
-                    session["Street"] = signInView.Street;
-                    session["City"] = signInView.City;
-                    session["State"] = signInView.State;
-                    session["Country"] = signInView.Country;
-                    session["ZipCode"] = signInView.ZipCode;
-                    session["Phone"] = signInView.Phone;
-                    session["Fax"] = signInView.Fax;
-                    session["Email"] = signInView.Email;
-                    session["Url"] = signInView.Url;
-                    session["AllowTransactionPosting"] = signInView.AllowTransactionPosting;
-
-                    SetCulture();
-
-
-                    return true;
-                }
-                catch (DbException ex)
-                {
-                    Log.Warning("Cannot set session for user with SingIn #{SigninId}. {Exception}.", signInId, ex);
-                }
-            }
-
-            return false;
-        }
-
         protected override void InitializeCulture()
         {
             SetCulture();
@@ -237,18 +179,9 @@ namespace MixERP.Net.FrontEnd.Base
             {
                 if (this.Request.IsAuthenticated)
                 {
-                    if (this.Context.Session == null)
+                    if (CurrentUser.GetSignInView().LoginId.ToLong().Equals(0))
                     {
-                        this.SetSession();
-                    }
-                    else
-                    {
-                        int userId = Conversion.TryCastInteger(this.Context.Session["UserId"]);
-
-                        if (userId.Equals(0))
-                        {
-                            this.SetSession();
-                        }
+                        CurrentUser.SetSignInView();
                     }
                 }
                 else
@@ -260,10 +193,10 @@ namespace MixERP.Net.FrontEnd.Base
                 }
             }
 
-            this.ForceLogOff();
+            this.CheckForceLogOffFlags();
             base.OnInit(e);
         }
-        
+
         protected override void OnLoad(EventArgs e)
         {
             Log.Verbose("Page loaded {Page}.", this.Page);
@@ -273,11 +206,15 @@ namespace MixERP.Net.FrontEnd.Base
                 this.OverridePath = this.Page.Request.Url.AbsolutePath;
             }
 
-            Literal contentMenuLiteral = ((Literal) PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
+            Literal contentMenuLiteral = ((Literal)PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
 
             string menu = "<div id=\"tree\" style='display:none;'><ul id='treeData'>";
 
-            IEnumerable<Entities.Core.Menu> collection = Data.Core.Menu.GetMenuCollection(0, 0);
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            string culture = CurrentUser.GetSignInView().Culture;
+
+            IEnumerable<Entities.Core.Menu> collection = Data.Core.Menu.GetMenuCollection(officeId, userId, culture, 0, 0);
 
             if (collection == null)
             {
@@ -315,12 +252,12 @@ namespace MixERP.Net.FrontEnd.Base
 
         private static void SetCulture()
         {
-            if (SessionHelper.GetSessionKey("Culture") == null)
+            string cultureName = CurrentUser.GetSignInView().Culture;
+
+            if (string.IsNullOrWhiteSpace(cultureName))
             {
                 return;
             }
-
-            string cultureName = Conversion.TryCastString(SessionHelper.GetSessionKey("Culture"));
 
             CultureInfo culture = new CultureInfo(cultureName);
             Thread.CurrentThread.CurrentCulture = culture;
@@ -329,30 +266,26 @@ namespace MixERP.Net.FrontEnd.Base
             CultureInfo.DefaultThreadCurrentUICulture = culture;
         }
 
-        private void ForceLogOff()
+        private void CheckForceLogOffFlags()
         {
-            int officeId = CurrentSession.GetOfficeId();
-            Collection<ApplicationDateModel> applicationDates = ApplicationStateHelper.GetApplicationDates();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates();
 
             if (applicationDates != null)
             {
                 ApplicationDateModel model = applicationDates.FirstOrDefault(c => c.OfficeId.Equals(officeId));
+
                 if (model != null)
                 {
-                    if (model.ForcedLogOffTimestamp != null)
+                    if (model.ForcedLogOffTimestamp != null && !model.ForcedLogOffTimestamp.Equals(DateTime.MinValue))
                     {
-                        if (model.ForcedLogOffTimestamp <= DateTime.Now && model.ForcedLogOffTimestamp >= CurrentSession.GetSignInTimestamp())
+                        if (model.ForcedLogOffTimestamp <= DateTime.Now && model.ForcedLogOffTimestamp >= CurrentUser.GetSignInView().LoginDateTime)
                         {
                             RequestLogOnPage();
                         }
                     }
                 }
             }
-        }
-
-        private void SetSession()
-        {
-            SetSession(this.Page.Session, Conversion.TryCastLong(this.User.Identity.Name));
         }
     }
 }

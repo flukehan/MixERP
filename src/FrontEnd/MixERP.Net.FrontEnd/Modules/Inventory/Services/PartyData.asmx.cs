@@ -24,9 +24,11 @@ using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Transactions;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services
 {
@@ -71,7 +73,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod(EnableSession = true)]
         public DbGetPartyTransactionSummaryResult GetPartyDue(string partyCode)
         {
-            return Parties.GetPartyDue(partyCode);
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            return Parties.GetPartyDue(partyCode, officeId);
         }
 
         [WebMethod]

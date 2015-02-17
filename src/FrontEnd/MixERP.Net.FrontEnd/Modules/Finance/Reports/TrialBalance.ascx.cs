@@ -23,10 +23,12 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
@@ -178,6 +180,9 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.fromDateTextBox = new DateTextBox();
                 this.fromDateTextBox.ID = "FromDateTextBox";
                 this.fromDateTextBox.Mode = FrequencyType.QuarterStartDate;
+                this.fromDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+
+                
                 field.Controls.Add(this.fromDateTextBox);
 
                 container.Controls.Add(field);
@@ -220,6 +225,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.toDateTextBox = new DateTextBox();
                 this.toDateTextBox.ID = "ToDateTextBox";
                 this.toDateTextBox.Mode = FrequencyType.QuarterEndDate;
+                this.toDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
                 field.Controls.Add(this.toDateTextBox);
 
@@ -237,8 +243,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             bool changeSide = this.ChangeSideWhenNegative();
             bool includeZeroBalanceAccounts = this.IncludeZeroBalanceAccounts();
 
-            int userId = CurrentSession.GetUserId();
-            int officeId = CurrentSession.GetOfficeId();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             using (DataTable table = Data.Reports.TrialBalance.GetTrialBalance(from, to, userId, officeId, compact, factor, changeSide, includeZeroBalanceAccounts))
             {

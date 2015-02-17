@@ -24,8 +24,10 @@ using System.ComponentModel;
 using System.IO;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Core;
+using MixERP.Net.FrontEnd.Cache;
 using Serilog;
 using CollectionHelper = MixERP.Net.WebControls.StockTransactionFactory.Helpers.CollectionHelper;
 
@@ -45,7 +47,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
                 throw new ArgumentNullException("id");
             }
 
-            if (CurrentSession.GetUserId() > 0)
+            if (CurrentUser.GetSignInView().UserId.ToInt() > 0)
             {
                 return this.DeleteImage(Data.Attachments.DeleteReturningPath(id));
             }
@@ -88,7 +90,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
             }
 
             Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
-            int userId = CurrentSession.GetUserId();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
 
             return Data.Attachments.Save(userId, book, id, attachments);
         }

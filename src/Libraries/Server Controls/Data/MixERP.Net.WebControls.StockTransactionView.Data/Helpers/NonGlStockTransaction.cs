@@ -60,11 +60,6 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data.Helpers
             return Factory.Scalar<bool>(sql, ids);
         }
 
-        public static IEnumerable<DbGetNonGlProductViewResult> GetView(string book, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
-        {
-            return GetView(CurrentSession.GetUserId(), book, CurrentSession.GetOfficeId(), dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
-        }
-
         public static bool TransactionIdsBelongToSameParty(Collection<long> ids)
         {
             if (ids == null)
@@ -77,7 +72,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data.Helpers
             return Factory.Scalar<int>(sql, ids).Equals(1);
         }
 
-        private static IEnumerable<DbGetNonGlProductViewResult> GetView(int userId, string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
+        public static IEnumerable<DbGetNonGlProductViewResult> GetView(int userId, string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
         {
             return Factory.Get<DbGetNonGlProductViewResult>("SELECT * FROM transactions.get_non_gl_product_view(@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10);", userId, book, officeId, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
         }

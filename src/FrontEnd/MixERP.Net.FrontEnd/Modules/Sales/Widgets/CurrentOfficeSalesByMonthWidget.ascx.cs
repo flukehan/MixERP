@@ -19,8 +19,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using MixERP.Net.Common.Domains;
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Sales.Widgets
 {
@@ -33,7 +34,7 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
 
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            int officeId = CurrentSession.GetOfficeId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             this.TitleLiteral.Text = Resources.Titles.SalesByMonthInThousands;
 

@@ -48,6 +48,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
                     this.dateFromDateTextBox.CssClass = "date";
                     this.dateFromDateTextBox.Mode = this.DateFromFromFrequencyType;
                     this.dateFromDateTextBox.Required = true;
+                    this.dateFromDateTextBox.OfficeId = this.OfficeId;
 
                     iconInput.Controls.Add(this.dateFromDateTextBox);
 
@@ -78,6 +79,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
                     this.dateToDateTextBox.CssClass = "date";
                     this.dateToDateTextBox.Mode = this.DateToFrequencyType;
                     this.dateToDateTextBox.Required = true;
+                    this.dateToDateTextBox.OfficeId = this.OfficeId;
 
                     iconInput.Controls.Add(this.dateToDateTextBox);
 

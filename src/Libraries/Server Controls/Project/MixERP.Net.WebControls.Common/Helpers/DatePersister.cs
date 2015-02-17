@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MixERP.Net.Common.Helpers;
@@ -27,65 +26,9 @@ namespace MixERP.Net.WebControls.Common.Helpers
 {
     internal static class DatePersister
     {
-        public static DateTime GetDate()
+        public static ApplicationDateModel GetApplicationDates(int officeId)
         {
-            ApplicationDateModel model = GetApplicationDates();
-
-            return (model == null) ? DateTime.Today : model.Today;
-        }
-
-        public static DateTime GetFiscalHalfEndDate()
-        {
-            ApplicationDateModel model = GetApplicationDates();
-            return (model == null) ? DateTime.Today : model.FiscalHalfEndDate;
-        }
-
-        public static DateTime GetFiscalHalfStartDate()
-        {
-            ApplicationDateModel model = GetApplicationDates();
-            return (model == null) ? DateTime.Today : model.FiscalHalfStartDate;
-        }
-
-        public static DateTime GetFiscalYearEndDate()
-        {
-            ApplicationDateModel model = GetApplicationDates();
-            return (model == null) ? DateTime.Today : model.FiscalYearEndDate;
-        }
-
-        public static DateTime GetFiscalYearStartDate()
-        {
-            ApplicationDateModel model = GetApplicationDates();
-            return (model == null) ? DateTime.Today : model.FiscalYearStartDate;
-        }
-
-        public static DateTime GetMonthEndtDate()
-        {
-            ApplicationDateModel model = GetApplicationDates();
-            return (model == null) ? DateTime.Today : model.MonthEndDate;
-        }
-
-        public static DateTime GetMonthStartDate()
-        {
-            ApplicationDateModel model = GetApplicationDates();
-            return (model == null) ? DateTime.Today : model.MonthStartDate;
-        }
-
-        public static DateTime GetQuarterEndDate()
-        {
-            ApplicationDateModel model = GetApplicationDates();
-            return (model == null) ? DateTime.Today : model.QuarterEndDate;
-        }
-
-        public static DateTime GetQuarterStartDate()
-        {
-            ApplicationDateModel model = GetApplicationDates();
-            return (model == null) ? DateTime.Today : model.QuarterStartDate;
-        }
-
-        private static ApplicationDateModel GetApplicationDates()
-        {
-            int officeId = CurrentSession.GetOfficeId();
-            Collection<ApplicationDateModel> applicationDates = ApplicationStateHelper.GetApplicationDates();
+            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates();
             bool persist = false;
 
             if (applicationDates == null || applicationDates.Count.Equals(0))
@@ -110,7 +53,7 @@ namespace MixERP.Net.WebControls.Common.Helpers
 
             if (persist)
             {
-                ApplicationStateHelper.SetApplicationDates(applicationDates);
+                CacheFactory.SetApplicationDates(applicationDates);
             }
 
             return applicationDates.FirstOrDefault(c => c.OfficeId.Equals(officeId));

@@ -25,6 +25,7 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Sales.Data.Reports;
 using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Sales.Widgets
@@ -82,6 +83,7 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
                     widget.Controls.Add(segment);
                 }
 
+
                 container.Controls.Add(widget);
             }
         }
@@ -89,7 +91,7 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
         private void RegisterJavascriptVariables()
         {
             string javascript = JSUtility.GetVar("totalSalesLocalized", Titles.TotalSales);
-            javascript += JSUtility.GetVar("baseCurrencyCode", CurrentSession.GetBaseCurrency());
+            javascript += JSUtility.GetVar("baseCurrencyCode", CurrentUser.GetSignInView().CurrencyCode);
 
             PageUtility.RegisterJavascript("SalesByGeographyWidget_Localized", javascript, this.Page, true);
         }

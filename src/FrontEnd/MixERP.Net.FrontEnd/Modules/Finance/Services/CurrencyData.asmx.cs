@@ -20,8 +20,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System.Collections.Generic;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Core;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
@@ -34,7 +36,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public IEnumerable<Currency> GetExchangeCurrencies()
         {
-            int officeId = CurrentSession.GetOfficeId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
             return Data.Helpers.Currencies.GetExchangeCurrencies(officeId);
         }
     }

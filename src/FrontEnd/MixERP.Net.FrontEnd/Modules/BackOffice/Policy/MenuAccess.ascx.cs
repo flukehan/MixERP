@@ -24,9 +24,11 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Domains;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Policy
@@ -131,7 +133,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         private void SaveButton_Click(object sender, EventArgs e)
         {
             int userId = Conversion.TryCastInteger(this.userSelect.SelectedValue);
-            int officeId = CurrentSession.GetOfficeId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
             string menus = this.selectedMenusHidden.Value;
 
             if (userId.Equals(0) || officeId.Equals(0))
@@ -160,8 +162,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         private void BindGrid()
         {
             int userId = Conversion.TryCastInteger(this.userSelect.SelectedValue);
-            int officeId = CurrentSession.GetOfficeId();
-            string culture = CurrentSession.GetCulture().Name;
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            string culture = CurrentUser.GetSignInView().Culture;
 
             if (userId.Equals(0) || officeId.Equals(0))
             {

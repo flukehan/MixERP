@@ -27,6 +27,7 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
@@ -141,6 +142,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.fromDateTextBox = new DateTextBox();
                 this.fromDateTextBox.ID = "FromDateTextBox";
                 this.fromDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
+                this.fromDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+
                 field.Controls.Add(this.fromDateTextBox);
 
                 container.Controls.Add(field);
@@ -183,6 +186,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.toDateTextBox = new DateTextBox();
                 this.toDateTextBox.ID = "ToDateTextBox";
                 this.toDateTextBox.Mode = FrequencyType.FiscalYearEndDate;
+                this.toDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
                 field.Controls.Add(this.toDateTextBox);
 
@@ -196,8 +200,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             DateTime to = Conversion.TryCastDate(this.toDateTextBox.Text);
             decimal factor = Conversion.TryCastDecimal(this.factorInputText.Value);
 
-            int userId = CurrentSession.GetUserId();
-            int officeId = CurrentSession.GetOfficeId();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             this.cashflowStatementGridView.DataSource = Data.Reports.CashFlow.GetDirectCashFlowStatement(from, to, userId, officeId, factor);
             this.cashflowStatementGridView.DataBind();

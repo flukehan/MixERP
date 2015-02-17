@@ -21,43 +21,8 @@ using System;
 
 namespace MixERP.Net.Common.Models
 {
-    public class ApplicationDateModel
+    public class ApplicationDateModel:ICloneable
     {
-        public ApplicationDateModel()
-        {
-        }
-
-        public ApplicationDateModel(int officeId, DateTime today, DateTime monthStartDate, DateTime monthEndDate, DateTime quarterStartDate, DateTime quarterEndDate, DateTime fiscalHalfStartDate, DateTime fiscalHalfEndDate, DateTime fiscalYearStartDate, DateTime fiscalYearEndDate, bool newDayStarted)
-        {
-            this.OfficeId = officeId;
-            this.Today = today;
-            this.MonthStartDate = monthStartDate;
-            this.MonthEndDate = monthEndDate;
-            this.QuarterStartDate = quarterStartDate;
-            this.QuarterEndDate = quarterEndDate;
-            this.FiscalHalfStartDate = fiscalHalfStartDate;
-            this.FiscalHalfEndDate = fiscalHalfEndDate;
-            this.FiscalYearStartDate = fiscalYearStartDate;
-            this.FiscalYearEndDate = fiscalYearEndDate;
-            this.NewDayStarted = newDayStarted;
-        }
-
-        public ApplicationDateModel(int officeId, DateTime today, DateTime monthStartDate, DateTime monthEndDate, DateTime quarterStartDate, DateTime quarterEndDate, DateTime fiscalHalfStartDate, DateTime fiscalHalfEndDate, DateTime fiscalYearStartDate, DateTime fiscalYearEndDate, bool newDayStarted, DateTime forcedLogOffTimestamp)
-        {
-            this.OfficeId = officeId;
-            this.Today = today;
-            this.MonthStartDate = monthStartDate;
-            this.MonthEndDate = monthEndDate;
-            this.QuarterStartDate = quarterStartDate;
-            this.QuarterEndDate = quarterEndDate;
-            this.FiscalHalfStartDate = fiscalHalfStartDate;
-            this.FiscalHalfEndDate = fiscalHalfEndDate;
-            this.FiscalYearStartDate = fiscalYearStartDate;
-            this.FiscalYearEndDate = fiscalYearEndDate;
-            this.NewDayStarted = newDayStarted;
-            this.ForcedLogOffTimestamp = forcedLogOffTimestamp;
-        }
-
         public DateTime FiscalHalfEndDate { get; set; }
         public DateTime FiscalHalfStartDate { get; set; }
         public DateTime FiscalYearEndDate { get; set; }
@@ -70,5 +35,10 @@ namespace MixERP.Net.Common.Models
         public DateTime QuarterEndDate { get; set; }
         public DateTime QuarterStartDate { get; set; }
         public DateTime Today { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

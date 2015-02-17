@@ -17,12 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Purchase.Services
 {
@@ -40,9 +41,9 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
                 throw new ArgumentNullException("details");
             }
 
-            long loginId = CurrentSession.GetLoginId();
-            int userId = CurrentSession.GetUserId();
-            int officeId = CurrentSession.GetOfficeId();
+            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             return Data.Transactions.Reorder.Save(loginId, userId, officeId, details);
         }

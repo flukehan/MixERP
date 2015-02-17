@@ -20,7 +20,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Web.UI;
@@ -30,6 +29,7 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Office;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Data.Helpers;
 using MixERP.Net.FrontEnd.Data.Office;
 using Resources;
@@ -131,19 +131,8 @@ namespace MixERP.Net.FrontEnd
 
                     if (signInId > 0)
                     {
-                        string sessionUser = Conversion.TryCastString(this.Page.Session["UserName"]);
-
-                        if (string.IsNullOrWhiteSpace(sessionUser))
-                        {
-                            if (MixERPWebpage.SetSession(this.Page.Session, signInId))
-                            {
-                                this.RedirectToDashboard();
-                            }
-                        }
-                        else
-                        {
-                            this.RedirectToDashboard();
-                        }
+                        CurrentUser.SetSignInView();
+                        this.RedirectToDashboard();
                     }
                 }
             }

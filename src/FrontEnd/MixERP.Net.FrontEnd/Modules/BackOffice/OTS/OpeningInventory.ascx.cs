@@ -4,10 +4,12 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Domains;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.BackOffice.OTS
@@ -24,7 +26,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
             this.CreateHeader(this.Placeholder1);
             this.CreateTopPanel(this.Placeholder1);
 
-            if (Data.OpeningInventory.Exists(CurrentSession.GetOfficeId()))
+            if (Data.OpeningInventory.Exists(CurrentUser.GetSignInView().OfficeId.ToInt()))
             {
                 this.CreateMessage(this.Placeholder1);
                 return;
@@ -123,6 +125,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
                 this.dateTextBox = new DateTextBox();
                 this.dateTextBox.ID = "ValueDateTextBox";
                 this.dateTextBox.Mode = FrequencyType.Today;
+                this.dateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+
                 field.Controls.Add(this.dateTextBox);
 
                 fields.Controls.Add(field);

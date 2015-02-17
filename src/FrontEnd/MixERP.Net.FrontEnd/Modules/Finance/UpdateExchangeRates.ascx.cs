@@ -18,9 +18,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
@@ -28,8 +28,8 @@ namespace MixERP.Net.Core.Modules.Finance
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            this.OfficeInputText.Value = CurrentSession.GetOfficeName();
-            this.CurrencyInputText.Value = CurrentSession.GetBaseCurrency();
+            this.OfficeInputText.Value = CurrentUser.GetSignInView().OfficeName;
+            this.CurrencyInputText.Value = CurrentUser.GetSignInView().CurrencyCode;
         }
     }
 }

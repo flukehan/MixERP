@@ -27,23 +27,20 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
         public TranBook Book { get; set; }
         public string ChecklistUrl { get; set; }
         public string PreviewUrl { get; set; }
-
         public bool ShowMergeToDeliveryButton { get; set; }
         public string MergeToDeliveryButtonUrl { get; set; }
-
         public bool ShowMergeToGRNButton { get; set; }
         public string MergeToGRNButtonUrl { get; set; }
-
         public bool ShowMergeToOrderButton { get; set; }
         public string MergeToOrderButtonUrl { get; set; }
-
         public SubTranBook SubBook { get; set; }
         public string Text { get; set; }
         public string DbTableName { get; set; }
         public string PrimaryKey { get; set; }
         public bool IsNonGlTransaction { get; set; }
-
         public bool ShowReturnButton { get; set; }
         public string ReturnButtonUrl { get; set; }
+        public int UserId { get; set; }
+        public int OfficeId { get; set; }
     }
 }

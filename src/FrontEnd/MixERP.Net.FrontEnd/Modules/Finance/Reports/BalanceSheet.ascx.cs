@@ -24,9 +24,11 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.Entities;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
@@ -186,6 +188,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.currentPeriodDateTextBox = new DateTextBox();
                 this.currentPeriodDateTextBox.ID = "CurrentPeriodDateTextBox";
                 this.currentPeriodDateTextBox.Mode = FrequencyType.FiscalYearEndDate;
+                this.currentPeriodDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+
                 field.Controls.Add(this.currentPeriodDateTextBox);
 
                 container.Controls.Add(field);
@@ -223,6 +227,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.previousPeriodDateTextBox = new DateTextBox();
                 this.previousPeriodDateTextBox.ID = "PreviousPeriodDateTextBox";
                 this.previousPeriodDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
+                this.previousPeriodDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+
                 field.Controls.Add(this.previousPeriodDateTextBox);
 
                 container.Controls.Add(field);
@@ -254,8 +260,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             DateTime previousTerm = Conversion.TryCastDate(this.previousPeriodDateTextBox.Text);
             DateTime currentTerm = Conversion.TryCastDate(this.currentPeriodDateTextBox.Text);
             int factor = Conversion.TryCastInteger(this.factorInputText.Value);
-            int userId = CurrentSession.GetUserId();
-            int officeId = CurrentSession.GetOfficeId();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             using (DataTable table = Data.Reports.BalanceSheet.GetBalanceSheet(previousTerm, currentTerm, userId, officeId, factor))
             {

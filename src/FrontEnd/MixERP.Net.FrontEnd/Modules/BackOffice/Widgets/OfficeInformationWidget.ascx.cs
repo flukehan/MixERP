@@ -21,10 +21,12 @@ using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using MixERP.Net.Common.Domains;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.Entities.Audit;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Widgets
 {
@@ -62,7 +64,12 @@ namespace MixERP.Net.Core.Modules.BackOffice.Widgets
 
         private void CreateContent(HtmlGenericControl container)
         {
-            int userId = CurrentSession.GetUserId();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+
+            if (userId.Equals(0))
+            {
+                return;
+            }
 
             DbGetOfficeInformationModelResult model = Data.Audit.GetOfficeInformationModel(userId);
 

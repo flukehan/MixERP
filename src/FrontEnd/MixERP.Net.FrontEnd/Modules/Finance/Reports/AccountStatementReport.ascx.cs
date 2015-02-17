@@ -23,9 +23,11 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reflection;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.ReportEngine;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
@@ -38,8 +40,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             DateTime from = Conversion.TryCastDate(this.Page.Request["From"]);
             DateTime to = Conversion.TryCastDate(this.Page.Request["To"]);
 
-            int userId = CurrentSession.GetUserId();
-            int officeId = CurrentSession.GetOfficeId();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
 
             Collection<KeyValuePair<string, object>> parameter1 = new Collection<KeyValuePair<string, object>>();

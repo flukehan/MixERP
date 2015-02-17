@@ -20,9 +20,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Purchase.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Purchase
 {
@@ -42,7 +43,7 @@ namespace MixERP.Net.Core.Modules.Purchase
 
         private void AddBoundField(GridView grid, string text, string dataField)
         {
-            BoundField field = new BoundField { HeaderText = text, DataField = dataField };
+            BoundField field = new BoundField {HeaderText = text, DataField = dataField};
 
             grid.Columns.Add(field);
         }
@@ -67,7 +68,7 @@ namespace MixERP.Net.Core.Modules.Purchase
 
         private void AddGridView()
         {
-            int officeId = CurrentSession.GetOfficeId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             using (GridView grid = new GridView())
             {

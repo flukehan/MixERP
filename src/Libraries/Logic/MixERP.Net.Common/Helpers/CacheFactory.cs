@@ -18,63 +18,61 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Collections.ObjectModel;
-using System.Web;
+using System.Runtime.Caching;
 using MixERP.Net.Common.Models;
 
 namespace MixERP.Net.Common.Helpers
 {
-    public static class ApplicationStateHelper
+    public static class CacheFactory
     {
         private const string appDatesKey = "ApplicationDates";
 
         public static Collection<ApplicationDateModel> GetApplicationDates()
         {
-            return (Collection<ApplicationDateModel>)GetApplicationValueByKey(appDatesKey);
+            return (Collection<ApplicationDateModel>) GetFromDefaultCacheByKey(appDatesKey);
         }
 
         public static void SetApplicationDates(Collection<ApplicationDateModel> applicationDates)
         {
-            AddApplicationKey(appDatesKey, applicationDates);
+            AddToDefaultCache(appDatesKey, applicationDates);
         }
 
-        private static void AddApplicationKey(string key, object value)
+        public static void AddToDefaultCache(string key, object value)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(key))
+            if (value == null)
             {
                 return;
             }
 
-            HttpApplicationState application = HttpContext.Current.Application;
+            var cacheItem = new CacheItem(key, value);
+
+            if (MemoryCache.Default[key] == null)
             {
-                if (application[key] == null)
-                {
-                    application[key] = value;
-                }
-                else
-                {
-                    application.Add(key, value);
-                }
+                MemoryCache.Default.Add(cacheItem, new CacheItemPolicy());
+            }
+            else
+            {
+                MemoryCache.Default[key] = cacheItem;
             }
         }
 
-        private static object GetApplicationValueByKey(string key)
+        public static object GetFromDefaultCacheByKey(string key)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
                 return null;
             }
 
-            HttpApplicationState application = HttpContext.Current.Application;
+            var item = MemoryCache.Default.GetCacheItem(key);
+
+            if (item != null)
             {
-                if (application[key] != null)
-                {
-                    return application[key];
-                }
+                return item.Value;
             }
 
             return null;

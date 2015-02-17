@@ -45,9 +45,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             return string.Empty;
         }
 
-        public static DbGetPartyTransactionSummaryResult GetPartyDue(string partyCode)
+        public static DbGetPartyTransactionSummaryResult GetPartyDue(string partyCode, int officeId)
         {
-            int officeId = CurrentSession.GetOfficeId();
             return GetPartyDue(officeId, partyCode);
         }
 

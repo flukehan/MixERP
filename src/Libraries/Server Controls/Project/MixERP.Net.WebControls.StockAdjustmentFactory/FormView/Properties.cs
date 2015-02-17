@@ -2,5 +2,6 @@
 {
     public partial class FormView
     {
+        public int OfficeId { get; set; }
     }
 }

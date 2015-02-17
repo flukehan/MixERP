@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.Controls
@@ -26,10 +27,10 @@ namespace MixERP.Net.FrontEnd.Controls
     {
         public Scrud()
         {
-            this.UserId = CurrentSession.GetUserId();
-            this.UserName = CurrentSession.GetUserName();
-            this.OfficeCode = CurrentSession.GetOfficeName();
-            this.OfficeId = CurrentSession.GetOfficeId();
+            this.UserId = CurrentUser.GetSignInView().UserId.ToInt();
+            this.UserName = CurrentUser.GetSignInView().UserName;
+            this.OfficeCode = CurrentUser.GetSignInView().OfficeName;
+            this.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
         }
     }
 }

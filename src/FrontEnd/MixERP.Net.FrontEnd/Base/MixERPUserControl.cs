@@ -21,8 +21,9 @@ using System;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Domains;
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Contracts;
+using MixERP.Net.FrontEnd.Cache;
 using Serilog;
 
 namespace MixERP.Net.FrontEnd.Base
@@ -47,7 +48,7 @@ namespace MixERP.Net.FrontEnd.Base
         {
             if (this is ITransaction)
             {
-                if (!CurrentSession.AllowTransactionPosting())
+                if (!CurrentUser.GetSignInView().AllowTransactionPosting.ToBool())
                 {
                     this.Server.Transfer("~/Site/Exceptions/RestrictedTransactionMode.aspx");
                 }
@@ -56,9 +57,9 @@ namespace MixERP.Net.FrontEnd.Base
 
         private void CheckAccessLevel()
         {
-            if ((this.AccessLevel.Equals(AccessLevel.AdminOnly) || this.AccessLevel.Equals(AccessLevel.LocalhostAdmin)) && !CurrentSession.IsAdmin())
+            if ((this.AccessLevel.Equals(AccessLevel.AdminOnly) || this.AccessLevel.Equals(AccessLevel.LocalhostAdmin)) && !CurrentUser.GetSignInView().IsAdmin.ToBool())
             {
-                Log.Information("Access to {Control} is denied to user.", this, CurrentSession.GetUserName());
+                Log.Information("Access to {Control} is denied to user.", this, CurrentUser.GetSignInView().UserName);
 
                 this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
             }
@@ -67,7 +68,7 @@ namespace MixERP.Net.FrontEnd.Base
 
             if (this.AccessLevel.Equals(AccessLevel.LocalhostAdmin) && !isLocalHost)
             {
-                Log.Information("Access to {Control} is denied to user.", this, CurrentSession.GetUserName());
+                Log.Information("Access to {Control} is denied to user.", this, CurrentUser.GetSignInView().UserName);
 
                 this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
             }

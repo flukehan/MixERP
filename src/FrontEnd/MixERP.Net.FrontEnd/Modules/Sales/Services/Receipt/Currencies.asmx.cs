@@ -18,12 +18,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Web.Services;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Core;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 {
     /// <summary>
-    /// Summary description for Currencies
+    ///     Summary description for Currencies
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -64,7 +66,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
                 return 1;
             }
 
-            int officeId = Common.Helpers.CurrentSession.GetOfficeId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             decimal exchangeRate = Data.Helpers.Transaction.GetExchangeRate(officeId, sourceCurrencyCode, destinationCurrencyCode);
 
@@ -74,7 +76,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         [WebMethod(EnableSession = true)]
         public string GetHomeCurrency()
         {
-            int officeId = Common.Helpers.CurrentSession.GetOfficeId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
             return Data.Helpers.Currencies.GetHomeCurrency(officeId);
         }
     }

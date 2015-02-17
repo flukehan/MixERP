@@ -24,10 +24,11 @@ using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Office;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services
 {
@@ -138,13 +139,12 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             }
 
             return values;
-
         }
 
         [WebMethod(EnableSession = true)]
         public Collection<ListItem> GetStores()
         {
-            int officeId = CurrentSession.GetOfficeId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
             Collection<ListItem> values = new Collection<ListItem>();
 
             IEnumerable<Store> stores = Stores.GetStores(officeId);

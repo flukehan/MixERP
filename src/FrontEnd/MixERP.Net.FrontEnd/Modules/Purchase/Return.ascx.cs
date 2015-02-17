@@ -18,9 +18,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Purchase.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.StockTransactionViewFactory;
 
 namespace MixERP.Net.Core.Modules.Purchase
@@ -29,17 +31,19 @@ namespace MixERP.Net.Core.Modules.Purchase
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (StockTransactionView productView = new StockTransactionView())
+            using (StockTransactionView view = new StockTransactionView())
             {
-                productView.Text = Titles.PurchaseReturn;
-                productView.Book = TranBook.Purchase;
-                productView.SubBook = SubTranBook.Return;
-                productView.PreviewUrl = "~/Modules/Purchase/Reports/PurchaseReturnReport.mix";
-                productView.ChecklistUrl = "~/Modules/Purchase/Confirmation/Return.mix";
+                view.Text = Titles.PurchaseReturn;
+                view.Book = TranBook.Purchase;
+                view.SubBook = SubTranBook.Return;
+                view.PreviewUrl = "~/Modules/Purchase/Reports/PurchaseReturnReport.mix";
+                view.ChecklistUrl = "~/Modules/Purchase/Confirmation/Return.mix";
 
-                this.Placeholder1.Controls.Add(productView);
+                view.UserId = CurrentUser.GetSignInView().UserId.ToInt();
+                view.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+
+                this.Placeholder1.Controls.Add(view);
             }
-
             
         }
     }

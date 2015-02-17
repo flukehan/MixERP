@@ -25,15 +25,10 @@ namespace MixERP.Net.WebControls.ScrudFactory
     public partial class ScrudForm : CompositeControl
     {
         public string AddButtonIconCssClass { get; set; }
-
         public string AllButtonIconCssClass { get; set; }
-
         public string ButtonCssClass { get; set; }
-
         public string CommandPanelButtonCssClass { get; set; }
-
         public string CommandPanelCssClass { get; set; }
-
         public string CompactButtonIconCssClass { get; set; }
 
         /// <summary>
@@ -45,7 +40,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public string CustomFormUrl { get; set; }
 
         public string DateControlCssClass { get; set; }
-
         public string DeleteButtonIconCssClass { get; set; }
 
         /// <summary>
@@ -108,41 +102,35 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public string DisplayViews { get; set; }
 
         public string EditButtonIconCssClass { get; set; }
-
         public string ErrorCssClass { get; set; }
 
         /// <summary>
-        /// Comma separated list of columns to exclude for CRUD operation.
+        ///     Comma separated list of columns to exclude for CRUD operation.
         /// </summary>
         public string Exclude { get; set; }
 
         /// <summary>
-        /// Comma separated list of columns to exclude during the edit operation.
+        ///     Comma separated list of columns to exclude during the edit operation.
         /// </summary>
         public string ExcludeEdit { get; set; }
 
         public string FailureCssClass { get; set; }
-
         public string FormCssClass { get; set; }
-
         public string FormPanelCssClass { get; set; }
-
         public string GridPanelCssClass { get; set; }
 
         /// <summary>
-        /// Custom CSS style for grid container.
+        ///     Custom CSS style for grid container.
         /// </summary>
         public string GridPanelStyle { get; set; }
 
         /// <summary>
-        /// The outer width of grid container.
+        ///     The outer width of grid container.
         /// </summary>
         public Unit GridPanelWidth { get; set; }
 
         public string GridViewAlternateRowCssClass { get; set; }
-
         public string GridViewCssClass { get; set; }
-
         public string GridViewRowCssClass { get; set; }
 
         /// <summary>
@@ -168,9 +156,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public string KeyColumn { get; set; }
 
         public string PagerCssClass { get; set; }
-
         public string PagerCurrentPageCssClass { get; set; }
-
         public string PagerPageButtonCssClass { get; set; }
 
         /// <summary>
@@ -179,10 +165,9 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public int PageSize { get; set; }
 
         /// <summary>Gets or sets the maximum row limit.</summary>
-        ///Set this to -1 if you want to display all the rows of your database
+        /// Set this to -1 if you want to display all the rows of your database
         /// table no matter how big it is. Default value is: 1000
         /// <value>The maximum row limit.</value>
-
         public int MaxRowLimit { get; set; }
 
         public string PrintButtonIconCssClass { get; set; }
@@ -197,8 +182,8 @@ namespace MixERP.Net.WebControls.ScrudFactory
         ///     ResourceClassName contains localized resource strings of database table column names.
         /// </summary>
         public string ResourceClassName { get; set; }
-        public string SaveButtonCssClass { get; set; }
 
+        public string SaveButtonCssClass { get; set; }
         public string SelectButtonIconCssClass { get; set; }
 
         /// <summary>
@@ -228,7 +213,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
         ///     CssClass of the title label.
         /// </summary>
         public string TitleLabelCssClass { get; set; }
-
 
         /// <summary>
         ///     If the table has foreign keys, set this to override the data being populated on the

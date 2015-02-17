@@ -23,11 +23,12 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.TransactionGovernor.Transactions;
-using CollectionHelper = MixERP.Net.WebControls.StockTransactionFactory.Helpers.CollectionHelper;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 {
@@ -59,9 +60,9 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 
             Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
-            int officeId = CurrentSession.GetOfficeId();
-            int userId = CurrentSession.GetUserId();
-            long loginId = CurrentSession.GetLoginId();
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
 
             return Data.Transactions.Return.PostTransaction(tranId, valueDate, officeId, userId, loginId, storeId, partyCode, priceTypeId, referenceNumber, statementReference, details, attachments);
         }

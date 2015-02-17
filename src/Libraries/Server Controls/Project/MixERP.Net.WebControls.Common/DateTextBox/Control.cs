@@ -21,7 +21,9 @@ using System;
 using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Models;
 using MixERP.Net.Entities;
+using MixERP.Net.WebControls.Common.Helpers;
 using MixERP.Net.WebControls.Common.Resources;
 
 namespace MixERP.Net.WebControls.Common
@@ -68,6 +70,7 @@ namespace MixERP.Net.WebControls.Common
             }
 
             Net.Common.jQueryHelper.jQueryUI.AddjQueryUIDatePicker(this.Page, this.textBox.ID, this.MinDate, this.MaxDate);
+
             base.CreateChildControls();
         }
 
@@ -151,36 +154,42 @@ namespace MixERP.Net.WebControls.Common
             }
         }
 
-        private void InitializeDate(FrequencyType frequencyType)
+        private void InitializeDate()
         {
-            DateTime date = Helpers.DatePersister.GetDate();
+            if (this.officeId.Equals(0))
+            {
+                return;
+            }
 
+            ApplicationDateModel model = DatePersister.GetApplicationDates(this.officeId);
 
-            switch (frequencyType)
+            DateTime date = model.Today;
+
+            switch (this.mode)
             {
                 case FrequencyType.MonthStartDate:
-                    date = Helpers.DatePersister.GetMonthStartDate();
+                    date = model.MonthStartDate;
                     break;
                 case FrequencyType.MonthEndDate:
-                    date = Helpers.DatePersister.GetMonthEndtDate();
+                    date = model.MonthEndDate;
                     break;
                 case FrequencyType.QuarterStartDate:
-                    date = Helpers.DatePersister.GetQuarterStartDate();
+                    date = model.QuarterStartDate;
                     break;
                 case FrequencyType.QuarterEndDate:
-                    date = Helpers.DatePersister.GetQuarterEndDate();
+                    date = model.QuarterEndDate;
                     break;
                 case FrequencyType.HalfStartDate:
-                    date = Helpers.DatePersister.GetFiscalHalfStartDate();
+                    date = model.FiscalHalfStartDate;
                     break;
                 case FrequencyType.HalfEndDate:
-                    date = Helpers.DatePersister.GetFiscalHalfEndDate();
+                    date = model.FiscalHalfEndDate;
                     break;
                 case FrequencyType.FiscalYearStartDate:
-                    date = Helpers.DatePersister.GetFiscalYearStartDate();
+                    date = model.FiscalYearStartDate;
                     break;
                 case FrequencyType.FiscalYearEndDate:
-                    date = Helpers.DatePersister.GetFiscalYearEndDate();
+                    date = model.FiscalYearEndDate;
                     break;
             }
 

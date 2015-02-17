@@ -22,8 +22,10 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 
 namespace MixERP.Net.Core.Modules.Purchase.Services
@@ -45,8 +47,11 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
             Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
             bool isCredit = !string.IsNullOrWhiteSpace(transactionType) && !transactionType.ToUpperInvariant().Equals("CASH");
+            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
 
-            return Data.Transactions.DirectPurchase.Add(valueDate, storeId, isCredit, partyCode, details, costCenterId, referenceNumber, statementReference, attachments);
+            return Data.Transactions.DirectPurchase.Add(officeId, userId, loginId, valueDate, storeId, isCredit, partyCode, details, costCenterId, referenceNumber, statementReference, attachments);
         }
     }
 }

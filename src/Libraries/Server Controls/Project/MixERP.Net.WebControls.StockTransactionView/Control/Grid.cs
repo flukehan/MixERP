@@ -109,14 +109,14 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
                 priceType = this.priceTypeInputText.Value;
             }
 
-            int userId = CurrentSession.GetUserId();
-            int officeId = CurrentSession.GetOfficeId();
+            int userId = this.UserId;
+            int officeId = this.OfficeId;
 
             GridViewColumnHelper.AddColumns(this.productViewGridView, this.SubBook);
 
             if (this.IsNonGlTransaction)
             {
-                this.productViewGridView.DataSource = NonGlStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
+                this.productViewGridView.DataSource = NonGlStockTransaction.GetView(userId, bookName, officeId, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
                 this.productViewGridView.DataBind();
                 return;
             }
@@ -129,7 +129,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
             }
 
 
-            this.productViewGridView.DataSource = GLStockTransaction.GetView(bookName, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
+            this.productViewGridView.DataSource = GLStockTransaction.GetView(userId, bookName, officeId, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
             this.productViewGridView.DataBind();
         }
     }

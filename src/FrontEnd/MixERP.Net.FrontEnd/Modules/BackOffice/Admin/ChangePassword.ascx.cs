@@ -23,10 +23,12 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Domains;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.BackOffice.Data.Admin;
 using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using Serilog;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Admin
@@ -151,7 +153,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             {
                 User user = new User();
 
-                user.SetNewPassword(CurrentSession.GetUserId(), username, password);
+                user.SetNewPassword(CurrentUser.GetSignInView().UserId.ToInt(), username, password);
 
                 this.messageLabel.InnerText = Titles.PasswordUpdated;
             }

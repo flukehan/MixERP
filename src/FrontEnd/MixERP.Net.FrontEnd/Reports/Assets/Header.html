@@ -2,17 +2,17 @@
     <img src="{LogoPath}" width="250" height="50" alt="Logo" />
 </p>
 <p>
-    {Session.Street}, {Session.City}, {Session.State}, {Session.Country}.
-    {Resources.Titles.Phone} : {Session.Phone}. {Resources.Titles.Fax} : {Session.Fax}.
+    {CurrentOffice.Street}, {CurrentOffice.City}, {CurrentOffice.State}, {CurrentOffice.Country}.
+    {Resources.Titles.Phone} : {CurrentOffice.Phone}. {Resources.Titles.Fax} : {CurrentOffice.Fax}.
     <br />
-    {Resources.Titles.Email} : {Session.Email}
+    {Resources.Titles.Email} : {CurrentOffice.Email}
     {Resources.Titles.Url} :
-    <a href="{Session.Url}" target="_blank">{Session.Url}</a>
+    <a href="{CurrentOffice.Url}" target="_blank">{CurrentOffice.Url}</a>
 </p>
 
 {Resources.Titles.PreparedOn} : {PrintDate}.
-{Resources.Titles.User} : {Session.UserName}
+{Resources.Titles.User} : {CurrentOffice.UserName}
 <br />
-{Resources.Titles.OfficeCode} : {Session.OfficeCode}
+{Resources.Titles.OfficeCode} : {CurrentOffice.OfficeCode}
 <br />
-<br />
+<br/>

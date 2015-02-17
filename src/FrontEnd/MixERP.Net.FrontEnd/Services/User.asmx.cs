@@ -23,6 +23,7 @@ using System.Web.Services;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using Resources;
 using Serilog;
 
@@ -72,7 +73,7 @@ namespace MixERP.Net.FrontEnd.Services
 
                 if (signInId > 0)
                 {
-                    MixERPWebpage.SetSession(this.Context.Session, signInId);
+                    CurrentUser.SetSignInView(signInId);
                     MixERPWebpage.SetAuthenticationTicket(this.Context.Response, signInId, rememberMe);
 
                     return "OK";

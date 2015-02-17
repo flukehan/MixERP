@@ -22,11 +22,13 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Data;
 using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
@@ -59,7 +61,7 @@ namespace MixERP.Net.Core.Modules.Finance
 
         private void InitializeEODStatus()
         {
-            this.officeId = CurrentSession.GetOfficeId();
+            this.officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
             status = Data.EODOperation.GetStatus(officeId);
         }
 

@@ -18,9 +18,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.StockAdjustmentFactory;
 
 namespace MixERP.Net.Core.Modules.Inventory.Entry
@@ -38,6 +40,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Entry
                 form.ItemPopupUrl = "/Modules/Inventory/Setup/ItemsPopup.mix?modal=1&CallBackFunctionName=loadItems&AssociatedControlId=ItemIdHidden";
                 form.ItemIdQuerySericeUrl = "/Modules/Inventory/Services/ItemData.asmx/GetItemCodeByItemId";
                 form.ValidateSides = true;
+                form.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
                 this.Placeholder1.Controls.Add(form);
             }
