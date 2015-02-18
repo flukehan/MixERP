@@ -35,7 +35,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
                 this.dateFromDateTextBox.CssClass = "date";
                 this.dateFromDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
                 this.dateFromDateTextBox.Required = true;
-                this.dateToDateTextBox.OfficeId = this.OfficeId;
+                this.dateFromDateTextBox.OfficeId = this.OfficeId;
 
                 field.Controls.Add(this.dateFromDateTextBox);
                 container.Controls.Add(field);
