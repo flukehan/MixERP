@@ -34,7 +34,5 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <div class="container" runat="server" id="container">
     <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
 </div>
-<script type="text/javascript">
-    var p = "<%= GetPartyNameParameter() %>";
-</script>
+
 <script src="../Scripts/Setup/Parties.js"></script>
