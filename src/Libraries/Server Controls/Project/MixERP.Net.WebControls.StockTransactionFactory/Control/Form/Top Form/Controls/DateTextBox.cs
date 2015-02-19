@@ -30,8 +30,8 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
             using (HtmlTableCell cell = Helpers.TableHelper.GetFieldCell())
             {
                 this.dateTextBox = new DateTextBox();
-                this.dateTextBox.OfficeId = this.OfficeId;
                 this.dateTextBox.ID = "DateTextBox";
+                this.dateTextBox.OfficeId = this.OfficeId;
                 this.dateTextBox.Mode = FrequencyType.Today;
                 this.dateTextBox.CssClass = "date";
                 this.dateTextBox.OfficeId = this.OfficeId;
