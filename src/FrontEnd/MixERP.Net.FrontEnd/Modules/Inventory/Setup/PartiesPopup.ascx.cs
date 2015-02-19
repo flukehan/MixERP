@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
@@ -29,11 +30,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
     public partial class PartiesPopup : MixERPUserControl
     {
-        public static string GetPartyNameParameter()
-        {
-            return Parameters.GetParameter("PartyName");
-        }
-
         public override void OnControlLoad(object sender, EventArgs e)
         {
             using (Scrud scrud = new Scrud())
@@ -55,6 +51,14 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof (PartiesPopup));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
+
+            this.RegisterJavascript();
+        }
+
+        private void RegisterJavascript()
+        {
+            string script = JSUtility.GetVar("partyNameParameter", Parameters.GetParameter("PartyName"));
+            PageUtility.RegisterJavascript("PartiesPopup_Vars", script, this.Page, true);
         }
 
         private static string GetDisplayFields()
