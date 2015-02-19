@@ -4838,48 +4838,6 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [FunctionName("get_workflow_model")]
-    [ExplicitColumns]
-    public class DbGetWorkflowModelResult : PetaPocoDB.Record<DbGetWorkflowModelResult> 
-    {
-        [Column("flagged_transactions")] 
-        public string FlaggedTransactions { get; set; }
-
-        [Column("in_verification_stack")] 
-        public string InVerificationStack { get; set; }
-
-        [Column("auto_approved")] 
-        public string AutoApproved { get; set; }
-
-        [Column("approved")] 
-        public string Approved { get; set; }
-
-        [Column("rejected")] 
-        public string Rejected { get; set; }
-
-        [Column("closed")] 
-        public string Closed { get; set; }
-
-        [Column("withdrawn")] 
-        public string Withdrawn { get; set; }
-
-    }
-
-    [FunctionName("get_account_view_by_account_master_id")]
-    [ExplicitColumns]
-    public class DbGetAccountViewByAccountMasterIdResult : PetaPocoDB.Record<DbGetAccountViewByAccountMasterIdResult> 
-    {
-        [Column("id")] 
-        public string Id { get; set; }
-
-        [Column("account_id")] 
-        public string AccountId { get; set; }
-
-        [Column("account_name")] 
-        public string AccountName { get; set; }
-
-    }
-
     [FunctionName("get_associated_units_from_item_id")]
     [ExplicitColumns]
     public class DbGetAssociatedUnitsFromItemIdResult : PetaPocoDB.Record<DbGetAssociatedUnitsFromItemIdResult> 
@@ -4922,6 +4880,48 @@ namespace MixERP.Net.Entities.Core
 
         [Column("unit_name")] 
         public string UnitName { get; set; }
+
+    }
+
+    [FunctionName("get_workflow_model")]
+    [ExplicitColumns]
+    public class DbGetWorkflowModelResult : PetaPocoDB.Record<DbGetWorkflowModelResult> 
+    {
+        [Column("flagged_transactions")] 
+        public string FlaggedTransactions { get; set; }
+
+        [Column("in_verification_stack")] 
+        public string InVerificationStack { get; set; }
+
+        [Column("auto_approved")] 
+        public string AutoApproved { get; set; }
+
+        [Column("approved")] 
+        public string Approved { get; set; }
+
+        [Column("rejected")] 
+        public string Rejected { get; set; }
+
+        [Column("closed")] 
+        public string Closed { get; set; }
+
+        [Column("withdrawn")] 
+        public string Withdrawn { get; set; }
+
+    }
+
+    [FunctionName("get_account_view_by_account_master_id")]
+    [ExplicitColumns]
+    public class DbGetAccountViewByAccountMasterIdResult : PetaPocoDB.Record<DbGetAccountViewByAccountMasterIdResult> 
+    {
+        [Column("id")] 
+        public string Id { get; set; }
+
+        [Column("account_id")] 
+        public string AccountId { get; set; }
+
+        [Column("account_name")] 
+        public string AccountName { get; set; }
 
     }
 

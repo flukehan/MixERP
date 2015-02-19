@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\ITransaction.cs" />
+    <Compile Include="ORM\Attributes.cs" />
     <Compile Include="Public.cs">
       <DependentUpon>Public.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -130,6 +131,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="Public.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Public.cs</LastGenOutput>

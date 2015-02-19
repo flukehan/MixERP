@@ -18,7 +18,7 @@ namespace MixERP.Net.Entities
         {
             try
             {
-                using (Database db = new Database(GetConnectionString()))
+                using (Database db = new Database(GetConnectionString(), ProviderName))
                 {
                     return db.Query<T>(sql, args);
                 }
@@ -89,7 +89,7 @@ namespace MixERP.Net.Entities
                    SingleOrDefault(assembly => assembly.GetName().Name == name);
         }
 
-        private static string GetConnectionString()
+        public static string GetConnectionString()
         {
             var connectionStringBuilder = new NpgsqlConnectionStringBuilder
             {
@@ -107,7 +107,6 @@ namespace MixERP.Net.Entities
                 ApplicationName = "MixERP"
             };
 
-            //connectionStringBuilder.ApplicationName = "MixERP";
             return connectionStringBuilder.ConnectionString;
         }
     }

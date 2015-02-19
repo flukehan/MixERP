@@ -21,6 +21,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Web;
+using System.Web.Http;
 using System.Web.Routing;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
@@ -43,6 +44,9 @@ namespace MixERP.Net.FrontEnd
                 routes.MapPageRoute("DefaultRoute", "", "~/SignIn.aspx");
                 routes.MapPageRoute("Reporting", "Reports/{path}", "~/Reports/ReportMaster.aspx");
                 routes.MapPageRoute("Modules", "Modules/{*path}", "~/Modules/Default.aspx");
+
+                routes.MapHttpRoute("API Default", "api/{controller}/{action}/{id}", new {id = RouteParameter.Optional});
+                routes.MapHttpRoute("API Paged Results", "api/{controller}/get/page/{page}", new {id = RouteParameter.Optional});
             }
         }
 
@@ -116,7 +120,8 @@ namespace MixERP.Net.FrontEnd
         private string GetLogFileName()
         {
             string applicationLogDirectory = this.GetLogDirectory();
-            string filePath = Path.Combine(applicationLogDirectory, DateTime.Now.Date.ToShortDateString().Replace(@"/", "-"), "log.txt");
+            string filePath = Path.Combine(applicationLogDirectory,
+                DateTime.Now.Date.ToShortDateString().Replace(@"/", "-"), "log.txt");
             return filePath;
         }
 
@@ -131,7 +136,9 @@ namespace MixERP.Net.FrontEnd
 
             levelSwitch.MinimumLevel = logLevel;
 
-            return new LoggerConfiguration().MinimumLevel.ControlledBy(levelSwitch).WriteTo.RollingFile(this.GetLogFileName());
+            return
+                new LoggerConfiguration().MinimumLevel.ControlledBy(levelSwitch)
+                    .WriteTo.RollingFile(this.GetLogFileName());
         }
 
         private void IntializeLogger()

@@ -5,6 +5,9 @@
 <#@ assembly name="System.Xml" #>
 <#@ assembly name="System.Configuration" #>
 <#@ assembly name="System.Windows.Forms" #>
+<#@ assembly name="$(SolutionDir)FrontEnd\MixERP.Net.FrontEnd\bin\Npgsql.dll" #>
+<#@ assembly name="$(SolutionDir)FrontEnd\MixERP.Net.FrontEnd\bin\Mono.Security.dll" #>
+<#@ import namespace="Npgsql" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Data" #>
 <#@ import namespace="System.Data.SqlClient" #>
@@ -281,31 +284,15 @@ static string zap_password(string connectionString)
 
 
 
+
 Tables LoadTables()
 {
     InitConnectionString();
 
-    DbProviderFactory _factory;
-    try
-    {
-        _factory = DbProviderFactories.GetFactory(ProviderName);
-    }
-    catch (Exception x)
-    {
-        var error=x.Message.Replace("\r\n", "\n").Replace("\n", " ");
-        Warning(string.Format("Failed to load provider `{0}` - {1}", ProviderName, error));
-        WriteLine("");
-        WriteLine("// -----------------------------------------------------------------------------------------");
-        WriteLine("// Failed to load provider `{0}` - {1}", ProviderName, error);
-        WriteLine("// -----------------------------------------------------------------------------------------");
-        WriteLine("");
-        return new Tables();
-    }
-
     try
     {
         Tables result;
-        using(var conn=_factory.CreateConnection())
+        using(NpgsqlConnection conn= new NpgsqlConnection())
         {
             conn.ConnectionString=ConnectionString;         
             conn.Open();
@@ -315,7 +302,7 @@ Tables LoadTables()
             reader=new PostGreSqlSchemaReader();
 
             reader.outer=this;
-            result=reader.ReadSchema(conn, _factory, SchemaName);
+            result=reader.ReadSchema(conn, SchemaName);
 
             // Remove unrequired tables/views
             for (int i=result.Count-1; i>=0; i--)
@@ -369,7 +356,7 @@ Tables LoadTables()
 
 abstract class SchemaReader
 {
-    public abstract Tables ReadSchema(DbConnection connection, DbProviderFactory factory, string schemaName);
+    public abstract Tables ReadSchema(NpgsqlConnection connection, string schemaName);
     public GeneratedTextTransformation outer;
     public void WriteLine(string o)
     {
@@ -402,14 +389,13 @@ class PostGreSqlSchemaReader : SchemaReader
     }
 
     // SchemaReader.ReadSchema
-    public override Tables ReadSchema(DbConnection connection, DbProviderFactory factory, string schemaName)
+    public override Tables ReadSchema(NpgsqlConnection connection, string schemaName)
     {
         var result=new Tables();
         
         _connection=connection;
-        _factory=factory;
 
-        var cmd=_factory.CreateCommand();
+        var cmd= new NpgsqlCommand();
         cmd.Connection=connection;
         cmd.CommandText=TABLE_SQL;
 
@@ -460,14 +446,13 @@ class PostGreSqlSchemaReader : SchemaReader
         return result;
     }
     
-    DbConnection _connection;
-    DbProviderFactory _factory;
+    NpgsqlConnection _connection;
     
 
     List<Column> LoadColumns(Table tbl)
     {
     
-        using (var cmd=_factory.CreateCommand())
+        using (var cmd= new NpgsqlCommand())
         {
             cmd.Connection=_connection;
             cmd.CommandText=COLUMN_SQL;
@@ -513,7 +498,7 @@ class PostGreSqlSchemaReader : SchemaReader
             WHERE lower(tc.constraint_type)='primary key'
             AND kcu.table_name=@tablename";
 
-        using (var cmd=_factory.CreateCommand())
+        using (var cmd = new NpgsqlCommand())
         {
             cmd.Connection=_connection;
             cmd.CommandText=sql;
