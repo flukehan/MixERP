@@ -19,6 +19,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.IO;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Web;
 using System.Web.Http;
@@ -44,9 +46,6 @@ namespace MixERP.Net.FrontEnd
                 routes.MapPageRoute("DefaultRoute", "", "~/SignIn.aspx");
                 routes.MapPageRoute("Reporting", "Reports/{path}", "~/Reports/ReportMaster.aspx");
                 routes.MapPageRoute("Modules", "Modules/{*path}", "~/Modules/Default.aspx");
-
-                routes.MapHttpRoute("API Default", "api/{controller}/{action}/{id}", new {id = RouteParameter.Optional});
-                routes.MapHttpRoute("API Paged Results", "api/{controller}/get/page/{page}", new {id = RouteParameter.Optional});
             }
         }
 
@@ -97,6 +96,21 @@ namespace MixERP.Net.FrontEnd
         private void Application_Start(object sender, EventArgs e)
         {
             this.IntializeLogger();
+
+
+            GlobalConfiguration.Configure(config =>
+            {
+                //Configure routing as defined in respective class attributes.
+                config.MapHttpAttributeRoutes();
+
+                config.Formatters.JsonFormatter.MediaTypeMappings.Add(new QueryStringMapping("type", "json",
+                    new MediaTypeHeaderValue("application/json")));
+                config.Formatters.XmlFormatter.MediaTypeMappings.Add(new QueryStringMapping("type", "xml",
+                    new MediaTypeHeaderValue("application/xml")));
+
+                config.EnsureInitialized();
+            });
+
             RegisterRoutes(RouteTable.Routes);
         }
 

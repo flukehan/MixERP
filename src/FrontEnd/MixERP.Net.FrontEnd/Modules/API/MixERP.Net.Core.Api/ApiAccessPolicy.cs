@@ -29,6 +29,7 @@ namespace MixERP.Net.Core.Api
                 {
                     //Todo
                     this.IsAuthorized = true;
+                    return;
                 }
             }
 

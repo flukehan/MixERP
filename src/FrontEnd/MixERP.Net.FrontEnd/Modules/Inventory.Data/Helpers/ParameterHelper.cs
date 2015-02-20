@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
                 for (int i = 0; i < details.Count; i++)
                 {
                     string type = "Cr";
-                    if (details[i].TransferType.Equals(TransactionType.Debit))
+                    if (details[i].TransferTypeEnum.Equals(TransactionTypeEnum.Debit))
                     {
                         type = "Dr";
                     }

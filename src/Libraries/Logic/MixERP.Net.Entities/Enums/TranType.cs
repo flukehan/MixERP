@@ -19,7 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace MixERP.Net.Entities
 {
-    public enum TransactionType
+    public enum TransactionTypeEnum
     {
         Debit,
         Credit

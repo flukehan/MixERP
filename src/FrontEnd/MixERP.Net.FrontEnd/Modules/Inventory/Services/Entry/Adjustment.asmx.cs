@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
         {
             foreach (var model in models)
             {
-                if (model.TransferType == TransactionType.Credit)
+                if (model.TransferTypeEnum == TransactionTypeEnum.Credit)
                 {
                     decimal existingQuantity = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreName);
 

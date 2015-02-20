@@ -48,7 +48,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
 
             foreach (var model in stockTransferModels)
             {
-                if (model.TransferType == TransactionType.Credit)
+                if (model.TransferTypeEnum == TransactionTypeEnum.Credit)
                 {
                     decimal existingQuantity = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreName);
 
@@ -77,14 +77,14 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
             foreach (var item in result)
             {
                 StockAdjustmentDetail detail = new StockAdjustmentDetail();
-                TransactionType type = TransactionType.Credit;
+                TransactionTypeEnum typeEnum = TransactionTypeEnum.Credit;
 
                 if (Conversion.TryCastString(item[0]).ToString().Equals("Dr"))
                 {
-                    type = TransactionType.Debit;
+                    typeEnum = TransactionTypeEnum.Debit;
                 }
 
-                detail.TransferType = type;
+                detail.TransferTypeEnum = typeEnum;
                 detail.StoreName = Conversion.TryCastString(item[1]);
                 detail.ItemCode = Conversion.TryCastString(item[2]);
                 detail.ItemName = Conversion.TryCastString(item[3]);
@@ -101,8 +101,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                 {
                     aggregate.Key.ItemCode,
                     aggregate.Key.UnitName,
-                    Debit = aggregate.Where(row => row.TransferType.Equals(TransactionType.Debit)).Sum(row => row.Quantity),
-                    Credit = aggregate.Where(row => row.TransferType.Equals(TransactionType.Credit)).Sum(row => row.Quantity)
+                    Debit = aggregate.Where(row => row.TransferTypeEnum.Equals(TransactionTypeEnum.Debit)).Sum(row => row.Quantity),
+                    Credit = aggregate.Where(row => row.TransferTypeEnum.Equals(TransactionTypeEnum.Credit)).Sum(row => row.Quantity)
                 };
 
             if ((from query in results where query.Debit != query.Credit select query).Any())

@@ -40,7 +40,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -50,8 +52,22 @@
   <ItemGroup>
     <Compile Include="ApiAccessPolicy.cs" />
     <Compile Include="Authentication.cs" />
-    <Compile Include="Core\CurrenciesController.cs" />
+    <Compile Include="Core.cs">
+      <DependentUpon>Core.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CRM.cs">
+      <DependentUpon>CRM.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="MixERPApiController.cs" />
+    <Compile Include="Office.cs">
+      <DependentUpon>Office.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +79,27 @@
       <Project>{bde918b1-dd9b-41c9-a41f-f3ddec18b6d8}</Project>
       <Name>MixERP.Net.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Core.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Core.cs</LastGenOutput>
+    </Content>
+    <Content Include="CRM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CRM.cs</LastGenOutput>
+    </Content>
+    <Content Include="Office.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Office.cs</LastGenOutput>
+    </Content>
+    <Content Include="Processors\Core.processor.template" />
+    <Content Include="Processors\CRM.processor.template" />
+    <Content Include="Processors\Office.processor.template" />
+    <Content Include="Templates\Generator.template" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

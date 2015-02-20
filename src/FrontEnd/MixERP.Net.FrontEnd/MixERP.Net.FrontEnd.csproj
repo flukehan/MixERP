@@ -675,6 +675,9 @@
     <Content Include="Resource\Configuration\AttachmentFactoryParameters.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Resource\Configuration\ApiConfiguration.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Resource\Configuration\MixERP.xml">
       <SubType>Designer</SubType>
     </Content>
