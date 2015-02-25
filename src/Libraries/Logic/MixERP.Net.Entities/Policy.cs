@@ -1,9 +1,10 @@
 ﻿
+using MixERP.Net.Entities.Contracts;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using PetaPoco;
 
 namespace MixERP.Net.Entities.Policy
 {
@@ -95,7 +96,7 @@ namespace MixERP.Net.Entities.Policy
     [TableName("policy.lock_outs")]
     [PrimaryKey("lock_out_id")]
     [ExplicitColumns]
-    public class LockOut : PetaPocoDB.Record<LockOut> 
+    public class LockOut : PetaPocoDB.Record<LockOut> , IPoco
     {
         [Column("lock_out_id")] 
         public long LockOutId { get; set; }
@@ -114,7 +115,7 @@ namespace MixERP.Net.Entities.Policy
     [TableName("policy.menu_access")]
     [PrimaryKey("access_id")]
     [ExplicitColumns]
-    public class MenuAccess : PetaPocoDB.Record<MenuAccess> 
+    public class MenuAccess : PetaPocoDB.Record<MenuAccess> , IPoco
     {
         [Column("access_id")] 
         public long AccessId { get; set; }
@@ -133,7 +134,7 @@ namespace MixERP.Net.Entities.Policy
     [TableName("policy.store_policies")]
     [PrimaryKey("store_policy_id")]
     [ExplicitColumns]
-    public class StorePolicy : PetaPocoDB.Record<StorePolicy> 
+    public class StorePolicy : PetaPocoDB.Record<StorePolicy> , IPoco
     {
         [Column("store_policy_id")] 
         public long StorePolicyId { get; set; }
@@ -155,7 +156,7 @@ namespace MixERP.Net.Entities.Policy
     [TableName("policy.store_policy_details")]
     [PrimaryKey("store_policy_detail_id")]
     [ExplicitColumns]
-    public class StorePolicyDetail : PetaPocoDB.Record<StorePolicyDetail> 
+    public class StorePolicyDetail : PetaPocoDB.Record<StorePolicyDetail> , IPoco
     {
         [Column("store_policy_detail_id")] 
         public long StorePolicyDetailId { get; set; }
@@ -180,7 +181,7 @@ namespace MixERP.Net.Entities.Policy
     [TableName("policy.voucher_verification_policy")]
     [PrimaryKey("policy_id")]
     [ExplicitColumns]
-    public class VoucherVerificationPolicy : PetaPocoDB.Record<VoucherVerificationPolicy> 
+    public class VoucherVerificationPolicy : PetaPocoDB.Record<VoucherVerificationPolicy> , IPoco
     {
         [Column("policy_id")] 
         public int PolicyId { get; set; }
@@ -232,7 +233,7 @@ namespace MixERP.Net.Entities.Policy
     [TableName("policy.auto_verification_policy")]
     [PrimaryKey("user_id", autoIncrement=false)]
     [ExplicitColumns]
-    public class AutoVerificationPolicy : PetaPocoDB.Record<AutoVerificationPolicy> 
+    public class AutoVerificationPolicy : PetaPocoDB.Record<AutoVerificationPolicy> , IPoco
     {
         [Column("user_id")] 
         public int UserId { get; set; }
@@ -275,7 +276,7 @@ namespace MixERP.Net.Entities.Policy
     [TableName("policy.menu_policy")]
     [PrimaryKey("policy_id")]
     [ExplicitColumns]
-    public class MenuPolicy : PetaPocoDB.Record<MenuPolicy> 
+    public class MenuPolicy : PetaPocoDB.Record<MenuPolicy> , IPoco
     {
         [Column("policy_id")] 
         public int PolicyId { get; set; }
@@ -302,7 +303,7 @@ namespace MixERP.Net.Entities.Policy
 
     [TableName("policy.auto_verification_policy_scrud_view")]
     [ExplicitColumns]
-    public class AutoVerificationPolicyScrudView : PetaPocoDB.Record<AutoVerificationPolicyScrudView> 
+    public class AutoVerificationPolicyScrudView : PetaPocoDB.Record<AutoVerificationPolicyScrudView> , IPoco
     {
         [Column("user_id")] 
         public int? UserId { get; set; }
@@ -341,7 +342,7 @@ namespace MixERP.Net.Entities.Policy
 
     [TableName("policy.voucher_verification_policy_scrud_view")]
     [ExplicitColumns]
-    public class VoucherVerificationPolicyScrudView : PetaPocoDB.Record<VoucherVerificationPolicyScrudView> 
+    public class VoucherVerificationPolicyScrudView : PetaPocoDB.Record<VoucherVerificationPolicyScrudView> , IPoco
     {
         [Column("user_id")] 
         public int? UserId { get; set; }
@@ -384,9 +385,53 @@ namespace MixERP.Net.Entities.Policy
 
     }
 
+    [TableName("policy.http_actions")]
+    [PrimaryKey("http_action_code", autoIncrement=false)]
+    [ExplicitColumns]
+    public class HttpAction : PetaPocoDB.Record<HttpAction> , IPoco
+    {
+        [Column("http_action_code")] 
+        public string HttpActionCode { get; set; }
+
+        [Column("http_action_name")] 
+        public string HttpActionName { get; set; }
+
+    }
+
+    [TableName("policy.api_access_policy")]
+    [PrimaryKey("api_access_policy_id")]
+    [ExplicitColumns]
+    public class ApiAccessPolicy : PetaPocoDB.Record<ApiAccessPolicy> , IPoco
+    {
+        [Column("api_access_policy_id")] 
+        public long ApiAccessPolicyId { get; set; }
+
+        [Column("user_id")] 
+        public int UserId { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+        [Column("poco_type_name")] 
+        public string PocoTypeName { get; set; }
+
+        [Column("http_action_code")] 
+        public string HttpActionCode { get; set; }
+
+        [Column("valid_till")] 
+        public DateTime ValidTill { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
     [FunctionName("get_menu")]
     [ExplicitColumns]
-    public class DbGetMenuResult : PetaPocoDB.Record<DbGetMenuResult> 
+    public class DbGetMenuResult : PetaPocoDB.Record<DbGetMenuResult> , IPoco
     {
         [Column("menu_id")] 
         public string MenuId { get; set; }
@@ -410,7 +455,7 @@ namespace MixERP.Net.Entities.Policy
 
     [FunctionName("get_menu_policy")]
     [ExplicitColumns]
-    public class DbGetMenuPolicyResult : PetaPocoDB.Record<DbGetMenuPolicyResult> 
+    public class DbGetMenuPolicyResult : PetaPocoDB.Record<DbGetMenuPolicyResult> , IPoco
     {
         [Column("row_number")] 
         public string RowNumber { get; set; }

@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IPoco.cs" />
     <Compile Include="Contracts\ITransaction.cs" />
     <Compile Include="ORM\Attributes.cs" />
     <Compile Include="Public.cs">

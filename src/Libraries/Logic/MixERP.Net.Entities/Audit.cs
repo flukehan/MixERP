@@ -1,9 +1,10 @@
 ﻿
+using MixERP.Net.Entities.Contracts;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using PetaPoco;
 
 namespace MixERP.Net.Entities.Audit
 {
@@ -95,7 +96,7 @@ namespace MixERP.Net.Entities.Audit
     [TableName("audit.logins")]
     [PrimaryKey("login_id")]
     [ExplicitColumns]
-    public class Login : PetaPocoDB.Record<Login> 
+    public class Login : PetaPocoDB.Record<Login> , IPoco
     {
         [Column("login_id")] 
         public long LoginId { get; set; }
@@ -126,7 +127,7 @@ namespace MixERP.Net.Entities.Audit
     [TableName("audit.failed_logins")]
     [PrimaryKey("failed_login_id")]
     [ExplicitColumns]
-    public class FailedLogin : PetaPocoDB.Record<FailedLogin> 
+    public class FailedLogin : PetaPocoDB.Record<FailedLogin> , IPoco
     {
         [Column("failed_login_id")] 
         public long FailedLoginId { get; set; }
@@ -160,7 +161,7 @@ namespace MixERP.Net.Entities.Audit
     [TableName("audit.logged_actions")]
     [PrimaryKey("event_id")]
     [ExplicitColumns]
-    public class LoggedAction : PetaPocoDB.Record<LoggedAction> 
+    public class LoggedAction : PetaPocoDB.Record<LoggedAction> , IPoco
     {
         [Column("event_id")] 
         public long EventId { get; set; }
@@ -220,7 +221,7 @@ namespace MixERP.Net.Entities.Audit
 
     [FunctionName("get_office_information_model")]
     [ExplicitColumns]
-    public class DbGetOfficeInformationModelResult : PetaPocoDB.Record<DbGetOfficeInformationModelResult> 
+    public class DbGetOfficeInformationModelResult : PetaPocoDB.Record<DbGetOfficeInformationModelResult> , IPoco
     {
         [Column("office")] 
         public string Office { get; set; }

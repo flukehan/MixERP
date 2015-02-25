@@ -103,6 +103,7 @@
     <Content Include="Industries.ascx" />
     <Content Include="Mix Open Foundation.snk" />
     <Content Include="OTS\OpeningInventory.ascx" />
+    <Content Include="Policy\ApiAccess.ascx" />
     <Content Include="Scripts\Admin\DatabaseBackup.ascx.js" />
     <Content Include="Scripts\AttachmentManager.ascx.js" />
     <Content Include="packages.config" />
@@ -309,6 +310,13 @@
     </Compile>
     <Compile Include="OTS\OpeningInventory.ascx.designer.cs">
       <DependentUpon>OpeningInventory.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Policy\ApiAccess.ascx.cs">
+      <DependentUpon>ApiAccess.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Policy\ApiAccess.ascx.designer.cs">
+      <DependentUpon>ApiAccess.ascx</DependentUpon>
     </Compile>
     <Compile Include="Policy\AutoVerification.ascx.cs">
       <DependentUpon>AutoVerification.ascx</DependentUpon>

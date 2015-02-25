@@ -19,7 +19,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/departments/page/{page:long}")]
         public IEnumerable<MixERP.Net.Entities.Office.Department> GetPagedResult(long page=1)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Department), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Department), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/departments/{id}")]
         public MixERP.Net.Entities.Office.Department GetSingle(int id)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Department), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Department), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -74,7 +74,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Department), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Department), "POST");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -106,7 +106,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
                         
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Department), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Department), "PUT");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -136,7 +136,7 @@ namespace MixERP.Net.Core.Api.Office
                 return;
             }
             
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Department), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Department), "DELETE");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -171,7 +171,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/roles/page/{page:long}")]
         public IEnumerable<MixERP.Net.Entities.Office.Role> GetPagedResult(long page=1)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Role), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Role), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -196,7 +196,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/roles/{id}")]
         public MixERP.Net.Entities.Office.Role GetSingle(int id)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Role), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Role), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -226,7 +226,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Role), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Role), "POST");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -258,7 +258,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
                         
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Role), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Role), "PUT");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -288,7 +288,7 @@ namespace MixERP.Net.Core.Api.Office
                 return;
             }
             
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Role), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Role), "DELETE");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -323,7 +323,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/store-types/page/{page:long}")]
         public IEnumerable<MixERP.Net.Entities.Office.StoreType> GetPagedResult(long page=1)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.StoreType), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.StoreType), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -348,7 +348,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/store-types/{id}")]
         public MixERP.Net.Entities.Office.StoreType GetSingle(int id)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.StoreType), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.StoreType), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -378,7 +378,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.StoreType), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.StoreType), "POST");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -410,7 +410,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
                         
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.StoreType), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.StoreType), "PUT");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -440,7 +440,7 @@ namespace MixERP.Net.Core.Api.Office
                 return;
             }
             
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.StoreType), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.StoreType), "DELETE");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -475,7 +475,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/counters/page/{page:long}")]
         public IEnumerable<MixERP.Net.Entities.Office.Counter> GetPagedResult(long page=1)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Counter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Counter), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -500,7 +500,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/counters/{id}")]
         public MixERP.Net.Entities.Office.Counter GetSingle(int id)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Counter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Counter), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -530,7 +530,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Counter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Counter), "POST");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -562,7 +562,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
                         
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Counter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Counter), "PUT");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -592,7 +592,7 @@ namespace MixERP.Net.Core.Api.Office
                 return;
             }
             
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Counter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Counter), "DELETE");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -627,7 +627,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/cashiers/page/{page:long}")]
         public IEnumerable<MixERP.Net.Entities.Office.Cashier> GetPagedResult(long page=1)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Cashier), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Cashier), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -652,7 +652,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/cashiers/{id}")]
         public MixERP.Net.Entities.Office.Cashier GetSingle(long id)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Cashier), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Cashier), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -682,7 +682,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Cashier), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Cashier), "POST");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -714,7 +714,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
                         
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Cashier), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Cashier), "PUT");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -744,7 +744,7 @@ namespace MixERP.Net.Core.Api.Office
                 return;
             }
             
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Cashier), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Cashier), "DELETE");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -779,7 +779,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/cost-centers/page/{page:long}")]
         public IEnumerable<MixERP.Net.Entities.Office.CostCenter> GetPagedResult(long page=1)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CostCenter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CostCenter), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -804,7 +804,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/cost-centers/{id}")]
         public MixERP.Net.Entities.Office.CostCenter GetSingle(int id)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CostCenter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CostCenter), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -834,7 +834,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CostCenter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CostCenter), "POST");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -866,7 +866,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
                         
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CostCenter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CostCenter), "PUT");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -896,7 +896,7 @@ namespace MixERP.Net.Core.Api.Office
                 return;
             }
             
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CostCenter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CostCenter), "DELETE");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -931,7 +931,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/cash-repositories/page/{page:long}")]
         public IEnumerable<MixERP.Net.Entities.Office.CashRepository> GetPagedResult(long page=1)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -956,7 +956,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/cash-repositories/{id}")]
         public MixERP.Net.Entities.Office.CashRepository GetSingle(int id)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -986,7 +986,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "POST");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1018,7 +1018,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
                         
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "PUT");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1048,7 +1048,7 @@ namespace MixERP.Net.Core.Api.Office
                 return;
             }
             
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "DELETE");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1083,7 +1083,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/work-centers/page/{page:long}")]
         public IEnumerable<MixERP.Net.Entities.Office.WorkCenter> GetPagedResult(long page=1)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.WorkCenter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.WorkCenter), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1108,7 +1108,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/work-centers/{id}")]
         public MixERP.Net.Entities.Office.WorkCenter GetSingle(int id)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.WorkCenter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.WorkCenter), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1138,7 +1138,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.WorkCenter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.WorkCenter), "POST");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1170,7 +1170,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
                         
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.WorkCenter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.WorkCenter), "PUT");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1200,7 +1200,7 @@ namespace MixERP.Net.Core.Api.Office
                 return;
             }
             
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.WorkCenter), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.WorkCenter), "DELETE");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1235,7 +1235,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/configuration/page/{page:long}")]
         public IEnumerable<MixERP.Net.Entities.Office.Configuration> GetPagedResult(long page=1)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Configuration), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Configuration), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1260,7 +1260,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/configuration/{id}")]
         public MixERP.Net.Entities.Office.Configuration GetSingle(int id)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Configuration), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Configuration), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1290,7 +1290,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Configuration), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Configuration), "POST");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1322,7 +1322,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
                         
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Configuration), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Configuration), "PUT");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1352,7 +1352,7 @@ namespace MixERP.Net.Core.Api.Office
                 return;
             }
             
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Configuration), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Configuration), "DELETE");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1387,7 +1387,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/stores/page/{page:long}")]
         public IEnumerable<MixERP.Net.Entities.Office.Store> GetPagedResult(long page=1)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Store), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Store), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1412,7 +1412,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/stores/{id}")]
         public MixERP.Net.Entities.Office.Store GetSingle(int id)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Store), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Store), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1442,7 +1442,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Store), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Store), "POST");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1474,7 +1474,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
                         
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Store), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Store), "PUT");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1504,7 +1504,7 @@ namespace MixERP.Net.Core.Api.Office
                 return;
             }
             
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Store), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Store), "DELETE");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1539,7 +1539,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/offices/page/{page:long}")]
         public IEnumerable<MixERP.Net.Entities.Office.Office> GetPagedResult(long page=1)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Office), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Office), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1564,7 +1564,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/offices/{id}")]
         public MixERP.Net.Entities.Office.Office GetSingle(int id)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Office), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Office), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1594,7 +1594,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Office), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Office), "POST");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1626,7 +1626,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
                         
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Office), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Office), "PUT");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1656,7 +1656,7 @@ namespace MixERP.Net.Core.Api.Office
                 return;
             }
             
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Office), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.Office), "DELETE");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1691,7 +1691,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/users/page/{page:long}")]
         public IEnumerable<MixERP.Net.Entities.Office.User> GetPagedResult(long page=1)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.User), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.User), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1716,7 +1716,7 @@ namespace MixERP.Net.Core.Api.Office
         [Route("api/office/users/{id}")]
         public MixERP.Net.Entities.Office.User GetSingle(int id)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.User), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.User), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1746,7 +1746,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.User), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.User), "POST");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1778,7 +1778,7 @@ namespace MixERP.Net.Core.Api.Office
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
                         
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.User), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.User), "PUT");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -1808,7 +1808,7 @@ namespace MixERP.Net.Core.Api.Office
                 return;
             }
             
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.User), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.User), "DELETE");
             policy.Authorize();
 
             if (!policy.IsAuthorized)

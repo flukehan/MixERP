@@ -1,9 +1,10 @@
 ﻿
+using MixERP.Net.Entities.Contracts;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using PetaPoco;
 
 namespace MixERP.Net.Entities.CRM
 {
@@ -95,7 +96,7 @@ namespace MixERP.Net.Entities.CRM
     [TableName("crm.lead_sources")]
     [PrimaryKey("lead_source_id")]
     [ExplicitColumns]
-    public class LeadSource : PetaPocoDB.Record<LeadSource> 
+    public class LeadSource : PetaPocoDB.Record<LeadSource> , IPoco
     {
         [Column("lead_source_id")] 
         public int LeadSourceId { get; set; }
@@ -117,7 +118,7 @@ namespace MixERP.Net.Entities.CRM
     [TableName("crm.lead_statuses")]
     [PrimaryKey("lead_status_id")]
     [ExplicitColumns]
-    public class LeadStatus : PetaPocoDB.Record<LeadStatus> 
+    public class LeadStatus : PetaPocoDB.Record<LeadStatus> , IPoco
     {
         [Column("lead_status_id")] 
         public int LeadStatusId { get; set; }
@@ -139,7 +140,7 @@ namespace MixERP.Net.Entities.CRM
     [TableName("crm.opportunity_stages")]
     [PrimaryKey("opportunity_stage_id")]
     [ExplicitColumns]
-    public class OpportunityStage : PetaPocoDB.Record<OpportunityStage> 
+    public class OpportunityStage : PetaPocoDB.Record<OpportunityStage> , IPoco
     {
         [Column("opportunity_stage_id")] 
         public int OpportunityStageId { get; set; }

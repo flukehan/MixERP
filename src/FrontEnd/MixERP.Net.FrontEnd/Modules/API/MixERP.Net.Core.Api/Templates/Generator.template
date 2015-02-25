@@ -22,7 +22,7 @@ foreach(Table tbl in from t in tables where !t.Ignore select t)
         [Route("api/<#=tbl.Schema.Replace("_", "-") #>/<#=tbl.Name.Replace("_", "-") #>/page/{page:long}")]
         public IEnumerable<<#=EntityNamespace#>.<#=tbl.ClassName#>> GetPagedResult(long page=1)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(<#=EntityNamespace#>.<#=tbl.ClassName#>), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(<#=EntityNamespace#>.<#=tbl.ClassName#>), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -47,7 +47,7 @@ foreach(Table tbl in from t in tables where !t.Ignore select t)
         [Route("api/<#=tbl.Schema.Replace("_", "-") #>/<#=tbl.Name.Replace("_", "-") #>/{id}")]
         public <#=EntityNamespace#>.<#=tbl.ClassName#> GetSingle(<#=tbl.PrimaryKeyType#> id)
         {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(<#=EntityNamespace#>.<#=tbl.ClassName#>), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(<#=EntityNamespace#>.<#=tbl.ClassName#>), "GET");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -77,7 +77,7 @@ foreach(Table tbl in from t in tables where !t.Ignore select t)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(<#=EntityNamespace#>.<#=tbl.ClassName#>), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(<#=EntityNamespace#>.<#=tbl.ClassName#>), "POST");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -123,7 +123,7 @@ foreach(Table tbl in from t in tables where !t.Ignore select t)
             }
             #>
             
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(<#=EntityNamespace#>.<#=tbl.ClassName#>), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(<#=EntityNamespace#>.<#=tbl.ClassName#>), "PUT");
             policy.Authorize();
 
             if (!policy.IsAuthorized)
@@ -167,7 +167,7 @@ foreach(Table tbl in from t in tables where !t.Ignore select t)
             }
             #>
 
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(<#=EntityNamespace#>.<#=tbl.ClassName#>), new HttpGetAttribute());
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(<#=EntityNamespace#>.<#=tbl.ClassName#>), "DELETE");
             policy.Authorize();
 
             if (!policy.IsAuthorized)

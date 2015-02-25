@@ -4,11 +4,12 @@ if (string.IsNullOrEmpty(RepoName) && !string.IsNullOrEmpty(ConnectionStringName
 if (string.IsNullOrEmpty(Namespace)) Namespace="PetaPoco";
 if (string.IsNullOrEmpty(RepoName)) RepoName="PetaPocoDB";
 #>
+using MixERP.Net.Entities.Contracts;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using PetaPoco;
 
 namespace <#=Namespace #>
 {
@@ -151,8 +152,7 @@ foreach(Table tbl in from t in tables where !t.Ignore select t)
     [PrimaryKey("<#=tbl.PK.Name#>", autoIncrement=false)]
 <# } #>
     [ExplicitColumns]
-    public class <#=tbl.ClassName#> <# if (GenerateOperations) { #>: <#=RepoName#>.Record<<#=tbl.ClassName#>> <# } #>
-
+    public class <#=tbl.ClassName#> <# if (GenerateOperations) { #>: <#=RepoName#>.Record<<#=tbl.ClassName#>> <# } #>, IPoco
     {
 <#
 foreach(Column col in from c in tbl.Columns where !c.Ignore select c)

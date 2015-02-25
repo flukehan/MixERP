@@ -1,9 +1,10 @@
 ﻿
+using MixERP.Net.Entities.Contracts;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using PetaPoco;
 
 namespace MixERP.Net.Entities.Localization
 {
@@ -95,7 +96,7 @@ namespace MixERP.Net.Entities.Localization
     [TableName("localization.resources")]
     [PrimaryKey("resource_id")]
     [ExplicitColumns]
-    public class Resource : PetaPocoDB.Record<Resource> 
+    public class Resource : PetaPocoDB.Record<Resource> , IPoco
     {
         [Column("resource_id")] 
         public int ResourceId { get; set; }
@@ -114,7 +115,7 @@ namespace MixERP.Net.Entities.Localization
     [TableName("localization.cultures")]
     [PrimaryKey("culture_code", autoIncrement=false)]
     [ExplicitColumns]
-    public class Culture : PetaPocoDB.Record<Culture> 
+    public class Culture : PetaPocoDB.Record<Culture> , IPoco
     {
         [Column("culture_code")] 
         public string CultureCode { get; set; }
@@ -127,7 +128,7 @@ namespace MixERP.Net.Entities.Localization
     [TableName("localization.localized_resources")]
     [PrimaryKey("id")]
     [ExplicitColumns]
-    public class LocalizedResource : PetaPocoDB.Record<LocalizedResource> 
+    public class LocalizedResource : PetaPocoDB.Record<LocalizedResource> , IPoco
     {
         [Column("id")] 
         public int Id { get; set; }
@@ -145,7 +146,7 @@ namespace MixERP.Net.Entities.Localization
 
     [TableName("localization.localized_resources_view")]
     [ExplicitColumns]
-    public class LocalizedResourcesView : PetaPocoDB.Record<LocalizedResourcesView> 
+    public class LocalizedResourcesView : PetaPocoDB.Record<LocalizedResourcesView> , IPoco
     {
         [Column("resource")] 
         public string Resource { get; set; }
@@ -163,7 +164,7 @@ namespace MixERP.Net.Entities.Localization
 
     [FunctionName("get_localization_table")]
     [ExplicitColumns]
-    public class DbGetLocalizationTableResult : PetaPocoDB.Record<DbGetLocalizationTableResult> 
+    public class DbGetLocalizationTableResult : PetaPocoDB.Record<DbGetLocalizationTableResult> , IPoco
     {
         [Column("row_number")] 
         public string RowNumber { get; set; }

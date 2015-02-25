@@ -56,6 +56,11 @@ namespace MixERP.Net.FrontEnd.Cache
         {
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
 
+            if (signInView == null)
+            {
+                return dictionary;
+            }
+
             dictionary.Add("AddressLine1", signInView.AddressLine1);
             dictionary.Add("AddressLine2", signInView.AddressLine2);
             dictionary.Add("City", signInView.City);

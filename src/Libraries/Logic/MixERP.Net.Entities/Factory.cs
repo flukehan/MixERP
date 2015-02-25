@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
@@ -13,7 +15,6 @@ namespace MixERP.Net.Entities
     public sealed class Factory
     {
         private const string ProviderName = "Npgsql";
-
         public static IEnumerable<T> Get<T>(string sql, params object[] args)
         {
             try
@@ -39,7 +40,7 @@ namespace MixERP.Net.Entities
         {
             try
             {
-                using (Database db = new Database(GetConnectionString()))
+                using (Database db = new Database(GetConnectionString(), ProviderName))
                 {
                     return db.ExecuteScalar<T>(sql, args);
                 }
@@ -60,7 +61,7 @@ namespace MixERP.Net.Entities
         {
             try
             {
-                using (Database db = new Database(GetConnectionString()))
+                using (Database db = new Database(GetConnectionString(), ProviderName))
                 {
                     db.Execute(sql, args);
                 }

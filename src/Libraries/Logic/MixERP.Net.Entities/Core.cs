@@ -1,9 +1,10 @@
 ﻿
+using MixERP.Net.Entities.Contracts;
+using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using PetaPoco;
 
 namespace MixERP.Net.Entities.Core
 {
@@ -95,7 +96,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.flag_types")]
     [PrimaryKey("flag_type_id")]
     [ExplicitColumns]
-    public class FlagType : PetaPocoDB.Record<FlagType> 
+    public class FlagType : PetaPocoDB.Record<FlagType> , IPoco
     {
         [Column("flag_type_id")] 
         public int FlagTypeId { get; set; }
@@ -120,7 +121,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.flags")]
     [PrimaryKey("flag_id")]
     [ExplicitColumns]
-    public class Flag : PetaPocoDB.Record<Flag> 
+    public class Flag : PetaPocoDB.Record<Flag> , IPoco
     {
         [Column("flag_id")] 
         public long FlagId { get; set; }
@@ -148,7 +149,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.zip_code_types")]
     [PrimaryKey("zip_code_type_id")]
     [ExplicitColumns]
-    public class ZipCodeType : PetaPocoDB.Record<ZipCodeType> 
+    public class ZipCodeType : PetaPocoDB.Record<ZipCodeType> , IPoco
     {
         [Column("zip_code_type_id")] 
         public int ZipCodeTypeId { get; set; }
@@ -167,7 +168,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.zip_codes")]
     [PrimaryKey("zip_code_id")]
     [ExplicitColumns]
-    public class ZipCode : PetaPocoDB.Record<ZipCode> 
+    public class ZipCode : PetaPocoDB.Record<ZipCode> , IPoco
     {
         [Column("zip_code_id")] 
         public long ZipCodeId { get; set; }
@@ -210,7 +211,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.attachment_lookup")]
     [PrimaryKey("attachment_lookup_id")]
     [ExplicitColumns]
-    public class AttachmentLookup : PetaPocoDB.Record<AttachmentLookup> 
+    public class AttachmentLookup : PetaPocoDB.Record<AttachmentLookup> , IPoco
     {
         [Column("attachment_lookup_id")] 
         public int AttachmentLookupId { get; set; }
@@ -229,7 +230,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.attachments")]
     [PrimaryKey("attachment_id")]
     [ExplicitColumns]
-    public class Attachment : PetaPocoDB.Record<Attachment> 
+    public class Attachment : PetaPocoDB.Record<Attachment> , IPoco
     {
         [Column("attachment_id")] 
         public long AttachmentId { get; set; }
@@ -266,7 +267,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.exchange_rates")]
     [PrimaryKey("exchange_rate_id")]
     [ExplicitColumns]
-    public class ExchangeRate : PetaPocoDB.Record<ExchangeRate> 
+    public class ExchangeRate : PetaPocoDB.Record<ExchangeRate> , IPoco
     {
         [Column("exchange_rate_id")] 
         public long ExchangeRateId { get; set; }
@@ -285,7 +286,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.exchange_rate_details")]
     [PrimaryKey("exchange_rate_detail_id")]
     [ExplicitColumns]
-    public class ExchangeRateDetail : PetaPocoDB.Record<ExchangeRateDetail> 
+    public class ExchangeRateDetail : PetaPocoDB.Record<ExchangeRateDetail> , IPoco
     {
         [Column("exchange_rate_detail_id")] 
         public long ExchangeRateDetailId { get; set; }
@@ -310,7 +311,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.menu_locale")]
     [PrimaryKey("menu_locale_id")]
     [ExplicitColumns]
-    public class MenuLocale : PetaPocoDB.Record<MenuLocale> 
+    public class MenuLocale : PetaPocoDB.Record<MenuLocale> , IPoco
     {
         [Column("menu_locale_id")] 
         public int MenuLocaleId { get; set; }
@@ -329,7 +330,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.menus")]
     [PrimaryKey("menu_id")]
     [ExplicitColumns]
-    public class Menu : PetaPocoDB.Record<Menu> 
+    public class Menu : PetaPocoDB.Record<Menu> , IPoco
     {
         [Column("menu_id")] 
         public int MenuId { get; set; }
@@ -360,7 +361,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.fiscal_year")]
     [PrimaryKey("fiscal_year_code", autoIncrement=false)]
     [ExplicitColumns]
-    public class FiscalYear : PetaPocoDB.Record<FiscalYear> 
+    public class FiscalYear : PetaPocoDB.Record<FiscalYear> , IPoco
     {
         [Column("fiscal_year_code")] 
         public string FiscalYearCode { get; set; }
@@ -385,7 +386,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.frequency_setups")]
     [PrimaryKey("frequency_setup_id")]
     [ExplicitColumns]
-    public class FrequencySetup : PetaPocoDB.Record<FrequencySetup> 
+    public class FrequencySetup : PetaPocoDB.Record<FrequencySetup> , IPoco
     {
         [Column("frequency_setup_id")] 
         public int FrequencySetupId { get; set; }
@@ -413,7 +414,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.compound_units")]
     [PrimaryKey("compound_unit_id")]
     [ExplicitColumns]
-    public class CompoundUnit : PetaPocoDB.Record<CompoundUnit> 
+    public class CompoundUnit : PetaPocoDB.Record<CompoundUnit> , IPoco
     {
         [Column("compound_unit_id")] 
         public int CompoundUnitId { get; set; }
@@ -438,7 +439,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.transaction_types")]
     [PrimaryKey("transaction_type_id", autoIncrement=false)]
     [ExplicitColumns]
-    public class TransactionType : PetaPocoDB.Record<TransactionType> 
+    public class TransactionType : PetaPocoDB.Record<TransactionType> , IPoco
     {
         [Column("transaction_type_id")] 
         public short TransactionTypeId { get; set; }
@@ -454,7 +455,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.cash_flow_headings")]
     [PrimaryKey("cash_flow_heading_id", autoIncrement=false)]
     [ExplicitColumns]
-    public class CashFlowHeading : PetaPocoDB.Record<CashFlowHeading> 
+    public class CashFlowHeading : PetaPocoDB.Record<CashFlowHeading> , IPoco
     {
         [Column("cash_flow_heading_id")] 
         public int CashFlowHeadingId { get; set; }
@@ -488,7 +489,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.account_masters")]
     [PrimaryKey("account_master_id", autoIncrement=false)]
     [ExplicitColumns]
-    public class AccountMaster : PetaPocoDB.Record<AccountMaster> 
+    public class AccountMaster : PetaPocoDB.Record<AccountMaster> , IPoco
     {
         [Column("account_master_id")] 
         public short AccountMasterId { get; set; }
@@ -510,7 +511,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.cash_flow_setup")]
     [PrimaryKey("cash_flow_setup_id")]
     [ExplicitColumns]
-    public class CashFlowSetup : PetaPocoDB.Record<CashFlowSetup> 
+    public class CashFlowSetup : PetaPocoDB.Record<CashFlowSetup> , IPoco
     {
         [Column("cash_flow_setup_id")] 
         public int CashFlowSetupId { get; set; }
@@ -532,7 +533,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.sales_teams")]
     [PrimaryKey("sales_team_id")]
     [ExplicitColumns]
-    public class SalesTeam : PetaPocoDB.Record<SalesTeam> 
+    public class SalesTeam : PetaPocoDB.Record<SalesTeam> , IPoco
     {
         [Column("sales_team_id")] 
         public int SalesTeamId { get; set; }
@@ -554,7 +555,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.bonus_slab_details")]
     [PrimaryKey("bonus_slab_detail_id")]
     [ExplicitColumns]
-    public class BonusSlabDetail : PetaPocoDB.Record<BonusSlabDetail> 
+    public class BonusSlabDetail : PetaPocoDB.Record<BonusSlabDetail> , IPoco
     {
         [Column("bonus_slab_detail_id")] 
         public int BonusSlabDetailId { get; set; }
@@ -582,7 +583,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.bonus_slabs")]
     [PrimaryKey("bonus_slab_id")]
     [ExplicitColumns]
-    public class BonusSlab : PetaPocoDB.Record<BonusSlab> 
+    public class BonusSlab : PetaPocoDB.Record<BonusSlab> , IPoco
     {
         [Column("bonus_slab_id")] 
         public int BonusSlabId { get; set; }
@@ -613,7 +614,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.salesperson_bonus_setups")]
     [PrimaryKey("salesperson_bonus_setup_id")]
     [ExplicitColumns]
-    public class SalespersonBonusSetup : PetaPocoDB.Record<SalespersonBonusSetup> 
+    public class SalespersonBonusSetup : PetaPocoDB.Record<SalespersonBonusSetup> , IPoco
     {
         [Column("salesperson_bonus_setup_id")] 
         public int SalespersonBonusSetupId { get; set; }
@@ -635,7 +636,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.ageing_slabs")]
     [PrimaryKey("ageing_slab_id")]
     [ExplicitColumns]
-    public class AgeingSlab : PetaPocoDB.Record<AgeingSlab> 
+    public class AgeingSlab : PetaPocoDB.Record<AgeingSlab> , IPoco
     {
         [Column("ageing_slab_id")] 
         public int AgeingSlabId { get; set; }
@@ -660,7 +661,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.countries")]
     [PrimaryKey("country_id")]
     [ExplicitColumns]
-    public class Country : PetaPocoDB.Record<Country> 
+    public class Country : PetaPocoDB.Record<Country> , IPoco
     {
         [Column("country_id")] 
         public int CountryId { get; set; }
@@ -682,7 +683,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.income_tax_setup")]
     [PrimaryKey("income_tax_setup_id")]
     [ExplicitColumns]
-    public class IncomeTaxSetup : PetaPocoDB.Record<IncomeTaxSetup> 
+    public class IncomeTaxSetup : PetaPocoDB.Record<IncomeTaxSetup> , IPoco
     {
         [Column("income_tax_setup_id")] 
         public int IncomeTaxSetupId { get; set; }
@@ -710,7 +711,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.states")]
     [PrimaryKey("state_id")]
     [ExplicitColumns]
-    public class State : PetaPocoDB.Record<State> 
+    public class State : PetaPocoDB.Record<State> , IPoco
     {
         [Column("state_id")] 
         public int StateId { get; set; }
@@ -735,7 +736,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.counties")]
     [PrimaryKey("county_id")]
     [ExplicitColumns]
-    public class County : PetaPocoDB.Record<County> 
+    public class County : PetaPocoDB.Record<County> , IPoco
     {
         [Column("county_id")] 
         public int CountyId { get; set; }
@@ -760,7 +761,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.tax_base_amount_types")]
     [PrimaryKey("tax_base_amount_type_code", autoIncrement=false)]
     [ExplicitColumns]
-    public class TaxBaseAmountType : PetaPocoDB.Record<TaxBaseAmountType> 
+    public class TaxBaseAmountType : PetaPocoDB.Record<TaxBaseAmountType> , IPoco
     {
         [Column("tax_base_amount_type_code")] 
         public string TaxBaseAmountTypeCode { get; set; }
@@ -773,7 +774,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.sales_tax_types")]
     [PrimaryKey("sales_tax_type_id")]
     [ExplicitColumns]
-    public class SalesTaxType : PetaPocoDB.Record<SalesTaxType> 
+    public class SalesTaxType : PetaPocoDB.Record<SalesTaxType> , IPoco
     {
         [Column("sales_tax_type_id")] 
         public int SalesTaxTypeId { get; set; }
@@ -798,7 +799,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.tax_rate_types")]
     [PrimaryKey("tax_rate_type_code", autoIncrement=false)]
     [ExplicitColumns]
-    public class TaxRateType : PetaPocoDB.Record<TaxRateType> 
+    public class TaxRateType : PetaPocoDB.Record<TaxRateType> , IPoco
     {
         [Column("tax_rate_type_code")] 
         public string TaxRateTypeCode { get; set; }
@@ -811,7 +812,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.tax_authorities")]
     [PrimaryKey("tax_authority_id")]
     [ExplicitColumns]
-    public class TaxAuthority : PetaPocoDB.Record<TaxAuthority> 
+    public class TaxAuthority : PetaPocoDB.Record<TaxAuthority> , IPoco
     {
         [Column("tax_authority_id")] 
         public int TaxAuthorityId { get; set; }
@@ -872,7 +873,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.rounding_methods")]
     [PrimaryKey("rounding_method_code", autoIncrement=false)]
     [ExplicitColumns]
-    public class RoundingMethod : PetaPocoDB.Record<RoundingMethod> 
+    public class RoundingMethod : PetaPocoDB.Record<RoundingMethod> , IPoco
     {
         [Column("rounding_method_code")] 
         public string RoundingMethodCode { get; set; }
@@ -885,7 +886,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.tax_master")]
     [PrimaryKey("tax_master_id")]
     [ExplicitColumns]
-    public class TaxMaster : PetaPocoDB.Record<TaxMaster> 
+    public class TaxMaster : PetaPocoDB.Record<TaxMaster> , IPoco
     {
         [Column("tax_master_id")] 
         public int TaxMasterId { get; set; }
@@ -907,7 +908,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.tax_exempt_types")]
     [PrimaryKey("tax_exempt_type_id")]
     [ExplicitColumns]
-    public class TaxExemptType : PetaPocoDB.Record<TaxExemptType> 
+    public class TaxExemptType : PetaPocoDB.Record<TaxExemptType> , IPoco
     {
         [Column("tax_exempt_type_id")] 
         public int TaxExemptTypeId { get; set; }
@@ -929,7 +930,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.entities")]
     [PrimaryKey("entity_id")]
     [ExplicitColumns]
-    public class Entity : PetaPocoDB.Record<Entity> 
+    public class Entity : PetaPocoDB.Record<Entity> , IPoco
     {
         [Column("entity_id")] 
         public int EntityId { get; set; }
@@ -948,7 +949,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.industries")]
     [PrimaryKey("industry_id")]
     [ExplicitColumns]
-    public class Industry : PetaPocoDB.Record<Industry> 
+    public class Industry : PetaPocoDB.Record<Industry> , IPoco
     {
         [Column("industry_id")] 
         public int IndustryId { get; set; }
@@ -970,7 +971,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.item_groups")]
     [PrimaryKey("item_group_id")]
     [ExplicitColumns]
-    public class ItemGroup : PetaPocoDB.Record<ItemGroup> 
+    public class ItemGroup : PetaPocoDB.Record<ItemGroup> , IPoco
     {
         [Column("item_group_id")] 
         public int ItemGroupId { get; set; }
@@ -1025,7 +1026,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.item_types")]
     [PrimaryKey("item_type_id")]
     [ExplicitColumns]
-    public class ItemType : PetaPocoDB.Record<ItemType> 
+    public class ItemType : PetaPocoDB.Record<ItemType> , IPoco
     {
         [Column("item_type_id")] 
         public int ItemTypeId { get; set; }
@@ -1047,7 +1048,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.brands")]
     [PrimaryKey("brand_id")]
     [ExplicitColumns]
-    public class Brand : PetaPocoDB.Record<Brand> 
+    public class Brand : PetaPocoDB.Record<Brand> , IPoco
     {
         [Column("brand_id")] 
         public int BrandId { get; set; }
@@ -1069,7 +1070,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.shipping_mail_types")]
     [PrimaryKey("shipping_mail_type_id")]
     [ExplicitColumns]
-    public class ShippingMailType : PetaPocoDB.Record<ShippingMailType> 
+    public class ShippingMailType : PetaPocoDB.Record<ShippingMailType> , IPoco
     {
         [Column("shipping_mail_type_id")] 
         public int ShippingMailTypeId { get; set; }
@@ -1091,7 +1092,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.shipping_package_shapes")]
     [PrimaryKey("shipping_package_shape_id")]
     [ExplicitColumns]
-    public class ShippingPackageShape : PetaPocoDB.Record<ShippingPackageShape> 
+    public class ShippingPackageShape : PetaPocoDB.Record<ShippingPackageShape> , IPoco
     {
         [Column("shipping_package_shape_id")] 
         public int ShippingPackageShapeId { get; set; }
@@ -1116,7 +1117,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.sales_tax_exempt_details")]
     [PrimaryKey("sales_tax_exempt_detail_id")]
     [ExplicitColumns]
-    public class SalesTaxExemptDetail : PetaPocoDB.Record<SalesTaxExemptDetail> 
+    public class SalesTaxExemptDetail : PetaPocoDB.Record<SalesTaxExemptDetail> , IPoco
     {
         [Column("sales_tax_exempt_detail_id")] 
         public int SalesTaxExemptDetailId { get; set; }
@@ -1153,7 +1154,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.late_fee")]
     [PrimaryKey("late_fee_id")]
     [ExplicitColumns]
-    public class LateFee : PetaPocoDB.Record<LateFee> 
+    public class LateFee : PetaPocoDB.Record<LateFee> , IPoco
     {
         [Column("late_fee_id")] 
         public int LateFeeId { get; set; }
@@ -1181,7 +1182,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.compound_items")]
     [PrimaryKey("compound_item_id")]
     [ExplicitColumns]
-    public class CompoundItem : PetaPocoDB.Record<CompoundItem> 
+    public class CompoundItem : PetaPocoDB.Record<CompoundItem> , IPoco
     {
         [Column("compound_item_id")] 
         public int CompoundItemId { get; set; }
@@ -1203,7 +1204,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.frequencies")]
     [PrimaryKey("frequency_id")]
     [ExplicitColumns]
-    public class Frequency : PetaPocoDB.Record<Frequency> 
+    public class Frequency : PetaPocoDB.Record<Frequency> , IPoco
     {
         [Column("frequency_id")] 
         public int FrequencyId { get; set; }
@@ -1219,7 +1220,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.recurring_invoices")]
     [PrimaryKey("recurring_invoice_id")]
     [ExplicitColumns]
-    public class RecurringInvoice : PetaPocoDB.Record<RecurringInvoice> 
+    public class RecurringInvoice : PetaPocoDB.Record<RecurringInvoice> , IPoco
     {
         [Column("recurring_invoice_id")] 
         public int RecurringInvoiceId { get; set; }
@@ -1256,7 +1257,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.recurring_invoice_setup")]
     [PrimaryKey("recurring_invoice_setup_id")]
     [ExplicitColumns]
-    public class RecurringInvoiceSetup : PetaPocoDB.Record<RecurringInvoiceSetup> 
+    public class RecurringInvoiceSetup : PetaPocoDB.Record<RecurringInvoiceSetup> , IPoco
     {
         [Column("recurring_invoice_setup_id")] 
         public int RecurringInvoiceSetupId { get; set; }
@@ -1290,7 +1291,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.party_types")]
     [PrimaryKey("party_type_id")]
     [ExplicitColumns]
-    public class PartyType : PetaPocoDB.Record<PartyType> 
+    public class PartyType : PetaPocoDB.Record<PartyType> , IPoco
     {
         [Column("party_type_id")] 
         public int PartyTypeId { get; set; }
@@ -1318,7 +1319,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.sales_tax_exempts")]
     [PrimaryKey("sales_tax_exempt_id")]
     [ExplicitColumns]
-    public class SalesTaxExempt : PetaPocoDB.Record<SalesTaxExempt> 
+    public class SalesTaxExempt : PetaPocoDB.Record<SalesTaxExempt> , IPoco
     {
         [Column("sales_tax_exempt_id")] 
         public int SalesTaxExemptId { get; set; }
@@ -1364,7 +1365,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.verification_statuses")]
     [PrimaryKey("verification_status_id", autoIncrement=false)]
     [ExplicitColumns]
-    public class VerificationStatus : PetaPocoDB.Record<VerificationStatus> 
+    public class VerificationStatus : PetaPocoDB.Record<VerificationStatus> , IPoco
     {
         [Column("verification_status_id")] 
         public short VerificationStatusId { get; set; }
@@ -1377,7 +1378,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.accounts")]
     [PrimaryKey("account_id")]
     [ExplicitColumns]
-    public class Account : PetaPocoDB.Record<Account> 
+    public class Account : PetaPocoDB.Record<Account> , IPoco
     {
         [Column("account_id")] 
         public long AccountId { get; set; }
@@ -1423,7 +1424,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.currencies")]
     [PrimaryKey("currency_code", autoIncrement=false)]
     [ExplicitColumns]
-    public class Currency : PetaPocoDB.Record<Currency> 
+    public class Currency : PetaPocoDB.Record<Currency> , IPoco
     {
         [Column("currency_code")] 
         public string CurrencyCode { get; set; }
@@ -1448,7 +1449,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.payment_terms")]
     [PrimaryKey("payment_term_id")]
     [ExplicitColumns]
-    public class PaymentTerm : PetaPocoDB.Record<PaymentTerm> 
+    public class PaymentTerm : PetaPocoDB.Record<PaymentTerm> , IPoco
     {
         [Column("payment_term_id")] 
         public int PaymentTermId { get; set; }
@@ -1488,7 +1489,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.price_types")]
     [PrimaryKey("price_type_id")]
     [ExplicitColumns]
-    public class PriceType : PetaPocoDB.Record<PriceType> 
+    public class PriceType : PetaPocoDB.Record<PriceType> , IPoco
     {
         [Column("price_type_id")] 
         public int PriceTypeId { get; set; }
@@ -1510,7 +1511,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.salespersons")]
     [PrimaryKey("salesperson_id")]
     [ExplicitColumns]
-    public class Salesperson : PetaPocoDB.Record<Salesperson> 
+    public class Salesperson : PetaPocoDB.Record<Salesperson> , IPoco
     {
         [Column("salesperson_id")] 
         public int SalespersonId { get; set; }
@@ -1547,7 +1548,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.units")]
     [PrimaryKey("unit_id")]
     [ExplicitColumns]
-    public class Unit : PetaPocoDB.Record<Unit> 
+    public class Unit : PetaPocoDB.Record<Unit> , IPoco
     {
         [Column("unit_id")] 
         public int UnitId { get; set; }
@@ -1569,7 +1570,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.sales_taxes")]
     [PrimaryKey("sales_tax_id")]
     [ExplicitColumns]
-    public class SalesTax : PetaPocoDB.Record<SalesTax> 
+    public class SalesTax : PetaPocoDB.Record<SalesTax> , IPoco
     {
         [Column("sales_tax_id")] 
         public int SalesTaxId { get; set; }
@@ -1606,7 +1607,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.sales_tax_details")]
     [PrimaryKey("sales_tax_detail_id")]
     [ExplicitColumns]
-    public class SalesTaxDetail : PetaPocoDB.Record<SalesTaxDetail> 
+    public class SalesTaxDetail : PetaPocoDB.Record<SalesTaxDetail> , IPoco
     {
         [Column("sales_tax_detail_id")] 
         public int SalesTaxDetailId { get; set; }
@@ -1676,7 +1677,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.state_sales_taxes")]
     [PrimaryKey("state_sales_tax_id")]
     [ExplicitColumns]
-    public class StateSalesTax : PetaPocoDB.Record<StateSalesTax> 
+    public class StateSalesTax : PetaPocoDB.Record<StateSalesTax> , IPoco
     {
         [Column("state_sales_tax_id")] 
         public int StateSalesTaxId { get; set; }
@@ -1713,7 +1714,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.county_sales_taxes")]
     [PrimaryKey("county_sales_tax_id")]
     [ExplicitColumns]
-    public class CountySalesTax : PetaPocoDB.Record<CountySalesTax> 
+    public class CountySalesTax : PetaPocoDB.Record<CountySalesTax> , IPoco
     {
         [Column("county_sales_tax_id")] 
         public int CountySalesTaxId { get; set; }
@@ -1750,7 +1751,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.config")]
     [PrimaryKey("config_id", autoIncrement=false)]
     [ExplicitColumns]
-    public class Config : PetaPocoDB.Record<Config> 
+    public class Config : PetaPocoDB.Record<Config> , IPoco
     {
         [Column("config_id")] 
         public int ConfigId { get; set; }
@@ -1763,7 +1764,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.widgets")]
     [PrimaryKey("widget_id")]
     [ExplicitColumns]
-    public class Widget : PetaPocoDB.Record<Widget> 
+    public class Widget : PetaPocoDB.Record<Widget> , IPoco
     {
         [Column("widget_id")] 
         public int WidgetId { get; set; }
@@ -1785,7 +1786,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.bank_accounts")]
     [PrimaryKey("account_id", autoIncrement=false)]
     [ExplicitColumns]
-    public class BankAccount : PetaPocoDB.Record<BankAccount> 
+    public class BankAccount : PetaPocoDB.Record<BankAccount> , IPoco
     {
         [Column("account_id")] 
         public long AccountId { get; set; }
@@ -1827,7 +1828,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.account_scrud_view")]
     [ExplicitColumns]
-    public class AccountScrudView : PetaPocoDB.Record<AccountScrudView> 
+    public class AccountScrudView : PetaPocoDB.Record<AccountScrudView> , IPoco
     {
         [Column("account_id")] 
         public long? AccountId { get; set; }
@@ -1866,7 +1867,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.ageing_slab_scrud_view")]
     [ExplicitColumns]
-    public class AgeingSlabScrudView : PetaPocoDB.Record<AgeingSlabScrudView> 
+    public class AgeingSlabScrudView : PetaPocoDB.Record<AgeingSlabScrudView> , IPoco
     {
         [Column("ageing_slab_id")] 
         public int? AgeingSlabId { get; set; }
@@ -1884,7 +1885,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.bonus_slab_detail_scrud_view")]
     [ExplicitColumns]
-    public class BonusSlabDetailScrudView : PetaPocoDB.Record<BonusSlabDetailScrudView> 
+    public class BonusSlabDetailScrudView : PetaPocoDB.Record<BonusSlabDetailScrudView> , IPoco
     {
         [Column("bonus_slab_detail_id")] 
         public int? BonusSlabDetailId { get; set; }
@@ -1908,7 +1909,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.bonus_slab_scrud_view")]
     [ExplicitColumns]
-    public class BonusSlabScrudView : PetaPocoDB.Record<BonusSlabScrudView> 
+    public class BonusSlabScrudView : PetaPocoDB.Record<BonusSlabScrudView> , IPoco
     {
         [Column("bonus_slab_id")] 
         public int? BonusSlabId { get; set; }
@@ -1932,7 +1933,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.brand_scrud_view")]
     [ExplicitColumns]
-    public class BrandScrudView : PetaPocoDB.Record<BrandScrudView> 
+    public class BrandScrudView : PetaPocoDB.Record<BrandScrudView> , IPoco
     {
         [Column("brand_id")] 
         public int? BrandId { get; set; }
@@ -1947,7 +1948,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.cash_flow_heading_scrud_view")]
     [ExplicitColumns]
-    public class CashFlowHeadingScrudView : PetaPocoDB.Record<CashFlowHeadingScrudView> 
+    public class CashFlowHeadingScrudView : PetaPocoDB.Record<CashFlowHeadingScrudView> , IPoco
     {
         [Column("cash_flow_heading_id")] 
         public int? CashFlowHeadingId { get; set; }
@@ -1974,7 +1975,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.cash_flow_setup_scrud_view")]
     [ExplicitColumns]
-    public class CashFlowSetupScrudView : PetaPocoDB.Record<CashFlowSetupScrudView> 
+    public class CashFlowSetupScrudView : PetaPocoDB.Record<CashFlowSetupScrudView> , IPoco
     {
         [Column("cash_flow_setup_id")] 
         public int? CashFlowSetupId { get; set; }
@@ -1989,7 +1990,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.compound_item_detail_scrud_view")]
     [ExplicitColumns]
-    public class CompoundItemDetailScrudView : PetaPocoDB.Record<CompoundItemDetailScrudView> 
+    public class CompoundItemDetailScrudView : PetaPocoDB.Record<CompoundItemDetailScrudView> , IPoco
     {
         [Column("compound_item_detail_id")] 
         public int? CompoundItemDetailId { get; set; }
@@ -2019,7 +2020,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.compound_item_scrud_view")]
     [ExplicitColumns]
-    public class CompoundItemScrudView : PetaPocoDB.Record<CompoundItemScrudView> 
+    public class CompoundItemScrudView : PetaPocoDB.Record<CompoundItemScrudView> , IPoco
     {
         [Column("compound_item_id")] 
         public int? CompoundItemId { get; set; }
@@ -2034,7 +2035,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.compound_unit_scrud_view")]
     [ExplicitColumns]
-    public class CompoundUnitScrudView : PetaPocoDB.Record<CompoundUnitScrudView> 
+    public class CompoundUnitScrudView : PetaPocoDB.Record<CompoundUnitScrudView> , IPoco
     {
         [Column("compound_unit_id")] 
         public int? CompoundUnitId { get; set; }
@@ -2052,7 +2053,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.country_scrud_view")]
     [ExplicitColumns]
-    public class CountryScrudView : PetaPocoDB.Record<CountryScrudView> 
+    public class CountryScrudView : PetaPocoDB.Record<CountryScrudView> , IPoco
     {
         [Column("country_id")] 
         public int? CountryId { get; set; }
@@ -2067,7 +2068,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.county_sales_tax_scrud_view")]
     [ExplicitColumns]
-    public class CountySalesTaxScrudView : PetaPocoDB.Record<CountySalesTaxScrudView> 
+    public class CountySalesTaxScrudView : PetaPocoDB.Record<CountySalesTaxScrudView> , IPoco
     {
         [Column("county_sales_tax_id")] 
         public int? CountySalesTaxId { get; set; }
@@ -2097,7 +2098,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.county_scrud_view")]
     [ExplicitColumns]
-    public class CountyScrudView : PetaPocoDB.Record<CountyScrudView> 
+    public class CountyScrudView : PetaPocoDB.Record<CountyScrudView> , IPoco
     {
         [Column("county_id")] 
         public int? CountyId { get; set; }
@@ -2115,7 +2116,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.currency_scrud_view")]
     [ExplicitColumns]
-    public class CurrencyScrudView : PetaPocoDB.Record<CurrencyScrudView> 
+    public class CurrencyScrudView : PetaPocoDB.Record<CurrencyScrudView> , IPoco
     {
         [Column("currency_code")] 
         public string CurrencyCode { get; set; }
@@ -2133,7 +2134,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.entity_scrud_view")]
     [ExplicitColumns]
-    public class EntityScrudView : PetaPocoDB.Record<EntityScrudView> 
+    public class EntityScrudView : PetaPocoDB.Record<EntityScrudView> , IPoco
     {
         [Column("entity_id")] 
         public int? EntityId { get; set; }
@@ -2145,7 +2146,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.fiscal_year_scrud_view")]
     [ExplicitColumns]
-    public class FiscalYearScrudView : PetaPocoDB.Record<FiscalYearScrudView> 
+    public class FiscalYearScrudView : PetaPocoDB.Record<FiscalYearScrudView> , IPoco
     {
         [Column("fiscal_year_code")] 
         public string FiscalYearCode { get; set; }
@@ -2163,7 +2164,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.flag_type_scrud_view")]
     [ExplicitColumns]
-    public class FlagTypeScrudView : PetaPocoDB.Record<FlagTypeScrudView> 
+    public class FlagTypeScrudView : PetaPocoDB.Record<FlagTypeScrudView> , IPoco
     {
         [Column("flag_type_id")] 
         public int? FlagTypeId { get; set; }
@@ -2181,7 +2182,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.frequency_setup_scrud_view")]
     [ExplicitColumns]
-    public class FrequencySetupScrudView : PetaPocoDB.Record<FrequencySetupScrudView> 
+    public class FrequencySetupScrudView : PetaPocoDB.Record<FrequencySetupScrudView> , IPoco
     {
         [Column("frequency_setup_id")] 
         public int? FrequencySetupId { get; set; }
@@ -2199,7 +2200,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.industry_scrud_view")]
     [ExplicitColumns]
-    public class IndustryScrudView : PetaPocoDB.Record<IndustryScrudView> 
+    public class IndustryScrudView : PetaPocoDB.Record<IndustryScrudView> , IPoco
     {
         [Column("industry_id")] 
         public int? IndustryId { get; set; }
@@ -2214,7 +2215,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.item_cost_price_scrud_view")]
     [ExplicitColumns]
-    public class ItemCostPriceScrudView : PetaPocoDB.Record<ItemCostPriceScrudView> 
+    public class ItemCostPriceScrudView : PetaPocoDB.Record<ItemCostPriceScrudView> , IPoco
     {
         [Column("item_cost_price_id")] 
         public long? ItemCostPriceId { get; set; }
@@ -2241,7 +2242,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.item_group_scrud_view")]
     [ExplicitColumns]
-    public class ItemGroupScrudView : PetaPocoDB.Record<ItemGroupScrudView> 
+    public class ItemGroupScrudView : PetaPocoDB.Record<ItemGroupScrudView> , IPoco
     {
         [Column("item_group_id")] 
         public int? ItemGroupId { get; set; }
@@ -2268,7 +2269,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.item_scrud_view")]
     [ExplicitColumns]
-    public class ItemScrudView : PetaPocoDB.Record<ItemScrudView> 
+    public class ItemScrudView : PetaPocoDB.Record<ItemScrudView> , IPoco
     {
         [Column("item_id")] 
         public int? ItemId { get; set; }
@@ -2349,7 +2350,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.item_selling_price_scrud_view")]
     [ExplicitColumns]
-    public class ItemSellingPriceScrudView : PetaPocoDB.Record<ItemSellingPriceScrudView> 
+    public class ItemSellingPriceScrudView : PetaPocoDB.Record<ItemSellingPriceScrudView> , IPoco
     {
         [Column("item_selling_price_id")] 
         public long? ItemSellingPriceId { get; set; }
@@ -2376,7 +2377,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.item_type_scrud_view")]
     [ExplicitColumns]
-    public class ItemTypeScrudView : PetaPocoDB.Record<ItemTypeScrudView> 
+    public class ItemTypeScrudView : PetaPocoDB.Record<ItemTypeScrudView> , IPoco
     {
         [Column("item_type_id")] 
         public int? ItemTypeId { get; set; }
@@ -2391,7 +2392,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.late_fee_scrud_view")]
     [ExplicitColumns]
-    public class LateFeeScrudView : PetaPocoDB.Record<LateFeeScrudView> 
+    public class LateFeeScrudView : PetaPocoDB.Record<LateFeeScrudView> , IPoco
     {
         [Column("late_fee_id")] 
         public int? LateFeeId { get; set; }
@@ -2412,7 +2413,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.party_scrud_view")]
     [ExplicitColumns]
-    public class PartyScrudView : PetaPocoDB.Record<PartyScrudView> 
+    public class PartyScrudView : PetaPocoDB.Record<PartyScrudView> , IPoco
     {
         [Column("party_id")] 
         public long? PartyId { get; set; }
@@ -2508,7 +2509,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.party_type_scrud_view")]
     [ExplicitColumns]
-    public class PartyTypeScrudView : PetaPocoDB.Record<PartyTypeScrudView> 
+    public class PartyTypeScrudView : PetaPocoDB.Record<PartyTypeScrudView> , IPoco
     {
         [Column("party_type_id")] 
         public int? PartyTypeId { get; set; }
@@ -2526,7 +2527,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.payment_term_scrud_view")]
     [ExplicitColumns]
-    public class PaymentTermScrudView : PetaPocoDB.Record<PaymentTermScrudView> 
+    public class PaymentTermScrudView : PetaPocoDB.Record<PaymentTermScrudView> , IPoco
     {
         [Column("payment_term_id")] 
         public int? PaymentTermId { get; set; }
@@ -2559,7 +2560,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.recurring_invoice_scrud_view")]
     [ExplicitColumns]
-    public class RecurringInvoiceScrudView : PetaPocoDB.Record<RecurringInvoiceScrudView> 
+    public class RecurringInvoiceScrudView : PetaPocoDB.Record<RecurringInvoiceScrudView> , IPoco
     {
         [Column("recurring_invoice_id")] 
         public int? RecurringInvoiceId { get; set; }
@@ -2589,7 +2590,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.recurring_invoice_setup_scrud_view")]
     [ExplicitColumns]
-    public class RecurringInvoiceSetupScrudView : PetaPocoDB.Record<RecurringInvoiceSetupScrudView> 
+    public class RecurringInvoiceSetupScrudView : PetaPocoDB.Record<RecurringInvoiceSetupScrudView> , IPoco
     {
         [Column("recurring_invoice_setup_id")] 
         public int? RecurringInvoiceSetupId { get; set; }
@@ -2616,7 +2617,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.sales_tax_detail_scrud_view")]
     [ExplicitColumns]
-    public class SalesTaxDetailScrudView : PetaPocoDB.Record<SalesTaxDetailScrudView> 
+    public class SalesTaxDetailScrudView : PetaPocoDB.Record<SalesTaxDetailScrudView> , IPoco
     {
         [Column("sales_tax_detail_id")] 
         public int? SalesTaxDetailId { get; set; }
@@ -2679,7 +2680,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.sales_tax_exempt_detail_scrud_view")]
     [ExplicitColumns]
-    public class SalesTaxExemptDetailScrudView : PetaPocoDB.Record<SalesTaxExemptDetailScrudView> 
+    public class SalesTaxExemptDetailScrudView : PetaPocoDB.Record<SalesTaxExemptDetailScrudView> , IPoco
     {
         [Column("sales_tax_exempt_detail_id")] 
         public int? SalesTaxExemptDetailId { get; set; }
@@ -2709,7 +2710,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.sales_tax_exempt_scrud_view")]
     [ExplicitColumns]
-    public class SalesTaxExemptScrudView : PetaPocoDB.Record<SalesTaxExemptScrudView> 
+    public class SalesTaxExemptScrudView : PetaPocoDB.Record<SalesTaxExemptScrudView> , IPoco
     {
         [Column("sales_tax_exempt_id")] 
         public int? SalesTaxExemptId { get; set; }
@@ -2748,7 +2749,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.sales_tax_scrud_view")]
     [ExplicitColumns]
-    public class SalesTaxScrudView : PetaPocoDB.Record<SalesTaxScrudView> 
+    public class SalesTaxScrudView : PetaPocoDB.Record<SalesTaxScrudView> , IPoco
     {
         [Column("sales_tax_id")] 
         public int? SalesTaxId { get; set; }
@@ -2778,7 +2779,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.sales_tax_type_scrud_view")]
     [ExplicitColumns]
-    public class SalesTaxTypeScrudView : PetaPocoDB.Record<SalesTaxTypeScrudView> 
+    public class SalesTaxTypeScrudView : PetaPocoDB.Record<SalesTaxTypeScrudView> , IPoco
     {
         [Column("sales_tax_type_id")] 
         public int? SalesTaxTypeId { get; set; }
@@ -2796,7 +2797,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.sales_team_scrud_view")]
     [ExplicitColumns]
-    public class SalesTeamScrudView : PetaPocoDB.Record<SalesTeamScrudView> 
+    public class SalesTeamScrudView : PetaPocoDB.Record<SalesTeamScrudView> , IPoco
     {
         [Column("sales_team_id")] 
         public int? SalesTeamId { get; set; }
@@ -2811,7 +2812,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.salesperson_bonus_setup_scrud_view")]
     [ExplicitColumns]
-    public class SalespersonBonusSetupScrudView : PetaPocoDB.Record<SalespersonBonusSetupScrudView> 
+    public class SalespersonBonusSetupScrudView : PetaPocoDB.Record<SalespersonBonusSetupScrudView> , IPoco
     {
         [Column("salesperson_bonus_setup_id")] 
         public int? SalespersonBonusSetupId { get; set; }
@@ -2826,7 +2827,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.salesperson_scrud_view")]
     [ExplicitColumns]
-    public class SalespersonScrudView : PetaPocoDB.Record<SalespersonScrudView> 
+    public class SalespersonScrudView : PetaPocoDB.Record<SalespersonScrudView> , IPoco
     {
         [Column("salesperson_id")] 
         public int? SalespersonId { get; set; }
@@ -2853,7 +2854,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.shipper_scrud_view")]
     [ExplicitColumns]
-    public class ShipperScrudView : PetaPocoDB.Record<ShipperScrudView> 
+    public class ShipperScrudView : PetaPocoDB.Record<ShipperScrudView> , IPoco
     {
         [Column("shipper_id")] 
         public int? ShipperId { get; set; }
@@ -2955,7 +2956,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.shipping_address_scrud_view")]
     [ExplicitColumns]
-    public class ShippingAddressScrudView : PetaPocoDB.Record<ShippingAddressScrudView> 
+    public class ShippingAddressScrudView : PetaPocoDB.Record<ShippingAddressScrudView> , IPoco
     {
         [Column("shipping_address_id")] 
         public long? ShippingAddressId { get; set; }
@@ -2991,7 +2992,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.state_sales_tax_scrud_view")]
     [ExplicitColumns]
-    public class StateSalesTaxScrudView : PetaPocoDB.Record<StateSalesTaxScrudView> 
+    public class StateSalesTaxScrudView : PetaPocoDB.Record<StateSalesTaxScrudView> , IPoco
     {
         [Column("state_sales_tax_id")] 
         public int? StateSalesTaxId { get; set; }
@@ -3021,7 +3022,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.state_scrud_view")]
     [ExplicitColumns]
-    public class StateScrudView : PetaPocoDB.Record<StateScrudView> 
+    public class StateScrudView : PetaPocoDB.Record<StateScrudView> , IPoco
     {
         [Column("state_id")] 
         public int? StateId { get; set; }
@@ -3039,7 +3040,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.tax_authority_scrud_view")]
     [ExplicitColumns]
-    public class TaxAuthorityScrudView : PetaPocoDB.Record<TaxAuthorityScrudView> 
+    public class TaxAuthorityScrudView : PetaPocoDB.Record<TaxAuthorityScrudView> , IPoco
     {
         [Column("tax_authority_id")] 
         public int? TaxAuthorityId { get; set; }
@@ -3093,7 +3094,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.tax_exempt_type_scrud_view")]
     [ExplicitColumns]
-    public class TaxExemptTypeScrudView : PetaPocoDB.Record<TaxExemptTypeScrudView> 
+    public class TaxExemptTypeScrudView : PetaPocoDB.Record<TaxExemptTypeScrudView> , IPoco
     {
         [Column("tax_exempt_type_id")] 
         public int? TaxExemptTypeId { get; set; }
@@ -3108,7 +3109,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.tax_master_scrud_view")]
     [ExplicitColumns]
-    public class TaxMasterScrudView : PetaPocoDB.Record<TaxMasterScrudView> 
+    public class TaxMasterScrudView : PetaPocoDB.Record<TaxMasterScrudView> , IPoco
     {
         [Column("tax_master_id")] 
         public int? TaxMasterId { get; set; }
@@ -3123,7 +3124,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.unit_scrud_view")]
     [ExplicitColumns]
-    public class UnitScrudView : PetaPocoDB.Record<UnitScrudView> 
+    public class UnitScrudView : PetaPocoDB.Record<UnitScrudView> , IPoco
     {
         [Column("unit_id")] 
         public int? UnitId { get; set; }
@@ -3138,7 +3139,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.account_master_selector_view")]
     [ExplicitColumns]
-    public class AccountMasterSelectorView : PetaPocoDB.Record<AccountMasterSelectorView> 
+    public class AccountMasterSelectorView : PetaPocoDB.Record<AccountMasterSelectorView> , IPoco
     {
         [Column("account_master_id")] 
         public short? AccountMasterId { get; set; }
@@ -3159,7 +3160,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.account_selector_view")]
     [ExplicitColumns]
-    public class AccountSelectorView : PetaPocoDB.Record<AccountSelectorView> 
+    public class AccountSelectorView : PetaPocoDB.Record<AccountSelectorView> , IPoco
     {
         [Column("account_id")] 
         public long? AccountId { get; set; }
@@ -3198,7 +3199,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.bonus_slab_selector_view")]
     [ExplicitColumns]
-    public class BonusSlabSelectorView : PetaPocoDB.Record<BonusSlabSelectorView> 
+    public class BonusSlabSelectorView : PetaPocoDB.Record<BonusSlabSelectorView> , IPoco
     {
         [Column("bonus_slab_id")] 
         public int? BonusSlabId { get; set; }
@@ -3228,7 +3229,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.brand_selector_view")]
     [ExplicitColumns]
-    public class BrandSelectorView : PetaPocoDB.Record<BrandSelectorView> 
+    public class BrandSelectorView : PetaPocoDB.Record<BrandSelectorView> , IPoco
     {
         [Column("brand_id")] 
         public int? BrandId { get; set; }
@@ -3249,7 +3250,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.compound_item_selector_view")]
     [ExplicitColumns]
-    public class CompoundItemSelectorView : PetaPocoDB.Record<CompoundItemSelectorView> 
+    public class CompoundItemSelectorView : PetaPocoDB.Record<CompoundItemSelectorView> , IPoco
     {
         [Column("compound_item_id")] 
         public int? CompoundItemId { get; set; }
@@ -3270,7 +3271,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.currency_selector_view")]
     [ExplicitColumns]
-    public class CurrencySelectorView : PetaPocoDB.Record<CurrencySelectorView> 
+    public class CurrencySelectorView : PetaPocoDB.Record<CurrencySelectorView> , IPoco
     {
         [Column("currency_code")] 
         public string CurrencyCode { get; set; }
@@ -3294,7 +3295,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.fiscal_year_selector_view")]
     [ExplicitColumns]
-    public class FiscalYearSelectorView : PetaPocoDB.Record<FiscalYearSelectorView> 
+    public class FiscalYearSelectorView : PetaPocoDB.Record<FiscalYearSelectorView> , IPoco
     {
         [Column("fiscal_year_code")] 
         public string FiscalYearCode { get; set; }
@@ -3318,7 +3319,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.frequency_selector_view")]
     [ExplicitColumns]
-    public class FrequencySelectorView : PetaPocoDB.Record<FrequencySelectorView> 
+    public class FrequencySelectorView : PetaPocoDB.Record<FrequencySelectorView> , IPoco
     {
         [Column("frequency_id")] 
         public int? FrequencyId { get; set; }
@@ -3333,7 +3334,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.item_group_selector_view")]
     [ExplicitColumns]
-    public class ItemGroupSelectorView : PetaPocoDB.Record<ItemGroupSelectorView> 
+    public class ItemGroupSelectorView : PetaPocoDB.Record<ItemGroupSelectorView> , IPoco
     {
         [Column("item_group_id")] 
         public int? ItemGroupId { get; set; }
@@ -3387,7 +3388,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.item_selector_view")]
     [ExplicitColumns]
-    public class ItemSelectorView : PetaPocoDB.Record<ItemSelectorView> 
+    public class ItemSelectorView : PetaPocoDB.Record<ItemSelectorView> , IPoco
     {
         [Column("item_id")] 
         public int? ItemId { get; set; }
@@ -3477,7 +3478,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.party_selector_view")]
     [ExplicitColumns]
-    public class PartySelectorView : PetaPocoDB.Record<PartySelectorView> 
+    public class PartySelectorView : PetaPocoDB.Record<PartySelectorView> , IPoco
     {
         [Column("party_id")] 
         public long? PartyId { get; set; }
@@ -3573,7 +3574,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.party_type_selector_view")]
     [ExplicitColumns]
-    public class PartyTypeSelectorView : PetaPocoDB.Record<PartyTypeSelectorView> 
+    public class PartyTypeSelectorView : PetaPocoDB.Record<PartyTypeSelectorView> , IPoco
     {
         [Column("party_type_id")] 
         public int? PartyTypeId { get; set; }
@@ -3600,7 +3601,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.price_type_selector_view")]
     [ExplicitColumns]
-    public class PriceTypeSelectorView : PetaPocoDB.Record<PriceTypeSelectorView> 
+    public class PriceTypeSelectorView : PetaPocoDB.Record<PriceTypeSelectorView> , IPoco
     {
         [Column("price_type_id")] 
         public int? PriceTypeId { get; set; }
@@ -3615,7 +3616,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.rounding_method_selector_view")]
     [ExplicitColumns]
-    public class RoundingMethodSelectorView : PetaPocoDB.Record<RoundingMethodSelectorView> 
+    public class RoundingMethodSelectorView : PetaPocoDB.Record<RoundingMethodSelectorView> , IPoco
     {
         [Column("rounding_method_code")] 
         public string RoundingMethodCode { get; set; }
@@ -3627,7 +3628,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.sales_tax_selector_view")]
     [ExplicitColumns]
-    public class SalesTaxSelectorView : PetaPocoDB.Record<SalesTaxSelectorView> 
+    public class SalesTaxSelectorView : PetaPocoDB.Record<SalesTaxSelectorView> , IPoco
     {
         [Column("sales_tax_id")] 
         public int? SalesTaxId { get; set; }
@@ -3663,7 +3664,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.sales_team_selector_view")]
     [ExplicitColumns]
-    public class SalesTeamSelectorView : PetaPocoDB.Record<SalesTeamSelectorView> 
+    public class SalesTeamSelectorView : PetaPocoDB.Record<SalesTeamSelectorView> , IPoco
     {
         [Column("sales_team_id")] 
         public int? SalesTeamId { get; set; }
@@ -3684,7 +3685,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.salesperson_selector_view")]
     [ExplicitColumns]
-    public class SalespersonSelectorView : PetaPocoDB.Record<SalespersonSelectorView> 
+    public class SalespersonSelectorView : PetaPocoDB.Record<SalespersonSelectorView> , IPoco
     {
         [Column("salesperson_id")] 
         public int? SalespersonId { get; set; }
@@ -3711,7 +3712,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.shipping_mail_type_selector_view")]
     [ExplicitColumns]
-    public class ShippingMailTypeSelectorView : PetaPocoDB.Record<ShippingMailTypeSelectorView> 
+    public class ShippingMailTypeSelectorView : PetaPocoDB.Record<ShippingMailTypeSelectorView> , IPoco
     {
         [Column("shipping_mail_type_id")] 
         public int? ShippingMailTypeId { get; set; }
@@ -3726,7 +3727,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.shipping_package_shape_selector_view")]
     [ExplicitColumns]
-    public class ShippingPackageShapeSelectorView : PetaPocoDB.Record<ShippingPackageShapeSelectorView> 
+    public class ShippingPackageShapeSelectorView : PetaPocoDB.Record<ShippingPackageShapeSelectorView> , IPoco
     {
         [Column("shipping_package_shape_id")] 
         public int? ShippingPackageShapeId { get; set; }
@@ -3744,7 +3745,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.supplier_selector_view")]
     [ExplicitColumns]
-    public class SupplierSelectorView : PetaPocoDB.Record<SupplierSelectorView> 
+    public class SupplierSelectorView : PetaPocoDB.Record<SupplierSelectorView> , IPoco
     {
         [Column("party_id")] 
         public long? PartyId { get; set; }
@@ -3840,7 +3841,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.tax_base_amount_type_selector_view")]
     [ExplicitColumns]
-    public class TaxBaseAmountTypeSelectorView : PetaPocoDB.Record<TaxBaseAmountTypeSelectorView> 
+    public class TaxBaseAmountTypeSelectorView : PetaPocoDB.Record<TaxBaseAmountTypeSelectorView> , IPoco
     {
         [Column("tax_base_amount_type_code")] 
         public string TaxBaseAmountTypeCode { get; set; }
@@ -3852,7 +3853,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.tax_rate_type_selector_view")]
     [ExplicitColumns]
-    public class TaxRateTypeSelectorView : PetaPocoDB.Record<TaxRateTypeSelectorView> 
+    public class TaxRateTypeSelectorView : PetaPocoDB.Record<TaxRateTypeSelectorView> , IPoco
     {
         [Column("tax_rate_type_code")] 
         public string TaxRateTypeCode { get; set; }
@@ -3864,7 +3865,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.unit_selector_view")]
     [ExplicitColumns]
-    public class UnitSelectorView : PetaPocoDB.Record<UnitSelectorView> 
+    public class UnitSelectorView : PetaPocoDB.Record<UnitSelectorView> , IPoco
     {
         [Column("unit_id")] 
         public int? UnitId { get; set; }
@@ -3885,7 +3886,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.account_view")]
     [ExplicitColumns]
-    public class AccountView : PetaPocoDB.Record<AccountView> 
+    public class AccountView : PetaPocoDB.Record<AccountView> , IPoco
     {
         [Column("account_id")] 
         public long? AccountId { get; set; }
@@ -3948,7 +3949,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.bank_account_view")]
     [ExplicitColumns]
-    public class BankAccountView : PetaPocoDB.Record<BankAccountView> 
+    public class BankAccountView : PetaPocoDB.Record<BankAccountView> , IPoco
     {
         [Column("account_id")] 
         public long? AccountId { get; set; }
@@ -3987,7 +3988,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.item_view")]
     [ExplicitColumns]
-    public class ItemView : PetaPocoDB.Record<ItemView> 
+    public class ItemView : PetaPocoDB.Record<ItemView> , IPoco
     {
         [Column("item_id")] 
         public int? ItemId { get; set; }
@@ -4074,7 +4075,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.party_user_control_view")]
     [ExplicitColumns]
-    public class PartyUserControlView : PetaPocoDB.Record<PartyUserControlView> 
+    public class PartyUserControlView : PetaPocoDB.Record<PartyUserControlView> , IPoco
     {
         [Column("party_type_code")] 
         public string PartyTypeCode { get; set; }
@@ -4134,7 +4135,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.party_view")]
     [ExplicitColumns]
-    public class PartyView : PetaPocoDB.Record<PartyView> 
+    public class PartyView : PetaPocoDB.Record<PartyView> , IPoco
     {
         [Column("party_id")] 
         public long? PartyId { get; set; }
@@ -4230,7 +4231,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.shipping_address_view")]
     [ExplicitColumns]
-    public class ShippingAddressView : PetaPocoDB.Record<ShippingAddressView> 
+    public class ShippingAddressView : PetaPocoDB.Record<ShippingAddressView> , IPoco
     {
         [Column("shipping_address_id")] 
         public long? ShippingAddressId { get; set; }
@@ -4269,7 +4270,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.supplier_view")]
     [ExplicitColumns]
-    public class SupplierView : PetaPocoDB.Record<SupplierView> 
+    public class SupplierView : PetaPocoDB.Record<SupplierView> , IPoco
     {
         [Column("party_id")] 
         public long? PartyId { get; set; }
@@ -4371,7 +4372,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.unit_view")]
     [ExplicitColumns]
-    public class UnitView : PetaPocoDB.Record<UnitView> 
+    public class UnitView : PetaPocoDB.Record<UnitView> , IPoco
     {
         [Column("unit_id")] 
         public int? UnitId { get; set; }
@@ -4393,7 +4394,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.shippers")]
     [PrimaryKey("shipper_id")]
     [ExplicitColumns]
-    public class Shipper : PetaPocoDB.Record<Shipper> 
+    public class Shipper : PetaPocoDB.Record<Shipper> , IPoco
     {
         [Column("shipper_id")] 
         public int ShipperId { get; set; }
@@ -4502,7 +4503,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.shipping_addresses")]
     [PrimaryKey("shipping_address_id")]
     [ExplicitColumns]
-    public class ShippingAddress : PetaPocoDB.Record<ShippingAddress> 
+    public class ShippingAddress : PetaPocoDB.Record<ShippingAddress> , IPoco
     {
         [Column("shipping_address_id")] 
         public long ShippingAddressId { get; set; }
@@ -4545,7 +4546,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.compound_item_details")]
     [PrimaryKey("compound_item_detail_id")]
     [ExplicitColumns]
-    public class CompoundItemDetail : PetaPocoDB.Record<CompoundItemDetail> 
+    public class CompoundItemDetail : PetaPocoDB.Record<CompoundItemDetail> , IPoco
     {
         [Column("compound_item_detail_id")] 
         public int CompoundItemDetailId { get; set; }
@@ -4576,7 +4577,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.item_cost_prices")]
     [PrimaryKey("item_cost_price_id")]
     [ExplicitColumns]
-    public class ItemCostPrice : PetaPocoDB.Record<ItemCostPrice> 
+    public class ItemCostPrice : PetaPocoDB.Record<ItemCostPrice> , IPoco
     {
         [Column("item_cost_price_id")] 
         public long ItemCostPriceId { get; set; }
@@ -4613,7 +4614,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.item_selling_prices")]
     [PrimaryKey("item_selling_price_id")]
     [ExplicitColumns]
-    public class ItemSellingPrice : PetaPocoDB.Record<ItemSellingPrice> 
+    public class ItemSellingPrice : PetaPocoDB.Record<ItemSellingPrice> , IPoco
     {
         [Column("item_selling_price_id")] 
         public long ItemSellingPriceId { get; set; }
@@ -4647,7 +4648,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.items")]
     [PrimaryKey("item_id")]
     [ExplicitColumns]
-    public class Item : PetaPocoDB.Record<Item> 
+    public class Item : PetaPocoDB.Record<Item> , IPoco
     {
         [Column("item_id")] 
         public int ItemId { get; set; }
@@ -4738,7 +4739,7 @@ namespace MixERP.Net.Entities.Core
     [TableName("core.parties")]
     [PrimaryKey("party_id")]
     [ExplicitColumns]
-    public class Party : PetaPocoDB.Record<Party> 
+    public class Party : PetaPocoDB.Record<Party> , IPoco
     {
         [Column("party_id")] 
         public long PartyId { get; set; }
@@ -4840,22 +4841,7 @@ namespace MixERP.Net.Entities.Core
 
     [FunctionName("get_associated_units_from_item_id")]
     [ExplicitColumns]
-    public class DbGetAssociatedUnitsFromItemIdResult : PetaPocoDB.Record<DbGetAssociatedUnitsFromItemIdResult> 
-    {
-        [Column("unit_id")] 
-        public string UnitId { get; set; }
-
-        [Column("unit_code")] 
-        public string UnitCode { get; set; }
-
-        [Column("unit_name")] 
-        public string UnitName { get; set; }
-
-    }
-
-    [FunctionName("get_associated_units")]
-    [ExplicitColumns]
-    public class DbGetAssociatedUnitsResult : PetaPocoDB.Record<DbGetAssociatedUnitsResult> 
+    public class DbGetAssociatedUnitsFromItemIdResult : PetaPocoDB.Record<DbGetAssociatedUnitsFromItemIdResult> , IPoco
     {
         [Column("unit_id")] 
         public string UnitId { get; set; }
@@ -4870,7 +4856,7 @@ namespace MixERP.Net.Entities.Core
 
     [FunctionName("get_associated_units_from_item_code")]
     [ExplicitColumns]
-    public class DbGetAssociatedUnitsFromItemCodeResult : PetaPocoDB.Record<DbGetAssociatedUnitsFromItemCodeResult> 
+    public class DbGetAssociatedUnitsFromItemCodeResult : PetaPocoDB.Record<DbGetAssociatedUnitsFromItemCodeResult> , IPoco
     {
         [Column("unit_id")] 
         public string UnitId { get; set; }
@@ -4885,7 +4871,7 @@ namespace MixERP.Net.Entities.Core
 
     [FunctionName("get_workflow_model")]
     [ExplicitColumns]
-    public class DbGetWorkflowModelResult : PetaPocoDB.Record<DbGetWorkflowModelResult> 
+    public class DbGetWorkflowModelResult : PetaPocoDB.Record<DbGetWorkflowModelResult> , IPoco
     {
         [Column("flagged_transactions")] 
         public string FlaggedTransactions { get; set; }
@@ -4912,7 +4898,7 @@ namespace MixERP.Net.Entities.Core
 
     [FunctionName("get_account_view_by_account_master_id")]
     [ExplicitColumns]
-    public class DbGetAccountViewByAccountMasterIdResult : PetaPocoDB.Record<DbGetAccountViewByAccountMasterIdResult> 
+    public class DbGetAccountViewByAccountMasterIdResult : PetaPocoDB.Record<DbGetAccountViewByAccountMasterIdResult> , IPoco
     {
         [Column("id")] 
         public string Id { get; set; }
@@ -4925,9 +4911,24 @@ namespace MixERP.Net.Entities.Core
 
     }
 
+    [FunctionName("get_associated_units")]
+    [ExplicitColumns]
+    public class DbGetAssociatedUnitsResult : PetaPocoDB.Record<DbGetAssociatedUnitsResult> , IPoco
+    {
+        [Column("unit_id")] 
+        public string UnitId { get; set; }
+
+        [Column("unit_code")] 
+        public string UnitCode { get; set; }
+
+        [Column("unit_name")] 
+        public string UnitName { get; set; }
+
+    }
+
     [TableName("core.attachment_type")]
     [ExplicitColumns]
-    public class AttachmentType : PetaPocoDB.Record<AttachmentType> 
+    public class AttachmentType : PetaPocoDB.Record<AttachmentType> , IPoco
     {
         [Column("comment")] 
         public string Comment { get; set; }
@@ -4945,7 +4946,7 @@ namespace MixERP.Net.Entities.Core
 
     [TableName("core.period")]
     [ExplicitColumns]
-    public class Period : PetaPocoDB.Record<Period> 
+    public class Period : PetaPocoDB.Record<Period> , IPoco
     {
         [Column("period_name")] 
         public string PeriodName { get; set; }
@@ -4958,5 +4959,4 @@ namespace MixERP.Net.Entities.Core
 
     }
 }
-
 

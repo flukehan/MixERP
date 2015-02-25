@@ -19,18 +19,20 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using MixERP.Net.Common;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
+using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Policy
 {
-    public partial class AutoVerification : MixERPUserControl
+    public partial class ApiAccess : MixERPUserControl
     {
         public override AccessLevel AccessLevel
         {
@@ -50,20 +52,39 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                 scrud.KeyColumn = "user_id";
 
                 scrud.TableSchema = "policy";
-                scrud.Table = "auto_verification_policy";
+                scrud.Table = "api_access_policy";
                 scrud.ViewSchema = "policy";
-                scrud.View = "auto_verification_policy_scrud_view";
+                scrud.View = "api_access_policy";
 
                 scrud.PageSize = 100;
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                scrud.Text = Titles.AutoVerificationPolicy;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (AutoVerification));
+                scrud.Text = "API Access Policy";
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (ApiAccess));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
+                this.RegisterJavascript();
             }
+        }
+
+        private void RegisterJavascript()
+        {
+            var script = "var pocos = [" + this.GetPocos() + "];";
+            PageUtility.RegisterJavascript("ApiAccess_Vars", script, this.Page, true);
+        }
+
+        private string GetPocos()
+        {
+            Type type = typeof(IPoco);
+            List<Type> types = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p)).ToList();
+
+
+            List<string> items = types.Select(t => "'" + t.FullName + "'").ToList();
+            return string.Join(",", items);
         }
 
         private static string GetDisplayFields()
@@ -71,6 +92,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "office.users.user_id",
                 ConfigurationHelper.GetDbParameter("UserDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id",
+                ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "policy.http_actions.http_action_code", "http_action_code");
             return string.Join(",", displayFields);
         }
 
@@ -78,6 +102,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "office.users.user_id", "office.user_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "policy.http_actions.http_action_code", "policy.http_actions");
             return string.Join(",", displayViews);
         }
     }
