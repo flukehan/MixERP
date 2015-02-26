@@ -10,6 +10,25 @@
   </settings>
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
+    <!--Libraries Start -->
+
+    <file>/Scripts/jquery-1.9.1.js</file>
+    <file>/Scripts/jquery.address.js</file>
+    <file>/Scripts/jquery-ui.js</file>
+    <file>/Scripts/shortcut.js</file>
+    <file>/Scripts/colorbox/jquery.colorbox.js</file>
+    <file>/Scripts/jqueryNumber/jquery.number.js</file>
+    <file>/Scripts/date.js</file>
+    <file>/Scripts/chartjs/Chart.min.js</file>
+    <file>/Scripts/chartjs/legend.js</file>
+    <file>/Scripts/notify-combined.min.js</file>
+    <file>/Scripts/semantic-ui/semantic.js</file>
+    <file>/Scripts/jquery.signalR.js</file>
+    <file>/Scripts/vakata-jstree/dist/jstree.min.js</file>
+    <file>/Scripts/mixerp.js</file>
+
+    <!--Libraries End -->
+    
     <file>/Scripts/mixerp/master-page/declaration.js</file>
     <file>/Scripts/mixerp/master-page/js-tree.js</file>
     <file>/Scripts/mixerp/master-page/keyboard.js</file>

@@ -58,15 +58,6 @@ namespace MixERP.Net.FrontEnd {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
-        /// MenuLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal MenuLiteral;
-        
-        /// <summary>
         /// ContentMenuLiteral control.
         /// </summary>
         /// <remarks>
@@ -146,15 +137,6 @@ namespace MixERP.Net.FrontEnd {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder BodyContentPlaceholder;
-        
-        /// <summary>
-        /// HeadHolder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder HeadHolder;
         
         /// <summary>
         /// BottomScriptContentPlaceholder control.

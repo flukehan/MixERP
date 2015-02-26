@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -33,14 +32,17 @@ using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models;
-using MixERP.Net.Entities.Office;
 using MixERP.Net.FrontEnd.Cache;
 using Serilog;
+using Menu = MixERP.Net.Entities.Core.Menu;
 
 namespace MixERP.Net.FrontEnd.Base
 {
     public class MixERPWebpage : MixERPWebPageBase
     {
+        private string currentPage;
+        private Menu[] menus;
+
         /// <summary>
         ///     The pages, having no actual entry on database menu table, can have an OverridePath
         ///     which can be set to an existing page.
@@ -52,72 +54,13 @@ namespace MixERP.Net.FrontEnd.Base
         /// </summary>
         public bool SkipLoginCheck { get; set; }
 
-        private static string GetContentPageMenu(Control page, string path, string currentPage)
-        {
-            if (page != null)
-            {
-                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-                int userId = CurrentUser.GetSignInView().UserId.ToInt();
-                string culture = CurrentUser.GetSignInView().Culture;
-
-
-                IEnumerable<Entities.Core.Menu> rootMenus = Data.Core.Menu.GetRootMenuCollection(officeId, userId, culture, path);
-
-                string menu = "<ul>";
-
-                foreach (Entities.Core.Menu rootMenu in rootMenus)
-                {
-                    string anchor = string.Format(Thread.CurrentThread.CurrentCulture, "<a href=\"javascript:void(0);\">{0}</a>", rootMenu.MenuText);
-
-                    IEnumerable<Entities.Core.Menu> childMenus = Data.Core.Menu.GetMenuCollection(officeId, userId, culture, rootMenu.MenuId, 2);
-
-                    if (childMenus != null)
-                    {
-                        menu += "<li>";
-                        menu += anchor;
-                        menu += "<ul>";
-
-                        foreach (Entities.Core.Menu childMenu in childMenus)
-                        {
-                            string id = Conversion.TryCastString(childMenu.MenuId);
-
-                            if (childMenu.Url.Replace("~", "").Equals(currentPage))
-                            {
-                                menu += string.Format(Thread.CurrentThread.CurrentCulture,
-                                    "<li id='node{0}' class='expanded' data-selected='true' data-menucode='{1}' data-jstree='{{\"type\":\"active\"}}'><a id='anchorNode{0}' href='{2}' title='{3}'>{3}</a></li>",
-                                    id, childMenu.MenuCode, page.ResolveUrl(childMenu.Url), childMenu.MenuText);
-                            }
-                            else
-                            {
-                                menu += string.Format(Thread.CurrentThread.CurrentCulture,
-                                    "<li id='item{0}' data-menucode='{1}' data-jstree='{{\"type\":\"file\"}}'><a href='{2}' title='{3}'>{3}</a></li>",
-                                    id, childMenu.MenuCode, page.ResolveUrl(childMenu.Url), childMenu.MenuText);
-                            }
-                        }
-
-                        menu += "</ul>";
-                    }
-                    else
-                    {
-                        menu += "<li data-jstree='{\"type\":\"file\"}'>" + anchor;
-                    }
-                }
-
-                menu += "</li></ul>";
-
-                return menu;
-            }
-
-            return null;
-        }
-
         public static void RedirectToRootPage()
         {
             Log.Debug("Redirecting to '/' root page.");
             HttpContext.Current.Response.Redirect("~/");
         }
 
-        public static void RequestLogOnPage()
+        public void RequestLoginPage()
         {
             FormsAuthentication.SignOut();
             Log.Information("User {UserName} was signed off.", CurrentUser.GetSignInView().UserName);
@@ -129,9 +72,9 @@ namespace MixERP.Net.FrontEnd.Base
                 Log.Verbose("Cleared cookie: {Cookie}.", cookie);
             }
 
-            string currentPage = HttpContext.Current.Request.Url.AbsolutePath;
+            this.currentPage = HttpContext.Current.Request.Url.AbsolutePath;
 
-            Log.Verbose("Current page is {CurrentPage}.", currentPage);
+            Log.Verbose("Current page is {CurrentPage}.", this.currentPage);
 
             Page page = HttpContext.Current.Handler as Page;
 
@@ -142,9 +85,10 @@ namespace MixERP.Net.FrontEnd.Base
 
             string loginUrl = (page).ResolveUrl(FormsAuthentication.LoginUrl);
 
-            if (currentPage != loginUrl)
+            if (this.currentPage != loginUrl)
             {
-                FormsAuthentication.RedirectToLoginPage(currentPage);
+                FormsAuthentication.RedirectToLoginPage(this.currentPage);
+                HttpContext.Current.Response.Redirect("/SignIn.aspx?ReturnUrl=" + this.currentPage);
                 Log.Information("Redirected to login page.");
             }
         }
@@ -156,7 +100,9 @@ namespace MixERP.Net.FrontEnd.Base
                 return;
             }
 
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, signInId.ToString(CultureInfo.InvariantCulture), DateTime.Now, DateTime.Now.AddMinutes(30), rememberMe, String.Empty, FormsAuthentication.FormsCookiePath);
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
+                signInId.ToString(CultureInfo.InvariantCulture), DateTime.Now, DateTime.Now.AddMinutes(30), rememberMe,
+                String.Empty, FormsAuthentication.FormsCookiePath);
             string encryptedCookie = FormsAuthentication.Encrypt(ticket);
 
             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedCookie);
@@ -188,7 +134,7 @@ namespace MixERP.Net.FrontEnd.Base
                 {
                     if (!this.SkipLoginCheck)
                     {
-                        RequestLogOnPage();
+                        this.RequestLoginPage();
                     }
                 }
             }
@@ -207,6 +153,10 @@ namespace MixERP.Net.FrontEnd.Base
             }
 
             Literal contentMenuLiteral = ((Literal)PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
+            if (contentMenuLiteral == null)
+            {
+                return;
+            }
 
             string menu = "<div id=\"tree\" style='display:none;'><ul id='treeData'>";
 
@@ -214,40 +164,105 @@ namespace MixERP.Net.FrontEnd.Base
             int userId = CurrentUser.GetSignInView().UserId.ToInt();
             string culture = CurrentUser.GetSignInView().Culture;
 
-            IEnumerable<Entities.Core.Menu> collection = Data.Core.Menu.GetMenuCollection(officeId, userId, culture, 0, 0);
-
-            if (collection == null)
+            if (userId.Equals(0) || officeId.Equals(0))
             {
                 return;
             }
 
-            foreach (Entities.Core.Menu model in collection)
+            this.menus = Data.Core.Menu.GetMenuCollection(officeId, userId, culture).ToArray();
+            Menu[] collection = menus.Where(x => x.ParentMenuId == null).ToArray();
+
+            if (collection.Length > 0)
             {
-                string menuText = model.MenuText;
-                string url = model.Url;
-                string id = Conversion.TryCastString(model.MenuId);
+                for (int i = 0; i < collection.Length; i++)
+                {
+                    string menuText = collection[i].MenuText;
+                    string id = collection[i].MenuId.ToString(CultureInfo.InvariantCulture);
 
-                string subMenu = GetContentPageMenu(this.Page, url, this.OverridePath);
+                    string items = GetMenu(collection[i].MenuId);
 
-                menu += string.Format(Thread.CurrentThread.CurrentCulture,
-                    "<li id='node{0}'>" +
-                    "<a id='anchorNode{0}' href='javascript:void(0);' title='{1}'>{1}</a>" +
-                    "{2}" +
-                    "</li>",
-                    id,
-                    menuText,
-                    subMenu);
+                    menu += string.Format(Thread.CurrentThread.CurrentCulture,
+                        "<li id='node{0}'>" +
+                        "<a id='anchorNode{0}' href='javascript:void(0);' title='{1}'>{1}</a>" +
+                        "{2}" +
+                        "</li>",
+                        id,
+                        menuText,
+                        items);
+                }
             }
-
 
             menu += "</ul></div>";
 
-            if (contentMenuLiteral != null)
-            {
-                contentMenuLiteral.Text = menu;
-            }
+            contentMenuLiteral.Text = menu;
+
+            this.menus = null;
 
             base.OnLoad(e);
+        }
+
+        private string GetMenu(int menuId)
+        {
+            string menu = string.Empty;
+            if (menuId.Equals(0))
+            {
+                return menu;
+            }
+
+            Menu[] items = menus.Where(m => m.ParentMenuId.Equals(menuId)).ToArray();
+
+            if (items.Length > 0)
+            {
+                for (int i = 0; i < items.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        menu += "<ul>";
+                    }
+
+                    //If this menu has any children, fetch them.
+                    string childMenu = GetMenu(items[i].MenuId);
+                    string id = items[i].MenuId.ToString(CultureInfo.InvariantCulture);
+                    string url = string.IsNullOrWhiteSpace(items[i].Url)
+                        ? "javascript:void(0);"
+                        : this.Page.ResolveUrl(items[i].Url);
+
+                    string cssClass = string.Empty;
+                    string dataJSTree = string.Empty;
+                    string dataSelected = string.Empty;
+
+                    if (string.IsNullOrWhiteSpace(childMenu))
+                    {
+                        dataJSTree = "data-jstree='{\"type\":\"file\"}'";
+                    }
+
+                    if (url.Replace("~", "").Equals(this.currentPage))
+                    {
+                        dataSelected = "data-selected='true'";
+                        cssClass = "class='expanded'";
+                        dataJSTree = "data-jstree='{\"type\":\"active\"}'";
+                    }
+
+                    string anchor = "<a href='" + url + "'>" + items[i].MenuText + "</a>";
+
+                    menu += string.Format(Thread.CurrentThread.CurrentCulture,
+                        "<li id='node{0}' {1} {2} data-menucode='{3}' {4}>",
+                        id, cssClass, dataSelected, items[i].MenuCode, dataJSTree);
+
+
+                    menu += anchor;
+                    menu += childMenu;
+                    menu += "</li>";
+
+                    if (i == items.Length - 1)
+                    {
+                        menu += "</ul>";
+                    }
+                }
+            }
+
+
+            return menu;
         }
 
         private static void SetCulture()
@@ -279,9 +294,10 @@ namespace MixERP.Net.FrontEnd.Base
                 {
                     if (model.ForcedLogOffTimestamp != null && !model.ForcedLogOffTimestamp.Equals(DateTime.MinValue))
                     {
-                        if (model.ForcedLogOffTimestamp <= DateTime.Now && model.ForcedLogOffTimestamp >= CurrentUser.GetSignInView().LoginDateTime)
+                        if (model.ForcedLogOffTimestamp <= DateTime.Now &&
+                            model.ForcedLogOffTimestamp >= CurrentUser.GetSignInView().LoginDateTime)
                         {
-                            RequestLogOnPage();
+                            this.RequestLoginPage();
                         }
                     }
                 }

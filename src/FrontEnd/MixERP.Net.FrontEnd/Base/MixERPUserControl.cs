@@ -59,7 +59,7 @@ namespace MixERP.Net.FrontEnd.Base
         {
             if ((this.AccessLevel.Equals(AccessLevel.AdminOnly) || this.AccessLevel.Equals(AccessLevel.LocalhostAdmin)) && !CurrentUser.GetSignInView().IsAdmin.ToBool())
             {
-                Log.Information("Access to {Control} is denied to user.", this, CurrentUser.GetSignInView().UserName);
+                Log.Information("Access to {Control} is denied to {User} from {IP}.", this, CurrentUser.GetSignInView().UserName, CurrentUser.GetSignInView().IpAddress);
 
                 this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
             }
@@ -68,7 +68,7 @@ namespace MixERP.Net.FrontEnd.Base
 
             if (this.AccessLevel.Equals(AccessLevel.LocalhostAdmin) && !isLocalHost)
             {
-                Log.Information("Access to {Control} is denied to user.", this, CurrentUser.GetSignInView().UserName);
+                Log.Information("Access to {Control} is denied to {User} from {IP}.", this, CurrentUser.GetSignInView().UserName, CurrentUser.GetSignInView().IpAddress);
 
                 this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
             }

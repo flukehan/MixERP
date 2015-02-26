@@ -13,6 +13,9 @@
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
     <file>/Scripts/colorbox/colorbox.css</file>
-    <file>/Scripts/jquery-ui/css/custom-theme/jquery-ui.min.css</file>
+    <file>/Scripts/jquery-ui/css/custom-theme/jquery-ui.css</file>
+    <file>/Scripts/vakata-jstree/dist/themes/default/style.css</file>
+    <file>/Scripts/semantic-ui/semantic.css</file>
+    <file>/App_Themes/MixERP/mixerp.css</file>
   </files>
 </bundle>

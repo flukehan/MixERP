@@ -24,25 +24,9 @@ namespace MixERP.Net.FrontEnd.Data.Core
 {
     public static class Menu
     {
-        public static IEnumerable<Entities.Core.Menu> GetMenuCollection(int officeId, int userId, string culture, string path, short level)
+        public static IEnumerable<Entities.Core.Menu> GetMenuCollection(int officeId, int userId, string culture)
         {
-            string relativePath = path;
-            return Factory.Get<Entities.Core.Menu>("SELECT * FROM policy.get_menu(@0, @1, @2) WHERE parent_menu_id=(SELECT menu_id FROM core.menus WHERE url=@3) AND level=@4 ORDER BY menu_id;", userId, officeId, culture, relativePath, level);
-        }
-
-        public static IEnumerable<Entities.Core.Menu> GetMenuCollection(int officeId, int userId, string culture, int parentMenuId, short level)
-        {
-            if (parentMenuId > 0)
-            {
-                return Factory.Get<Entities.Core.Menu>("SELECT * FROM policy.get_menu(@0, @1, @2) WHERE parent_menu_id=@3 AND level=@4 ORDER BY menu_id;", userId, officeId, culture, parentMenuId, level);
-            }
-
-            return Factory.Get<Entities.Core.Menu>("SELECT * FROM policy.get_menu(@0, @1, @2) WHERE parent_menu_id is null ORDER BY menu_id;", userId, officeId, culture);
-        }
-
-        public static IEnumerable<Entities.Core.Menu> GetRootMenuCollection(int officeId, int userId, string culture, string path)
-        {
-            return Factory.Get<Entities.Core.Menu>("SELECT * FROM policy.get_menu(@0, @1, @2) WHERE parent_menu_id=core.get_root_parent_menu_id(@3) ORDER BY menu_id;", userId, officeId, culture, path);
+            return Factory.Get<Entities.Core.Menu>("SELECT * FROM policy.get_menu(@0, @1, @2) ORDER BY menu_id;", userId, officeId, culture);
         }
     }
 }

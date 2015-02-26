@@ -27,7 +27,7 @@ namespace MixERP.Net.FrontEnd.Modules
     {
         private MixERPUserControl plugin;
 
-        protected void Page_Init(object sender, EventArgs e)
+        protected override void OnInit(EventArgs e)
         {
             if (this.plugin != null)
             {
@@ -41,9 +41,11 @@ namespace MixERP.Net.FrontEnd.Modules
                     this.OverridePath = this.plugin.OverridePath;
                 }
             }
+
+            base.OnInit(e);
         }
 
-        protected void Page_PreInit(object sender, EventArgs e)
+        protected override void OnPreInit(EventArgs e)
         {
             this.InitializeControl();
 
@@ -59,7 +61,10 @@ namespace MixERP.Net.FrontEnd.Modules
                     this.Page.Theme = null;
                 }
             }
+
+            base.OnPreInit(e);
         }
+
 
         private void InitializeControl()
         {

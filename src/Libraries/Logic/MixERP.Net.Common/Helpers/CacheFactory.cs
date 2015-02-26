@@ -68,14 +68,7 @@ namespace MixERP.Net.Common.Helpers
                 return null;
             }
 
-            var item = MemoryCache.Default.GetCacheItem(key);
-
-            if (item != null)
-            {
-                return item.Value;
-            }
-
-            return null;
+            return MemoryCache.Default.Get(key);
         }
     }
 }

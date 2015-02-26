@@ -42,7 +42,7 @@ namespace MixERP.Net.FrontEnd
             if (routes != null)
             {
                 Log.Information("Registering routes.");
-                routes.IgnoreRoute("{*asmx}", new { aspx = @".*\.asmx(/.*)?" });
+                routes.IgnoreRoute("{*asmx}", new { asmx = @".*\.asmx(/.*)?" });
                 routes.IgnoreRoute("{*ashx}", new { ashx = @".*\.ashx(/.*)?" });
                 routes.Ignore("{resource}.axd");
                 routes.MapPageRoute("DefaultRoute", "", "~/SignIn.aspx");
@@ -99,6 +99,7 @@ namespace MixERP.Net.FrontEnd
         {
             this.IntializeLogger();
 
+            RegisterRoutes(RouteTable.Routes);
 
             GlobalConfiguration.Configure(config =>
             {
@@ -114,7 +115,6 @@ namespace MixERP.Net.FrontEnd
                 config.EnsureInitialized();
             });
 
-            RegisterRoutes(RouteTable.Routes);
         }
 
         private string GetLogDirectory()

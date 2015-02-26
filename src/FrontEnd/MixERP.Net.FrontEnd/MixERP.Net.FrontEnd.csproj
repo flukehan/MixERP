@@ -70,6 +70,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -110,7 +113,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -668,7 +682,11 @@
     <Content Include="bundles\scripts\master-page.min.js">
       <DependentUpon>master-page.js</DependentUpon>
     </Content>
+    <Content Include="db\beta-1\v1\mixerp-blank.sql" />
+    <Content Include="db\beta-1\v1\mixerp-sample.sql" />
     <Content Include="db\beta-1\v1\mixerp.sql" />
+    <Content Include="db\beta-1\v2\mixerp-incremental-blank-db.sql" />
+    <Content Include="db\beta-1\v2\mixerp-incremental-sample.sql" />
     <Content Include="db\index.html" />
     <Content Include="MixERP.Installation.xml" />
     <Content Include="Modules\Default.aspx" />
@@ -696,8 +714,10 @@
     <Content Include="Resource\Icons\print-16.png" />
     <Content Include="Resource\Icons\top-16.png" />
     <Content Include="Resource\Static\Emails\index.html" />
+    <Content Include="Resource\Static\images\index.html" />
     <Content Include="Resource\Static\images\not-image-file.png" />
     <Content Include="Resource\Static\Templates\EmailTemplate.html" />
+    <Content Include="Resource\Static\Templates\index.html" />
     <Content Include="Resource\Temp\Images\index.html" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\ajax-file-upload.js" />
@@ -818,6 +838,8 @@
     <Content Include="Scripts\jquery-ui\i18n\datepicker-de.js" />
     <Content Include="Scripts\jquery-ui\i18n\datepicker-el.js" />
     <Content Include="Scripts\jquery-ui\i18n\datepicker-en-AU.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-en.js" />
+    <Content Include="Scripts\jquery-ui\i18n\datepicker-en-US.js" />
     <Content Include="Scripts\jquery-ui\i18n\datepicker-en-GB.js" />
     <Content Include="Scripts\jquery-ui\i18n\datepicker-en-NZ.js" />
     <Content Include="Scripts\jquery-ui\i18n\datepicker-eo.js" />
