@@ -870,4 +870,16 @@
   <data name="Select" xml:space="preserve">
     <value>sélectionner</value>
   </data>
+  <data name="api_access_policy_id" xml:space="preserve">
+    <value>Politique d'accès aux API Id</value>
+  </data>
+  <data name="api_access_policy_uix" xml:space="preserve">
+    <value>Dupliquer entrée pour API Stratégie d'accès</value>
+  </data>
+  <data name="http_action_code" xml:space="preserve">
+    <value>HTTP Code d'action</value>
+  </data>
+  <data name="poco_type_name" xml:space="preserve">
+    <value>Poco Type Nom</value>
+  </data>
 </root>

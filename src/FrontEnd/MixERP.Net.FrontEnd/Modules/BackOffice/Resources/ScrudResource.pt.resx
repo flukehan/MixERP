@@ -870,4 +870,16 @@
   <data name="counter_id" xml:space="preserve">
     <value>contador Identificador</value>
   </data>
+  <data name="api_access_policy_id" xml:space="preserve">
+    <value>API Acesso Id Política</value>
+  </data>
+  <data name="api_access_policy_uix" xml:space="preserve">
+    <value>Duplicate entry de Política de Acesso API</value>
+  </data>
+  <data name="http_action_code" xml:space="preserve">
+    <value>HTTP Código de Ação</value>
+  </data>
+  <data name="poco_type_name" xml:space="preserve">
+    <value>Poco Type Name</value>
+  </data>
 </root>

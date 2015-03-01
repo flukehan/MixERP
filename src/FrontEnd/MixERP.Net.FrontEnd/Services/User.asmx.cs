@@ -69,7 +69,7 @@ namespace MixERP.Net.FrontEnd.Services
             {
                 long signInId = Data.Office.User.SignIn(officeId, userName, password, culture, rememberMe, challenge, context);
 
-                Log.Information("{UserName} signed in to office : #{OfficeId}.", userName, officeId);
+                Log.Information("{UserName} signed in to office : #{OfficeId} from {IP}.", userName, officeId, context.Request.ServerVariables["REMOTE_ADDR"]);
 
                 if (signInId > 0)
                 {
@@ -84,7 +84,7 @@ namespace MixERP.Net.FrontEnd.Services
             }
             catch (MixERPException ex)
             {
-                Log.Warning("{UserName} could not sign in to office : #{OfficeId}.", userName, officeId);
+                Log.Warning("{UserName} could not sign in to office : #{OfficeId} from {IP}.", userName, officeId, context.Request.ServerVariables["REMOTE_ADDR"]);
 
                 this.LogInvalidSignIn();
                 return ex.Message;

@@ -32,9 +32,6 @@ using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services
 {
-    /// <summary>
-    ///     Summary description for ItemData
-    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [ScriptService]

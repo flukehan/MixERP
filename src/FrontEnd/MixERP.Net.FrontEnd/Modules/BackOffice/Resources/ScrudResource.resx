@@ -870,4 +870,16 @@
   <data name="is_transaction_node" xml:space="preserve">
     <value>Is Transaction Node</value>
   </data>
+  <data name="api_access_policy_uix" xml:space="preserve">
+    <value>Duplicate Entry for API Access Policy</value>
+  </data>
+  <data name="api_access_policy_id" xml:space="preserve">
+    <value>API Access Policy Id</value>
+  </data>
+  <data name="http_action_code" xml:space="preserve">
+    <value>HTTP Action Code</value>
+  </data>
+  <data name="poco_type_name" xml:space="preserve">
+    <value>Poco Type Name</value>
+  </data>
 </root>

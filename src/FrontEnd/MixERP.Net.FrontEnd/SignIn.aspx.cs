@@ -370,7 +370,7 @@ namespace MixERP.Net.FrontEnd
             {
                 field.Attributes.Add("class", "field");
 
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.UserId, "UserNameInputText"))
+                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.UserId, "UsernameInputText"))
                 {
                     field.Controls.Add(label);
                 }

@@ -870,4 +870,16 @@
   <data name="Select" xml:space="preserve">
     <value>выбрать</value>
   </data>
+  <data name="api_access_policy_id" xml:space="preserve">
+    <value>API доступа Политика Id</value>
+  </data>
+  <data name="api_access_policy_uix" xml:space="preserve">
+    <value>Дубликат записи по политике доступа API</value>
+  </data>
+  <data name="http_action_code" xml:space="preserve">
+    <value>HTTP Code Экшн</value>
+  </data>
+  <data name="poco_type_name" xml:space="preserve">
+    <value>Poco Тип Название</value>
+  </data>
 </root>

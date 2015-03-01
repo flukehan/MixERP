@@ -1,16 +1,59 @@
 ﻿-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/01.types-domains-tables-and-constraints/tables-and-constraints.sql --<--<--
+CREATE TABLE policy.http_actions
+(
+    http_action_code                text NOT NULL PRIMARY KEY
+);
+
+CREATE UNIQUE INDEX policy_http_action_code_uix
+ON policy.http_actions(UPPER(http_action_code));
+
 CREATE TABLE policy.api_access_policy
 (
     api_access_policy_id            BIGSERIAL NOT NULL PRIMARY KEY,
     user_id                         integer NOT NULL REFERENCES office.users(user_id),
     office_id                       integer NOT NULL REFERENCES office.offices(office_id),
     poco_type_name                  text NOT NULL,
+    http_action_code                text NOT NULL REFERENCES policy.http_actions(http_action_code),
     valid_till                      date NOT NULL,
     audit_user_id                   integer NULL REFERENCES office.users(user_id),
     audit_ts                        TIMESTAMP WITH TIME ZONE NULL 
                                     DEFAULT(NOW())    
 );
 
+CREATE UNIQUE INDEX api_access_policy_uix
+ON policy.api_access_policy(user_id, poco_type_name, http_action_code, valid_till);
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/audit/audit.get_office_id_by_login_id.sql --<--<--
+DROP FUNCTION IF EXISTS audit.get_office_id_by_login_id(bigint);
+
+CREATE FUNCTION audit.get_office_id_by_login_id(bigint)
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN office_id
+    FROM audit.logins
+    WHERE login_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/audit/audit.get_user_id_by_login_id.sql --<--<--
+DROP FUNCTION IF EXISTS audit.get_user_id_by_login_id(bigint);
+
+CREATE FUNCTION audit.get_user_id_by_login_id(bigint)
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN user_id
+    FROM audit.logins
+    WHERE login_id=$1;
+END
+$$
+LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.get_cash_repository_balance.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12));
@@ -407,6 +450,68 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/http-actions.sql --<--<--
+--This table should not be localized.
+INSERT INTO policy.http_actions
+SELECT 'GET' UNION ALL
+SELECT 'PUT' UNION ALL
+SELECT 'POST' UNION ALL
+SELECT 'DELETE';
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/06.sample-data/0.menus.sql --<--<--
+INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
+SELECT 'API Access Policy', '~/Modules/BackOffice/Policy/ApiAccessPolicy.mix', 'SAA', 2, core.get_menu_id('SPM');
+
+--FRENCH
+INSERT INTO core.menu_locale(menu_id, culture, menu_text)
+SELECT core.get_menu_id('SAA'), 'fr', 'API Stratégie d''accès';
+
+
+--GERMAN
+INSERT INTO core.menu_locale(menu_id, culture, menu_text)
+SELECT core.get_menu_id('SAA'), 'de', 'API-Richtlinien';
+
+--RUSSIAN
+INSERT INTO core.menu_locale(menu_id, culture, menu_text)
+SELECT core.get_menu_id('SAA'), 'ru', 'Политика доступа API';
+
+--JAPANESE
+INSERT INTO core.menu_locale(menu_id, culture, menu_text)
+SELECT core.get_menu_id('SAA'), 'ja', 'APIのアクセスポリシー';
+
+--SPANISH
+INSERT INTO core.menu_locale(menu_id, culture, menu_text)
+SELECT core.get_menu_id('SAA'), 'es', 'API Política de Acceso';
+
+--DUTCH
+INSERT INTO core.menu_locale(menu_id, culture, menu_text)
+SELECT core.get_menu_id('SAA'), 'nl', 'API Access Policy';
+
+--SIMPLIFIED CHINESE
+INSERT INTO core.menu_locale(menu_id, culture, menu_text)
+SELECT core.get_menu_id('SAA'), 'zh', 'API访问策略';
+
+--PORTUGUESE
+INSERT INTO core.menu_locale(menu_id, culture, menu_text)
+SELECT core.get_menu_id('SAA'), 'pt', 'Política de Acesso API';
+
+--SWEDISH
+INSERT INTO core.menu_locale(menu_id, culture, menu_text)
+SELECT core.get_menu_id('SAA'), 'sv', 'API Access Policy';
+
+--MALAY
+INSERT INTO core.menu_locale(menu_id, culture, menu_text)
+SELECT core.get_menu_id('SAA'), 'ms', 'Dasar Akses API';
+
+--INDONESIAN
+INSERT INTO core.menu_locale(menu_id, culture, menu_text)
+SELECT core.get_menu_id('SAA'), 'id', 'API Kebijakan Access';
+
+--FILIPINO
+INSERT INTO core.menu_locale(menu_id, culture, menu_text)
+SELECT core.get_menu_id('SAA'), 'fil', 'API Patakaran sa Pag-access';
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/transactions/unit_tests.balance_sheet_test.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.balance_sheet_test();

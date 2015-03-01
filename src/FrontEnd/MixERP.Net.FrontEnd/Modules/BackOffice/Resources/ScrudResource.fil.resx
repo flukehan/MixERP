@@ -870,4 +870,16 @@
   <data name="Select" xml:space="preserve">
     <value>piliin</value>
   </data>
+  <data name="api_access_policy_id" xml:space="preserve">
+    <value>I-access ang Id Patakaran API</value>
+  </data>
+  <data name="api_access_policy_uix" xml:space="preserve">
+    <value>Doblehin Entry para sa API Access Patakaran</value>
+  </data>
+  <data name="http_action_code" xml:space="preserve">
+    <value>HTTP Action Code</value>
+  </data>
+  <data name="poco_type_name" xml:space="preserve">
+    <value>Uri ng Pangalan sa Poco</value>
+  </data>
 </root>

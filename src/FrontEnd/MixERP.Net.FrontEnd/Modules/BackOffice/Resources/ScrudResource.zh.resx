@@ -870,4 +870,16 @@
   <data name="Select" xml:space="preserve">
     <value>选择</value>
   </data>
+  <data name="api_access_policy_id" xml:space="preserve">
+    <value>API访问策略ID</value>
+  </data>
+  <data name="api_access_policy_uix" xml:space="preserve">
+    <value>重复条目的API访问策略</value>
+  </data>
+  <data name="http_action_code" xml:space="preserve">
+    <value>HTTP操作代码</value>
+  </data>
+  <data name="poco_type_name" xml:space="preserve">
+    <value>POCO类型名称</value>
+  </data>
 </root>

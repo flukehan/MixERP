@@ -27,12 +27,10 @@ using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.Purchase.Services
 {
-    /// <summary>
-    ///     Summary description for DirectPurchase
-    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [ToolboxItem(false)]
@@ -42,16 +40,24 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, int storeId, string partyCode, string referenceNumber, string data, string statementReference, string transactionType, int costCenterId, string attachmentsJSON)
         {
-            Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
+            try
+            {
+                Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
 
-            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
+                Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
-            bool isCredit = !string.IsNullOrWhiteSpace(transactionType) && !transactionType.ToUpperInvariant().Equals("CASH");
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
-            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+                bool isCredit = !string.IsNullOrWhiteSpace(transactionType) && !transactionType.ToUpperInvariant().Equals("CASH");
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
 
-            return Data.Transactions.DirectPurchase.Add(officeId, userId, loginId, valueDate, storeId, isCredit, partyCode, details, costCenterId, referenceNumber, statementReference, attachments);
+                return Data.Transactions.DirectPurchase.Add(officeId, userId, loginId, valueDate, storeId, isCredit, partyCode, details, costCenterId, referenceNumber, statementReference, attachments);
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("Could not save direct purchase entry. {Exception}", ex);
+                throw;
+            }
         }
     }
 }

@@ -22,6 +22,7 @@ using System.Web.Services;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.FrontEnd.Cache;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 {
@@ -34,42 +35,55 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         [WebMethod(EnableSession = true)]
         public long Save(string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, int bankAccountId, string bankInstrumentCode, string bankTransactionCode)
         {
-            if (string.IsNullOrWhiteSpace(partyCode))
+            try
             {
-                throw new ArgumentNullException("partyCode");
-            }
 
-            if (string.IsNullOrWhiteSpace(currencyCode))
+                if (string.IsNullOrWhiteSpace(partyCode))
+                {
+                    throw new ArgumentNullException("partyCode");
+                }
+
+                if (string.IsNullOrWhiteSpace(currencyCode))
+                {
+                    throw new ArgumentNullException("currencyCode");
+                }
+
+                if (amount <= 0)
+                {
+                    throw new ArgumentNullException("amount");
+                }
+
+                if (debitExchangeRate <= 0)
+                {
+                    throw new ArgumentNullException("debitExchangeRate");
+                }
+
+                if (creditExchangeRate <= 0)
+                {
+                    throw new ArgumentNullException("creditExchangeRate");
+                }
+
+                if (cashRepositoryId == 0 && bankAccountId == 0)
+                {
+                    throw new InvalidOperationException(Warnings.InvalidReceiptMode);
+                }
+
+                if (cashRepositoryId > 0 &&
+                    (bankAccountId > 0 || !string.IsNullOrWhiteSpace(bankInstrumentCode) ||
+                     !string.IsNullOrWhiteSpace(bankInstrumentCode)))
+                {
+                    throw new InvalidOperationException(Warnings.CashTransactionCannotContainBankInfo);
+                }
+
+                return PostTransaction(partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate,
+                    referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId,
+                    bankInstrumentCode, bankTransactionCode);
+            }
+            catch (Exception ex)
             {
-                throw new ArgumentNullException("currencyCode");
+                Log.Warning("Could not save sales receipt. {Exception}", ex);
+                throw;
             }
-
-            if (amount <= 0)
-            {
-                throw new ArgumentNullException("amount");
-            }
-
-            if (debitExchangeRate <= 0)
-            {
-                throw new ArgumentNullException("debitExchangeRate");
-            }
-
-            if (creditExchangeRate <= 0)
-            {
-                throw new ArgumentNullException("creditExchangeRate");
-            }
-
-            if (cashRepositoryId == 0 && bankAccountId == 0)
-            {
-                throw new InvalidOperationException(Warnings.InvalidReceiptMode);
-            }
-
-            if (cashRepositoryId > 0 && (bankAccountId > 0 || !string.IsNullOrWhiteSpace(bankInstrumentCode) || !string.IsNullOrWhiteSpace(bankInstrumentCode)))
-            {
-                throw new InvalidOperationException(Warnings.CashTransactionCannotContainBankInfo);
-            }
-
-            return PostTransaction(partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, bankInstrumentCode, bankTransactionCode);
         }
 
         private static long PostTransaction(string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, int bankAccountId, string bankInstrumentCode, string bankTransactionCode)

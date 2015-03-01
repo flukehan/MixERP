@@ -19,38 +19,44 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.Purchase.Services
 {
-    /// <summary>
-    ///     Summary description for PurchaseOrder
-    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the
-    // following line.
-    [System.Web.Script.Services.ScriptService]
+    [ToolboxItem(false)]
+    [ScriptService]
     public class Order : WebService
     {
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, string partyCode, string referenceNumber, string data, string statementReference, string attachmentsJSON)
         {
-            Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, 0);
+            try
+            {
+                Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, 0);
 
-            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
+                Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
-            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
 
-            return Data.Transactions.Order.Add(officeId, userId, loginId, "Purchase.Order", valueDate, partyCode, 0, details, referenceNumber, statementReference, null, attachments);
+                return Data.Transactions.Order.Add(officeId, userId, loginId, "Purchase.Order", valueDate, partyCode, 0, details, referenceNumber, statementReference, null, attachments);
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("Could not save purchase order entry. {Exception}", ex);
+                throw;
+            }
         }
     }
 }

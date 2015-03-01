@@ -24,6 +24,7 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.FrontEnd.Cache;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.Purchase.Services
 {
@@ -36,16 +37,24 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
         [WebMethod(EnableSession = true)]
         public bool Save(Collection<Data.Models.Reorder> details)
         {
-            if (details == null)
+            try
             {
-                throw new ArgumentNullException("details");
+                if (details == null)
+                {
+                    throw new ArgumentNullException("details");
+                }
+
+                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+
+                return Data.Transactions.Reorder.Save(loginId, userId, officeId, details);
             }
-
-            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-
-            return Data.Transactions.Reorder.Save(loginId, userId, officeId, details);
+            catch (Exception ex)
+            {
+                Log.Warning("Could not save purchase reorder entry. {Exception}", ex);
+                throw;
+            }
         }
     }
 }

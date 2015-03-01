@@ -870,4 +870,16 @@
   <data name="Select" xml:space="preserve">
     <value>選択する</value>
   </data>
+  <data name="api_access_policy_id" xml:space="preserve">
+    <value>APIアクセスポリシーのId</value>
+  </data>
+  <data name="api_access_policy_uix" xml:space="preserve">
+    <value>APIのアクセスポリシーのエントリを重複</value>
+  </data>
+  <data name="http_action_code" xml:space="preserve">
+    <value>HTTPアクションコード</value>
+  </data>
+  <data name="poco_type_name" xml:space="preserve">
+    <value>ポコタイプ名</value>
+  </data>
 </root>

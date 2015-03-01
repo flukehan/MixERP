@@ -870,4 +870,16 @@
   <data name="sales_tax_code" xml:space="preserve">
     <value>Kode Pajak Penjualan</value>
   </data>
+  <data name="api_access_policy_id" xml:space="preserve">
+    <value>API Access Kebijakan Id</value>
+  </data>
+  <data name="api_access_policy_uix" xml:space="preserve">
+    <value>Duplikat Masuk untuk API Kebijakan Access</value>
+  </data>
+  <data name="http_action_code" xml:space="preserve">
+    <value>HTTP Kode Aksi</value>
+  </data>
+  <data name="poco_type_name" xml:space="preserve">
+    <value>Poco Jenis Nama</value>
+  </data>
 </root>

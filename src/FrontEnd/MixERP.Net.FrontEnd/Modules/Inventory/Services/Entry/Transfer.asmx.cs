@@ -32,6 +32,7 @@ using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Cache;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
 {
@@ -44,26 +45,34 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, string referenceNumber, string statementReference, string data)
         {
-            Collection<StockAdjustmentDetail> stockTransferModels = GetModels(data);
-
-            foreach (var model in stockTransferModels)
+            try
             {
-                if (model.TransferTypeEnum == TransactionTypeEnum.Credit)
-                {
-                    decimal existingQuantity = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreName);
+                Collection<StockAdjustmentDetail> stockTransferModels = GetModels(data);
 
-                    if (existingQuantity < model.Quantity)
+                foreach (StockAdjustmentDetail model in stockTransferModels)
+                {
+                    if (model.TransferTypeEnum == TransactionTypeEnum.Credit)
                     {
-                        throw new MixERPException(string.Format(CultureInfo.CurrentCulture, Errors.InsufficientStockWarning, Conversion.TryCastInteger(existingQuantity), model.UnitName, model.ItemName));
+                        decimal existingQuantity = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreName);
+
+                        if (existingQuantity < model.Quantity)
+                        {
+                            throw new MixERPException(string.Format(CultureInfo.CurrentCulture, Errors.InsufficientStockWarning, Conversion.TryCastInteger(existingQuantity), model.UnitName, model.ItemName));
+                        }
                     }
                 }
+
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+
+                return Data.Transactions.StockTransfer.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, stockTransferModels);
             }
-
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
-            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
-
-            return Data.Transactions.StockTransfer.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, stockTransferModels);
+            catch (Exception ex)
+            {
+                Log.Warning("Could not save inventory transfer entry. {Exception}", ex);
+                throw;
+            }
         }
 
         // ReSharper disable once ReturnTypeCanBeEnumerable.Local

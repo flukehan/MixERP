@@ -178,6 +178,24 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to API Access Policy Id.
+        /// </summary>
+        internal static string api_access_policy_id {
+            get {
+                return ResourceManager.GetString("api_access_policy_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate Entry for API Access Policy.
+        /// </summary>
+        internal static string api_access_policy_uix {
+            get {
+                return ResourceManager.GetString("api_access_policy_uix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Applied on Shipping Charge.
         /// </summary>
         internal static string applied_on_shipping_charge {
@@ -916,6 +934,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HTTP Action Code.
+        /// </summary>
+        internal static string http_action_code {
+            get {
+                return ResourceManager.GetString("http_action_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hundredth Name.
         /// </summary>
         internal static string hundredth_name {
@@ -1425,6 +1452,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         internal static string po_box {
             get {
                 return ResourceManager.GetString("po_box", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Poco Type Name.
+        /// </summary>
+        internal static string poco_type_name {
+            get {
+                return ResourceManager.GetString("poco_type_name", resourceCulture);
             }
         }
         

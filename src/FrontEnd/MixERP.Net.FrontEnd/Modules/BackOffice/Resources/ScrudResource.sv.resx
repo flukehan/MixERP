@@ -870,4 +870,16 @@
   <data name="account_number" xml:space="preserve">
     <value>kontonummer</value>
   </data>
+  <data name="api_access_policy_id" xml:space="preserve">
+    <value>API Access Policy Id</value>
+  </data>
+  <data name="api_access_policy_uix" xml:space="preserve">
+    <value>Duplicera Entry för API Access Policy</value>
+  </data>
+  <data name="http_action_code" xml:space="preserve">
+    <value>HTTP Action Code</value>
+  </data>
+  <data name="poco_type_name" xml:space="preserve">
+    <value>Poco Typ Namn</value>
+  </data>
 </root>

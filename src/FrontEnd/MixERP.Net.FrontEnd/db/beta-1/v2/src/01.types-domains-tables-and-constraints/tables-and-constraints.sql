@@ -19,3 +19,5 @@ CREATE TABLE policy.api_access_policy
                                     DEFAULT(NOW())    
 );
 
+CREATE UNIQUE INDEX api_access_policy_uix
+ON policy.api_access_policy(user_id, poco_type_name, http_action_code, valid_till);

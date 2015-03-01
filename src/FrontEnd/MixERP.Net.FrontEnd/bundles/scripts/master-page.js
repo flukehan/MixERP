@@ -50318,8 +50318,8 @@ var parseFormattedNumber = function (input) {
         window.decimalSeparator = ".";
     };
 
-    var result = input.replace(thousandSeparator, "");
-    result = result.replace(decimalSeparator, ".");
+    var result = input.split(thousandSeparator).join("");
+    result = result.split(decimalSeparator).join (".");
     return result;
 };
 

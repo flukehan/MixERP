@@ -870,4 +870,16 @@
   <data name="counter_id" xml:space="preserve">
     <value>kaunter Identifier</value>
   </data>
+  <data name="api_access_policy_id" xml:space="preserve">
+    <value>API Akses Id Dasar</value>
+  </data>
+  <data name="api_access_policy_uix" xml:space="preserve">
+    <value>Pendua Entry Dasar Akses API</value>
+  </data>
+  <data name="http_action_code" xml:space="preserve">
+    <value>HTTP Kod Tindakan</value>
+  </data>
+  <data name="poco_type_name" xml:space="preserve">
+    <value>Nama Poco Jenis</value>
+  </data>
 </root>

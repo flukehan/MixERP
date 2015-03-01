@@ -28,6 +28,7 @@ using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Transactions;
 using MixERP.Net.FrontEnd.Cache;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Services.OTS
 {
@@ -40,24 +41,32 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services.OTS
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, string referenceNumber, string statementReference, string jsonDetails)
         {
-            if (string.IsNullOrWhiteSpace(jsonDetails))
+            try
             {
-                return 0;
+                if (string.IsNullOrWhiteSpace(jsonDetails))
+                {
+                    return 0;
+                }
+
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+
+                Collection<OpeningStockType> details = this.GetStockDetails(jsonDetails);
+
+                return Data.OneTimeSetup.OpeningInventory.Save(officeId, userId, loginId, valueDate, referenceNumber, statementReference, details);
             }
-
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
-
-            Collection<OpeningStockType> details = this.GetStockDetails(jsonDetails);
-
-            return Data.OneTimeSetup.OpeningInventory.Save(officeId, userId, loginId, valueDate, referenceNumber, statementReference, details);
+            catch (Exception ex)
+            {
+                Log.Warning("Could not save opening inventory entry. {Exception}", ex);
+                throw;
+            }
         }
 
         private Collection<OpeningStockType> GetStockDetails(string json)
         {
             Collection<OpeningStockType> details = new Collection<OpeningStockType>();
-            var jss = new JavaScriptSerializer();
+            JavaScriptSerializer jss = new JavaScriptSerializer();
 
             dynamic result = jss.Deserialize<dynamic>(json);
 

@@ -42,17 +42,25 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
         [WebMethod(EnableSession = true)]
         public bool DeleteAttachment(long id)
         {
-            if (id <= 0)
+            try
             {
-                throw new ArgumentNullException("id");
-            }
+                if (id <= 0)
+                {
+                    throw new ArgumentNullException("id");
+                }
 
-            if (CurrentUser.GetSignInView().UserId.ToInt() > 0)
+                if (CurrentUser.GetSignInView().UserId.ToInt() > 0)
+                {
+                    return this.DeleteImage(Data.Attachments.DeleteReturningPath(id));
+                }
+
+                return false;
+            }
+            catch (Exception ex)
             {
-                return this.DeleteImage(Data.Attachments.DeleteReturningPath(id));
+                Log.Warning("Could not delete attachment. {Exception}", ex);
+                throw;
             }
-
-            return false;
         }
 
         [WebMethod]
@@ -74,25 +82,33 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
         [WebMethod(EnableSession = true)]
         public bool Save(string book, long id, string attachmentsJSON)
         {
-            if (string.IsNullOrWhiteSpace(book))
+            try
             {
-                throw new ArgumentNullException("book");
-            }
+                if (string.IsNullOrWhiteSpace(book))
+                {
+                    throw new ArgumentNullException("book");
+                }
 
-            if (id <= 0)
+                if (id <= 0)
+                {
+                    throw new ArgumentNullException("id");
+                }
+
+                if (string.IsNullOrWhiteSpace(attachmentsJSON))
+                {
+                    throw new ArgumentNullException("attachmentsJSON");
+                }
+
+                Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+
+                return Data.Attachments.Save(userId, book, id, attachments);
+            }
+            catch (Exception ex)
             {
-                throw new ArgumentNullException("id");
+                Log.Warning("Could not save attachment. {Exception}", ex);
+                throw;
             }
-
-            if (string.IsNullOrWhiteSpace(attachmentsJSON))
-            {
-                throw new ArgumentNullException("attachmentsJSON");
-            }
-
-            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
-
-            return Data.Attachments.Save(userId, book, id, attachments);
         }
 
         private bool DeleteImage(string filePath)

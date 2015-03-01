@@ -29,6 +29,7 @@ using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.TransactionGovernor.Transactions;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 {
@@ -41,30 +42,39 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
         [WebMethod(EnableSession = true)]
         public long Save(long tranId, DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string attachmentsJSON)
         {
-            if (!StockTransaction.IsValidStockTransactionByTransactionMasterId(tranId))
+            try
             {
-                throw new InvalidOperationException(Resources.Warnings.InvalidStockTransaction);
-            }
+                if (!StockTransaction.IsValidStockTransactionByTransactionMasterId(tranId))
+                {
+                    throw new InvalidOperationException(Resources.Warnings.InvalidStockTransaction);
+                }
 
-            if (!StockTransaction.IsValidPartyByTransactionMasterId(tranId, partyCode))
+                if (!StockTransaction.IsValidPartyByTransactionMasterId(tranId, partyCode))
+                {
+                    throw new InvalidOperationException(Resources.Warnings.InvalidParty);
+                }
+
+                Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
+
+                if (!this.ValidateDetails(details, tranId))
+                {
+                    return 0;
+                }
+
+                Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
+
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+
+                return Data.Transactions.Return.PostTransaction(tranId, valueDate, officeId, userId, loginId, storeId,
+                    partyCode, priceTypeId, referenceNumber, statementReference, details, attachments);
+            }
+            catch (Exception ex)
             {
-                throw new InvalidOperationException(Resources.Warnings.InvalidParty);
+                Log.Warning("Could not save sales return entry. {Exception}", ex);
+                throw;
             }
-
-            Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
-
-            if (!this.ValidateDetails(details, tranId))
-            {
-                return 0;
-            }
-
-            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
-
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
-            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
-
-            return Data.Transactions.Return.PostTransaction(tranId, valueDate, officeId, userId, loginId, storeId, partyCode, priceTypeId, referenceNumber, statementReference, details, attachments);
         }
 
         private bool ValidateDetails(IEnumerable<StockDetail> details, long stockMasterId)

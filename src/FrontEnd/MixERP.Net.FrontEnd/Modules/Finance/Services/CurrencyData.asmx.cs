@@ -18,10 +18,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.FrontEnd.Cache;
 
@@ -29,7 +29,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 {
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
+    [ToolboxItem(false)]
     [ScriptService]
     public class CurrencyData : WebService
     {

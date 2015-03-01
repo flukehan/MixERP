@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
@@ -30,36 +31,45 @@ using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Cache;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
 {
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
+    [ToolboxItem(false)]
     [ScriptService]
     public class Adjustment : WebService
     {
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, string referenceNumber, string statementReference, List<StockAdjustmentDetail> models)
         {
-            foreach (var model in models)
+            try
             {
-                if (model.TransferTypeEnum == TransactionTypeEnum.Credit)
+                foreach (StockAdjustmentDetail model in models)
                 {
-                    decimal existingQuantity = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreName);
-
-                    if (existingQuantity < model.Quantity)
+                    if (model.TransferTypeEnum == TransactionTypeEnum.Credit)
                     {
-                        throw new MixERPException(string.Format(CultureInfo.CurrentCulture, Errors.InsufficientStockWarning, Conversion.TryCastInteger(existingQuantity), model.UnitName, model.ItemName));
+                        decimal existingQuantity = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreName);
+
+                        if (existingQuantity < model.Quantity)
+                        {
+                            throw new MixERPException(string.Format(CultureInfo.CurrentCulture, Errors.InsufficientStockWarning, Conversion.TryCastInteger(existingQuantity), model.UnitName, model.ItemName));
+                        }
                     }
                 }
+
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+
+                return Data.Transactions.StockAdjustment.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, models.ToCollection());
             }
-
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
-            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
-
-            return Data.Transactions.StockAdjustment.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, models.ToCollection());
+            catch (Exception ex)
+            {
+                Log.Warning("Could not save inventory adjustment entry. {Exception}", ex);
+                throw;
+            }
         }
     }
 }

@@ -26,6 +26,7 @@ using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models;
 using MixERP.Net.FrontEnd.Cache;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
@@ -38,28 +39,44 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod(EnableSession = true)]
         public bool InitializeEODOperation()
         {
-            if (!CurrentUser.GetSignInView().IsAdmin.ToBool())
+            try
             {
-                return false;
+                if (!CurrentUser.GetSignInView().IsAdmin.ToBool())
+                {
+                    return false;
+                }
+
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+
+                Data.EODOperation.Initialize(userId, officeId);
+
+                ForceLogOff(officeId);
+
+                return true;
             }
-
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-
-            Data.EODOperation.Initialize(userId, officeId);
-
-            this.ForceLogOff(officeId);
-
-            return true;
+            catch (Exception ex)
+            {
+                Log.Warning("Could not initialize eod operation. {Exception}", ex);
+                throw;
+            }
         }
 
         [WebMethod(EnableSession = true)]
         public void StartNewDay()
         {
-            this.SuggestDateReload();
+            try
+            {
+                SuggestDateReload();
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("Could not start a new day. {Exception}", ex);
+                throw;
+            }
         }
 
-        private void ForceLogOff(int officeId)
+        private static void ForceLogOff(int officeId)
         {
             Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates();
             DateTime forcedLogOffOn = DateTime.Now.AddMinutes(2);
@@ -86,7 +103,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             }
         }
 
-        private void SuggestDateReload()
+        private static void SuggestDateReload()
         {
             int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
             Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates();

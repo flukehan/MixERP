@@ -35,14 +35,9 @@ using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
-    /// <summary>
-    ///     Summary description for AccountData
-    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the
-    // following line. [System.Web.Script.Services.ScriptService]
     [ScriptService]
     public class AccountData : WebService
     {

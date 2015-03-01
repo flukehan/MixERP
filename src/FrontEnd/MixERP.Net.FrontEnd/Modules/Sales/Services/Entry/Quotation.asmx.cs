@@ -27,6 +27,7 @@ using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 {
@@ -39,24 +40,32 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string transactionIds, string attachmentsJSON, bool nonTaxable, int salespersonId, int shipperId, string shippingAddressCode)
         {
-            Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
-            Collection<long> tranIds = new Collection<long>();
-
-            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
-
-            if (!string.IsNullOrWhiteSpace(transactionIds))
+            try
             {
-                foreach (string transactionId in transactionIds.Split(','))
+                Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
+                Collection<long> tranIds = new Collection<long>();
+
+                Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
+
+                if (!string.IsNullOrWhiteSpace(transactionIds))
                 {
-                    tranIds.Add(Common.Conversion.TryCastInteger(transactionId));
+                    foreach (string transactionId in transactionIds.Split(','))
+                    {
+                        tranIds.Add(Common.Conversion.TryCastInteger(transactionId));
+                    }
                 }
+
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+
+                return Data.Transactions.Quotation.Add(officeId, userId, loginId, valueDate, partyCode, priceTypeId, details, referenceNumber, statementReference, tranIds, attachments, nonTaxable, salespersonId, shipperId, shippingAddressCode, storeId);
             }
-
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
-            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
-
-            return Data.Transactions.Quotation.Add(officeId, userId, loginId, valueDate, partyCode, priceTypeId, details, referenceNumber, statementReference, tranIds, attachments, nonTaxable, salespersonId, shipperId, shippingAddressCode, storeId);
+            catch (Exception ex)
+            {
+                Log.Warning("Could not save sales quotation entry. {Exception}", ex);
+                throw;
+            }
         }
     }
 }

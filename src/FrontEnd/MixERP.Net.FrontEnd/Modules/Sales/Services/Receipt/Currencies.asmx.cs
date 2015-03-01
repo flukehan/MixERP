@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Core;
@@ -24,15 +25,10 @@ using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 {
-    /// <summary>
-    ///     Summary description for Currencies
-    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the
-    // following line.
-    [System.Web.Script.Services.ScriptService]
+    [ScriptService]
     public class Currencies : WebService
     {
         [WebMethod]

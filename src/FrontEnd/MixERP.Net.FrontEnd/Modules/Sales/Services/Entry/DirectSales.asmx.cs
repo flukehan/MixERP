@@ -26,6 +26,7 @@ using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 {
@@ -38,35 +39,43 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string transactionType, int paymentTermId, int salespersonId, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string transactionIds, string attachmentsJSON, bool nonTaxable)
         {
-            Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
-
-            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
-
-            bool isCredit = transactionType != null && !transactionType.ToUpperInvariant().Equals("CASH");
-
-            if (!Data.Helpers.Stores.IsSalesAllowed(storeId))
+            try
             {
-                throw new InvalidOperationException("Sales is not allowed here.");
-            }
+                Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
 
-            foreach (StockDetail model in details)
-            {
-                if (Data.Helpers.Items.IsStockItem(model.ItemCode))
+                Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
+
+                bool isCredit = transactionType != null && !transactionType.ToUpperInvariant().Equals("CASH");
+
+                if (!Data.Helpers.Stores.IsSalesAllowed(storeId))
                 {
-                    decimal available = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreId);
+                    throw new InvalidOperationException("Sales is not allowed here.");
+                }
 
-                    if (available < model.Quantity)
+                foreach (StockDetail model in details)
+                {
+                    if (Data.Helpers.Items.IsStockItem(model.ItemCode))
                     {
-                        throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.Warnings.InsufficientStockWarning, available, model.UnitName, model.ItemCode));
+                        decimal available = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreId);
+
+                        if (available < model.Quantity)
+                        {
+                            throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.Warnings.InsufficientStockWarning, available, model.UnitName, model.ItemCode));
+                        }
                     }
                 }
+
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+
+                return Data.Transactions.DirectSales.Add(officeId, userId, loginId, valueDate, storeId, isCredit, paymentTermId, partyCode, salespersonId, priceTypeId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, statementReference, attachments, nonTaxable);
             }
-
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
-            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
-
-            return Data.Transactions.DirectSales.Add(officeId, userId, loginId, valueDate, storeId, isCredit, paymentTermId, partyCode, salespersonId, priceTypeId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, statementReference, attachments, nonTaxable);
+            catch (Exception ex)
+            {
+                Log.Warning("Could not save direct sales entry. {Exception}", ex);
+                throw;
+            }
         }
     }
 }

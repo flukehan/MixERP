@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-
+using Serilog;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -38,42 +38,50 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
         [WebMethod(EnableSession = true)]
         public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, int paymentTermId, string referenceNumber, string data, string statementReference, int salespersonId, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string transactionIds, string attachmentsJSON, bool nonTaxable)
         {
-            Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
-            Collection<int> tranIds = new Collection<int>();
-
-            Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
-
-            if (!Data.Helpers.Stores.IsSalesAllowed(storeId))
+            try
             {
-                throw new InvalidOperationException("Sales is not allowed here.");
-            }
+                Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
+                Collection<int> tranIds = new Collection<int>();
 
-            foreach (StockDetail model in details)
-            {
-                if (Data.Helpers.Items.IsStockItem(model.ItemCode))
+                Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
+
+                if (!Data.Helpers.Stores.IsSalesAllowed(storeId))
                 {
-                    decimal available = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreId);
+                    throw new InvalidOperationException("Sales is not allowed here.");
+                }
 
-                    if (available < model.Quantity)
+                foreach (StockDetail model in details)
+                {
+                    if (Data.Helpers.Items.IsStockItem(model.ItemCode))
                     {
-                        throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.Warnings.InsufficientStockWarning, available, model.UnitName, model.ItemCode));
+                        decimal available = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreId);
+
+                        if (available < model.Quantity)
+                        {
+                            throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.Warnings.InsufficientStockWarning, available, model.UnitName, model.ItemCode));
+                        }
                     }
                 }
-            }
 
-            if (!string.IsNullOrWhiteSpace(transactionIds))
-            {
-                foreach (string transactionId in transactionIds.Split(','))
+                if (!string.IsNullOrWhiteSpace(transactionIds))
                 {
-                    tranIds.Add(Common.Conversion.TryCastInteger(transactionId));
+                    foreach (string transactionId in transactionIds.Split(','))
+                    {
+                        tranIds.Add(Common.Conversion.TryCastInteger(transactionId));
+                    }
                 }
+
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+
+                return Data.Transactions.Delivery.Add(officeId, userId, loginId, valueDate, storeId, partyCode, priceTypeId, paymentTermId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, salespersonId, statementReference, tranIds, attachments, nonTaxable);
             }
-
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
-            long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
-
-            return Data.Transactions.Delivery.Add(officeId, userId, loginId, valueDate, storeId, partyCode, priceTypeId, paymentTermId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, salespersonId, statementReference, tranIds, attachments, nonTaxable);
+            catch (Exception ex)
+            {
+                Log.Warning("Could not save sales delivery entry. {Exception}", ex);
+                throw;
+            }
         }
     }
 }
