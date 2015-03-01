@@ -35,11 +35,11 @@ var valueDateTextBox = $("#ValueDateTextBox");
 var amount;
 var data;
 var itemCode;
-var itemName;
+var itemId;
 var quantity;
-var storeName;
+var storeId;
 var total;
-var unitName;
+var unitId;
 var url;
 
 $(document).ready(function () {
@@ -123,49 +123,48 @@ addRowButton.click(function () {
 
     removeDirty(itemCodeInputText);
 
-    itemName = itemSelect.getSelectedText();
-
-
-
-    storeName = parseInt(storeSelect.getSelectedValue());
-    if (!storeName) {
+    itemId = itemSelect.getSelectedText();
+    storeId = parseInt(storeSelect.getSelectedValue());
+    if (storeId <=0) {
         makeDirty(storeSelect);
         return;
     }
 
-    storeName = storeSelect.getSelectedText();
+    storeId = parseInt2(storeSelect.getSelectedValue());
+    if (storeId <= 0) {
+        makeDirty(storeSelect);
+        return;
+    }
+
+    storeId = storeSelect.getSelectedText();
     removeDirty(storeSelect);
 
-
     quantity = parseInt2(quantityInputText.val());
-    if (isNullOrWhiteSpace(quantity)) {
+    if (quantity <= 0) {
         makeDirty(quantityInputText);
         return;
-    };
+    }
 
-    removeDirty(quantityInputText);
-
-
-    unitName = parseInt2(unitSelect.getSelectedValue());
-    if (!unitName) {
+    unitId = parseInt2(unitSelect.getSelectedValue());
+    if (unitId <=0) {
         makeDirty(unitSelect);
         return;
     }
 
-    unitName = unitSelect.getSelectedText();
+    unitId = unitSelect.getSelectedText();
     removeDirty(unitSelect);
 
 
-    amount = parseFloat2(amountInputText.val());
-    if (isNullOrWhiteSpace(amount)) {
+    amount = parseInt2(amountInputText.val());
+    if (amount <= 0) {
         makeDirty(amountInputText);
         return;
     }
-
+    removeDirty(amountInputText)
 
     total = amount * quantity;
 
-    addRowToTable(itemCode, itemName, storeName, quantity, unitName, amount, total);
+    addRowToTable(itemCode, itemId, storeId, quantity, unitId, amount, total);
 
     itemCodeInputText.val("");
     quantityInputText.val("");
@@ -176,7 +175,7 @@ addRowButton.click(function () {
 });
 
 
-function addRowToTable(itemCode, itemName, storeName, quantity, unitName, amount, total) {
+function addRowToTable(itemCode, itemId, storeId, quantity, unitId, amount, total) {
     var grid = openingInventoryGridView;
     var rows = grid.find("tbody tr:not(:last-child)");
     var result = quantity * amount;
@@ -186,12 +185,13 @@ function addRowToTable(itemCode, itemName, storeName, quantity, unitName, amount
         var row = $(this);
 
         if (getColumnText(row, 0) === itemCode &&
-            getColumnText(row, 1) === itemName &&
-            getColumnText(row, 2) === storeName &&
-            getColumnText(row, 4) === unitName &&
-            parseFloat2(getColumnText(row, 5)) === amount) {
-            setColumnText(row, 3, getFormattedNumber(parseFloat2(parseFormattedNumber(getColumnText(row, 3))) + quantity));
-            setColumnText(row, 6, getFormattedNumber(parseFloat2(parseFormattedNumber(getColumnText(row, 6))) + result));
+                 getColumnText(row, 1) === itemId &&
+                 getColumnText(row, 2) === storeId &&
+                 getColumnText(row, 4) === unitId &&
+                 parseFloat2(getColumnText(row, 5)) === amount) {
+            setColumnText(row, 3, getFormattedNumber(parseInt2(getColumnText(row, 3)) + (quantity)));
+            setColumnText(row, 6, getFormattedNumber(parseFloat2(getColumnText(row, 6)) + result));
+            setColumnText(row, 5, getFormattedNumber(parseFloat2(getColumnText(row, 5))));
 
             addDanger(row);
 
@@ -202,10 +202,10 @@ function addRowToTable(itemCode, itemName, storeName, quantity, unitName, amount
 
     if (!match) {
         var html = "<tr><td>" + itemCode + "</td>" +
-            "<td>" + itemName + "</td>" +
-            "<td>" + storeName + "</td>" +
+            "<td>" + itemId + "</td>" +
+            "<td>" + storeId + "</td>" +
             "<td class='text-right'>" + getFormattedNumber(quantity) + "</td>" +
-            "<td>" + unitName + "</td>" +
+            "<td>" + unitId + "</td>" +
             "<td class='text-right'>" + getFormattedNumber(amount) + "</td>" +
             "<td class='text-right'>" + getFormattedNumber(total) + "</td>" +
             "<td><a class='pointer' onclick='removeRow($(this));summate();'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'>" +
