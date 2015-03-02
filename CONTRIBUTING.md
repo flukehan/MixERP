@@ -23,13 +23,13 @@ https://github.com/[your github username]
 
 Replace the text in square brackets as follows:
 
-* Replace `[date]` with the AD date since when you want your agreement to be effective from. The format should be `YYYY-MM-DD`.
+* Replace `[date]` with the AD date since when you want your agreement to be effective from. The format should be `YYYY-MM-DD` or `YYYY/MM/DD`.
 * Replace `[your name]` with your name.
 * Replace `[your github username]` with your GitHub username.
 
 
 ##Copyright Header
-Each file (exception *.designer.cs) needs to have the following license header.
+Each file (except *.designer.cs) must have the following license header.
 
 ```
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
