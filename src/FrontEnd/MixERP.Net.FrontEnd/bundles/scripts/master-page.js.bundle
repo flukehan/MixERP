@@ -25,7 +25,7 @@
     <file>/Scripts/semantic-ui/semantic.js</file>
     <file>/Scripts/jquery.signalR.js</file>
     <file>/Scripts/vakata-jstree/dist/jstree.min.js</file>
-    <file>/Scripts/mixerp.js</file>
+    <file>/Scripts/mixerp/mixerp-core.js</file>
 
     <!--Libraries End -->
     

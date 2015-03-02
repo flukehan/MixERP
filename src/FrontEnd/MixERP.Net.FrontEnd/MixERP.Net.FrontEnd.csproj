@@ -933,6 +933,12 @@
     <Content Include="Scripts\mixerp\core\dom\popunder.js" />
     <Content Include="Scripts\mixerp\core\dom\checkable.js" />
     <Content Include="Scripts\mixerp\core\grid\grid.js" />
+    <Content Include="Tests\all-tests.js">
+      <DependentUpon>all-tests.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Tests\all-tests.min.js">
+      <DependentUpon>all-tests.js</DependentUpon>
+    </Content>
     <Content Include="Tests\dom\cascading-pair.js" />
     <Content Include="Tests\dom\checkable.js" />
     <Content Include="Tests\dom\events.js" />
@@ -1275,6 +1281,13 @@
     </Content>
     <Content Include="Scripts\mixerp\mixerp-core.min.js.gzip">
       <DependentUpon>mixerp-core.min.js</DependentUpon>
+    </Content>
+    <Content Include="Tests\all-tests.js.bundle" />
+    <Content Include="Tests\all-tests.min.js.map">
+      <DependentUpon>all-tests.min.js</DependentUpon>
+    </Content>
+    <Content Include="Tests\all-tests.min.js.gzip">
+      <DependentUpon>all-tests.min.js</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
