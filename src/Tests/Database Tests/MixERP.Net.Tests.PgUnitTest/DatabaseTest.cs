@@ -18,14 +18,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using MixERP.Net.Tests.PgUnitTest.Helpers;
-using NUnit.Framework;
+using Xunit;
 
 namespace MixERP.Net.Tests.PgUnitTest
 {
-    [TestFixture]
     public class DatabaseTest
     {
-        [Test]
+        [Fact]
         public void RunDbTests()
         {
             DbTestRunner runner = new DbTestRunner();
@@ -36,10 +35,8 @@ namespace MixERP.Net.Tests.PgUnitTest
 
             if (expected != actual)
             {
-                Assert.Fail(message);
+                Assert.True(false, message);
             }
-
-            Assert.Pass(message);
         }
     }
 }
