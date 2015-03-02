@@ -18,7 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 /*jshint -W032*/
-/*global getAjax, getAjaxErrorMessage, getParameterByName, logError, saveButton, url:true, validateProductControl, errorLabelBottom, appendParameter, getData, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, salesPersonId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments*/
+/*global getAjax, getAjaxErrorMessage, getQueryStringByName, logError, saveButton, url:true, validateProductControl, errorLabelBottom, appendParameter, getData, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, salesPersonId, shipperId, shippingAddressCode, shippingCharge, cashRepositoryId, costCenterId, transactionIds, attachments*/
 
 if (typeof (saveButton) === "undefined") {
     saveButton = $("#SaveButton");
@@ -33,7 +33,7 @@ saveButton.click(function () {
 
 var save = function () {
     saveButton.addClass("loading");
-    var tranId = getParameterByName("TranId");
+    var tranId = getQueryStringByName("TranId");
     var ajaxSaveReturn = saveReturn(tranId, valueDate, storeId, partyCode, priceTypeId, referenceNumber, data, statementReference, attachments);
 
     ajaxSaveReturn.done(function (response) {

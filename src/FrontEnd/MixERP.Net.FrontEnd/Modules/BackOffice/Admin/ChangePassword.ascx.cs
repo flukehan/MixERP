@@ -42,10 +42,36 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            this.CreateHeader(this.Placeholder1);
-            this.CreateDivider(this.Placeholder1);
-            this.CreateFormSegment(this.Placeholder1);
-            this.CreateMessageLabel(this.Placeholder1);
+            using (ChangePasswordControl changePassword = new ChangePasswordControl())
+            {
+                this.Placeholder1.Controls.Add(changePassword);
+            }
+        }
+    }
+
+    public class ChangePasswordControl : CompositeControl
+    {
+        private HtmlGenericControl panel;
+
+        protected override void CreateChildControls()
+        {
+            this.panel = new HtmlGenericControl();                        
+            this.CreateHeader(this.panel);
+            this.CreateDivider(this.panel);
+            this.CreateFormSegment(this.panel);
+            this.CreateMessageLabel(this.panel);
+
+            this.Controls.Add(this.panel);
+        }
+
+        protected override void RecreateChildControls()
+        {
+            this.EnsureChildControls();
+        }
+
+        protected override void Render(HtmlTextWriter w)
+        {
+            this.panel.RenderControl(w);
         }
 
         private void CreateHeader(Control container)

@@ -924,6 +924,43 @@
     <Content Include="Scripts\jssha1.5\src\sha256.js" />
     <Content Include="Scripts\jssha1.5\src\sha512.js" />
     <Content Include="Scripts\jssha1.5\src\sha_dev.js" />
+    <Content Include="Scripts\mixerp\core\dom\cascading-pair.js" />
+    <Content Include="Scripts\mixerp\core\dom\visibility.js" />
+    <Content Include="Scripts\mixerp\core\grid\print-grid.js" />
+    <Content Include="Scripts\mixerp\core\libraries\semantic-ui.js" />
+    <Content Include="Scripts\mixerp\core\location.js" />
+    <Content Include="Scripts\mixerp\core\flag.js" />
+    <Content Include="Scripts\mixerp\core\dom\popunder.js" />
+    <Content Include="Scripts\mixerp\core\dom\checkable.js" />
+    <Content Include="Scripts\mixerp\core\grid\grid.js" />
+    <Content Include="Tests\dom\cascading-pair.js" />
+    <Content Include="Tests\dom\checkable.js" />
+    <Content Include="Tests\dom\events.js" />
+    <Content Include="Tests\dom\visibility.js" />
+    <Content Include="Tests\mixerp-core.test.html" />
+    <Content Include="Scripts\mixerp\mixerp-core.js">
+      <DependentUpon>mixerp-core.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Scripts\mixerp\mixerp-core.min.js">
+      <DependentUpon>mixerp-core.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\mixerp\core\transaction.js" />
+    <Content Include="Scripts\mixerp\core\mixerp-ajax.js" />
+    <Content Include="Scripts\mixerp\core\json.js" />
+    <Content Include="Scripts\mixerp\core\grid\cell.js" />
+    <Content Include="Scripts\mixerp\core\libraries\jquery-notify.js" />
+    <Content Include="Scripts\mixerp\core\prototype\string.js" />
+    <Content Include="Scripts\mixerp\core\validation.js" />
+    <Content Include="Scripts\mixerp\core\libraries\chartjs.js" />
+    <Content Include="Scripts\mixerp\core\localization.js" />
+    <Content Include="Scripts\mixerp\core\aspnet-validation.js" />
+    <Content Include="Scripts\mixerp\core\date-expressions.js" />
+    <Content Include="Scripts\mixerp\core\libraries\colorbox.js" />
+    <Content Include="Scripts\mixerp\core\window.js" />
+    <Content Include="Scripts\mixerp\core\conversion.js" />
+    <Content Include="Scripts\mixerp\core\dom\events.js" />
+    <Content Include="Scripts\mixerp\core\dom\select.js" />
+    <Content Include="Scripts\mixerp\core\dom\document.js" />
     <Content Include="Scripts\mixerp\master-page\locale.js" />
     <Content Include="Scripts\mixerp\utitlities\country-codes.js" />
     <Content Include="Scripts\Pages\SignIn.aspx.js" />
@@ -1231,6 +1268,13 @@
     <Content Include="Stylesheets\report.less" />
     <Content Include="Stylesheets\report.css.map">
       <DependentUpon>report.css</DependentUpon>
+    </Content>
+    <Content Include="Scripts\mixerp\mixerp-core.js.bundle" />
+    <Content Include="Scripts\mixerp\mixerp-core.min.js.map">
+      <DependentUpon>mixerp-core.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\mixerp\mixerp-core.min.js.gzip">
+      <DependentUpon>mixerp-core.min.js</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

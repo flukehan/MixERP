@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     $(".ui.checkbox").checkbox();
 
-    var message = getParameterByName("Message");
+    var message = getQueryStringByName("Message");
 
     if (message) {
         $(".exception").append(message).addClass("big error");
@@ -57,7 +57,7 @@ signInButton.click(function() {
 });
 
 function getRedirectUrl() {
-    var url = getParameterByName("ReturnUrl");
+    var url = getQueryStringByName("ReturnUrl");
 
     if (isNullOrWhiteSpace(url)) {
         url = "/";

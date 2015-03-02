@@ -22,8 +22,8 @@ $(document).ready(function () {
 });
 
 function initializeAttachments() {
-    var book = getParameterByName("Book");
-    var id = parseFloat2(getParameterByName("Id"));
+    var book = getQueryStringByName("Book");
+    var id = parseFloat2(getQueryStringByName("Id"));
 
     if (isNullOrWhiteSpace(book) || id <= 0) {
         return;
@@ -147,8 +147,8 @@ saveButton.click(function () {
         return;
     };
 
-    var book = getParameterByName("Book");
-    var id = getParameterByName("Id");
+    var book = getQueryStringByName("Book");
+    var id = getQueryStringByName("Id");
 
     var ajaxSave = save(book, id, uploads);
 

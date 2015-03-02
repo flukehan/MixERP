@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-function sisGetParameterByName(name) {
+function sisGetQueryStringByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
@@ -24,7 +24,7 @@ function sisGetParameterByName(name) {
 };
 
 function sisUpdateValue(val) {
-    var ctl = sisGetParameterByName('AssociatedControlId');
+    var ctl = sisGetQueryStringByName('AssociatedControlId');
     $('#' + ctl, parent.document.body).val(val);
     closeWindow();
 };

@@ -109,7 +109,7 @@ function scrudLayout() {
     };
 };
 
-function scrudGetParameterByName(name) {
+function scrudGetQueryStringByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
@@ -135,9 +135,9 @@ function scrudSaveAndClose() {
 
     if (parent) {
         var lastValue = parseFloat2($("#LastValueHidden").val());
-        var ctl = scrudGetParameterByName('AssociatedControlId');
+        var ctl = scrudGetQueryStringByName('AssociatedControlId');
         var associatedControl = parent.$('#' + ctl);
-        var callBackFunctionName = scrudGetParameterByName('CallBackFunctionName');
+        var callBackFunctionName = scrudGetQueryStringByName('CallBackFunctionName');
 
         if (lastValue > 0) {
             associatedControl.val(lastValue);

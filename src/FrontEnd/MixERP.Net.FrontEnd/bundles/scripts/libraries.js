@@ -49837,42 +49837,16 @@ if(i.core.selected)return o=this,this.deselect_all(),n.each(i.core.selected,func
 /*
 //# sourceMappingURL=jstree.min.js.map
 */
-///#source 1 1 /Scripts/mixerp.js
-/********************************************************************************
-Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+///#source 1 1 /Scripts/mixerp/mixerp-core.js
+///#source 1 1 /Scripts/mixerp/core/dom/cascading-pair.js
+function createCascadingPair(select, input) {
+    input.blur(function () {
+        selectDropDownListByValue(this.id, select.attr("id"));
+    });
 
-This file is part of MixERP.
-
-MixERP is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-MixERP is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
-***********************************************************************************/
-
-/*jshint -W032, -W107, -W098 */
-/*global areYouSureLocalized, Chart, currencyDecimalPlaces, decimalSeparator, legend, noneLocalized, Page_ClientValidate, selectLocalized, shortDateFormat, Sys, thousandSeparator, today*/
-
-function getDocHeight(margin) {
-    var D = document;
-    var height = Math.max(
-        Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
-        Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
-        Math.max(D.body.clientHeight, D.documentElement.clientHeight)
-    );
-
-    if (margin) {
-        height += parseInt2(margin);
-    };
-
-    return height;
+    select.change(function () {
+        input.val(select.getSelectedValue());
+    });
 };
 
 var selectDropDownListByValue = function (textBoxId, dropDownListId) {
@@ -49901,7 +49875,38 @@ var selectDropDownListByValue = function (textBoxId, dropDownListId) {
 
     triggerChange(dropDownListId);
 };
+///#source 1 1 /Scripts/mixerp/core/dom/checkable.js
+var toogleSelection = function (element) {
+    var property = element.prop("checked");
 
+    if (property) {
+        element.prop("checked", false);
+    } else {
+        element.prop("checked", true);
+    }
+};
+///#source 1 1 /Scripts/mixerp/core/dom/document.js
+function getDocHeight(margin) {
+    var D = document;
+    var height = Math.max(
+        Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
+        Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
+        Math.max(D.body.clientHeight, D.documentElement.clientHeight)
+    );
+
+    if (margin) {
+        height += parseInt2(margin);
+    };
+
+    return height;
+};
+
+var repaint = function () {
+    setTimeout(function () {
+        $(document).trigger('resize');
+    }, 1000);
+};
+///#source 1 1 /Scripts/mixerp/core/dom/events.js
 var triggerChange = function (controlId) {
     var element = document.getElementById(controlId);
 
@@ -49928,225 +49933,159 @@ var triggerClick = function (controlId) {
     }
 };
 
-//function fireEvent(element, event) {
-//    if (document.createEvent) {
-//        // dispatch for firefox + others
-//        var evt = document.createEvent("HTMLEvents");
-//        evt.initEvent(event, true, true); // event type,bubbling,cancelable
-//        return !element.dispatchEvent(evt);
-//    } else {
-//        // dispatch for IE
-//        var evt = document.createEventObject();
-//        return element.fireEvent('on' + event, evt);
-//    }
-//};
+///#source 1 1 /Scripts/mixerp/core/dom/popunder.js
+function popUnder(div, button) {
+    div.css("position", "fixed");
 
-var parseFloat2 = function (arg) {
-    if (typeof (arg) === "undefined") {
-        return 0;
+    div.position({
+        my: "left top",
+        at: "left bottom",
+        of: button,
+        collision: "fit"
+    });
+
+    div.show(500);
+};
+///#source 1 1 /Scripts/mixerp/core/dom/select.js
+jQuery.fn.getSelectedItem = function () {
+    var listItem = $(this[0]);
+    return listItem.find("option:selected");
+};
+
+jQuery.fn.getSelectedValue = function () {
+    return $(this[0]).getSelectedItem().val();
+};
+
+jQuery.fn.getSelectedText = function () {
+    return $(this[0]).getSelectedItem().text();
+};
+///#source 1 1 /Scripts/mixerp/core/dom/visibility.js
+function setVisible(targetControl, visible, timeout) {
+    if (visible) {
+        targetControl.show(timeout);
+        return;
     };
 
-    var input = arg;
+    targetControl.hide(timeout);
+};
+///#source 1 1 /Scripts/mixerp/core/grid/cell.js
+var sumOfColumn = function (tableSelector, columnIndex) {
+    var total = 0;
 
-    if (currencySymbol) {
-        input = input.toString().replace(currencySymbol, "");
-    };
+    $(tableSelector).find('tr').each(function () {
+        var value = parseFormattedNumber($('td', this).eq(columnIndex).text());
+        total += parseFloat2(value);
+    });
 
-    var val = parseFloat(parseFormattedNumber(input.toString()) || 0);
+    return $.number(total, currencyDecimalPlaces, decimalSeparator, thousandSeparator);
+};
 
-    if (isNaN(val)) {
-        val = 0;
+var getColumnText = function (row, columnIndex) {
+    return row.find("td:eq(" + columnIndex + ")").text();
+};
+
+var setColumnText = function (row, columnIndex, value) {
+    row.find("td:eq(" + columnIndex + ")").html(value);
+};
+
+var toggleDanger = function (cell) {
+    var row = cell.closest("tr");
+    row.toggleClass("negative");
+};
+
+var addDanger = function (row) {
+    row.removeClass("negative");
+    row.addClass("negative");
+};
+
+var toggleSuccess = function (cell) {
+    var row = cell.closest("tr");
+    row.toggleClass("positive");
+};
+
+var removeRow = function (cell) {
+    var result = confirm(areYouSureLocalized);
+
+    if (result) {
+        cell.closest("tr").remove();
     }
-
-    return val;
 };
+///#source 1 1 /Scripts/mixerp/core/grid/grid.js
+function getSelectedCheckBoxItemIds(checkBoxColumnPosition, itemIdColumnPosition, grid) {
+    var selection = [];
 
-var parseInt2 = function (arg) {
-    if (typeof (arg) === "undefined") {
-        return 0;
-    };
+    //Iterate through each row to investigate the selection.
+    grid.find("tr").each(function () {
+        //Get an instance of the current row in this loop.
+        var row = $(this);
 
-    var val = parseInt(parseFormattedNumber(arg.toString()) || 0);
+        //Get the instance of the cell which contains the checkbox.
+        var checkBoxContainer = row.select("td:nth-child(" + checkBoxColumnPosition + ")");
 
-    if (isNaN(val)) {
-        val = 0;
-    }
+        //Get the instance of the checkbox from the container.
+        var checkBox = checkBoxContainer.find("input");
 
-    return val;
-};
+        if (checkBox) {
+            //Check if the checkbox was selected or checked.
+            if (checkBox.prop("checked")) {
+                //Get ID from the associated cell.
+                var id = row.find("td:nth-child(" + itemIdColumnPosition + ")").html();
 
-var confirmAction = function () {
-    return confirm(areYouSureLocalized);
-};
-
-/******************************************************************************************************
-DATE EXPRESSION START
-******************************************************************************************************/
-
-var validateByControlId = function (controlId) {
-    if (typeof Page_ClientValidate === "function") {
-        Page_ClientValidate(controlId);
-    };
-};
-
-$(document).ready(function () {
-    $(".date").blur(function () {
-        if (today === "") return;
-        var control = $(this);
-        var value = control.val().trim().toLowerCase();
-        var result;
-        var number;
-
-        if (value === "d") {
-            result = dateAdd(today, "d", 0);
-            control.val(result).trigger('change');
-            validateByControlId(control.attr("id"));
-            return;
-        }
-
-        if (value === "m" || value === "+m") {
-            control.val(dateAdd(today, "m", 1)).trigger('change');
-            validateByControlId(control.attr("id"));
-            return;
-        }
-
-        if (value === "w" || value === "+w") {
-            control.val(dateAdd(today, "d", 7)).trigger('change');
-            validateByControlId(control.attr("id"));
-            return;
-        }
-
-        if (value === "y" || value === "+y") {
-            control.val(dateAdd(today, "y", 1)).trigger('change');
-            validateByControlId(control.attr("id"));
-            return;
-        }
-
-        if (value === "-d") {
-            control.val(dateAdd(today, "d", -1)).trigger('change');
-            validateByControlId(control.attr("id"));
-            return;
-        }
-
-        if (value === "+d") {
-            control.val(dateAdd(today, "d", 1)).trigger('change');
-            validateByControlId(control.attr("id"));
-            return;
-        }
-
-        if (value === "-w") {
-            control.val(dateAdd(today, "d", -7)).trigger('change');
-            validateByControlId(control.attr("id"));
-            return;
-        }
-
-        if (value === "-m") {
-            control.val(dateAdd(today, "m", -1)).trigger('change');
-            validateByControlId(control.attr("id"));
-            return;
-        }
-
-        if (value === "-y") {
-            control.val(dateAdd(today, "y", -1)).trigger('change');
-            validateByControlId(control.attr("id"));
-            return;
-        }
-
-        if (value.indexOf("d") >= 0) {
-            number = parseInt(value.replace("d"));
-            control.val(dateAdd(today, "d", number)).trigger('change');
-            validateByControlId(control.attr("id"));
-            return;
-        }
-
-        if (value.indexOf("w") >= 0) {
-            number = parseInt(value.replace("w"));
-            control.val(dateAdd(today, "d", number * 7)).trigger('change');
-            validateByControlId(control.attr("id"));
-            return;
-        }
-
-        if (value.indexOf("m") >= 0) {
-            number = parseInt(value.replace("m"));
-            control.val(dateAdd(today, "m", number)).trigger('change');
-            validateByControlId(control.attr("id"));
-            return;
-        }
-
-        if (value.indexOf("y") >= 0) {
-            number = parseInt(value.replace("y"));
-            control.val(dateAdd(today, "y", number)).trigger('change');
-            validateByControlId(control.attr("id"));
-            return;
+                //Add the ID to the array.
+                selection.push(id);
+            }
         }
     });
-});
 
-function dateAdd(dt, expression, number) {
-    var d = Date.parseExact(dt, shortDateFormat);
-    var ret = new Date();
-
-    if (expression === "d") {
-        ret = new Date(d.getFullYear(), d.getMonth(), d.getDate() + parseInt(number));
-    }
-
-    if (expression === "m") {
-        ret = new Date(d.getFullYear(), d.getMonth() + parseInt(number), d.getDate());
-    }
-
-    if (expression === "y") {
-        ret = new Date(d.getFullYear() + parseInt(number), d.getMonth(), d.getDate());
-    }
-
-    return ret.toString(shortDateFormat);
+    return selection;
 };
+///#source 1 1 /Scripts/mixerp/core/grid/print-grid.js
+var printGridView = function (templatePath, headerPath, reportTitle, gridViewId, printedDate, user, office, windowName, offset, offsetLast) {
+    //Load report template from the path.
+    $.get(templatePath, function () { }).done(function (data) {
+        //Load report header template.
+        $.get(headerPath, function () { }).done(function (header) {
+            var table = $("#" + gridViewId).clone();
 
-/******************************************************************************************************
-DATE EXPRESSION END
-******************************************************************************************************/
+            table.find("tr.tableFloatingHeader").remove();
 
-var showWindow = function (url) {
-    $.colorbox({ width: +$('html').width() * 0.7, height: +$('html').height() * 0.7, iframe: true, href: url });
+            table.find("th:nth-child(-n" + offset + ")").remove();
+            table.find("td:nth-child(-n" + offset + ")").remove();
+
+            table.find("th:nth-last-child(-n" + offsetLast + ")").remove();
+            table.find("td:nth-last-child(-n" + offsetLast + ")").remove();
+
+            table.find("td").removeAttr("style");
+            table.find("tr").removeAttr("style");
+
+            table = "<table border='1' class='preview'>" + table.html() + "</table>";
+
+            data = data.replace("{Header}", header);
+            data = data.replace("{ReportHeading}", reportTitle);
+            data = data.replace("{PrintDate}", printedDate);
+            data = data.replace("{UserName}", user);
+            data = data.replace("{OfficeCode}", office);
+            data = data.replace("{Table}", table);
+
+            //Creating and opening a new window to display the report.
+            var w = window.open('', windowName,
+                + ',menubar=0'
+                + ',toolbar=0'
+                + ',status=0'
+                + ',scrollbars=1'
+                + ',resizable=0');
+            w.moveTo(0, 0);
+            w.resizeTo(screen.width, screen.height);
+
+            //Writing the report to the window.
+            w.document.writeln(data);
+            w.document.close();
+
+            //Report sent to the browser.
+        });
+    });
 };
-
-$(document).ready(function () {
-    setCurrencyFormat();
-    setNumberFormat();
-
-    if (typeof Sys !== "undefined") {
-        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(Page_EndRequest);
-    }
-});
-
-function Page_EndRequest() {
-    setCurrencyFormat();
-    setNumberFormat();
-
-    if (typeof (AsyncListener) === "function") {
-        AsyncListener();
-    };
-};
-
-var setCurrencyFormat = function () {
-    if (typeof currencyDecimalPlaces === "undefined" || typeof decimalSeparator === "undefined" || typeof thousandSeparator === "undefined") {
-        return;
-    };
-
-    $('input.currency').number(true, currencyDecimalPlaces, decimalSeparator, thousandSeparator);
-};
-
-var setNumberFormat = function () {
-    if (typeof decimalSeparator === "undefined" || typeof thousandSeparator === "undefined") {
-        return;
-    };
-
-    $('input.decimal').number(true, 6, decimalSeparator, thousandSeparator);
-    $('input.integer').number(true, 0, decimalSeparator, thousandSeparator);
-};
-
-/******************************************************************************************************
-Chart BEGIN
-******************************************************************************************************/
+///#source 1 1 /Scripts/mixerp/core/libraries/chartjs.js
 var chartColors = ["#3366CC", "#DC3912", "#109618", "#FF9900", "#990099", "#0099C6", "#DD4477", "#66AA00", "#B82E2E", "#316395", "#994499", "#AAAA11", "#E67300", "#8B0707", "#3B3EAC", "#B77322", "#16D620"];
 
 function getFillColor(index) {
@@ -50302,12 +50241,334 @@ function preparePieChart(datasourceId, canvasId, legendId, type, hide, titleColu
         table.hide();
     };
 };
+///#source 1 1 /Scripts/mixerp/core/libraries/colorbox.js
+var showWindow = function (url) {
+    $.colorbox({ width: +$('html').width() * 0.7, height: +$('html').height() * 0.7, iframe: true, href: url });
+};
+///#source 1 1 /Scripts/mixerp/core/libraries/jquery-notify.js
+function displayMessage(a, b) {
+    $.notify(a, b);
+};
 
-/******************************************************************************************************
-Chart END
-******************************************************************************************************/
+function displaySucess() {
+    $.notify(taskCompletedSuccessfullyLocalized, "success");
+};
 
+var logError = function (a, b) {
+    //Todo
+    $.notify(a, b);
+};
 
+function logAjaxErrorMessage(xhr) {
+    logError(getAjaxErrorMessage(xhr));
+};
+///#source 1 1 /Scripts/mixerp/core/libraries/semantic-ui.js
+//Semantic UI Tab Support
+$(document).ready(function () {
+    var tabItems = $('.tabular .item');
+
+    if (tabItems && tabItems.length > 0) {
+        tabItems.tab();
+    };
+
+    //Semantic UI Button Support
+    var buttons = $(".buttons .button");
+
+    buttons.on("click", function () {
+        buttons.removeClass("active");
+        $(this).addClass("active");
+    });
+});
+///#source 1 1 /Scripts/mixerp/core/prototype/string.js
+if (!String.prototype.format) {
+// ReSharper disable once NativeTypePrototypeExtending
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function (match, number) {
+            return typeof args[number] !== 'undefined'
+                ? args[number]
+                : match;
+        });
+    };
+};
+///#source 1 1 /Scripts/mixerp/core/aspnet-validation.js
+var validateByControlId = function (controlId) {
+    if (typeof Page_ClientValidate === "function") {
+        Page_ClientValidate(controlId);
+    };
+};
+///#source 1 1 /Scripts/mixerp/core/conversion.js
+var parseFloat2 = function (arg) {
+    if (typeof (arg) === "undefined") {
+        return 0;
+    };
+
+    var input = arg;
+
+    if (currencySymbol) {
+        input = input.toString().replace(currencySymbol, "");
+    };
+
+    var val = parseFloat(parseFormattedNumber(input.toString()) || 0);
+
+    if (isNaN(val)) {
+        val = 0;
+    }
+
+    return val;
+};
+
+var parseInt2 = function (arg) {
+    if (typeof (arg) === "undefined") {
+        return 0;
+    };
+
+    var val = parseInt(parseFormattedNumber(arg.toString()) || 0);
+
+    if (isNaN(val)) {
+        val = 0;
+    }
+
+    return val;
+};
+
+function parseDate(str) {
+    return new Date(Date.parse(str));
+};
+
+function parseSerializedDate(str) {
+    str = str.replace(/[^0-9 +]/g, '');
+    return new Date(parseInt(str));
+};
+///#source 1 1 /Scripts/mixerp/core/date-expressions.js
+function dateAdd(dt, expression, number) {
+    var d = Date.parseExact(dt, shortDateFormat);
+    var ret = new Date();
+
+    if (expression === "d") {
+        ret = new Date(d.getFullYear(), d.getMonth(), d.getDate() + parseInt(number));
+    }
+
+    if (expression === "m") {
+        ret = new Date(d.getFullYear(), d.getMonth() + parseInt(number), d.getDate());
+    }
+
+    if (expression === "y") {
+        ret = new Date(d.getFullYear() + parseInt(number), d.getMonth(), d.getDate());
+    }
+
+    return ret.toString(shortDateFormat);
+};
+
+$(document).ready(function () {
+    $(".date").blur(function () {
+        if (today === "") return;
+        var control = $(this);
+        var value = control.val().trim().toLowerCase();
+        var result;
+        var number;
+
+        if (value === "d") {
+            result = dateAdd(today, "d", 0);
+            control.val(result).trigger('change');
+            validateByControlId(control.attr("id"));
+            return;
+        }
+
+        if (value === "m" || value === "+m") {
+            control.val(dateAdd(today, "m", 1)).trigger('change');
+            validateByControlId(control.attr("id"));
+            return;
+        }
+
+        if (value === "w" || value === "+w") {
+            control.val(dateAdd(today, "d", 7)).trigger('change');
+            validateByControlId(control.attr("id"));
+            return;
+        }
+
+        if (value === "y" || value === "+y") {
+            control.val(dateAdd(today, "y", 1)).trigger('change');
+            validateByControlId(control.attr("id"));
+            return;
+        }
+
+        if (value === "-d") {
+            control.val(dateAdd(today, "d", -1)).trigger('change');
+            validateByControlId(control.attr("id"));
+            return;
+        }
+
+        if (value === "+d") {
+            control.val(dateAdd(today, "d", 1)).trigger('change');
+            validateByControlId(control.attr("id"));
+            return;
+        }
+
+        if (value === "-w") {
+            control.val(dateAdd(today, "d", -7)).trigger('change');
+            validateByControlId(control.attr("id"));
+            return;
+        }
+
+        if (value === "-m") {
+            control.val(dateAdd(today, "m", -1)).trigger('change');
+            validateByControlId(control.attr("id"));
+            return;
+        }
+
+        if (value === "-y") {
+            control.val(dateAdd(today, "y", -1)).trigger('change');
+            validateByControlId(control.attr("id"));
+            return;
+        }
+
+        if (value.indexOf("d") >= 0) {
+            number = parseInt(value.replace("d"));
+            control.val(dateAdd(today, "d", number)).trigger('change');
+            validateByControlId(control.attr("id"));
+            return;
+        }
+
+        if (value.indexOf("w") >= 0) {
+            number = parseInt(value.replace("w"));
+            control.val(dateAdd(today, "d", number * 7)).trigger('change');
+            validateByControlId(control.attr("id"));
+            return;
+        }
+
+        if (value.indexOf("m") >= 0) {
+            number = parseInt(value.replace("m"));
+            control.val(dateAdd(today, "m", number)).trigger('change');
+            validateByControlId(control.attr("id"));
+            return;
+        }
+
+        if (value.indexOf("y") >= 0) {
+            number = parseInt(value.replace("y"));
+            control.val(dateAdd(today, "y", number)).trigger('change');
+            validateByControlId(control.attr("id"));
+            return;
+        }
+    });
+});
+///#source 1 1 /Scripts/mixerp/core/flag.js
+jQuery.fn.getTotalColumns = function () {
+    var grid = $($(this).selector);
+    var row = grid.find("tr").eq(1);
+
+    var colCount = 0;
+
+    row.find("td").each(function () {
+        if ($(this).attr('colspan')) {
+            colCount += +$(this).attr('colspan');
+        } else {
+            colCount++;
+        }
+    });
+
+    return colCount;
+};
+
+function createFlaggedRows(grid, bgColorColumnPos, fgColorColumnPos) {
+    if (!bgColorColumnPos) {
+        bgColorColumnPos = grid.getTotalColumns() - 1;
+    };
+
+    if (!fgColorColumnPos) {
+        fgColorColumnPos = grid.getTotalColumns();
+    };
+
+    //Iterate through all the rows of the grid.
+    grid.find("tr").each(function () {
+        var row = $(this);
+
+        //Read the color value from the associated column.
+        var background = row.find("td:nth-child(" + bgColorColumnPos + ")").html();
+        var foreground = row.find("td:nth-child(" + fgColorColumnPos + ")").html();
+
+        if (background) {
+            if (background !== '&nbsp;') {
+                row.css("background", background);
+
+                //Iterate through all the columns of the current row.
+                row.find("td").each(function () {
+                    //Prevent border display by unsetting the border information for each cell.
+                    $(this).css("border", "none");
+                });
+            };
+        };
+
+        if (foreground) {
+            if (foreground !== '&nbsp;') {
+                row.find("td").css("color", foreground);
+            };
+        };
+
+        row.find(":nth-child(" + bgColorColumnPos + ")").hide();
+        row.find(":nth-child(" + fgColorColumnPos + ")").hide();
+    });
+};
+
+///#source 1 1 /Scripts/mixerp/core/json.js
+var tableToJSON = function (grid) {
+    var colData = [];
+    var rowData = [];
+
+    var rows = grid.find("tr:not(:last-child)");
+
+    rows.each(function () {
+        var row = $(this);
+
+        colData = [];
+
+        row.find("td:not(:last-child)").each(function () {
+            colData.push($(this).text());
+        });
+
+        rowData.push(colData);
+    });
+
+    var data = JSON.stringify(rowData);
+
+    return data;
+};
+///#source 1 1 /Scripts/mixerp/core/localization.js
+$(document).ready(function () {
+    setCurrencyFormat();
+    setNumberFormat();
+
+    if (typeof Sys !== "undefined") {
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(Page_EndRequest);
+    }
+});
+
+//Fired on ASP.net Ajax Postback
+function Page_EndRequest() {
+    setCurrencyFormat();
+    setNumberFormat();
+
+    if (typeof (AsyncListener) === "function") {
+        AsyncListener();
+    };
+};
+
+var setCurrencyFormat = function () {
+    if (typeof currencyDecimalPlaces === "undefined" || typeof decimalSeparator === "undefined" || typeof thousandSeparator === "undefined") {
+        return;
+    };
+
+    $('input.currency').number(true, currencyDecimalPlaces, decimalSeparator, thousandSeparator);
+};
+
+var setNumberFormat = function () {
+    if (typeof decimalSeparator === "undefined" || typeof thousandSeparator === "undefined") {
+        return;
+    };
+
+    $('input.decimal').number(true, 6, decimalSeparator, thousandSeparator);
+    $('input.integer').number(true, 0, decimalSeparator, thousandSeparator);
+};
 
 var parseFormattedNumber = function (input) {
     if (typeof window.thousandSeparator === "undefined") {
@@ -50319,7 +50580,7 @@ var parseFormattedNumber = function (input) {
     };
 
     var result = input.split(thousandSeparator).join("");
-    result = result.split(decimalSeparator).join (".");
+    result = result.split(decimalSeparator).join(".");
     return result;
 };
 
@@ -50345,89 +50606,45 @@ var getFormattedNumber = function (input, isInteger) {
     return $.number(input, decimalPlaces, decimalSeparator, thousandSeparator);
 };
 
-var makeDirty = function (obj) {
-    obj.parent().addClass("error");
-    obj.focus();
+///#source 1 1 /Scripts/mixerp/core/location.js
+function getQueryStringByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 };
 
-var removeDirty = function (obj) {
-    obj.parent().removeClass("error");
+//http://stackoverflow.com/questions/5999118/add-or-update-query-string-parameter
+function updateQueryString(key, value, url) {
+    if (!url) url = window.location.href;
+    var re = new RegExp("([?&])" + key + "=.*?(&|#|$)(.*)", "gi"),
+        hash;
+
+    if (re.test(url)) {
+        if (typeof value !== 'undefined' && value !== null)
+            return url.replace(re, '$1' + key + "=" + value + '$2$3');
+        else {
+            hash = url.split('#');
+            url = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
+            if (typeof hash[1] !== 'undefined' && hash[1] !== null)
+                url += '#' + hash[1];
+            return url;
+        }
+    }
+    else {
+        if (typeof value !== 'undefined' && value !== null) {
+            var separator = url.indexOf('?') !== -1 ? '&' : '?';
+            hash = url.split('#');
+            url = hash[0] + separator + key + '=' + value;
+            if (typeof hash[1] !== 'undefined' && hash[1] !== null)
+                url += '#' + hash[1];
+            return url;
+        }
+        else
+            return url;
+    }
 };
-
-var isNullOrWhiteSpace = function (obj) {
-    return (!obj || $.trim(obj) === "");
-};
-
-if (!String.prototype.format) {
-    String.prototype.format = function () {
-        var args = arguments;
-        return this.replace(/{(\d+)}/g, function (match, number) {
-            return typeof args[number] !== 'undefined'
-                ? args[number]
-                : match;
-        });
-    };
-};
-
-function displayMessage(a, b) {
-    $.notify(a, b);
-};
-
-var logError = function (a, b) {
-    //Todo
-    $.notify(a, b);
-};
-
-function logAjaxErrorMessage(xhr) {
-    logError(getAjaxErrorMessage(xhr));
-};
-
-function logToConsole(message) {
-    console.log(message);
-};
-
-function logToConsole2(message) {
-    console.log(JSON.stringify(message));
-};
-
-var sumOfColumn = function (tableSelector, columnIndex) {
-    var total = 0;
-
-    $(tableSelector).find('tr').each(function () {
-        var value = parseFormattedNumber($('td', this).eq(columnIndex).text());
-        total += parseFloat2(value);
-    });
-
-    return $.number(total, currencyDecimalPlaces, decimalSeparator, thousandSeparator);
-};
-
-var getColumnText = function (row, columnIndex) {
-    return row.find("td:eq(" + columnIndex + ")").text();
-};
-
-var setColumnText = function (row, columnIndex, value) {
-    row.find("td:eq(" + columnIndex + ")").html(value);
-};
-
-var fadeThis = function (selector) {
-    var options = {};
-    var panel = $(selector);
-    panel.effect("fade", options, 5000);
-};
-
-jQuery.fn.getSelectedItem = function () {
-    var listItem = $(this[0]);
-    return listItem.find("option:selected");
-};
-
-jQuery.fn.getSelectedValue = function () {
-    return $(this[0]).getSelectedItem().val();
-};
-
-jQuery.fn.getSelectedText = function () {
-    return $(this[0]).getSelectedItem().text();
-};
-
+///#source 1 1 /Scripts/mixerp/core/mixerp-ajax.js
 var appendParameter = function (data, parameter, value) {
     if (!isNullOrWhiteSpace(data)) {
         data += ",";
@@ -50448,73 +50665,6 @@ var getData = function (data) {
     };
 
     return null;
-};
-
-var focusNextElement = function () {
-    var $this = document.activeElement;
-
-    // if we haven't stored the tabbing order
-    if (!$this.form.tabOrder) {
-        var els = $this.form.elements,
-            ti = [],
-            rest = [];
-
-        // store all focusable form elements with tabIndex > 0
-        for (var i = 0, il = els.length; i < il; i++) {
-            if (els[i].tabIndex > 0 &&
-                !els[i].disabled &&
-                !els[i].hidden &&
-                !els[i].readOnly &&
-                els[i].type !== 'hidden') {
-                ti.push(els[i]);
-            }
-        }
-
-        // sort them by tabIndex order
-        ti.sort(function (a, b) { return a.tabIndex - b.tabIndex; });
-
-        // store the rest of the elements in order
-        for (i = 0, il = els.length; i < il; i++) {
-            if (els[i].tabIndex === 0 &&
-                !els[i].disabled &&
-                !els[i].hidden &&
-                !els[i].readOnly &&
-                els[i].type !== 'hidden') {
-                rest.push(els[i]);
-            }
-        }
-
-        // store the full tabbing order
-        $this.form.tabOrder = ti.concat(rest);
-    }
-
-    // find the next element in the tabbing order and focus it
-    // if the last element of the form then blur
-    // (this can be changed to focus the next <form> if any)
-    for (var j = 0, jl = $this.form.tabOrder.length; j < jl; j++) {
-        if ($this === $this.form.tabOrder[j]) {
-            if (j + 1 < jl) {
-                $($this.form.tabOrder[j + 1]).focus();
-            } else {
-                $($this).blur();
-            }
-        }
-    }
-};
-
-var toggleDanger = function (cell) {
-    var row = cell.closest("tr");
-    row.toggleClass("negative");
-};
-
-var addDanger = function (row) {
-    row.removeClass("negative");
-    row.addClass("negative");
-};
-
-var toggleSuccess = function (cell) {
-    var row = cell.closest("tr");
-    row.toggleClass("positive");
 };
 
 jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
@@ -50652,301 +50802,31 @@ var getAjaxErrorMessage = function (xhr) {
     return "";
 };
 
-var repaint = function () {
-    setTimeout(function () {
-        $(document).trigger('resize');
-    }, 1000);
+
+///#source 1 1 /Scripts/mixerp/core/transaction.js
+function convertToDebit(balanceInCredit) {
+    return balanceInCredit * -1;
+};
+///#source 1 1 /Scripts/mixerp/core/validation.js
+var makeDirty = function (obj) {
+    obj.parent().addClass("error");
+    obj.focus();
 };
 
-var removeRow = function (cell) {
-    var result = confirm(areYouSureLocalized);
-
-    if (result) {
-        cell.closest("tr").remove();
-    }
+var removeDirty = function (obj) {
+    obj.parent().removeClass("error");
 };
 
-var tableToJSON = function (grid) {
-    var colData = [];
-    var rowData = [];
-
-    var rows = grid.find("tr:not(:last-child)");
-
-    rows.each(function () {
-        var row = $(this);
-
-        colData = [];
-
-        row.find("td:not(:last-child)").each(function () {
-            colData.push($(this).text());
-        });
-
-        rowData.push(colData);
-    });
-
-    var data = JSON.stringify(rowData);
-
-    return data;
+var isNullOrWhiteSpace = function (obj) {
+    return (!obj || $.trim(obj) === "");
 };
 
 function isDate(val) {
     var d = new Date(val);
     return !isNaN(d.valueOf());
-}
-
-function convertToDebit(balanceInCredit) {
-    return balanceInCredit * -1;
 };
-
-function popUnder(div, button) {
-    div.css("position", "fixed");
-
-    div.position({
-        my: "left top",
-        at: "left bottom",
-        of: button,
-        collision: "fit"
-    });
-
-    div.show(500);
-};
-
-function getSelectedCheckBoxItemIds(checkBoxColumnPosition, itemIdColumnPosition, grid) {
-    var selection = [];
-
-    //Iterate through each row to investigate the selection.
-    grid.find("tr").each(function () {
-        //Get an instance of the current row in this loop.
-        var row = $(this);
-
-        //Get the instance of the cell which contains the checkbox.
-        var checkBoxContainer = row.select("td:nth-child(" + checkBoxColumnPosition + ")");
-
-        //Get the instance of the checkbox from the container.
-        var checkBox = checkBoxContainer.find("input");
-
-        if (checkBox) {
-            //Check if the checkbox was selected or checked.
-            if (checkBox.prop("checked")) {
-                //Get ID from the associated cell.
-                var id = row.find("td:nth-child(" + itemIdColumnPosition + ")").html();
-
-                //Add the ID to the array.
-                selection.push(id);
-            }
-        }
-    });
-
-    return selection;
-};
-
-var toogleSelection = function (element) {
-    var property = element.prop("checked");
-
-    if (property) {
-        element.prop("checked", false);
-    } else {
-        element.prop("checked", true);
-    }
-};
-
-jQuery.fn.getTotalColumns = function () {
-    var grid = $($(this).selector);
-    var row = grid.find("tr").eq(1);
-
-    var colCount = 0;
-
-    row.find("td").each(function () {
-        if ($(this).attr('colspan')) {
-            colCount += +$(this).attr('colspan');
-        } else {
-            colCount++;
-        }
-    });
-
-    return colCount;
-};
-
-function createFlaggedRows(grid, bgColorColumnPos, fgColorColumnPos) {
-    if (!bgColorColumnPos) {
-        bgColorColumnPos = grid.getTotalColumns() - 1;
-    };
-
-    if (!fgColorColumnPos) {
-        fgColorColumnPos = grid.getTotalColumns();
-    };
-
-    //Iterate through all the rows of the grid.
-    grid.find("tr").each(function () {
-        //Get the current row instance from the loop.
-        var row = $(this);
-
-        //Read the color value from the associated column.
-        var background = row.find("td:nth-child(" + bgColorColumnPos + ")").html();
-        var foreground = row.find("td:nth-child(" + fgColorColumnPos + ")").html();
-
-        if (background) {
-            if (background !== '&nbsp;') {
-                row.css("background", background);
-
-                //Iterate through all the columns of the current row.
-                row.find("td").each(function () {
-                    //Prevent border display by unsetting the border information for each cell.
-                    $(this).css("border", "none");
-                });
-            }
-        }
-
-        if (foreground) {
-            if (foreground !== '&nbsp;') {
-                row.find("td").css("color", foreground);
-            }
-        }
-
-        row.find(":nth-child(" + bgColorColumnPos + ")").hide();
-        row.find(":nth-child(" + fgColorColumnPos + ")").hide();
-    });
-};
-
-jQuery.fn.updateHiddenFieldOnBlur = function (associatedControl) {
-    var element = $(this[0]);
-    associatedControl.val(element.getSelectedValue()).trigger('change');
-
-    element.blur(function () {
-        associatedControl.val(element.getSelectedValue()).trigger('change');
-    });
-};
-
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-};
-
-function displaySucess() {
-    $.notify(taskCompletedSuccessfullyLocalized, "success");
-};
-
-//Semantic UI Tab Support
-$(document).ready(function () {
-    var tabItems = $('.tabular .item');
-
-    if (tabItems && tabItems.length > 0) {
-        tabItems.tab();
-    };
-
-    //Semantic UI Button Support
-    var buttons = $(".buttons .button");
-
-    buttons.on("click", function () {
-        buttons.removeClass("active");
-        $(this).addClass("active");
-    });
-});
-
-var printGridView = function (templatePath, headerPath, reportTitle, gridViewId, printedDate, user, office, windowName, offset, offsetLast) {
-    //Load report template from the path.
-    $.get(templatePath, function () { }).done(function (data) {
-        //Load report header template.
-        $.get(headerPath, function () { }).done(function (header) {
-            var table = $("#" + gridViewId).clone();
-
-            table.find("tr.tableFloatingHeader").remove();
-
-            table.find("th:nth-child(-n" + offset + ")").remove();
-            table.find("td:nth-child(-n" + offset + ")").remove();
-
-            table.find("th:nth-last-child(-n" + offsetLast + ")").remove();
-            table.find("td:nth-last-child(-n" + offsetLast + ")").remove();
-
-            table.find("td").removeAttr("style");
-            table.find("tr").removeAttr("style");
-
-            table = "<table border='1' class='preview'>" + table.html() + "</table>";
-
-            data = data.replace("{Header}", header);
-            data = data.replace("{ReportHeading}", reportTitle);
-            data = data.replace("{PrintDate}", printedDate);
-            data = data.replace("{UserName}", user);
-            data = data.replace("{OfficeCode}", office);
-            data = data.replace("{Table}", table);
-
-            //Creating and opening a new window to display the report.
-            var w = window.open('', windowName,
-                + ',menubar=0'
-                + ',toolbar=0'
-                + ',status=0'
-                + ',scrollbars=1'
-                + ',resizable=0');
-            w.moveTo(0, 0);
-            w.resizeTo(screen.width, screen.height);
-
-            //Writing the report to the window.
-            w.document.writeln(data);
-            w.document.close();
-
-            //Report sent to the browser.
-        });
-    });
-};
-
-function setVisible(targetControl, visible, time) {
-    if (visible) {
-        targetControl.show(time);
-        return;
-    };
-
-    targetControl.hide(time);
-};
-
-function createCascadingPair(select, input) {
-    input.blur(function () {
-        selectDropDownListByValue(this.id, select.attr("id"));
-    });
-
-    select.change(function () {
-        input.val(select.getSelectedValue());
-    });
-};
-
-function parseDate(str) {
-    return new Date(Date.parse(str));
-};
-
-function parseSerializedDate(str) {
-    str = str.replace(/[^0-9 +]/g, '');
-    return new Date(parseInt(str));
-};
-
-//http://stackoverflow.com/questions/5999118/add-or-update-query-string-parameter
-function updateQueryString(key, value, url) {
-    if (!url) url = window.location.href;
-    var re = new RegExp("([?&])" + key + "=.*?(&|#|$)(.*)", "gi"),
-        hash;
-
-    if (re.test(url)) {
-        if (typeof value !== 'undefined' && value !== null)
-            return url.replace(re, '$1' + key + "=" + value + '$2$3');
-        else {
-            hash = url.split('#');
-            url = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
-            if (typeof hash[1] !== 'undefined' && hash[1] !== null)
-                url += '#' + hash[1];
-            return url;
-        }
-    }
-    else {
-        if (typeof value !== 'undefined' && value !== null) {
-            var separator = url.indexOf('?') !== -1 ? '&' : '?';
-            hash = url.split('#');
-            url = hash[0] + separator + key + '=' + value;
-            if (typeof hash[1] !== 'undefined' && hash[1] !== null)
-                url += '#' + hash[1];
-            return url;
-        }
-        else
-            return url;
-    }
+///#source 1 1 /Scripts/mixerp/core/window.js
+var confirmAction = function () {
+    return confirm(areYouSureLocalized);
 };
 

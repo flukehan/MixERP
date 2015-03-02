@@ -24,6 +24,7 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
         public string Text { get; set; }
         public string UnitServiceUrl { get; set; }
         public bool ValidateSides { get; set; }
+
         protected override void CreateChildControls()
         {
             this.container = new HtmlGenericControl();
