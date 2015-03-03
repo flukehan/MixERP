@@ -387,9 +387,13 @@ function updateTax() {
         return 0;
     };
 
+
+    addLoader(productGridView.parent());
     var ajaxGetSalesTax = getSalesTax(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId);
 
     ajaxGetSalesTax.success(function (msg) {
+        removeLoader(productGridView.parent());
+
         var tax = parseFloat2(msg.d);
         taxInputText.data("val", tax);
 
@@ -397,6 +401,8 @@ function updateTax() {
     });
 
     ajaxGetSalesTax.fail(function (xhr) {
+        removeLoader(productGridView.parent());
+
         logAjaxErrorMessage(xhr);
     });
 };
@@ -442,8 +448,12 @@ function getDefaultSalesTax() {
         return;
     };
 
+    addLoader(productGridView.parent());
+
     var ajaxGetDefaultSalesTaxId = getDefaultSalesTaxId(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price);
     ajaxGetDefaultSalesTaxId.success(function (msg) {
+        removeLoader(productGridView.parent());
+
         var result = parseInt2(msg.d);
 
         if (result) {
@@ -452,6 +462,8 @@ function getDefaultSalesTax() {
     });
 
     ajaxGetDefaultSalesTaxId.fail(function (xhr) {
+        removeLoader(productGridView.parent());
+
         logAjaxErrorMessage(xhr);
     });
 };
@@ -932,13 +944,18 @@ var getPrice = function () {
 
     data = getData(data);
 
+    addLoader(productGridView.parent());
     var priceAjax = getAjax(url, data);
 
     priceAjax.success(function (msg) {
+        removeLoader(productGridView.parent());
+
         priceInputText.val(msg.d);
     });
 
     priceAjax.error(function (xhr) {
+        removeLoader(productGridView.parent());
+
         var err = $.parseJSON(xhr.responseText);
         logError(err, "error");
     });

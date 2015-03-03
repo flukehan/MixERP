@@ -16,7 +16,7 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
                 using (Table table = new Table())
                 {
                     table.ID = "TransferGridView";
-                    table.Attributes.Add("class", "ui table");
+                    table.Attributes.Add("class", "ui table segment");
                     table.Attributes.Add("style", "min-width:1000px;max-width:2000px;");
 
                     table.Rows.Add(this.GetHeaderRow());

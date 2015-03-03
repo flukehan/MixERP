@@ -93,6 +93,14 @@ var triggerClick = function (controlId) {
     }
 };
 
+///#source 1 1 /Scripts/mixerp/core/dom/loader.js
+function addLoader(el) {
+    $(el).addClass('loading');
+};
+
+function removeLoader(el) {
+    $(el).removeClass('loading');
+};
 ///#source 1 1 /Scripts/mixerp/core/dom/popunder.js
 function popUnder(div, button) {
     div.css("position", "fixed");
@@ -910,7 +918,7 @@ var ajaxUpdateVal = function (url, data, targetControls) {
     });
 };
 
-var ajaxDataBind = function (url, targetControl, data, selectedValue, associatedControl) {
+var ajaxDataBind = function (url, targetControl, data, selectedValue, associatedControl, callback) {
     if (!targetControl) {
         return;
     };
@@ -928,6 +936,10 @@ var ajaxDataBind = function (url, targetControl, data, selectedValue, associated
     };
 
     ajax.success(function (msg) {
+        if (typeof callback === "function") {
+            callback();
+        };
+
         if (targetControl.length === 1) {
             targetControl.bindAjaxData(msg.d, false, selectedValue);
         };
@@ -948,6 +960,10 @@ var ajaxDataBind = function (url, targetControl, data, selectedValue, associated
     });
 
     ajax.error(function (xhr) {
+        if (typeof callback === "function") {
+            callback();
+        };
+
         var err = $.parseJSON(xhr.responseText);
         appendItem(targetControl, 0, err.Message);
     });

@@ -925,6 +925,7 @@
     <Content Include="Scripts\jssha1.5\src\sha512.js" />
     <Content Include="Scripts\jssha1.5\src\sha_dev.js" />
     <Content Include="Scripts\mixerp\core\dom\cascading-pair.js" />
+    <Content Include="Scripts\mixerp\core\dom\loader.js" />
     <Content Include="Scripts\mixerp\core\dom\visibility.js" />
     <Content Include="Scripts\mixerp\core\grid\print-grid.js" />
     <Content Include="Scripts\mixerp\core\libraries\semantic-ui.js" />

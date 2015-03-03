@@ -95,7 +95,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin\LocalizeMixERP.ascx" />
     <Content Include="Counters.ascx" />
     <Content Include="Counties.ascx" />
     <Content Include="Countries.ascx" />
@@ -122,7 +121,6 @@
     <Content Include="Scripts\Flags.ascx.js" />
     <Content Include="Scripts\OTS\OpeningInventory.ascx.js" />
     <Content Include="Scripts\Policy\MenuAccess.ascx.js" />
-    <Content Include="Services\Admin\LocalizeMixERP.asmx" />
     <Content Include="Services\web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -191,13 +189,6 @@
     </Compile>
     <Compile Include="Admin\DatabaseStatistics.ascx.designer.cs">
       <DependentUpon>DatabaseStatistics.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\LocalizeMixERP.ascx.cs">
-      <DependentUpon>LocalizeMixERP.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\LocalizeMixERP.ascx.designer.cs">
-      <DependentUpon>LocalizeMixERP.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\NewCompany.ascx.cs">
       <DependentUpon>NewCompany.ascx</DependentUpon>
@@ -389,10 +380,6 @@
     </Compile>
     <Compile Include="Roles.ascx.designer.cs">
       <DependentUpon>Roles.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Services\Admin\LocalizeMixERP.asmx.cs">
-      <DependentUpon>LocalizeMixERP.asmx</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\Attachments.asmx.cs">
       <DependentUpon>Attachments.asmx</DependentUpon>

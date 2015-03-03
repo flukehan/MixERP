@@ -238,7 +238,12 @@ function loadUnits() {
     data = appendParameter("", "itemCode", itemCode);
     data = getData(data);
 
-    ajaxDataBind(url, unitSelect, data);
+    addLoader(transferGridView);
+    ajaxDataBind(url, unitSelect, data, null, null, removeLoaderInstance);
+};
+
+function removeLoaderInstance() {
+    removeLoader(transferGridView);
 };
 
 //Check if ItemPopup window has updated the hidden field.

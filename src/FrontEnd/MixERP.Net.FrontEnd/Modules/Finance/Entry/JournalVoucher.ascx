@@ -46,7 +46,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <input type="hidden" id="TransactionGridViewHidden" />
 
 <div style="width: 100%; overflow: auto;">
-    <table id="TransactionGridView" class="ui table" style="min-width: 1200px; max-width: 2000px;">
+    <table id="TransactionGridView" class="ui table segment" style="min-width: 1200px; max-width: 2000px;">
         <thead>
             <tr>
                 <th style="width: 9%">

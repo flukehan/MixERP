@@ -105,10 +105,13 @@ function loadCashRepositories() {
     data = appendParameter("", "accountNumber", accountNumber);
     data = getData(data);
 
+    addLoader(transactionGridView);
     var repoAjax = getAjax(url, data);
 
     repoAjax.success(function(msg) {
         $.when(cashRepositorySelect.bindAjaxData(msg.d)).done(function () {
+            removeLoader(transactionGridView);
+
             if (cashRepositorySelect.children('option').length === 1) {
                 loadCurrenciesByAccountNumber(accountSelect.getSelectedValue());
                 return;
@@ -119,6 +122,8 @@ function loadCashRepositories() {
     });
 
     repoAjax.error(function(xhr) {
+        removeLoader(transactionGridView);
+
         var err = $.parseJSON(xhr.responseText);
         appendItem(cashRepositorySelect, 0, err.Message);
     });
@@ -229,6 +234,7 @@ addInputButton.click(function() {
         return;
     }
 
+    addLoader(transactionGridView);
     var ajaxAccountNumberExists = accountNumberExists(accountNumber);
     var ajaxIsCash = isCash(accountNumber);
     var ajaxCashRepositoryCodeExists = cashRepositoryCodeExists(cashRepositoryCode);
@@ -236,14 +242,17 @@ addInputButton.click(function() {
     var ajaxHasBalance;
 
     ajaxAccountNumberExists.error(function(xhr) {
+        removeLoader(transactionGridView);
         logAjaxErrorMessage(xhr);
     });
 
     ajaxCashRepositoryCodeExists.fail(function(xhr) {
+        removeLoader(transactionGridView);
         logAjaxErrorMessage(xhr);
     });
 
     ajaxIsCash.fail(function(xhr) {
+        removeLoader(transactionGridView);
         logAjaxErrorMessage(xhr);
     });
 
@@ -364,6 +373,7 @@ var addRow = function(statementReference, accountNumber, account, cashRepository
 
     creditInputText.prop("disabled", false);
 
+    removeLoader(transactionGridView);
     repaint();
     statementReferenceInputText.focus();
 };

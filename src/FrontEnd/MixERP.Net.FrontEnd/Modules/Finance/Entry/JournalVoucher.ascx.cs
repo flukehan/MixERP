@@ -18,8 +18,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.AttachmentFactory;
 
 namespace MixERP.Net.Core.Modules.Finance.Entry
@@ -47,7 +49,7 @@ namespace MixERP.Net.Core.Modules.Finance.Entry
             this.CreditTotalLiteral.Text = Resources.Titles.CreditTotal;
             this.PostTransactionLiteral.Text = Resources.Titles.PostTransaction;
             this.AddInputButton.Value = Resources.Titles.Add;
-
+            this.ValueDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             using (Attachment attachment = new Attachment())
             {

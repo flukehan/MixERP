@@ -35,7 +35,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
             using (HtmlGenericControl div = new HtmlGenericControl("div"))
             {
                 div.Attributes.Add("style", "width:100%;overflow:auto;");
-                div.Attributes.Add("class", "vpad16");
+                div.Attributes.Add("class", "ui form vpad16");
 
                 using (Table productGridView = new Table())
                 {
