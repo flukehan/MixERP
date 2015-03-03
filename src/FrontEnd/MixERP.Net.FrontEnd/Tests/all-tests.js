@@ -86,7 +86,7 @@ function shouldNotEqualBySelect(unexpected, assert, input, select) {
 
 ///#source 1 1 /Tests/dom/checkable.js
 QUnit.test("checkable.js -> toogleSelection", function (assert) {
-    var input = $('<input type="radio" checked="checked" />').hide();
+    var input = $('<input type="checkbox" checked="checked" />').hide();
     $('body').append(input);
 
     toogleSelection(input);
@@ -94,7 +94,7 @@ QUnit.test("checkable.js -> toogleSelection", function (assert) {
     if (input.not(":checked")) {
         assert.ok(true, "Input was unchecked.");
     } else {
-        assert.ok(true, "Input was not unchecked.");
+        assert.ok(false, "Input was not unchecked.");
     };
 
     toogleSelection(input);//Check
@@ -116,7 +116,7 @@ QUnit.test("checkable.js -> toogleSelection", function (assert) {
     if (input.not(":checked")) {
         assert.ok(true, "Input was unchecked again.");
     } else {
-        assert.ok(true, "Input was not unchecked again.");
+        assert.ok(false, "Input was not unchecked again.");
     };
 
     toogleSelection(input);//Check
@@ -168,7 +168,7 @@ QUnit.test("event.js -> triggerChange", function (assert) {
 });
 ///#source 1 1 /Tests/dom/visibility.js
 QUnit.test("visibility.js -> triggerClick", function(assert) {
-    var el = $("<div style='display:none'></div>");
+    var el = $("<div style='display:none;'></div>");
     $('body').append(el);
 
     setVisible(el, true, 0);

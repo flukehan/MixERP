@@ -1,13 +1,55 @@
 #What is MixERP?
 
-MixERP is an ASP.net open source ERP Solution currently being developed since 2013 under the GNU/GPLv3 with an objective to make ERP less frustrating and more intuitive. MixERP uses the following notable platforms:
+MixERP is an ASP.net open source ERP Solution.
 
-* ASP.net C# WebForms
-* jQuery
-* PostgreSQL Server
-* Semantic UI
-* SignalR
-* Many other frameworks
+##Demo Sites Updated
+
+We have a few demo servers to access the project:
+
+**Denver**
+
+* [chamlang.mixerp.org](http://chamlang.mixerp.org)
+* [nemjung.mixerp.org](http://) 
+
+**New Jersey**
+
+* [nuptse.mixerp.org](http://nuptse.mixerp.org)
+* [langtang.mixerp.org](http://langtang.mixerp.org)
+
+**Kathmandu**
+
+* [kanjirowa.mixerp.org](http://kanjirowa.mixerp.org)
+* [nilgiri.mixerp.org](http://nilgiri.mixerp.org)
+
+##Beta 1 Version 2 is Coming Soon
+
+Please stay tuned to updates and releases because we are planning to release the second version of the first Beta release with added features and improved functions within March 2015. Case you find any issues with the project , please feel free to post on [MixERP forums](http://mixerp.org/forum). Let us know how we can help you.
+
+[Beta 1 Version 2 Milestone](https://github.com/mixerp/mixerp/milestones/Beta%201%20Version%202)
+
+##Upgrades and Compatibility
+
+All transactions posted to the **v1** is supported and will be automatically updated to the v2 release, which means that installing a new release will automatically update your current installation of MixERP without any loss of data due to an update. This applies to every new release of MixERP henceforth.
+
+#Where Can I Get Support?
+Please create an account in [MixERP Forums](http://mixerp.org/forum) and post your questions there. We will be happy to help.
+
+##Why Betas?
+
+We will have many small, stable, and incremental releases to reach our milestone. This means that once we start Beta 2 version, Beta 1 should be considered stable even though we like to call it Beta.
+
+##Why PostgreSQL Server?
+
+We have been receiving tons of queries on why PostgreSQL? We chose PostgreSQL Server because:
+
+* PostgreSQL is platform independent.
+* We have plans to support Apache and nginx.
+* We have plans to support *nix based operating system.
+* PostgreSQL is free no matter how big your data grows, unlimited processors, unlimited cores, unlimited memory. You will never be forced to upgrade to higher version due to a limitation of database size or similar.
+* PostgreSQL is an [excellent choice for enterprise application](http://www.computerweekly.com/feature/Hot-skills-PostgreSQL).
+* PostgreSQL does have [paid support plans](http://www.infoworld.com/article/2617783/open-source-software/the-stealth-success-of-postgresql.html) for enterprises.
+* PostgreSQL is [ahead of commercial database](http://www.infoworld.com/article/2608863/nosql/postgresql-ramps-up-its-nosql-game.html) vendors in terms of development. Also see [this](https://wiki.postgresql.org/wiki/What%27s_new_in_PostgreSQL_9.0), [this](https://wiki.postgresql.org/wiki/What%27s_new_in_PostgreSQL_9.1), [this](https://wiki.postgresql.org/wiki/What%27s_new_in_PostgreSQL_9.2), [this](https://wiki.postgresql.org/wiki/What%27s_new_in_PostgreSQL_9.3), and [this](https://wiki.postgresql.org/wiki/What%27s_new_in_PostgreSQL_9.4). And [this](http://www.postgresql.org/docs/9.4/static/release-9-4-1.html) as well.
+* We have been SQL Server developers long before we even knew PostgreSQL Server existed. We love SQL Server, but PostgreSQL is a better fit for open source software.
 
 ![MixERP Dashboard](http://mixerp.org/images/features/mixerp-dashboard.png)
 

@@ -33035,6 +33035,23 @@ END
 $$
 LANGUAGE plpgsql;
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/core/core.get_menu_id_by_menu_code.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_menu_id_by_menu_code(national character varying(250));
+
+CREATE FUNCTION core.get_menu_id_by_menu_code(national character varying(250))
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN menu_id
+    FROM core.menus
+    WHERE menu_code=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.get_cash_repository_balance.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12));
 CREATE FUNCTION transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12))
@@ -33492,6 +33509,17 @@ SELECT core.get_menu_id('SAA'), 'id', 'API Kebijakan Access';
 --FILIPINO
 INSERT INTO core.menu_locale(menu_id, culture, menu_text)
 SELECT core.get_menu_id('SAA'), 'fil', 'API Patakaran sa Pag-access';
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/06.sample-data/1.remove-obsolete-menus.sql --<--<--
+DELETE FROM core.menu_locale
+WHERE menu_id = core.get_menu_id_by_menu_code('TRA');
+
+DELETE FROM policy.menu_access
+WHERE menu_id = core.get_menu_id_by_menu_code('TRA');
+
+DELETE FROM core.menus
+WHERE menu_code = 'TRA';
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/transactions/unit_tests.balance_sheet_test.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.balance_sheet_test();

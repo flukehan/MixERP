@@ -1,5 +1,5 @@
 QUnit.test("visibility.js -> triggerClick", function(assert) {
-    var el = $("<div style='display:none'></div>");
+    var el = $("<div style='display:none;'></div>");
     $('body').append(el);
 
     setVisible(el, true, 0);
