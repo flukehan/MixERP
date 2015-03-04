@@ -2,6 +2,11 @@
 
 MixERP is an ASP.net open source ERP Solution.
 
+#We Are Accepting Feature Requests for CRM Module
+Tell us what you like to see in the CRM Module! Not sure? Then what about reviewing the upcoming features of the CRM module? This is how it looks like:
+
+[https://github.com/mixerp/mixerp/wiki/crm-requirements](https://github.com/mixerp/mixerp/wiki/crm-requirements)
+
 ##Demo Sites Updated
 
 We have a few demo servers to access the project:
