@@ -546,4 +546,16 @@
   <data name="first_name" xml:space="preserve">
     <value>Förnamn</value>
   </data>
+  <data name="is_active" xml:space="preserve">
+    <value>Är Aktiv</value>
+  </data>
+  <data name="recurrence_type_id" xml:space="preserve">
+    <value>Upprepning Typ Identifier</value>
+  </data>
+  <data name="recurring_duration" xml:space="preserve">
+    <value>Återkommande Varaktighet</value>
+  </data>
+  <data name="recurs_on_same_calendar_date" xml:space="preserve">
+    <value>Återkommer på samma kalenderår Datum</value>
+  </data>
 </root>

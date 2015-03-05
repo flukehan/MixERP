@@ -546,4 +546,16 @@
   <data name="cell" xml:space="preserve">
     <value>细胞</value>
   </data>
+  <data name="is_active" xml:space="preserve">
+    <value>为主动</value>
+  </data>
+  <data name="recurrence_type_id" xml:space="preserve">
+    <value>复发类型标识符</value>
+  </data>
+  <data name="recurring_duration" xml:space="preserve">
+    <value>反复出现的持续时间</value>
+  </data>
+  <data name="recurs_on_same_calendar_date" xml:space="preserve">
+    <value>复发的同一个日历日期</value>
+  </data>
 </root>

@@ -546,4 +546,16 @@
   <data name="is_transaction_node" xml:space="preserve">
     <value>Is Transaction Node</value>
   </data>
+  <data name="is_active" xml:space="preserve">
+    <value>Is Active</value>
+  </data>
+  <data name="recurrence_type_id" xml:space="preserve">
+    <value>Recurrence Type Id</value>
+  </data>
+  <data name="recurring_duration" xml:space="preserve">
+    <value>Recurring Duration</value>
+  </data>
+  <data name="recurs_on_same_calendar_date" xml:space="preserve">
+    <value>Recurs on Same Calendar Date</value>
+  </data>
 </root>

@@ -546,4 +546,16 @@
   <data name="cell" xml:space="preserve">
     <value>клетка</value>
   </data>
+  <data name="is_active" xml:space="preserve">
+    <value>является активным</value>
+  </data>
+  <data name="recurrence_type_id" xml:space="preserve">
+    <value>Повторение Идентификатор</value>
+  </data>
+  <data name="recurring_duration" xml:space="preserve">
+    <value>Период подписки</value>
+  </data>
+  <data name="recurs_on_same_calendar_date" xml:space="preserve">
+    <value>Повторяется на том же календарном Дата</value>
+  </data>
 </root>

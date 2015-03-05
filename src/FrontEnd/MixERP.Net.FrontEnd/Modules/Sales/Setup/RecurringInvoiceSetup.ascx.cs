@@ -62,6 +62,8 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
 
         {
             List<string> displayFields = new List<string>();
+            ScrudHelper.AddDisplayField(displayFields, "core.recurrence_types.recurrence_type_id", ConfigurationHelper.GetDbParameter("RecurrenceTypeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id", ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.recurring_invoices.recurring_invoice_id", ConfigurationHelper.GetDbParameter("RecurringInvoiceDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id", ConfigurationHelper.GetDbParameter("PartyDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.payment_terms.payment_term_id", ConfigurationHelper.GetDbParameter("PaymentTermDisplayField"));
@@ -71,6 +73,8 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
+            ScrudHelper.AddDisplayView(displayViews, "core.recurrence_types.recurrence_type_id", "core.recurrence_types");//Todo:Change to scrud view
+            ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequencies");
             ScrudHelper.AddDisplayView(displayViews, "core.recurring_invoices.recurring_invoice_id", "core.recurring_invoice_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.party_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.payment_terms.payment_term_id", "core.payment_term_scrud_view");

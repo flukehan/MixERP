@@ -546,4 +546,16 @@
   <data name="first_name" xml:space="preserve">
     <value>pangalan</value>
   </data>
+  <data name="is_active" xml:space="preserve">
+    <value>Is Aktibo</value>
+  </data>
+  <data name="recurrence_type_id" xml:space="preserve">
+    <value>Uri ng Pantukoy sa pag-ulit</value>
+  </data>
+  <data name="recurring_duration" xml:space="preserve">
+    <value>umuulit na Tagal</value>
+  </data>
+  <data name="recurs_on_same_calendar_date" xml:space="preserve">
+    <value>Recurs sa Parehong Petsa ng Calendar</value>
+  </data>
 </root>

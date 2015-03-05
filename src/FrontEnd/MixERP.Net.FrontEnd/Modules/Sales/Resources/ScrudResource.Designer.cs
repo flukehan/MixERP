@@ -601,6 +601,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is Active.
+        /// </summary>
+        internal static string is_active {
+            get {
+                return ResourceManager.GetString("is_active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Flat Amount.
         /// </summary>
         internal static string is_flat_amount {
@@ -997,11 +1006,29 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recurrence Type Id.
+        /// </summary>
+        internal static string recurrence_type_id {
+            get {
+                return ResourceManager.GetString("recurrence_type_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recurring Amount.
         /// </summary>
         internal static string recurring_amount {
             get {
                 return ResourceManager.GetString("recurring_amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recurring Duration.
+        /// </summary>
+        internal static string recurring_duration {
+            get {
+                return ResourceManager.GetString("recurring_duration", resourceCulture);
             }
         }
         
@@ -1074,6 +1101,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string recurring_invoices_item_id_auto_trigger_on_sales_uix {
             get {
                 return ResourceManager.GetString("recurring_invoices_item_id_auto_trigger_on_sales_uix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recurs on Same Calendar Date.
+        /// </summary>
+        internal static string recurs_on_same_calendar_date {
+            get {
+                return ResourceManager.GetString("recurs_on_same_calendar_date", resourceCulture);
             }
         }
         

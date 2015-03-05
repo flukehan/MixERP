@@ -546,4 +546,16 @@
   <data name="cell" xml:space="preserve">
     <value>cellule</value>
   </data>
+  <data name="is_active" xml:space="preserve">
+    <value>est active</value>
+  </data>
+  <data name="recurrence_type_id" xml:space="preserve">
+    <value>Type de récidive Identifiant</value>
+  </data>
+  <data name="recurring_duration" xml:space="preserve">
+    <value>Durée récurrent</value>
+  </data>
+  <data name="recurs_on_same_calendar_date" xml:space="preserve">
+    <value>Revient sur la même Date du calendrier</value>
+  </data>
 </root>

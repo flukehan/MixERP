@@ -546,4 +546,16 @@
   <data name="first_name" xml:space="preserve">
     <value>primeiro nome</value>
   </data>
+  <data name="is_active" xml:space="preserve">
+    <value>é Active</value>
+  </data>
+  <data name="recurrence_type_id" xml:space="preserve">
+    <value>Recorrência Identificação do Tipo</value>
+  </data>
+  <data name="recurring_duration" xml:space="preserve">
+    <value>recorrente Duração</value>
+  </data>
+  <data name="recurs_on_same_calendar_date" xml:space="preserve">
+    <value>Reaparece no mesmo calendário Data</value>
+  </data>
 </root>

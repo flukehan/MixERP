@@ -546,4 +546,16 @@
   <data name="cell" xml:space="preserve">
     <value>セル</value>
   </data>
+  <data name="is_active" xml:space="preserve">
+    <value>アクティブです</value>
+  </data>
+  <data name="recurrence_type_id" xml:space="preserve">
+    <value>再発タイプ識別子</value>
+  </data>
+  <data name="recurring_duration" xml:space="preserve">
+    <value>定期的な時間</value>
+  </data>
+  <data name="recurs_on_same_calendar_date" xml:space="preserve">
+    <value>同じカレンダ日に再発する</value>
+  </data>
 </root>

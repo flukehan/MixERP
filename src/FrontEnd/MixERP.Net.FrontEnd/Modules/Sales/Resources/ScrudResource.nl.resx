@@ -546,4 +546,16 @@
   <data name="cell" xml:space="preserve">
     <value>cel</value>
   </data>
+  <data name="is_active" xml:space="preserve">
+    <value>is Actief</value>
+  </data>
+  <data name="recurrence_type_id" xml:space="preserve">
+    <value>Herhalingstype Identifier</value>
+  </data>
+  <data name="recurring_duration" xml:space="preserve">
+    <value>terugkerende Duur</value>
+  </data>
+  <data name="recurs_on_same_calendar_date" xml:space="preserve">
+    <value>Terugkeert op dezelfde kalenderdag Date</value>
+  </data>
 </root>

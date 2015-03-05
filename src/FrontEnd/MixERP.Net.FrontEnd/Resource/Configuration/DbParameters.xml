@@ -51,6 +51,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="PartyTypeDisplayField" value="party_type_code + ' (' + party_type_name + ')'" />
     <add key="PaymentTermDisplayField" value="payment_term_code + ' (' + payment_term_name + ')'" />
     <add key="PriceTypeDisplayField" value="price_type_code + ' (' + price_type_name + ')'" />
+    <add key="RecurrenceTypeDisplayField" value="recurrence_type_code + ' (' + recurrence_type_name + ')'" />
     <add key="RecurringInvoiceDisplayField" value="recurring_invoice_code + ' (' + recurring_invoice_name + ')'" />
     <add key="RoleDisplayField" value="role_code + ' (' + role_name + ')'" />
     <add key="RoundingMethodCodeDisplayField" value="rounding_method_code + ' (' + rounding_method_name + ')'" />

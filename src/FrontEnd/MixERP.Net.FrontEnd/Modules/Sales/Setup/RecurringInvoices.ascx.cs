@@ -62,6 +62,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
+            ScrudHelper.AddDisplayField(displayFields, "core.recurrence_types.recurrence_type_id", ConfigurationHelper.GetDbParameter("RecurrenceTypeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id", ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.items.item_id", ConfigurationHelper.GetDbParameter("ItemDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.compound_items.compound_item_id", ConfigurationHelper.GetDbParameter("CompoundItemDisplayField"));
@@ -71,6 +72,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
+            ScrudHelper.AddDisplayView(displayViews, "core.recurrence_types.recurrence_type_id", "core.recurrence_types");//Todo:Change to scrud view
             ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequencies");
             ScrudHelper.AddDisplayView(displayViews, "core.items.item_id", "core.item_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.compound_items.compound_item_id", "core.compound_item_scrud_view");
