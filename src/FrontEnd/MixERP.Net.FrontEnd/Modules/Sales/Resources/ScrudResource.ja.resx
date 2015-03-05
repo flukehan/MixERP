@@ -558,4 +558,7 @@
   <data name="recurs_on_same_calendar_date" xml:space="preserve">
     <value>同じカレンダ日に再発する</value>
   </data>
+  <data name="total_duration" xml:space="preserve">
+    <value>全持続時間</value>
+  </data>
 </root>

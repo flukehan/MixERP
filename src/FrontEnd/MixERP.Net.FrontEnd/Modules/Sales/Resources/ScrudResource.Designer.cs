@@ -1321,6 +1321,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total Duration.
+        /// </summary>
+        internal static string total_duration {
+            get {
+                return ResourceManager.GetString("total_duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total Sales.
         /// </summary>
         internal static string total_sales {

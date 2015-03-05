@@ -558,4 +558,7 @@
   <data name="recurs_on_same_calendar_date" xml:space="preserve">
     <value>Повторяется на том же календарном Дата</value>
   </data>
+  <data name="total_duration" xml:space="preserve">
+    <value>Общая продолжительность</value>
+  </data>
 </root>

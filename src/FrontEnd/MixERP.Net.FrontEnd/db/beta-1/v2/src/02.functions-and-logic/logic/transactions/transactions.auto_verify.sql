@@ -151,6 +151,8 @@ BEGIN
                 verification_reason=_reason
             WHERE
                 transactions.transaction_master.transaction_master_id=_transaction_master_id;
+
+            PERFORM transactions.create_recurring_invoices(_transaction_master_id);
         END IF;
     ELSE
         RAISE NOTICE 'No auto verification policy found for this user.';

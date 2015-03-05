@@ -558,4 +558,7 @@
   <data name="recurs_on_same_calendar_date" xml:space="preserve">
     <value>复发的同一个日历日期</value>
   </data>
+  <data name="total_duration" xml:space="preserve">
+    <value>总工期</value>
+  </data>
 </root>

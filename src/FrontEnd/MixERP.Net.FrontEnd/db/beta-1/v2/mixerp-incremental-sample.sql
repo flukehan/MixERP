@@ -33034,6 +33034,32 @@ END
 $$
 LANGUAGE plpgsql;
 
+DO
+$$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'core'
+        AND    c.relname = 'recurrence_types'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE core.recurrence_types
+        (
+            recurrence_type_id              SERIAL NOT NULL PRIMARY KEY,
+            recurrence_type_code            national character varying(12) NOT NULL,
+            recurrence_type_name            national character varying(50) NOT NULL,
+            is_frequency                    boolean NOT NULL,
+            audit_user_id                   integer NULL REFERENCES office.users(user_id),
+            audit_ts                        TIMESTAMP WITH TIME ZONE NULL 
+                                            DEFAULT(NOW())            
+        );
+    END IF;    
+END
+$$
+LANGUAGE plpgsql;
+
 
 
 
@@ -33048,8 +33074,8 @@ CREATE TABLE core.recurring_invoice_setup_temp
 AS
 SELECT * FROM core.recurring_invoice_setup;
 
-
 DROP TABLE IF EXISTS core.recurring_invoices CASCADE;
+DROP TABLE IF EXISTS core.recurring_invoice_setup CASCADE;
 
 CREATE TABLE core.recurring_invoices
 (
@@ -33057,17 +33083,15 @@ CREATE TABLE core.recurring_invoices
     recurring_invoice_code                      national character varying(12) NOT NULL,
     recurring_invoice_name                      national character varying(50) NOT NULL,
     item_id                                     integer NULL REFERENCES core.items(item_id),
-    compound_item_id                            integer NULL REFERENCES core.compound_items(compound_item_id)
-                                                CONSTRAINT recurring_invoices_item_chk
-                                                CHECK
-                                                (
-                                                    (item_id IS NULL)::integer + (compound_item_id IS NULL)::integer = 1 --Only one of these two can be NOT NULL.
-                                                ),
+    total_duration                              integer NOT NULL DEFAULT(365),
+    recurrence_type_id                          integer REFERENCES core.recurrence_types(recurrence_type_id),
     recurring_frequency_id                      integer NOT NULL REFERENCES core.frequencies(frequency_id),
-    recurring_amount                            money_strict NOT NULL 
-                                                CONSTRAINT recurring_invoices_recurring_amount_chk 
-                                                CHECK(recurring_amount > 0),
+    recurring_duration                          public.integer_strict2 NOT NULL DEFAULT(0),
+    recurs_on_same_calendar_date                boolean NOT NULL DEFAULT(true),
+    recurring_amount                            public.money_strict NOT NULL,
+    payment_term_id                             integer NOT NULL REFERENCES core.payment_terms(payment_term_id),
     auto_trigger_on_sales                       boolean NOT NULL,
+    is_active                                   boolean NOT NULL DEFAULT(true),
     audit_user_id                               integer NULL REFERENCES office.users(user_id),
     audit_ts                                    TIMESTAMP WITH TIME ZONE NULL 
                                                 DEFAULT(NOW())    
@@ -33077,12 +33101,6 @@ CREATE UNIQUE INDEX recurring_invoices_item_id_auto_trigger_on_sales_uix
 ON core.recurring_invoices(item_id, auto_trigger_on_sales)
 WHERE auto_trigger_on_sales = true;
 
-CREATE UNIQUE INDEX recurring_invoices_compound_item_id_auto_trigger_on_sales_uix
-ON core.recurring_invoices(compound_item_id, auto_trigger_on_sales)
-WHERE auto_trigger_on_sales = true;
-
-
-DROP TABLE IF EXISTS core.recurring_invoice_setup CASCADE;
 CREATE TABLE core.recurring_invoice_setup
 (
     recurring_invoice_setup_id                  SERIAL NOT NULL PRIMARY KEY,
@@ -33095,10 +33113,13 @@ CREATE TABLE core.recurring_invoice_setup
                                                 (
                                                     ends_on >= starts_from
                                                 ),
-    recurring_amount                            money_strict NOT NULL 
-                                                CONSTRAINT recurring_invoice_setup_recurring_amount_chk
-                                                CHECK(recurring_amount > 0),
+    recurrence_type_id                          integer NOT NULL REFERENCES core.recurrence_types(recurrence_type_id),
+    recurring_frequency_id                      integer NULL REFERENCES core.frequencies(frequency_id),
+    recurring_duration                          public.integer_strict2 NOT NULL DEFAULT(0),
+    recurs_on_same_calendar_date                boolean NOT NULL DEFAULT(true),
+    recurring_amount                            public.money_strict NOT NULL,
     payment_term_id                             integer NOT NULL REFERENCES core.payment_terms(payment_term_id),
+    is_active                                   boolean NOT NULL DEFAULT(true),
     audit_user_id                               integer NULL REFERENCES office.users(user_id),
     audit_ts                                    TIMESTAMP WITH TIME ZONE NULL 
                                                 DEFAULT(NOW())    
@@ -33112,10 +33133,10 @@ INSERT INTO core.recurring_invoices
     recurring_invoice_code, 
     recurring_invoice_name, 
     item_id, 
-    compound_item_id, 
     recurring_frequency_id, 
     recurring_amount,
     auto_trigger_on_sales,
+    payment_term_id,
     audit_user_id,
     audit_ts
 )
@@ -33124,13 +33145,20 @@ SELECT
     recurring_invoice_code, 
     recurring_invoice_name, 
     item_id, 
-    compound_item_id, 
     recurring_frequency_id, 
     recurring_amount,
     auto_trigger_on_sales,
+    core.get_payment_term_id_by_payment_term_code('07-D'),
     audit_user_id,
     audit_ts
 FROM core.recurring_invoices_temp;
+
+SELECT setval
+(
+    pg_get_serial_sequence('core.recurring_invoices', 'recurring_invoice_id'), 
+    (SELECT MAX(recurring_invoice_id) FROM core.recurring_invoices) + 1
+); 
+
 
 INSERT INTO core.recurring_invoice_setup
 (
@@ -33156,11 +33184,15 @@ SELECT
     audit_ts
 FROM core.recurring_invoice_setup_temp;
 
+
+SELECT setval
+(
+    pg_get_serial_sequence('core.recurring_invoice_setup', 'recurring_invoice_setup_id'), 
+    (SELECT MAX(recurring_invoice_setup_id) FROM core.recurring_invoice_setup) + 1
+); 
+
 DROP TABLE IF EXISTS core.recurring_invoices_temp;
 DROP TABLE IF EXISTS core.recurring_invoice_setup_temp;
-
-
-
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/audit/audit.get_office_id_by_login_id.sql --<--<--
@@ -33201,8 +33233,8 @@ DROP FUNCTION IF EXISTS core.create_menu
     _menu_text          text,
     _url                text,
     _menu_code          text,
-    _level              smallint,
-    parent_menu_id      integer
+    _level              integer,
+    _parent_menu_id     integer
 );
 
 CREATE FUNCTION core.create_menu
@@ -33210,8 +33242,8 @@ CREATE FUNCTION core.create_menu
     _menu_text          text,
     _url                text,
     _menu_code          text,
-    _level              smallint,
-    parent_menu_id      integer
+    _level              integer,
+    _parent_menu_id     integer
 )
 RETURNS void
 VOLATILE
@@ -33262,6 +33294,7 @@ BEGIN
     (
         SELECT * FROM core.menu_locale
         WHERE menu_id = _menu_id
+        AND culture = _culture
     ) THEN
         INSERT INTO core.menu_locale(menu_id, culture, menu_text)
         SELECT _menu_id, _culture, _menu_text;
@@ -33269,9 +33302,9 @@ BEGIN
 
     UPDATE core.menu_locale
     SET
-        culture         = _culture,
         menu_text       = _menu_text
-    WHERE menu_id = _menu_id;    
+    WHERE menu_id = _menu_id
+    AND culture = _culture;
 END
 $$
 LANGUAGE plpgsql;
@@ -33293,6 +33326,22 @@ END
 $$
 LANGUAGE plpgsql;
 
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/core/core.get_recurrence_type_id_by_recurrence_type_code.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_recurrence_type_id_by_recurrence_type_code(text);
+
+CREATE FUNCTION core.get_recurrence_type_id_by_recurrence_type_code(text)
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN recurrence_type_id
+    FROM core.recurrence_types
+    WHERE recurrence_type_code = $1;
+END
+$$
+LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/public/public.add_column.sql --<--<--
 DROP FUNCTION IF EXISTS public.add_column(regclass, text, regtype, text, text);
@@ -33486,6 +33535,8 @@ BEGIN
                 verification_reason=_reason
             WHERE
                 transactions.transaction_master.transaction_master_id=_transaction_master_id;
+
+            PERFORM transactions.create_recurring_invoices(_transaction_master_id);
         END IF;
     ELSE
         RAISE NOTICE 'No auto verification policy found for this user.';
@@ -34004,6 +34055,123 @@ END
 $$
 LANGUAGE plpgsql;
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.create_recurring_invoices.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.create_recurring_invoices(bigint);
+
+CREATE FUNCTION transactions.create_recurring_invoices(bigint)
+RETURNS void
+VOLATILE
+AS
+$$
+    DECLARE _party_id       bigint;
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT * FROM transactions.transaction_master WHERE book IN('Sales.Direct', 'Sales.Delivery')
+        AND transaction_master_id=$1
+        AND verification_status_id > 0
+    ) THEN
+        RETURN;
+    END IF;
+
+    SELECT party_id INTO _party_id 
+    FROM transactions.stock_master
+    WHERE transaction_master_id = $1;
+
+    IF(COALESCE(_party_id, 0) = 0) THEN
+        RETURN;
+    END IF;
+    
+    DROP TABLE IF EXISTS recurring_invoices_temp;
+
+    CREATE TEMPORARY TABLE recurring_invoices_temp
+    (
+        recurring_invoice_id            integer,
+        party_id                        bigint,
+        total_duration                  integer,
+        starts_from                     date,
+        ends_on                         date,
+        recurrence_type_id              integer,
+        recurring_frequency_id          integer,
+        recurring_duration              integer,
+        recurs_on_same_calendar_date    boolean,
+        recurring_amount                public.money_strict,
+        payment_term_id                 integer,
+        is_active                       boolean DEFAULT(true)
+    ) ON COMMIT DROP;
+
+    INSERT INTO recurring_invoices_temp
+    (
+        recurring_invoice_id,
+        total_duration,
+        recurrence_type_id,
+        recurring_frequency_id,
+        recurring_duration,
+        recurs_on_same_calendar_date,
+        recurring_amount,
+        payment_term_id,
+        is_active
+    )
+    SELECT
+        recurring_invoice_id,
+        total_duration,
+        recurrence_type_id,
+        recurring_frequency_id,
+        recurring_duration,
+        recurs_on_same_calendar_date,
+        recurring_amount,
+        payment_term_id,
+        is_active
+    FROM core.recurring_invoices
+    WHERE is_active
+    AND item_id
+    IN
+    (
+        SELECT item_id FROM transactions.stock_details
+        INNER JOIN transactions.stock_master
+        ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+        WHERE 1 = 1
+        AND transactions.stock_master.transaction_master_id = $1
+        AND tran_type='Cr'
+    );
+
+    UPDATE recurring_invoices_temp
+    SET 
+        party_id        = _party_id, 
+        starts_from     = now()::date,
+        ends_on         = now()::date + total_duration;
+
+    INSERT INTO core.recurring_invoice_setup
+    (
+        recurring_invoice_id,
+        party_id,
+        starts_from,
+        ends_on,
+        recurrence_type_id,
+        recurring_frequency_id,
+        recurring_duration,
+        recurs_on_same_calendar_date,
+        recurring_amount,
+        payment_term_id,
+        is_active
+    )
+    SELECT
+            recurring_invoice_id,
+        party_id,
+        starts_from,
+        ends_on,
+        recurrence_type_id,
+        recurring_frequency_id,
+        recurring_duration,
+        recurs_on_same_calendar_date,
+        recurring_amount,
+        payment_term_id,
+        is_active
+    FROM recurring_invoices_temp;
+END
+$$
+LANGUAGE plpgsql;
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.get_cash_repository_balance.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12));
 CREATE FUNCTION transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12))
@@ -34122,6 +34290,184 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.verify_transaction.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.verify_transaction.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.verify_transaction
+(
+    _transaction_master_id                  bigint,
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _verification_status_id                 smallint,
+    _reason                                 national character varying
+) 
+CASCADE;
+
+CREATE FUNCTION transactions.verify_transaction
+(
+    _transaction_master_id                  bigint,
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _verification_status_id                 smallint,
+    _reason                                 national character varying
+)
+RETURNS VOID
+VOLATILE
+AS
+$$
+    DECLARE _transaction_posted_by integer;
+    DECLARE _can_approve boolean=true;
+    DECLARE _book text;
+    DECLARE _verify_sales boolean;
+    DECLARE _sales_verification_limit money_strict2;
+    DECLARE _verify_purchase boolean;
+    DECLARE _purchase_verification_limit money_strict2;
+    DECLARE _verify_gl boolean;
+    DECLARE _gl_verification_limit money_strict2;
+    DECLARE _posted_amount money_strict2;
+    DECLARE _has_policy boolean=false;
+    DECLARE _voucher_date date;
+    DECLARE _voucher_office_id integer;
+    DECLARE _value_date date=transactions.get_value_date(_office_id);
+BEGIN
+
+    SELECT
+        transactions.transaction_master.book,
+        transactions.transaction_master.value_date,
+        transactions.transaction_master.office_id,
+        transactions.transaction_master.user_id
+    INTO
+        _book,
+        _voucher_date,
+        _voucher_office_id,
+        _transaction_posted_by  
+    FROM
+    transactions.transaction_master
+    WHERE transactions.transaction_master.transaction_master_id=_transaction_master_id;
+
+
+    IF(_voucher_office_id <> _office_id) THEN
+        RAISE EXCEPTION 'Access is denied. You cannot verify a transaction of another office.'
+        USING ERRCODE='P9014';
+    END IF;
+    
+    IF(_voucher_date <> _value_date) THEN
+        RAISE EXCEPTION 'Access is denied. You cannot verify past or futuer dated transaction.'
+        USING ERRCODE='P9015';
+    END IF;
+    
+    SELECT
+        SUM(amount_in_local_currency)
+    INTO
+        _posted_amount
+    FROM
+        transactions.transaction_details
+    WHERE transactions.transaction_details.transaction_master_id = _transaction_master_id
+    AND transactions.transaction_details.tran_type='Cr';
+
+
+    SELECT
+        true,
+        can_verify_sales_transactions,
+        sales_verification_limit,
+        can_verify_purchase_transactions,
+        purchase_verification_limit,
+        can_verify_gl_transactions,
+        gl_verification_limit
+    INTO
+        _has_policy,
+        _verify_sales,
+        _sales_verification_limit,
+        _verify_purchase,
+        _purchase_verification_limit,
+        _verify_gl,
+        _gl_verification_limit
+    FROM
+    policy.voucher_verification_policy
+    WHERE user_id=_user_id
+    AND is_active=true
+    AND now() >= effective_from
+    AND now() <= ends_on;
+
+
+    IF(lower(_book) LIKE 'sales%') THEN
+        IF(_verify_sales = false) THEN
+            _can_approve := false;
+        END IF;
+        IF(_verify_sales = true) THEN
+            IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::money_strict2) THEN
+                _can_approve := false;
+            END IF;
+        END IF;         
+    END IF;
+
+
+    IF(lower(_book) LIKE 'purchase%') THEN
+        IF(_verify_purchase = false) THEN
+            _can_approve := false;
+        END IF;
+        IF(_verify_purchase = true) THEN
+            IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::money_strict2) THEN
+                _can_approve := false;
+            END IF;
+        END IF;         
+    END IF;
+
+
+    IF(lower(_book) LIKE 'journal%') THEN
+        IF(_verify_gl = false) THEN
+            _can_approve := false;
+        END IF;
+        IF(_verify_gl = true) THEN
+            IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::money_strict2) THEN
+                _can_approve := false;
+            END IF;
+        END IF;         
+    END IF;
+
+    IF(_has_policy=true) THEN
+        IF(_can_approve = true) THEN
+            UPDATE transactions.transaction_master
+            SET 
+                last_verified_on = now(),
+                verified_by_user_id=_user_id,
+                verification_status_id=_verification_status_id,
+                verification_reason=_reason
+            WHERE
+                transactions.transaction_master.transaction_master_id=_transaction_master_id;
+
+            PERFORM transactions.create_recurring_invoices(_transaction_master_id);
+
+            RAISE NOTICE 'Done.';
+        END IF;
+    ELSE
+        RAISE EXCEPTION 'No verification policy found for this user.'
+        USING ERRCODE='P4030';
+    END IF;
+    RETURN;
+END
+$$
+LANGUAGE plpgsql;
+
+
+--SELECT * FROM transactions.verify_transaction(65::bigint, 2, 2, 51::bigint, -3::smallint, '');
+
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/triggers/transactions.verification_trigger.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.verification_trigger() CASCADE;
@@ -34420,7 +34766,35 @@ WHERE code NOT IN
 );
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/recurrence-types.sql --<--<--
+WITH recurrence_types
+AS
+(
+SELECT 'FRE' AS code,   'Frequency' AS name,    true AS is_freq UNION ALL
+SELECT 'DUR',           'Duration',             false
+)
+
+INSERT INTO core.recurrence_types(recurrence_type_code, recurrence_type_name, is_frequency)
+SELECT * FROM recurrence_types
+WHERE code NOT IN
+(
+    SELECT recurrence_type_code FROM core.recurrence_types
+    WHERE recurrence_type_code IN('FRE','DUR')
+);
+
+UPDATE core.recurring_invoices 
+SET recurrence_type_id = core.get_recurrence_type_id_by_recurrence_type_code('FRE')
+WHERE recurrence_type_id IS NULL;
+
+ALTER TABLE core.recurring_invoices
+ALTER COLUMN recurrence_type_id SET NOT NULL;
+
+ALTER TABLE core.recurring_invoices
+ALTER COLUMN recurring_frequency_id DROP NOT NULL;
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.recurring_invoice_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.recurring_invoice_scrud_view;
+
 CREATE VIEW core.recurring_invoice_scrud_view
 AS
 SELECT 
@@ -34428,18 +34802,15 @@ SELECT
   core.recurring_invoices.recurring_invoice_code, 
   core.recurring_invoices.recurring_invoice_name,
   core.items.item_code || '('|| core.items.item_name||')' AS item,
-  core.compound_items.compound_item_code || ' (' || core.compound_items.compound_item_name || ')' AS compound_item,
   core.frequencies.frequency_code || '('|| core.frequencies.frequency_name||')' AS recurring_frequency,
   core.recurring_invoices.recurring_amount, 
   core.recurring_invoices.auto_trigger_on_sales
 FROM 
   core.recurring_invoices
-LEFT JOIN core.items 
+INNER JOIN core.items 
 ON core.recurring_invoices.item_id = core.items.item_id
-INNER JOIN core.frequencies
-ON core.recurring_invoices.recurring_frequency_id = core.frequencies.frequency_id
-LEFT JOIN core.compound_items
-ON core.recurring_invoices.compound_item_id=core.compound_items.compound_item_id;
+LEFT JOIN core.frequencies
+ON core.recurring_invoices.recurring_frequency_id = core.frequencies.frequency_id;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.recurring_invoice_setup_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.recurring_invoice_setup_scrud_view;

@@ -558,4 +558,7 @@
   <data name="recurs_on_same_calendar_date" xml:space="preserve">
     <value>Terugkeert op dezelfde kalenderdag Date</value>
   </data>
+  <data name="total_duration" xml:space="preserve">
+    <value>totale duur</value>
+  </data>
 </root>

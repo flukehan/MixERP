@@ -558,4 +558,7 @@
   <data name="recurs_on_same_calendar_date" xml:space="preserve">
     <value>Recurs sa Parehong Petsa ng Calendar</value>
   </data>
+  <data name="total_duration" xml:space="preserve">
+    <value>kabuuang Tagal ng</value>
+  </data>
 </root>
