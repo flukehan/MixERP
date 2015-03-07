@@ -34269,8 +34269,16 @@ select,
 table,
 tr,
 th,
-td {
-  font-family: "Roboto", 'Segoe UI', "Open Sans", Helvetica, Arial, sans-serif;
+td,
+canvas,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.ui {
+  font-family: "Titillium Web", "Open Sans", "Segoe UI", Helvetica, Arial, sans-serif !important;
 }
 html,
 body,
@@ -34791,6 +34799,6 @@ select option {
   font-size: 1.1rem;
 }
 .ui-widget-content {
-  z-index: 2!important;
+  z-index: 2 !important;
 }
 /*# sourceMappingURL=mixerp.css.map */

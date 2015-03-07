@@ -21,11 +21,20 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     Inherits="MixERP.Net.Core.Modules.Sales.Widgets.CurrentOfficeSalesByMonthWidget" %>
 
 <div class="eight wide column widget" id="CurrentOfficeSalesByMonthWidget">
-    <div class="ui segment">
-        <h2 class="ui purple header">
+    <div class="ui attached segment">
+        <div class="ui left floated column">
+        <div class="ui header">
             <asp:Literal runat="server" ID="TitleLiteral" />
-        </h2>
-        <div class="ui divider"></div>
+        </div>
+        </div>
+        <div class="right floated column">
+            <i class="expand disabled icon"></i>
+            <i class="move icon"></i>
+            <i class="help icon"></i>
+            <i class="close icon"></i>
+        </div>
+    </div>
+    <div class="ui attached segment">
         <asp:GridView runat="server" ID="SalesByMonthGridView" DataKeyNames="office" AutoGenerateColumns="False" CssClass="hidden">
             <Columns>
                 <asp:BoundField HeaderText="OfficeCode" DataField="office" />

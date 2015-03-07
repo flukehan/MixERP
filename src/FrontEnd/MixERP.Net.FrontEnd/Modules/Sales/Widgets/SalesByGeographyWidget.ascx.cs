@@ -59,30 +59,62 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
                 widget.ID = "SalesByGeographyWidget";
                 widget.Attributes.Add("class", "sixteen wide column widget");
 
-                using (HtmlGenericControl segment = HtmlControlHelper.GetSegment())
+                using (HtmlGenericControl segment = new HtmlGenericControl("div"))
                 {
-                    using (HtmlGenericControl header = new HtmlGenericControl("h2"))
+                    segment.Attributes.Add("class", "ui attached segment");
+
+                    using (HtmlGenericControl leftFloatedColumn = new HtmlGenericControl("div"))
                     {
-                        header.Attributes.Add("class", "ui purple header");
-                        header.InnerText = Titles.WorldSalesStatistics;
-                        segment.Controls.Add(header);
+                        leftFloatedColumn.Attributes.Add("class", "ui left floated column");
+
+                        using (HtmlGenericControl header = new HtmlGenericControl("div"))
+                        {
+                            header.Attributes.Add("class", "ui header");
+                            header.InnerText = Titles.WorldSalesStatistics;
+                            leftFloatedColumn.Controls.Add(header);
+                        }
+
+                        segment.Controls.Add(leftFloatedColumn);
                     }
 
-                    using (HtmlGenericControl divider = HtmlControlHelper.GetDivider())
+                    using (HtmlGenericControl rightFloatedColumn = new HtmlGenericControl("div"))
                     {
-                        segment.Controls.Add(divider);
-                    }
+                        rightFloatedColumn.Attributes.Add("class", "right floated column");
 
+                        using (HtmlGenericControl i = HtmlControlHelper.GetIcon("expand disabled icon"))
+                        {
+                            rightFloatedColumn.Controls.Add(i);
+                        }
+                        using (HtmlGenericControl i = HtmlControlHelper.GetIcon("move icon"))
+                        {
+                            rightFloatedColumn.Controls.Add(i);
+                        }
+                        using (HtmlGenericControl i = HtmlControlHelper.GetIcon("help icon"))
+                        {
+                            rightFloatedColumn.Controls.Add(i);
+                        }
+                        using (HtmlGenericControl i = HtmlControlHelper.GetIcon("close icon"))
+                        {
+                            rightFloatedColumn.Controls.Add(i);
+                        }
+
+                        segment.Controls.Add(rightFloatedColumn);
+                    }
+                    widget.Controls.Add(segment);
+                }
+
+                using (HtmlGenericControl bottomAttachedSegment = new HtmlGenericControl("div"))
+                {
+                    bottomAttachedSegment.Attributes.Add("class", "ui attached segment");
                     using (HtmlGenericControl mapContainer = new HtmlGenericControl("div"))
                     {
                         mapContainer.ID = "map-container";
                         mapContainer.Attributes.Add("style", "height: 400px; width: 980px;");
-                        segment.Controls.Add(mapContainer);
+                        bottomAttachedSegment.Controls.Add(mapContainer);
                     }
 
-                    widget.Controls.Add(segment);
+                    widget.Controls.Add(bottomAttachedSegment);
                 }
-
 
                 container.Controls.Add(widget);
             }

@@ -205,6 +205,16 @@ namespace MixERP.Net.Common.Helpers
             }
         }
 
+        public static HtmlGenericControl GetSegment(string cssClass)
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", cssClass);
+
+                return field;
+            }
+        }
+
         public static void AddListItem(HtmlGenericControl container, string key, object value)
         {
             using (HtmlGenericControl li = new HtmlGenericControl("li"))

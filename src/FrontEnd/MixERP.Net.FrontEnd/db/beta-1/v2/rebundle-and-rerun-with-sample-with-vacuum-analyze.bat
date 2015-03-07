@@ -10,6 +10,4 @@ echo Now, running full vacuum with analyze.
 
 "C:\Progra~1\PostgreSQL\9.4\bin\psql.exe" -U postgres -d mixerp -c "VACUUM FULL ANALYZE;"
 
-pause
 exit
-

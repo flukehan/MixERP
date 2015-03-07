@@ -33086,7 +33086,7 @@ CREATE TABLE core.recurring_invoices
     total_duration                              integer NOT NULL DEFAULT(365),
     recurrence_type_id                          integer REFERENCES core.recurrence_types(recurrence_type_id),
     recurring_frequency_id                      integer NOT NULL REFERENCES core.frequencies(frequency_id),
-    recurring_duration                          public.integer_strict2 NOT NULL DEFAULT(0),
+    recurring_duration                          public.integer_strict2 NOT NULL DEFAULT(30),
     recurs_on_same_calendar_date                boolean NOT NULL DEFAULT(true),
     recurring_amount                            public.money_strict NOT NULL,
     payment_term_id                             integer NOT NULL REFERENCES core.payment_terms(payment_term_id),
@@ -34124,6 +34124,7 @@ BEGIN
         is_active
     FROM core.recurring_invoices
     WHERE is_active
+    AND auto_trigger_on_sales
     AND item_id
     IN
     (

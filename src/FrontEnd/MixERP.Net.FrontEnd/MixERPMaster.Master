@@ -18,12 +18,26 @@
             .grid3 td { padding-left: 1px !important; }
         </style>
     <![endif]-->
-    <%--<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css' />--%>
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css' />
     <asp:ContentPlaceHolder ID="ScriptContentPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
     <asp:ContentPlaceHolder ID="StyleSheetContentPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
     <meta name="description" content="MixERP" />
+    <style>
+        #right {
+            padding: 0;
+            margin: 0;
+        }
+
+        .widget {
+            cursor: move;
+        }
+
+            .widget i {
+                cursor: pointer;
+            }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server" enctype="multipart/form-data" method="post" submitdisabledcontrols="true" defaultbutton="SwallowSubmit">
@@ -45,9 +59,12 @@
                         <asp:Literal runat="server" ID="ContentMenuLiteral" />
                     </div>
                 </div>
-                <div class="thirteen wide column">
-                    <div id="TopMenu" class="ui menu inverted theme">
-                        <a class="active item">
+                <div class="ui thirteen wide column" id="right">
+                    <div id="TopMenu" class="ui menu attached inverted theme">
+                        <a class="item" onclick="$('#MenuContainer').toggle(100);">
+                            <i class="options icon"></i>
+                        </a>
+                        <a class="item">
                             <i class="home icon"></i>
                             <asp:Literal runat="server" ID="BranchNameLiteral" />
                         </a>
@@ -62,7 +79,7 @@
                             </div>
                         </div>
                         <a class="item" href="http://docs.mixerp.org/" target="_blank">
-                            <i class="github basic icon"></i>
+                            <i class="book basic icon"></i>
                             <asp:Literal runat="server" ID="MixERPDocumentationLiteral" />
                         </a>
                         <div class="right menu">

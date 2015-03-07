@@ -30,7 +30,7 @@ We have a few demo servers to access the project:
 
 Please stay tuned to updates and releases because we are planning to release the second version of the first Beta release with added features and improved functions within March 2015. Case you find any issues with the project , please feel free to post on [MixERP forums](http://mixerp.org/forum). Let us know how we can help you.
 
-[Beta 1 Version 2 Milestone](https://github.com/mixerp/mixerp/milestones/Beta%201%20Version%202)
+[Beta 1 Version 2 Milestone](https://github.com/mixerp/mixerp/milestones/Beta%201%20Version%202%20%28QA%29)
 
 ##Upgrades and Compatibility
 

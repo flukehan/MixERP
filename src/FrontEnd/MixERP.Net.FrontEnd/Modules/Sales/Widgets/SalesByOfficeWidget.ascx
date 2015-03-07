@@ -18,12 +18,21 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SalesByOfficeWidget.ascx.cs" Inherits="MixERP.Net.Core.Modules.Sales.Widgets.SalesByOfficeWidget" %>
 
-<div class="eight wide column widget" id="SalesByOfficeWidget">
-    <div class="ui segment">
-        <h2 class="ui purple header">
+<div class="eight wide column widget" id="SalesByOfficeWidget">        
+    <div class="ui attached segment">
+        <div class="ui left floated column">
+        <div class="ui header">
             <asp:Literal runat="server" ID="TitleLiteral" />
-        </h2>
-        <div class="ui divider"></div>
+        </div>
+        </div>
+        <div class="right floated column">
+            <i class="expand disabled icon"></i>
+            <i class="move icon"></i>
+            <i class="help icon"></i>
+            <i class="close icon" onclick="$(this).closest('.widget').remove();"></i>
+        </div>
+    </div>
+    <div class="ui attached segment">
         <asp:GridView runat="server" ID="SalesByOfficeGridView" DataKeyNames="office" AutoGenerateColumns="False" CssClass="hidden">
             <Columns>
                 <asp:BoundField HeaderText="OfficeCode" DataField="office" />

@@ -49,10 +49,46 @@ namespace MixERP.Net.Core.Modules.BackOffice.Widgets
                 widget.ID = "OfficeInformationWidget";
                 widget.Attributes.Add("class", "four wide column widget");
 
-                using (HtmlGenericControl segment = HtmlControlHelper.GetSegment())
+
+                using (HtmlGenericControl segment = HtmlControlHelper.GetSegment("ui attached segment"))
                 {
-                    this.CreateHeader(segment);
-                    this.CreateDivider(segment);
+                    using (HtmlGenericControl leftFloatedColumn = new HtmlGenericControl("div"))
+                    {
+                        leftFloatedColumn.Attributes.Add("class", "ui left floated column");
+                        this.CreateHeader(leftFloatedColumn);
+                        segment.Controls.Add(leftFloatedColumn);
+                    }
+
+                    using (HtmlGenericControl rightFloatedColumn = new HtmlGenericControl("div"))
+                    {
+                        rightFloatedColumn.Attributes.Add("class", "ui right floated column");
+
+
+                        using (HtmlGenericControl i = HtmlControlHelper.GetIcon("expand disabled icon"))
+                        {
+                            rightFloatedColumn.Controls.Add(i);
+                        }
+                        using (HtmlGenericControl i = HtmlControlHelper.GetIcon("move icon"))
+                        {
+                            rightFloatedColumn.Controls.Add(i);
+                        }
+                        using (HtmlGenericControl i = HtmlControlHelper.GetIcon("help icon"))
+                        {
+                            rightFloatedColumn.Controls.Add(i);
+                        }
+                        using (HtmlGenericControl i = HtmlControlHelper.GetIcon("close icon"))
+                        {
+                            rightFloatedColumn.Controls.Add(i);
+                        }
+
+                        segment.Controls.Add(rightFloatedColumn);
+                    }
+
+                    widget.Controls.Add(segment);
+                }
+
+                using (HtmlGenericControl segment = HtmlControlHelper.GetSegment("ui attached segment"))
+                {
                     this.CreateContent(segment);
 
                     widget.Controls.Add(segment);
@@ -88,19 +124,11 @@ namespace MixERP.Net.Core.Modules.BackOffice.Widgets
             }
         }
 
-        private void CreateDivider(HtmlGenericControl container)
-        {
-            using (HtmlGenericControl divider = HtmlControlHelper.GetDivider())
-            {
-                container.Controls.Add(divider);
-            }
-        }
-
         private void CreateHeader(HtmlGenericControl container)
         {
-            using (HtmlGenericControl header = new HtmlGenericControl("h2"))
+            using (HtmlGenericControl header = new HtmlGenericControl("div"))
             {
-                header.Attributes.Add("class", "ui purple header");
+                header.Attributes.Add("class", "ui header");
                 header.InnerText = Titles.OfficeInformation;
                 container.Controls.Add(header);
             }
