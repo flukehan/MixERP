@@ -1,3 +1,5 @@
+///<reference path="/Scripts/jquery-1.9.1.js" />
+///<reference path="/Scripts/mixerp/mixerp-core.js" />
 QUnit.test("cascading-pair.js -> createCascadingPair", function (assert) {
     var destinations = ['Mugu', 'Langtang', 'Annapurna', 'Pumori', 'Denver', 'Las Vegas'];
     var select = $("<select  id='DesintaionSelect' />").hide();

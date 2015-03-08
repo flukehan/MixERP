@@ -1,4 +1,6 @@
 ﻿///#source 1 1 /Tests/dom/cascading-pair.js
+///<reference path="/Scripts/jquery-1.9.1.js" />
+///<reference path="/Scripts/mixerp/mixerp-core.js" />
 QUnit.test("cascading-pair.js -> createCascadingPair", function (assert) {
     var destinations = ['Mugu', 'Langtang', 'Annapurna', 'Pumori', 'Denver', 'Las Vegas'];
     var select = $("<select  id='DesintaionSelect' />").hide();
@@ -85,6 +87,8 @@ function shouldNotEqualBySelect(unexpected, assert, input, select) {
 };
 
 ///#source 1 1 /Tests/dom/checkable.js
+///<reference path="/Scripts/jquery-1.9.1.js" />
+///<reference path="/Scripts/mixerp/mixerp-core.js" />
 QUnit.test("checkable.js -> toogleSelection", function (assert) {
     var input = $('<input type="checkbox" checked="checked" />').hide();
     $('body').append(input);
@@ -134,6 +138,8 @@ QUnit.test("checkable.js -> toogleSelection", function (assert) {
     input.remove();
 });
 ///#source 1 1 /Tests/dom/events.js
+///<reference path="/Scripts/jquery-1.9.1.js" />
+///<reference path="/Scripts/mixerp/mixerp-core.js" />
 QUnit.test("event.js -> triggerClick", function (assert) {
     var button = $("<input type='button' id='TestButton' />").hide();
     $('body').append(button);
@@ -167,7 +173,9 @@ QUnit.test("event.js -> triggerChange", function (assert) {
     select.remove();
 });
 ///#source 1 1 /Tests/dom/visibility.js
-QUnit.test("visibility.js -> triggerClick", function(assert) {
+///<reference path="/Scripts/jquery-1.9.1.js" />
+///<reference path="/Scripts/mixerp/mixerp-core.js" />
+QUnit.test("visibility.js -> triggerClick", function (assert) {
     var el = $("<div style='display:none;'></div>");
     $('body').append(el);
 

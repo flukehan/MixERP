@@ -23,7 +23,7 @@ $$
     DECLARE _can_verify_sales_transactions      boolean;
     DECLARE _sales_verification_limit           public.money_strict2;
     DECLARE _can_verify_purchase_transactions   boolean;
-    DECLARE _purchase_verification_limit        money_strict2;
+    DECLARE _purchase_verification_limit        public.money_strict2;
     DECLARE _can_verify_gl_transactions         boolean;
     DECLARE _gl_verification_limit              public.money_strict2;
     DECLARE _can_verify_self                    boolean;
@@ -186,7 +186,7 @@ BEGIN
                 USING ERRCODE='P5901';                
             END IF;
             IF(_can_verify_self = true) THEN
-                IF(_posted_amount > _self_verification_limit AND _self_verification_limit > 0::money_strict2) THEN
+                IF(_posted_amount > _self_verification_limit AND _self_verification_limit > 0::public.money_strict2) THEN
                     RAISE EXCEPTION 'Self verification limit exceeded. The transaction was not verified.'
                     USING ERRCODE='P5910';
                 END IF;
@@ -199,7 +199,7 @@ BEGIN
                 USING ERRCODE='P9001';
             END IF;
             IF(_can_verify_sales_transactions = true) THEN
-                IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::money_strict2) THEN
+                IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::public.money_strict2) THEN
                     RAISE EXCEPTION 'Sales verification limit exceeded. The transaction was not verified.'
                     USING ERRCODE='P5911';
                 END IF;
@@ -213,7 +213,7 @@ BEGIN
                 USING ERRCODE='P9001';
             END IF;
             IF(_can_verify_purchase_transactions = true) THEN
-                IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::money_strict2) THEN
+                IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::public.money_strict2) THEN
                     RAISE EXCEPTION 'Purchase verification limit exceeded. The transaction was not verified.'
                     USING ERRCODE='P5912';
                 END IF;
@@ -227,7 +227,7 @@ BEGIN
                 USING ERRCODE='P9001';
             END IF;
             IF(_can_verify_gl_transactions = true) THEN
-                IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::money_strict2) THEN
+                IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::public.money_strict2) THEN
                     RAISE EXCEPTION 'GL verification limit exceeded. The transaction was not verified.'
                     USING ERRCODE='P5913';
                 END IF;

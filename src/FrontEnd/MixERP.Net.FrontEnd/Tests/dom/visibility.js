@@ -1,4 +1,6 @@
-QUnit.test("visibility.js -> triggerClick", function(assert) {
+///<reference path="/Scripts/jquery-1.9.1.js" />
+///<reference path="/Scripts/mixerp/mixerp-core.js" />
+QUnit.test("visibility.js -> triggerClick", function (assert) {
     var el = $("<div style='display:none;'></div>");
     $('body').append(el);
 

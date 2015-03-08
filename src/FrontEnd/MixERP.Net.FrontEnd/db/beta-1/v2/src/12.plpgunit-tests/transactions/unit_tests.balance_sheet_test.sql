@@ -9,7 +9,7 @@ $$
     DECLARE _period_to      date;
     DECLARE _counter        date;
     DECLARE _bs_unequal     bool=false;
-    DECLARE _message        test_result;
+    DECLARE _message        public.test_result;
     DECLARE _difference     numeric;
     DECLARE _amount         numeric;
     DECLARE _office_id      integer;

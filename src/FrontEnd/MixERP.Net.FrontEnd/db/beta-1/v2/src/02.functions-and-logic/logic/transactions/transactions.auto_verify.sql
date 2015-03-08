@@ -13,29 +13,29 @@ RETURNS VOID
 VOLATILE
 AS
 $$
-    DECLARE _transaction_master_id bigint;
-    DECLARE _transaction_posted_by integer;
-    DECLARE _verifier integer;
-    DECLARE _status integer;
-    DECLARE _reason national character varying(128);
-    DECLARE _rejected smallint=-3;
-    DECLARE _closed smallint=-2;
-    DECLARE _withdrawn smallint=-1;
-    DECLARE _unapproved smallint = 0;
-    DECLARE _auto_approved smallint = 1;
-    DECLARE _approved smallint=2;
-    DECLARE _book text;
-    DECLARE _auto_verify_sales boolean;
-    DECLARE _sales_verification_limit money_strict2;
-    DECLARE _auto_verify_purchase boolean;
-    DECLARE _purchase_verification_limit money_strict2;
-    DECLARE _auto_verify_gl boolean;
-    DECLARE _gl_verification_limit money_strict2;
-    DECLARE _posted_amount money_strict2;
-    DECLARE _auto_verification boolean=true;
-    DECLARE _has_policy boolean=false;
-    DECLARE _voucher_date date;
-    DECLARE _value_date date=transactions.get_value_date(_office_id);
+    DECLARE _transaction_master_id          bigint;
+    DECLARE _transaction_posted_by          integer;
+    DECLARE _verifier                       integer;
+    DECLARE _status                         integer;
+    DECLARE _reason                         national character varying(128);
+    DECLARE _rejected                       smallint=-3;
+    DECLARE _closed                         smallint=-2;
+    DECLARE _withdrawn                      smallint=-1;
+    DECLARE _unapproved                     smallint = 0;
+    DECLARE _auto_approved                  smallint = 1;
+    DECLARE _approved                       smallint=2;
+    DECLARE _book                           text;
+    DECLARE _auto_verify_sales              boolean;
+    DECLARE _sales_verification_limit       public.money_strict2;
+    DECLARE _auto_verify_purchase           boolean;
+    DECLARE _purchase_verification_limit    public.money_strict2;
+    DECLARE _auto_verify_gl                 boolean;
+    DECLARE _gl_verification_limit          public.money_strict2;
+    DECLARE _posted_amount                  public.money_strict2;
+    DECLARE _auto_verification              boolean=true;
+    DECLARE _has_policy                     boolean=false;
+    DECLARE _voucher_date                   date;
+    DECLARE _value_date                     date=transactions.get_value_date(_office_id);
 BEGIN
     _transaction_master_id := $1;
 
@@ -111,7 +111,7 @@ BEGIN
             _auto_verification := false;
         END IF;
         IF(_auto_verify_sales = true) THEN
-            IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::money_strict2) THEN
+            IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::public.money_strict2) THEN
                 _auto_verification := false;
             END IF;
         END IF;         
@@ -123,7 +123,7 @@ BEGIN
             _auto_verification := false;
         END IF;
         IF(_auto_verify_purchase = true) THEN
-            IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::money_strict2) THEN
+            IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::public.money_strict2) THEN
                 _auto_verification := false;
             END IF;
         END IF;         
@@ -135,7 +135,7 @@ BEGIN
             _auto_verification := false;
         END IF;
         IF(_auto_verify_gl = true) THEN
-            IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::money_strict2) THEN
+            IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::public.money_strict2) THEN
                 _auto_verification := false;
             END IF;
         END IF;         
@@ -330,8 +330,8 @@ BEGIN
     WHERE transaction_master_id = _tran_id;
 
     IF(_verification_status_id > 0) THEN
-            SELECT assert.fail('This transaction should not have been verified.') INTO message;
-            RETURN message;
+        SELECT assert.fail('This transaction should not have been verified.') INTO message;
+        RETURN message;
     END IF;
 
     SELECT assert.ok('End of test.') INTO message;  

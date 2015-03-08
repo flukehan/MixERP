@@ -23,20 +23,20 @@ RETURNS VOID
 VOLATILE
 AS
 $$
-    DECLARE _transaction_posted_by integer;
-    DECLARE _can_approve boolean=true;
-    DECLARE _book text;
-    DECLARE _verify_sales boolean;
-    DECLARE _sales_verification_limit money_strict2;
-    DECLARE _verify_purchase boolean;
-    DECLARE _purchase_verification_limit money_strict2;
-    DECLARE _verify_gl boolean;
-    DECLARE _gl_verification_limit money_strict2;
-    DECLARE _posted_amount money_strict2;
-    DECLARE _has_policy boolean=false;
-    DECLARE _voucher_date date;
-    DECLARE _voucher_office_id integer;
-    DECLARE _value_date date=transactions.get_value_date(_office_id);
+    DECLARE _transaction_posted_by          integer;
+    DECLARE _can_approve                    boolean=true;
+    DECLARE _book                           text;
+    DECLARE _verify_sales                   boolean;
+    DECLARE _sales_verification_limit       public.money_strict2;
+    DECLARE _verify_purchase                boolean;
+    DECLARE _purchase_verification_limit    public.money_strict2;
+    DECLARE _verify_gl                      boolean;
+    DECLARE _gl_verification_limit          public.money_strict2;
+    DECLARE _posted_amount                  public.money_strict2;
+    DECLARE _has_policy                     boolean=false;
+    DECLARE _voucher_date                   date;
+    DECLARE _voucher_office_id              integer;
+    DECLARE _value_date                     date=transactions.get_value_date(_office_id);
 BEGIN
 
     SELECT
@@ -103,7 +103,7 @@ BEGIN
             _can_approve := false;
         END IF;
         IF(_verify_sales = true) THEN
-            IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::money_strict2) THEN
+            IF(_posted_amount > _sales_verification_limit AND _sales_verification_limit > 0::public.money_strict2) THEN
                 _can_approve := false;
             END IF;
         END IF;         
@@ -115,7 +115,7 @@ BEGIN
             _can_approve := false;
         END IF;
         IF(_verify_purchase = true) THEN
-            IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::money_strict2) THEN
+            IF(_posted_amount > _purchase_verification_limit AND _purchase_verification_limit > 0::public.money_strict2) THEN
                 _can_approve := false;
             END IF;
         END IF;         
@@ -127,7 +127,7 @@ BEGIN
             _can_approve := false;
         END IF;
         IF(_verify_gl = true) THEN
-            IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::money_strict2) THEN
+            IF(_posted_amount > _gl_verification_limit AND _gl_verification_limit > 0::public.money_strict2) THEN
                 _can_approve := false;
             END IF;
         END IF;         
