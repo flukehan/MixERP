@@ -38,8 +38,10 @@ BEGIN
         recurring_duration              integer,
         recurs_on_same_calendar_date    boolean,
         recurring_amount                public.money_strict,
+        account_id                      bigint,
         payment_term_id                 integer,
-        is_active                       boolean DEFAULT(true)
+        is_active                       boolean DEFAULT(true),
+        statement_reference             national character varying(100)
     ) ON COMMIT DROP;
 
     INSERT INTO recurring_invoices_temp
@@ -51,8 +53,10 @@ BEGIN
         recurring_duration,
         recurs_on_same_calendar_date,
         recurring_amount,
+        account_id,
         payment_term_id,
-        is_active
+        is_active,
+        statement_reference
     )
     SELECT
         recurring_invoice_id,
@@ -62,8 +66,10 @@ BEGIN
         recurring_duration,
         recurs_on_same_calendar_date,
         recurring_amount,
+        account_id,
         payment_term_id,
-        is_active
+        is_active,
+        statement_reference
     FROM core.recurring_invoices
     WHERE is_active
     AND auto_trigger_on_sales
@@ -95,11 +101,13 @@ BEGIN
         recurring_duration,
         recurs_on_same_calendar_date,
         recurring_amount,
+        account_id,
         payment_term_id,
-        is_active
+        is_active,
+        statement_reference
     )
     SELECT
-            recurring_invoice_id,
+        recurring_invoice_id,
         party_id,
         starts_from,
         ends_on,
@@ -108,8 +116,10 @@ BEGIN
         recurring_duration,
         recurs_on_same_calendar_date,
         recurring_amount,
+        account_id,
         payment_term_id,
-        is_active
+        is_active,
+        statement_reference
     FROM recurring_invoices_temp;
 END
 $$

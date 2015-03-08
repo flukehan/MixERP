@@ -108,9 +108,11 @@ CREATE TABLE core.recurring_invoices
     recurring_duration                          public.integer_strict2 NOT NULL DEFAULT(30),
     recurs_on_same_calendar_date                boolean NOT NULL DEFAULT(true),
     recurring_amount                            public.money_strict NOT NULL,
+    account_id                                  bigint REFERENCES core.accounts(account_id),
     payment_term_id                             integer NOT NULL REFERENCES core.payment_terms(payment_term_id),
     auto_trigger_on_sales                       boolean NOT NULL,
     is_active                                   boolean NOT NULL DEFAULT(true),
+    statement_reference                         national character varying(100) NOT NULL DEFAULT(''),
     audit_user_id                               integer NULL REFERENCES office.users(user_id),
     audit_ts                                    TIMESTAMP WITH TIME ZONE NULL 
                                                 DEFAULT(NOW())    
@@ -137,8 +139,10 @@ CREATE TABLE core.recurring_invoice_setup
     recurring_duration                          public.integer_strict2 NOT NULL DEFAULT(0),
     recurs_on_same_calendar_date                boolean NOT NULL DEFAULT(true),
     recurring_amount                            public.money_strict NOT NULL,
+    account_id                                  bigint REFERENCES core.accounts(account_id),
     payment_term_id                             integer NOT NULL REFERENCES core.payment_terms(payment_term_id),
     is_active                                   boolean NOT NULL DEFAULT(true),
+    statement_reference                         national character varying(100) NOT NULL DEFAULT(''),
     audit_user_id                               integer NULL REFERENCES office.users(user_id),
     audit_ts                                    TIMESTAMP WITH TIME ZONE NULL 
                                                 DEFAULT(NOW())    
@@ -203,6 +207,17 @@ SELECT
     audit_ts
 FROM core.recurring_invoice_setup_temp;
 
+UPDATE core.recurring_invoices
+SET account_id = core.get_account_id_by_account_number('30100');
+
+UPDATE core.recurring_invoice_setup
+SET account_id = core.get_account_id_by_account_number('30100');
+
+ALTER TABLE core.recurring_invoices
+ALTER COLUMN account_id SET NOT NULL;
+
+ALTER TABLE core.recurring_invoice_setup
+ALTER COLUMN account_id SET NOT NULL;
 
 SELECT setval
 (

@@ -63,7 +63,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.OneTimeSetup
             }
         }
 
-        public static IEnumerable<NpgsqlParameter> AddOpeningStockParamter(Collection<OpeningStockType> details)
+        private static IEnumerable<NpgsqlParameter> AddOpeningStockParamter(Collection<OpeningStockType> details)
         {
             Collection<NpgsqlParameter> collection = new Collection<NpgsqlParameter>();
 

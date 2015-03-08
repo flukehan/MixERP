@@ -66,6 +66,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
             ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id", ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.items.item_id", ConfigurationHelper.GetDbParameter("ItemDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.payment_terms.payment_term_id", ConfigurationHelper.GetDbParameter("PaymentTermDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
             return string.Join(",", displayFields);
         }
 
@@ -76,6 +77,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
             ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequencies");
             ScrudHelper.AddDisplayView(displayViews, "core.items.item_id", "core.item_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.payment_terms.payment_term_id", "core.payment_term_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_scrud_view");
             return string.Join(",", displayViews);
         }
     }

@@ -33089,9 +33089,11 @@ CREATE TABLE core.recurring_invoices
     recurring_duration                          public.integer_strict2 NOT NULL DEFAULT(30),
     recurs_on_same_calendar_date                boolean NOT NULL DEFAULT(true),
     recurring_amount                            public.money_strict NOT NULL,
+    account_id                                  bigint REFERENCES core.accounts(account_id),
     payment_term_id                             integer NOT NULL REFERENCES core.payment_terms(payment_term_id),
     auto_trigger_on_sales                       boolean NOT NULL,
     is_active                                   boolean NOT NULL DEFAULT(true),
+    statement_reference                         national character varying(100) NOT NULL DEFAULT(''),
     audit_user_id                               integer NULL REFERENCES office.users(user_id),
     audit_ts                                    TIMESTAMP WITH TIME ZONE NULL 
                                                 DEFAULT(NOW())    
@@ -33118,8 +33120,10 @@ CREATE TABLE core.recurring_invoice_setup
     recurring_duration                          public.integer_strict2 NOT NULL DEFAULT(0),
     recurs_on_same_calendar_date                boolean NOT NULL DEFAULT(true),
     recurring_amount                            public.money_strict NOT NULL,
+    account_id                                  bigint REFERENCES core.accounts(account_id),
     payment_term_id                             integer NOT NULL REFERENCES core.payment_terms(payment_term_id),
     is_active                                   boolean NOT NULL DEFAULT(true),
+    statement_reference                         national character varying(100) NOT NULL DEFAULT(''),
     audit_user_id                               integer NULL REFERENCES office.users(user_id),
     audit_ts                                    TIMESTAMP WITH TIME ZONE NULL 
                                                 DEFAULT(NOW())    
@@ -33184,6 +33188,17 @@ SELECT
     audit_ts
 FROM core.recurring_invoice_setup_temp;
 
+UPDATE core.recurring_invoices
+SET account_id = core.get_account_id_by_account_number('30100');
+
+UPDATE core.recurring_invoice_setup
+SET account_id = core.get_account_id_by_account_number('30100');
+
+ALTER TABLE core.recurring_invoices
+ALTER COLUMN account_id SET NOT NULL;
+
+ALTER TABLE core.recurring_invoice_setup
+ALTER COLUMN account_id SET NOT NULL;
 
 SELECT setval
 (
@@ -34096,8 +34111,10 @@ BEGIN
         recurring_duration              integer,
         recurs_on_same_calendar_date    boolean,
         recurring_amount                public.money_strict,
+        account_id                      bigint,
         payment_term_id                 integer,
-        is_active                       boolean DEFAULT(true)
+        is_active                       boolean DEFAULT(true),
+        statement_reference             national character varying(100)
     ) ON COMMIT DROP;
 
     INSERT INTO recurring_invoices_temp
@@ -34109,8 +34126,10 @@ BEGIN
         recurring_duration,
         recurs_on_same_calendar_date,
         recurring_amount,
+        account_id,
         payment_term_id,
-        is_active
+        is_active,
+        statement_reference
     )
     SELECT
         recurring_invoice_id,
@@ -34120,8 +34139,10 @@ BEGIN
         recurring_duration,
         recurs_on_same_calendar_date,
         recurring_amount,
+        account_id,
         payment_term_id,
-        is_active
+        is_active,
+        statement_reference
     FROM core.recurring_invoices
     WHERE is_active
     AND auto_trigger_on_sales
@@ -34153,11 +34174,13 @@ BEGIN
         recurring_duration,
         recurs_on_same_calendar_date,
         recurring_amount,
+        account_id,
         payment_term_id,
-        is_active
+        is_active,
+        statement_reference
     )
     SELECT
-            recurring_invoice_id,
+        recurring_invoice_id,
         party_id,
         starts_from,
         ends_on,
@@ -34166,12 +34189,39 @@ BEGIN
         recurring_duration,
         recurs_on_same_calendar_date,
         recurring_amount,
+        account_id,
         payment_term_id,
-        is_active
+        is_active,
+        statement_reference
     FROM recurring_invoices_temp;
 END
 $$
 LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.create_routine.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.create_routine(_routine_code national character varying(12), _routine regproc, _order integer);
+
+CREATE FUNCTION transactions.create_routine(_routine_code national character varying(12), _routine regproc, _order integer)
+RETURNS void
+AS
+$$
+BEGIN
+    IF NOT EXISTS(SELECT * FROM transactions.routines WHERE routine_code=_routine_code) THEN
+        INSERT INTO transactions.routines(routine_code, routine_name, "order")
+        SELECT $1, $2, $3;
+        RETURN;
+    END IF;
+
+    UPDATE transactions.routines
+    SET
+        routine_name = _routine,
+        "order" = _order
+    WHERE routine_code=_routine_code;
+    RETURN;
+END
+$$
+LANGUAGE plpgsql;
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.get_cash_repository_balance.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_cash_repository_balance(_cash_repository_id integer, _currency_code national character varying(12));
@@ -34291,6 +34341,143 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.post_recurring_invoices.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.post_recurring_invoices(_office_id integer);
+
+CREATE FUNCTION transactions.post_recurring_invoices(_office_id integer)
+RETURNS TABLE
+(
+        id                      integer,
+        party_id                bigint,
+        recurring_amount        public.money_strict2,
+        account_id              bigint,
+        statement_reference     national character varying(100)
+)
+AS
+$$
+    DECLARE _value_date         date='5/7/2015';
+    DECLARE _frequency_id       integer; 
+    DECLARE _day                double precision;
+BEGIN
+    DROP TABLE IF EXISTS recurring_invoices_temp;
+    CREATE TEMPORARY TABLE recurring_invoices_temp
+    (
+        id                      SERIAL,
+        party_id                bigint,
+        recurring_amount        public.money_strict2,
+        account_id              bigint,
+        statement_reference     national character varying(100)
+    ) ON COMMIT DROP;
+
+    SELECT frequency_id INTO _frequency_id
+    FROM core.frequency_setups
+    WHERE value_date = _value_date;
+
+    _frequency_id   := COALESCE(_frequency_id, 0);
+    _day            := EXTRACT(DAY FROM _value_date);
+
+    --INSERT RECURRING INVOICES THAT :
+    -->RECUR BASED ON SAME CALENDAR DATE 
+    -->AND OCCUR TODAY 
+    -->AND HAVE DURATION RECURRENCE TYPE
+    INSERT INTO recurring_invoices_temp(party_id, recurring_amount, account_id, statement_reference)
+    SELECT 
+        core.recurring_invoice_setup.party_id, 
+        core.recurring_invoice_setup.recurring_amount, 
+        core.recurring_invoice_setup.account_id,
+        core.recurring_invoice_setup.statement_reference
+    FROM core.recurring_invoice_setup
+    WHERE 1 = 1
+    AND is_active                                   --IS ACTIVE
+    AND _value_date > starts_from                   --HAS NOT STARTED YET
+    AND _value_date <= ends_on                      --HAS NOT ENDED YET
+    AND recurs_on_same_calendar_date                --RECURS ON THE SAME CALENDAR DATE
+    AND _day = EXTRACT(DAY FROM starts_from) - 1    --OCCURS TODAY
+    AND recurrence_type_id IN                       --HAS DURATION RECURRENCE TYPE
+    (
+        SELECT recurrence_type_id FROM core.recurrence_types
+        WHERE NOT is_frequency
+    );
+   
+    --INSERT RECURRING INVOICES THAT :
+    -->DO NOT RECUR BASED ON SAME CALENDAR DATE, BUT RECURRING DAYS
+    -->AND OCCUR TODAY
+    -->AND HAVE DURATION RECURRENCE TYPE
+    INSERT INTO recurring_invoices_temp(party_id, recurring_amount, account_id, statement_reference)
+    SELECT 
+        core.recurring_invoice_setup.party_id, 
+        core.recurring_invoice_setup.recurring_amount, 
+        core.recurring_invoice_setup.account_id,
+        core.recurring_invoice_setup.statement_reference
+    FROM core.recurring_invoice_setup
+    WHERE 1 = 1
+    AND is_active                                   --IS ACTIVE
+    AND _value_date > starts_from                   --HAS NOT STARTED YET
+    AND _value_date <= ends_on                      --HAS NOT ENDED YET
+    AND NOT recurs_on_same_calendar_date            --DOES NOT RECUR ON THE SAME CALENDAR DATE, BUT RECURRING DAYS
+    --OCCURS TODAY
+    AND _value_date
+    IN
+    (
+        SELECT 
+        GENERATE_SERIES
+        (
+            starts_from::timestamp, 
+            ends_on::timestamp, 
+            (
+                recurring_duration::text || 'days'
+            )::interval
+        )::date - INTERVAL '1 DAY'
+    )
+    AND recurrence_type_id IN                       --HAS DURATION RECURRENCE TYPE
+    (
+        SELECT recurrence_type_id FROM core.recurrence_types
+        WHERE NOT is_frequency
+    );
+   
+    --INSERT RECURRING INVOICES THAT :
+    -->OCCUR TODAY 
+    -->AND RECUR BASED ON FREQUENCIES
+    INSERT INTO recurring_invoices_temp(party_id, recurring_amount, account_id, statement_reference)
+    SELECT
+        core.recurring_invoice_setup.party_id, 
+        core.recurring_invoice_setup.recurring_amount, 
+        core.recurring_invoice_setup.account_id,
+        core.recurring_invoice_setup.statement_reference    
+    FROM core.recurring_invoice_setup
+    WHERE 1 = 1
+    AND is_active                                   --IS ACTIVE
+    AND _value_date > starts_from                   --HAS NOT STARTED YET
+    AND _value_date <= ends_on                      --HAS NOT ENDED YET
+    AND recurring_frequency_id = _frequency_id      --OCCURS TODAY
+    AND recurrence_type_id IN                       --RECURS BASED ON FREQUENCIES
+    (
+        SELECT recurrence_type_id FROM core.recurrence_types
+        WHERE is_frequency
+    );
+
+    UPDATE recurring_invoices_temp
+    SET statement_reference = REPLACE(recurring_invoices_temp.statement_reference, '{RIMonth}', to_char(date_trunc('month', _value_date), 'MON'));
+
+    UPDATE recurring_invoices_temp
+    SET statement_reference = REPLACE(recurring_invoices_temp.statement_reference, '{RIYear}', to_char(date_trunc('year', _value_date), 'YYYY'));
+
+
+
+    RETURN QUERY
+    SELECT *
+    FROM recurring_invoices_temp;
+END
+$$
+LANGUAGE plpgsql;
+
+
+SELECT transactions.create_routine('REF-PORCIV', 'transactions.post_recurring_invoices', 200);
+
+--SELECT  * FROM transactions.post_recurring_invoices(2);
+--SELECT to_char(to_timestamp (now()::text, 'DD'), 'MON')
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.verify_transaction.sql --<--<--
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.verify_transaction.sql --<--<--

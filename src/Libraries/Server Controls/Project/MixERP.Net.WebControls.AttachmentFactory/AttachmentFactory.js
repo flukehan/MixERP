@@ -207,5 +207,5 @@ var validateDuplicates = function () {
     } else {
         warningLabel.html(duplicateFileLocalized + " : " + duplicates.join());
         return false;
-    };
+    }
 };
