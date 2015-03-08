@@ -40,6 +40,7 @@
     </style>
 </head>
 <body>
+    <script src="/bundles/scripts/master-page.min.js"></script>
     <form id="form1" runat="server" enctype="multipart/form-data" method="post" submitdisabledcontrols="true" defaultbutton="SwallowSubmit">
         <asp:Button runat="server" ID="SwallowSubmit" OnClientClick=" return false; " Style="display: none;" />
         <asp:ScriptManager runat="server" ID="ScriptManager1" />
@@ -105,7 +106,6 @@
                         </div>
                     </div>
                     <div id="MainContent">
-                        <script src="/bundles/scripts/master-page.min.js"></script>
                         <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
                         </asp:ContentPlaceHolder>
                     </div>

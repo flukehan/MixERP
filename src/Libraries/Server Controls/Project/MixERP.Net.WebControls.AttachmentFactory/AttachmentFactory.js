@@ -61,12 +61,12 @@ $(function () {
                 $(filePathSelector).html(fileName);
                 $(filePathSelector).removeClass("big error");
                 return;
-            }
+            };
 
             $(filePathSelector).html(invalidFileLocalized + " " + fileName);
             $(filePathSelector).addClass("big error");
             $(this).val("");
-        }
+        };
     });
 });
 
@@ -125,7 +125,22 @@ function Upload(comment, filePath, originalFileName) {
     this.Comment = comment;
     this.FilePath = filePath;
     this.OriginalFileName = originalFileName;
-}
+};
+
+
+var hasFile = function () {
+    var files = [];
+    var filePath;
+
+    $(".upload").each(function () {
+        filePath = $(this).val();
+        if (filePath) {
+            files.push(filePath);
+        };
+    });
+
+    return files.length > 0;
+};
 
 uploadButton.on("click", function () {
     if (hasFile()) {
@@ -164,19 +179,6 @@ uploadButton.on("click", function () {
     }
 });
 
-var hasFile = function () {
-    var files = [];
-    var filePath;
-
-    $(".upload").each(function () {
-        filePath = $(this).val();
-        if (filePath) {
-            files.push(filePath);
-        }
-    });
-
-    return files.length > 0;
-};
 
 var validateDuplicates = function () {
     var files = [];
@@ -186,8 +188,9 @@ var validateDuplicates = function () {
         filePath = $(this).val();
         if (filePath) {
             files.push(filePath);
-        }
+        };
     });
+
 
     var sortedFiles = files.sort();
     var duplicates = [];
@@ -195,8 +198,8 @@ var validateDuplicates = function () {
     for (var i = 0; i < files.length - 1; i++) {
         if (sortedFiles[i + 1] === sortedFiles[i]) {
             duplicates.push(sortedFiles[i]);
-        }
-    }
+        };
+    };
 
     if (isNullOrWhiteSpace(duplicates)) { //No duplicate found.
         warningLabel.html("");
@@ -204,5 +207,5 @@ var validateDuplicates = function () {
     } else {
         warningLabel.html(duplicateFileLocalized + " : " + duplicates.join());
         return false;
-    }
+    };
 };
