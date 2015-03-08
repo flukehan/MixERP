@@ -22,7 +22,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Linq.Expressions;
 
-
+// ReSharper Disable All
 namespace PetaPoco
 {
     // Poco's marked [Explicit] require all column properties to be marked
