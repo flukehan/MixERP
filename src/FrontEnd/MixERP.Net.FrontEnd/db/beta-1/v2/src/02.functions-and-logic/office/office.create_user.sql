@@ -23,7 +23,7 @@ RETURNS VOID
 AS
 $$
 BEGIN
-    IF(COALESCE(_user_name, '') THEN
+    IF(COALESCE(_user_name, '')) THEN
         RETURN;
     END IF;
 
