@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Mail;
@@ -24,17 +25,17 @@ using System.Net.Mime;
 
 namespace MixERP.Net.Messaging.Email
 {
-    public static class EmailAttachment
+    public static class AttachmentFactory
     {
-        public static Collection<Attachment> GetAttachments(params string[] files)
+        public static IEnumerable<Attachment> GetAttachments(params string[] files)
         {
             Collection<Attachment> attachments = new Collection<Attachment>();
 
             if (files != null)
             {
-                foreach (var file in files)
+                foreach (string file in files)
                 {
-                    if (file != null)
+                    if (!string.IsNullOrWhiteSpace(file))
                     {
                         using (Attachment attachment = new Attachment(file, MediaTypeNames.Application.Octet))
                         {
@@ -42,6 +43,7 @@ namespace MixERP.Net.Messaging.Email
                             disposition.CreationDate = File.GetCreationTime(file);
                             disposition.ModificationDate = File.GetLastWriteTime(file);
                             disposition.ReadDate = File.GetLastAccessTime(file);
+
                             disposition.FileName = Path.GetFileName(file);
                             disposition.Size = new FileInfo(file).Length;
                             disposition.DispositionType = DispositionTypeNames.Attachment;

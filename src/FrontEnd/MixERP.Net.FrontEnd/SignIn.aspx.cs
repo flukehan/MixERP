@@ -28,7 +28,6 @@ using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Office;
-using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Data.Helpers;
 using MixERP.Net.FrontEnd.Data.Office;
@@ -43,64 +42,7 @@ namespace MixERP.Net.FrontEnd
         {
             this.CreateControls(this.Placeholder1);
             this.CreateDimmer(this.Placeholder1);
-
-            string challenge = Guid.NewGuid().ToString().Replace("-", "");
-
-            this.Session["Challenge"] = challenge;
-
-            PageUtility.RegisterJavascript("SignInChallenge", "var challenge = '" + challenge + "';", this.Page, true);
-        }
-
-        private void CreateDimmer(Control container)
-        {
-            using (HtmlGenericControl pageDimmer = new HtmlGenericControl("div"))
-            {
-                pageDimmer.Attributes.Add("class", "ui page dimmer");
-
-                using (HtmlGenericControl content = new HtmlGenericControl("div"))
-                {
-                    content.Attributes.Add("class", "content");
-
-                    using (HtmlGenericControl center = new HtmlGenericControl("div"))
-                    {
-                        center.Attributes.Add("class", "center");
-
-                        using (HtmlGenericControl header = new HtmlGenericControl("div"))
-                        {
-                            header.Attributes.Add("class", "ui yellow huge icon header");
-
-                            using (HtmlGenericControl icon = new HtmlGenericControl("i"))
-                            {
-                                icon.Attributes.Add("class", "ui inverted yellow setting loading icon");
-
-                                header.Controls.Add(icon);
-                            }
-
-                            using (Literal literal = new Literal())
-                            {
-                                literal.Text = Titles.SigningIn;
-                                header.Controls.Add(literal);
-                            }
-
-                            using (HtmlGenericControl subHeader = new HtmlGenericControl("div"))
-                            {
-                                subHeader.Attributes.Add("class", "ui yellow sub header");
-                                subHeader.InnerText = Labels.JustAMomentPlease;
-                                header.Controls.Add(subHeader);
-                            }
-
-
-                            center.Controls.Add(header);
-                        }
-
-                        content.Controls.Add(center);
-                    }
-
-                    pageDimmer.Controls.Add(content);
-                }
-
-                container.Controls.Add(pageDimmer);
-            }
+            this.AddJavascript();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -166,9 +108,76 @@ namespace MixERP.Net.FrontEnd
             this.Response.Redirect("~/Site/offline.html");
         }
 
+        private void AddJavascript()
+        {
+            string challenge = Guid.NewGuid().ToString().Replace("-", "");
+            this.Session["Challenge"] = challenge;
+
+            string script = JSUtility.GetVar("challenge", challenge);
+            script += JSUtility.GetVar("shortDateFormat", LocalizationHelper.GetShortDateFormat());
+            script += JSUtility.GetVar("thousandSeparator", LocalizationHelper.GetThousandSeparator());
+            script += JSUtility.GetVar("decimalSeparator", LocalizationHelper.GetDecimalSeparator());
+            script += JSUtility.GetVar("currencyDecimalPlaces", LocalizationHelper.GetCurrencyDecimalPlaces());
+
+
+            PageUtility.RegisterJavascript("SignInPage_Vars", script, this.Page, true);
+        }
+
         #region Controls
 
         private HtmlSelect branchSelect;
+
+        private void CreateDimmer(Control container)
+        {
+            using (HtmlGenericControl pageDimmer = new HtmlGenericControl("div"))
+            {
+                pageDimmer.Attributes.Add("class", "ui page dimmer");
+
+                using (HtmlGenericControl content = new HtmlGenericControl("div"))
+                {
+                    content.Attributes.Add("class", "content");
+
+                    using (HtmlGenericControl center = new HtmlGenericControl("div"))
+                    {
+                        center.Attributes.Add("class", "center");
+
+                        using (HtmlGenericControl header = new HtmlGenericControl("div"))
+                        {
+                            header.Attributes.Add("class", "ui yellow huge icon header");
+
+                            using (HtmlGenericControl icon = new HtmlGenericControl("i"))
+                            {
+                                icon.Attributes.Add("class", "ui inverted yellow setting loading icon");
+
+                                header.Controls.Add(icon);
+                            }
+
+                            using (Literal literal = new Literal())
+                            {
+                                literal.Text = Titles.SigningIn;
+                                header.Controls.Add(literal);
+                            }
+
+                            using (HtmlGenericControl subHeader = new HtmlGenericControl("div"))
+                            {
+                                subHeader.Attributes.Add("class", "ui yellow sub header");
+                                subHeader.InnerText = Labels.JustAMomentPlease;
+                                header.Controls.Add(subHeader);
+                            }
+
+
+                            center.Controls.Add(header);
+                        }
+
+                        content.Controls.Add(center);
+                    }
+
+                    pageDimmer.Controls.Add(content);
+                }
+
+                container.Controls.Add(pageDimmer);
+            }
+        }
 
         private void CreateControls(Control container)
         {
@@ -221,8 +230,7 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
-
-        private void AddDivider(HtmlGenericControl container)
+        private static void AddDivider(HtmlGenericControl container)
         {
             using (HtmlGenericControl divider = new HtmlGenericControl("div"))
             {
@@ -231,7 +239,7 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
-        private void AddExceptionField(HtmlGenericControl container)
+        private static void AddExceptionField(HtmlGenericControl container)
         {
             using (HtmlGenericControl exceptionField = new HtmlGenericControl("div"))
             {
@@ -240,7 +248,7 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
-        private void AddIconDivider(HtmlGenericControl container)
+        private static void AddIconDivider(HtmlGenericControl container)
         {
             using (HtmlGenericControl iconDivider = new HtmlGenericControl("div"))
             {
@@ -272,7 +280,7 @@ namespace MixERP.Net.FrontEnd
                     languageSelect.ID = "LanguageSelect";
                     languageSelect.DataTextField = "Text";
                     languageSelect.DataValueField = "Value";
-                    languageSelect.DataSource = this.GetLanguages();
+                    languageSelect.DataSource = GetLanguages();
                     languageSelect.DataBind();
 
 
@@ -292,7 +300,7 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
-        private void AddPasswordField(HtmlGenericControl container)
+        private static void AddPasswordField(HtmlGenericControl container)
         {
             using (HtmlGenericControl field = new HtmlGenericControl("div"))
             {
@@ -314,7 +322,7 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
-        private void AddRememberMeField(HtmlGenericControl container)
+        private static void AddRememberMeField(HtmlGenericControl container)
         {
             using (HtmlGenericControl field = new HtmlGenericControl("div"))
             {
@@ -345,7 +353,7 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
-        private void AddSignInButtonField(HtmlGenericControl container)
+        private static void AddSignInButtonField(HtmlGenericControl container)
         {
             using (HtmlGenericControl field = new HtmlGenericControl("div"))
             {
@@ -364,7 +372,7 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
-        private void AddUserIdField(HtmlGenericControl container)
+        private static void AddUserIdField(HtmlGenericControl container)
         {
             using (HtmlGenericControl field = new HtmlGenericControl("div"))
             {
@@ -393,22 +401,22 @@ namespace MixERP.Net.FrontEnd
                 form.Attributes.Add("class", "ui form segment");
                 form.Attributes.Add("style", "padding:24px 48px;");
 
-                this.CreateHeader(form);
-                this.AddDivider(form);
-                this.AddUserIdField(form);
-                this.AddPasswordField(form);
-                this.AddRememberMeField(form);
-                this.AddIconDivider(form);
+                CreateHeader(form);
+                AddDivider(form);
+                AddUserIdField(form);
+                AddPasswordField(form);
+                AddRememberMeField(form);
+                AddIconDivider(form);
                 this.AddBranchField(form);
                 this.AddLanguageField(form);
-                this.AddExceptionField(form);
-                this.AddSignInButtonField(form);
+                AddExceptionField(form);
+                AddSignInButtonField(form);
 
                 container.Controls.Add(form);
             }
         }
 
-        private void CreateHeader(HtmlGenericControl container)
+        private static void CreateHeader(HtmlGenericControl container)
         {
             using (HtmlGenericControl header = new HtmlGenericControl("div"))
             {
@@ -421,7 +429,7 @@ namespace MixERP.Net.FrontEnd
             }
         }
 
-        private Collection<ListItem> GetLanguages()
+        private static Collection<ListItem> GetLanguages()
         {
             string[] cultures = ConfigurationHelper.GetMixERPParameter("cultures").Split(',');
             Collection<ListItem> items = new Collection<ListItem>();
@@ -431,7 +439,10 @@ namespace MixERP.Net.FrontEnd
             {
                 string cultureName = culture.Trim();
 
-                foreach (CultureInfo infos in CultureInfo.GetCultures(CultureTypes.AllCultures).Where(x => x.TwoLetterISOLanguageName.Equals(cultureName)))
+                foreach (
+                    CultureInfo infos in
+                        CultureInfo.GetCultures(CultureTypes.AllCultures)
+                            .Where(x => x.TwoLetterISOLanguageName.Equals(cultureName)))
                 {
                     items.Add(new ListItem(infos.NativeName, infos.Name));
                 }

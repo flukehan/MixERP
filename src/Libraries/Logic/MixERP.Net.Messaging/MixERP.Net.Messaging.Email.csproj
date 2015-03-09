@@ -7,8 +7,8 @@
     <ProjectGuid>{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MixERP.Net.Messaging</RootNamespace>
-    <AssemblyName>MixERP.Net.Messaging</AssemblyName>
+    <RootNamespace>MixERP.Net.Messaging.Email</RootNamespace>
+    <AssemblyName>MixERP.Net.Messaging.Email</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
@@ -53,8 +53,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Email\EmailAttachment.cs" />
-    <Compile Include="Email\EmailProcessor.cs" />
+    <Compile Include="Status.cs" />
+    <Compile Include="Type.cs" />
+    <Compile Include="ICredentials.cs" />
+    <Compile Include="EmailMessage.cs" />
+    <Compile Include="SmtpCredentials.cs" />
+    <Compile Include="SmtpHost.cs" />
+    <Compile Include="IMessage.cs" />
+    <Compile Include="Helpers\Config.cs" />
+    <Compile Include="Validator.cs" />
+    <Compile Include="Helpers\AttachmentFactory.cs" />
+    <Compile Include="Processor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1307,9 +1307,9 @@
       <Project>{bde918b1-dd9b-41c9-a41f-f3ddec18b6d8}</Project>
       <Name>MixERP.Net.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Logic\MixERP.Net.Messaging\MixERP.Net.Messaging.csproj">
+    <ProjectReference Include="..\..\Libraries\Logic\MixERP.Net.Messaging\MixERP.Net.Messaging.Email.csproj">
       <Project>{d29b7b60-76b2-4a00-a8fa-7654519afcd4}</Project>
-      <Name>MixERP.Net.Messaging</Name>
+      <Name>MixERP.Net.Messaging.Email</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\MixERP.Net.WebControls.AttachmentFactory.csproj">
       <Project>{403f308d-10e7-4c70-9360-1027ee541495}</Project>

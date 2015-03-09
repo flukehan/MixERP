@@ -111,9 +111,9 @@
       <Project>{0ef8a910-9603-477e-9ef7-aae9aea46160}</Project>
       <Name>MixERP.Net.HtmlParser</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Logic\MixERP.Net.Messaging\MixERP.Net.Messaging.csproj">
+    <ProjectReference Include="..\..\..\Logic\MixERP.Net.Messaging\MixERP.Net.Messaging.Email.csproj">
       <Project>{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}</Project>
-      <Name>MixERP.Net.Messaging</Name>
+      <Name>MixERP.Net.Messaging.Email</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Logic\MixERP.Net.TransactionGovernor\MixERP.Net.TransactionGovernor.csproj">
       <Project>{0aacf4db-8332-4c4b-96df-2bf6aea68473}</Project>
