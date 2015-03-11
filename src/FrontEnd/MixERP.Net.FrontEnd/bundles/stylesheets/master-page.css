@@ -34699,6 +34699,7 @@ table.borderless td {
 /*Semantic UI Override End */
 #MainContent {
   padding: 12px;
+  min-height: 1000px;
 }
 .text-right,
 .text-right td,

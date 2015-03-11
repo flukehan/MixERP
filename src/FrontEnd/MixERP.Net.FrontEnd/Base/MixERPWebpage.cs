@@ -72,7 +72,6 @@ namespace MixERP.Net.FrontEnd.Base
                 Log.Verbose("Cleared cookie: {Cookie}.", cookie);
             }
 
-            this.currentPage = HttpContext.Current.Request.Url.AbsolutePath;
 
             Log.Verbose("Current page is {CurrentPage}.", this.currentPage);
 
@@ -85,6 +84,7 @@ namespace MixERP.Net.FrontEnd.Base
 
             string loginUrl = (page).ResolveUrl(FormsAuthentication.LoginUrl);
 
+            this.currentPage = HttpContext.Current.Request.Url.AbsolutePath;
             if (this.currentPage != loginUrl)
             {
                 FormsAuthentication.RedirectToLoginPage(this.currentPage);
@@ -121,6 +121,7 @@ namespace MixERP.Net.FrontEnd.Base
 
         protected override void OnInit(EventArgs e)
         {
+
             if (!this.IsPostBack)
             {
                 if (this.Request.IsAuthenticated)
@@ -236,7 +237,7 @@ namespace MixERP.Net.FrontEnd.Base
                         dataJSTree = "data-jstree='{\"type\":\"file\"}'";
                     }
 
-                    if (url.Replace("~", "").Equals(this.currentPage))
+                    if (url.Equals(this.OverridePath))
                     {
                         dataSelected = "data-selected='true'";
                         cssClass = "class='expanded'";
