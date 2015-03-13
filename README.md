@@ -2,6 +2,10 @@
 
 MixERP is an ASP.net open source ERP Solution.
 
+#Beta 2 Version Development Started
+
+We have already started developing the next version. Beta 2 with MVC 5/Razor 3 will support Linux and OSX on ASP.net vNext. 
+
 #We Are Accepting Feature Requests for CRM Module
 Tell us what you like to see in the CRM Module! Not sure? Then what about reviewing the upcoming features of the CRM module? This is how it looks like:
 
@@ -149,5 +153,4 @@ MixERP has a very wide range of features which are tightly integrated with each 
 
 ##Please Note
 * MixERP comes with GNU-GPL Version 3 license.
-* MixERP is an ASP.net WebForms Application, not MVC.
 * MixERP only supports PostgreSQL Server database and we do not have any plans to support other DBMS right now.

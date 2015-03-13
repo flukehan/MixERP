@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h1 class="ui header">Welcome to Beta 2 Preview</h1>
+<div class="ui divider"></div>
+
+<div class="ui large positive message">
+    Beta 2 with MVC 5/Razor 3 will support nginx on Linux and OSX.
+</div>
+
+<div class="ui large negative message">
+    The menu still redirects to Beta 1 links.
+</div>
+
+<div class="ui large positive message">
+    This will be corrected soon enough though. Below is the only page that works out of the blue.
+</div>
+
+@Html.ActionLink("ScrudFactory MVC Test Page", "Index", "Parties", new { Area = "Inventory" }, new { @class = "ui blue button" })

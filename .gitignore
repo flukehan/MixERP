@@ -5,4 +5,7 @@ src/FrontEnd/MixERP.Net.FrontEnd/Resource/Static/Attachments
 src/FrontEnd/MixERP.Net.FrontEnd/Resource/Static/Emails
 src/FrontEnd/MixERP.Net.FrontEnd/Resource/Backups
 src/FrontEnd/MixERP.Net.FrontEnd/Resource/Temp
-src/Framework
+src-beta2/Web/MixERP.Net.Web.UI/Resource/Static/Attachments
+src-beta2/Web/MixERP.Net.Web.UI/Resource/Static/Emails
+src-beta2/Web/MixERP.Net.Web.UI/Resource/Backups
+src-beta2/Web/MixERP.Net.Web.UI/Resource/Temp
