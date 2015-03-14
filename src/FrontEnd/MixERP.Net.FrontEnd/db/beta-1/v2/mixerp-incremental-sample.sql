@@ -33904,7 +33904,7 @@ CREATE TABLE core.recurring_invoices
     statement_reference                         national character varying(100) NOT NULL DEFAULT(''),
     audit_user_id                               integer NULL REFERENCES office.users(user_id),
     audit_ts                                    TIMESTAMP WITH TIME ZONE NULL 
-                                                DEFAULT(NOW())    
+                                                DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX recurring_invoices_item_id_auto_trigger_on_sales_uix
@@ -35150,6 +35150,128 @@ END
 $$
 LANGUAGE plpgsql;
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.perform_eod_operation.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.perform_eod_operation(_user_id integer, _office_id integer, _value_date date);
+DROP FUNCTION IF EXISTS transactions.perform_eod_operation(_user_id integer, _login_id bigint, _office_id integer, _value_date date);
+
+CREATE FUNCTION transactions.perform_eod_operation(_user_id integer, _login_id bigint, _office_id integer, _value_date date)
+RETURNS boolean
+AS
+$$
+    DECLARE _routine            regproc;
+    DECLARE _routine_id         integer;
+    DECLARE this                RECORD;
+    DECLARE _sql                text;
+    DECLARE _is_error           boolean=false;
+    DECLARE _notice             text;
+    DECLARE _office_code        text;
+BEGIN
+    IF(_value_date IS NULL) THEN
+        RAISE EXCEPTION 'Invalid date.'
+        USING ERRCODE='P3008';
+    END IF;
+
+    IF(NOT policy.is_elevated_user(_user_id)) THEN
+        RAISE EXCEPTION 'Access is denied.'
+        USING ERRCODE='P9001';
+    END IF;
+
+    IF(_value_date != transactions.get_value_date(_office_id)) THEN
+        RAISE EXCEPTION 'Invalid value date.'
+        USING ERRCODE='P3007';
+    END IF;
+
+    SELECT * FROM transactions.day_operation
+    WHERE value_date=_value_date 
+    AND office_id = _office_id INTO this;
+
+    IF(this IS NULL) THEN
+        RAISE EXCEPTION 'Invalid value date.'
+        USING ERRCODE='P3007';
+    ELSE    
+        IF(this.completed OR this.completed_on IS NOT NULL) THEN
+            RAISE WARNING 'EOD operation was already performed.';
+            _is_error        := true;
+        END IF;
+    END IF;
+    
+    IF(NOT _is_error) THEN
+        _office_code        := office.get_office_code_by_id(_office_id);
+        _notice             := 'EOD started.'::text;
+        RAISE INFO  '%', _notice;
+
+        FOR this IN
+        SELECT routine_id, routine_name 
+        FROM transactions.routines 
+        WHERE status 
+        ORDER BY "order" ASC
+        LOOP
+            _routine_id             := this.routine_id;
+            _routine                := this.routine_name;
+            _sql                    := format('SELECT * FROM %1$s($1, $2, $3, $4);', _routine);
+
+            RAISE NOTICE '%', _sql;
+
+            _notice             := 'Performing ' || _routine::text || '.';
+            RAISE INFO '%', _notice;
+
+            PERFORM pg_sleep(5);
+            EXECUTE _sql USING _user_id, _login_id, _office_id, _value_date;
+
+            _notice             := 'Completed  ' || _routine::text || '.';
+            RAISE INFO '%', _notice;
+            
+            PERFORM pg_sleep(5);            
+        END LOOP;
+
+
+        UPDATE transactions.day_operation SET 
+            completed_on = NOW(), 
+            completed_by = _user_id,
+            completed = true
+        WHERE value_date=_value_date
+        AND office_id = _office_id;
+
+        _notice             := 'EOD of ' || _office_code || ' for ' || _value_date::text || ' completed without errors.'::text;
+        RAISE INFO '%', _notice;
+
+        _notice             := 'OK'::text;
+        RAISE INFO '%', _notice;
+
+        RETURN true;
+    END IF;
+
+    RETURN false;    
+END;
+$$
+LANGUAGE plpgsql;
+
+DROP FUNCTION IF EXISTS transactions.perform_eod_operation(_login_id bigint);
+
+CREATE FUNCTION transactions.perform_eod_operation(_login_id bigint)
+RETURNS boolean
+AS
+$$
+    DECLARE _user_id    integer;
+    DECLARE _office_id integer;
+    DECLARE _value_date date;
+BEGIN
+    SELECT 
+        user_id,
+        office_id,
+        transactions.get_value_date(office_id)
+    INTO
+        _user_id,
+        _office_id,
+        _value_date
+    FROM audit.logins
+    WHERE login_id=$1;
+
+    RETURN transactions.perform_eod_operation(_user_id,_login_id, _office_id, _value_date);
+END
+$$
+LANGUAGE plpgsql;
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.post_purchase_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_purchase_return
 (
@@ -35190,7 +35312,6 @@ $$
     DECLARE _tran_master_id                 bigint;
     DECLARE _stock_detail_id                bigint;
     DECLARE _tran_counter                   integer;
-    DECLARE _tran_code                      text;
     DECLARE _transaction_code               text;
     DECLARE _stock_master_id                bigint;
     DECLARE _grand_total                    money_strict;
@@ -35367,10 +35488,6 @@ BEGIN
 
     _credit_account_id = core.get_account_id_by_party_code(_party_code); 
 
-    _tran_master_id             := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
-    _stock_master_id            := nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));
-    _tran_counter               := transactions.get_new_transaction_counter(_value_date);
-    _tran_code                  := transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id);
         
     SELECT SUM(COALESCE(tax, 0))                                INTO _tax_total FROM temp_stock_tax_details;
     SELECT SUM(COALESCE(discount, 0))                           INTO _discount_total FROM temp_stock_details;
@@ -35393,7 +35510,7 @@ BEGIN
     END IF;
 
 
-    IF(_tax_total IS NOT NULL AND _tax_total > 0) THEN
+    IF(COALESCE(_tax_total, 0) > 0) THEN
         FOR this IN 
         SELECT 
             format('P: %s x R: %s %% = %s (%s)', principal::text, rate::text, tax::text, sales_tax_detail_code) as statement_reference,
@@ -35406,7 +35523,7 @@ BEGIN
         END LOOP;
     END IF;
 
-    IF(_discount_total IS NOT NULL AND _discount_total > 0) THEN
+    IF(COALESCE(_discount_total, 0) > 0) THEN
         INSERT INTO temp_transaction_details(tran_type, account_id, statement_reference, currency_code, amount_in_currency, er, local_currency_code, amount_in_local_currency)
         SELECT 'Dr', purchase_discount_account_id, _statement_reference, _default_currency_code, SUM(COALESCE(discount, 0)), 1, _default_currency_code, SUM(COALESCE(discount, 0))
         FROM temp_stock_details
@@ -35417,16 +35534,16 @@ BEGIN
     SELECT 'Dr', core.get_account_id_by_party_id(_party_id), _statement_reference, _default_currency_code, _receivable, 1, _default_currency_code, _receivable;
 
 
-    _transaction_master_id  := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+    _tran_master_id         := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
     _stock_master_id        := nextval(pg_get_serial_sequence('transactions.stock_master', 'stock_master_id'));
     _tran_counter           := transactions.get_new_transaction_counter(_value_date);
     _transaction_code       := transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id);
 
-    UPDATE temp_transaction_details     SET transaction_master_id   = _transaction_master_id;
+    UPDATE temp_transaction_details     SET transaction_master_id   = _tran_master_id;
     UPDATE temp_stock_details           SET stock_master_id         = _stock_master_id;
 
     INSERT INTO transactions.transaction_master(transaction_master_id, transaction_counter, transaction_code, book, value_date, user_id, login_id, office_id, cost_center_id, reference_number, statement_reference) 
-    SELECT _transaction_master_id, _tran_counter, _transaction_code, _book_name, _value_date, _user_id, _login_id, _office_id, _cost_center_id, _reference_number, _statement_reference;
+    SELECT _tran_master_id, _tran_counter, _transaction_code, _book_name, _value_date, _user_id, _login_id, _office_id, _cost_center_id, _reference_number, _statement_reference;
 
 
     INSERT INTO transactions.transaction_details(value_date, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency)
@@ -35436,7 +35553,7 @@ BEGIN
 
 
     INSERT INTO transactions.stock_master(value_date, stock_master_id, transaction_master_id, party_id, price_type_id, is_credit, shipper_id, shipping_charge, store_id, cash_repository_id)
-    SELECT _value_date, _stock_master_id, _transaction_master_id, _party_id, _price_type_id, _is_credit, NULL, 0, _store_id, NULL;
+    SELECT _value_date, _stock_master_id, _tran_master_id, _party_id, _price_type_id, _is_credit, NULL, 0, _store_id, NULL;
             
     FOR this IN SELECT * FROM temp_stock_details ORDER BY id
     LOOP
@@ -35460,12 +35577,11 @@ BEGIN
 
     IF(array_length(_attachments, 1) > 0 AND _attachments != ARRAY[NULL::core.attachment_type]) THEN
         INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment)
-        SELECT _user_id, 'transactions.transaction_master', 'transaction_master_id', _transaction_master_id, original_file_name, file_extension, file_path, comment 
+        SELECT _user_id, 'transactions.transaction_master', 'transaction_master_id', _tran_master_id, original_file_name, file_extension, file_path, comment 
         FROM explode_array(_attachments);
     END IF;
     
-    RETURN _transaction_master_id;
-    PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
+    PERFORM transactions.auto_verify(_tran_master_id, _office_id);
     RETURN _tran_master_id;
 END
 $$
@@ -35511,31 +35627,48 @@ LANGUAGE plpgsql;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.post_recurring_invoices.sql --<--<--
-DROP FUNCTION IF EXISTS transactions.post_recurring_invoices(_office_id integer);
+DROP FUNCTION IF EXISTS transactions.post_recurring_invoices(_user_id integer, _login_id bigint, _office_id integer, _value_date date);
 
-CREATE FUNCTION transactions.post_recurring_invoices(_office_id integer)
+CREATE FUNCTION transactions.post_recurring_invoices(_user_id integer, _login_id bigint, _office_id integer, _value_date date)
 RETURNS TABLE
 (
-        id                      integer,
-        party_id                bigint,
-        recurring_amount        public.money_strict2,
-        account_id              bigint,
-        statement_reference     national character varying(100)
+    id                              integer,
+    recurring_invoice_setup_id      integer,
+    tran_type                       public.transaction_type,
+    party_id                        bigint,
+    recurring_amount                public.money_strict2,
+    account_id                      bigint,
+    statement_reference             national character varying(100),
+    transaction_master_id           bigint
 )
 AS
 $$
-    DECLARE _value_date         date='5/7/2015';
-    DECLARE _frequency_id       integer; 
-    DECLARE _day                double precision;
+    DECLARE _frequency_id           integer; 
+    DECLARE _day                    double precision;
+    DECLARE _transaction_master_id  bigint;
+    DECLARE _tran_counter           integer;
+    DECLARE _transaction_code       text;
+    DECLARE this                    RECORD;
+    DECLARE _default_currency_code  national character varying(12);
 BEGIN
+    IF(_value_date != transactions.get_value_date(_office_id)) THEN
+        RAISE EXCEPTION 'Invalid value date.'
+        USING ERRCODE='P3007';
+    END IF;
+
+    _default_currency_code          := transactions.get_default_currency_code_by_office_id(_office_id);
+
     DROP TABLE IF EXISTS recurring_invoices_temp;
     CREATE TEMPORARY TABLE recurring_invoices_temp
     (
-        id                      SERIAL,
-        party_id                bigint,
-        recurring_amount        public.money_strict2,
-        account_id              bigint,
-        statement_reference     national character varying(100)
+        id                          SERIAL,
+        recurring_invoice_setup_id  integer,
+        tran_type                   public.transaction_type,
+        party_id                    bigint,
+        recurring_amount            public.money_strict2,
+        account_id                  bigint NOT NULL,
+        statement_reference         national character varying(100),
+        transaction_master_id       bigint
     ) ON COMMIT DROP;
 
     SELECT frequency_id INTO _frequency_id
@@ -35549,8 +35682,10 @@ BEGIN
     -->RECUR BASED ON SAME CALENDAR DATE 
     -->AND OCCUR TODAY 
     -->AND HAVE DURATION RECURRENCE TYPE
-    INSERT INTO recurring_invoices_temp(party_id, recurring_amount, account_id, statement_reference)
+    INSERT INTO recurring_invoices_temp(recurring_invoice_setup_id, tran_type, party_id, recurring_amount, account_id, statement_reference)
     SELECT 
+        core.recurring_invoice_setup.recurring_invoice_setup_id,
+        'Cr' AS tran_type,
         core.recurring_invoice_setup.party_id, 
         core.recurring_invoice_setup.recurring_amount, 
         core.recurring_invoice_setup.account_id,
@@ -35572,8 +35707,10 @@ BEGIN
     -->DO NOT RECUR BASED ON SAME CALENDAR DATE, BUT RECURRING DAYS
     -->AND OCCUR TODAY
     -->AND HAVE DURATION RECURRENCE TYPE
-    INSERT INTO recurring_invoices_temp(party_id, recurring_amount, account_id, statement_reference)
+    INSERT INTO recurring_invoices_temp(recurring_invoice_setup_id, tran_type, party_id, recurring_amount, account_id, statement_reference)
     SELECT 
+        core.recurring_invoice_setup.recurring_invoice_setup_id, 
+        'Cr' AS tran_type,
         core.recurring_invoice_setup.party_id, 
         core.recurring_invoice_setup.recurring_amount, 
         core.recurring_invoice_setup.account_id,
@@ -35607,8 +35744,10 @@ BEGIN
     --INSERT RECURRING INVOICES THAT :
     -->OCCUR TODAY 
     -->AND RECUR BASED ON FREQUENCIES
-    INSERT INTO recurring_invoices_temp(party_id, recurring_amount, account_id, statement_reference)
+    INSERT INTO recurring_invoices_temp(recurring_invoice_setup_id, tran_type, party_id, recurring_amount, account_id, statement_reference)
     SELECT
+        core.recurring_invoice_setup.recurring_invoice_setup_id, 
+        'Cr' AS tran_type,
         core.recurring_invoice_setup.party_id, 
         core.recurring_invoice_setup.recurring_amount, 
         core.recurring_invoice_setup.account_id,
@@ -35631,11 +35770,84 @@ BEGIN
     UPDATE recurring_invoices_temp
     SET statement_reference = REPLACE(recurring_invoices_temp.statement_reference, '{RIYear}', to_char(date_trunc('year', _value_date), 'YYYY'));
 
+    INSERT INTO recurring_invoices_temp(recurring_invoice_setup_id, tran_type, party_id, recurring_amount, account_id, statement_reference)
+    SELECT 
+        recurring_invoices_temp.recurring_invoice_setup_id, 
+        'Dr' AS tran_type,
+        recurring_invoices_temp.party_id, 
+        recurring_invoices_temp.recurring_amount, 
+        core.get_account_id_by_party_id(recurring_invoices_temp.party_id), 
+        recurring_invoices_temp.statement_reference
+    FROM recurring_invoices_temp;
 
 
+    FOR this IN
+    SELECT DISTINCT recurring_invoices_temp.recurring_invoice_setup_id 
+    FROM recurring_invoices_temp
+    LOOP
+        _transaction_master_id  := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+        _tran_counter           := transactions.get_new_transaction_counter(_value_date);
+        _transaction_code       := transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id);
+
+        INSERT INTO transactions.transaction_master
+        (
+            transaction_master_id, 
+            transaction_counter, 
+            transaction_code, 
+            book, 
+            value_date, 
+            user_id, 
+            login_id, 
+            office_id, 
+            statement_reference
+        ) 
+        SELECT            
+            _transaction_master_id, 
+            _tran_counter, 
+            _transaction_code, 
+            'Recurring.Invoice', 
+            _value_date, 
+            _user_id, 
+            _login_id, 
+            _office_id,             
+            recurring_invoices_temp.statement_reference
+        FROM recurring_invoices_temp
+        WHERE recurring_invoices_temp.recurring_invoice_setup_id  = this.recurring_invoice_setup_id
+        LIMIT 1;
+
+        INSERT INTO transactions.transaction_details
+        (
+            transaction_master_id,
+            value_date,
+            tran_type, 
+            account_id, 
+            statement_reference, 
+            currency_code, 
+            amount_in_currency, 
+            er, 
+            local_currency_code, 
+            amount_in_local_currency
+        )
+        SELECT
+            _transaction_master_id,
+            _value_date,
+            recurring_invoices_temp.tran_type,
+            recurring_invoices_temp.account_id,
+            recurring_invoices_temp.statement_reference,
+            _default_currency_code, 
+            recurring_invoices_temp.recurring_amount, 
+            1 AS exchange_rate,
+            _default_currency_code,
+            recurring_invoices_temp.recurring_amount
+        FROM recurring_invoices_temp
+        WHERE recurring_invoices_temp.recurring_invoice_setup_id  = this.recurring_invoice_setup_id;
+    END LOOP;
+
+    
     RETURN QUERY
     SELECT *
-    FROM recurring_invoices_temp;
+    FROM recurring_invoices_temp
+    ORDER BY 2;
 END
 $$
 LANGUAGE plpgsql;
@@ -35643,9 +35855,25 @@ LANGUAGE plpgsql;
 
 SELECT transactions.create_routine('REF-PORCIV', 'transactions.post_recurring_invoices', 200);
 
---SELECT  * FROM transactions.post_recurring_invoices(2);
---SELECT to_char(to_timestamp (now()::text, 'DD'), 'MON')
 
+--SELECT  * FROM transactions.post_recurring_invoices(2, 5, 2, '4/13/2015');
+
+-- 
+-- DO
+-- $$
+--     DECLARE _office_id      integer = 2;
+--     DECLARE _value_date     date = transactions.get_value_date(_office_id);
+--     DECLARE _till           date = '1/1/2016';
+--     DECLARE _user_id        integer = 2;
+--     DECLARE _login_id       bigint = 5;
+-- BEGIN
+--     --transactions.perform_eod_operation
+-- 
+--     PERFORM transactions.perform_eod_operation(_user_id, _login_id, _office_id, value_date::date)
+--     FROM generate_series(_value_date, _till, '1 day') AS value_date;
+-- END
+-- $$
+-- LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.post_sales_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_sales_return
@@ -35818,7 +36046,7 @@ BEGIN
 
     FOR this IN SELECT * FROM temp_stock_details
     LOOP
-        PERFORM transactions.validate_item_for_return(this.stock_master_id, this.store_id, this.item_code, this.unit_name, this.quantity, this.price);
+        PERFORM FROM transactions.validate_item_for_return(_transaction_master_id, this.store_id, this.item_code, this.unit_name, this.quantity, this.price);
     END LOOP;
 
     FOR this IN SELECT * FROM temp_stock_details ORDER BY id
@@ -35975,6 +36203,27 @@ LANGUAGE plpgsql;
 
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.refresh_materialized_views.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.refresh_materialized_views(_office_id integer);
+DROP FUNCTION IF EXISTS transactions.refresh_materialized_views(_user_id integer, _login_id bigint, _office_id integer, _value_date date);
+
+CREATE FUNCTION transactions.refresh_materialized_views(_user_id integer, _login_id bigint, _office_id integer, _value_date date)
+RETURNS void
+AS
+$$
+BEGIN
+    REFRESH MATERIALIZED VIEW transactions.trial_balance_view;
+    REFRESH MATERIALIZED VIEW transactions.verified_stock_transaction_view;
+    REFRESH MATERIALIZED VIEW transactions.verified_transaction_mat_view;
+    REFRESH MATERIALIZED VIEW transactions.verified_cash_transaction_mat_view;
+END
+$$
+LANGUAGE plpgsql;
+
+
+SELECT transactions.create_routine('REF-MV', 'transactions.refresh_materialized_views', 1000);
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.validate_item_for_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.validate_item_for_return
 (
@@ -36004,7 +36253,7 @@ $$
     DECLARE _unit_id                        integer = 0;
     DECLARE _actual_quantity                public.decimal_strict2 = 0;
     DECLARE _returned_in_previous_batch     public.decimal_strict2 = 0;
-    DECLARE _in_verification_quque          public.decimal_strict2 = 0;
+    DECLARE _in_verification_queue          public.decimal_strict2 = 0;
     DECLARE _actual_price_in_root_unit      public.money_strict2 = 0;
     DECLARE _price_in_root_unit             public.money_strict2 = 0;
     DECLARE _item_in_stock                  public.decimal_strict2 = 0;        
@@ -36127,7 +36376,7 @@ BEGIN
 
     SELECT 
         COALESCE(SUM(core.convert_unit(base_unit_id, 1) * base_quantity), 0)
-        INTO _in_verification_quque
+        INTO _in_verification_queue
     FROM transactions.stock_details
     WHERE stock_master_id IN
     (
@@ -36146,7 +36395,7 @@ BEGIN
     )
     AND item_id = _item_id;
 
-    IF(_quantity + _returned_in_previous_batch + _in_verification_quque > _actual_quantity) THEN
+    IF(_quantity + _returned_in_previous_batch + _in_verification_queue > _actual_quantity) THEN
         RAISE EXCEPTION 'The returned quantity cannot be greater than actual quantity.'
         USING ERRCODE='P5203';
     END IF;
@@ -36173,8 +36422,7 @@ END
 $$
 LANGUAGE plpgsql;
 
---SELECT * FROM transactions.validate_item_for_return(121, 5, 'RMBP', 'Piece', 1, 180000);
-
+--SELECT * FROM transactions.validate_item_for_return(121, 5, 'RMBP', 'Piece', 4, 180000);
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.verify_transaction.sql --<--<--
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/FrontEnd/MixERP.Net.FrontEnd/db/src/02. functions and logic/logic/functions/transactions/transactions.verify_transaction.sql --<--<--
@@ -41846,4 +42094,4 @@ ALTER TABLE transactions.transaction_details ENABLE TRIGGER check_cash_balance_t
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/refresh-materialized-views.sql --<--<--
-SELECT * FROM transactions.refresh_materialized_views(1);
+SELECT * FROM transactions.refresh_materialized_views(2, 2, 5, '1/1/2015');

@@ -115,7 +115,7 @@ CREATE TABLE core.recurring_invoices
     statement_reference                         national character varying(100) NOT NULL DEFAULT(''),
     audit_user_id                               integer NULL REFERENCES office.users(user_id),
     audit_ts                                    TIMESTAMP WITH TIME ZONE NULL 
-                                                DEFAULT(NOW())    
+                                                DEFAULT(NOW())
 );
 
 CREATE UNIQUE INDEX recurring_invoices_item_id_auto_trigger_on_sales_uix
