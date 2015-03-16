@@ -15,29 +15,26 @@
     </style>
 
     <script src="/bundles/scripts/libraries.min.js"></script>
-    <link href="/Scripts/semantic-ui/semantic.min.css" rel="stylesheet" />
+    <link href="/bundles/stylesheets/master-page.min.css" rel="stylesheet" />
+    <style type="text/css">
+        form {
+            background-color: white !important;
+        }
+
+        #GridPanel {
+            width: 99% !important;
+        }
+
+        .container {
+            padding: 24px;
+        }
+    </style>
 
     <asp:ContentPlaceHolder ID="ContentPlaceHolderHead" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
-        <script type="text/javascript">
-            //function pageLoad() {
-            //    $(".item-selector").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
-            //    $(".preview").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
-            //};
-
-            //Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-            //    //Fired on each ASP.net AJAX request.
-            //    initializeItemSelector();
-            //});
-
-            //$(document).on('ready', function () {
-            //    initializeItemSelector();
-            //});
-        </script>
-
         <asp:ScriptManager runat="server" ID="ScriptManager1" />
 
         <div class="row">

@@ -55,6 +55,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                         }
                     }
 
+                    textBox.ReadOnly = disabled;
+
                     if (isSerial)
                     {
                         textBox.ReadOnly = true;
@@ -71,7 +73,6 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                         }
                     }
 
-                    textBox.ReadOnly = disabled;
                     ScrudFactoryHelper.AddRow(htmlTable, label, textBox, numberValidator);
                 }
             }

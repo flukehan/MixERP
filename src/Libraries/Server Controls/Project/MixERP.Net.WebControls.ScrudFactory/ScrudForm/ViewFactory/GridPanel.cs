@@ -78,7 +78,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             if (this.GridPanelWidth.Value.Equals(0))
             {
-                var style = Conversion.TryCastString(ConfigurationHelper.GetScrudParameter("GridPanelStyle"));
+                string style = Conversion.TryCastString(ConfigurationHelper.GetScrudParameter("GridPanelStyle"));
 
                 return style;
             }
@@ -90,7 +90,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             if (this.GridPanelWidth.Value.Equals(0))
             {
-                var width = Conversion.TryCastUnit(ConfigurationHelper.GetScrudParameter("GridPanelDefaultWidth"));
+                Unit width = Conversion.TryCastUnit(ConfigurationHelper.GetScrudParameter("GridPanelDefaultWidth"));
 
                 return width;
             }

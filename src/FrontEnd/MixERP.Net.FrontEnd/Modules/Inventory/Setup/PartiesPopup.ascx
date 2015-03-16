@@ -17,20 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PartiesPopup.ascx.cs" Inherits="MixERP.Net.Core.Modules.Inventory.Setup.PartiesPopup" MasterPageId="MixERPBlankMaster.Master" %>
-<style type="text/css">
-    form {
-        background-color: white !important;
-    }
-
-    #GridPanel {
-        width: 99% !important;
-    }
-
-    .container {
-        padding: 24px;
-    }
-</style>
-
 <div class="container" runat="server" id="container">
     <asp:PlaceHolder ID="ScrudPlaceholder" runat="server" />
 </div>

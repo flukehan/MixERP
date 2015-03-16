@@ -44,6 +44,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         public string EditButtonIconCssClass { get; set; }
         public string PrintButtonIconCssClass { get; set; }
         public string SelectButtonIconCssClass { get; set; }
+
         public HtmlGenericControl GetCommandPanel(string controlSuffix)
         {
             this.commandPanel = new HtmlGenericControl("div");
