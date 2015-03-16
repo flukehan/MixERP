@@ -38,6 +38,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 {
                     textBox.Text = defaultValue;
                     textBox.ReadOnly = disabled;
+                    textBox.CssClass = "decimal";
 
                     if (!isNullable)
                     {
@@ -62,7 +63,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 validator.EnableClientScript = true;
                 validator.SetFocusOnError = true;
                 validator.Display = ValidatorDisplay.Dynamic;
-                validator.Type = ValidationDataType.Double;
+                validator.Type = ValidationDataType.Currency;
 
                 //MixERP strict data type
                 if (domain.EndsWith("strict"))

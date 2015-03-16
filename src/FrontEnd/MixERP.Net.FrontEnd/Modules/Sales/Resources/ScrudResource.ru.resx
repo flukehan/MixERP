@@ -561,4 +561,7 @@
   <data name="total_duration" xml:space="preserve">
     <value>Общая продолжительность</value>
   </data>
+  <data name="statement_reference" xml:space="preserve">
+    <value>О себе Ссылка</value>
+  </data>
 </root>

@@ -30,7 +30,7 @@ var setNumberFormat = function () {
         return;
     };
 
-    $('input.decimal').number(true, 6, decimalSeparator, thousandSeparator);
+    $('input.decimal').number(true, currencyDecimalPlaces, decimalSeparator, thousandSeparator);
     $('input.integer').number(true, 0, decimalSeparator, thousandSeparator);
 };
 

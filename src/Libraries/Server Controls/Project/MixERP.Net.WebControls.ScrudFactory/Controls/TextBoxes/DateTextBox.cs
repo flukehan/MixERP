@@ -69,6 +69,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 
                 textBox.Text = GetLocalizedDate(defaultValue);
                 textBox.ReadOnly = disabled;
+                textBox.CssClass = "date";
 
                 using (CompareValidator dateValidator = GetDateValidator(textBox, validatorCssClass))
                 {

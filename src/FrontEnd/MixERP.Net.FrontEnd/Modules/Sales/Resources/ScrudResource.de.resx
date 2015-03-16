@@ -561,4 +561,7 @@
   <data name="total_duration" xml:space="preserve">
     <value>Gesamtdauer</value>
   </data>
+  <data name="statement_reference" xml:space="preserve">
+    <value>Anweisungsreferenz</value>
+  </data>
 </root>

@@ -1276,6 +1276,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Statement Reference.
+        /// </summary>
+        internal static string statement_reference {
+            get {
+                return ResourceManager.GetString("statement_reference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Street.
         /// </summary>
         internal static string street {

@@ -561,4 +561,7 @@
   <data name="total_duration" xml:space="preserve">
     <value>全持続時間</value>
   </data>
+  <data name="statement_reference" xml:space="preserve">
+    <value>ステートメントリファレンス</value>
+  </data>
 </root>

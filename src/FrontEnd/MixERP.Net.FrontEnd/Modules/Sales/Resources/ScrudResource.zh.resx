@@ -561,4 +561,7 @@
   <data name="total_duration" xml:space="preserve">
     <value>总工期</value>
   </data>
+  <data name="statement_reference" xml:space="preserve">
+    <value>声明参考</value>
+  </data>
 </root>

@@ -69,7 +69,7 @@ namespace MixERP.Net.WebControls.Common
                 this.Controls.Add(this.compareValidator);
             }
 
-            //Net.Common.jQueryHelper.jQueryUI.AddjQueryUIDatePicker(this.Page, this.textBox.ID, this.MinDate, this.MaxDate);
+            Net.Common.jQueryHelper.jQueryUI.AddjQueryUIDatePicker(this.Page, this.textBox.ID, this.MinDate, this.MaxDate);
 
             base.CreateChildControls();
         }
