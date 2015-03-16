@@ -12,11 +12,14 @@ namespace MixERP.Net.Web.UI.Inventory
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.Routes.LowercaseUrls = true;
+
+            context.Routes.MapMvcAttributeRoutes();
+
             context.MapRoute(
                 "Inventory_Default",
-                "Inventory/{controller}/{action}/{id}",
-                new { controller = "Inventory", action = "Index", id = UrlParameter.Optional },
-                new string[] { "MixERP.Net.Web.UI.Inventory.Controllers" });
+                "inventory/{controller}/{action}/{id}",
+                new { action = "Index", id = UrlParameter.Optional },
+                new[] { "MixERP.Net.Web.UI.Inventory.Controllers" });
         }
     }
 }

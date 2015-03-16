@@ -12,11 +12,14 @@ namespace MixERP.Net.Web.UI.Sales
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.Routes.LowercaseUrls = true;
+            
+            context.Routes.MapMvcAttributeRoutes();
+
             context.MapRoute(
                 "Sales_Default",
-                "Sales/{controller}/{action}/{id}",
+                "sales/{controller}/{action}/{id}",
                 new {controller = "Sales", action = "Index", id = UrlParameter.Optional},
-                new string[] { "MixERP.Net.Web.UI.Sales.Controllers" });
+                new[] { "MixERP.Net.Web.UI.Sales.Controllers" });
         }
     }
 }

@@ -62,7 +62,7 @@ var appendItem = function (dropDownList, value, text, selected) {
 var getAjax = function (url, data) {
     if (data) {
         return $.ajax({
-            type: "POST",
+            type: "GET",
             url: url,
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -71,13 +71,34 @@ var getAjax = function (url, data) {
     };
 
     return $.ajax({
-        type: "POST",
+        type: "GET",
         url: url,
         data: "{}",
         contentType: "application/json; charset=utf-8",
         dataType: "json"
     });
 };
+
+var getAjax = function (url, data, type) {
+    if (data) {
+        return $.ajax({
+            type: type,
+            url: url,
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });
+    };
+
+    return $.ajax({
+        type: type,
+        url: url,
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+    });
+};
+
 
 var ajaxUpdateVal = function (url, data, targetControls) {
     var ajax;

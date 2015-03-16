@@ -88,7 +88,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Folder Include="Controllers\Setup\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +112,27 @@
   <ItemGroup>
     <Content Include="Mix Open Foundation.snk" />
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Framework\HTML Factories\ScrudFactory\MixERP.Net.UI.ScrudFactory\MixERP.Net.UI.ScrudFactory.csproj">
+      <Project>{8b9da7ac-d62c-4569-9737-8f2b203b4862}</Project>
+      <Name>MixERP.Net.UI.ScrudFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MixERP.Net.Web.UI.csproj">
+      <Project>{4235fd88-8fb5-499f-ad44-672b5c27fcfc}</Project>
+      <Name>MixERP.Net.Web.UI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

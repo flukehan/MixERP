@@ -35858,22 +35858,40 @@ SELECT transactions.create_routine('REF-PORCIV', 'transactions.post_recurring_in
 
 --SELECT  * FROM transactions.post_recurring_invoices(2, 5, 2, '4/13/2015');
 
--- 
 -- DO
 -- $$
 --     DECLARE _office_id      integer = 2;
 --     DECLARE _value_date     date = transactions.get_value_date(_office_id);
---     DECLARE _till           date = '1/1/2016';
+--     --DECLARE _till           date = '1/1/2016';
+--     DECLARE _till           date = _value_date + INTERVAL '45 days';
 --     DECLARE _user_id        integer = 2;
---     DECLARE _login_id       bigint = 5;
+--     DECLARE _login_id       bigint;
+--     DECLARE this            RECORD;
 -- BEGIN
---     --transactions.perform_eod_operation
+--     SET CLIENT_MIN_MESSAGES TO WARNING;
 -- 
---     PERFORM transactions.perform_eod_operation(_user_id, _login_id, _office_id, value_date::date)
---     FROM generate_series(_value_date, _till, '1 day') AS value_date;
+--     SELECT login_id INTO _login_id
+--     FROM audit.logins
+--     WHERE user_id = _user_id
+--     AND office_id = _office_id
+--     ORDER BY login_date_time DESC
+--     LIMIT 1;
+-- 
+--     UPDATE office.users
+--     SET elevated = true
+--     WHERE office.users.user_id = _user_id;
+-- 
+--     FOR this IN
+--     SELECT * FROM generate_series(_value_date, _till, '1 day') AS value_date
+--     LOOP
+--         PERFORM transactions.initialize_eod_operation(_user_id, _office_id, this.value_date::date);
+--         PERFORM transactions.perform_eod_operation(_user_id, _login_id, _office_id, this.value_date::date);
+--     END LOOP;
 -- END
 -- $$
 -- LANGUAGE plpgsql;
+-- 
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.post_sales_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_sales_return

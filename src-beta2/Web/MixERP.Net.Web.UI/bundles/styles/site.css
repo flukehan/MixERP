@@ -34321,8 +34321,19 @@ body,
 .logo {
   height: 54px;
 }
-.theme {
+.theme,
+#SignInBody {
   background-color: #67238B !important;
+}
+#signin-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  margin-top: -300px;
+  /*set to a negative number 1/2 of your height*/
+  margin-left: -200px;
+  /*set to a negative number 1/2 of your width*/
 }
 .contrast.theme {
   background-color: #763997 !important;

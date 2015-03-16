@@ -12,6 +12,7 @@ namespace MixERP.Net.UI.ScrudFactory
     {
         public static MvcHtmlString ScrudFor(this HtmlHelper helper, Config config)
         {
+            helper.ViewBag.Title = config.Text;
             return GetScrud(config);
         }
 

@@ -12,11 +12,14 @@ namespace MixERP.Net.Web.UI.Production
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.Routes.LowercaseUrls = true;
+            
+            context.Routes.MapMvcAttributeRoutes();
+
             context.MapRoute(
                 "Production_Default",
-                "Production/{controller}/{action}/{id}",
-                new {controller = "Production", action = "Index", id = UrlParameter.Optional},
-                new string[] { "MixERP.Net.Web.UI.Production.Controllers" });
+                "production/{controller}/{action}/{id}",
+                new {action = "Index", id = UrlParameter.Optional},
+                new[] { "MixERP.Net.Web.UI.Production.Controllers" });
         }
     }
 }

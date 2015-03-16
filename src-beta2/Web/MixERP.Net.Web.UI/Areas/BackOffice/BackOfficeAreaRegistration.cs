@@ -12,11 +12,17 @@ namespace MixERP.Net.Web.UI.BackOffice
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.Routes.LowercaseUrls = true;
+
+            context.Routes.MapMvcAttributeRoutes();
+
             context.MapRoute(
                 "BackOffice_Default",
-                "BackOffice/{controller}/{action}/{id}",
-                new { controller = "BackOffice", action = "Index", id = UrlParameter.Optional },
-                new string[] { "MixERP.Net.Web.UI.BackOffice.Controllers" });
+                "back-office/{controller}/{action}/{id}",
+                new {action = "Index", id = UrlParameter.Optional},
+                new[]
+                {
+                    "MixERP.Net.Web.UI.BackOffice.Controllers"
+                });
         }
     }
 }

@@ -38,12 +38,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\..\packages\Npgsql.2.2.3\lib\net45\Mono.Security.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Npgsql.2.2.5\lib\net45\Mono.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Npgsql, Version=2.2.3.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+    <Reference Include="Npgsql, Version=2.2.5.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Npgsql.2.2.5\lib\net45\Npgsql.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\..\..\packages\Npgsql.2.2.3\lib\net45\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -133,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
     <None Include="Public.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Public.cs</LastGenOutput>
@@ -141,7 +143,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Localization.cs</LastGenOutput>
     </None>
-    <None Include="packages.config" />
     <None Include="Processors\Public.processor.template" />
     <None Include="Processors\Localization.processor.template" />
     <None Include="Processors\Transactions.processor.template" />

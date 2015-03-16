@@ -14,6 +14,8 @@ namespace MixERP.Net.Web.UI
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.LowercaseUrls = true;
+            
+
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",

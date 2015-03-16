@@ -26,7 +26,7 @@ namespace MixERP.Net.Common.Base
     [Serializable]
     public class MixERPException : Exception
     {
-        private readonly string dbConstraintName;
+        private readonly string _dbConstraintName;
 
         public MixERPException()
         {
@@ -45,7 +45,7 @@ namespace MixERP.Net.Common.Base
         public MixERPException(string message, Exception exception, string dbConstraintName)
             : base(message, exception)
         {
-            this.dbConstraintName = dbConstraintName;
+            this._dbConstraintName = dbConstraintName;
         }
 
         protected MixERPException(SerializationInfo info, StreamingContext context)
@@ -53,9 +53,9 @@ namespace MixERP.Net.Common.Base
         {
         }
 
-        public string DBConstraintName
+        public string DbConstraintName
         {
-            get { return this.dbConstraintName; }
+            get { return this._dbConstraintName; }
         }
 
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]

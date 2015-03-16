@@ -36,17 +36,38 @@
     <AssemblyOriginatorKeyFile>Mix Open Foundation.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Npgsql.2.2.5\lib\net45\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.2.5.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Npgsql.2.2.5\lib\net45\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Navigation.cs" />
+    <Compile Include="Office\Offices.cs" />
+    <Compile Include="Office\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\Domains\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
       <Project>{bde918b1-dd9b-41c9-a41f-f3ddec18b6d8}</Project>
       <Name>MixERP.Net.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Framework\Libraries\MixERP.Net.Common\MixERP.Net.Common.csproj">
+      <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
+      <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Framework\Libraries\MixERP.Net.DbFactory\MixERP.Net.DBFactory.csproj">
+      <Project>{8FD9661C-2473-4581-8722-18B08D4DB252}</Project>
+      <Name>MixERP.Net.DBFactory</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -17,25 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-using System.Web.UI;
 
 namespace MixERP.Net.Common.Helpers
 {
     public static class JSUtility
     {
-        public static void AddJSReference(Page page, string resourceName, string key, Type type)
-        {
-            if (page != null)
-            {
-                string script = "<script type='text/javascript' src='" + page.Request.Url.GetLeftPart(UriPartial.Authority) + page.ClientScript.GetWebResourceUrl(type, resourceName) + "'></script>";
-                PageUtility.RegisterJavascript(key, script, page, false);
-            }
-        }
-
         public static string GetEmbeddedScript(string embeddedScriptName, Assembly assembly)
         {
             if (assembly == null)
