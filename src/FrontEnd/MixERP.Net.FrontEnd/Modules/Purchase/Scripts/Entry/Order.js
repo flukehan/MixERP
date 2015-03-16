@@ -59,6 +59,6 @@ var savePurchaseOrder = function (valueDate, partyCode, referenceNumber, data, s
 
     d = getData(d);
 
-    url = "/Modules/Purchase/Services/Order.asmx/Save";
+    url = "/Modules/Purchase/Services/Entry/Order.asmx/Save";
     return getAjax(url, d);
 };

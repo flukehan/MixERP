@@ -22,49 +22,37 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
-using MixERP.Net.Entities.Core;
-using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using Serilog;
 
-namespace MixERP.Net.Core.Modules.Purchase.Services
+namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
 {
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [ToolboxItem(false)]
     [ScriptService]
-    public class GRN : WebService
+    public class Reorder : WebService
     {
         [WebMethod]
-        public long Save(DateTime valueDate, int storeId, string partyCode, string referenceNumber, string data, string statementReference, int costCenterId, string transactionIds, string attachmentsJSON)
+        public bool Save(Collection<Data.Models.Reorder> details)
         {
             try
             {
-                Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
-                Collection<long> tranIds = new Collection<long>();
-
-                Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
-
-                if (!string.IsNullOrWhiteSpace(transactionIds))
+                if (details == null)
                 {
-                    foreach (string transactionId in transactionIds.Split(','))
-                    {
-                        tranIds.Add(Conversion.TryCastInteger(transactionId));
-                    }
+                    throw new ArgumentNullException("details");
                 }
 
-                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-                int userId = CurrentUser.GetSignInView().UserId.ToInt();
                 long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
-                return Data.Transactions.GRN.Add(officeId, userId, loginId, valueDate, storeId, partyCode, details, costCenterId, referenceNumber, statementReference, tranIds, attachments);
+                return Data.Transactions.Reorder.Save(loginId, userId, officeId, details);
             }
             catch (Exception ex)
             {
-                Log.Warning("Could not save GRN entry. {Exception}", ex);
+                Log.Warning("Could not save purchase reorder entry. {Exception}", ex);
                 throw;
             }
         }

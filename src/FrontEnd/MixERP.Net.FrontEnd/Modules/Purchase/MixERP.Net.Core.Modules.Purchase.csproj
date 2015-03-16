@@ -121,12 +121,12 @@
     <Content Include="Scripts\Entry\Order.js" />
     <Content Include="Scripts\Entry\Return.js" />
     <Content Include="Services\Entry\Return.asmx" />
-    <Content Include="Services\Reorder.asmx" />
+    <Content Include="Services\Entry\Reorder.asmx" />
     <Content Include="SQL\Menu.sql" />
     <Content Include="SQL\Module.sql" />
-    <Content Include="Services\DirectPurchase.asmx" />
-    <Content Include="Services\GRN.asmx" />
-    <Content Include="Services\Order.asmx" />
+    <Content Include="Services\Entry\DirectPurchase.asmx" />
+    <Content Include="Services\Entry\GRN.asmx" />
+    <Content Include="Services\Entry\Order.asmx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -272,7 +272,7 @@
     <Compile Include="Return.ascx.designer.cs">
       <DependentUpon>Return.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Services\DirectPurchase.asmx.cs">
+    <Compile Include="Services\Entry\DirectPurchase.asmx.cs">
       <DependentUpon>DirectPurchase.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
@@ -280,15 +280,15 @@
       <DependentUpon>Return.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Services\GRN.asmx.cs">
+    <Compile Include="Services\Entry\GRN.asmx.cs">
       <DependentUpon>GRN.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Services\Order.asmx.cs">
+    <Compile Include="Services\Entry\Order.asmx.cs">
       <DependentUpon>Order.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Services\Reorder.asmx.cs">
+    <Compile Include="Services\Entry\Reorder.asmx.cs">
       <DependentUpon>Reorder.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>

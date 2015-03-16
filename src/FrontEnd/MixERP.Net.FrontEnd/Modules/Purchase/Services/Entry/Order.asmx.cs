@@ -23,36 +23,38 @@ using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common.Extensions;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using Serilog;
 
-namespace MixERP.Net.Core.Modules.Purchase.Services
+namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
 {
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [ToolboxItem(false)]
     [ScriptService]
-    public class Reorder : WebService
+    public class Order : WebService
     {
         [WebMethod]
-        public bool Save(Collection<Data.Models.Reorder> details)
+        public long Save(DateTime valueDate, string partyCode, string referenceNumber, string data, string statementReference, string attachmentsJSON)
         {
             try
             {
-                if (details == null)
-                {
-                    throw new ArgumentNullException("details");
-                }
+                Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, 0);
 
-                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
-                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
+
                 int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
 
-                return Data.Transactions.Reorder.Save(loginId, userId, officeId, details);
+                return Data.Transactions.Order.Add(officeId, userId, loginId, "Purchase.Order", valueDate, partyCode, 0, details, referenceNumber, statementReference, null, attachments);
             }
             catch (Exception ex)
             {
-                Log.Warning("Could not save purchase reorder entry. {Exception}", ex);
+                Log.Warning("Could not save purchase order entry. {Exception}", ex);
                 throw;
             }
         }

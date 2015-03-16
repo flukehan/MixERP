@@ -40,9 +40,9 @@ var save = function () {
         window.location = "/Modules/Purchase/Confirmation/DirectPurchase.mix?TranId=" + id;
     });
 
-    ajaxSaveDirectPurchase.fail(function (jqXHR) {
+    ajaxSaveDirectPurchase.fail(function (xhr) {
         saveButton.removeClass("loading");
-        var errorMessage = getAjaxErrorMessage(jqXHR);
+        var errorMessage = getAjaxErrorMessage(xhr);
         errorLabelBottom.html(errorMessage);
         logError(errorMessage);
     });
@@ -62,6 +62,6 @@ var saveDirectPurchase = function (valueDate, storeId, partyCode, referenceNumbe
 
     d = getData(d);
 
-    url = "/Modules/Purchase/Services/DirectPurchase.asmx/Save";
+    url = "/Modules/Purchase/Services/Entry/DirectPurchase.asmx/Save";
     return getAjax(url, d);
 };

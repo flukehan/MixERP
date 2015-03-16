@@ -150,7 +150,7 @@
     <Content Include="SQL\Menu.sql" />
     <Content Include="SQL\Module.sql" />
     <Content Include="Services\AccountData.asmx" />
-    <Content Include="Services\JournalVoucher.asmx" />
+    <Content Include="Services\Entry\JournalVoucher.asmx" />
     <Content Include="Setup\AgeingSlabs.ascx" />
     <Content Include="Setup\BankAccounts.ascx" />
     <Content Include="Setup\COA.ascx" />
@@ -294,7 +294,7 @@
       <DependentUpon>EODOperation.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Services\JournalVoucher.asmx.cs">
+    <Compile Include="Services\Entry\JournalVoucher.asmx.cs">
       <DependentUpon>JournalVoucher.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>

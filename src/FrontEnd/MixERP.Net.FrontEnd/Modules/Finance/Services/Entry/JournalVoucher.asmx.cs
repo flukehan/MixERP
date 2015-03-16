@@ -33,7 +33,7 @@ using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using Serilog;
 
-namespace MixERP.Net.Core.Modules.Finance.Services
+namespace MixERP.Net.Core.Modules.Finance.Services.Entry
 {
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]

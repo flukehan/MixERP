@@ -459,7 +459,7 @@ var postpostJournalTransaction = function(valueDate, referenceNumber, data, cost
     d = appendParameter(d, "attachmentsJSON", attachments);
     d = getData(d);
 
-    url = "/Modules/Finance/Services/JournalVoucher.asmx/Save";
+    url = "/Modules/Finance/Services/Entry/JournalVoucher.asmx/Save";
     return getAjax(url, d);
 };
 
@@ -571,7 +571,7 @@ function isCash(accountNumber) {
 };
 
 function getExchangeRate(currencyCode) {
-    url = "/Modules/Finance/Services/JournalVoucher.asmx/GetExchangeRate";
+    url = "/Modules/Finance/Services/Entry/JournalVoucher.asmx/GetExchangeRate";
     data = appendParameter("", "currencyCode", currencyCode);
     data = getData(data);
 

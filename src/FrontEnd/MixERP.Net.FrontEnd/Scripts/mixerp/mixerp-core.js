@@ -971,7 +971,7 @@ var ajaxDataBind = function (url, targetControl, data, selectedValue, associated
 
 var getAjaxErrorMessage = function (xhr) {
     if (xhr) {
-        var err = $.parseJSON(xhr.responseText).Message;
+        var err = xhr.responseText;
         return err;
     }
 

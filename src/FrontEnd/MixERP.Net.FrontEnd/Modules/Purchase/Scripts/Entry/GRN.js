@@ -61,7 +61,7 @@ var saveGRN = function (valueDate, storeId, partyCode, referenceNumber, data, st
     d = appendParameter(d, "attachmentsJSON", attachments);
 
     d = getData(d);
-    url = "/Modules/Purchase/Services/GRN.asmx/Save";
+    url = "/Modules/Purchase/Services/Entry/GRN.asmx/Save";
 
     return getAjax(url, d);
 };

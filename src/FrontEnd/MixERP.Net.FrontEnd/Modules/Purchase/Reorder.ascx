@@ -231,7 +231,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         d = appendParameter("", "details", details);
         d = getData(d);
 
-        var url = "/Modules/Purchase/Services/Reorder.asmx/Save";
+        var url = "/Modules/Purchase/Services/Entry/Reorder.asmx/Save";
         return getAjax(url, d);
     };
 </script>

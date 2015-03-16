@@ -571,7 +571,7 @@ var validateProductControl = function () {
     paymentTermId = parseInt2(paymentTermSelect.getSelectedValue());
     priceTypeId = parseInt2(priceTypeSelect.getSelectedValue());
 
-    referenceNumber = referenceNumberInputText.getSelectedValue();
+    referenceNumber = referenceNumberInputText.val();
 
     shippingAddressCode = shippingAddressSelect.getSelectedText();
     shipperId = parseInt2(shippingCompanySelect.getSelectedValue());
