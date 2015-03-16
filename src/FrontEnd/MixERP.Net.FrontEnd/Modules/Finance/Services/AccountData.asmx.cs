@@ -58,7 +58,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             return CashRepositories.CashRepositoryCodeExists(cashRepositoryCode);
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public Collection<ListItem> GetAccounts()
         {
             if (Switches.AllowParentAccountInGlTransaction())
@@ -80,7 +80,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             return GetValues(AccountHelper.GetNonConfidentialChildAccounts());
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public Collection<ListItem> GetCashRepositories()
         {
             Collection<ListItem> values = new Collection<ListItem>();
@@ -94,7 +94,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             return values;
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public Collection<ListItem> GetCashRepositoriesByAccountNumber(string accountNumber)
         {
             Collection<ListItem> values = new Collection<ListItem>();
@@ -200,7 +200,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             return false;
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public Collection<ListItem> ListAccounts()
         {
             if (CurrentUser.GetSignInView().IsAdmin.ToBool())

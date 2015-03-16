@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
     [ScriptService]
     public class JournalVoucher : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public void Approve(long tranId, string reason)
         {
             try
@@ -60,7 +60,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             }
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public decimal GetExchangeRate(string currencyCode)
         {            
             int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
@@ -69,7 +69,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             return exchangeRate;
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public void Reject(long tranId, string reason)
         {
             try
@@ -88,7 +88,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             }
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public long Save(DateTime valueDate, string referenceNumber, string data, int costCenterId, string attachmentsJSON)
         {
             try

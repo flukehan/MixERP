@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
     [ScriptService]
     public class Return : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public long Save(long tranId, DateTime valueDate, int storeId, string partyCode, int priceTypeId,
             string referenceNumber, string data, string statementReference, string attachmentsJSON)
         {

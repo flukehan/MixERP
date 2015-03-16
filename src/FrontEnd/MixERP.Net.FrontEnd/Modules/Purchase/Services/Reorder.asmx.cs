@@ -34,7 +34,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
     [ScriptService]
     public class Reorder : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public bool Save(Collection<Data.Models.Reorder> details)
         {
             try

@@ -38,7 +38,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
     [ScriptService]
     public class GRN : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public long Save(DateTime valueDate, int storeId, string partyCode, string referenceNumber, string data, string statementReference, int costCenterId, string transactionIds, string attachmentsJSON)
         {
             try

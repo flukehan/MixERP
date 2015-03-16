@@ -34276,8 +34276,7 @@ h2,
 h3,
 h4,
 h5,
-h6,
-.ui {
+h6 {
   font-family: "Titillium Web", "Open Sans", "Segoe UI", Helvetica, Arial, sans-serif !important;
 }
 html,

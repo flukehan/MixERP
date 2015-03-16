@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
     [ScriptService]
     public class Adjustment : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public long Save(DateTime valueDate, string referenceNumber, string statementReference, List<StockAdjustmentDetail> models)
         {
             try

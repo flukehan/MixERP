@@ -38,7 +38,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services.OTS
     [ScriptService]
     public class OpeningInventory : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public long Save(DateTime valueDate, string referenceNumber, string statementReference, string jsonDetails)
         {
             try

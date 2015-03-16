@@ -138,7 +138,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             return values;
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public Collection<ListItem> GetStores()
         {
             int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();

@@ -33,7 +33,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
     [ScriptService]
     public class CurrencyData : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public IEnumerable<Currency> GetExchangeCurrencies()
         {
             int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();

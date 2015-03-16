@@ -36,7 +36,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
     [ScriptService]
     public class Accounts : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public Collection<ListItem> GetBankAccounts()
         {
             int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
@@ -50,7 +50,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
             return values;
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public Collection<ListItem> GetCashRepositories()
         {
             int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();

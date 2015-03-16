@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
     [ScriptService]
     public class Attachments : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public bool DeleteAttachment(long id)
         {
             try
@@ -79,7 +79,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
             return Data.Attachments.GetAttachments("/Resource/Static/Attachments/", book, id);
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public bool Save(string book, long id, string attachmentsJSON)
         {
             try

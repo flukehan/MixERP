@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
             return values;
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public decimal GetExchangeRate(string sourceCurrencyCode, string destinationCurrencyCode)
         {
             if (string.IsNullOrWhiteSpace(sourceCurrencyCode))
@@ -69,7 +69,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
             return exchangeRate;
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public string GetHomeCurrency()
         {
             int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();

@@ -19,7 +19,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
+using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Core;
@@ -32,11 +34,11 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 {
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
-    [System.Web.Script.Services.ScriptService]
+    [ToolboxItem(false)]
+    [ScriptService]
     public class DirectSales : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string transactionType, int paymentTermId, int salespersonId, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string transactionIds, string attachmentsJSON, bool nonTaxable)
         {
             try

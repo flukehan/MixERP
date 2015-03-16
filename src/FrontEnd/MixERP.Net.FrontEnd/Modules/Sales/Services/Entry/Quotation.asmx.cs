@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
     [ScriptService]
     public class Quotation : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public long Save(DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string transactionIds, string attachmentsJSON, bool nonTaxable, int salespersonId, int shipperId, string shippingAddressCode)
         {
             try

@@ -36,7 +36,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
     [ScriptService]
     public class EODOperation : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public bool InitializeEODOperation()
         {
             try
@@ -62,7 +62,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             }
         }
 
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public void StartNewDay()
         {
             try

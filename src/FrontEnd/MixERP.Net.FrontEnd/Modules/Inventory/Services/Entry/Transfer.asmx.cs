@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
     [ScriptService]
     public class Transfer : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public long Save(DateTime valueDate, string referenceNumber, string statementReference, string data)
         {
             try

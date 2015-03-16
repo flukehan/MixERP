@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
     [ScriptService]
     public class Order : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public long Save(DateTime valueDate, string partyCode, string referenceNumber, string data, string statementReference, string attachmentsJSON)
         {
             try

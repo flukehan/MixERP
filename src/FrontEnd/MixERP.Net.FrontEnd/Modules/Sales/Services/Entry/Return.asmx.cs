@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
     [ScriptService]
     public class Return : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public long Save(long tranId, DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string attachmentsJSON)
         {
             try
@@ -79,7 +79,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 
         private bool ValidateDetails(IEnumerable<StockDetail> details, long stockMasterId)
         {
-            foreach (var model in details)
+            foreach (StockDetail model in details)
             {
                 return StockTransaction.ValidateItemForReturn(stockMasterId, model.StoreId, model.ItemCode, model.UnitName, model.Quantity, model.Price);
             }

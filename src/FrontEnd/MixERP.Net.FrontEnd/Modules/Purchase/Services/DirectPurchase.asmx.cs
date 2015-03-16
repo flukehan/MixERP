@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services
     [ScriptService]
     public class DirectPurchase : WebService
     {
-        [WebMethod(EnableSession = true)]
+        [WebMethod]
         public long Save(DateTime valueDate, int storeId, string partyCode, string referenceNumber, string data, string statementReference, string transactionType, int costCenterId, string attachmentsJSON)
         {
             try
