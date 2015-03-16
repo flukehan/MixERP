@@ -28,6 +28,8 @@ namespace MixERP.Net.FrontEnd.Site
     {
         protected void Page_Init(object sender, EventArgs e)
         {
+            this.IsLandingPage = true;
+
             using (HtmlGenericControl header = new HtmlGenericControl("h1"))
             {
                 header.InnerText = Resources.Warnings.AccessIsDenied;

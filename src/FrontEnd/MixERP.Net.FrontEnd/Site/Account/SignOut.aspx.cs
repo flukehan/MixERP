@@ -27,6 +27,8 @@ namespace MixERP.Net.FrontEnd.Site.Account
     {
         protected void Page_Init(object sender, EventArgs e)
         {
+            this.IsLandingPage = true;
+
             this.Session.Remove("UserName");
             FormsAuthentication.SignOut();
             this.Response.Redirect("~/SignIn.aspx");

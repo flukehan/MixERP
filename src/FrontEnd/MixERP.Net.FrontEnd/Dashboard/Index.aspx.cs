@@ -29,6 +29,12 @@ namespace MixERP.Net.FrontEnd.Dashboard
 {
     public partial class Index : MixERPWebpage
     {
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            this.IsLandingPage = true;
+        }
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             IEnumerable<Widget> widgets = Data.Core.Widget.GetWidgets();

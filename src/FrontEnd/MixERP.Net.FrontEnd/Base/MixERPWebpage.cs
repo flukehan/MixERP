@@ -18,7 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
@@ -48,6 +47,12 @@ namespace MixERP.Net.FrontEnd.Base
         ///     which can be set to an existing page.
         /// </summary>
         public virtual string OverridePath { get; set; }
+
+
+        /// <summary>
+        /// The pages which do not have actual entry on database menu table, but rather serve as placeholders are landing pages.
+        /// </summary>
+        public virtual bool IsLandingPage { get; set; }
 
         /// <summary>
         ///     Set this to true for pages where you do not need users to be logged in.
@@ -121,7 +126,6 @@ namespace MixERP.Net.FrontEnd.Base
 
         protected override void OnInit(EventArgs e)
         {
-
             if (!this.IsPostBack)
             {
                 if (this.Request.IsAuthenticated)
@@ -153,7 +157,7 @@ namespace MixERP.Net.FrontEnd.Base
                 this.OverridePath = this.Page.Request.Url.AbsolutePath;
             }
 
-            Literal contentMenuLiteral = ((Literal)PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
+            Literal contentMenuLiteral = ((Literal) PageUtility.FindControlIterative(this.Master, "ContentMenuLiteral"));
             if (contentMenuLiteral == null)
             {
                 return;
@@ -171,6 +175,13 @@ namespace MixERP.Net.FrontEnd.Base
             }
 
             this.menus = Data.Core.Menu.GetMenuCollection(officeId, userId, culture).ToArray();
+
+            if (!this.VerifyAccess())
+            {
+                return;
+            }
+
+
             Menu[] collection = menus.Where(x => x.ParentMenuId == null).ToArray();
 
             if (collection.Length > 0)
@@ -200,6 +211,32 @@ namespace MixERP.Net.FrontEnd.Base
             this.menus = null;
 
             base.OnLoad(e);
+        }
+
+        private bool VerifyAccess()
+        {
+            bool policyExists = false;
+
+            if (this.IsLandingPage)
+            {
+                return true;
+            }
+
+            foreach (Menu menu in this.menus)
+            {
+                if (menu != null && !string.IsNullOrWhiteSpace(menu.Url) && menu.Url.Replace("~", "").Equals(this.OverridePath))
+                {
+                    policyExists = true;
+                    break;
+                }
+            }
+
+            if (!policyExists)
+            {
+                Server.Transfer("~/Site/AccessIsDenied.aspx");
+            }
+
+            return policyExists;
         }
 
         private string GetMenu(int menuId)

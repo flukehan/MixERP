@@ -46,6 +46,11 @@ namespace MixERP.Net.FrontEnd.Site
 {
     public partial class RuntimeError : MixERPWebpage
     {
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            this.IsLandingPage = true;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             string server = this.Request.ServerVariables["SERVER_SOFTWARE"];

@@ -29,6 +29,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
 
         protected void Page_Init(object sender, EventArgs e)
         {
+            this.IsLandingPage = true;
         }
 
         //private void EmailReportLinkButton_Click(object sender, EventArgs e)

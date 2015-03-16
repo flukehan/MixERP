@@ -35,6 +35,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
     {
         protected void Page_Init(object sender, EventArgs e)
         {
+            this.IsLandingPage = true;
             this.CreateHeader(this.Placeholder1);
             this.CreateDivider(this.Placeholder1);
             this.CreateMessage(this.Placeholder1);
