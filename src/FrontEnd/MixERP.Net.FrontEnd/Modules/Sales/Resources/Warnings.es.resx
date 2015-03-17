@@ -136,7 +136,7 @@
     <value>Inválido transacción de acciones.</value>
   </data>
   <data name="ItemErrorMessage" xml:space="preserve">
-    <value>Usted tiene que seleccionar Identificación del artículo o identificador compuesto.</value>
+    <value>Usted tiene que seleccionar entre identificador o identificador de elemento compuesto artículo.</value>
   </data>
   <data name="DateErrorMessage" xml:space="preserve">
     <value>Fecha seleccionada está fuera de rango.</value>
@@ -151,6 +151,6 @@
     <value>Una transacción en efectivo no puede contener bancarias detalles de la transacción.</value>
   </data>
   <data name="RecurringAmountErrorMessage" xml:space="preserve">
-    <value>Recurrentes cantidad no debe ser menor que o igual a 0</value>
+    <value>Recurrentes cantidad no debe ser menor que o igual a 0.</value>
   </data>
 </root>

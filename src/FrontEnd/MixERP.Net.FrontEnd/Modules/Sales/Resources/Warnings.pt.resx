@@ -124,7 +124,7 @@
     <value>Só {0} {1} de {2} deixou em estoque.</value>
   </data>
   <data name="ItemErrorMessage" xml:space="preserve">
-    <value>Você tem que selecionar um item ou id id composto.</value>
+    <value>Você tem que selecionar um item identificador ou identificador de item composto.</value>
   </data>
   <data name="DueFrequencyErrorMessage" xml:space="preserve">
     <value>Dias devido só pode ser 0 se devido id freqüência é selecionada.</value>
@@ -148,7 +148,7 @@
     <value>A quantidade de deve ser maior do que a quantidade de.</value>
   </data>
   <data name="RecurringAmountErrorMessage" xml:space="preserve">
-    <value>Recorrentes quantidade não deve ser menor do que ou igual a 0</value>
+    <value>Recorrentes quantidade não deve ser menor do que ou igual a 0.</value>
   </data>
   <data name="CashTransactionCannotContainBankInfo" xml:space="preserve">
     <value>A transação de dinheiro não pode conter bancárias detalhes da transação.</value>
