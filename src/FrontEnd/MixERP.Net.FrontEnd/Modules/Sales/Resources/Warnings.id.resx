@@ -136,10 +136,10 @@
     <value>Pihak yang tidak sah.</value>
   </data>
   <data name="ItemErrorMessage" xml:space="preserve">
-    <value>Anda perlu memilih sama ada id item atau sebatian id.</value>
+    <value>Anda harus memilih salah satu item yang identifier atau senyawa identifier item.</value>
   </data>
   <data name="RecurringAmountErrorMessage" xml:space="preserve">
-    <value>Berulang jumlah tidak boleh kurang dari atau sama dengan 0</value>
+    <value>Berulang jumlah tidak boleh kurang dari atau sama dengan 0.</value>
   </data>
   <data name="LateFeeErrorMessage" xml:space="preserve">
     <value>Id biaya keterlambatan dan biaya akhir postingan frekuensi id keduanya harus baik dipilih atau tidak.</value>

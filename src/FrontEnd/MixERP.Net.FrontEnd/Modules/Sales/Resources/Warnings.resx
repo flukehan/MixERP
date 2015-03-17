@@ -146,12 +146,12 @@
     <value>Invalid stock transaction Id.</value>
   </data>
   <data name="ItemErrorMessage" xml:space="preserve">
-    <value>You have to select either item id or  compound id.</value>
+    <value>You have to select either item id or  compound item id.</value>
   </data>
   <data name="LateFeeErrorMessage" xml:space="preserve">
     <value>Late fee id and late fee posting frequency id both should be either selected or not.</value>
   </data>
   <data name="RecurringAmountErrorMessage" xml:space="preserve">
-    <value>Recurring amount should not be less than or equal to 0</value>
+    <value>Recurring amount should not be less than or equal to 0.</value>
   </data>
 </root>

@@ -133,7 +133,7 @@
     <value>Только {0} {1} {2} оставил в запасе.</value>
   </data>
   <data name="ItemErrorMessage" xml:space="preserve">
-    <value>Вы должны выбрать либо Item ID или идентификатор соединения.</value>
+    <value>Вы должны выбрать либо идентификатор элемента или соединения идентификатор элемента.</value>
   </data>
   <data name="InvalidStockTransaction" xml:space="preserve">
     <value>Неверный фондовые операции.</value>
@@ -151,6 +151,6 @@
     <value>Неверный режим получения.</value>
   </data>
   <data name="RecurringAmountErrorMessage" xml:space="preserve">
-    <value>Периодическое количество не должно быть меньше или равно 0</value>
+    <value>Периодическое количество не должно быть меньше или равно 0.</value>
   </data>
 </root>
