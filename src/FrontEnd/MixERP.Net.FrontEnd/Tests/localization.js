@@ -57,8 +57,8 @@ QUnit.test("localization.js -> getFormattedNumber (Case 3)", function (assert) {
 
 QUnit.test("localization.js -> parseFormattedNumber (Case 1)", function (assert) {
     //Cultures: en-US, zh-CN, fil-PH, ja-JP, ms-MY
-    window.thousandSeparator = ".";
-    window.decimalSeparator = ",";
+    window.thousandSeparator = ",";
+    window.decimalSeparator = ".";
     var num = '1,000,000,000,000.00';
 
     var expected = '1000000000000.00';
