@@ -41,7 +41,11 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.CreateForm(this.Placeholder1);
             this.CreateGrid(this.Placeholder1);
             this.RegisterJavascript();
-            this.BindGrid();
+
+            if (!this.IsPostBack)
+            {
+                this.BindGrid();
+            }
         }
 
         private void RegisterJavascript()

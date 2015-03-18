@@ -1,17 +1,7 @@
 DROP FUNCTION IF EXISTS transactions.post_recurring_invoices(_user_id integer, _login_id bigint, _office_id integer, _value_date date);
 
 CREATE FUNCTION transactions.post_recurring_invoices(_user_id integer, _login_id bigint, _office_id integer, _value_date date)
-RETURNS TABLE
-(
-    id                              integer,
-    recurring_invoice_setup_id      integer,
-    tran_type                       public.transaction_type,
-    party_id                        bigint,
-    recurring_amount                public.money_strict2,
-    account_id                      bigint,
-    statement_reference             national character varying(100),
-    transaction_master_id           bigint
-)
+RETURNS void
 AS
 $$
     DECLARE _frequency_id           integer; 
@@ -212,13 +202,7 @@ BEGIN
             recurring_invoices_temp.recurring_amount
         FROM recurring_invoices_temp
         WHERE recurring_invoices_temp.recurring_invoice_setup_id  = this.recurring_invoice_setup_id;
-    END LOOP;
-
-    
-    RETURN QUERY
-    SELECT *
-    FROM recurring_invoices_temp
-    ORDER BY 2;
+    END LOOP;    
 END
 $$
 LANGUAGE plpgsql;
