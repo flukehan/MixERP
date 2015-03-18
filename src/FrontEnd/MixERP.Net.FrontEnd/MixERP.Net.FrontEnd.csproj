@@ -936,6 +936,7 @@
     <Content Include="Scripts\mixerp\core\dom\popunder.js" />
     <Content Include="Scripts\mixerp\core\dom\checkable.js" />
     <Content Include="Scripts\mixerp\core\grid\grid.js" />
+    <Content Include="Scripts\qunit-1.17.1.js" />
     <Content Include="Tests\all-tests.js">
       <DependentUpon>all-tests.js.bundle</DependentUpon>
     </Content>
