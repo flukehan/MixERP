@@ -124,7 +124,7 @@
     <value>アクセスが拒否されました。</value>
   </data>
   <data name="ItemErrorMessage" xml:space="preserve">
-    <value>あなたはアイテム識別子または化合物の識別子のいずれかを選択する必要があります。</value>
+    <value>あなたはアイテム識別子または化合アイテム識別子のどちらかを選択する必要があります。</value>
   </data>
   <data name="InsufficientStockWarning" xml:space="preserve">
     <value>唯一の{0}{1}{2}在庫の。</value>
@@ -151,6 +151,6 @@
     <value>無効なレシートモード。</value>
   </data>
   <data name="RecurringAmountErrorMessage" xml:space="preserve">
-    <value>量繰り返しが0以下であってはならない</value>
+    <value>量繰り返しが0以下であってはならない。</value>
   </data>
 </root>

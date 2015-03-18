@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -136,7 +137,7 @@
     <value>Valt datum är utanför intervallet.</value>
   </data>
   <data name="ItemErrorMessage" xml:space="preserve">
-    <value>Du måste välja antingen posten id eller förening id.</value>
+    <value>Du måste välja antingen artikelidentifierare eller förening artikelidentifierare.</value>
   </data>
   <data name="InvalidParty" xml:space="preserve">
     <value>Ogiltig part. Detta parti är inte associerad med denna transaktion.</value>
@@ -151,6 +152,6 @@
     <value>Ogiltigt kvitto läge.</value>
   </data>
   <data name="RecurringAmountErrorMessage" xml:space="preserve">
-    <value>Återkommande belopp bör inte vara mindre än eller lika med 0</value>
+    <value>Återkommande belopp bör inte vara mindre än eller lika med 0.</value>
   </data>
 </root>

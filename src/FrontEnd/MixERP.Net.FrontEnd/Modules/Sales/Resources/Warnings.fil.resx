@@ -139,10 +139,10 @@
     <value>Di-wastong party. Party na ito ay hindi nauugnay sa transaksyong ito.</value>
   </data>
   <data name="ItemErrorMessage" xml:space="preserve">
-    <value>Kailangan mong piliin ang alinman sa item id o tambalang id.</value>
+    <value>Kailangan mong piliin ang alinman sa item na pantukoy o tambalang tagatukoy ng item.</value>
   </data>
   <data name="RecurringAmountErrorMessage" xml:space="preserve">
-    <value>Paulit-ulit na halaga ay hindi dapat mas mababa sa o katumbas ng 0</value>
+    <value>Paulit-ulit na halaga ay hindi dapat mas mababa sa o katumbas ng 0.</value>
   </data>
   <data name="CompareAmountErrorMessage" xml:space="preserve">
     <value>Ang halaga na dapat na mas mataas ang halaga mula sa.</value>
