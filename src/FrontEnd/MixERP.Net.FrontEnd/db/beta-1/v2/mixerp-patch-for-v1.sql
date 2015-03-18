@@ -1037,6 +1037,42 @@ SELECT setval
 DROP TABLE IF EXISTS core.recurring_invoices_temp;
 DROP TABLE IF EXISTS core.recurring_invoice_setup_temp;
 
+DO
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'core.bonus_slabs'::regclass
+        AND    attname = 'account_id'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE core.bonus_slabs
+        ADD COLUMN account_id bigint NOT NULL 
+        REFERENCES core.accounts(account_id)
+        CONSTRAINT bonus_slab_account_id_df
+        DEFAULT(core.get_account_id_by_account_number('40230'));
+    END IF;
+
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'core.bonus_slabs'::regclass
+        AND    attname = 'statement_reference'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE core.bonus_slabs
+        ADD COLUMN statement_reference national character varying(100) NOT NULL DEFAULT('');
+    END IF;
+
+    ALTER TABLE transactions.transaction_master
+    ALTER COLUMN login_id DROP NOT NULL;
+END
+$$
+LANGUAGE plpgsql;
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/audit/audit.get_office_id_by_login_id.sql --<--<--
 DROP FUNCTION IF EXISTS audit.get_office_id_by_login_id(bigint);
@@ -1153,6 +1189,55 @@ $$
 LANGUAGE plpgsql;
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/core/core.get_frequency_setup_end_date_frequency_setup_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_frequency_setup_end_date_frequency_setup_id(_frequency_setup_id integer);
+DROP FUNCTION IF EXISTS core.get_frequency_setup_end_date_by_frequency_setup_id(_frequency_setup_id integer);
+CREATE FUNCTION core.get_frequency_setup_end_date_by_frequency_setup_id(_frequency_setup_id integer)
+RETURNS date
+AS
+$$
+BEGIN
+    RETURN
+        value_date
+    FROM
+        core.frequency_setups
+    WHERE
+        frequency_setup_id = $1;
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/core/core.get_frequency_setup_start_date_frequency_setup_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_frequency_setup_start_date_frequency_setup_id(_frequency_setup_id integer);
+DROP FUNCTION IF EXISTS core.get_frequency_setup_start_date_by_frequency_setup_id(_frequency_setup_id integer);
+CREATE FUNCTION core.get_frequency_setup_start_date_by_frequency_setup_id(_frequency_setup_id integer)
+RETURNS date
+AS
+$$
+    DECLARE _start_date date;
+BEGIN
+    SELECT MAX(value_date) + 1 
+    INTO _start_date
+    FROM core.frequency_setups
+    WHERE value_date < 
+    (
+        SELECT value_date
+        FROM core.frequency_setups
+        WHERE frequency_setup_id = $1
+    );
+
+    IF(_start_date IS NULL) THEN
+        SELECT starts_from 
+        INTO _start_date
+        FROM core.fiscal_year;
+    END IF;
+
+    RETURN _start_date;
+END
+$$
+LANGUAGE plpgsql;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/core/core.get_menu_id_by_menu_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_menu_id_by_menu_code(national character varying(250));
 
@@ -1185,6 +1270,116 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.cast_frequency.sql --<--<--
+DROP FUNCTION IF EXISTS core.cast_frequency(text) CASCADE;
+
+CREATE FUNCTION core.cast_frequency(text)
+RETURNS integer
+IMMUTABLE
+AS
+$$
+BEGIN
+    IF(UPPER($1) = 'EOM') THEN
+        RETURN 2;
+    END IF;
+    IF(UPPER($1) = 'EOQ') THEN
+        RETURN 3;
+    END IF;
+    IF(UPPER($1) = 'EOH') THEN
+        RETURN 4;
+    END IF;
+    IF(UPPER($1) = 'EOY') THEN
+        RETURN 5;
+    END IF;
+
+    RETURN NULL;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE CAST (text as integer)
+WITH FUNCTION core.cast_frequency(text) AS ASSIGNMENT;
+
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_frequency_start_date.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_frequency_start_date(_frequency_id integer, _value_date date);
+
+CREATE FUNCTION core.get_frequency_start_date(_frequency_id integer, _value_date date)
+RETURNS date
+STABLE
+AS
+$$
+    DECLARE _start_date date;
+BEGIN
+    SELECT MAX(value_date) 
+    INTO _start_date
+    FROM core.frequency_setups
+    WHERE value_date < $2
+    AND frequency_id = ANY(core.get_frequencies($1));
+
+    IF(_start_date IS NULL AND $1 = 'EOY'::text::integer) THEN
+        SELECT MAX(starts_from)
+        INTO _start_date
+        FROM core.fiscal_year
+        WHERE starts_from < $2;
+    END IF;
+
+    RETURN _start_date;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT * FROM core.get_frequency_start_date('eoy'::text::integer, '2015-05-14');
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_periods.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_periods
+(
+    _date_from                      date,
+    _date_to                        date
+);
+
+CREATE FUNCTION core.get_periods
+(
+    _date_from                      date,
+    _date_to                        date
+)
+RETURNS core.period[]
+VOLATILE
+AS
+$$
+BEGIN
+    DROP TABLE IF EXISTS frequency_setups_temp;
+    CREATE TEMPORARY TABLE frequency_setups_temp
+    (
+        frequency_setup_id      int,
+        value_date              date
+    ) ON COMMIT DROP;
+
+    INSERT INTO frequency_setups_temp
+    SELECT frequency_setup_id, value_date
+    FROM core.frequency_setups
+    WHERE value_date BETWEEN _date_from AND _date_to
+    ORDER BY value_date;
+
+    RETURN
+        array_agg
+        (
+            (
+                core.get_frequency_setup_code_by_frequency_setup_id(frequency_setup_id),
+                core.get_frequency_setup_start_date_by_frequency_setup_id(frequency_setup_id),
+                core.get_frequency_setup_end_date_by_frequency_setup_id(frequency_setup_id)
+            )::core.period
+        )::core.period[]
+    FROM frequency_setups_temp;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT * FROM core.get_periods('1-1-2000', '1-1-2020');
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/public/public.add_column.sql --<--<--
 DROP FUNCTION IF EXISTS public.add_column(regclass, text, regtype, text, text);
@@ -1223,6 +1418,43 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/core.get_frequencies.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_frequencies(_frequency_id integer);
+
+CREATE FUNCTION core.get_frequencies(_frequency_id integer)
+RETURNS integer[]
+IMMUTABLE
+AS
+$$
+    DECLARE _frequencies integer[];
+BEGIN
+    IF(_frequency_id = 2) THEN--End of month
+        --End of month
+        --End of quarter is also end of third/ninth month
+        --End of half is also end of sixth month
+        --End of year is also end of twelfth month
+        _frequencies = ARRAY[2, 3, 4, 5];
+    ELSIF(_frequency_id = 3) THEN--End of quarter
+        --End of quarter
+        --End of half is the second end of quarter
+        --End of year is the fourth/last end of quarter
+        _frequencies = ARRAY[3, 4, 5];
+    ELSIF(_frequency_id = 4) THEN--End of half
+        --End of half
+        --End of year is the second end of half
+        _frequencies = ARRAY[4, 5];
+    ELSIF(_frequency_id = 5) THEN--End of year
+        --End of year
+        _frequencies = ARRAY[5];
+    END IF;
+
+    RETURN _frequencies;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT * FROM core.get_frequencies(3);
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.auto_verify.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.auto_verify
@@ -2292,6 +2524,291 @@ END
 $$
 LANGUAGE plpgsql;
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.post_bonus.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.post_bonus(_user_id integer, _login_id bigint, _office_id integer, _value_date date);
+
+CREATE FUNCTION transactions.post_bonus(_user_id integer, _login_id bigint, _office_id integer, _value_date date)
+RETURNS void
+VOLATILE
+AS
+$$
+    DECLARE _frequency_id           integer;
+    DECLARE _transaction_master_id  bigint;
+    DECLARE _tran_counter           integer;
+    DECLARE _transaction_code       text;
+    DECLARE _default_currency_code  national character varying(12);
+    DECLARE _sys                    integer = office.get_sys_user_id();
+    DECLARE this                    RECORD;
+BEGIN
+    IF(_value_date != transactions.get_value_date(_office_id)) THEN
+        RAISE EXCEPTION 'Invalid value date.'
+        USING ERRCODE='P3007';
+    END IF;
+
+    IF NOT EXISTS(SELECT 1 FROM core.bonus_slabs WHERE ends_on >= _value_date) THEN
+        RETURN;
+    END IF;
+
+    IF NOT EXISTS(SELECT 1 FROM core.salesperson_bonus_setups) THEN
+        RETURN;
+    END IF;
+
+    SELECT frequency_id INTO _frequency_id
+    FROM core.frequency_setups
+    WHERE value_date = _value_date;
+
+    IF(COALESCE(_frequency_id, 0) = 0) THEN
+        --Today does not fall on a frequency
+        RETURN;
+    END IF;
+
+
+    DROP TABLE IF EXISTS bonus_slab_temp;
+    CREATE TEMPORARY TABLE bonus_slab_temp
+    (
+        bonus_slab_id               integer,
+        bonus_slab_code             text,
+        bonus_slab_name             text,
+        checking_frequency_id       integer,
+        amount_from                 public.money_strict,
+        amount_to                   public.money_strict,
+        bonus_rate                  numeric,
+        salesperson_id              integer,
+        period_from                 date,
+        period_to                   date,
+        salesperson_account_id      bigint,
+        bonus_account_id            bigint,
+        statement_reference         national character varying(100)
+    ) ON COMMIT DROP;
+
+    INSERT INTO bonus_slab_temp(bonus_slab_id, bonus_slab_code, bonus_slab_name, checking_frequency_id, amount_from, amount_to, bonus_rate, salesperson_id, salesperson_account_id, bonus_account_id, statement_reference)
+    SELECT
+        core.bonus_slabs.bonus_slab_id,
+        core.bonus_slabs.bonus_slab_code,
+        core.bonus_slabs.bonus_slab_name,
+        core.bonus_slabs.checking_frequency_id,
+        core.bonus_slab_details.amount_from,
+        core.bonus_slab_details.amount_to,
+        core.bonus_slab_details.bonus_rate,
+        core.salesperson_bonus_setups.salesperson_id,
+        core.salespersons.account_id,
+        core.bonus_slabs.account_id,
+        core.bonus_slabs.statement_reference
+    FROM core.bonus_slab_details
+    INNER JOIN core.bonus_slabs
+    ON core.bonus_slabs.bonus_slab_id = core.bonus_slab_details.bonus_slab_id
+    INNER JOIN core.salesperson_bonus_setups
+    ON core.salesperson_bonus_setups.bonus_slab_id = core.bonus_slabs.bonus_slab_id
+    INNER JOIN core.salespersons
+    ON core.salespersons.salesperson_id = core.salesperson_bonus_setups.salesperson_id
+    WHERE ends_on >= _value_date::date
+    AND _frequency_id = ANY(core.get_frequencies(core.bonus_slabs.checking_frequency_id));
+
+    IF(SELECT COUNT(*) FROM bonus_slab_temp) = 0 THEN
+        --Nothing found to post today
+        RETURN;
+    END IF;
+
+    UPDATE bonus_slab_temp
+    SET period_to = _value_date,
+    period_from = core.get_frequency_start_date(_frequency_id, _value_date);
+
+    DROP TABLE IF EXISTS bonus_temp;
+    CREATE TEMPORARY TABLE bonus_temp
+    (
+        id                      SERIAL,
+        salesperson_id          integer,
+        period_from             date,
+        period_to               date,
+        sales                   public.money_strict2,
+        bonus_rate              numeric,
+        bonus                   numeric,
+        salesperson_account_id  bigint,
+        bonus_account_id        bigint,
+        statement_reference     national character varying(100)
+    ) ON COMMIT DROP;
+
+    INSERT INTO bonus_temp(salesperson_id, period_from, period_to, salesperson_account_id, bonus_account_id, statement_reference)
+    SELECT 
+    DISTINCT 
+        bonus_slab_temp.salesperson_id, 
+        bonus_slab_temp.period_from, 
+        bonus_slab_temp.period_to,
+        bonus_slab_temp.salesperson_account_id,
+        bonus_slab_temp.bonus_account_id,        
+        bonus_slab_temp.statement_reference
+    FROM bonus_slab_temp;
+    
+    UPDATE bonus_temp
+    SET sales = 
+    (
+        SELECT
+            SUM
+            (
+                (
+                    COALESCE(quantity, 0)
+                    * 
+                    COALESCE(price, 0)
+                ) - COALESCE(discount, 0)
+            ) AS total
+        FROM transactions.transaction_master
+        INNER JOIN transactions.stock_master
+        ON transactions.transaction_master.transaction_master_id = transactions.stock_master.transaction_master_id
+        INNER JOIN transactions.stock_details
+        ON transactions.stock_details.stock_master_id = transactions.stock_master.stock_master_id
+        WHERE transactions.transaction_master.verification_status_id > 0
+        AND transactions.stock_master.salesperson_id = bonus_temp.salesperson_id
+        AND transactions.transaction_master.book = ANY(ARRAY['Sales.Direct', 'Sales.Delivery'])
+        AND transactions.transaction_master.value_date
+        BETWEEN bonus_temp.period_from AND bonus_temp.period_to
+   );
+
+   
+    UPDATE bonus_temp
+    SET bonus_rate = 
+    (
+        SELECT bonus_slab_temp.bonus_rate
+        FROM bonus_slab_temp
+        WHERE bonus_slab_temp.salesperson_id = bonus_temp.salesperson_id
+        AND bonus_temp.sales > bonus_slab_temp.amount_from
+        AND bonus_temp.sales <= bonus_slab_temp.amount_to
+    );
+
+
+    UPDATE bonus_temp
+    SET bonus = ROUND(bonus_temp.sales * bonus_temp.bonus_rate / 100, 2);
+
+    UPDATE bonus_temp
+    SET statement_reference = REPLACE(bonus_temp.statement_reference, '{From}', bonus_temp.period_from::text);
+
+    UPDATE bonus_temp
+    SET statement_reference = REPLACE(bonus_temp.statement_reference, '{To}', bonus_temp.period_to::text);
+
+
+    FOR this IN
+    SELECT bonus_temp.id 
+    FROM bonus_temp 
+    WHERE COALESCE(bonus_temp.bonus, 0) > 0
+    LOOP
+        _transaction_master_id  := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
+        _tran_counter           := transactions.get_new_transaction_counter(_value_date);
+        _transaction_code       := transactions.get_transaction_code(_value_date, _office_id, _user_id, _login_id);
+
+        INSERT INTO transactions.transaction_master
+        (
+            transaction_master_id, 
+            transaction_counter, 
+            transaction_code, 
+            book, 
+            value_date, 
+            user_id, 
+            office_id, 
+            statement_reference,
+            verification_status_id,
+            sys_user_id,
+            verified_by_user_id,
+            verification_reason
+        ) 
+        SELECT            
+            _transaction_master_id, 
+            _tran_counter, 
+            _transaction_code, 
+            'Bonus.Slab', 
+            _value_date, 
+            _user_id, 
+            _office_id,             
+            bonus_temp.statement_reference,
+            1,
+            _sys,
+            _sys,
+            'Automatically verified by workflow.'
+        FROM bonus_temp
+        WHERE bonus_temp.id  = this.id
+        LIMIT 1;
+
+        INSERT INTO transactions.transaction_details
+        (
+            transaction_master_id,
+            value_date,
+            tran_type, 
+            account_id, 
+            statement_reference, 
+            currency_code, 
+            amount_in_currency, 
+            er, 
+            local_currency_code, 
+            amount_in_local_currency
+        )
+        SELECT
+            _transaction_master_id,
+            _value_date,
+            'Cr',
+            bonus_temp.salesperson_account_id,
+            bonus_temp.statement_reference,
+            _default_currency_code, 
+            bonus_temp.bonus, 
+            1 AS exchange_rate,
+            _default_currency_code,
+            bonus_temp.bonus
+        FROM bonus_temp
+        WHERE bonus_temp.id = this.id
+
+        UNION ALL
+        SELECT
+            _transaction_master_id,
+            _value_date,
+            'Dr',
+            bonus_temp.bonus_account_id,
+            bonus_temp.statement_reference,
+            _default_currency_code, 
+            bonus_temp.bonus, 
+            1 AS exchange_rate,
+            _default_currency_code,
+            bonus_temp.bonus
+        FROM bonus_temp
+        WHERE bonus_temp.id = this.id;
+    END LOOP;    
+END
+$$
+LANGUAGE plpgsql;
+
+DELETE FROM transactions.routines where routine_code='REF-POBNS';
+SELECT transactions.create_routine('POST-BNS', 'transactions.post_bonus', 201);
+
+--select * from transactions.post_bonus(2, 5, 2, '2015-04-13');
+
+
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.post_er_fluctuation.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.post_er_fluctuation(_user_id integer, _login_id bigint, _office_id integer, _value_date date);
+
+CREATE FUNCTION transactions.post_er_fluctuation(_user_id integer, _login_id bigint, _office_id integer, _value_date date)
+RETURNS void
+AS
+$$
+BEGIN
+
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.post_late_fee.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.post_late_fee(_user_id integer, _login_id bigint, _office_id integer, _value_date date);
+
+CREATE FUNCTION transactions.post_late_fee(_user_id integer, _login_id bigint, _office_id integer, _value_date date)
+RETURNS void
+AS
+$$
+BEGIN
+
+END
+$$
+LANGUAGE plpgsql;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.post_purchase_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_purchase_return
 (
@@ -2650,26 +3167,18 @@ LANGUAGE plpgsql;
 DROP FUNCTION IF EXISTS transactions.post_recurring_invoices(_user_id integer, _login_id bigint, _office_id integer, _value_date date);
 
 CREATE FUNCTION transactions.post_recurring_invoices(_user_id integer, _login_id bigint, _office_id integer, _value_date date)
-RETURNS TABLE
-(
-    id                              integer,
-    recurring_invoice_setup_id      integer,
-    tran_type                       public.transaction_type,
-    party_id                        bigint,
-    recurring_amount                public.money_strict2,
-    account_id                      bigint,
-    statement_reference             national character varying(100),
-    transaction_master_id           bigint
-)
+RETURNS void
 AS
 $$
-    DECLARE _frequency_id           integer; 
+    DECLARE _frequency_id           integer;
+    DECLARE _frequencies            integer[];
     DECLARE _day                    double precision;
     DECLARE _transaction_master_id  bigint;
     DECLARE _tran_counter           integer;
     DECLARE _transaction_code       text;
-    DECLARE this                    RECORD;
+    DECLARE _sys                    integer = office.get_sys_user_id();
     DECLARE _default_currency_code  national character varying(12);
+    DECLARE this                    RECORD;
 BEGIN
     IF(_value_date != transactions.get_value_date(_office_id)) THEN
         RAISE EXCEPTION 'Invalid value date.'
@@ -2697,6 +3206,7 @@ BEGIN
 
     _frequency_id   := COALESCE(_frequency_id, 0);
     _day            := EXTRACT(DAY FROM _value_date);
+    _frequencies    := core.get_frequencies(_frequency_id);
 
     --INSERT RECURRING INVOICES THAT :
     -->RECUR BASED ON SAME CALENDAR DATE 
@@ -2777,7 +3287,7 @@ BEGIN
     AND is_active                                   --IS ACTIVE
     AND _value_date > starts_from                   --HAS NOT STARTED YET
     AND _value_date <= ends_on                      --HAS NOT ENDED YET
-    AND recurring_frequency_id = _frequency_id      --OCCURS TODAY
+    AND recurring_frequency_id = ANY(_frequencies)  --OCCURS TODAY
     AND recurrence_type_id IN                       --RECURS BASED ON FREQUENCIES
     (
         SELECT recurrence_type_id FROM core.recurrence_types
@@ -2802,8 +3312,9 @@ BEGIN
 
 
     FOR this IN
-    SELECT DISTINCT recurring_invoices_temp.recurring_invoice_setup_id 
+    SELECT DISTINCT recurring_invoices_temp.recurring_invoice_setup_id
     FROM recurring_invoices_temp
+    WHERE COALESCE(recurring_invoices_temp.recurring_amount, 0) > 0
     LOOP
         _transaction_master_id  := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
         _tran_counter           := transactions.get_new_transaction_counter(_value_date);
@@ -2817,9 +3328,12 @@ BEGIN
             book, 
             value_date, 
             user_id, 
-            login_id, 
             office_id, 
-            statement_reference
+            statement_reference,
+            verification_status_id,
+            sys_user_id,
+            verified_by_user_id,
+            verification_reason
         ) 
         SELECT            
             _transaction_master_id, 
@@ -2828,9 +3342,12 @@ BEGIN
             'Recurring.Invoice', 
             _value_date, 
             _user_id, 
-            _login_id, 
             _office_id,             
-            recurring_invoices_temp.statement_reference
+            recurring_invoices_temp.statement_reference,
+            1,
+            _sys,
+            _sys,
+            'Automatically verified by workflow.'
         FROM recurring_invoices_temp
         WHERE recurring_invoices_temp.recurring_invoice_setup_id  = this.recurring_invoice_setup_id
         LIMIT 1;
@@ -2861,39 +3378,18 @@ BEGIN
             recurring_invoices_temp.recurring_amount
         FROM recurring_invoices_temp
         WHERE recurring_invoices_temp.recurring_invoice_setup_id  = this.recurring_invoice_setup_id;
-    END LOOP;
-
-    
-    RETURN QUERY
-    SELECT *
-    FROM recurring_invoices_temp
-    ORDER BY 2;
+    END LOOP;    
 END
 $$
 LANGUAGE plpgsql;
 
 
-SELECT transactions.create_routine('REF-PORCIV', 'transactions.post_recurring_invoices', 200);
+DELETE FROM transactions.routines where routine_code='REF-PORCIV';
+SELECT transactions.create_routine('POST-RCIV', 'transactions.post_recurring_invoices', 200);
 
 
---SELECT  * FROM transactions.post_recurring_invoices(2, 5, 2, '4/13/2015');
+--SELECT  * FROM transactions.post_recurring_invoices(2, 5, 2, '2015-04-17');
 
--- 
--- DO
--- $$
---     DECLARE _office_id      integer = 2;
---     DECLARE _value_date     date = transactions.get_value_date(_office_id);
---     DECLARE _till           date = '1/1/2016';
---     DECLARE _user_id        integer = 2;
---     DECLARE _login_id       bigint = 5;
--- BEGIN
---     --transactions.perform_eod_operation
--- 
---     PERFORM transactions.perform_eod_operation(_user_id, _login_id, _office_id, value_date::date)
---     FROM generate_series(_value_date, _till, '1 day') AS value_date;
--- END
--- $$
--- LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.post_sales_return.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_sales_return
@@ -3936,6 +4432,11 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/01.frequencies-payment-terms-late-fee.sql.sql --<--<--
+UPDATE core.frequency_setups
+SET frequency_setup_code= 'Sep-Oct'
+WHERE frequency_setup_code= 'Sep-Oc';
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/http-actions.sql --<--<--
 --This table should not be localized.

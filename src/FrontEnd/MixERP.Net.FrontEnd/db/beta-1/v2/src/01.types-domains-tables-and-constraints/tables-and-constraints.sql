@@ -227,3 +227,39 @@ SELECT setval
 
 DROP TABLE IF EXISTS core.recurring_invoices_temp;
 DROP TABLE IF EXISTS core.recurring_invoice_setup_temp;
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'core.bonus_slabs'::regclass
+        AND    attname = 'account_id'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE core.bonus_slabs
+        ADD COLUMN account_id bigint NOT NULL 
+        REFERENCES core.accounts(account_id)
+        CONSTRAINT bonus_slab_account_id_df
+        DEFAULT(core.get_account_id_by_account_number('40230'));
+    END IF;
+
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'core.bonus_slabs'::regclass
+        AND    attname = 'statement_reference'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE core.bonus_slabs
+        ADD COLUMN statement_reference national character varying(100) NOT NULL DEFAULT('');
+    END IF;
+
+    ALTER TABLE transactions.transaction_master
+    ALTER COLUMN login_id DROP NOT NULL;
+END
+$$
+LANGUAGE plpgsql;

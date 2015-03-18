@@ -4,13 +4,15 @@ CREATE FUNCTION transactions.post_recurring_invoices(_user_id integer, _login_id
 RETURNS void
 AS
 $$
-    DECLARE _frequency_id           integer; 
+    DECLARE _frequency_id           integer;
+    DECLARE _frequencies            integer[];
     DECLARE _day                    double precision;
     DECLARE _transaction_master_id  bigint;
     DECLARE _tran_counter           integer;
     DECLARE _transaction_code       text;
-    DECLARE this                    RECORD;
+    DECLARE _sys                    integer = office.get_sys_user_id();
     DECLARE _default_currency_code  national character varying(12);
+    DECLARE this                    RECORD;
 BEGIN
     IF(_value_date != transactions.get_value_date(_office_id)) THEN
         RAISE EXCEPTION 'Invalid value date.'
@@ -38,6 +40,7 @@ BEGIN
 
     _frequency_id   := COALESCE(_frequency_id, 0);
     _day            := EXTRACT(DAY FROM _value_date);
+    _frequencies    := core.get_frequencies(_frequency_id);
 
     --INSERT RECURRING INVOICES THAT :
     -->RECUR BASED ON SAME CALENDAR DATE 
@@ -118,7 +121,7 @@ BEGIN
     AND is_active                                   --IS ACTIVE
     AND _value_date > starts_from                   --HAS NOT STARTED YET
     AND _value_date <= ends_on                      --HAS NOT ENDED YET
-    AND recurring_frequency_id = _frequency_id      --OCCURS TODAY
+    AND recurring_frequency_id = ANY(_frequencies)  --OCCURS TODAY
     AND recurrence_type_id IN                       --RECURS BASED ON FREQUENCIES
     (
         SELECT recurrence_type_id FROM core.recurrence_types
@@ -143,8 +146,9 @@ BEGIN
 
 
     FOR this IN
-    SELECT DISTINCT recurring_invoices_temp.recurring_invoice_setup_id 
+    SELECT DISTINCT recurring_invoices_temp.recurring_invoice_setup_id
     FROM recurring_invoices_temp
+    WHERE COALESCE(recurring_invoices_temp.recurring_amount, 0) > 0
     LOOP
         _transaction_master_id  := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
         _tran_counter           := transactions.get_new_transaction_counter(_value_date);
@@ -158,9 +162,12 @@ BEGIN
             book, 
             value_date, 
             user_id, 
-            login_id, 
             office_id, 
-            statement_reference
+            statement_reference,
+            verification_status_id,
+            sys_user_id,
+            verified_by_user_id,
+            verification_reason
         ) 
         SELECT            
             _transaction_master_id, 
@@ -169,9 +176,12 @@ BEGIN
             'Recurring.Invoice', 
             _value_date, 
             _user_id, 
-            _login_id, 
             _office_id,             
-            recurring_invoices_temp.statement_reference
+            recurring_invoices_temp.statement_reference,
+            1,
+            _sys,
+            _sys,
+            'Automatically verified by workflow.'
         FROM recurring_invoices_temp
         WHERE recurring_invoices_temp.recurring_invoice_setup_id  = this.recurring_invoice_setup_id
         LIMIT 1;
@@ -208,41 +218,8 @@ $$
 LANGUAGE plpgsql;
 
 
-SELECT transactions.create_routine('REF-PORCIV', 'transactions.post_recurring_invoices', 200);
+DELETE FROM transactions.routines where routine_code='REF-PORCIV';
+SELECT transactions.create_routine('POST-RCIV', 'transactions.post_recurring_invoices', 200);
 
 
---SELECT  * FROM transactions.post_recurring_invoices(2, 5, 2, '4/13/2015');
-
--- DO
--- $$
---     DECLARE _office_id      integer = 2;
---     DECLARE _value_date     date = transactions.get_value_date(_office_id);
---     --DECLARE _till           date = '1/1/2016';
---     DECLARE _till           date = _value_date + INTERVAL '45 days';
---     DECLARE _user_id        integer = 2;
---     DECLARE _login_id       bigint;
---     DECLARE this            RECORD;
--- BEGIN
---     SET CLIENT_MIN_MESSAGES TO WARNING;
--- 
---     SELECT login_id INTO _login_id
---     FROM audit.logins
---     WHERE user_id = _user_id
---     AND office_id = _office_id
---     ORDER BY login_date_time DESC
---     LIMIT 1;
--- 
---     UPDATE office.users
---     SET elevated = true
---     WHERE office.users.user_id = _user_id;
--- 
---     FOR this IN
---     SELECT * FROM generate_series(_value_date, _till, '1 day') AS value_date
---     LOOP
---         PERFORM transactions.initialize_eod_operation(_user_id, _office_id, this.value_date::date);
---         PERFORM transactions.perform_eod_operation(_user_id, _login_id, _office_id, this.value_date::date);
---     END LOOP;
--- END
--- $$
--- LANGUAGE plpgsql;
--- 
+--SELECT  * FROM transactions.post_recurring_invoices(2, 5, 2, '2015-04-17');
