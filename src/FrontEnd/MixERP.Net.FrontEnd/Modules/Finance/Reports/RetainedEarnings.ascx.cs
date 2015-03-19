@@ -40,8 +40,10 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             this.CreateTopPanel(this.Placeholder1);
             this.SetQueryParameters();
-            this.BindGrid();
-            
+            if (!this.Page.IsPostBack)
+            {
+                this.BindGrid();
+            }
         }
 
         private void SetQueryParameters()
