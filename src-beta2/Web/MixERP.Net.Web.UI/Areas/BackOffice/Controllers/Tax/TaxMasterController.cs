@@ -19,9 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Web.Mvc;
 using MixERP.Net.UI.ScrudFactory;
-using MixERP.Net.Web.UI.BackOffice.Resources;
 using MixERP.Net.Web.UI.Providers;
-using System.Reflection;
 
 namespace MixERP.Net.Web.UI.BackOffice.Controllers.Tax
 {
@@ -30,11 +28,10 @@ namespace MixERP.Net.Web.UI.BackOffice.Controllers.Tax
     [Route("{action=index}")]
     public class TaxMasterController : ScrudController
     {
-        
         public ActionResult Index()
         {
             const string view = "~/Areas/BackOffice/Views/Tax/TaxMaster.cshtml";
-            return View (view, this.GetConfig());
+            return View(view, this.GetConfig());
         }
 
         public override Config GetConfig()
@@ -48,10 +45,9 @@ namespace MixERP.Net.Web.UI.BackOffice.Controllers.Tax
                 config.View = "tax_master_scrud_view";
                 config.Text = Resources.Titles.TaxMaster;
 
-                config.ResourceAssembly = typeof(TaxMasterController).Assembly;
+                config.ResourceAssembly = typeof (TaxMasterController).Assembly;
                 return config;
             }
-
         }
     }
 }

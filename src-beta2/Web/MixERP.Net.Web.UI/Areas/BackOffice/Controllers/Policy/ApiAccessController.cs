@@ -12,13 +12,13 @@ using MixERP.Net.Web.UI.Providers;
 namespace MixERP.Net.Web.UI.BackOffice.Controllers.Policy
 {
     [RouteArea("BackOffice", AreaPrefix = "back-office")]
-    [RoutePrefix("policy/api-access-policy")]
+    [RoutePrefix("policy/api-access")]
     [Route("{action=index}")]
-    public class ApiAccessPolicyController : ScrudController
+    public class ApiAccessController : ScrudController
     {
         public ActionResult Index()
         {
-            const string view = "~/Areas/BackOffice/Views/Policy/ApiAccessPolicy.cshtml";
+            const string view = "~/Areas/BackOffice/Views/Policy/ApiAccess.cshtml";
             return View(view, this.GetConfig());
         }
 
@@ -45,7 +45,7 @@ namespace MixERP.Net.Web.UI.BackOffice.Controllers.Policy
             config.DisplayViews = GetDisplayViews();
 
             config.Text = "API Access Policy";
-            config.ResourceAssembly = Assembly.GetAssembly(typeof (ApiAccessPolicyController));
+            config.ResourceAssembly = Assembly.GetAssembly(typeof (ApiAccessController));
 
             ViewData["Pocos"] = this.GetPocos();
 

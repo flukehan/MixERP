@@ -419,6 +419,13 @@
     </Content>
     <Content Include="Contents\images\mixerp-logo-light.png" />
     <Content Include="Contents\images\mixerp-logo.png" />
+    <Content Include="Contents\images\social\binod-1.jpg" />
+    <Content Include="Contents\images\social\binod-2.jpg" />
+    <Content Include="Contents\images\social\binod-3.jpg" />
+    <Content Include="Contents\images\social\binod-4.jpg" />
+    <Content Include="Contents\images\social\guru-1.jpg" />
+    <Content Include="Contents\images\social\surya-1.jpg" />
+    <Content Include="Contents\images\social\surya-2.jpg" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
     <Content Include="Resource\Configuration\DbParameters.xml" />

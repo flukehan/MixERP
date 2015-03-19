@@ -68,6 +68,8 @@ namespace MixERP.Net.UI.ScrudFactory.Layout.Form
                     {
                         TagBuilder.AddValue(textBox, date.Date == date ? date.ToString("d") : date.ToString("f"));
                     }
+
+                    TagBuilder.AddClass(textBox, "date");
                 }
                 else
                 {

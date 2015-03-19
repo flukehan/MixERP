@@ -201,3 +201,124 @@ QUnit.test("visibility.js -> triggerClick", function (assert) {
 
     assert.equal(actual, true, "The element was unhidden again.");
 });
+///#source 1 1 /Tests/localization.js
+///<reference path="../bundles/scripts/master-page.min.js"/>
+QUnit.test("localization.js -> getFormattedNumber (Case 1)", function (assert) {
+    //Cultures: en-US, zh-CN, fil-PH, ja-JP, ms-MY
+    window.currencyDecimalPlaces = 2;
+    window.thousandSeparator = ",";
+    window.decimalSeparator = ".";
+
+    var expectedNumbers = ['100.00', '1,000.00', '1,000,000,000.00', '1,000,000,000,000,000.00'];
+    var numbers = ['100', '1000', '1000000000', '1000000000000000'];
+
+    $.each(numbers, function (i, v) {
+        var actual = getFormattedNumber(v);
+        var expected = expectedNumbers[i];
+
+        assert.equal(actual, expected, "The function returned " +
+            "expected formatted number \"" + expected + "\".");
+    });
+});
+
+QUnit.test("localization.js -> getFormattedNumber (Case 2)", function (assert) {
+    //Cultures: es-ES, pt-PT, nl-NL, de-DE, sv-SE, id_ID
+    window.currencyDecimalPlaces = 2;
+    window.thousandSeparator = ".";
+    window.decimalSeparator = ",";
+
+    var expectedNumbers = ['100,00', '1.000,00', '1.000.000.000,00', '1.000.000.000.000.000,00'];
+    var numbers = ['100', '1000', '1000000000', '1000000000000000'];
+
+
+    $.each(numbers, function (i, v) {
+        var actual = getFormattedNumber(v);
+        var expected = expectedNumbers[i];
+
+        assert.equal(actual, expected, "The function returned " +
+            "expected formatted number \"" + expected + "\".");
+    });
+});
+
+QUnit.test("localization.js -> getFormattedNumber (Case 3)", function (assert) {
+    //Cultures: fr-FR, ru-RU 
+    window.currencyDecimalPlaces = 2;
+    window.thousandSeparator = " ";
+    window.decimalSeparator = ",";
+
+    var expectedNumbers = ['100,00', '1 000,00', '1 000 000 000,00', '1 000 000 000 000 000,00'];
+    var numbers = ['100', '1000', '1000000000', '1000000000000000'];
+
+
+    $.each(numbers, function (i, v) {
+        var actual = getFormattedNumber(v);
+        var expected = expectedNumbers[i];
+
+        assert.equal(actual, expected, "The function returned " +
+            "expected formatted number \"" + expected + "\".");
+    });
+});
+
+QUnit.test("localization.js -> parseFormattedNumber (Case 1)", function (assert) {
+    //Cultures: en-US, zh-CN, fil-PH, ja-JP, ms-MY
+    window.thousandSeparator = ",";
+    window.decimalSeparator = ".";
+    var num = '1,000,000,000,000.00';
+
+    var expected = '1000000000000.00';
+    var actual = parseFormattedNumber(num);
+
+  
+    assert.equal(actual,expected,"The function returned expected parsed formatted number \"" + expected + "\".");
+
+});
+
+QUnit.test("localization.js -> parseFormattedNumber (Case 2)", function (assert) {
+    //Cultures: es-ES, pt-PT, nl-NL, de-DE, sv-SE, id_ID
+    window.thousandSeparator = ".";
+    window.decimalSeparator = ",";
+    var num = '1.000.000.000.000,00';
+
+    var expected = '1000000000000.00';
+    var actual = parseFormattedNumber(num);
+
+  
+    assert.equal(actual,expected,"The function returned expected parsed formatted number \"" + expected + "\".");
+
+});
+QUnit.test("localization.js -> parseFormattedNumber (Case 3)", function (assert) {
+    //Cultures: fr-FR, ru-RU 
+    window.thousandSeparator = " ";
+    window.decimalSeparator = ",";
+    var num = '1 000 000 000 000,00';
+
+    var expected = '1000000000000.00';
+    var actual = parseFormattedNumber(num);
+
+  
+    assert.equal(actual,expected,"The function returned expected parsed formatted number \"" + expected + "\".");
+
+});
+///#source 1 1 /Tests/transaction.js
+///<reference path="../bundles/scripts/master-page.min.js"/>
+QUnit.test("transaction.js -> convertToDebit", function (assert) {
+    var expected = -100;//Negative credit balance is debit
+    var actualBalance = 100;
+
+    var actual = convertToDebit(actualBalance);
+
+    assert.equal(actual, expected, "The credit balance was converted to debit balance \"" + actual + "\".");
+
+    expected = -1000.33;
+    actualBalance = 1000.33;
+    actual = convertToDebit(actualBalance);
+
+    assert.equal(actual, expected, "The credit balance was converted to debit balance \"" + actual + "\".");
+
+    expected = -0.33;
+    actualBalance = 0.33;
+    actual = convertToDebit(actualBalance);
+
+    assert.equal(actual, expected, "The credit balance was converted to debit balance \"" + actual + "\".");
+
+});

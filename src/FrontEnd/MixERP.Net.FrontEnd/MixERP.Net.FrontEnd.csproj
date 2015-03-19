@@ -936,7 +936,8 @@
     <Content Include="Scripts\mixerp\core\dom\popunder.js" />
     <Content Include="Scripts\mixerp\core\dom\checkable.js" />
     <Content Include="Scripts\mixerp\core\grid\grid.js" />
-    <Content Include="Scripts\qunit-1.17.1.js" />
+    <Content Include="Scripts\qunit\qunit-1.17.1.css" />
+    <Content Include="Scripts\qunit\qunit-1.17.1.js" />
     <Content Include="Tests\all-tests.js">
       <DependentUpon>all-tests.js.bundle</DependentUpon>
     </Content>
@@ -947,6 +948,7 @@
     <Content Include="Tests\dom\checkable.js" />
     <Content Include="Tests\dom\events.js" />
     <Content Include="Tests\dom\visibility.js" />
+    <Content Include="Tests\localization.js" />
     <Content Include="Tests\mixerp-core.test.html" />
     <Content Include="Scripts\mixerp\mixerp-core.js">
       <DependentUpon>mixerp-core.js.bundle</DependentUpon>
@@ -1220,6 +1222,7 @@
   <ItemGroup>
     <Content Include="App_Themes\MixERP\Skin1.skin" />
     <Content Include="MixERPMaster.Master" />
+    <Content Include="Tests\transaction.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

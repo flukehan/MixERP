@@ -100,6 +100,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Setup\AgeingSlabsController.cs" />
+    <Compile Include="Controllers\Setup\BankAccountsController.cs" />
+    <Compile Include="Controllers\Setup\CashFlowHeadingsController.cs" />
+    <Compile Include="Controllers\Setup\CashFlowSetupController.cs" />
+    <Compile Include="Controllers\Setup\COAController.cs" />
+    <Compile Include="Controllers\Setup\CostCentersController.cs" />
+    <Compile Include="Controllers\Setup\CurrenciesController.cs" />
     <Compile Include="FinanceAreaRegistration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Messages.Designer.cs">
@@ -139,6 +145,12 @@
     <Content Include="web.config" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
     <Content Include="Views\Setup\AgeingSlabs.cshtml" />
+    <Content Include="Views\Setup\BankAccounts.cshtml" />
+    <Content Include="Views\Setup\CashFlowHeadings.cshtml" />
+    <Content Include="Views\Setup\CashFlowSetup.cshtml" />
+    <Content Include="Views\Setup\COA.cshtml" />
+    <Content Include="Views\Setup\CostCenters.cshtml" />
+    <Content Include="Views\Setup\Currencies.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -148,7 +160,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Views\AgeingSlabs\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Messages.de.resx" />
@@ -224,6 +235,10 @@
     <ProjectReference Include="..\..\..\..\Framework\HTML Factories\ScrudFactory\MixERP.Net.UI.ScrudFactory\MixERP.Net.UI.ScrudFactory.csproj">
       <Project>{8b9da7ac-d62c-4569-9737-8f2b203b4862}</Project>
       <Name>MixERP.Net.UI.ScrudFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Framework\Libraries\MixERP.Net.Common\MixERP.Net.Common.csproj">
+      <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
+      <Name>MixERP.Net.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MixERP.Net.Web.UI.csproj">
       <Project>{4235fd88-8fb5-499f-ad44-672b5c27fcfc}</Project>
