@@ -39,8 +39,10 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             this.CreateTopPanel(this.Placeholder1);
             this.CreateGridPanel(this.Placeholder1);
-            this.BindGrid();
-            
+            if (!this.Page.IsPostBack)
+            {
+                this.BindGrid();
+            }
         }
 
         #region IDispoable

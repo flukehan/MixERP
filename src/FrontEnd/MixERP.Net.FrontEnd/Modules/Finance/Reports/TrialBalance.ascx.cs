@@ -41,8 +41,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.CreateForm(this.Placeholder1);
             this.CreateGrid(this.Placeholder1);
             this.RegisterJavascript();
-
-            if (!this.IsPostBack)
+            if (!this.Page.IsPostBack)
             {
                 this.BindGrid();
             }
@@ -186,7 +185,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.fromDateTextBox.Mode = FrequencyType.QuarterStartDate;
                 this.fromDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
-                
+
                 field.Controls.Add(this.fromDateTextBox);
 
                 container.Controls.Add(field);

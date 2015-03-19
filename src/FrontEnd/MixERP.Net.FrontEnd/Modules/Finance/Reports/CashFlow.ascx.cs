@@ -39,9 +39,10 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.CreateHeader(this.Placeholder1);
             this.CreateForm(this.Placeholder1);
             this.CreateGrid(this.Placeholder1);
-            this.BindGrid();
-
-            
+            if (!this.Page.IsPostBack)
+            {
+                this.BindGrid();
+            }
         }
 
         private void CreateHeader(Control container)
