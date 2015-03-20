@@ -81,7 +81,7 @@ $(document).ready(function () {
 
 
     function ajaxApprove(tranId, reason) {
-        url = "/Modules/Finance/Services/JournalVoucher.asmx/Approve";
+        url = "/Modules/Finance/Services/Entry/JournalVoucher.asmx/Approve";
         data = appendParameter("", "tranId", tranId);
         data = appendParameter(data, "reason", reason);
         data = getData(data);
@@ -90,7 +90,7 @@ $(document).ready(function () {
     };
 
     function ajaxReject(tranId, reason) {
-        url = "/Modules/Finance/Services/JournalVoucher.asmx/Reject";
+        url = "/Modules/Finance/Services/Entry/JournalVoucher.asmx/Reject";
         data = appendParameter("", "tranId", tranId);
         data = appendParameter(data, "reason", reason);
         data = getData(data);
