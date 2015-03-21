@@ -40,6 +40,8 @@ namespace MixERP.Net.FrontEnd.Modules
                 {
                     this.OverridePath = this.plugin.OverridePath;
                 }
+
+                this.IsLandingPage = this.plugin.IsLandingPage;
             }
 
             base.OnInit(e);

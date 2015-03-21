@@ -393,9 +393,6 @@ namespace MixERP.Net.Entities.Policy
         [Column("http_action_code")] 
         public string HttpActionCode { get; set; }
 
-        [Column("http_action_name")] 
-        public string HttpActionName { get; set; }
-
     }
 
     [TableName("policy.api_access_policy")]

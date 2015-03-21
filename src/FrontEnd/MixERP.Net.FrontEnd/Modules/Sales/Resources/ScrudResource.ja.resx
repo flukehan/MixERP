@@ -348,7 +348,7 @@
   <data name="bonus_rate" xml:space="preserve">
     <value>レートボーナス</value>
   </data>
-  <data name="grace_peiod" xml:space="preserve">
+  <data name="grace_period" xml:space="preserve">
     <value>猶予期間</value>
   </data>
   <data name="party_code" xml:space="preserve">

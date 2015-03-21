@@ -150,7 +150,9 @@ BEGIN
                 verification_status_id=_status,
                 verification_reason=_reason
             WHERE
-                transactions.transaction_master.transaction_master_id=_transaction_master_id;
+                transactions.transaction_master.transaction_master_id=_transaction_master_id
+            OR
+                transactions.transaction_master.cascading_tran_id=_transaction_master_id;
 
             PERFORM transactions.create_recurring_invoices(_transaction_master_id);
         END IF;
@@ -354,7 +356,7 @@ $$
     DECLARE _value_date                             date;
     DECLARE _tran_id                                bigint;
     DECLARE _verification_status_id                 smallint;
-    DECLARE _book_name                              national character varying(12)='Sales.Direct';
+    DECLARE _book_name                              national character varying(12)='Purchase.Direct';
     DECLARE _office_id                              integer;
     DECLARE _user_id                                integer;
     DECLARE _login_id                               bigint;
@@ -427,7 +429,7 @@ $$
     DECLARE _value_date                             date;
     DECLARE _tran_id                                bigint;
     DECLARE _verification_status_id                 smallint;
-    DECLARE _book_name                              national character varying(12)='Sales.Direct';
+    DECLARE _book_name                              national character varying(12)='Purchase.Direct';
     DECLARE _office_id                              integer;
     DECLARE _user_id                                integer;
     DECLARE _login_id                               bigint;

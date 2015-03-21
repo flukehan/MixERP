@@ -57,10 +57,6 @@ namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
 
                 Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
 
-                if (!this.ValidateDetails(details, tranId))
-                {
-                    return 0;
-                }
 
                 Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
@@ -78,15 +74,5 @@ namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
             }
         }
 
-        private bool ValidateDetails(IEnumerable<StockDetail> details, long stockMasterId)
-        {
-            foreach (var model in details)
-            {
-                return StockTransaction.ValidateItemForReturn(stockMasterId, model.StoreId, model.ItemCode,
-                    model.UnitName, model.Quantity, model.Price);
-            }
-
-            return false;
-        }
     }
 }

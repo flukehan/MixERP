@@ -21,7 +21,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.Sales.Setup
@@ -38,10 +40,27 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.ViewSchema = "core";
                 scrud.View = "late_fee_scrud_view";
                 scrud.Text = Resources.Titles.LateFees;
+                scrud.DisplayFields = GetDisplayFields();
+                scrud.DisplayViews = GetDisplayViews();
 
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(LateFees));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
+
+        private static string GetDisplayFields()
+        {
+            List<string> displayFields = new List<string>();
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+            return string.Join(",", displayFields);
+        }
+
+        private static string GetDisplayViews()
+        {
+            List<string> displayViews = new List<string>();
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_scrud_view");
+            return string.Join(",", displayViews);
+        }
+
     }
 }

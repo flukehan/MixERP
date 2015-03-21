@@ -558,9 +558,9 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Grace Period.
         /// </summary>
-        internal static string grace_peiod {
+        internal static string grace_period {
             get {
-                return ResourceManager.GetString("grace_peiod", resourceCulture);
+                return ResourceManager.GetString("grace_period", resourceCulture);
             }
         }
         

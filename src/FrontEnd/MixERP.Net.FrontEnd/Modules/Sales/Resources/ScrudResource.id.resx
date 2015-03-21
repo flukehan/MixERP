@@ -345,7 +345,7 @@
   <data name="bonus_rate" xml:space="preserve">
     <value>Tingkat bonus</value>
   </data>
-  <data name="grace_peiod" xml:space="preserve">
+  <data name="grace_period" xml:space="preserve">
     <value>tenggang Waktu</value>
   </data>
   <data name="party_name" xml:space="preserve">

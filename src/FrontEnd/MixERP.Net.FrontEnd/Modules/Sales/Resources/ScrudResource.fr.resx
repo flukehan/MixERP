@@ -387,7 +387,7 @@
   <data name="address" xml:space="preserve">
     <value>adresse</value>
   </data>
-  <data name="grace_peiod" xml:space="preserve">
+  <data name="grace_period" xml:space="preserve">
     <value>Délai de grâce</value>
   </data>
   <data name="is_transaction_node" xml:space="preserve">

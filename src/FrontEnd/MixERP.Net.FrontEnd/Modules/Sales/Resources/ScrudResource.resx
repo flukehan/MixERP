@@ -285,7 +285,7 @@
   <data name="due_on_date" xml:space="preserve">
     <value>Due on Date</value>
   </data>
-  <data name="grace_peiod" xml:space="preserve">
+  <data name="grace_period" xml:space="preserve">
     <value>Grace Period</value>
   </data>
   <data name="is_flat_amount" xml:space="preserve">

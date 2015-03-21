@@ -101,7 +101,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackOfficeAreaRegistration.cs" />
+    <Compile Include="Controllers\CashRepositoriesController.cs" />
+    <Compile Include="Controllers\CountiesController.cs" />
+    <Compile Include="Controllers\DepartmentsController.cs" />
+    <Compile Include="Controllers\EntitiesController.cs" />
+    <Compile Include="Controllers\FiscalYearController.cs" />
+    <Compile Include="Controllers\FrequencyController.cs" />
+    <Compile Include="Controllers\IndustriesController.cs" />
+    <Compile Include="Controllers\OfficesController.cs" />
     <Compile Include="Controllers\Policy\ApiAccessController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\StatesController.cs" />
+    <Compile Include="Controllers\Tax\CountySalesTaxesController.cs" />
+    <Compile Include="Controllers\Tax\SalesTaxDetailsController.cs" />
+    <Compile Include="Controllers\Tax\SalesTaxesController.cs" />
     <Compile Include="Controllers\Tax\TaxMasterController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Labels.Designer.cs">
@@ -142,6 +155,20 @@
     <Content Include="Scripts\jquery-2.1.3.min.map" />
     <Content Include="Views\Policy\ApiAccess.cshtml" />
     <Content Include="Views\Tax\TaxMaster.cshtml" />
+    <Content Include="Views\Tax\CountySalesTaxes.cshtml" />
+    <Content Include="Views\CashRepositories.cshtml" />
+    <Content Include="Views\Counties.cshtml" />
+    <Content Include="Views\Departments.cshtml" />
+    <Content Include="Views\Entities.cshtml" />
+    <Content Include="Views\FiscalYear.cshtml" />
+    <Content Include="Views\Frequency.cshtml" />
+    <Content Include="Views\Industries.cshtml" />
+    <Content Include="Views\Offices.cshtml" />
+    <Content Include="Views\Roles.cshtml" />
+    <Content Include="Views\States.cshtml" />
+    <Content Include="Views\Users.cshtml" />
+    <Content Include="Views\Tax\SalesTaxDetails.cshtml" />
+    <Content Include="Views\Tax\SalesTaxes.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

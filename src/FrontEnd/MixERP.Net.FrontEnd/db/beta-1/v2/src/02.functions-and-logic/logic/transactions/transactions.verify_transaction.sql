@@ -142,7 +142,9 @@ BEGIN
                 verification_status_id=_verification_status_id,
                 verification_reason=_reason
             WHERE
-                transactions.transaction_master.transaction_master_id=_transaction_master_id;
+                transactions.transaction_master.transaction_master_id=_transaction_master_id
+            OR 
+                transactions.transaction_master.cascading_tran_id =_transaction_master_id;
 
             PERFORM transactions.create_recurring_invoices(_transaction_master_id);
 

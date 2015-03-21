@@ -1,21 +1,23 @@
 DROP FUNCTION IF EXISTS transactions.validate_item_for_return
 (
-    _transaction_master_id  bigint, 
-    _store_id               integer, 
-    _item_code              national character varying(12), 
-    _unit_name              national character varying(50), 
-    _quantity               integer, 
-    _price                  public.money_strict
+    _transaction_master_id                  bigint, 
+    _store_id                               integer, 
+    _item_code                              national character varying(12), 
+    _unit_name                              national character varying(50), 
+    _quantity                               integer, 
+    _price                                  public.money_strict
 );
 
-CREATE FUNCTION transactions.validate_item_for_return
+DROP FUNCTION IF EXISTS transactions.validate_items_for_return
 (
-    _transaction_master_id  bigint, 
-    _store_id               integer, 
-    _item_code              national character varying(12), 
-    _unit_name              national character varying(50), 
-    _quantity               integer, 
-    _price                  public.money_strict
+    _transaction_master_id                  bigint, 
+    _details                                transactions.stock_detail_type[]
+);
+
+CREATE FUNCTION transactions.validate_items_for_return
+(
+    _transaction_master_id                  bigint, 
+    _details                                transactions.stock_detail_type[]
 )
 RETURNS boolean
 AS
@@ -24,12 +26,13 @@ $$
     DECLARE _is_purchase                    boolean = false;
     DECLARE _item_id                        integer = 0;
     DECLARE _unit_id                        integer = 0;
+    DECLARE _factor_to_base_unit            numeric;
     DECLARE _actual_quantity                public.decimal_strict2 = 0;
     DECLARE _returned_in_previous_batch     public.decimal_strict2 = 0;
     DECLARE _in_verification_queue          public.decimal_strict2 = 0;
     DECLARE _actual_price_in_root_unit      public.money_strict2 = 0;
     DECLARE _price_in_root_unit             public.money_strict2 = 0;
-    DECLARE _item_in_stock                  public.decimal_strict2 = 0;        
+    DECLARE _item_in_stock                  public.decimal_strict2 = 0;    
 BEGIN        
     IF(_store_id IS NULL OR _store_id <= 0) THEN
         RAISE EXCEPTION 'Invalid store.'
@@ -118,16 +121,13 @@ BEGIN
         END IF;
     END IF;
 
-    SELECT 
-            COALESCE(core.convert_unit(base_unit_id, _unit_id) * base_quantity, 0)
-            INTO _actual_quantity
+    SELECT SUM(base_quantity) INTO _actual_quantity
     FROM transactions.stock_details
     WHERE stock_master_id = _stock_master_id
     AND item_id = _item_id;
 
-
     SELECT 
-        COALESCE(SUM(core.convert_unit(base_unit_id, 1) * base_quantity), 0)
+        COALESCE(SUM(base_quantity), 0)
         INTO _returned_in_previous_batch
     FROM transactions.stock_details
     WHERE stock_master_id IN
@@ -148,7 +148,7 @@ BEGIN
     AND item_id = _item_id;
 
     SELECT 
-        COALESCE(SUM(core.convert_unit(base_unit_id, 1) * base_quantity), 0)
+        COALESCE(SUM(base_quantity), 0)
         INTO _in_verification_queue
     FROM transactions.stock_details
     WHERE stock_master_id IN
@@ -168,7 +168,9 @@ BEGIN
     )
     AND item_id = _item_id;
 
-    IF(_quantity + _returned_in_previous_batch + _in_verification_queue > _actual_quantity) THEN
+    _factor_to_base_unit = core.convert_unit(_unit_id, core.get_root_unit_id(_unit_id));
+    
+    IF(_quantity * _factor_to_base_unit + _returned_in_previous_batch + _in_verification_queue > _actual_quantity) THEN
         RAISE EXCEPTION 'The returned quantity cannot be greater than actual quantity.'
         USING ERRCODE='P5203';
     END IF;
@@ -196,3 +198,6 @@ $$
 LANGUAGE plpgsql;
 
 --SELECT * FROM transactions.validate_item_for_return(121, 5, 'RMBP', 'Piece', 4, 180000);
+
+
+--SELECT transactions.validate_item_for_return(121, 1, 'RMBP', 'Piece', 11, 225000);

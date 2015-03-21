@@ -61,14 +61,5 @@ namespace MixERP.Net.TransactionGovernor.Transactions
             return Data.Transactions.StockTransaction.IsValidStockTransaction(transactionMasterId);
         }
 
-        public static bool ValidateItemForReturn(long stockMasterId, int storeId, string itemCode, string unit, int quantity, decimal price)
-        {
-            if (stockMasterId <= 0 || storeId <= 0 || string.IsNullOrWhiteSpace(itemCode) || string.IsNullOrWhiteSpace(unit) || quantity <= 0 || price <= 0)
-            {
-                return false;
-            }
-
-            return Data.Transactions.StockTransaction.ValidateItemForReturn(stockMasterId, storeId, itemCode, unit, quantity, price);
-        }
     }
 }

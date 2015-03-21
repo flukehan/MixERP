@@ -40,32 +40,31 @@ namespace MixERP.Net.Web.UI.Sales.Controllers.Setup
         public override Config GetConfig()
         {
             Config config = ScrudProvider.GetScrudConfig();
-            
-                config.KeyColumn = "bonus_slab_id";
 
-                config.TableSchema = "core";
-                config.Table = "bonus_slabs";
+            config.KeyColumn = "bonus_slab_id";
 
-                config.ViewSchema = "core";
-                config.View = "bonus_slab_scrud_view";
-                config.DisplayFields = GetDisplayFields();
-                config.DisplayViews = GetDisplayViews();
-                                
-                config.Text = Titles.AgentBonusSlabs;
+            config.TableSchema = "core";
+            config.Table = "bonus_slabs";
 
-                config.ResourceAssembly = typeof(BonusSlabsController).Assembly;
-                this.AddScrudCustomValidatorErrorMessages();
+            config.ViewSchema = "core";
+            config.View = "bonus_slab_scrud_view";
+            config.DisplayFields = GetDisplayFields();
+            config.DisplayViews = GetDisplayViews();
 
-                return config;
-         }
+            config.Text = Titles.AgentBonusSlabs;
 
-                private void AddScrudCustomValidatorErrorMessages()
-                {
-                    ViewData["DateErrorMessage"] = Warnings.DateErrorMessage;
-                }
+            config.ResourceAssembly = typeof(BonusSlabsController).Assembly;
+            this.AddScrudCustomValidatorErrorMessages();
 
-                
-               
+            return config;
+        }
+
+        private void AddScrudCustomValidatorErrorMessages()
+        {
+            ViewData["DateErrorMessage"] = Warnings.DateErrorMessage;
+        }
+
+
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();

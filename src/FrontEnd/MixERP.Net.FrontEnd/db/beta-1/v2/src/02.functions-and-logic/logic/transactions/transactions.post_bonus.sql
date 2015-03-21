@@ -158,6 +158,8 @@ BEGIN
     SET statement_reference = REPLACE(bonus_temp.statement_reference, '{To}', bonus_temp.period_to::text);
 
 
+    _default_currency_code                  := transactions.get_default_currency_code_by_office_id(_office_id);
+
     FOR this IN
     SELECT bonus_temp.id 
     FROM bonus_temp 

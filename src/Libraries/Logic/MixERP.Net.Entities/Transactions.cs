@@ -788,61 +788,6 @@ namespace MixERP.Net.Entities.Transactions
 
     }
 
-    [TableName("transactions.stock_master")]
-    [PrimaryKey("stock_master_id")]
-    [ExplicitColumns]
-    public class StockMaster : PetaPocoDB.Record<StockMaster> , IPoco
-    {
-        [Column("stock_master_id")] 
-        public long StockMasterId { get; set; }
-
-        [Column("transaction_master_id")] 
-        public long TransactionMasterId { get; set; }
-
-        [Column("value_date")] 
-        public DateTime ValueDate { get; set; }
-
-        [Column("party_id")] 
-        public long? PartyId { get; set; }
-
-        [Column("salesperson_id")] 
-        public int? SalespersonId { get; set; }
-
-        [Column("price_type_id")] 
-        public int? PriceTypeId { get; set; }
-
-        [Column("is_credit")] 
-        public bool IsCredit { get; set; }
-
-        [Column("payment_term_id")] 
-        public int? PaymentTermId { get; set; }
-
-        [Column("shipper_id")] 
-        public int? ShipperId { get; set; }
-
-        [Column("shipping_address_id")] 
-        public long? ShippingAddressId { get; set; }
-
-        [Column("shipping_charge")] 
-        public decimal ShippingCharge { get; set; }
-
-        [Column("store_id")] 
-        public int? StoreId { get; set; }
-
-        [Column("non_taxable")] 
-        public bool NonTaxable { get; set; }
-
-        [Column("cash_repository_id")] 
-        public int? CashRepositoryId { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
     [TableName("transactions.transaction_details")]
     [PrimaryKey("transaction_detail_id")]
     [ExplicitColumns]
@@ -1005,6 +950,86 @@ namespace MixERP.Net.Entities.Transactions
 
     }
 
+    [TableName("transactions.stock_master")]
+    [PrimaryKey("stock_master_id")]
+    [ExplicitColumns]
+    public class StockMaster : PetaPocoDB.Record<StockMaster> , IPoco
+    {
+        [Column("stock_master_id")] 
+        public long StockMasterId { get; set; }
+
+        [Column("transaction_master_id")] 
+        public long TransactionMasterId { get; set; }
+
+        [Column("value_date")] 
+        public DateTime ValueDate { get; set; }
+
+        [Column("party_id")] 
+        public long? PartyId { get; set; }
+
+        [Column("salesperson_id")] 
+        public int? SalespersonId { get; set; }
+
+        [Column("price_type_id")] 
+        public int? PriceTypeId { get; set; }
+
+        [Column("is_credit")] 
+        public bool IsCredit { get; set; }
+
+        [Column("payment_term_id")] 
+        public int? PaymentTermId { get; set; }
+
+        [Column("shipper_id")] 
+        public int? ShipperId { get; set; }
+
+        [Column("shipping_address_id")] 
+        public long? ShippingAddressId { get; set; }
+
+        [Column("shipping_charge")] 
+        public decimal ShippingCharge { get; set; }
+
+        [Column("store_id")] 
+        public int? StoreId { get; set; }
+
+        [Column("non_taxable")] 
+        public bool NonTaxable { get; set; }
+
+        [Column("cash_repository_id")] 
+        public int? CashRepositoryId { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+        [Column("credit_settled")] 
+        public bool? CreditSettled { get; set; }
+
+    }
+
+    [TableName("transactions.late_fee")]
+    [PrimaryKey("transaction_master_id", autoIncrement=false)]
+    [ExplicitColumns]
+    public class LateFee : PetaPocoDB.Record<LateFee> , IPoco
+    {
+        [Column("transaction_master_id")] 
+        public long TransactionMasterId { get; set; }
+
+        [Column("party_id")] 
+        public long PartyId { get; set; }
+
+        [Column("value_date")] 
+        public DateTime ValueDate { get; set; }
+
+        [Column("late_fee_tran_id")] 
+        public long LateFeeTranId { get; set; }
+
+        [Column("amount")] 
+        public decimal? Amount { get; set; }
+
+    }
+
     [TableName("transactions.transaction_master")]
     [PrimaryKey("transaction_master_id")]
     [ExplicitColumns]
@@ -1029,7 +1054,7 @@ namespace MixERP.Net.Entities.Transactions
         public DateTime TransactionTs { get; set; }
 
         [Column("login_id")] 
-        public long LoginId { get; set; }
+        public long? LoginId { get; set; }
 
         [Column("user_id")] 
         public int UserId { get; set; }
@@ -1066,6 +1091,9 @@ namespace MixERP.Net.Entities.Transactions
 
         [Column("audit_ts")] 
         public DateTime? AuditTs { get; set; }
+
+        [Column("cascading_tran_id")] 
+        public long? CascadingTranId { get; set; }
 
     }
 
@@ -1801,6 +1829,27 @@ namespace MixERP.Net.Entities.Transactions
 
     }
 
+    [TableName("transactions.opening_stock_type")]
+    [ExplicitColumns]
+    public class OpeningStockType : PetaPocoDB.Record<OpeningStockType> , IPoco
+    {
+        [Column("store_name")] 
+        public string StoreName { get; set; }
+
+        [Column("item_code")] 
+        public string ItemCode { get; set; }
+
+        [Column("quantity")] 
+        public int Quantity { get; set; }
+
+        [Column("unit_name")] 
+        public string UnitName { get; set; }
+
+        [Column("amount")] 
+        public decimal Amount { get; set; }
+
+    }
+
     [TableName("transactions.stock_detail_type")]
     [ExplicitColumns]
     public class StockDetailType : PetaPocoDB.Record<StockDetailType> , IPoco
@@ -1876,27 +1925,6 @@ namespace MixERP.Net.Entities.Transactions
 
         [Column("quantity")] 
         public int Quantity { get; set; }
-
-    }
-
-    [TableName("transactions.opening_stock_type")]
-    [ExplicitColumns]
-    public class OpeningStockType : PetaPocoDB.Record<OpeningStockType> , IPoco
-    {
-        [Column("store_name")] 
-        public string StoreName { get; set; }
-
-        [Column("item_code")] 
-        public string ItemCode { get; set; }
-
-        [Column("quantity")] 
-        public int Quantity { get; set; }
-
-        [Column("unit_name")] 
-        public string UnitName { get; set; }
-
-        [Column("amount")] 
-        public decimal Amount { get; set; }
 
     }
 

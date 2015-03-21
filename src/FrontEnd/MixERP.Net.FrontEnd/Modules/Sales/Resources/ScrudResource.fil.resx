@@ -312,7 +312,7 @@
   <data name="recurring_amount" xml:space="preserve">
     <value>umuulit na Halaga</value>
   </data>
-  <data name="grace_peiod" xml:space="preserve">
+  <data name="grace_period" xml:space="preserve">
     <value>Grace Period</value>
   </data>
   <data name="slab_name" xml:space="preserve">

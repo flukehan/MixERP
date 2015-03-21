@@ -30,6 +30,8 @@ namespace MixERP.Net.FrontEnd.Base
 {
     public abstract class MixERPUserControl : MixERPUserControlBase
     {
+        public virtual bool IsLandingPage { get; set; }
+
         public override AccessLevel AccessLevel
         {
             get { return AccessLevel.PolicyBased; }
@@ -57,9 +59,11 @@ namespace MixERP.Net.FrontEnd.Base
 
         private void CheckAccessLevel()
         {
-            if ((this.AccessLevel.Equals(AccessLevel.AdminOnly) || this.AccessLevel.Equals(AccessLevel.LocalhostAdmin)) && !CurrentUser.GetSignInView().IsAdmin.ToBool())
+            if ((this.AccessLevel.Equals(AccessLevel.AdminOnly) || this.AccessLevel.Equals(AccessLevel.LocalhostAdmin)) &&
+                !CurrentUser.GetSignInView().IsAdmin.ToBool())
             {
-                Log.Information("Access to {Control} is denied to {User} from {IP}.", this, CurrentUser.GetSignInView().UserName, CurrentUser.GetSignInView().IpAddress);
+                Log.Information("Access to {Control} is denied to {User} from {IP}.", this,
+                    CurrentUser.GetSignInView().UserName, CurrentUser.GetSignInView().IpAddress);
 
                 this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
             }
@@ -68,7 +72,8 @@ namespace MixERP.Net.FrontEnd.Base
 
             if (this.AccessLevel.Equals(AccessLevel.LocalhostAdmin) && !isLocalHost)
             {
-                Log.Information("Access to {Control} is denied to {User} from {IP}.", this, CurrentUser.GetSignInView().UserName, CurrentUser.GetSignInView().IpAddress);
+                Log.Information("Access to {Control} is denied to {User} from {IP}.", this,
+                    CurrentUser.GetSignInView().UserName, CurrentUser.GetSignInView().IpAddress);
 
                 this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
             }

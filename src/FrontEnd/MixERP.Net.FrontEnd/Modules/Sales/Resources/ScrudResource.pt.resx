@@ -300,7 +300,7 @@
   <data name="bonus_slab_detail_id" xml:space="preserve">
     <value>Lealdade Detalhe Slab Identificador</value>
   </data>
-  <data name="grace_peiod" xml:space="preserve">
+  <data name="grace_period" xml:space="preserve">
     <value>prazo de carência</value>
   </data>
   <data name="due_frequency_id" xml:space="preserve">

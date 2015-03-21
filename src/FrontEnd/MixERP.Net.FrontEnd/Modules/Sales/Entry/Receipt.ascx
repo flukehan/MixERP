@@ -90,14 +90,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <select id="CostCenterSelect"></select>
             </div>
 
-            <div id="CashFormGroup">
+            <div id="CashFormGroup" style="padding-bottom: 12px;">
                 <div class="field">
                     <label for="CashRepositorySelect">Cash Repository</label>
                     <select id="CashRepositorySelect"></select>
                 </div>
             </div>
 
-            <div id="BankFormGroup" style="display: none;">
+            <div id="BankFormGroup" style="display: none; padding-bottom: 12px;">
                 <div class="field">
                     <label for="BankSelect">Which Bank?</label>
                     <select id="BankSelect"></select>
@@ -126,6 +126,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <label for="ReferenceNumberInputText">Reference Number</label>
                 <input type="text" id="ReferenceNumberInputText" />
             </div>
+
             <div class="field">
                 <label for="StatementReferenceTextArea">Statement Reference</label>
                 <textarea id="StatementReferenceTextArea" rows="3"></textarea>

@@ -339,7 +339,7 @@
   <data name="bonus_rate" xml:space="preserve">
     <value>Baserat in Leveransadress</value>
   </data>
-  <data name="grace_peiod" xml:space="preserve">
+  <data name="grace_period" xml:space="preserve">
     <value>respitperioden</value>
   </data>
   <data name="zip_code" xml:space="preserve">

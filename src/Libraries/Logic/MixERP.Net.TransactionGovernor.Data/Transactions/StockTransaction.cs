@@ -70,21 +70,5 @@ namespace MixERP.Net.TransactionGovernor.Data.Transactions
                 return Conversion.TryCastBoolean(DbOperation.GetScalarValue(command));
             }
         }
-
-        public static bool ValidateItemForReturn(long stockMasterId, int storeId, string itemCode, string unit, int quantity, decimal price)
-        {
-            const string sql = "SELECT transactions.validate_item_for_return(@StockMasterId, @StoreId, @ItemCode, @UnitName, @Quantity, @Price);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@StockMasterId", stockMasterId);
-                command.Parameters.AddWithValue("@StoreId", storeId);
-                command.Parameters.AddWithValue("@ItemCode", itemCode);
-                command.Parameters.AddWithValue("@UnitName", unit);
-                command.Parameters.AddWithValue("@Quantity", quantity);
-                command.Parameters.AddWithValue("@Price", price);
-
-                return Conversion.TryCastBoolean(DbOperation.GetScalarValue(command));
-            }
-        }
     }
 }

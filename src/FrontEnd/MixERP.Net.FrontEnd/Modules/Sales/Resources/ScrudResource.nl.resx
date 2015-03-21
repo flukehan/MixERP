@@ -345,7 +345,7 @@
   <data name="bonus_rate" xml:space="preserve">
     <value>bonus Rate</value>
   </data>
-  <data name="grace_peiod" xml:space="preserve">
+  <data name="grace_period" xml:space="preserve">
     <value>Grace Period</value>
   </data>
   <data name="audit_user_id" xml:space="preserve">

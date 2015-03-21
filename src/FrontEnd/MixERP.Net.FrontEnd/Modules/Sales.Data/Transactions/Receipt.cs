@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
     {
         public static long PostTransaction(int userId, int officeId, long loginId, string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, int bankAccountId, string bankInstrumentCode, string bankTransactionCode)
         {
-            const string sql = "SELECT transactions.post_receipt_function(@UserId, @OfficeId, @LoginId, @PartyCode, @CurrencyCode, @Amount, @DebitExchangeRate, @CreditExchangeRate, @ReferenceNumber, @StatementReference, @CostCenterId, @CashRepositoryId, @PostedDate, @BankAccountId, @BankInstrumentCode, @BankTransactionCode); ";
+            const string sql = "SELECT transactions.post_receipt(@UserId, @OfficeId, @LoginId, @PartyCode, @CurrencyCode, @Amount, @DebitExchangeRate, @CreditExchangeRate, @ReferenceNumber, @StatementReference, @CostCenterId, @CashRepositoryId, @PostedDate, @BankAccountId, @BankInstrumentCode, @BankTransactionCode); ";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@UserId", userId);

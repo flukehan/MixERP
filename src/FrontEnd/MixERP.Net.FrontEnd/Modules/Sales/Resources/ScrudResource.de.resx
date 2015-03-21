@@ -357,7 +357,7 @@
   <data name="party_name" xml:space="preserve">
     <value>Name der Partei</value>
   </data>
-  <data name="grace_peiod" xml:space="preserve">
+  <data name="grace_period" xml:space="preserve">
     <value>Grace Period</value>
   </data>
   <data name="bonus_rate" xml:space="preserve">

@@ -342,7 +342,7 @@
   <data name="item_name" xml:space="preserve">
     <value>Название товара</value>
   </data>
-  <data name="grace_peiod" xml:space="preserve">
+  <data name="grace_period" xml:space="preserve">
     <value>льготный срок</value>
   </data>
   <data name="bonus_slab_details_amounts_chk" xml:space="preserve">

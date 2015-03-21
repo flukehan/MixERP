@@ -2897,158 +2897,6 @@ namespace MixERP.Net.Core.Api.Core
 
     
     /// <summary>
-    /// A CRUD API for bonus-slabs. 
-    /// This class cannot be inherited.
-    /// </summary>
-    public sealed class BonusSlabController: MixERPApiController
-    {
-        [HttpGet]
-        [Route("api/core/bonus-slabs")]
-        [Route("api/core/bonus-slabs/page/{page:long}")]
-        public IEnumerable<MixERP.Net.Entities.Core.BonusSlab> GetPagedResult(long page=1)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.BonusSlab), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.Page<MixERP.Net.Entities.Core.BonusSlab>(page, 10, "SELECT * FROM core.bonus_slabs ORDER BY bonus_slab_id").Items;
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpGet]
-        [Route("api/core/bonus-slabs/{id}")]
-        public MixERP.Net.Entities.Core.BonusSlab GetSingle(int id)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.BonusSlab), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.FirstOrDefault<MixERP.Net.Entities.Core.BonusSlab>("SELECT * FROM core.bonus_slabs WHERE bonus_slab_id=@0", id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        
-        [HttpPost]
-        [Route("api/core/bonus-slabs/post/{item}")]
-        public bool Post(MixERP.Net.Entities.Core.BonusSlab item)
-        {
-            if (item == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.BonusSlab), "POST");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Insert(item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-
-            return true;
-        }
-
-        [HttpPut]
-        [Route("api/core/bonus-slabs/put/{id}")]
-        public void Put(int id, MixERP.Net.Entities.Core.BonusSlab item)
-        {
-            if (item == null || id <= 0)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-                        
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.BonusSlab), "PUT");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Update("core.bonus_slabs", "bonus_slab_id", item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpDelete]
-        [Route("api/core/bonus-slabs/delete/{id}")]
-        public void Delete(int id)
-        {
-            if (id <= 0)
-            {
-                return;
-            }
-            
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.BonusSlab), "DELETE");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Delete("core.bonus_slabs", "bonus_slab_id", null, id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        //End of BonusSlabController Class        
-    }
-
-    
-    /// <summary>
     /// A CRUD API for salesperson-bonus-setups. 
     /// This class cannot be inherited.
     /// </summary>
@@ -6241,158 +6089,6 @@ namespace MixERP.Net.Core.Api.Core
 
     
     /// <summary>
-    /// A CRUD API for late-fee. 
-    /// This class cannot be inherited.
-    /// </summary>
-    public sealed class LateFeeController: MixERPApiController
-    {
-        [HttpGet]
-        [Route("api/core/late-fee")]
-        [Route("api/core/late-fee/page/{page:long}")]
-        public IEnumerable<MixERP.Net.Entities.Core.LateFee> GetPagedResult(long page=1)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.LateFee), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.Page<MixERP.Net.Entities.Core.LateFee>(page, 10, "SELECT * FROM core.late_fee ORDER BY late_fee_id").Items;
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpGet]
-        [Route("api/core/late-fee/{id}")]
-        public MixERP.Net.Entities.Core.LateFee GetSingle(int id)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.LateFee), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.FirstOrDefault<MixERP.Net.Entities.Core.LateFee>("SELECT * FROM core.late_fee WHERE late_fee_id=@0", id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        
-        [HttpPost]
-        [Route("api/core/late-fee/post/{item}")]
-        public bool Post(MixERP.Net.Entities.Core.LateFee item)
-        {
-            if (item == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.LateFee), "POST");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Insert(item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-
-            return true;
-        }
-
-        [HttpPut]
-        [Route("api/core/late-fee/put/{id}")]
-        public void Put(int id, MixERP.Net.Entities.Core.LateFee item)
-        {
-            if (item == null || id <= 0)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-                        
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.LateFee), "PUT");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Update("core.late_fee", "late_fee_id", item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpDelete]
-        [Route("api/core/late-fee/delete/{id}")]
-        public void Delete(int id)
-        {
-            if (id <= 0)
-            {
-                return;
-            }
-            
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.LateFee), "DELETE");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Delete("core.late_fee", "late_fee_id", null, id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        //End of LateFeeController Class        
-    }
-
-    
-    /// <summary>
     /// A CRUD API for compound-items. 
     /// This class cannot be inherited.
     /// </summary>
@@ -6541,462 +6237,6 @@ namespace MixERP.Net.Core.Api.Core
             }
         }
         //End of CompoundItemController Class        
-    }
-
-    
-    /// <summary>
-    /// A CRUD API for frequencies. 
-    /// This class cannot be inherited.
-    /// </summary>
-    public sealed class FrequencyController: MixERPApiController
-    {
-        [HttpGet]
-        [Route("api/core/frequencies")]
-        [Route("api/core/frequencies/page/{page:long}")]
-        public IEnumerable<MixERP.Net.Entities.Core.Frequency> GetPagedResult(long page=1)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Frequency), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.Page<MixERP.Net.Entities.Core.Frequency>(page, 10, "SELECT * FROM core.frequencies ORDER BY frequency_id").Items;
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpGet]
-        [Route("api/core/frequencies/{id}")]
-        public MixERP.Net.Entities.Core.Frequency GetSingle(int id)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Frequency), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.FirstOrDefault<MixERP.Net.Entities.Core.Frequency>("SELECT * FROM core.frequencies WHERE frequency_id=@0", id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        
-        [HttpPost]
-        [Route("api/core/frequencies/post/{item}")]
-        public bool Post(MixERP.Net.Entities.Core.Frequency item)
-        {
-            if (item == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Frequency), "POST");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Insert(item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-
-            return true;
-        }
-
-        [HttpPut]
-        [Route("api/core/frequencies/put/{id}")]
-        public void Put(int id, MixERP.Net.Entities.Core.Frequency item)
-        {
-            if (item == null || id <= 0)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-                        
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Frequency), "PUT");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Update("core.frequencies", "frequency_id", item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpDelete]
-        [Route("api/core/frequencies/delete/{id}")]
-        public void Delete(int id)
-        {
-            if (id <= 0)
-            {
-                return;
-            }
-            
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Frequency), "DELETE");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Delete("core.frequencies", "frequency_id", null, id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        //End of FrequencyController Class        
-    }
-
-    
-    /// <summary>
-    /// A CRUD API for recurring-invoices. 
-    /// This class cannot be inherited.
-    /// </summary>
-    public sealed class RecurringInvoiceController: MixERPApiController
-    {
-        [HttpGet]
-        [Route("api/core/recurring-invoices")]
-        [Route("api/core/recurring-invoices/page/{page:long}")]
-        public IEnumerable<MixERP.Net.Entities.Core.RecurringInvoice> GetPagedResult(long page=1)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoice), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.Page<MixERP.Net.Entities.Core.RecurringInvoice>(page, 10, "SELECT * FROM core.recurring_invoices ORDER BY recurring_invoice_id").Items;
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpGet]
-        [Route("api/core/recurring-invoices/{id}")]
-        public MixERP.Net.Entities.Core.RecurringInvoice GetSingle(int id)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoice), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.FirstOrDefault<MixERP.Net.Entities.Core.RecurringInvoice>("SELECT * FROM core.recurring_invoices WHERE recurring_invoice_id=@0", id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        
-        [HttpPost]
-        [Route("api/core/recurring-invoices/post/{item}")]
-        public bool Post(MixERP.Net.Entities.Core.RecurringInvoice item)
-        {
-            if (item == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoice), "POST");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Insert(item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-
-            return true;
-        }
-
-        [HttpPut]
-        [Route("api/core/recurring-invoices/put/{id}")]
-        public void Put(int id, MixERP.Net.Entities.Core.RecurringInvoice item)
-        {
-            if (item == null || id <= 0)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-                        
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoice), "PUT");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Update("core.recurring_invoices", "recurring_invoice_id", item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpDelete]
-        [Route("api/core/recurring-invoices/delete/{id}")]
-        public void Delete(int id)
-        {
-            if (id <= 0)
-            {
-                return;
-            }
-            
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoice), "DELETE");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Delete("core.recurring_invoices", "recurring_invoice_id", null, id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        //End of RecurringInvoiceController Class        
-    }
-
-    
-    /// <summary>
-    /// A CRUD API for recurring-invoice-setup. 
-    /// This class cannot be inherited.
-    /// </summary>
-    public sealed class RecurringInvoiceSetupController: MixERPApiController
-    {
-        [HttpGet]
-        [Route("api/core/recurring-invoice-setup")]
-        [Route("api/core/recurring-invoice-setup/page/{page:long}")]
-        public IEnumerable<MixERP.Net.Entities.Core.RecurringInvoiceSetup> GetPagedResult(long page=1)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoiceSetup), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.Page<MixERP.Net.Entities.Core.RecurringInvoiceSetup>(page, 10, "SELECT * FROM core.recurring_invoice_setup ORDER BY recurring_invoice_setup_id").Items;
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpGet]
-        [Route("api/core/recurring-invoice-setup/{id}")]
-        public MixERP.Net.Entities.Core.RecurringInvoiceSetup GetSingle(int id)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoiceSetup), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.FirstOrDefault<MixERP.Net.Entities.Core.RecurringInvoiceSetup>("SELECT * FROM core.recurring_invoice_setup WHERE recurring_invoice_setup_id=@0", id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        
-        [HttpPost]
-        [Route("api/core/recurring-invoice-setup/post/{item}")]
-        public bool Post(MixERP.Net.Entities.Core.RecurringInvoiceSetup item)
-        {
-            if (item == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoiceSetup), "POST");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Insert(item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-
-            return true;
-        }
-
-        [HttpPut]
-        [Route("api/core/recurring-invoice-setup/put/{id}")]
-        public void Put(int id, MixERP.Net.Entities.Core.RecurringInvoiceSetup item)
-        {
-            if (item == null || id <= 0)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-                        
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoiceSetup), "PUT");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Update("core.recurring_invoice_setup", "recurring_invoice_setup_id", item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpDelete]
-        [Route("api/core/recurring-invoice-setup/delete/{id}")]
-        public void Delete(int id)
-        {
-            if (id <= 0)
-            {
-                return;
-            }
-            
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoiceSetup), "DELETE");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Delete("core.recurring_invoice_setup", "recurring_invoice_setup_id", null, id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        //End of RecurringInvoiceSetupController Class        
     }
 
     
@@ -7457,158 +6697,6 @@ namespace MixERP.Net.Core.Api.Core
 
     
     /// <summary>
-    /// A CRUD API for accounts. 
-    /// This class cannot be inherited.
-    /// </summary>
-    public sealed class AccountController: MixERPApiController
-    {
-        [HttpGet]
-        [Route("api/core/accounts")]
-        [Route("api/core/accounts/page/{page:long}")]
-        public IEnumerable<MixERP.Net.Entities.Core.Account> GetPagedResult(long page=1)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Account), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.Page<MixERP.Net.Entities.Core.Account>(page, 10, "SELECT * FROM core.accounts ORDER BY account_id").Items;
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpGet]
-        [Route("api/core/accounts/{id}")]
-        public MixERP.Net.Entities.Core.Account GetSingle(long id)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Account), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.FirstOrDefault<MixERP.Net.Entities.Core.Account>("SELECT * FROM core.accounts WHERE account_id=@0", id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        
-        [HttpPost]
-        [Route("api/core/accounts/post/{item}")]
-        public bool Post(MixERP.Net.Entities.Core.Account item)
-        {
-            if (item == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Account), "POST");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Insert(item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-
-            return true;
-        }
-
-        [HttpPut]
-        [Route("api/core/accounts/put/{id}")]
-        public void Put(long id, MixERP.Net.Entities.Core.Account item)
-        {
-            if (item == null || id <= 0)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-                        
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Account), "PUT");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Update("core.accounts", "account_id", item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpDelete]
-        [Route("api/core/accounts/delete/{id}")]
-        public void Delete(long id)
-        {
-            if (id <= 0)
-            {
-                return;
-            }
-            
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Account), "DELETE");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Delete("core.accounts", "account_id", null, id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        //End of AccountController Class        
-    }
-
-    
-    /// <summary>
     /// A CRUD API for currencies. 
     /// This class cannot be inherited.
     /// </summary>
@@ -7757,158 +6845,6 @@ namespace MixERP.Net.Core.Api.Core
             }
         }
         //End of CurrencyController Class        
-    }
-
-    
-    /// <summary>
-    /// A CRUD API for payment-terms. 
-    /// This class cannot be inherited.
-    /// </summary>
-    public sealed class PaymentTermController: MixERPApiController
-    {
-        [HttpGet]
-        [Route("api/core/payment-terms")]
-        [Route("api/core/payment-terms/page/{page:long}")]
-        public IEnumerable<MixERP.Net.Entities.Core.PaymentTerm> GetPagedResult(long page=1)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.PaymentTerm), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.Page<MixERP.Net.Entities.Core.PaymentTerm>(page, 10, "SELECT * FROM core.payment_terms ORDER BY payment_term_id").Items;
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpGet]
-        [Route("api/core/payment-terms/{id}")]
-        public MixERP.Net.Entities.Core.PaymentTerm GetSingle(int id)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.PaymentTerm), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.FirstOrDefault<MixERP.Net.Entities.Core.PaymentTerm>("SELECT * FROM core.payment_terms WHERE payment_term_id=@0", id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        
-        [HttpPost]
-        [Route("api/core/payment-terms/post/{item}")]
-        public bool Post(MixERP.Net.Entities.Core.PaymentTerm item)
-        {
-            if (item == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.PaymentTerm), "POST");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Insert(item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-
-            return true;
-        }
-
-        [HttpPut]
-        [Route("api/core/payment-terms/put/{id}")]
-        public void Put(int id, MixERP.Net.Entities.Core.PaymentTerm item)
-        {
-            if (item == null || id <= 0)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-                        
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.PaymentTerm), "PUT");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Update("core.payment_terms", "payment_term_id", item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpDelete]
-        [Route("api/core/payment-terms/delete/{id}")]
-        public void Delete(int id)
-        {
-            if (id <= 0)
-            {
-                return;
-            }
-            
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.PaymentTerm), "DELETE");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Delete("core.payment_terms", "payment_term_id", null, id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        //End of PaymentTermController Class        
     }
 
     
@@ -10341,6 +9277,1070 @@ namespace MixERP.Net.Core.Api.Core
             }
         }
         //End of ItemController Class        
+    }
+
+    
+    /// <summary>
+    /// A CRUD API for recurring-invoices. 
+    /// This class cannot be inherited.
+    /// </summary>
+    public sealed class RecurringInvoiceController: MixERPApiController
+    {
+        [HttpGet]
+        [Route("api/core/recurring-invoices")]
+        [Route("api/core/recurring-invoices/page/{page:long}")]
+        public IEnumerable<MixERP.Net.Entities.Core.RecurringInvoice> GetPagedResult(long page=1)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoice), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.Page<MixERP.Net.Entities.Core.RecurringInvoice>(page, 10, "SELECT * FROM core.recurring_invoices ORDER BY recurring_invoice_id").Items;
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/core/recurring-invoices/{id}")]
+        public MixERP.Net.Entities.Core.RecurringInvoice GetSingle(int id)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoice), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.FirstOrDefault<MixERP.Net.Entities.Core.RecurringInvoice>("SELECT * FROM core.recurring_invoices WHERE recurring_invoice_id=@0", id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        
+        [HttpPost]
+        [Route("api/core/recurring-invoices/post/{item}")]
+        public bool Post(MixERP.Net.Entities.Core.RecurringInvoice item)
+        {
+            if (item == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoice), "POST");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Insert(item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+
+            return true;
+        }
+
+        [HttpPut]
+        [Route("api/core/recurring-invoices/put/{id}")]
+        public void Put(int id, MixERP.Net.Entities.Core.RecurringInvoice item)
+        {
+            if (item == null || id <= 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+                        
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoice), "PUT");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Update("core.recurring_invoices", "recurring_invoice_id", item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/core/recurring-invoices/delete/{id}")]
+        public void Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return;
+            }
+            
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoice), "DELETE");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Delete("core.recurring_invoices", "recurring_invoice_id", null, id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        //End of RecurringInvoiceController Class        
+    }
+
+    
+    /// <summary>
+    /// A CRUD API for recurrence-types. 
+    /// This class cannot be inherited.
+    /// </summary>
+    public sealed class RecurrenceTypeController: MixERPApiController
+    {
+        [HttpGet]
+        [Route("api/core/recurrence-types")]
+        [Route("api/core/recurrence-types/page/{page:long}")]
+        public IEnumerable<MixERP.Net.Entities.Core.RecurrenceType> GetPagedResult(long page=1)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurrenceType), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.Page<MixERP.Net.Entities.Core.RecurrenceType>(page, 10, "SELECT * FROM core.recurrence_types ORDER BY recurrence_type_id").Items;
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/core/recurrence-types/{id}")]
+        public MixERP.Net.Entities.Core.RecurrenceType GetSingle(int id)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurrenceType), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.FirstOrDefault<MixERP.Net.Entities.Core.RecurrenceType>("SELECT * FROM core.recurrence_types WHERE recurrence_type_id=@0", id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        
+        [HttpPost]
+        [Route("api/core/recurrence-types/post/{item}")]
+        public bool Post(MixERP.Net.Entities.Core.RecurrenceType item)
+        {
+            if (item == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurrenceType), "POST");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Insert(item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+
+            return true;
+        }
+
+        [HttpPut]
+        [Route("api/core/recurrence-types/put/{id}")]
+        public void Put(int id, MixERP.Net.Entities.Core.RecurrenceType item)
+        {
+            if (item == null || id <= 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+                        
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurrenceType), "PUT");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Update("core.recurrence_types", "recurrence_type_id", item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/core/recurrence-types/delete/{id}")]
+        public void Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return;
+            }
+            
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurrenceType), "DELETE");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Delete("core.recurrence_types", "recurrence_type_id", null, id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        //End of RecurrenceTypeController Class        
+    }
+
+    
+    /// <summary>
+    /// A CRUD API for frequencies. 
+    /// This class cannot be inherited.
+    /// </summary>
+    public sealed class FrequencyController: MixERPApiController
+    {
+        [HttpGet]
+        [Route("api/core/frequencies")]
+        [Route("api/core/frequencies/page/{page:long}")]
+        public IEnumerable<MixERP.Net.Entities.Core.Frequency> GetPagedResult(long page=1)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Frequency), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.Page<MixERP.Net.Entities.Core.Frequency>(page, 10, "SELECT * FROM core.frequencies ORDER BY frequency_id").Items;
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/core/frequencies/{id}")]
+        public MixERP.Net.Entities.Core.Frequency GetSingle(int id)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Frequency), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.FirstOrDefault<MixERP.Net.Entities.Core.Frequency>("SELECT * FROM core.frequencies WHERE frequency_id=@0", id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        
+        [HttpPost]
+        [Route("api/core/frequencies/post/{item}")]
+        public bool Post(MixERP.Net.Entities.Core.Frequency item)
+        {
+            if (item == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Frequency), "POST");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Insert(item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+
+            return true;
+        }
+
+        [HttpPut]
+        [Route("api/core/frequencies/put/{id}")]
+        public void Put(int id, MixERP.Net.Entities.Core.Frequency item)
+        {
+            if (item == null || id <= 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+                        
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Frequency), "PUT");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Update("core.frequencies", "frequency_id", item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/core/frequencies/delete/{id}")]
+        public void Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return;
+            }
+            
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Frequency), "DELETE");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Delete("core.frequencies", "frequency_id", null, id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        //End of FrequencyController Class        
+    }
+
+    
+    /// <summary>
+    /// A CRUD API for recurring-invoice-setup. 
+    /// This class cannot be inherited.
+    /// </summary>
+    public sealed class RecurringInvoiceSetupController: MixERPApiController
+    {
+        [HttpGet]
+        [Route("api/core/recurring-invoice-setup")]
+        [Route("api/core/recurring-invoice-setup/page/{page:long}")]
+        public IEnumerable<MixERP.Net.Entities.Core.RecurringInvoiceSetup> GetPagedResult(long page=1)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoiceSetup), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.Page<MixERP.Net.Entities.Core.RecurringInvoiceSetup>(page, 10, "SELECT * FROM core.recurring_invoice_setup ORDER BY recurring_invoice_setup_id").Items;
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/core/recurring-invoice-setup/{id}")]
+        public MixERP.Net.Entities.Core.RecurringInvoiceSetup GetSingle(int id)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoiceSetup), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.FirstOrDefault<MixERP.Net.Entities.Core.RecurringInvoiceSetup>("SELECT * FROM core.recurring_invoice_setup WHERE recurring_invoice_setup_id=@0", id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        
+        [HttpPost]
+        [Route("api/core/recurring-invoice-setup/post/{item}")]
+        public bool Post(MixERP.Net.Entities.Core.RecurringInvoiceSetup item)
+        {
+            if (item == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoiceSetup), "POST");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Insert(item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+
+            return true;
+        }
+
+        [HttpPut]
+        [Route("api/core/recurring-invoice-setup/put/{id}")]
+        public void Put(int id, MixERP.Net.Entities.Core.RecurringInvoiceSetup item)
+        {
+            if (item == null || id <= 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+                        
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoiceSetup), "PUT");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Update("core.recurring_invoice_setup", "recurring_invoice_setup_id", item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/core/recurring-invoice-setup/delete/{id}")]
+        public void Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return;
+            }
+            
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.RecurringInvoiceSetup), "DELETE");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Delete("core.recurring_invoice_setup", "recurring_invoice_setup_id", null, id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        //End of RecurringInvoiceSetupController Class        
+    }
+
+    
+    /// <summary>
+    /// A CRUD API for bonus-slabs. 
+    /// This class cannot be inherited.
+    /// </summary>
+    public sealed class BonusSlabController: MixERPApiController
+    {
+        [HttpGet]
+        [Route("api/core/bonus-slabs")]
+        [Route("api/core/bonus-slabs/page/{page:long}")]
+        public IEnumerable<MixERP.Net.Entities.Core.BonusSlab> GetPagedResult(long page=1)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.BonusSlab), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.Page<MixERP.Net.Entities.Core.BonusSlab>(page, 10, "SELECT * FROM core.bonus_slabs ORDER BY bonus_slab_id").Items;
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/core/bonus-slabs/{id}")]
+        public MixERP.Net.Entities.Core.BonusSlab GetSingle(int id)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.BonusSlab), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.FirstOrDefault<MixERP.Net.Entities.Core.BonusSlab>("SELECT * FROM core.bonus_slabs WHERE bonus_slab_id=@0", id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        
+        [HttpPost]
+        [Route("api/core/bonus-slabs/post/{item}")]
+        public bool Post(MixERP.Net.Entities.Core.BonusSlab item)
+        {
+            if (item == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.BonusSlab), "POST");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Insert(item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+
+            return true;
+        }
+
+        [HttpPut]
+        [Route("api/core/bonus-slabs/put/{id}")]
+        public void Put(int id, MixERP.Net.Entities.Core.BonusSlab item)
+        {
+            if (item == null || id <= 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+                        
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.BonusSlab), "PUT");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Update("core.bonus_slabs", "bonus_slab_id", item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/core/bonus-slabs/delete/{id}")]
+        public void Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return;
+            }
+            
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.BonusSlab), "DELETE");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Delete("core.bonus_slabs", "bonus_slab_id", null, id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        //End of BonusSlabController Class        
+    }
+
+    
+    /// <summary>
+    /// A CRUD API for payment-terms. 
+    /// This class cannot be inherited.
+    /// </summary>
+    public sealed class PaymentTermController: MixERPApiController
+    {
+        [HttpGet]
+        [Route("api/core/payment-terms")]
+        [Route("api/core/payment-terms/page/{page:long}")]
+        public IEnumerable<MixERP.Net.Entities.Core.PaymentTerm> GetPagedResult(long page=1)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.PaymentTerm), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.Page<MixERP.Net.Entities.Core.PaymentTerm>(page, 10, "SELECT * FROM core.payment_terms ORDER BY payment_term_id").Items;
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/core/payment-terms/{id}")]
+        public MixERP.Net.Entities.Core.PaymentTerm GetSingle(int id)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.PaymentTerm), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.FirstOrDefault<MixERP.Net.Entities.Core.PaymentTerm>("SELECT * FROM core.payment_terms WHERE payment_term_id=@0", id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        
+        [HttpPost]
+        [Route("api/core/payment-terms/post/{item}")]
+        public bool Post(MixERP.Net.Entities.Core.PaymentTerm item)
+        {
+            if (item == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.PaymentTerm), "POST");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Insert(item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+
+            return true;
+        }
+
+        [HttpPut]
+        [Route("api/core/payment-terms/put/{id}")]
+        public void Put(int id, MixERP.Net.Entities.Core.PaymentTerm item)
+        {
+            if (item == null || id <= 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+                        
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.PaymentTerm), "PUT");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Update("core.payment_terms", "payment_term_id", item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/core/payment-terms/delete/{id}")]
+        public void Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return;
+            }
+            
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.PaymentTerm), "DELETE");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Delete("core.payment_terms", "payment_term_id", null, id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        //End of PaymentTermController Class        
+    }
+
+    
+    /// <summary>
+    /// A CRUD API for accounts. 
+    /// This class cannot be inherited.
+    /// </summary>
+    public sealed class AccountController: MixERPApiController
+    {
+        [HttpGet]
+        [Route("api/core/accounts")]
+        [Route("api/core/accounts/page/{page:long}")]
+        public IEnumerable<MixERP.Net.Entities.Core.Account> GetPagedResult(long page=1)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Account), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.Page<MixERP.Net.Entities.Core.Account>(page, 10, "SELECT * FROM core.accounts ORDER BY account_id").Items;
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/core/accounts/{id}")]
+        public MixERP.Net.Entities.Core.Account GetSingle(long id)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Account), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.FirstOrDefault<MixERP.Net.Entities.Core.Account>("SELECT * FROM core.accounts WHERE account_id=@0", id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        
+        [HttpPost]
+        [Route("api/core/accounts/post/{item}")]
+        public bool Post(MixERP.Net.Entities.Core.Account item)
+        {
+            if (item == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Account), "POST");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Insert(item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+
+            return true;
+        }
+
+        [HttpPut]
+        [Route("api/core/accounts/put/{id}")]
+        public void Put(long id, MixERP.Net.Entities.Core.Account item)
+        {
+            if (item == null || id <= 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+                        
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Account), "PUT");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Update("core.accounts", "account_id", item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/core/accounts/delete/{id}")]
+        public void Delete(long id)
+        {
+            if (id <= 0)
+            {
+                return;
+            }
+            
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.Account), "DELETE");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Delete("core.accounts", "account_id", null, id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        //End of AccountController Class        
     }
 
     

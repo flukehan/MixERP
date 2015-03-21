@@ -263,3 +263,117 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'transactions.stock_master'::regclass
+        AND    attname = 'credit_settled'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE transactions.stock_master
+        ADD COLUMN credit_settled boolean DEFAULT(false);
+
+        CREATE INDEX stock_master_credit_settled_inx
+        ON transactions.stock_master(credit_settled);
+    END IF;
+
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'transactions.transaction_master'::regclass
+        AND    attname = 'cascading_tran_id'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE transactions.transaction_master
+        ADD COLUMN cascading_tran_id bigint NULL
+        REFERENCES transactions.transaction_master(transaction_master_id);
+
+        CREATE INDEX transaction_master_cascading_tran_id_inx
+        ON transactions.transaction_master(cascading_tran_id);
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+UPDATE core.payment_terms
+SET late_fee_posting_frequency_id = due_frequency_id
+WHERE late_fee_posting_frequency_id IS NOT NULL
+AND due_frequency_id IS NOT NULL
+AND late_fee_posting_frequency_id < due_frequency_id;
+
+ALTER TABLE core.payment_terms
+DROP CONSTRAINT IF EXISTS payment_terms_late_fee_posting_frequency_id_chk;
+
+ALTER TABLE core.payment_terms
+ADD CONSTRAINT payment_terms_late_fee_posting_frequency_id_chk
+CHECK(late_fee_posting_frequency_id IS NULL OR late_fee_posting_frequency_id >= due_frequency_id);
+
+DO
+$$
+BEGIN
+    IF EXISTS
+    (
+        SELECT TRUE
+        FROM   pg_attribute 
+        WHERE  attrelid = 'core.payment_terms'::regclass
+        AND    attname = 'grace_peiod'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE core.payment_terms
+        RENAME COLUMN grace_peiod TO grace_period;
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'core.late_fee'::regclass
+        AND    attname = 'account_id'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE core.late_fee
+        ADD COLUMN account_id bigint NOT NULL 
+        REFERENCES core.accounts(account_id)
+        CONSTRAINT late_fee_account_id_df
+        DEFAULT(core.get_account_id_by_account_number('30300'));
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'transactions'
+        AND    c.relname = 'late_fee'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE transactions.late_fee
+        (
+            transaction_master_id               bigint PRIMARY KEY REFERENCES transactions.transaction_master(transaction_master_id),
+            party_id                            bigint NOT NULL REFERENCES core.parties(party_id),
+            value_date                          date NOT NULL,
+            late_fee_tran_id                    bigint NOT NULL REFERENCES transactions.transaction_master(transaction_master_id),
+            amount                              public.money_strict
+        );
+    END IF;    
+END
+$$
+LANGUAGE plpgsql;
+
