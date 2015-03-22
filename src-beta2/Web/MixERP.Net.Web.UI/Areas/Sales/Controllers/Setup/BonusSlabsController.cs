@@ -69,6 +69,7 @@ namespace MixERP.Net.Web.UI.Sales.Controllers.Setup
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id", ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
             return string.Join(",", displayFields);
         }
 
@@ -76,6 +77,7 @@ namespace MixERP.Net.Web.UI.Sales.Controllers.Setup
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequency_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_scrud_view");
             return string.Join(",", displayViews);
         }
     }
