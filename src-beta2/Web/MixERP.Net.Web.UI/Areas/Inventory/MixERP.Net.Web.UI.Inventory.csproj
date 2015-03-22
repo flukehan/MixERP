@@ -76,7 +76,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Setup\BrandsController.cs" />
+    <Compile Include="Controllers\Setup\CompoundItemDetailsController.cs" />
+    <Compile Include="Controllers\Setup\CompoundItemsController.cs" />
+    <Compile Include="Controllers\Setup\CostPricesController.cs" />
+    <Compile Include="Controllers\Setup\CUOMController.cs" />
+    <Compile Include="Controllers\Setup\ItemGroupsController.cs" />
+    <Compile Include="Controllers\Setup\ItemsController.cs" />
+    <Compile Include="Controllers\Setup\ItemTypesController.cs" />
     <Compile Include="Controllers\Setup\PartiesController.cs" />
+    <Compile Include="Controllers\Setup\PartyTypesController.cs" />
+    <Compile Include="Controllers\Setup\SellingPricesController.cs" />
+    <Compile Include="Controllers\Setup\ShippersController.cs" />
+    <Compile Include="Controllers\Setup\ShippingAddressesController.cs" />
+    <Compile Include="Controllers\Setup\StoresController.cs" />
+    <Compile Include="Controllers\Setup\StoreTypesController.cs" />
+    <Compile Include="Controllers\Setup\UOMController.cs" />
     <Compile Include="InventoryAreaRegistration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Errors.Designer.cs">
@@ -198,6 +213,21 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Setup\Brands.cshtml" />
+    <Content Include="Views\Setup\CompoundItemDetails.cshtml" />
+    <Content Include="Views\Setup\CompoundItems.cshtml" />
+    <Content Include="Views\Setup\CostPrices.cshtml" />
+    <Content Include="Views\Setup\CUOM.cshtml" />
+    <Content Include="Views\Setup\ItemGroups.cshtml" />
+    <Content Include="Views\Setup\Items.cshtml" />
+    <Content Include="Views\Setup\ItemTypes.cshtml" />
+    <Content Include="Views\Setup\PartyTypes.cshtml" />
+    <Content Include="Views\Setup\SellingPrices.cshtml" />
+    <Content Include="Views\Setup\Shippers.cshtml" />
+    <Content Include="Views\Setup\ShippingAddresses.cshtml" />
+    <Content Include="Views\Setup\Stores.cshtml" />
+    <Content Include="Views\Setup\StoreTypes.cshtml" />
+    <Content Include="Views\Setup\UOM.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

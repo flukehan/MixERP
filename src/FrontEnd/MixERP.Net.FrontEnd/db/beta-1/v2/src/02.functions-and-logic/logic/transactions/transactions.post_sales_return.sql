@@ -52,6 +52,10 @@ BEGIN
     IF(policy.can_post_transaction(_login_id, _user_id, _office_id, 'Sales.Return', _value_date) = false) THEN
         RETURN 0;
     END IF;
+
+    IF(NOT transactions.validate_items_for_return(_transaction_master_id, _details)) THEN
+        RETURN 0;
+    END IF;
     
     _party_id                       := core.get_party_id_by_party_code(_party_code);
     _default_currency_code          := transactions.get_default_currency_code_by_office_id(_office_id);
@@ -165,11 +169,6 @@ BEGIN
             USING ERRCODE='P5110';
         END IF;
     END IF;
-
-    FOR this IN SELECT * FROM temp_stock_details
-    LOOP
-        PERFORM FROM transactions.validate_item_for_return(_transaction_master_id, this.store_id, this.item_code, this.unit_name, this.quantity, this.price);
-    END LOOP;
 
     FOR this IN SELECT * FROM temp_stock_details ORDER BY id
     LOOP
@@ -293,7 +292,7 @@ LANGUAGE plpgsql;
 -- ON COMMIT DROP
 -- AS
 -- 
--- SELECT * FROM transactions.post_sales_return(5, 2, 2, 1, '1-1-2000', 1, 'MAJON-0002', 1, '1234-AD', 'Test', 
+-- SELECT * FROM transactions.post_sales_return(5, 2, 2, 1, transactions.get_value_date(2), 1, 'MAJON-0002', 1, '1234-AD', 'Test', 
 -- ARRAY[
 --  ROW(1, 'RMBP', 1, 'Piece', 180000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
 --  ROW(1, '13MBA', 1, 'Piece', 110000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type

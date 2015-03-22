@@ -102,20 +102,32 @@
   <ItemGroup>
     <Compile Include="BackOfficeAreaRegistration.cs" />
     <Compile Include="Controllers\CashRepositoriesController.cs" />
+    <Compile Include="Controllers\CountersController.cs" />
     <Compile Include="Controllers\CountiesController.cs" />
+    <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\EntitiesController.cs" />
     <Compile Include="Controllers\FiscalYearController.cs" />
+    <Compile Include="Controllers\FlagsController.cs" />
     <Compile Include="Controllers\FrequencyController.cs" />
     <Compile Include="Controllers\IndustriesController.cs" />
     <Compile Include="Controllers\OfficesController.cs" />
     <Compile Include="Controllers\Policy\ApiAccessController.cs" />
+    <Compile Include="Controllers\Policy\AutoVerificationController.cs" />
+    <Compile Include="Controllers\Policy\VoucherVerificationController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Controllers\Tax\CountySalesTaxesController.cs" />
     <Compile Include="Controllers\Tax\SalesTaxDetailsController.cs" />
     <Compile Include="Controllers\Tax\SalesTaxesController.cs" />
+    <Compile Include="Controllers\Tax\SalesTaxExemptDetailsController.cs" />
+    <Compile Include="Controllers\Tax\SalesTaxExemptsController.cs" />
+    <Compile Include="Controllers\Tax\SalesTaxTypesController.cs" />
+    <Compile Include="Controllers\Tax\StateSalesTaxesController.cs" />
+    <Compile Include="Controllers\Tax\TaxAuthoritiesController.cs" />
+    <Compile Include="Controllers\Tax\TaxExemptTypesController.cs" />
     <Compile Include="Controllers\Tax\TaxMasterController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Labels.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -145,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\flags.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
     <Content Include="Scripts\jquery-2.1.3.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.js" />
@@ -169,6 +182,17 @@
     <Content Include="Views\Users.cshtml" />
     <Content Include="Views\Tax\SalesTaxDetails.cshtml" />
     <Content Include="Views\Tax\SalesTaxes.cshtml" />
+    <Content Include="Views\Counters.cshtml" />
+    <Content Include="Views\Flags.cshtml" />
+    <Content Include="Views\Countries.cshtml" />
+    <Content Include="Views\Tax\SalesTaxExemptDetails.cshtml" />
+    <Content Include="Views\Tax\SalesTaxExempts.cshtml" />
+    <Content Include="Views\Tax\SalesTaxTypes.cshtml" />
+    <Content Include="Views\Tax\StateSalesTaxes.cshtml" />
+    <Content Include="Views\Tax\TaxAuthorities.cshtml" />
+    <Content Include="Views\Tax\TaxExemptTypes.cshtml" />
+    <Content Include="Views\Policy\AutoVerification.cshtml" />
+    <Content Include="Views\Policy\VoucherVerification.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

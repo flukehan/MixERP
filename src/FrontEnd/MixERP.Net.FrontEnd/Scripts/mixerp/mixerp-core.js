@@ -971,14 +971,16 @@ var ajaxDataBind = function (url, targetControl, data, selectedValue, associated
 
 var getAjaxErrorMessage = function (xhr) {
     if (xhr) {
-        var err = xhr.responseText;
-        return err;
+        var err = JSON.parse(xhr.responseText).Message;
+        if (err) {
+            return err;
+        };
+
+        return xhr.responseText;
     }
 
     return "";
 };
-
-
 ///#source 1 1 /Scripts/mixerp/core/transaction.js
 function convertToDebit(balanceInCredit) {
     return balanceInCredit * -1;

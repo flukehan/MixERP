@@ -1,37 +1,29 @@
 ﻿function displayPreview() {
-    var background_color_textbox = $("#background_color_textbox");
-    var foreground_color_textbox = $("#foreground_color_textbox");
+    var backgroundColorTextbox = $("#background_color");
+    var foregroundColorTextbox = $("#foreground_color");
 
-    var background = background_color_textbox.val();
-    var foreground = foreground_color_textbox.val();
-    $(".lorem.ipsum").css("background-color", "#" + background);
-    $(".lorem.ipsum").css("color", "#" + foreground);
+    var background = backgroundColorTextbox.val();
+    var foreground = foregroundColorTextbox.val();
+    var loremIpsum = $(".lorem.ipsum");
 
+    loremIpsum.css("background-color", "#" + background);
+    loremIpsum.css("color", "#" + foreground);
 };
 
 
-//This event will be called by ASP.net AJAX during
-//asynchronous partial page rendering.
-function AsyncListener() {
-    //At this point, the GridView should have already been reloaded.
-    //So, load color information on the grid once again.
-    loadColor();
-    displayPreview();
-    addColorPicker();
-};
 
 
 $(document).ready(function () {
     loadColor();
+    displayPreview();
     addColorPicker();
+
+    $('.color').blur(function() {
+        $(".lorem.ipsum").hide();
+    });
 });
 
-function scrudCustomValidator() {
-    $(".lorem.ipsum").hide(500);
-};
-
 function addColorPicker() {
-
     $('.color').colorpicker({
         parts: 'full',
         alpha: true,

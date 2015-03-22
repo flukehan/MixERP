@@ -284,10 +284,10 @@ function closeWindow() {
 };
 
 function scrudDispalyLoading() {
-    $(formPanelId).find("div.segment").addClass("loading");
+    $("#" + formPanelId).find("div.segment").addClass("loading");
 };
 function scrudRemoveLoading() {
-    $(formPanelId).find("div.segment").removeClass("loading");
+    $("#" + formPanelId).find("div.segment").removeClass("loading");
 };
 
 

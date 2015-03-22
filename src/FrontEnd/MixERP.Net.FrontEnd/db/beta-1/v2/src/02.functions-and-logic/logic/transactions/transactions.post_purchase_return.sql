@@ -55,6 +55,10 @@ BEGIN
     IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name, _value_date) = false) THEN
         RETURN 0;
     END IF;
+
+    IF(NOT transactions.validate_items_for_return(_transaction_master_id, _details)) THEN
+        RETURN 0;
+    END IF;
     
     CREATE TEMPORARY TABLE temp_stock_details
     (
@@ -174,10 +178,6 @@ BEGIN
         USING ERRCODE='P3201';
     END IF;
 
-    FOR this IN SELECT * FROM temp_stock_details
-    LOOP
-        PERFORM FROM transactions.validate_item_for_return(_transaction_master_id, this.store_id, this.item_code, this.unit_name, this.quantity, this.price);
-    END LOOP;
 
     FOR this IN SELECT * FROM temp_stock_details ORDER BY id
     LOOP
