@@ -61,11 +61,74 @@ namespace MixERP.Net.WebControls.PartyControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accrued Interest.
+        /// </summary>
+        internal static string AccruedInterest {
+            get {
+                return ResourceManager.GetString("AccruedInterest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Address &amp; Contact Information.
         /// </summary>
         internal static string AddressAndContactInfo {
             get {
                 return ResourceManager.GetString("AddressAndContactInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credit Allowed.
+        /// </summary>
+        internal static string CreditAllowed {
+            get {
+                return ResourceManager.GetString("CreditAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CST Number.
+        /// </summary>
+        internal static string CSTNumber {
+            get {
+                return ResourceManager.GetString("CSTNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Address.
+        /// </summary>
+        internal static string DefaultAddress {
+            get {
+                return ResourceManager.GetString("DefaultAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Currency.
+        /// </summary>
+        internal static string DefaultCurrency {
+            get {
+                return ResourceManager.GetString("DefaultCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Address.
+        /// </summary>
+        internal static string EmailAddress {
+            get {
+                return ResourceManager.GetString("EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GL Head.
+        /// </summary>
+        internal static string GLHead {
+            get {
+                return ResourceManager.GetString("GLHead", resourceCulture);
             }
         }
         
@@ -88,11 +151,65 @@ namespace MixERP.Net.WebControls.PartyControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Interest Applicable.
+        /// </summary>
+        internal static string InterestApplicable {
+            get {
+                return ResourceManager.GetString("InterestApplicable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Payment Date.
+        /// </summary>
+        internal static string LastPaymentDate {
+            get {
+                return ResourceManager.GetString("LastPaymentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum Credit Amount.
+        /// </summary>
+        internal static string MaximumCreditAmount {
+            get {
+                return ResourceManager.GetString("MaximumCreditAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum Credit Period.
+        /// </summary>
+        internal static string MaximumCreditPeriod {
+            get {
+                return ResourceManager.GetString("MaximumCreditPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAN Number.
+        /// </summary>
+        internal static string PANNumber {
+            get {
+                return ResourceManager.GetString("PANNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Party Summary.
         /// </summary>
         internal static string PartySummary {
             get {
                 return ResourceManager.GetString("PartySummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Party Type.
+        /// </summary>
+        internal static string PartyType {
+            get {
+                return ResourceManager.GetString("PartyType", resourceCulture);
             }
         }
         
@@ -106,11 +223,56 @@ namespace MixERP.Net.WebControls.PartyControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shipping Address(es).
+        /// </summary>
+        internal static string ShippingAddresses {
+            get {
+                return ResourceManager.GetString("ShippingAddresses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SST Number.
+        /// </summary>
+        internal static string SSTNumber {
+            get {
+                return ResourceManager.GetString("SSTNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Due Amount.
+        /// </summary>
+        internal static string TotalDueAmount {
+            get {
+                return ResourceManager.GetString("TotalDueAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Due Amount (Current Office).
+        /// </summary>
+        internal static string TotalDueAmountCurrentOffice {
+            get {
+                return ResourceManager.GetString("TotalDueAmountCurrentOffice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transaction Summary.
         /// </summary>
         internal static string TransactionSummary {
             get {
                 return ResourceManager.GetString("TransactionSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction Value.
+        /// </summary>
+        internal static string TransactionValue {
+            get {
+                return ResourceManager.GetString("TransactionValue", resourceCulture);
             }
         }
     }

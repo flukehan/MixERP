@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.PartyControl;
 using System;
+using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.Entities.Contracts;
 
 namespace MixERP.Net.Core.Modules.Sales.Entry
@@ -28,7 +29,7 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
     {
         public string ExchangeRateLocalized()
         {
-            return Resources.Titles.ExchangeRate;
+            return Titles.ExchangeRate;
         }
 
         public override void OnControlLoad(object sender, EventArgs e)
@@ -37,6 +38,32 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
             {
                 this.Placeholder1.Controls.Add(partyControl);
             }
+
+            this.InitializeResourceStrings();
+        }
+
+        private void InitializeResourceStrings()
+        {
+            this.TitleLiteral.Text = Titles.Receipt;
+            this.TotalDueAmountInBaseCurrencyLiteral.Text = Titles.TotalDueAmountInBaseCurrency;
+            this.BaseCurrencyLiteral.Text = Titles.BaseCurrency;
+            this.ReceivedCurrencyLiteral.Text = Titles.ReceivedCurrency;
+            this.ReceivedAmountInaboveCurrencyLiteral.Text = Titles.ReceivedAmountInaboveCurrency;
+            this.DebitExchangeRateLiteral.Text = Titles.ExchangeRate;
+            this.ConvertedToHomeCurrencyLiteral.Text = Titles.ConvertedtoHomeCurrency;
+            this.CreditExchangeRateLiteral.Text = Titles.ExchangeRate;
+            this.ConvertedToBaseCurrencyLiteral.Text = Titles.ConvertedtoBaseCurrency;
+            this.FinalDueAmountInBaseCurrencyLiteral.Text = Titles.FinalDueAmountinBaseCurrency;
+            this.SaveLiteral.Text = Titles.Save;
+            this.ReceiptTypeLiteral.Text = Titles.ReceiptType;
+            this.CostCenterLiteral.Text = Titles.CostCenter;
+            this.CashRepositoryLiteral.Text = Titles.CashRepository;
+            this.WhichBankLiteral.Text = Titles.WhichBank;
+            this.PostedDateLiteral.Text = Titles.PostedDate;
+            this.InstrumentCodeLiteral.Text = Titles.InstrumentCode;
+            this.BankTransactionCodeLiteral.Text = Titles.BankTransactionCode;
+            this.ReferenceNumberLiteral.Text = Titles.ReferenceNumber;
+            this.StatementReferenceLiteral.Text = Titles.StatementReference;
         }
     }
 }

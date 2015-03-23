@@ -117,8 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccruedInterest" xml:space="preserve">
+    <value>Accrued Interest</value>
+  </data>
   <data name="AddressAndContactInfo" xml:space="preserve">
     <value>Address &amp; Contact Information</value>
+  </data>
+  <data name="CreditAllowed" xml:space="preserve">
+    <value>Credit Allowed</value>
+  </data>
+  <data name="CSTNumber" xml:space="preserve">
+    <value>CST Number</value>
+  </data>
+  <data name="DefaultAddress" xml:space="preserve">
+    <value>Default Address</value>
+  </data>
+  <data name="DefaultCurrency" xml:space="preserve">
+    <value>Default Currency</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>Email Address</value>
+  </data>
+  <data name="GLHead" xml:space="preserve">
+    <value>GL Head</value>
   </data>
   <data name="Go" xml:space="preserve">
     <value>Go</value>
@@ -126,13 +147,46 @@
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="InterestApplicable" xml:space="preserve">
+    <value>Interest Applicable</value>
+  </data>
+  <data name="LastPaymentDate" xml:space="preserve">
+    <value>Last Payment Date</value>
+  </data>
+  <data name="MaximumCreditAmount" xml:space="preserve">
+    <value>Maximum Credit Amount</value>
+  </data>
+  <data name="MaximumCreditPeriod" xml:space="preserve">
+    <value>Maximum Credit Period</value>
+  </data>
+  <data name="PANNumber" xml:space="preserve">
+    <value>PAN Number</value>
+  </data>
   <data name="PartySummary" xml:space="preserve">
     <value>Party Summary</value>
+  </data>
+  <data name="PartyType" xml:space="preserve">
+    <value>Party Type</value>
   </data>
   <data name="SelectCustomer" xml:space="preserve">
     <value>Select Customer</value>
   </data>
+  <data name="ShippingAddresses" xml:space="preserve">
+    <value>Shipping Address(es)</value>
+  </data>
+  <data name="SSTNumber" xml:space="preserve">
+    <value>SST Number</value>
+  </data>
+  <data name="TotalDueAmount" xml:space="preserve">
+    <value>Total Due Amount</value>
+  </data>
+  <data name="TotalDueAmountCurrentOffice" xml:space="preserve">
+    <value>Total Due Amount (Current Office)</value>
+  </data>
   <data name="TransactionSummary" xml:space="preserve">
     <value>Transaction Summary</value>
+  </data>
+  <data name="TransactionValue" xml:space="preserve">
+    <value>Transaction Value</value>
   </data>
 </root>

@@ -135,4 +135,58 @@
   <data name="Home" xml:space="preserve">
     <value>домой</value>
   </data>
+  <data name="AccruedInterest" xml:space="preserve">
+    <value>начисленные проценты</value>
+  </data>
+  <data name="CreditAllowed" xml:space="preserve">
+    <value>Кредитная животных</value>
+  </data>
+  <data name="CSTNumber" xml:space="preserve">
+    <value>Количество CST</value>
+  </data>
+  <data name="DefaultAddress" xml:space="preserve">
+    <value>Адрес по умолчанию</value>
+  </data>
+  <data name="DefaultCurrency" xml:space="preserve">
+    <value>Базовая валюта</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>Адрес Электронной Почты</value>
+  </data>
+  <data name="GLHead" xml:space="preserve">
+    <value>GL Руководитель</value>
+  </data>
+  <data name="InterestApplicable" xml:space="preserve">
+    <value>ставка, применяемая</value>
+  </data>
+  <data name="LastPaymentDate" xml:space="preserve">
+    <value>Последний платеж Дата</value>
+  </data>
+  <data name="MaximumCreditAmount" xml:space="preserve">
+    <value>Максимальная сумма кредита</value>
+  </data>
+  <data name="MaximumCreditPeriod" xml:space="preserve">
+    <value>Максимальный размер кредита Период</value>
+  </data>
+  <data name="PANNumber" xml:space="preserve">
+    <value>PAN Количество</value>
+  </data>
+  <data name="PartyType" xml:space="preserve">
+    <value>Тип партия</value>
+  </data>
+  <data name="ShippingAddresses" xml:space="preserve">
+    <value>Адрес Доставки</value>
+  </data>
+  <data name="SSTNumber" xml:space="preserve">
+    <value>SST Количество</value>
+  </data>
+  <data name="TotalDueAmount" xml:space="preserve">
+    <value>Всего надлежащей суммы</value>
+  </data>
+  <data name="TotalDueAmountCurrentOffice" xml:space="preserve">
+    <value>Всего надлежащей суммы (Текущий Office)</value>
+  </data>
+  <data name="TransactionValue" xml:space="preserve">
+    <value>стоимость сделки</value>
+  </data>
 </root>

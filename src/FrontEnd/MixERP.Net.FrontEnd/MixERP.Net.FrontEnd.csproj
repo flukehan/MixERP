@@ -947,7 +947,9 @@
     <Content Include="Tests\dom\cascading-pair.js" />
     <Content Include="Tests\dom\checkable.js" />
     <Content Include="Tests\dom\events.js" />
+    <Content Include="Tests\dom\select.js" />
     <Content Include="Tests\dom\visibility.js" />
+    <Content Include="Tests\grid\cell.js" />
     <Content Include="Tests\localization.js" />
     <Content Include="Tests\mixerp-core.test.html" />
     <Content Include="Scripts\mixerp\mixerp-core.js">

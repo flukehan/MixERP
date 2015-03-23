@@ -115,6 +115,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bank Transaction Code.
+        /// </summary>
+        internal static string BankTransactionCode {
+            get {
+                return ResourceManager.GetString("BankTransactionCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Base Currency.
         /// </summary>
         internal static string BaseCurrency {
@@ -147,6 +156,24 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string Close {
             get {
                 return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Converted to Base Currency.
+        /// </summary>
+        internal static string ConvertedtoBaseCurrency {
+            get {
+                return ResourceManager.GetString("ConvertedtoBaseCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Converted to Home Currency.
+        /// </summary>
+        internal static string ConvertedtoHomeCurrency {
+            get {
+                return ResourceManager.GetString("ConvertedtoHomeCurrency", resourceCulture);
             }
         }
         
@@ -331,6 +358,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Final Due Amount in Base Currency.
+        /// </summary>
+        internal static string FinalDueAmountinBaseCurrency {
+            get {
+                return ResourceManager.GetString("FinalDueAmountinBaseCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flag.
         /// </summary>
         internal static string Flag {
@@ -363,6 +399,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string HomeCurrency {
             get {
                 return ResourceManager.GetString("HomeCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instrument Code.
+        /// </summary>
+        internal static string InstrumentCode {
+            get {
+                return ResourceManager.GetString("InstrumentCode", resourceCulture);
             }
         }
         
@@ -466,6 +511,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Posted Date.
+        /// </summary>
+        internal static string PostedDate {
+            get {
+                return ResourceManager.GetString("PostedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prepared On.
         /// </summary>
         internal static string PreparedOn {
@@ -525,6 +579,33 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string ReceiptCurrency {
             get {
                 return ResourceManager.GetString("ReceiptCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receipt Type.
+        /// </summary>
+        internal static string ReceiptType {
+            get {
+                return ResourceManager.GetString("ReceiptType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Received Amount (In above Currency).
+        /// </summary>
+        internal static string ReceivedAmountInaboveCurrency {
+            get {
+                return ResourceManager.GetString("ReceivedAmountInaboveCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Received Currency.
+        /// </summary>
+        internal static string ReceivedCurrency {
+            get {
+                return ResourceManager.GetString("ReceivedCurrency", resourceCulture);
             }
         }
         
@@ -664,6 +745,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select a Flag.
         /// </summary>
         internal static string SelectFlag {
@@ -723,6 +813,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string TopSellingProductsOfAllTime {
             get {
                 return ResourceManager.GetString("TopSellingProductsOfAllTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Due Amount (In Base Currency).
+        /// </summary>
+        internal static string TotalDueAmountInBaseCurrency {
+            get {
+                return ResourceManager.GetString("TotalDueAmountInBaseCurrency", resourceCulture);
             }
         }
         
@@ -876,6 +975,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string ViewThisReturn {
             get {
                 return ResourceManager.GetString("ViewThisReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Which Bank?.
+        /// </summary>
+        internal static string WhichBank {
+            get {
+                return ResourceManager.GetString("WhichBank", resourceCulture);
             }
         }
         

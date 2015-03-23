@@ -393,4 +393,40 @@
   <data name="EmailThisInvoice" xml:space="preserve">
     <value>E-posta denna faktura</value>
   </data>
+  <data name="BankTransactionCode" xml:space="preserve">
+    <value>Bank transaktionskod</value>
+  </data>
+  <data name="ConvertedtoBaseCurrency" xml:space="preserve">
+    <value>Omräknat till Basvaluta</value>
+  </data>
+  <data name="ConvertedtoHomeCurrency" xml:space="preserve">
+    <value>Omräknat till Startsida Valuta</value>
+  </data>
+  <data name="FinalDueAmountinBaseCurrency" xml:space="preserve">
+    <value>Final Due Belopp i basvaluta</value>
+  </data>
+  <data name="InstrumentCode" xml:space="preserve">
+    <value>Instrument kod</value>
+  </data>
+  <data name="PostedDate" xml:space="preserve">
+    <value>datum</value>
+  </data>
+  <data name="ReceiptType" xml:space="preserve">
+    <value>kvitto Typ</value>
+  </data>
+  <data name="ReceivedAmountInaboveCurrency" xml:space="preserve">
+    <value>Erhållet belopp (I ovan valuta)</value>
+  </data>
+  <data name="ReceivedCurrency" xml:space="preserve">
+    <value>mottagna Valuta</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Spara</value>
+  </data>
+  <data name="TotalDueAmountInBaseCurrency" xml:space="preserve">
+    <value>Total Due Belopp (I basvaluta)</value>
+  </data>
+  <data name="WhichBank" xml:space="preserve">
+    <value>Vilken Bank?</value>
+  </data>
 </root>

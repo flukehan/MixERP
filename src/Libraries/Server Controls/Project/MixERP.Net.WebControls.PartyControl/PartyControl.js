@@ -30,8 +30,6 @@ var emailAddressSpan = $("#EmailAddressSpan");
 var gLHeadSpan = $("#GLHeadSpan");
 var goButton = $("#GoButton");
 
-var interestApplicableSpan = $("#InterestApplicableSpan");
-
 var lastPaymentDateSpan = $("#LastPaymentDateSpan");
 
 var maxCreditAmountSpan = $("#MaxCreditAmountSpan");

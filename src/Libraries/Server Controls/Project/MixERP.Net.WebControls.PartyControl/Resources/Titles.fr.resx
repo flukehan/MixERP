@@ -135,4 +135,58 @@
   <data name="Home" xml:space="preserve">
     <value>maison</value>
   </data>
+  <data name="AccruedInterest" xml:space="preserve">
+    <value>intérêts courus</value>
+  </data>
+  <data name="CreditAllowed" xml:space="preserve">
+    <value>Credit admis</value>
+  </data>
+  <data name="CSTNumber" xml:space="preserve">
+    <value>Nombre CST</value>
+  </data>
+  <data name="DefaultAddress" xml:space="preserve">
+    <value>Adresse par défaut</value>
+  </data>
+  <data name="DefaultCurrency" xml:space="preserve">
+    <value>devise par défaut</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>Adresse e-mail</value>
+  </data>
+  <data name="GLHead" xml:space="preserve">
+    <value>GL Head</value>
+  </data>
+  <data name="InterestApplicable" xml:space="preserve">
+    <value>intérêt applicable</value>
+  </data>
+  <data name="LastPaymentDate" xml:space="preserve">
+    <value>Dernière date de paiement</value>
+  </data>
+  <data name="MaximumCreditAmount" xml:space="preserve">
+    <value>Montant maximal de crédit</value>
+  </data>
+  <data name="MaximumCreditPeriod" xml:space="preserve">
+    <value>Période de crédit maximal</value>
+  </data>
+  <data name="PANNumber" xml:space="preserve">
+    <value>Nombre PAN</value>
+  </data>
+  <data name="PartyType" xml:space="preserve">
+    <value>type de partie</value>
+  </data>
+  <data name="ShippingAddresses" xml:space="preserve">
+    <value>Adresse De Livraison</value>
+  </data>
+  <data name="SSTNumber" xml:space="preserve">
+    <value>Nombre SST</value>
+  </data>
+  <data name="TotalDueAmount" xml:space="preserve">
+    <value>Montant total dû</value>
+  </data>
+  <data name="TotalDueAmountCurrentOffice" xml:space="preserve">
+    <value>Montant total dû (Bureau actuel)</value>
+  </data>
+  <data name="TransactionValue" xml:space="preserve">
+    <value>transaction Valeur</value>
+  </data>
 </root>

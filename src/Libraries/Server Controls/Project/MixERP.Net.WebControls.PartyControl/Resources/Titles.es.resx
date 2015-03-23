@@ -135,4 +135,58 @@
   <data name="PartySummary" xml:space="preserve">
     <value>Resumen del partido</value>
   </data>
+  <data name="AccruedInterest" xml:space="preserve">
+    <value>Los intereses devengados</value>
+  </data>
+  <data name="CreditAllowed" xml:space="preserve">
+    <value>animales de crédito</value>
+  </data>
+  <data name="CSTNumber" xml:space="preserve">
+    <value>Número CST</value>
+  </data>
+  <data name="DefaultAddress" xml:space="preserve">
+    <value>Dirección predeterminada</value>
+  </data>
+  <data name="DefaultCurrency" xml:space="preserve">
+    <value>moneda predeterminada</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>Dirección De Correo Electrónico</value>
+  </data>
+  <data name="GLHead" xml:space="preserve">
+    <value>GL Head</value>
+  </data>
+  <data name="InterestApplicable" xml:space="preserve">
+    <value>interés Aplicable</value>
+  </data>
+  <data name="LastPaymentDate" xml:space="preserve">
+    <value>Última Fecha de Pago</value>
+  </data>
+  <data name="MaximumCreditAmount" xml:space="preserve">
+    <value>Máximo del Crédito</value>
+  </data>
+  <data name="MaximumCreditPeriod" xml:space="preserve">
+    <value>Período Máximo del Crédito</value>
+  </data>
+  <data name="PANNumber" xml:space="preserve">
+    <value>Número PAN</value>
+  </data>
+  <data name="PartyType" xml:space="preserve">
+    <value>Tipo Partido</value>
+  </data>
+  <data name="ShippingAddresses" xml:space="preserve">
+    <value>Dirección De Envío</value>
+  </data>
+  <data name="SSTNumber" xml:space="preserve">
+    <value>Número SST</value>
+  </data>
+  <data name="TotalDueAmount" xml:space="preserve">
+    <value>La cantidad total debida</value>
+  </data>
+  <data name="TotalDueAmountCurrentOffice" xml:space="preserve">
+    <value>La cantidad total debida (Oficina actual)</value>
+  </data>
+  <data name="TransactionValue" xml:space="preserve">
+    <value>Valor de Transacción</value>
+  </data>
 </root>

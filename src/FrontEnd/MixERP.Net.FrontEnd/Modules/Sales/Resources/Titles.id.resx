@@ -393,4 +393,40 @@
   <data name="FlagThisTransaction" xml:space="preserve">
     <value>Flag Transaksi ini</value>
   </data>
+  <data name="BankTransactionCode" xml:space="preserve">
+    <value>Bank Kode Transaksi</value>
+  </data>
+  <data name="ConvertedtoBaseCurrency" xml:space="preserve">
+    <value>Dikonversi ke Base Currency</value>
+  </data>
+  <data name="ConvertedtoHomeCurrency" xml:space="preserve">
+    <value>Dikonversi ke Home Mata Uang</value>
+  </data>
+  <data name="FinalDueAmountinBaseCurrency" xml:space="preserve">
+    <value>Jumlah Karena akhir di Base Currency</value>
+  </data>
+  <data name="InstrumentCode" xml:space="preserve">
+    <value>Instrumen Kode</value>
+  </data>
+  <data name="PostedDate" xml:space="preserve">
+    <value>Dikirim Tanggal</value>
+  </data>
+  <data name="ReceiptType" xml:space="preserve">
+    <value>Penerimaan Type</value>
+  </data>
+  <data name="ReceivedAmountInaboveCurrency" xml:space="preserve">
+    <value>Diterima Jumlah (Dalam Mata Uang di atas)</value>
+  </data>
+  <data name="ReceivedCurrency" xml:space="preserve">
+    <value>menerima Uang</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Simpan</value>
+  </data>
+  <data name="TotalDueAmountInBaseCurrency" xml:space="preserve">
+    <value>Jumlah Total Karena (Dalam Mata Uang Dasar)</value>
+  </data>
+  <data name="WhichBank" xml:space="preserve">
+    <value>Bank mana?</value>
+  </data>
 </root>

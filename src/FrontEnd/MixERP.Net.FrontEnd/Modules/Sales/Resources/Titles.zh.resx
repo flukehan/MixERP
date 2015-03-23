@@ -393,4 +393,40 @@
   <data name="EmailThisInvoice" xml:space="preserve">
     <value>通过电子邮件发送发票</value>
   </data>
+  <data name="BankTransactionCode" xml:space="preserve">
+    <value>银行交易代码</value>
+  </data>
+  <data name="ConvertedtoBaseCurrency" xml:space="preserve">
+    <value>转换为基础货币</value>
+  </data>
+  <data name="ConvertedtoHomeCurrency" xml:space="preserve">
+    <value>转换首页货币</value>
+  </data>
+  <data name="FinalDueAmountinBaseCurrency" xml:space="preserve">
+    <value>在基础货币最终到期金额</value>
+  </data>
+  <data name="InstrumentCode" xml:space="preserve">
+    <value>仪表代码</value>
+  </data>
+  <data name="PostedDate" xml:space="preserve">
+    <value>发布日期</value>
+  </data>
+  <data name="ReceiptType" xml:space="preserve">
+    <value>收款类型</value>
+  </data>
+  <data name="ReceivedAmountInaboveCurrency" xml:space="preserve">
+    <value>收到的金额（在上述货币）</value>
+  </data>
+  <data name="ReceivedCurrency" xml:space="preserve">
+    <value>收到的货币</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="TotalDueAmountInBaseCurrency" xml:space="preserve">
+    <value>总到期金额（以基本货币）</value>
+  </data>
+  <data name="WhichBank" xml:space="preserve">
+    <value>哪家银行？</value>
+  </data>
 </root>

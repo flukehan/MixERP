@@ -135,4 +135,58 @@
   <data name="Home" xml:space="preserve">
     <value>家</value>
   </data>
+  <data name="AccruedInterest" xml:space="preserve">
+    <value>应计利息</value>
+  </data>
+  <data name="CreditAllowed" xml:space="preserve">
+    <value>信贷允许的</value>
+  </data>
+  <data name="CSTNumber" xml:space="preserve">
+    <value>CST号码</value>
+  </data>
+  <data name="DefaultAddress" xml:space="preserve">
+    <value>默认地址</value>
+  </data>
+  <data name="DefaultCurrency" xml:space="preserve">
+    <value>默认货币</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>电子邮件地址</value>
+  </data>
+  <data name="GLHead" xml:space="preserve">
+    <value>GL头</value>
+  </data>
+  <data name="InterestApplicable" xml:space="preserve">
+    <value>利息适用</value>
+  </data>
+  <data name="LastPaymentDate" xml:space="preserve">
+    <value>最后付款日期</value>
+  </data>
+  <data name="MaximumCreditAmount" xml:space="preserve">
+    <value>最高信用额</value>
+  </data>
+  <data name="MaximumCreditPeriod" xml:space="preserve">
+    <value>最高优惠期</value>
+  </data>
+  <data name="PANNumber" xml:space="preserve">
+    <value>PAN号码</value>
+  </data>
+  <data name="PartyType" xml:space="preserve">
+    <value>党的类型</value>
+  </data>
+  <data name="ShippingAddresses" xml:space="preserve">
+    <value>收件地址</value>
+  </data>
+  <data name="SSTNumber" xml:space="preserve">
+    <value>SST号码</value>
+  </data>
+  <data name="TotalDueAmount" xml:space="preserve">
+    <value>总到期金额</value>
+  </data>
+  <data name="TotalDueAmountCurrentOffice" xml:space="preserve">
+    <value>总到期金额（目前处）</value>
+  </data>
+  <data name="TransactionValue" xml:space="preserve">
+    <value>成交价格</value>
+  </data>
 </root>

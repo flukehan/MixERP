@@ -393,4 +393,40 @@
   <data name="FlagThisTransaction" xml:space="preserve">
     <value>I-flag Transaksyon na ito</value>
   </data>
+  <data name="BankTransactionCode" xml:space="preserve">
+    <value>Code ng Transaksyon Bank</value>
+  </data>
+  <data name="ConvertedtoBaseCurrency" xml:space="preserve">
+    <value>-Convert sa Base Pera</value>
+  </data>
+  <data name="ConvertedtoHomeCurrency" xml:space="preserve">
+    <value>-Convert sa Home Pera</value>
+  </data>
+  <data name="FinalDueAmountinBaseCurrency" xml:space="preserve">
+    <value>Final Dahil Halaga sa Base Pera</value>
+  </data>
+  <data name="InstrumentCode" xml:space="preserve">
+    <value>Instrumento Code</value>
+  </data>
+  <data name="PostedDate" xml:space="preserve">
+    <value>Nai-post sa Petsa</value>
+  </data>
+  <data name="ReceiptType" xml:space="preserve">
+    <value>Uri ng resibo</value>
+  </data>
+  <data name="ReceivedAmountInaboveCurrency" xml:space="preserve">
+    <value>Natanggap na Halaga (Sa itaas Pera)</value>
+  </data>
+  <data name="ReceivedCurrency" xml:space="preserve">
+    <value>natanggap Pera</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>I-save ang</value>
+  </data>
+  <data name="TotalDueAmountInBaseCurrency" xml:space="preserve">
+    <value>Kabuuang Dahil Halaga (Sa Base Pera)</value>
+  </data>
+  <data name="WhichBank" xml:space="preserve">
+    <value>Aling Bank?</value>
+  </data>
 </root>

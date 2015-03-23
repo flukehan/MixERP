@@ -393,4 +393,40 @@
   <data name="WorldSalesStatistics" xml:space="preserve">
     <value>World Sales Statistics</value>
   </data>
+  <data name="BankTransactionCode" xml:space="preserve">
+    <value>Bank Transaction Code</value>
+  </data>
+  <data name="ConvertedtoBaseCurrency" xml:space="preserve">
+    <value>Converted to Base Currency</value>
+  </data>
+  <data name="ConvertedtoHomeCurrency" xml:space="preserve">
+    <value>Converted to Home Currency</value>
+  </data>
+  <data name="FinalDueAmountinBaseCurrency" xml:space="preserve">
+    <value>Final Due Amount in Base Currency</value>
+  </data>
+  <data name="InstrumentCode" xml:space="preserve">
+    <value>Instrument Code</value>
+  </data>
+  <data name="PostedDate" xml:space="preserve">
+    <value>Posted Date</value>
+  </data>
+  <data name="ReceiptType" xml:space="preserve">
+    <value>Receipt Type</value>
+  </data>
+  <data name="ReceivedAmountInaboveCurrency" xml:space="preserve">
+    <value>Received Amount (In above Currency)</value>
+  </data>
+  <data name="ReceivedCurrency" xml:space="preserve">
+    <value>Received Currency</value>
+  </data>
+  <data name="TotalDueAmountInBaseCurrency" xml:space="preserve">
+    <value>Total Due Amount (In Base Currency)</value>
+  </data>
+  <data name="WhichBank" xml:space="preserve">
+    <value>Which Bank?</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>

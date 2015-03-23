@@ -135,4 +135,58 @@
   <data name="PartySummary" xml:space="preserve">
     <value>パーティーの概要</value>
   </data>
+  <data name="AccruedInterest" xml:space="preserve">
+    <value>未収利息</value>
+  </data>
+  <data name="CreditAllowed" xml:space="preserve">
+    <value>クレジット可</value>
+  </data>
+  <data name="CSTNumber" xml:space="preserve">
+    <value>CST番号</value>
+  </data>
+  <data name="DefaultAddress" xml:space="preserve">
+    <value>デフォルトアドレス</value>
+  </data>
+  <data name="DefaultCurrency" xml:space="preserve">
+    <value>デフォルト通貨</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>電子メールアドレス</value>
+  </data>
+  <data name="GLHead" xml:space="preserve">
+    <value>GLヘッド</value>
+  </data>
+  <data name="InterestApplicable" xml:space="preserve">
+    <value>適用金利</value>
+  </data>
+  <data name="LastPaymentDate" xml:space="preserve">
+    <value>最終支払日</value>
+  </data>
+  <data name="MaximumCreditAmount" xml:space="preserve">
+    <value>最大信用額</value>
+  </data>
+  <data name="MaximumCreditPeriod" xml:space="preserve">
+    <value>最大与信期間</value>
+  </data>
+  <data name="PANNumber" xml:space="preserve">
+    <value>PAN番号</value>
+  </data>
+  <data name="PartyType" xml:space="preserve">
+    <value>パーティーの種類</value>
+  </data>
+  <data name="ShippingAddresses" xml:space="preserve">
+    <value>お届け先の住所</value>
+  </data>
+  <data name="SSTNumber" xml:space="preserve">
+    <value>SST数</value>
+  </data>
+  <data name="TotalDueAmount" xml:space="preserve">
+    <value>合計未払い額</value>
+  </data>
+  <data name="TotalDueAmountCurrentOffice" xml:space="preserve">
+    <value>合計未払い額（現在のオフィス）</value>
+  </data>
+  <data name="TransactionValue" xml:space="preserve">
+    <value>取引額</value>
+  </data>
 </root>

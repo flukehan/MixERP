@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.ComponentModel;
 using System.Globalization;
 using System.Web.UI.HtmlControls;
 
@@ -24,7 +25,7 @@ namespace MixERP.Net.WebControls.PartyControl
 {
     public static class ControlHelper
     {
-        public static HtmlAnchor GetAnchor(string cssClass, string text, string tabName, string icon)
+        public static HtmlAnchor GetAnchor(string cssClass, [Localizable(true)]string text, string tabName, string icon)
         {
             using (HtmlAnchor a = new HtmlAnchor())
             {
@@ -48,7 +49,7 @@ namespace MixERP.Net.WebControls.PartyControl
             }
         }
 
-        public static HtmlButton GetButton(string id, string cssClass, string text)
+        public static HtmlButton GetButton(string id, string cssClass, [Localizable(true)] string text)
         {
             using (HtmlButton button = new HtmlButton())
             {
@@ -106,7 +107,7 @@ namespace MixERP.Net.WebControls.PartyControl
             }
         }
 
-        public static string GetLabelText(string targetControlId, string text)
+        public static string GetLabelText(string targetControlId, [Localizable(true)]string text)
         {
             if (string.IsNullOrWhiteSpace(targetControlId))
             {
@@ -121,7 +122,7 @@ namespace MixERP.Net.WebControls.PartyControl
             return string.Format(CultureInfo.InvariantCulture, @"<label for='{0}'>{1}</label>", targetControlId, text);
         }
 
-        public static HtmlTableRow GetNewRow(string text, string id, string tagName)
+        public static HtmlTableRow GetNewRow([Localizable(true)]string text, string id, string tagName)
         {
             using (HtmlTableRow row = new HtmlTableRow())
             {

@@ -393,4 +393,40 @@
   <data name="Fax" xml:space="preserve">
     <value>fax</value>
   </data>
+  <data name="BankTransactionCode" xml:space="preserve">
+    <value>Banco Código de transacción</value>
+  </data>
+  <data name="ConvertedtoBaseCurrency" xml:space="preserve">
+    <value>Convierten a la moneda base</value>
+  </data>
+  <data name="ConvertedtoHomeCurrency" xml:space="preserve">
+    <value>Convertido a Inicio moneda</value>
+  </data>
+  <data name="FinalDueAmountinBaseCurrency" xml:space="preserve">
+    <value>Final Monto a pagar en moneda Base</value>
+  </data>
+  <data name="InstrumentCode" xml:space="preserve">
+    <value>Código Instrumento</value>
+  </data>
+  <data name="PostedDate" xml:space="preserve">
+    <value>Fecha de publicación</value>
+  </data>
+  <data name="ReceiptType" xml:space="preserve">
+    <value>Tipo de Recibo</value>
+  </data>
+  <data name="ReceivedAmountInaboveCurrency" xml:space="preserve">
+    <value>Recibió Importe (anteriormente moneda)</value>
+  </data>
+  <data name="ReceivedCurrency" xml:space="preserve">
+    <value>recibido moneda</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="TotalDueAmountInBaseCurrency" xml:space="preserve">
+    <value>La cantidad total debida (En Base moneda)</value>
+  </data>
+  <data name="WhichBank" xml:space="preserve">
+    <value>Qué Banco?</value>
+  </data>
 </root>

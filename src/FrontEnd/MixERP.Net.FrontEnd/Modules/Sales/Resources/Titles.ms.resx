@@ -393,4 +393,40 @@
   <data name="RecurringInvoiceSetup" xml:space="preserve">
     <value>Berulang Persediaan Invois</value>
   </data>
+  <data name="BankTransactionCode" xml:space="preserve">
+    <value>Bank Transaksi Kod</value>
+  </data>
+  <data name="ConvertedtoBaseCurrency" xml:space="preserve">
+    <value>Ditukar ke mata wang Base</value>
+  </data>
+  <data name="ConvertedtoHomeCurrency" xml:space="preserve">
+    <value>Ditukar ke Laman Utama Mata Wang</value>
+  </data>
+  <data name="FinalDueAmountinBaseCurrency" xml:space="preserve">
+    <value>Hutang akhir dalam Mata Wang Base</value>
+  </data>
+  <data name="InstrumentCode" xml:space="preserve">
+    <value>instrumen Kod</value>
+  </data>
+  <data name="PostedDate" xml:space="preserve">
+    <value>Date Posted</value>
+  </data>
+  <data name="ReceiptType" xml:space="preserve">
+    <value>resit Jenis</value>
+  </data>
+  <data name="ReceivedAmountInaboveCurrency" xml:space="preserve">
+    <value>Pendapatan daripada (Dalam Mata Wang atas)</value>
+  </data>
+  <data name="ReceivedCurrency" xml:space="preserve">
+    <value>Wang yang diterima</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Simpan</value>
+  </data>
+  <data name="TotalDueAmountInBaseCurrency" xml:space="preserve">
+    <value>Jumlah Hutang (Dalam Pangkalan Mata Wang)</value>
+  </data>
+  <data name="WhichBank" xml:space="preserve">
+    <value>Yang Bank?</value>
+  </data>
 </root>

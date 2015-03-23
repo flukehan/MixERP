@@ -393,4 +393,40 @@
   <data name="VerifiedBy" xml:space="preserve">
     <value>geverifieerd door</value>
   </data>
+  <data name="BankTransactionCode" xml:space="preserve">
+    <value>Bank Transactie Code</value>
+  </data>
+  <data name="ConvertedtoBaseCurrency" xml:space="preserve">
+    <value>Omgerekend naar basisvaluta</value>
+  </data>
+  <data name="ConvertedtoHomeCurrency" xml:space="preserve">
+    <value>Omgerekend naar startpagina Valuta</value>
+  </data>
+  <data name="FinalDueAmountinBaseCurrency" xml:space="preserve">
+    <value>Final verschuldigde bedrag in basisvaluta</value>
+  </data>
+  <data name="InstrumentCode" xml:space="preserve">
+    <value>instrument Code</value>
+  </data>
+  <data name="PostedDate" xml:space="preserve">
+    <value>geplaatst Date</value>
+  </data>
+  <data name="ReceiptType" xml:space="preserve">
+    <value>ontvangst Type</value>
+  </data>
+  <data name="ReceivedAmountInaboveCurrency" xml:space="preserve">
+    <value>Ontvangen bedrag (In bovenstaande Valuta)</value>
+  </data>
+  <data name="ReceivedCurrency" xml:space="preserve">
+    <value>ontvangen Valuta</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Opslaan</value>
+  </data>
+  <data name="TotalDueAmountInBaseCurrency" xml:space="preserve">
+    <value>Totale verschuldigde bedrag (In basisvaluta)</value>
+  </data>
+  <data name="WhichBank" xml:space="preserve">
+    <value>Welke Bank?</value>
+  </data>
 </root>

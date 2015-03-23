@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.PartyControl.Resources;
 
 namespace MixERP.Net.WebControls.PartyControl
 {
@@ -56,7 +57,7 @@ namespace MixERP.Net.WebControls.PartyControl
 
                 using (HtmlGenericControl h3 = ControlHelper.GetGenericControl("h3", "ui header"))
                 {
-                    h3.InnerHtml = "  <i class='globe icon'></i>Address & Contact Information";
+                    h3.InnerHtml = "  <i class='globe icon'></i>" + Titles.AddressAndContactInfo;
 
                     addressInfoDiv.Controls.Add(h3);
                 }
@@ -64,8 +65,8 @@ namespace MixERP.Net.WebControls.PartyControl
                 using (HtmlTable table = new HtmlTable())
                 {
                     table.Attributes.Add("class", "ui table segment");
-                    table.Rows.Add(ControlHelper.GetNewRow("Default Address", @"AddressDiv", "div"));
-                    table.Rows.Add(ControlHelper.GetNewRow("Shipping Address(es)", @"ShippingAddressesDiv", "div"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.DefaultAddress, @"AddressDiv", "div"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.ShippingAddresses, @"ShippingAddressesDiv", "div"));
                     addressInfoDiv.Controls.Add(table);
                 }
 
@@ -84,17 +85,16 @@ namespace MixERP.Net.WebControls.PartyControl
                 using (HtmlTable table = new HtmlTable())
                 {
                     table.Attributes.Add("class", "ui table segment");
-                    table.Rows.Add(ControlHelper.GetNewRow("Party Type", @"PartyTypeSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("Email Address", @"EmailAddressSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("PAN Number", @"PANNumberSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("SST Number", @"SSTNumberSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("CST Number", @"CSTNumberSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("Credit Allowed", @"CreditAllowedSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("Maximum Credit Period", @"MaxCreditPeriodSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("Maximum Credit Amount", @"MaxCreditAmountSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("Interest Applicable", @"InterestApplicableSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("GL Head", @"GLHeadSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("Default Currency", @"DefaultCurrencySpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.PartyType, @"PartyTypeSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.EmailAddress, @"EmailAddressSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.PANNumber, @"PANNumberSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.SSTNumber, @"SSTNumberSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.CSTNumber, @"CSTNumberSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.CreditAllowed, @"CreditAllowedSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.MaximumCreditPeriod, @"MaxCreditPeriodSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.MaximumCreditAmount, @"MaxCreditAmountSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.GLHead, @"GLHeadSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.DefaultCurrency, @"DefaultCurrencySpan", @"span"));
                     partSummaryDiv.Controls.Add(table);
                 }
 
@@ -113,11 +113,11 @@ namespace MixERP.Net.WebControls.PartyControl
                 using (HtmlTable table = new HtmlTable())
                 {
                     table.Attributes.Add("class", "ui table segment");
-                    table.Rows.Add(ControlHelper.GetNewRow("Total Due Amount", @"TotalDueAmountSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("Total Due Amount (Current Office)", @"OfficeDueAmountSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("Accrued Interest", @"AccruedInterestSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("Last Payment Date", @"LastPaymentDateSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow("Transaction Value", @"TransactionValueSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.TotalDueAmount, @"TotalDueAmountSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.TotalDueAmountCurrentOffice, @"OfficeDueAmountSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.AccruedInterest, @"AccruedInterestSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.LastPaymentDate, @"LastPaymentDateSpan", @"span"));
+                    table.Rows.Add(ControlHelper.GetNewRow(Titles.TransactionValue, @"TransactionValueSpan", @"span"));
 
                     transactionSummaryDiv.Controls.Add(table);
                 }

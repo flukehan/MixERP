@@ -393,4 +393,40 @@
   <data name="Fax" xml:space="preserve">
     <value>факс</value>
   </data>
+  <data name="BankTransactionCode" xml:space="preserve">
+    <value>Банк Код транзакции</value>
+  </data>
+  <data name="ConvertedtoBaseCurrency" xml:space="preserve">
+    <value>В пересчете на базовой валюте</value>
+  </data>
+  <data name="ConvertedtoHomeCurrency" xml:space="preserve">
+    <value>В пересчете на местной валюте</value>
+  </data>
+  <data name="FinalDueAmountinBaseCurrency" xml:space="preserve">
+    <value>Заключительный надлежащей суммы в базовой валюте</value>
+  </data>
+  <data name="InstrumentCode" xml:space="preserve">
+    <value>Инструмент Код</value>
+  </data>
+  <data name="PostedDate" xml:space="preserve">
+    <value>Сообщение Дата</value>
+  </data>
+  <data name="ReceiptType" xml:space="preserve">
+    <value>Получение Тип</value>
+  </data>
+  <data name="ReceivedAmountInaboveCurrency" xml:space="preserve">
+    <value>Полученную сумму (в выше Валюты)</value>
+  </data>
+  <data name="ReceivedCurrency" xml:space="preserve">
+    <value>получаемую валюту</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="TotalDueAmountInBaseCurrency" xml:space="preserve">
+    <value>Всего Благодаря Сумма (в базовой валюте)</value>
+  </data>
+  <data name="WhichBank" xml:space="preserve">
+    <value>Какой банк?</value>
+  </data>
 </root>

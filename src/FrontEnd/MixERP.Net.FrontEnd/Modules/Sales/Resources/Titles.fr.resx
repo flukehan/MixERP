@@ -393,4 +393,40 @@
   <data name="EmailThisInvoice" xml:space="preserve">
     <value>Envoyer cette facture</value>
   </data>
+  <data name="BankTransactionCode" xml:space="preserve">
+    <value>Banque Code de transaction</value>
+  </data>
+  <data name="ConvertedtoBaseCurrency" xml:space="preserve">
+    <value>Converti en Devise de base</value>
+  </data>
+  <data name="ConvertedtoHomeCurrency" xml:space="preserve">
+    <value>Converti à l'accueil devise</value>
+  </data>
+  <data name="FinalDueAmountinBaseCurrency" xml:space="preserve">
+    <value>Montant dû final dans la Devise</value>
+  </data>
+  <data name="InstrumentCode" xml:space="preserve">
+    <value>instrument Code</value>
+  </data>
+  <data name="PostedDate" xml:space="preserve">
+    <value>date de publication</value>
+  </data>
+  <data name="ReceiptType" xml:space="preserve">
+    <value>Type de réception</value>
+  </data>
+  <data name="ReceivedAmountInaboveCurrency" xml:space="preserve">
+    <value>Montant reçu (En-dessus Devise)</value>
+  </data>
+  <data name="ReceivedCurrency" xml:space="preserve">
+    <value>reçu devise</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="TotalDueAmountInBaseCurrency" xml:space="preserve">
+    <value>Montant total dû (en devise de base)</value>
+  </data>
+  <data name="WhichBank" xml:space="preserve">
+    <value>Quelle banque?</value>
+  </data>
 </root>
