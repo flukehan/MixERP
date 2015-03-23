@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
             try
             {
                 Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);
-                Collection<int> tranIds = new Collection<int>();
+                Collection<long> tranIds = new Collection<long>();
 
                 Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
@@ -69,7 +69,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                 {
                     foreach (string transactionId in transactionIds.Split(','))
                     {
-                        tranIds.Add(Common.Conversion.TryCastInteger(transactionId));
+                        tranIds.Add(Common.Conversion.TryCastLong(transactionId));
                     }
                 }
 

@@ -21,6 +21,30 @@ DROP FUNCTION IF EXISTS transactions.post_sales
     _attachments                            core.attachment_type[]
 );
 
+DROP FUNCTION IF EXISTS transactions.post_sales
+(
+    _book_name                              national character varying(12),
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _value_date                             date,
+    _cost_center_id                         integer,
+    _reference_number                       national character varying(24),
+    _statement_reference                    text,
+    _is_credit                              boolean,
+    _payment_term_id                        integer,
+    _party_code                             national character varying(12),
+    _price_type_id                          integer,
+    _salesperson_id                         integer,
+    _shipper_id                             integer,
+    _shipping_address_code                  national character varying(12),
+    _store_id                               integer,
+    _is_non_taxable_sales                   boolean,
+    _details                                transactions.stock_detail_type[],
+    _attachments                            core.attachment_type[],
+    _non_gl_tran_ids                        bigint[]    
+);
+
 CREATE FUNCTION transactions.post_sales
 (
     _book_name                              national character varying(12),
@@ -41,7 +65,8 @@ CREATE FUNCTION transactions.post_sales
     _store_id                               integer,
     _is_non_taxable_sales                   boolean,
     _details                                transactions.stock_detail_type[],
-    _attachments                            core.attachment_type[]
+    _attachments                            core.attachment_type[],
+    _non_gl_tran_ids                        bigint[]
 )
 RETURNS bigint
 AS
@@ -321,6 +346,11 @@ BEGIN
         INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment)
         SELECT _user_id, 'transactions.transaction_master', 'transaction_master_id', _transaction_master_id, original_file_name, file_extension, file_path, comment 
         FROM explode_array(_attachments);
+    END IF;
+
+    IF(array_length(_non_gl_tran_ids, 1) > 0 AND _non_gl_tran_ids != ARRAY[NULL::bigint]) THEN
+        INSERT INTO transactions.stock_master_non_gl_relations(stock_master_id, non_gl_stock_master_id)
+        SELECT _stock_master_id, explode_array(_non_gl_tran_ids);
     END IF;
     
     PERFORM transactions.auto_verify(_transaction_master_id, _office_id);

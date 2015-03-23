@@ -32,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     internal static class GlTransaction
     {
-        public static long Add(string bookName, DateTime valueDate, int officeId, int userId, long loginId, int costCenterId, string referenceNumber, string statementReference, StockMaster stockMaster, Collection<StockDetail> details, Collection<Attachment> attachments, bool nonTaxable)
+        public static long Add(string bookName, DateTime valueDate, int officeId, int userId, long loginId, int costCenterId, string referenceNumber, string statementReference, StockMaster stockMaster, Collection<StockDetail> details, Collection<Attachment> attachments, bool nonTaxable, Collection<long> tranIds)
         {
             if (stockMaster == null)
             {
@@ -51,8 +51,15 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 
             string detail = StockMasterDetailHelper.CreateStockMasterDetailParameter(details);
             string attachment = AttachmentHelper.CreateAttachmentModelParameter(attachments);
+            string ids = "NULL::bigint";
 
-            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_sales(@BookName, @OfficeId, @UserId, @LoginId, @ValueDate, @CostCenterId, @ReferenceNumber, @StatementReference, @IsCredit, @PaymentTermId, @PartyCode, @PriceTypeId, @SalespersonId, @ShipperId, @ShippingAddressCode, @StoreId, @NonTaxable, ARRAY[{0}], ARRAY[{1}])", detail, attachment);
+            if (tranIds != null && tranIds.Count > 0)
+            {
+                ids = string.Join(",", tranIds);
+            }
+
+            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_sales(@BookName, @OfficeId, @UserId, @LoginId, @ValueDate, @CostCenterId, @ReferenceNumber, @StatementReference, @IsCredit, @PaymentTermId, @PartyCode, @PriceTypeId, @SalespersonId, @ShipperId, @ShippingAddressCode, @StoreId, @NonTaxable, ARRAY[{0}], ARRAY[{1}], ARRAY[{2}])", detail, attachment, ids);
+
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@BookName", bookName);
