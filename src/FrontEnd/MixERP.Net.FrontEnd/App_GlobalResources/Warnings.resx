@@ -139,7 +139,7 @@
     <value>New password can not be old password.</value>
   </data>
   <data name="NotAuthorized" xml:space="preserve">
-    <value>You are not authorized to access this resources at this time.</value>
+    <value>You are not authorized to access this resource at this time.</value>
   </data>
   <data name="NothingSelected" xml:space="preserve">
     <value>Nothing selected.</value>

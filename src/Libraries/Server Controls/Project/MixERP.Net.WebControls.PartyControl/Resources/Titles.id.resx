@@ -135,9 +135,6 @@
   <data name="PartySummary" xml:space="preserve">
     <value>Partai Ringkasan</value>
   </data>
-  <data name="AccruedInterest" xml:space="preserve">
-    <value>Bunga yang masih harus dibayar</value>
-  </data>
   <data name="CreditAllowed" xml:space="preserve">
     <value>kredit Diizinkan</value>
   </data>

@@ -168,6 +168,9 @@
   <data name="P3054" xml:space="preserve">
     <value>A unidade de reabastecimento é incompatível com a unidade base.</value>
   </data>
+  <data name="P3055" xml:space="preserve">
+    <value>Taxa de câmbio inválido.</value>
+  </data>
   <data name="P3101" xml:space="preserve">
     <value>LoginID inválido.</value>
   </data>

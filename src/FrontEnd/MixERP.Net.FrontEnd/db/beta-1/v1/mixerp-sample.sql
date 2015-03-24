@@ -28248,7 +28248,7 @@ INSERT INTO resources (resource_id, path, key, value) VALUES (40, '\FrontEnd\Mix
 INSERT INTO resources (resource_id, path, key, value) VALUES (41, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'GridViewEmpty', 'Gridview is empty.');
 INSERT INTO resources (resource_id, path, key, value) VALUES (42, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'InvalidDate', 'Invalid date.');
 INSERT INTO resources (resource_id, path, key, value) VALUES (43, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'NewPasswordCannotBeOldPassword', 'New password can not be old password.');
-INSERT INTO resources (resource_id, path, key, value) VALUES (44, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'NotAuthorized', 'You are not authorized to access this resources at this time.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (44, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'NotAuthorized', 'You are not authorized to access this resource at this time.');
 INSERT INTO resources (resource_id, path, key, value) VALUES (45, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'NothingSelected', 'Nothing selected.');
 INSERT INTO resources (resource_id, path, key, value) VALUES (46, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'PleaseEnterCurrentPassword', 'Please enter your current password.');
 INSERT INTO resources (resource_id, path, key, value) VALUES (47, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'PleaseEnterNewPassword', 'Please enter a new password.');
@@ -29200,7 +29200,7 @@ INSERT INTO resources (resource_id, path, key, value) VALUES (1175, '\FrontEnd\M
 INSERT INTO resources (resource_id, path, key, value) VALUES (1185, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'Fax', 'Fax');
 INSERT INTO resources (resource_id, path, key, value) VALUES (1195, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'PreparedOn', 'Prepared On');
 INSERT INTO resources (resource_id, path, key, value) VALUES (1205, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'UserId', 'User Id');
-INSERT INTO resources (resource_id, path, key, value) VALUES (1215, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'NotAuthorized', 'You are not authorized to access this resources at this time.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1215, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'NotAuthorized', 'You are not authorized to access this resource at this time.');
 INSERT INTO resources (resource_id, path, key, value) VALUES (1225, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookInventoryOrder', 'Invalid SubTranBook "Inventory Order"');
 INSERT INTO resources (resource_id, path, key, value) VALUES (1235, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookSalesSuspense', 'Invalid SubTranBook "Sales Suspense"');
 INSERT INTO resources (resource_id, path, key, value) VALUES (1245, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\Resources\Messages.resx', 'InvalidFile', 'Invalid file!');

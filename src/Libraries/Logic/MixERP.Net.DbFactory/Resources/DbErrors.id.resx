@@ -168,6 +168,9 @@
   <data name="P3054" xml:space="preserve">
     <value>Unit menyusun ulang tidak sesuai dengan unit dasar.</value>
   </data>
+  <data name="P3055" xml:space="preserve">
+    <value>Nilai tukar yang tidak valid.</value>
+  </data>
   <data name="P3101" xml:space="preserve">
     <value>LoginId valid.</value>
   </data>

@@ -168,6 +168,9 @@
   <data name="P3054" xml:space="preserve">
     <value>L'unité de réapprovisionnement est incompatible avec l'unité de base.</value>
   </data>
+  <data name="P3055" xml:space="preserve">
+    <value>Taux de change non valide.</value>
+  </data>
   <data name="P3101" xml:space="preserve">
     <value>LoginID valide.</value>
   </data>

@@ -99,6 +99,16 @@ BEGIN
     _local_currency_code                    := core.get_currency_code_by_office_id(_office_id);
     _base_currency_code                     := core.get_currency_code_by_party_id(_party_id);
 
+    IF(_local_currency_code = _currency_code AND _exchange_rate_debit != 1) THEN
+        RAISE EXCEPTION 'Invalid exchange rate.'
+        USING ERRCODE='P3055';
+    END IF;
+
+    IF(_base_currency_code = _currency_code AND _exchange_rate_credit != 1) THEN
+        RAISE EXCEPTION 'Invalid exchange rate.'
+        USING ERRCODE='P3055';
+    END IF;
+    
     _debit                                  := _amount;
     _lc_debit                               := _amount * _exchange_rate_debit;
 

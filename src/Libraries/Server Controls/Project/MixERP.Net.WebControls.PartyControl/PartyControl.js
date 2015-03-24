@@ -16,8 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-var accruedInterestSpan = $("#AccruedInterestSpan");
-var accruedInterestHidden = $("#AccruedInterestHidden");
 var addressDiv = $("#AddressDiv");
 
 var creditAllowedSpan = $("#CreditAllowedSpan");
@@ -54,7 +52,6 @@ var url = "";
 var data = "";
 
 //Variables
-var accruedInterest = 0;
 var baseCurrency = "";
 var officeDue = 0;
 var partyCode = "";
@@ -69,7 +66,6 @@ $(document).ready(function () {
 goButton.click(function () {
     totalDueAmountSpan.html("");
     officeDueAmountSpan.html("");
-    accruedInterestSpan.html("");
     lastPaymentDateSpan.html("");
     transactionValueSpan.html("");
 
@@ -86,7 +82,6 @@ goButton.click(function () {
         var model = msg.d;
         totalDue = convertToDebit(parseFloat2(model.TotalDueAmount));
         officeDue = convertToDebit(parseFloat2(model.OfficeDueAmount));
-        accruedInterest = model.AccruedInterest;
 
         baseCurrency = model.CurrencyCode;
 
@@ -97,9 +92,6 @@ goButton.click(function () {
 
         officeDueAmountSpan.html(getFormattedCurrency(model.CurrencySymbol, officeDue));
         officeDueAmountHidden.val(officeDue);
-
-        accruedInterestSpan.html(getFormattedCurrency(model.CurrencySymbol, accruedInterest));
-        accruedInterestHidden.val(accruedInterest);
 
         lastPaymentDateSpan.html(model.LastPaymentDate);
         transactionValueSpan.html(getFormattedCurrency(model.CurrencySymbol, model.TransactionValue));

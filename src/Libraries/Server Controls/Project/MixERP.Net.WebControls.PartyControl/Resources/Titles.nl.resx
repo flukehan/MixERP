@@ -135,9 +135,6 @@
   <data name="PartySummary" xml:space="preserve">
     <value>partij Samenvatting</value>
   </data>
-  <data name="AccruedInterest" xml:space="preserve">
-    <value>opgebouwde rente</value>
-  </data>
   <data name="CreditAllowed" xml:space="preserve">
     <value>credit toegestaan</value>
   </data>

@@ -135,9 +135,6 @@
   <data name="PartySummary" xml:space="preserve">
     <value>パーティーの概要</value>
   </data>
-  <data name="AccruedInterest" xml:space="preserve">
-    <value>未収利息</value>
-  </data>
   <data name="CreditAllowed" xml:space="preserve">
     <value>クレジット可</value>
   </data>

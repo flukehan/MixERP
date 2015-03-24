@@ -9,158 +9,6 @@ using System.Web.Http;
 namespace MixERP.Net.Core.Api.Office
 {
     /// <summary>
-    /// A CRUD API for cash-repositories. 
-    /// This class cannot be inherited.
-    /// </summary>
-    public sealed class CashRepositoryController: MixERPApiController
-    {
-        [HttpGet]
-        [Route("api/office/cash-repositories")]
-        [Route("api/office/cash-repositories/page/{page:long}")]
-        public IEnumerable<MixERP.Net.Entities.Office.CashRepository> GetPagedResult(long page=1)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.Page<MixERP.Net.Entities.Office.CashRepository>(page, 10, "SELECT * FROM office.cash_repositories ORDER BY cash_repository_id").Items;
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpGet]
-        [Route("api/office/cash-repositories/{id}")]
-        public MixERP.Net.Entities.Office.CashRepository GetSingle(int id)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.FirstOrDefault<MixERP.Net.Entities.Office.CashRepository>("SELECT * FROM office.cash_repositories WHERE cash_repository_id=@0", id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        
-        [HttpPost]
-        [Route("api/office/cash-repositories/post/{item}")]
-        public bool Post(MixERP.Net.Entities.Office.CashRepository item)
-        {
-            if (item == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "POST");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Insert(item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-
-            return true;
-        }
-
-        [HttpPut]
-        [Route("api/office/cash-repositories/put/{id}")]
-        public void Put(int id, MixERP.Net.Entities.Office.CashRepository item)
-        {
-            if (item == null || id <= 0)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-                        
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "PUT");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Update("office.cash_repositories", "cash_repository_id", item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpDelete]
-        [Route("api/office/cash-repositories/delete/{id}")]
-        public void Delete(int id)
-        {
-            if (id <= 0)
-            {
-                return;
-            }
-            
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "DELETE");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Delete("office.cash_repositories", "cash_repository_id", null, id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        //End of CashRepositoryController Class        
-    }
-
-    
-    /// <summary>
     /// A CRUD API for departments. 
     /// This class cannot be inherited.
     /// </summary>
@@ -1069,6 +917,158 @@ namespace MixERP.Net.Core.Api.Office
             }
         }
         //End of CostCenterController Class        
+    }
+
+    
+    /// <summary>
+    /// A CRUD API for cash-repositories. 
+    /// This class cannot be inherited.
+    /// </summary>
+    public sealed class CashRepositoryController: MixERPApiController
+    {
+        [HttpGet]
+        [Route("api/office/cash-repositories")]
+        [Route("api/office/cash-repositories/page/{page:long}")]
+        public IEnumerable<MixERP.Net.Entities.Office.CashRepository> GetPagedResult(long page=1)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.Page<MixERP.Net.Entities.Office.CashRepository>(page, 10, "SELECT * FROM office.cash_repositories ORDER BY cash_repository_id").Items;
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/office/cash-repositories/{id}")]
+        public MixERP.Net.Entities.Office.CashRepository GetSingle(int id)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.FirstOrDefault<MixERP.Net.Entities.Office.CashRepository>("SELECT * FROM office.cash_repositories WHERE cash_repository_id=@0", id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        
+        [HttpPost]
+        [Route("api/office/cash-repositories/post/{item}")]
+        public bool Post(MixERP.Net.Entities.Office.CashRepository item)
+        {
+            if (item == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "POST");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Insert(item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+
+            return true;
+        }
+
+        [HttpPut]
+        [Route("api/office/cash-repositories/put/{id}")]
+        public void Put(int id, MixERP.Net.Entities.Office.CashRepository item)
+        {
+            if (item == null || id <= 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+                        
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "PUT");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Update("office.cash_repositories", "cash_repository_id", item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/office/cash-repositories/delete/{id}")]
+        public void Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return;
+            }
+            
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Office.CashRepository), "DELETE");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Delete("office.cash_repositories", "cash_repository_id", null, id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        //End of CashRepositoryController Class        
     }
 
     

@@ -61,15 +61,6 @@ namespace MixERP.Net.WebControls.PartyControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Accrued Interest.
-        /// </summary>
-        internal static string AccruedInterest {
-            get {
-                return ResourceManager.GetString("AccruedInterest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Address &amp; Contact Information.
         /// </summary>
         internal static string AddressAndContactInfo {

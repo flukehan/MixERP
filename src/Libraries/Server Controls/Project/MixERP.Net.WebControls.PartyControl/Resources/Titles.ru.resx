@@ -135,9 +135,6 @@
   <data name="Home" xml:space="preserve">
     <value>домой</value>
   </data>
-  <data name="AccruedInterest" xml:space="preserve">
-    <value>начисленные проценты</value>
-  </data>
   <data name="CreditAllowed" xml:space="preserve">
     <value>Кредитная животных</value>
   </data>

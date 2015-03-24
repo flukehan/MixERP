@@ -168,6 +168,9 @@
   <data name="P3054" xml:space="preserve">
     <value>並べ替えユニットは、ベースユニットと互換性がありません。</value>
   </data>
+  <data name="P3055" xml:space="preserve">
+    <value>無効な為替相場。</value>
+  </data>
   <data name="P3101" xml:space="preserve">
     <value>無効なログインID。</value>
   </data>

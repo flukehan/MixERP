@@ -93,37 +93,6 @@ namespace MixERP.Net.Entities.Office
     
 
 
-    [TableName("office.cash_repositories")]
-    [PrimaryKey("cash_repository_id")]
-    [ExplicitColumns]
-    public class CashRepository : PetaPocoDB.Record<CashRepository> , IPoco
-    {
-        [Column("cash_repository_id")] 
-        public int CashRepositoryId { get; set; }
-
-        [Column("office_id")] 
-        public int OfficeId { get; set; }
-
-        [Column("cash_repository_code")] 
-        public string CashRepositoryCode { get; set; }
-
-        [Column("cash_repository_name")] 
-        public string CashRepositoryName { get; set; }
-
-        [Column("parent_cash_repository_id")] 
-        public int? ParentCashRepositoryId { get; set; }
-
-        [Column("description")] 
-        public string Description { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
     [TableName("office.departments")]
     [PrimaryKey("department_id")]
     [ExplicitColumns]
@@ -262,6 +231,37 @@ namespace MixERP.Net.Entities.Office
 
         [Column("cost_center_name")] 
         public string CostCenterName { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("office.cash_repositories")]
+    [PrimaryKey("cash_repository_id")]
+    [ExplicitColumns]
+    public class CashRepository : PetaPocoDB.Record<CashRepository> , IPoco
+    {
+        [Column("cash_repository_id")] 
+        public int CashRepositoryId { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+        [Column("cash_repository_code")] 
+        public string CashRepositoryCode { get; set; }
+
+        [Column("cash_repository_name")] 
+        public string CashRepositoryName { get; set; }
+
+        [Column("parent_cash_repository_id")] 
+        public int? ParentCashRepositoryId { get; set; }
+
+        [Column("description")] 
+        public string Description { get; set; }
 
         [Column("audit_user_id")] 
         public int? AuditUserId { get; set; }

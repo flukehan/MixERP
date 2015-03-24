@@ -168,6 +168,9 @@
   <data name="P3054" xml:space="preserve">
     <value>Beställningsenheten är oförenligt med basenheten.</value>
   </data>
+  <data name="P3055" xml:space="preserve">
+    <value>Ogiltig växelkurs.</value>
+  </data>
   <data name="P3101" xml:space="preserve">
     <value>Ogiltigt LoginId.</value>
   </data>

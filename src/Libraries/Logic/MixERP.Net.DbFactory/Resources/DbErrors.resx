@@ -168,6 +168,9 @@
   <data name="P3054" xml:space="preserve">
     <value>The reorder unit is incompatible with the base unit.</value>
   </data>
+  <data name="P3055" xml:space="preserve">
+    <value>Invalid exchange rate.</value>
+  </data>
   <data name="P3101" xml:space="preserve">
     <value>Invalid LoginId.</value>
   </data>

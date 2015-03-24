@@ -168,6 +168,9 @@
   <data name="P3054" xml:space="preserve">
     <value>Het bestelnummer unit is onverenigbaar met het basisstation.</value>
   </data>
+  <data name="P3055" xml:space="preserve">
+    <value>Ongeldige wisselkoers.</value>
+  </data>
   <data name="P3101" xml:space="preserve">
     <value>Ongeldige loginid.</value>
   </data>

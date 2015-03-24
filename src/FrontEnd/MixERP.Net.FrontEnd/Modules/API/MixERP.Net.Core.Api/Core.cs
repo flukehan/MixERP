@@ -9,158 +9,6 @@ using System.Web.Http;
 namespace MixERP.Net.Core.Api.Core
 {
     /// <summary>
-    /// A CRUD API for flag-types. 
-    /// This class cannot be inherited.
-    /// </summary>
-    public sealed class FlagTypeController: MixERPApiController
-    {
-        [HttpGet]
-        [Route("api/core/flag-types")]
-        [Route("api/core/flag-types/page/{page:long}")]
-        public IEnumerable<MixERP.Net.Entities.Core.FlagType> GetPagedResult(long page=1)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.FlagType), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.Page<MixERP.Net.Entities.Core.FlagType>(page, 10, "SELECT * FROM core.flag_types ORDER BY flag_type_id").Items;
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpGet]
-        [Route("api/core/flag-types/{id}")]
-        public MixERP.Net.Entities.Core.FlagType GetSingle(int id)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.FlagType), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.FirstOrDefault<MixERP.Net.Entities.Core.FlagType>("SELECT * FROM core.flag_types WHERE flag_type_id=@0", id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        
-        [HttpPost]
-        [Route("api/core/flag-types/post/{item}")]
-        public bool Post(MixERP.Net.Entities.Core.FlagType item)
-        {
-            if (item == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.FlagType), "POST");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Insert(item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-
-            return true;
-        }
-
-        [HttpPut]
-        [Route("api/core/flag-types/put/{id}")]
-        public void Put(int id, MixERP.Net.Entities.Core.FlagType item)
-        {
-            if (item == null || id <= 0)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-                        
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.FlagType), "PUT");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Update("core.flag_types", "flag_type_id", item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpDelete]
-        [Route("api/core/flag-types/delete/{id}")]
-        public void Delete(int id)
-        {
-            if (id <= 0)
-            {
-                return;
-            }
-            
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.FlagType), "DELETE");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Delete("core.flag_types", "flag_type_id", null, id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        //End of FlagTypeController Class        
-    }
-
-    
-    /// <summary>
     /// A CRUD API for flags. 
     /// This class cannot be inherited.
     /// </summary>
@@ -309,6 +157,158 @@ namespace MixERP.Net.Core.Api.Core
             }
         }
         //End of FlagController Class        
+    }
+
+    
+    /// <summary>
+    /// A CRUD API for flag-types. 
+    /// This class cannot be inherited.
+    /// </summary>
+    public sealed class FlagTypeController: MixERPApiController
+    {
+        [HttpGet]
+        [Route("api/core/flag-types")]
+        [Route("api/core/flag-types/page/{page:long}")]
+        public IEnumerable<MixERP.Net.Entities.Core.FlagType> GetPagedResult(long page=1)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.FlagType), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.Page<MixERP.Net.Entities.Core.FlagType>(page, 10, "SELECT * FROM core.flag_types ORDER BY flag_type_id").Items;
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/core/flag-types/{id}")]
+        public MixERP.Net.Entities.Core.FlagType GetSingle(int id)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.FlagType), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.FirstOrDefault<MixERP.Net.Entities.Core.FlagType>("SELECT * FROM core.flag_types WHERE flag_type_id=@0", id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        
+        [HttpPost]
+        [Route("api/core/flag-types/post/{item}")]
+        public bool Post(MixERP.Net.Entities.Core.FlagType item)
+        {
+            if (item == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.FlagType), "POST");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Insert(item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+
+            return true;
+        }
+
+        [HttpPut]
+        [Route("api/core/flag-types/put/{id}")]
+        public void Put(int id, MixERP.Net.Entities.Core.FlagType item)
+        {
+            if (item == null || id <= 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+                        
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.FlagType), "PUT");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Update("core.flag_types", "flag_type_id", item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/core/flag-types/delete/{id}")]
+        public void Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return;
+            }
+            
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.FlagType), "DELETE");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Delete("core.flag_types", "flag_type_id", null, id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        //End of FlagTypeController Class        
     }
 
     
@@ -2137,6 +2137,158 @@ namespace MixERP.Net.Core.Api.Core
 
     
     /// <summary>
+    /// A CRUD API for cash-flow-setup. 
+    /// This class cannot be inherited.
+    /// </summary>
+    public sealed class CashFlowSetupController: MixERPApiController
+    {
+        [HttpGet]
+        [Route("api/core/cash-flow-setup")]
+        [Route("api/core/cash-flow-setup/page/{page:long}")]
+        public IEnumerable<MixERP.Net.Entities.Core.CashFlowSetup> GetPagedResult(long page=1)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.CashFlowSetup), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.Page<MixERP.Net.Entities.Core.CashFlowSetup>(page, 10, "SELECT * FROM core.cash_flow_setup ORDER BY cash_flow_setup_id").Items;
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/core/cash-flow-setup/{id}")]
+        public MixERP.Net.Entities.Core.CashFlowSetup GetSingle(int id)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.CashFlowSetup), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.FirstOrDefault<MixERP.Net.Entities.Core.CashFlowSetup>("SELECT * FROM core.cash_flow_setup WHERE cash_flow_setup_id=@0", id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        
+        [HttpPost]
+        [Route("api/core/cash-flow-setup/post/{item}")]
+        public bool Post(MixERP.Net.Entities.Core.CashFlowSetup item)
+        {
+            if (item == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.CashFlowSetup), "POST");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Insert(item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+
+            return true;
+        }
+
+        [HttpPut]
+        [Route("api/core/cash-flow-setup/put/{id}")]
+        public void Put(int id, MixERP.Net.Entities.Core.CashFlowSetup item)
+        {
+            if (item == null || id <= 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+                        
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.CashFlowSetup), "PUT");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Update("core.cash_flow_setup", "cash_flow_setup_id", item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/core/cash-flow-setup/delete/{id}")]
+        public void Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return;
+            }
+            
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.CashFlowSetup), "DELETE");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Delete("core.cash_flow_setup", "cash_flow_setup_id", null, id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        //End of CashFlowSetupController Class        
+    }
+
+    
+    /// <summary>
     /// A CRUD API for cash-flow-headings. 
     /// This class cannot be inherited.
     /// </summary>
@@ -2437,158 +2589,6 @@ namespace MixERP.Net.Core.Api.Core
             }
         }
         //End of AccountMasterController Class        
-    }
-
-    
-    /// <summary>
-    /// A CRUD API for cash-flow-setup. 
-    /// This class cannot be inherited.
-    /// </summary>
-    public sealed class CashFlowSetupController: MixERPApiController
-    {
-        [HttpGet]
-        [Route("api/core/cash-flow-setup")]
-        [Route("api/core/cash-flow-setup/page/{page:long}")]
-        public IEnumerable<MixERP.Net.Entities.Core.CashFlowSetup> GetPagedResult(long page=1)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.CashFlowSetup), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.Page<MixERP.Net.Entities.Core.CashFlowSetup>(page, 10, "SELECT * FROM core.cash_flow_setup ORDER BY cash_flow_setup_id").Items;
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpGet]
-        [Route("api/core/cash-flow-setup/{id}")]
-        public MixERP.Net.Entities.Core.CashFlowSetup GetSingle(int id)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.CashFlowSetup), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.FirstOrDefault<MixERP.Net.Entities.Core.CashFlowSetup>("SELECT * FROM core.cash_flow_setup WHERE cash_flow_setup_id=@0", id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        
-        [HttpPost]
-        [Route("api/core/cash-flow-setup/post/{item}")]
-        public bool Post(MixERP.Net.Entities.Core.CashFlowSetup item)
-        {
-            if (item == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.CashFlowSetup), "POST");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Insert(item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-
-            return true;
-        }
-
-        [HttpPut]
-        [Route("api/core/cash-flow-setup/put/{id}")]
-        public void Put(int id, MixERP.Net.Entities.Core.CashFlowSetup item)
-        {
-            if (item == null || id <= 0)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-                        
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.CashFlowSetup), "PUT");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Update("core.cash_flow_setup", "cash_flow_setup_id", item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpDelete]
-        [Route("api/core/cash-flow-setup/delete/{id}")]
-        public void Delete(int id)
-        {
-            if (id <= 0)
-            {
-                return;
-            }
-            
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.CashFlowSetup), "DELETE");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Delete("core.cash_flow_setup", "cash_flow_setup_id", null, id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        //End of CashFlowSetupController Class        
     }
 
     
@@ -4569,158 +4569,6 @@ namespace MixERP.Net.Core.Api.Core
 
     
     /// <summary>
-    /// A CRUD API for tax-master. 
-    /// This class cannot be inherited.
-    /// </summary>
-    public sealed class TaxMasterController: MixERPApiController
-    {
-        [HttpGet]
-        [Route("api/core/tax-master")]
-        [Route("api/core/tax-master/page/{page:long}")]
-        public IEnumerable<MixERP.Net.Entities.Core.TaxMaster> GetPagedResult(long page=1)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.TaxMaster), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.Page<MixERP.Net.Entities.Core.TaxMaster>(page, 10, "SELECT * FROM core.tax_master ORDER BY tax_master_id").Items;
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpGet]
-        [Route("api/core/tax-master/{id}")]
-        public MixERP.Net.Entities.Core.TaxMaster GetSingle(int id)
-        {
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.TaxMaster), "GET");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    return db.FirstOrDefault<MixERP.Net.Entities.Core.TaxMaster>("SELECT * FROM core.tax_master WHERE tax_master_id=@0", id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        
-        [HttpPost]
-        [Route("api/core/tax-master/post/{item}")]
-        public bool Post(MixERP.Net.Entities.Core.TaxMaster item)
-        {
-            if (item == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.TaxMaster), "POST");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Insert(item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-
-            return true;
-        }
-
-        [HttpPut]
-        [Route("api/core/tax-master/put/{id}")]
-        public void Put(int id, MixERP.Net.Entities.Core.TaxMaster item)
-        {
-            if (item == null || id <= 0)
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-                        
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.TaxMaster), "PUT");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Update("core.tax_master", "tax_master_id", item);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpDelete]
-        [Route("api/core/tax-master/delete/{id}")]
-        public void Delete(int id)
-        {
-            if (id <= 0)
-            {
-                return;
-            }
-            
-            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.TaxMaster), "DELETE");
-            policy.Authorize();
-
-            if (!policy.IsAuthorized)
-            {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-            }
-
-            try
-            {
-                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
-                {
-                    db.Delete("core.tax_master", "tax_master_id", null, id);
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
-        //End of TaxMasterController Class        
-    }
-
-    
-    /// <summary>
     /// A CRUD API for tax-exempt-types. 
     /// This class cannot be inherited.
     /// </summary>
@@ -4869,6 +4717,158 @@ namespace MixERP.Net.Core.Api.Core
             }
         }
         //End of TaxExemptTypeController Class        
+    }
+
+    
+    /// <summary>
+    /// A CRUD API for tax-master. 
+    /// This class cannot be inherited.
+    /// </summary>
+    public sealed class TaxMasterController: MixERPApiController
+    {
+        [HttpGet]
+        [Route("api/core/tax-master")]
+        [Route("api/core/tax-master/page/{page:long}")]
+        public IEnumerable<MixERP.Net.Entities.Core.TaxMaster> GetPagedResult(long page=1)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.TaxMaster), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.Page<MixERP.Net.Entities.Core.TaxMaster>(page, 10, "SELECT * FROM core.tax_master ORDER BY tax_master_id").Items;
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/core/tax-master/{id}")]
+        public MixERP.Net.Entities.Core.TaxMaster GetSingle(int id)
+        {
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.TaxMaster), "GET");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    return db.FirstOrDefault<MixERP.Net.Entities.Core.TaxMaster>("SELECT * FROM core.tax_master WHERE tax_master_id=@0", id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        
+        [HttpPost]
+        [Route("api/core/tax-master/post/{item}")]
+        public bool Post(MixERP.Net.Entities.Core.TaxMaster item)
+        {
+            if (item == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.TaxMaster), "POST");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Insert(item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+
+            return true;
+        }
+
+        [HttpPut]
+        [Route("api/core/tax-master/put/{id}")]
+        public void Put(int id, MixERP.Net.Entities.Core.TaxMaster item)
+        {
+            if (item == null || id <= 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+                        
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.TaxMaster), "PUT");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Update("core.tax_master", "tax_master_id", item);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/core/tax-master/delete/{id}")]
+        public void Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return;
+            }
+            
+            ApiAccessPolicy policy = new ApiAccessPolicy(typeof(MixERP.Net.Entities.Core.TaxMaster), "DELETE");
+            policy.Authorize();
+
+            if (!policy.IsAuthorized)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+
+            try
+            {
+                using (Database db = new Database(Factory.GetConnectionString(), "Npgsql"))
+                {
+                    db.Delete("core.tax_master", "tax_master_id", null, id);
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+        //End of TaxMasterController Class        
     }
 
     

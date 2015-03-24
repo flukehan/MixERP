@@ -168,6 +168,9 @@
   <data name="P3054" xml:space="preserve">
     <value>Блок повторного заказа несовместимо с базовым блоком.</value>
   </data>
+  <data name="P3055" xml:space="preserve">
+    <value>Неверный курс.</value>
+  </data>
   <data name="P3101" xml:space="preserve">
     <value>Неверный LoginID.</value>
   </data>

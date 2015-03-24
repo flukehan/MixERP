@@ -135,9 +135,6 @@
   <data name="Home" xml:space="preserve">
     <value>Laman Utama</value>
   </data>
-  <data name="AccruedInterest" xml:space="preserve">
-    <value>Faedah terakru</value>
-  </data>
   <data name="CreditAllowed" xml:space="preserve">
     <value>kredit dibenarkan</value>
   </data>

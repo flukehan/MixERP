@@ -135,9 +135,6 @@
   <data name="PartySummary" xml:space="preserve">
     <value>Buod ng Party</value>
   </data>
-  <data name="AccruedInterest" xml:space="preserve">
-    <value>naipon Interes</value>
-  </data>
   <data name="CreditAllowed" xml:space="preserve">
     <value>Pinapayagang credit</value>
   </data>

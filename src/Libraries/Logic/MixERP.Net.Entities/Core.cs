@@ -93,31 +93,6 @@ namespace MixERP.Net.Entities.Core
     
 
 
-    [TableName("core.flag_types")]
-    [PrimaryKey("flag_type_id")]
-    [ExplicitColumns]
-    public class FlagType : PetaPocoDB.Record<FlagType> , IPoco
-    {
-        [Column("flag_type_id")] 
-        public int FlagTypeId { get; set; }
-
-        [Column("flag_type_name")] 
-        public string FlagTypeName { get; set; }
-
-        [Column("background_color")] 
-        public string BackgroundColor { get; set; }
-
-        [Column("foreground_color")] 
-        public string ForegroundColor { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
     [TableName("core.flags")]
     [PrimaryKey("flag_id")]
     [ExplicitColumns]
@@ -143,6 +118,31 @@ namespace MixERP.Net.Entities.Core
 
         [Column("flagged_on")] 
         public DateTime? FlaggedOn { get; set; }
+
+    }
+
+    [TableName("core.flag_types")]
+    [PrimaryKey("flag_type_id")]
+    [ExplicitColumns]
+    public class FlagType : PetaPocoDB.Record<FlagType> , IPoco
+    {
+        [Column("flag_type_id")] 
+        public int FlagTypeId { get; set; }
+
+        [Column("flag_type_name")] 
+        public string FlagTypeName { get; set; }
+
+        [Column("background_color")] 
+        public string BackgroundColor { get; set; }
+
+        [Column("foreground_color")] 
+        public string ForegroundColor { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
 
     }
 
@@ -452,6 +452,28 @@ namespace MixERP.Net.Entities.Core
 
     }
 
+    [TableName("core.cash_flow_setup")]
+    [PrimaryKey("cash_flow_setup_id")]
+    [ExplicitColumns]
+    public class CashFlowSetup : PetaPocoDB.Record<CashFlowSetup> , IPoco
+    {
+        [Column("cash_flow_setup_id")] 
+        public int CashFlowSetupId { get; set; }
+
+        [Column("cash_flow_heading_id")] 
+        public int CashFlowHeadingId { get; set; }
+
+        [Column("account_master_id")] 
+        public short AccountMasterId { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
     [TableName("core.cash_flow_headings")]
     [PrimaryKey("cash_flow_heading_id", autoIncrement=false)]
     [ExplicitColumns]
@@ -505,28 +527,6 @@ namespace MixERP.Net.Entities.Core
 
         [Column("parent_account_master_id")] 
         public short? ParentAccountMasterId { get; set; }
-
-    }
-
-    [TableName("core.cash_flow_setup")]
-    [PrimaryKey("cash_flow_setup_id")]
-    [ExplicitColumns]
-    public class CashFlowSetup : PetaPocoDB.Record<CashFlowSetup> , IPoco
-    {
-        [Column("cash_flow_setup_id")] 
-        public int CashFlowSetupId { get; set; }
-
-        [Column("cash_flow_heading_id")] 
-        public int CashFlowHeadingId { get; set; }
-
-        [Column("account_master_id")] 
-        public short AccountMasterId { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
 
     }
 
@@ -852,28 +852,6 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [TableName("core.tax_master")]
-    [PrimaryKey("tax_master_id")]
-    [ExplicitColumns]
-    public class TaxMaster : PetaPocoDB.Record<TaxMaster> , IPoco
-    {
-        [Column("tax_master_id")] 
-        public int TaxMasterId { get; set; }
-
-        [Column("tax_master_code")] 
-        public string TaxMasterCode { get; set; }
-
-        [Column("tax_master_name")] 
-        public string TaxMasterName { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
     [TableName("core.tax_exempt_types")]
     [PrimaryKey("tax_exempt_type_id")]
     [ExplicitColumns]
@@ -887,6 +865,28 @@ namespace MixERP.Net.Entities.Core
 
         [Column("tax_exempt_type_name")] 
         public string TaxExemptTypeName { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("core.tax_master")]
+    [PrimaryKey("tax_master_id")]
+    [ExplicitColumns]
+    public class TaxMaster : PetaPocoDB.Record<TaxMaster> , IPoco
+    {
+        [Column("tax_master_id")] 
+        public int TaxMasterId { get; set; }
+
+        [Column("tax_master_code")] 
+        public string TaxMasterCode { get; set; }
+
+        [Column("tax_master_name")] 
+        public string TaxMasterName { get; set; }
 
         [Column("audit_user_id")] 
         public int? AuditUserId { get; set; }
@@ -4998,21 +4998,6 @@ namespace MixERP.Net.Entities.Core
 
     }
 
-    [TableName("core.period")]
-    [ExplicitColumns]
-    public class Period : PetaPocoDB.Record<Period> , IPoco
-    {
-        [Column("period_name")] 
-        public string PeriodName { get; set; }
-
-        [Column("date_from")] 
-        public DateTime DateFrom { get; set; }
-
-        [Column("date_to")] 
-        public DateTime DateTo { get; set; }
-
-    }
-
     [TableName("core.attachment_type")]
     [ExplicitColumns]
     public class AttachmentType : PetaPocoDB.Record<AttachmentType> , IPoco
@@ -5028,6 +5013,21 @@ namespace MixERP.Net.Entities.Core
 
         [Column("file_extension")] 
         public string FileExtension { get; set; }
+
+    }
+
+    [TableName("core.period")]
+    [ExplicitColumns]
+    public class Period : PetaPocoDB.Record<Period> , IPoco
+    {
+        [Column("period_name")] 
+        public string PeriodName { get; set; }
+
+        [Column("date_from")] 
+        public DateTime DateFrom { get; set; }
+
+        [Column("date_to")] 
+        public DateTime DateTo { get; set; }
 
     }
 }

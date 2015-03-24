@@ -168,6 +168,9 @@
   <data name="P3054" xml:space="preserve">
     <value>Die Meldeeinheit ist mit der Basiseinheit nicht kompatibel.</value>
   </data>
+  <data name="P3055" xml:space="preserve">
+    <value>Ungültige Wechselkurs.</value>
+  </data>
   <data name="P3101" xml:space="preserve">
     <value>Ungültige LoginId.</value>
   </data>

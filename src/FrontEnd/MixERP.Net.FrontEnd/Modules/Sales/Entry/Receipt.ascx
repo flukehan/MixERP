@@ -21,9 +21,9 @@ OverridePath="/Modules/Sales/Receipt.mix" %>
 <%@ Register TagPrefix="mixerp" Namespace="MixERP.Net.WebControls.Common" Assembly="MixERP.Net.WebControls.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a724a47a0879d02f" %>
 
 
-<h3>
+<h2>
     <asp:Literal runat="server" ID="TitleLiteral"/>
-</h3>
+</h2>
 
 <asp:ScriptManagerProxy runat="server"></asp:ScriptManagerProxy>
 

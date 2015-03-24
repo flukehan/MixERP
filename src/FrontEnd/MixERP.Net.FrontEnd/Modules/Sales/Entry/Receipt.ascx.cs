@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
 
         private void InitializeResourceStrings()
         {
-            this.TitleLiteral.Text = Titles.Receipt;
+            this.TitleLiteral.Text = Titles.SalesReceipt;
             this.TotalDueAmountInBaseCurrencyLiteral.Text = Titles.TotalDueAmountInBaseCurrency;
             this.BaseCurrencyLiteral.Text = Titles.BaseCurrency;
             this.ReceivedCurrencyLiteral.Text = Titles.ReceivedCurrency;

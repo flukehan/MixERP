@@ -115,7 +115,6 @@ namespace MixERP.Net.WebControls.PartyControl
                     table.Attributes.Add("class", "ui table segment");
                     table.Rows.Add(ControlHelper.GetNewRow(Titles.TotalDueAmount, @"TotalDueAmountSpan", @"span"));
                     table.Rows.Add(ControlHelper.GetNewRow(Titles.TotalDueAmountCurrentOffice, @"OfficeDueAmountSpan", @"span"));
-                    table.Rows.Add(ControlHelper.GetNewRow(Titles.AccruedInterest, @"AccruedInterestSpan", @"span"));
                     table.Rows.Add(ControlHelper.GetNewRow(Titles.LastPaymentDate, @"LastPaymentDateSpan", @"span"));
                     table.Rows.Add(ControlHelper.GetNewRow(Titles.TransactionValue, @"TransactionValueSpan", @"span"));
 

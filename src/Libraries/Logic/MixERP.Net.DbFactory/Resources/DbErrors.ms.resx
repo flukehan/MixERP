@@ -168,6 +168,9 @@
   <data name="P3054" xml:space="preserve">
     <value>Unit pesanan semula adalah tidak serasi dengan unit asas.</value>
   </data>
+  <data name="P3055" xml:space="preserve">
+    <value>Kadar pertukaran tidak sah.</value>
+  </data>
   <data name="P3101" xml:space="preserve">
     <value>LoginId tidak sah.</value>
   </data>

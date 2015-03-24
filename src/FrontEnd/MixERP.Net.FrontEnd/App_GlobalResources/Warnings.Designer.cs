@@ -124,7 +124,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are not authorized to access this resources at this time..
+        ///   Looks up a localized string similar to You are not authorized to access this resource at this time..
         /// </summary>
         internal static string NotAuthorized {
             get {

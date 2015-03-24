@@ -214,6 +214,15 @@ namespace MixERP.Net.DbFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid exchange rate..
+        /// </summary>
+        internal static string P3055 {
+            get {
+                return ResourceManager.GetString("P3055", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid LoginId..
         /// </summary>
         internal static string P3101 {

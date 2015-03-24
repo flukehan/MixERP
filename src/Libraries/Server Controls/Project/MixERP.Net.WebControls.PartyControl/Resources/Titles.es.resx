@@ -135,9 +135,6 @@
   <data name="PartySummary" xml:space="preserve">
     <value>Resumen del partido</value>
   </data>
-  <data name="AccruedInterest" xml:space="preserve">
-    <value>Los intereses devengados</value>
-  </data>
   <data name="CreditAllowed" xml:space="preserve">
     <value>animales de crédito</value>
   </data>

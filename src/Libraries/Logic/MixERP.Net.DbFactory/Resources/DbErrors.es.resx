@@ -168,6 +168,9 @@
   <data name="P3054" xml:space="preserve">
     <value>La unidad de reordenación es incompatible con la unidad base.</value>
   </data>
+  <data name="P3055" xml:space="preserve">
+    <value>Tipo de cambio no es válida.</value>
+  </data>
   <data name="P3101" xml:space="preserve">
     <value>Loginid válido.</value>
   </data>

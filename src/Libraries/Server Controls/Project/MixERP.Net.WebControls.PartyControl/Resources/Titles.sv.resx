@@ -135,9 +135,6 @@
   <data name="PartySummary" xml:space="preserve">
     <value>parti sammandrag</value>
   </data>
-  <data name="AccruedInterest" xml:space="preserve">
-    <value>Upplupen ränta</value>
-  </data>
   <data name="CreditAllowed" xml:space="preserve">
     <value>Kredit tillåtna</value>
   </data>

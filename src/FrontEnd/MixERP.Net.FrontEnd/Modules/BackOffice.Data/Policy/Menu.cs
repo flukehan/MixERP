@@ -30,10 +30,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Policy
             return Factory.Get<DbGetMenuPolicyResult>("SELECT * FROM policy.get_menu_policy(@0, @1, @2)", userId, officeId, culture);
         }
 
-        public static void SaveMenuPolicy(int userId, int officeId, string menus)
-        {
-            const string sql = "SELECT * FROM policy.save_menu_policy(@0, @1, string_to_array(@2, ',')::int[]);";
-            Factory.NonQuery(sql, userId, officeId, menus);
-        }
+public static void SaveMenuPolicy(int userId, int officeId, string menus)
+{
+    const string sql = "SELECT * FROM policy.save_menu_policy(@0, @1, string_to_array(@2, ',')::varchar[]::int[]);";
+    Factory.NonQuery(sql, userId, officeId, menus);
+}
     }
 }

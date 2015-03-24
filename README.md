@@ -15,15 +15,10 @@ Tell us what you like to see in the CRM Module! Not sure? Then what about review
 
 We have a few demo servers to access the project:
 
-**Denver**
+**United States**
 
 * [chamlang.mixerp.org](http://chamlang.mixerp.org)
 * [nemjung.mixerp.org](http://) 
-
-**New Jersey**
-
-* [nuptse.mixerp.org](http://nuptse.mixerp.org)
-* [langtang.mixerp.org](http://langtang.mixerp.org)
 
 **Kathmandu**
 

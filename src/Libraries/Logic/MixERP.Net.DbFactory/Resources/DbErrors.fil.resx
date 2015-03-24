@@ -168,6 +168,9 @@
   <data name="P3054" xml:space="preserve">
     <value>Ang Muling mag-order yunit ay hindi tugma sa ang pangunahing yunit.</value>
   </data>
+  <data name="P3055" xml:space="preserve">
+    <value>Di-wastong halaga ng palitan.</value>
+  </data>
   <data name="P3101" xml:space="preserve">
     <value>Di-wastong LoginId.</value>
   </data>

@@ -171,7 +171,20 @@ debitExchangeRateInputText.keyup(function () {
     updateTotal();
 });
 
+creditExchangeRateInputText.keyup(function () {
+    updateTotal();
+});
+
+
 function updateTotal() {
+    if (currencySelect.getSelectedValue() === homeCurrency) {
+        debitExchangeRateInputText.val("1");
+    };
+
+    if (currencyInputText.val() === homeCurrency) {
+        creditExchangeRateInputText.val("1");
+    };
+
     var due = parseFloat2(dueAmountInputText.val());
     var amount = parseFloat2(amountInputText.val());
     var er = parseFloat2(debitExchangeRateInputText.val());

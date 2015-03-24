@@ -135,9 +135,6 @@
   <data name="Home" xml:space="preserve">
     <value>Nach Hause</value>
   </data>
-  <data name="AccruedInterest" xml:space="preserve">
-    <value>Stückzinsen</value>
-  </data>
   <data name="CreditAllowed" xml:space="preserve">
     <value>Kredit erlaubt</value>
   </data>

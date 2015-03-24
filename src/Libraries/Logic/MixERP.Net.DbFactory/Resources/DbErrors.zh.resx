@@ -168,6 +168,9 @@
   <data name="P3054" xml:space="preserve">
     <value>重排部是与基站单元不兼容。</value>
   </data>
+  <data name="P3055" xml:space="preserve">
+    <value>无效的汇率。</value>
+  </data>
   <data name="P3101" xml:space="preserve">
     <value>无效的登录ID。</value>
   </data>

@@ -135,9 +135,6 @@
   <data name="Home" xml:space="preserve">
     <value>家</value>
   </data>
-  <data name="AccruedInterest" xml:space="preserve">
-    <value>应计利息</value>
-  </data>
   <data name="CreditAllowed" xml:space="preserve">
     <value>信贷允许的</value>
   </data>
