@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Web.ModelBinding;
 using System.Web.UI;
 using MixERP.Net.Common;
 using MixERP.Net.WebControls.ScrudFactory.Controls;
@@ -30,7 +31,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             int pageSize = this.GetPageSize();
             int totalRecords = FormHelper.GetTotalRecords(this.ViewSchema, this.View);
-            
+
             int currentPage = Conversion.TryCastInteger(this.Page.Request.QueryString["page"]);
             if (currentPage.Equals(0))
             {
@@ -53,18 +54,20 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private void CreatePager(Control container, int pageSize, int totalRecords, int currentPage, int blockCount, string cssClass, string activeCssClass, string itemCssClass)
         {
-
+            string queryString = this.Page.Request.QueryString.ToString();
+           
             ScrudPager scrudPager = new ScrudPager
-            {
-                TotalRecords = totalRecords,
-                CurrentPage = currentPage,
-                PageSize = pageSize,
-                BlockCount = blockCount, 
-                CssClass = cssClass,
-                ActiveCssClass = activeCssClass,
-                ItemCssClass = itemCssClass,
-                CurrentPageUrl = this.Page.Request.Url.AbsolutePath
-            };
+             {
+                 TotalRecords = totalRecords,
+                 CurrentPage = currentPage,
+                 PageSize = pageSize,
+                 BlockCount = blockCount,
+                 CssClass = cssClass,
+                 ActiveCssClass = activeCssClass,
+                 ItemCssClass = itemCssClass,
+                 CurrentPageUrl = this.Page.Request.Url.AbsolutePath,
+                 QueryString=queryString
+             };
 
             container.Controls.Add(scrudPager.GetPager());
         }
