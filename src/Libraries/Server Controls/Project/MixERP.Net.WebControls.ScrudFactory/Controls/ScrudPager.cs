@@ -35,6 +35,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
         internal string ActiveCssClass { get; set; }
         internal string ItemCssClass { get; set; }
         internal string CurrentPageUrl { get; set; }
+        internal string QueryString { get; set; }
         public int BlockCount { get; set; }
 
         internal HtmlGenericControl GetPager()
@@ -44,9 +45,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
                 this.PageSize = this.BlockCount;
             }
 
-            this.TotalPages = (int) Decimal.Ceiling(Decimal.Divide(this.TotalRecords, this.PageSize));
+            this.TotalPages = (int)Decimal.Ceiling(Decimal.Divide(this.TotalRecords, this.PageSize));
 
-            int start = 1 + (int) Decimal.Ceiling(Decimal.Divide(this.CurrentPage, this.BlockCount) - 1)*this.BlockCount;
+            int start = 1 + (int)Decimal.Ceiling(Decimal.Divide(this.CurrentPage, this.BlockCount) - 1) * this.BlockCount;
             int end = start + this.BlockCount - 1;
 
             if (end > this.TotalPages)
@@ -194,7 +195,19 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
                 anchor.InnerText = pageNumber.ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
 
-                anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}", this.CurrentPageUrl, pageNumber);
+                if (this.QueryString == "modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden")
+                {
+                    anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}&modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden", this.CurrentPageUrl, pageNumber);
+                }
+                else if (this.QueryString == (string.Format(CultureInfo.InvariantCulture, "page={0}&modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden", this.CurrentPage)))
+                {
+                    anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}&modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden", this.CurrentPageUrl, pageNumber);
+                }
+                else
+                {
+                    anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}", this.CurrentPageUrl, pageNumber);
+                }
+
 
                 string title = string.Format(Thread.CurrentThread.CurrentCulture, Titles.PageN, pageNumber);
                 anchor.Attributes.Add("title", title);
@@ -213,6 +226,18 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
                 {
                     icon.Attributes.Add("class", iconCssClass);
                     anchor.Controls.Add(icon);
+                }
+
+                if (this.QueryString == "modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden")
+                {
+                    anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}&modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden", this.CurrentPageUrl, pageNumber);
+                    return anchor;
+                }
+                
+                if (this.QueryString == (string.Format(CultureInfo.InvariantCulture, "page={0}&modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden", this.CurrentPage)))
+                {
+                    anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}&modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden", this.CurrentPageUrl, pageNumber);
+                    return anchor;
                 }
 
                 if (pageNumber > 0)
