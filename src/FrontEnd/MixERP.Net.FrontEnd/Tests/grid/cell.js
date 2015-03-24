@@ -45,3 +45,20 @@ QUnit.test("cell.js -> sumOfColumn", function (assert) {
 
     assert.equal(actual, expected, "The function returned expected \"" + expected + "\".");
 });
+QUnit.test("cell.js -> getColumnText", function (assert) {
+    var expected = 100;
+    var actual = parseFloat2(getColumnText(table, 1));
+    assert.equal(actual, expected, "The function returned expected value \"" + expected + "\".");
+
+    expected = 4000;
+    actual = parseFloat2(getColumnText(table, 2));
+
+    assert.equal(actual, expected, "The function returned expected value \"" + expected + "\".");
+
+    expected = 2;
+    actual = parseFloat2(getColumnText(table, 4));
+
+    assert.equal(actual, expected, "The function returned expected value\"" + expected + "\".");
+
+});
+
