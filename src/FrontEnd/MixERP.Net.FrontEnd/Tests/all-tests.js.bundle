@@ -16,6 +16,7 @@
     <file>/Tests/dom/visibility.js</file>
     <file>/Tests/dom/select.js</file>
     <file>/Tests/grid/cell.js</file>
+    <file>/Tests/grid/grid.js</file>
     <file>/Tests/localization.js</file>
     <file>/Tests/transaction.js</file>
 
