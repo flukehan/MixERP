@@ -1,3 +1,4 @@
+DROP VIEW IF EXISTS office.office_scrud_view;
 CREATE VIEW office.office_scrud_view
 AS
 SELECT 
@@ -26,5 +27,5 @@ FROM
 INNER JOIN core.currencies
 ON office.offices.currency_code = core.currencies.currency_code
 LEFT JOIN office.offices AS parent_office
-ON  office.offices.parent_office_id = parent_office.parent_office_id;
+ON  office.offices.office_id = parent_office.office_id;
 
