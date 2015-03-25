@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS transactions.validate_item_for_return
+﻿DROP FUNCTION IF EXISTS transactions.validate_item_for_return
 (
     _transaction_master_id                  bigint, 
     _store_id                               integer, 
@@ -28,7 +28,7 @@ $$
     DECLARE _item_code                      text;
     DECLARE _unit_name                      text;
     DECLARE _unit_id                        integer = 0;
-    DECLARE _factor_to_base_unit            numeric;
+    DECLARE _factor_to_base_unit            numeric(24, 4);
     DECLARE _returned_in_previous_batch     public.decimal_strict2 = 0;
     DECLARE _in_verification_queue          public.decimal_strict2 = 0;
     DECLARE _actual_price_in_root_unit      public.money_strict2 = 0;
@@ -45,7 +45,7 @@ BEGIN
         store_id            integer,
         item_id             integer,
         item_code           national character varying(12),
-        item_in_stock       numeric,
+        item_in_stock       numeric(24, 4),
         quantity            integer_strict,        
         unit_id             integer,
         unit_name           national character varying(50),
@@ -55,7 +55,7 @@ BEGIN
         tax_form            national character varying(24),
         tax                 money_strict2,
         root_unit_id        integer,
-        base_quantity       numeric
+        base_quantity       numeric(24, 4)
     ) ON COMMIT DROP;
 
     INSERT INTO details_temp(store_id, item_code, quantity, unit_name, price, discount, shipping_charge, tax_form, tax)
@@ -82,10 +82,10 @@ BEGIN
         store_id                    integer,
         item_id                     integer,
         root_unit_id                integer,
-        returned_quantity           numeric,
-        actual_quantity             numeric,
-        returned_in_previous_batch  numeric,
-        in_verification_queue       numeric
+        returned_quantity           numeric(24, 4),
+        actual_quantity             numeric(24, 4),
+        returned_in_previous_batch  numeric(24, 4),
+        in_verification_queue       numeric(24, 4)
     ) ON COMMIT DROP;
     
     INSERT INTO item_summary_temp(store_id, item_id, root_unit_id, returned_quantity)
@@ -162,8 +162,8 @@ BEGIN
     CREATE TEMPORARY TABLE cumulative_pricing_temp
     (
         item_id                     integer,
-        base_price                  numeric,
-        allowed_returns             numeric
+        base_price                  numeric(24, 4),
+        allowed_returns             numeric(24, 4)
     ) ON COMMIT DROP;
 
     INSERT INTO cumulative_pricing_temp
@@ -269,15 +269,15 @@ BEGIN
     END IF;
 
     FOR this IN
-    SELECT item_id, base_quantity, price / base_quantity AS base_price
+    SELECT item_id, base_quantity, (price / base_quantity * quantity)::numeric(24, 4) as price
     FROM details_temp
-    LOOP    
+    LOOP
         IF NOT EXISTS
         (
             SELECT 0
             FROM cumulative_pricing_temp
             WHERE item_id = this.item_id
-            AND base_price >=  this.base_price
+            AND base_price >=  this.price
             AND allowed_returns >= this.base_quantity
         ) THEN
             RAISE EXCEPTION 'The returned amount cannot be greater than actual amount.'
@@ -294,9 +294,9 @@ LANGUAGE plpgsql;
 
 -- SELECT * FROM transactions.validate_items_for_return
 -- (
---     125,
+--     127,
 --     ARRAY[
---         ROW(1, 'RMBP', 1, 'Piece', 225000.0000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
---         ROW(1, 'RMBP', 12, 'Piece', 2565000.0000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type
+--         ROW(1, 'RMBP', 2, 'Dozen', 1000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type
+--        
 --     ]
 -- );
