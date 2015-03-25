@@ -19,6 +19,5 @@
     <file>/Tests/grid/grid.js</file>
     <file>/Tests/localization.js</file>
     <file>/Tests/transaction.js</file>
-
   </files>
 </bundle>

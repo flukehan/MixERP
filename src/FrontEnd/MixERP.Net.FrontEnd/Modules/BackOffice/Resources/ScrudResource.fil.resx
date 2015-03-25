@@ -882,4 +882,7 @@
   <data name="poco_type_name" xml:space="preserve">
     <value>Uri ng Pangalan sa Poco</value>
   </data>
+  <data name="income_tax_rate" xml:space="preserve">
+    <value>Rate ng Buwis sa Kita</value>
+  </data>
 </root>

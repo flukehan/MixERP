@@ -950,6 +950,7 @@
     <Content Include="Tests\dom\select.js" />
     <Content Include="Tests\dom\visibility.js" />
     <Content Include="Tests\grid\cell.js" />
+    <Content Include="Tests\grid\grid.js" />
     <Content Include="Tests\localization.js" />
     <Content Include="Tests\mixerp-core.test.html" />
     <Content Include="Scripts\mixerp\mixerp-core.js">

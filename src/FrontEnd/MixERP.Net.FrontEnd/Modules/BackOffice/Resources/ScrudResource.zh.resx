@@ -882,4 +882,7 @@
   <data name="poco_type_name" xml:space="preserve">
     <value>POCO类型名称</value>
   </data>
+  <data name="income_tax_rate" xml:space="preserve">
+    <value>所得税率</value>
+  </data>
 </root>

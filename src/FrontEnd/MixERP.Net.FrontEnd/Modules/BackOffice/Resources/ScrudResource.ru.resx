@@ -882,4 +882,7 @@
   <data name="poco_type_name" xml:space="preserve">
     <value>Poco Тип Название</value>
   </data>
+  <data name="income_tax_rate" xml:space="preserve">
+    <value>Ставка налога на прибыль</value>
+  </data>
 </root>

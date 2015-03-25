@@ -952,6 +952,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Income Tax Rate.
+        /// </summary>
+        internal static string income_tax_rate {
+            get {
+                return ResourceManager.GetString("income_tax_rate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Industry Id.
         /// </summary>
         internal static string industry_id {

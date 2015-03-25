@@ -882,4 +882,7 @@
   <data name="poco_type_name" xml:space="preserve">
     <value>Poco Jenis Nama</value>
   </data>
+  <data name="income_tax_rate" xml:space="preserve">
+    <value>Penghasilan Tarif Pajak</value>
+  </data>
 </root>
