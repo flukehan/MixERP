@@ -30,12 +30,13 @@ namespace MixERP.Net.Common.Helpers
         public static Collection<ApplicationDateModel> GetApplicationDates()
         {
             object dates = GetFromDefaultCacheByKey(appDatesKey);
+            
             if (dates == null)
             {
                 return new Collection<ApplicationDateModel>();
             }
 
-            return (Collection<ApplicationDateModel>)dates;
+            return dates as Collection<ApplicationDateModel>;
         }
 
         public static void SetApplicationDates(Collection<ApplicationDateModel> applicationDates)

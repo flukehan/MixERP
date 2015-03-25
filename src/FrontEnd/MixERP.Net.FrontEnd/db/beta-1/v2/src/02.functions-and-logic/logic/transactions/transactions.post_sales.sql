@@ -114,9 +114,10 @@ BEGIN
         store_id                        integer,
         item_code                       text,
         item_id                         integer, 
-        quantity                        integer_strict,
+        quantity                        integer_strict,        
         unit_name                       text,
         unit_id                         integer,
+        in_stock                        numeric,
         base_quantity                   decimal,
         base_unit_id                    integer,                
         price                           money_strict,
@@ -131,8 +132,7 @@ BEGIN
         inventory_account_id            integer,
         cost_of_goods_sold_account_id   integer
     ) ON COMMIT DROP;
-
-
+    
     DROP TABLE IF EXISTS temp_stock_tax_details;
     CREATE TEMPORARY TABLE temp_stock_tax_details
     (
@@ -171,7 +171,20 @@ BEGIN
         sales_discount_account_id       = core.get_sales_discount_account_id(item_id),
         inventory_account_id            = core.get_inventory_account_id(item_id),
         cost_of_goods_sold_account_id   = core.get_cost_of_goods_sold_account_id(item_id);
-            
+
+    UPDATE temp_stock_details
+    SET in_stock = core.count_item_in_stock(temp_stock_details.item_id, temp_stock_details.unit_id, temp_stock_details.store_id);
+
+    IF EXISTS
+    (
+        SELECT 0 FROM temp_stock_details
+        WHERE quantity > in_stock
+        LIMIT 1
+    ) THEN
+        RAISE EXCEPTION 'Insufficient item quantity'
+        USING ERRCODE='P5500';
+    END IF;
+    
     IF EXISTS
     (
             SELECT 1 FROM temp_stock_details AS details
@@ -373,7 +386,7 @@ LANGUAGE plpgsql;
 --                  ROW(1, 'RMBP', 1, 'Piece',180000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
 --                  ROW(1, '13MBA', 1, 'Dozen',130000, 300, 30, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
 --                  ROW(1, '11MBA', 1, 'Piece',110000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type], 
---       ARRAY[NULL::core.attachment_type]);
+--       ARRAY[NULL::core.attachment_type], NULL::bigint[]);
 
 
 

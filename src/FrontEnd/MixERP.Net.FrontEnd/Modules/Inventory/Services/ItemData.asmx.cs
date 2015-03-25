@@ -97,6 +97,11 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             decimal price = 0;
 
+            if (string.IsNullOrWhiteSpace(itemCode))
+            {
+                return 0;
+            }
+
             switch (tranBook)
             {
                 case "Sales":

@@ -34475,6 +34475,83 @@ WITH FUNCTION core.cast_frequency(text) AS ASSIGNMENT;
 
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.count_purchases.sql --<--<--
+DROP FUNCTION IF EXISTS core.count_purchases(_item_id integer, _unit_id integer, _store_id integer);
+
+CREATE FUNCTION core.count_purchases(_item_id integer, _unit_id integer, _store_id integer)
+RETURNS decimal
+STABLE
+AS
+$$
+        DECLARE _base_unit_id integer;
+        DECLARE _debit decimal;
+        DECLARE _factor decimal;
+BEGIN
+    --Get the base item unit
+    SELECT 
+        core.get_root_unit_id(core.items.unit_id) 
+    INTO _base_unit_id
+    FROM core.items
+    WHERE core.items.item_id=$1;
+
+    SELECT
+        COALESCE(SUM(base_quantity), 0)
+    INTO _debit
+    FROM transactions.stock_details
+    INNER JOIN transactions.stock_master
+    ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+    INNER JOIN transactions.transaction_master
+    ON transactions.stock_master.transaction_master_id = transactions.transaction_master.transaction_master_id
+    WHERE transactions.transaction_master.verification_status_id > 0
+    AND transactions.stock_details.item_id=$1
+    AND transactions.stock_details.store_id=$3
+    AND transactions.stock_details.tran_type='Dr';
+
+    _factor = core.convert_unit(_base_unit_id, $2);    
+    RETURN _debit * _factor;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.count_sales.sql --<--<--
+DROP FUNCTION IF EXISTS core.count_sales(_item_id integer, _unit_id integer, _store_id integer);
+CREATE FUNCTION core.count_sales(_item_id integer, _unit_id integer, _store_id integer)
+RETURNS decimal
+STABLE
+AS
+$$
+        DECLARE _base_unit_id integer;
+        DECLARE _credit decimal;
+        DECLARE _factor decimal;
+BEGIN
+    --Get the base item unit
+    SELECT 
+        core.get_root_unit_id(core.items.unit_id) 
+    INTO _base_unit_id
+    FROM core.items
+    WHERE core.items.item_id=$1;
+
+    SELECT 
+        COALESCE(SUM(base_quantity), 0)
+    INTO _credit
+    FROM transactions.stock_details
+    INNER JOIN transactions.stock_master
+    ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+    INNER JOIN transactions.transaction_master
+    ON transactions.stock_master.transaction_master_id = transactions.transaction_master.transaction_master_id
+    WHERE transactions.transaction_master.verification_status_id > 0
+    AND transactions.stock_details.item_id=$1
+    AND transactions.stock_details.store_id=$3
+    AND transactions.stock_details.tran_type='Cr';
+
+    _factor = core.convert_unit(_base_unit_id, $2);
+    RETURN _credit * _factor;
+END
+$$
+LANGUAGE plpgsql;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_frequency_end_date.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_frequency_end_date(_frequency_id integer, _value_date date);
 
@@ -38195,9 +38272,10 @@ BEGIN
         store_id                        integer,
         item_code                       text,
         item_id                         integer, 
-        quantity                        integer_strict,
+        quantity                        integer_strict,        
         unit_name                       text,
         unit_id                         integer,
+        in_stock                        numeric,
         base_quantity                   decimal,
         base_unit_id                    integer,                
         price                           money_strict,
@@ -38212,8 +38290,7 @@ BEGIN
         inventory_account_id            integer,
         cost_of_goods_sold_account_id   integer
     ) ON COMMIT DROP;
-
-
+    
     DROP TABLE IF EXISTS temp_stock_tax_details;
     CREATE TEMPORARY TABLE temp_stock_tax_details
     (
@@ -38252,7 +38329,20 @@ BEGIN
         sales_discount_account_id       = core.get_sales_discount_account_id(item_id),
         inventory_account_id            = core.get_inventory_account_id(item_id),
         cost_of_goods_sold_account_id   = core.get_cost_of_goods_sold_account_id(item_id);
-            
+
+    UPDATE temp_stock_details
+    SET in_stock = core.count_item_in_stock(temp_stock_details.item_id, temp_stock_details.unit_id, temp_stock_details.store_id);
+
+    IF EXISTS
+    (
+        SELECT 0 FROM temp_stock_details
+        WHERE quantity > in_stock
+        LIMIT 1
+    ) THEN
+        RAISE EXCEPTION 'Insufficient item quantity'
+        USING ERRCODE='P5500';
+    END IF;
+    
     IF EXISTS
     (
             SELECT 1 FROM temp_stock_details AS details
@@ -38454,7 +38544,7 @@ LANGUAGE plpgsql;
 --                  ROW(1, 'RMBP', 1, 'Piece',180000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
 --                  ROW(1, '13MBA', 1, 'Dozen',130000, 300, 30, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
 --                  ROW(1, '11MBA', 1, 'Piece',110000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type], 
---       ARRAY[NULL::core.attachment_type]);
+--       ARRAY[NULL::core.attachment_type], NULL::bigint[]);
 
 
 
@@ -39147,7 +39237,7 @@ $$
     DECLARE _item_code                      text;
     DECLARE _unit_name                      text;
     DECLARE _unit_id                        integer = 0;
-    DECLARE _factor_to_base_unit            numeric;
+    DECLARE _factor_to_base_unit            numeric(24, 4);
     DECLARE _returned_in_previous_batch     public.decimal_strict2 = 0;
     DECLARE _in_verification_queue          public.decimal_strict2 = 0;
     DECLARE _actual_price_in_root_unit      public.money_strict2 = 0;
@@ -39164,7 +39254,7 @@ BEGIN
         store_id            integer,
         item_id             integer,
         item_code           national character varying(12),
-        item_in_stock       numeric,
+        item_in_stock       numeric(24, 4),
         quantity            integer_strict,        
         unit_id             integer,
         unit_name           national character varying(50),
@@ -39174,7 +39264,7 @@ BEGIN
         tax_form            national character varying(24),
         tax                 money_strict2,
         root_unit_id        integer,
-        base_quantity       numeric
+        base_quantity       numeric(24, 4)
     ) ON COMMIT DROP;
 
     INSERT INTO details_temp(store_id, item_code, quantity, unit_name, price, discount, shipping_charge, tax_form, tax)
@@ -39201,10 +39291,10 @@ BEGIN
         store_id                    integer,
         item_id                     integer,
         root_unit_id                integer,
-        returned_quantity           numeric,
-        actual_quantity             numeric,
-        returned_in_previous_batch  numeric,
-        in_verification_queue       numeric
+        returned_quantity           numeric(24, 4),
+        actual_quantity             numeric(24, 4),
+        returned_in_previous_batch  numeric(24, 4),
+        in_verification_queue       numeric(24, 4)
     ) ON COMMIT DROP;
     
     INSERT INTO item_summary_temp(store_id, item_id, root_unit_id, returned_quantity)
@@ -39281,8 +39371,8 @@ BEGIN
     CREATE TEMPORARY TABLE cumulative_pricing_temp
     (
         item_id                     integer,
-        base_price                  numeric,
-        allowed_returns             numeric
+        base_price                  numeric(24, 4),
+        allowed_returns             numeric(24, 4)
     ) ON COMMIT DROP;
 
     INSERT INTO cumulative_pricing_temp
@@ -39388,15 +39478,15 @@ BEGIN
     END IF;
 
     FOR this IN
-    SELECT item_id, base_quantity, price / base_quantity AS base_price
+    SELECT item_id, base_quantity, (price / base_quantity * quantity)::numeric(24, 4) as price
     FROM details_temp
-    LOOP    
+    LOOP
         IF NOT EXISTS
         (
             SELECT 0
             FROM cumulative_pricing_temp
             WHERE item_id = this.item_id
-            AND base_price >=  this.base_price
+            AND base_price >=  this.price
             AND allowed_returns >= this.base_quantity
         ) THEN
             RAISE EXCEPTION 'The returned amount cannot be greater than actual amount.'
@@ -39413,10 +39503,10 @@ LANGUAGE plpgsql;
 
 -- SELECT * FROM transactions.validate_items_for_return
 -- (
---     125,
+--     127,
 --     ARRAY[
---         ROW(1, 'RMBP', 1, 'Piece', 225000.0000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
---         ROW(1, 'RMBP', 12, 'Piece', 2565000.0000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type
+--         ROW(1, 'RMBP', 2, 'Dozen', 1000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type
+--        
 --     ]
 -- );
 

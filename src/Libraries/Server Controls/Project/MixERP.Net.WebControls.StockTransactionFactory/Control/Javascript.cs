@@ -35,13 +35,11 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
         {
             string isSales = (this.Book.Equals(TranBook.Sales)) ? "true" : "false";
             string tranBook = this.GetTranBook();
-            string taxAfterDiscount = Switches.TaxAfterDiscount().ToString().ToUpperInvariant().Equals("TRUE") ? "true" : "false";
             string verifyStock = (this.VerifyStock) ? "true" : "false";
 
             string js = string.Empty;
             js += JSUtility.GetVar("isSales", isSales, false);
             js += JSUtility.GetVar("tranBook", tranBook);
-            js += JSUtility.GetVar("taxAfterDiscount", taxAfterDiscount, false);
             js += JSUtility.GetVar("verifyStock", verifyStock, false);
             js += JSUtility.GetVar("insufficientStockWarningLocalized", Warnings.InsufficientStockWarning);
             js += JSUtility.GetVar("invalidPartyWarningLocalized", Warnings.InvalidParty);

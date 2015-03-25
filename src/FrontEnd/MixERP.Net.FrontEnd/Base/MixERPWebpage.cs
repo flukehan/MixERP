@@ -133,6 +133,10 @@ namespace MixERP.Net.FrontEnd.Base
                     if (CurrentUser.GetSignInView().LoginId.ToLong().Equals(0))
                     {
                         CurrentUser.SetSignInView();
+                        if (CurrentUser.GetSignInView().LoginId.ToLong().Equals(0))
+                        {
+                            this.RequestLoginPage();
+                        }
                     }
                 }
                 else

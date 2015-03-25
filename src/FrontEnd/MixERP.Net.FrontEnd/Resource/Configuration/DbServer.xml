@@ -28,7 +28,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
     <add key="Password" value="change-on-deployment" />
 
     <add key="PostgreSQLBinDirectory" value="C:\Program Files\PostgreSQL\9.3\bin\" />
-    <add key="PostgreSQLBinDirectory" value="C:\Program Files\PostgreSQL\9.3\bin\" />
     <add key="DatabaseBackupDirectory" value="/Resource/Backups/" />
   </appSettings>
 </configuration>

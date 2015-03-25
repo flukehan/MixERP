@@ -25,7 +25,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="DatePickerNumberOfMonths" value="[2, 3]" />
 
     <add key="LogoPath" value="~/Resource/Static/images/mixerp-logo-light.png" />
-    <add key="PartyName" value="FirstName MiddleName LastName" />
     <add key="SalesDeliveryAcronym" value="SD" />
     <add key="SalesDirectAcronym" value="SDIR" />
     <add key="SalesInvoiceAcronym" value="SI" />

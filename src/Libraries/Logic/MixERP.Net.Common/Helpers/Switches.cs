@@ -21,29 +21,9 @@ namespace MixERP.Net.Common.Helpers
 {
     public static class Switches
     {
-        public static bool AllowNonSupplierInPurchase()
-        {
-            return GetSwitch("AllowNonSupplierInPurchase");
-        }
-
-        public static bool AllowSupplierInSales()
-        {
-            return GetSwitch("AllowSupplierInSales");
-        }
-
         public static bool AllowParentAccountInGlTransaction()
         {
             return GetSwitch("AllowParentAccountInGLTransaction");
-        }
-
-        public static bool EnableAutoVerification()
-        {
-            return GetSwitch("EnableAutoVerification");
-        }
-
-        public static bool TaxAfterDiscount()
-        {
-            return GetSwitch("TaxAfterDiscount");
         }
 
         private static bool GetSwitch(string key)

@@ -21,10 +21,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 <configuration>
   <appSettings>
-    <add key="AllowSupplierInSales" value="true" />
-    <add key="AllowNonSupplierInPurchase" value="true" />
     <add key="AllowParentAccountInGLTransaction" value="false" />
-    <add key="EnableAutoVerification" value="true" />
-    <add key="TaxAfterDiscount" value="true" />
   </appSettings>
 </configuration>
