@@ -395,3 +395,6 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+ALTER TABLE core.parties
+ALTER COLUMN party_name SET NOT NULL;

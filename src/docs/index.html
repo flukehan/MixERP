@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>MixERP Documentation</title>
+    <script src="assets/scripts/marked/marked.min.js"></script>
+    <script src="assets/scripts/jquery-1.9.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.1/js/foundation.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.1/css/foundation.min.css" />
+    <link rel="stylesheet" href="assets/styles/mixdoc.css" />
+</head>
+<body>
+    <div class="sticky contain-to-grid">
+        <nav class="top-bar" data-topbar role="navigation">
+            <ul class="title-area">
+                <li class="name">
+                    <h1>
+                        <a href="index.html">Index</a>
+                    </h1>
+                </li>
+                <li class="toggle-topbar menu-icon">
+                    <a href="javascript:void(0);">
+                        <span></span>
+                    </a>
+                </li>
+            </ul>
+            <section class="top-bar-section">
+                <ul class="right">
+                    <li>
+                        <a href="http://mixerp.org/forum" target="_blank">
+                            MixERP Forums
+                        </a>
+                    </li>
+                    <li class="has-dropdown"> <a href="javascript:void(0);">More</a>
+                        <ul class="dropdown"> 
+                            <li>
+                                <a href="https://github.com/mixerp/mixerp/issues" target="_blank">
+                                    Submit an Issue
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/mixerp/mixerp/releases" target="_blank">
+                                    Download Latest Release
+                                </a>
+                            </li>
+                        </ul> 
+                    </li>
+                    <li>
+                        <a class="right-off-canvas-toggle" href="javascript:void(0);">
+                            Sub Topics
+                        </a>
+                    </li>
+                </ul> 
+            </section>
+        </nav>
+    </div>
+    <div class="off-canvas-wrap" data-offcanvas>
+        <div class="inner-wrap">
+            <aside class="right-off-canvas-menu"> 
+                <ul class="topics"></ul>
+            </aside> 
+            <!-- main content goes here --> 
+            <div class="row">
+              <div class="large-12 large-centered columns">
+                <div id="content"></div>
+              </div>
+            </div>
+            <a class="exit-off-canvas"></a>
+        </div> 
+    </div>
+
+    <script src="assets/scripts/mixdoc.js"></script>
+</body>
+</html> 

@@ -34185,6 +34185,8 @@ END
 $$
 LANGUAGE plpgsql;
 
+ALTER TABLE core.parties
+ALTER COLUMN party_name SET NOT NULL;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/audit/audit.get_office_id_by_login_id.sql --<--<--
 DROP FUNCTION IF EXISTS audit.get_office_id_by_login_id(bigint);
@@ -38275,7 +38277,6 @@ BEGIN
         quantity                        integer_strict,        
         unit_name                       text,
         unit_id                         integer,
-        in_stock                        numeric,
         base_quantity                   decimal,
         base_unit_id                    integer,                
         price                           money_strict,
@@ -38330,13 +38331,27 @@ BEGIN
         inventory_account_id            = core.get_inventory_account_id(item_id),
         cost_of_goods_sold_account_id   = core.get_cost_of_goods_sold_account_id(item_id);
 
-    UPDATE temp_stock_details
+    DROP TABLE IF EXISTS item_quantities_temp;
+    CREATE TEMPORARY TABLE item_quantities_temp
+    (
+        item_id             integer,
+        total_sales         numeric,
+        in_stock            numeric
+    ) ON COMMIT DROP;
+
+    INSERT INTO item_quantities_temp(item_id, total_sales)
+    SELECT item_id, SUM(base_quantity)
+    FROM temp_stock_details
+    GROUP BY item_id;
+
+    UPDATE item_quantities_temp
     SET in_stock = core.count_item_in_stock(temp_stock_details.item_id, temp_stock_details.unit_id, temp_stock_details.store_id);
+    
 
     IF EXISTS
     (
-        SELECT 0 FROM temp_stock_details
-        WHERE quantity > in_stock
+        SELECT 0 FROM item_quantities_temp
+        WHERE total_sales > in_stock
         LIMIT 1
     ) THEN
         RAISE EXCEPTION 'Insufficient item quantity'
