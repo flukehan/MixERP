@@ -64,10 +64,10 @@ receiptTypeDiv.find(".button").click(function () {
 //GoButton's click event
 //in PartyControl.
 var goButtonCallBack = function () {
-    var totalDueAmountHidden = $("#TotalDueAmountHidden");
+    var totalOfficeDueAmountHidden = $("#OfficeDueAmountHidden");
     var defaultCurrencySpan = $("#DefaultCurrencySpan");
 
-    dueAmountInputText.val(totalDueAmountHidden.val());
+    dueAmountInputText.val(totalOfficeDueAmountHidden.val());
     currencyInputText.val(defaultCurrencySpan.html());
 
     var ajaxGetHomeCurrency = getHomeCurrency();
