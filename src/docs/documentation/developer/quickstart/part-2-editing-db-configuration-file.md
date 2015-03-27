@@ -19,6 +19,8 @@ Edit the following file using Visual Studio or any text editor of your choice.
 </configuration>
 ```
 
+###Configuration Explained
+
 | Key                         | Configuration |
 |-----------------------------| -------------|
 | Server                      | The hostname or IP address of your development PostgreSQL Server instance. Usually "localhost". |
@@ -28,3 +30,7 @@ Edit the following file using Visual Studio or any text editor of your choice.
 | Password                    | Password for the above user. The default password is "change-on-deployment". If you happen to change the password, change it here as well. |
 | PostgreSQLBinDirectory      | Depending upon where you installed PostgreSQL server, provide the correct location of the bin directory. |
 | DatabaseBackupDirectory     | Provide the path where you want to keep your database backups. If you host MixERP, make sure that the IIS user has write access to the path. |
+
+##Related Topics
+* [Part 1: Installing Database](part-1-installing-database.md)
+* [Documentation Home](../../../index.md)
