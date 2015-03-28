@@ -348,15 +348,8 @@ MixERP provides a highly parameterized design, so that you can parameterize almo
     </tr>
 </table>
 
-
-<div class="ui red message">
-    <div class="ui header">
-        Warning
-    </div>
-    <div class="ui divider"></div>
-    <div class="ui content">
-        This article is likely to become outdated for future releases.
-    </div>
+<div class="alert-box warn radius">
+    This article is likely to become outdated for future releases.
 </div>
 
 ##Related Topics

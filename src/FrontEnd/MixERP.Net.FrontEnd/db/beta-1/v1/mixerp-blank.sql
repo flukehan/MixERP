@@ -21131,21 +21131,21 @@ BEGIN
         SELECT 5, 'EOY', 'End of Year';
 
         INSERT INTO core.fiscal_year (fiscal_year_code, fiscal_year_name, starts_from, ends_on) 
-        VALUES ('FY1415', 'FY 2014/2015', '7/17/2014'::date, '7/16/2015'::date);
+        VALUES ('FY1415', 'FY 2014/2015', '2014-07-17'::date, '2015-07-16'::date);
 
         INSERT INTO core.frequency_setups (fiscal_year_code, frequency_setup_code, value_date, frequency_id) 
-        SELECT 'FY1415', 'Jul-Aug', '8/16/2014'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Aug-Sep', '9/16/2014'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Sep-Oc', '10/17/2014'::date, 3 UNION ALL
-        SELECT 'FY1415', 'Oct-Nov', '11/16/2014'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Nov-Dec', '12/15/2014'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Dec-Jan', '1/14/2015'::date, 4 UNION ALL
-        SELECT 'FY1415', 'Jan-Feb', '2/12/2015'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Feb-Mar', '3/14/2015'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Mar-Apr', '4/13/2015'::date, 3 UNION ALL
-        SELECT 'FY1415', 'Apr-May', '5/14/2015'::date, 2 UNION ALL
-        SELECT 'FY1415', 'May-Jun', '6/15/2015'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Jun-Jul', '7/16/2015'::date, 5;
+        SELECT 'FY1415', 'Jul-Aug', '2014-08-16'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Aug-Sep', '2014-09-16'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Sep-Oc',  '2014-10-17'::date, 3 UNION ALL
+        SELECT 'FY1415', 'Oct-Nov', '2014-11-16'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Nov-Dec', '2014-12-15'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Dec-Jan', '2015-01-14'::date, 4 UNION ALL
+        SELECT 'FY1415', 'Jan-Feb', '2015-02-12'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Feb-Mar', '2015-03-14'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Mar-Apr', '2015-04-13'::date, 3 UNION ALL
+        SELECT 'FY1415', 'Apr-May', '2015-05-14'::date, 2 UNION ALL
+        SELECT 'FY1415', 'May-Jun', '2015-06-15'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Jun-Jul', '2015-07-16'::date, 5;
 
 
         INSERT INTO core.late_fee(late_fee_code, late_fee_name, is_flat_amount, rate)
@@ -21587,6 +21587,28 @@ SELECT
 FROM 
   core.ageing_slabs;
 
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/05.scrud-views/core/core.bank_accounts_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.bank_accounts_scrud_view;
+CREATE VIEW core.bank_accounts_scrud_view
+AS
+SELECT 
+    core.bank_accounts.account_id,
+    office.users.user_name,
+    office.offices.office_code || '(' || office.offices.office_name||')' AS office_name,
+	core.bank_accounts.bank_name,
+	core.bank_accounts.bank_branch,
+	core.bank_accounts.bank_contact_number,
+	core.bank_accounts.bank_address,
+	core.bank_accounts.bank_account_number,
+	core.bank_accounts.bank_account_type,
+	core.bank_accounts.relationship_officer_name
+FROM
+    core.bank_accounts
+INNER JOIN office.users
+ON core.bank_accounts.maintained_by_user_id = office.users.user_id
+INNER JOIN office.offices
+ON core.bank_accounts.office_id = office.offices.office_id; 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/05.scrud-views/core/core.bonus_slab_detail_scrud_view.sql --<--<--
 CREATE VIEW core.bonus_slab_detail_scrud_view
@@ -22505,6 +22527,7 @@ FROM office.departments;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/05.scrud-views/office/office.office_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS office.office_scrud_view;
 CREATE VIEW office.office_scrud_view
 AS
 SELECT 
@@ -22533,7 +22556,7 @@ FROM
 INNER JOIN core.currencies
 ON office.offices.currency_code = core.currencies.currency_code
 LEFT JOIN office.offices AS parent_office
-ON  office.offices.parent_office_id = parent_office.parent_office_id;
+ON  office.offices.office_id = parent_office.office_id;
 
 
 

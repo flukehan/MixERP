@@ -22,37 +22,36 @@ You **should**, instead, create a hierarchical office structure as shown in the 
 * A stock item has an inventory balance according to office.
   A stock item balance when viewed on parent office means the sum of all child offices.
 * You cannot post transactions to an office group (an office which has child offices).
-* You can create General Ledgers (Accounts), Stock Items, Parties when logged in to any office.
-  Remember these entities are global--shared by all offices. 
+* You can create General Ledgers (Accounts), Stock Items, Parties when logged in to any office. Remember these entities are global--shared by all offices. 
 
 
 
 ##Core Concepts
-- [Date Expressions](date-expressions)
-- [Understanding MixERP Menu](understanding-menu)
-- [Understanding and Configuring Taxes](understanding-and-configuring-taxes)
-- [Flags](flags)
-- [Transaction Governor](transaction-governor)
- - [Transaction Posting Engine](transaction-posting-engine)
- - [Policy Engine](policy-engine)
-- [End of Day Operations](eod-operations)
-- [Widgets](widgets)
+- [Date Expressions](core-concepts/date-expressions.md)
+- [Understanding MixERP Menu](core-concepts/understanding-menu.md)
+- [Understanding and Configuring Taxes](core-concepts/understanding-and-configuring-taxes.md)
+- [Flags](core-concepts/flags.md)
+- [Transaction Governor](core-concepts/transaction-governor.md)
+ - [Transaction Posting Engine](core-concepts/transaction-posting-engine.md)
+ - [Policy Engine](core-concepts/policy-engine.md)
+- [End of Day Operations](core-concepts/eod-operations.md)
+- [Widgets](core-concepts/widgets.md)
 
 ## Introduction
- - [Account Management](account-management)
-  - [User Profile Management](profile-management)
-  - [Change Password](change-password)
+ - [Account Management](account-management.md)
+  - [User Profile Management](profile-management.md)
+  - [Change Password](change-password.md)
 
 ##Modules
-- [Sales](sales)
-- [Purchase](purchase)
-- [Inventory](inventory)
-- [Finance](finance)
-- [Production](production)
-- [Customer Relationship Management](crm)
-- [Back Office](back-office)
-- [Point of Sales](point-of-sales)
+- [Sales](sales/index.md)
+- [Purchase](purchase/index.md)
+- [Inventory](inventory/index.md)
+- [Finance](finance/index.md)
+- [Production](production/index.md)
+- [Customer Relationship Management](crm/index.md)
+- [Back Office](back-office/index.md)
+- [Point of Sales](point-of-sales/index.md)
 
 ##Related Topics
-* [MixERP Documentation](../documentation/main)
-* [Technical Documentation](technical-documentation)
+* [MixERP Documentation](../index.md)
+* [Developer Documentation](../developer/index.md)

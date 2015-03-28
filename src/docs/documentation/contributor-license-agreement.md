@@ -28,4 +28,4 @@ Replace the text in square brackets as follows:
 * Replace `[your github username]` with your GitHub username.
 
 ##Related Topics
-* [Contribution Guidelines](documentation/contribution-guidelines.md)
+* [Contribution Guidelines](contribution-guidelines.md)
