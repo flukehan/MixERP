@@ -6,8 +6,6 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.WebControls.Common;
 
-[assembly: WebResource("MixERP.Net.WebControls.StockAdjustmentFactory.FormView.js", "application/x-javascript")]
-
 namespace MixERP.Net.WebControls.StockAdjustmentFactory
 {
     [ToolboxData("<{0}:FormView runat=server></{0}:FormView>")]
@@ -16,7 +14,6 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
     {
         private HtmlGenericControl container;
         private DateTextBox dateTextBox;
-
         public string ItemIdQuerySericeUrl { get; set; }
         public string ItemPopupUrl { get; set; }
         public string ItemServiceUrl { get; set; }

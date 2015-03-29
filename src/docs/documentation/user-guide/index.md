@@ -30,11 +30,12 @@ You **should**, instead, create a hierarchical office structure as shown in the 
 - [Date Expressions](core-concepts/date-expressions.md)
 - [Understanding MixERP Menu](core-concepts/understanding-menu.md)
 - [Understanding and Configuring Taxes](core-concepts/understanding-and-configuring-taxes.md)
+- [Working with ScrudFactory](core-concepts/scrud-factory.md)
 - [Flags](core-concepts/flags.md)
-- [Transaction Governor](core-concepts/transaction-governor.md)
- - [Transaction Posting Engine](core-concepts/transaction-posting-engine.md)
- - [Policy Engine](core-concepts/policy-engine.md)
-- [End of Day Operations](core-concepts/eod-operations.md)
+- [Transaction Posting Engine](core-concepts/transaction-posting-engine.md)
+- [Voucher Verification](core-concepts/voucher-verification.md)
+- [Policy Engine](core-concepts/policy-engine.md)
+- [End of Day Operation](core-concepts/eod-operation.md)
 - [Widgets](core-concepts/widgets.md)
 
 ## Introduction

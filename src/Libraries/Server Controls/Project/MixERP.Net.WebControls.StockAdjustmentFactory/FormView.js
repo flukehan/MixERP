@@ -17,6 +17,7 @@ var url = "";
 var data = "";
 
 $(document).ready(function () {
+    alert("WTF!!!!")
     loadStores();
     loadItems();
 });

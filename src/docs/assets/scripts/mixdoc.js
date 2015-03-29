@@ -9,7 +9,7 @@ function isExternal(url) {
 
 function convertDocument(text)
 {
-    return marked(text);
+    return $(marked(text));
 };
 
 function processDocument(url)
@@ -20,8 +20,10 @@ function processDocument(url)
         if (this.readyState!==4) return;
         if (this.status!==200) return;
         
-        var content = $('#content');
-        var html = convertDocument(this.responseText);        
+        var content = $("#content");
+        var html = convertDocument(this.responseText);
+        html = processImages(html);
+
         content.html(html);
         var header = content.find("h1, h2, h3").html();
 
@@ -32,26 +34,38 @@ function processDocument(url)
 
         $(".footer").show();
 
-        processImages();
         createSubTopics();
-        processAnchors();        
+        processAnchors();
+        processVideos();
     };
     xhr.send();
 };
 
-function processImages()
-{
-    var images = $("#content").find("img"); 
+function processImages(html) {
+    var images = $(html).find("img");
     var path = getPath();
-    
-    images.each(function(){
+
+    images.each(function () {
         var el = $(this);
         var src = path + el.attr("src");
-        
         $(this).attr("src", src);
     });
-    
-    
+
+    return html;
+};
+
+function processVideos() {
+    var videos = $("#content").find("video");
+    var path = getPath();
+
+
+    videos.each(function () {
+        var el = $(this);
+        var src = path + el.attr("src");
+        $(this).attr("src", src);
+    });
+
+    return html;
 };
 
 function getPath()

@@ -1,7 +1,9 @@
 ﻿using System.Globalization;
+using System.Web.UI;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.StockAdjustmentFactory.Resources;
 
+[assembly: WebResource("MixERP.Net.WebControls.StockAdjustmentFactory.FormView.js", "application/x-javascript")]
 namespace MixERP.Net.WebControls.StockAdjustmentFactory
 {
     public partial class FormView

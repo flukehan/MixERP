@@ -94,6 +94,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@LoginId", loginId);
+                command.CommandTimeout = 3600;
 
                 DbOperation operation = new DbOperation();
                 operation.Listen += this.Listen;
