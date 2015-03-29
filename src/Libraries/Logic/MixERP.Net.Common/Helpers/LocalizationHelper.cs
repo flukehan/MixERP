@@ -114,12 +114,13 @@ namespace MixERP.Net.Common.Helpers
                     return globalResourceObject.ToString();
                 }
 
+                Log.Error("Resource could not be found for the key {Key} on {Class} on the default assembly.", key, className);
                 return string.Empty;
             }
             catch (MissingManifestResourceException)
             {
                 Log.Error("Resource could not be found for the key {Key} on {Class} on the default assembly.", key, className);
-                return key + "::";
+                return key;
             }
         }
 
@@ -152,13 +153,14 @@ namespace MixERP.Net.Common.Helpers
 
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    return key + "::";
+                    Log.Error("Resource could not be found for the key {Key} on {Class}.", key, fullyQualifiedClassName);
+                    return key;
                 }
             }
             catch (MissingManifestResourceException)
             {
                 Log.Error("Resource could not be found for the key {Key} on {Class}.", key, fullyQualifiedClassName);
-                return key + "::";
+                return key;
             }
 
             return value;

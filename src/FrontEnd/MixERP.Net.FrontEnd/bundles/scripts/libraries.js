@@ -27919,7 +27919,7 @@ var jqueryColorBox = function ($, document, window) {
 }(jQuery, document, window);
 ///#source 1 1 /Scripts/jqueryNumber/jquery.number.js
 /**
- * jQuery number plug-in 2.1.0
+ * jQuery number plug-in 2.1.5
  * Copyright 2012, Digital Fusion
  * Licensed under the MIT license.
  * http://opensource.teamdf.com/license/
@@ -27931,6 +27931,9 @@ var jqueryColorBox = function ($, document, window) {
  * @docs	http://www.teamdf.com/web/jquery-number-format-redux/196/
  */
 (function ($) {
+
+    "use strict";
+
     /**
 	 * Method for selecting a range of characters in an input/textarea.
 	 *
@@ -27997,6 +28000,7 @@ var jqueryColorBox = function ($, document, window) {
 	 */
     var _keydown = {
         codes: {
+            46: 127,
             188: 44,
             109: 45,
             190: 46,
@@ -28045,6 +28049,7 @@ var jqueryColorBox = function ($, document, window) {
 	 * @return : The jQuery collection the method was called with.
 	 */
     $.fn.number = function (number, decimals, dec_point, thousands_sep) {
+
         // Enter the default thousands separator, and the decimal placeholder.
         thousands_sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep;
         dec_point = (typeof dec_point === 'undefined') ? '.' : dec_point;
@@ -28052,8 +28057,8 @@ var jqueryColorBox = function ($, document, window) {
 
         // Work out the unicode character for the decimal placeholder.
         var u_dec = ('\\u' + ('0000' + (dec_point.charCodeAt(0).toString(16))).slice(-4)),
-	    	regex_dec_num = new RegExp('[^' + u_dec + '0-9]', 'g'),
-	    	regex_dec = new RegExp(u_dec, 'g');
+			regex_dec_num = new RegExp('[^' + u_dec + '0-9]', 'g'),
+			regex_dec = new RegExp(u_dec, 'g');
 
         // If we've specified to take the number from the target element,
         // we loop over the collection, and get the number.
@@ -28062,34 +28067,47 @@ var jqueryColorBox = function ($, document, window) {
             if (this.is('input:text')) {
                 // Return the jquery collection.
                 return this.on({
+
                     /**
-	    			 * Handles keyup events, re-formatting numbers.
-	    			 *
-	    			 * @param object e			: the keyup event object.s
-	    			 *
-	    			 * @return void;
-	    			 */
+					 * Handles keyup events, re-formatting numbers.
+					 *
+					 * Uses 'data' object to keep track of important information.
+					 *
+					 * data.c
+					 * This variable keeps track of where the caret *should* be. It works out the position as
+					 * the number of characters from the end of the string. E.g., '1^,234.56' where ^ denotes the caret,
+					 * would be index -7 (e.g., 7 characters from the end of the string). At the end of both the key down
+					 * and key up events, we'll re-position the caret to wherever data.c tells us the cursor should be.
+					 * This gives us a mechanism for incrementing the cursor position when we come across decimals, commas
+					 * etc. This figure typically doesn't increment for each keypress when to the left of the decimal,
+					 * but does when to the right of the decimal.
+					 *
+					 * @param object e			: the keyup event object.s
+					 *
+					 * @return void;
+					 */
                     'keydown.format': function (e) {
+
                         // Define variables used in the code below.
                         var $this = $(this),
-	    					data = $this.data('numFormat'),
-	    					code = (e.keyCode ? e.keyCode : e.which),
+							data = $this.data('numFormat'),
+							code = (e.keyCode ? e.keyCode : e.which),
 							chara = '', //unescape(e.originalEvent.keyIdentifier.replace('U+','%u')),
-	    					start = getSelection.apply(this, ['start']),
-	    					end = getSelection.apply(this, ['end']),
-	    					val = '',
-	    					setPos = false;
+							start = getSelection.apply(this, ['start']),
+							end = getSelection.apply(this, ['end']),
+							val = '',
+							setPos = false;
 
                         // Webkit (Chrome & Safari) on windows screws up the keyIdentifier detection
                         // for numpad characters. I've disabled this for now, because while keyCode munging
                         // below is hackish and ugly, it actually works cross browser & platform.
 
-                        //	    				if( typeof e.originalEvent.keyIdentifier !== 'undefined' )
-                        //	    				{
-                        //	    					chara = unescape(e.originalEvent.keyIdentifier.replace('U+','%u'));
-                        //	    				}
-                        //	    				else
-                        //	    				{
+                        //						if( typeof e.originalEvent.keyIdentifier !== 'undefined' )
+                        //						{
+                        //							chara = unescape(e.originalEvent.keyIdentifier.replace('U+','%u'));
+                        //						}
+                        //						else
+                        //						{
                         if (_keydown.codes.hasOwnProperty(code)) {
                             code = _keydown.codes[code];
                         }
@@ -28103,18 +28121,25 @@ var jqueryColorBox = function ($, document, window) {
                         }
 
                         if (chara == '') chara = String.fromCharCode(code);
-                        //	    				}
+                        //						}
 
-                        // Stop executing if the user didn't type a number key, a decimal character, or backspace.
-                        if (code !== 8 && chara != dec_point && !chara.match(/[0-9]/)) {
+
+
+
+                        // Stop executing if the user didn't type a number key, a decimal character, backspace, or delete.
+                        if (code != 8 && code != 45 && code != 127 && chara != dec_point && !chara.match(/[0-9]/)) {
                             // We need the original keycode now...
                             var key = (e.keyCode ? e.keyCode : e.which);
-                            if ( // Allow control keys to go through... (delete, etc)
-	    						key == 46 || key == 8 || key == 9 || key == 27 || key == 13 ||
-                                // Allow: Ctrl+A, Ctrl+R
-	    						((key == 65 || key == 82) && (e.ctrlKey || e.metaKey) === true) ||
+                            if ( // Allow control keys to go through... (delete, backspace, tab, enter, escape etc)
+								key == 46 || key == 8 || key == 127 || key == 9 || key == 27 || key == 13 ||
+                                // Allow: Ctrl+A, Ctrl+R, Ctrl+P, Ctrl+S, Ctrl+F, Ctrl+H, Ctrl+B, Ctrl+J, Ctrl+T, Ctrl+Z, Ctrl++, Ctrl+-, Ctrl+0
+								((key == 65 || key == 82 || key == 80 || key == 83 || key == 70 || key == 72 || key == 66 || key == 74 || key == 84 || key == 90 || key == 61 || key == 173 || key == 48) && (e.ctrlKey || e.metaKey) === true) ||
+                                // Allow: Ctrl+V, Ctrl+C, Ctrl+X
+								((key == 86 || key == 67 || key == 88) && (e.ctrlKey || e.metaKey) === true) ||
                                 // Allow: home, end, left, right
-	    						((key >= 35 && key <= 39))
+								((key >= 35 && key <= 39)) ||
+                                // Allow: F1-F12
+								((key >= 112 && key <= 123))
 							) {
                                 return;
                             }
@@ -28123,18 +28148,44 @@ var jqueryColorBox = function ($, document, window) {
                             return false;
                         }
 
-                        //console.log('Continuing on: ', code, chara);
+                        // The whole lot has been selected, or if the field is empty...
+                        if (start == 0 && end == this.value.length) //|| $this.val() == 0 )
+                        {
+                            if (code == 8)		// Backspace
+                            {
+                                // Blank out the field, but only if the data object has already been instantiated.
+                                start = end = 1;
+                                this.value = '';
 
-                        // The whole lot has been selected, or if the field is empty, and the character
-                        if ((start == 0 && end == this.value.length || $this.val() == 0) && !e.metaKey && !e.ctrlKey && !e.altKey && chara.length === 1 && chara != 0) {
-                            // Blank out the field, but only if the data object has already been instanciated.
-                            start = end = 1;
-                            this.value = '';
+                                // Reset the cursor position.
+                                data.init = (decimals > 0 ? -1 : 0);
+                                data.c = (decimals > 0 ? -(decimals + 1) : 0);
+                                setSelectionRange.apply(this, [0, 0]);
+                            }
+                            else if (chara == dec_point) {
+                                start = end = 1;
+                                this.value = '0' + dec_point + (new Array(decimals + 1).join('0'));
 
-                            // Reset the cursor position.
-                            data.init = (decimals > 0 ? -1 : 0);
-                            data.c = (decimals > 0 ? -(decimals + 1) : 0);
-                            setSelectionRange.apply(this, [0, 0]);
+                                // Reset the cursor position.
+                                data.init = (decimals > 0 ? 1 : 0);
+                                data.c = (decimals > 0 ? -(decimals + 1) : 0);
+                            }
+                            else if (code == 45)	// Negative sign
+                            {
+                                start = end = 2;
+                                this.value = '-0' + dec_point + (new Array(decimals + 1).join('0'));
+
+                                // Reset the cursor position.
+                                data.init = (decimals > 0 ? 1 : 0);
+                                data.c = (decimals > 0 ? -(decimals + 1) : 0);
+
+                                setSelectionRange.apply(this, [2, 2]);
+                            }
+                            else {
+                                // Reset the cursor position.
+                                data.init = (decimals > 0 ? -1 : 0);
+                                data.c = (decimals > 0 ? -(decimals) : 0);
+                            }
                         }
 
                             // Otherwise, we need to reset the caret position
@@ -28142,6 +28193,9 @@ var jqueryColorBox = function ($, document, window) {
                         else {
                             data.c = end - this.value.length;
                         }
+
+                        // Track if partial selection was used
+                        data.isPartialSelection = start == end ? false : true;
 
                         // If the start position is before the decimal point,
                         // and the user has typed a decimal point, we need to move the caret
@@ -28155,6 +28209,11 @@ var jqueryColorBox = function ($, document, window) {
                             setPos = this.value.length + data.c;
                         }
 
+                            // Ignore negative sign unless at beginning of number (and it's not already present)
+                        else if (code == 45 && (start != 0 || this.value.indexOf('-') == 0)) {
+                            e.preventDefault();
+                        }
+
                             // If the user is just typing the decimal place,
                             // we simply ignore it.
                         else if (chara == dec_point) {
@@ -28162,7 +28221,14 @@ var jqueryColorBox = function ($, document, window) {
                             e.preventDefault();
                         }
 
-                            // If hitting the delete key, and the cursor is behind a decimal place,
+                            // If hitting the delete key, and the cursor is before a decimal place,
+                            // we simply move the cursor to the other side of the decimal place.
+                        else if (decimals > 0 && code == 127 && start == this.value.length - decimals - 1) {
+                            // Just prevent default but don't actually move the caret here because it's done in the keyup event
+                            e.preventDefault();
+                        }
+
+                            // If hitting the backspace key, and the cursor is behind a decimal place,
                             // we simply move the cursor to the other side of the decimal place.
                         else if (decimals > 0 && code == 8 && start == this.value.length - decimals) {
                             e.preventDefault();
@@ -28173,16 +28239,40 @@ var jqueryColorBox = function ($, document, window) {
                         }
 
                             // If hitting the delete key, and the cursor is to the right of the decimal
-                            // (but not directly to the right) we replace the character preceeding the
+                            // we replace the character after the caret with a 0.
+                        else if (decimals > 0 && code == 127 && start > this.value.length - decimals - 1) {
+                            if (this.value === '') return;
+
+                            // If the character following is not already a 0,
+                            // replace it with one.
+                            if (this.value.slice(start, start + 1) != '0') {
+                                val = this.value.slice(0, start) + '0' + this.value.slice(start + 1);
+                                // The regex replacement below removes negative sign from numbers...
+                                // not sure why they're necessary here when none of the other cases use them
+                                //$this.val(val.replace(regex_dec_num,'').replace(regex_dec,dec_point));
+                                $this.val(val);
+                            }
+
+                            e.preventDefault();
+
+                            // Set the selection position.
+                            setPos = this.value.length + data.c;
+                        }
+
+                            // If hitting the backspace key, and the cursor is to the right of the decimal
+                            // (but not directly to the right) we replace the character preceding the
                             // caret with a 0.
                         else if (decimals > 0 && code == 8 && start > this.value.length - decimals) {
                             if (this.value === '') return;
 
-                            // If the character preceeding is not already a 0,
+                            // If the character preceding is not already a 0,
                             // replace it with one.
                             if (this.value.slice(start - 1, start) != '0') {
                                 val = this.value.slice(0, start - 1) + '0' + this.value.slice(start);
-                                $this.val(val.replace(regex_dec_num, '').replace(regex_dec, dec_point));
+                                // The regex replacement below removes negative sign from numbers...
+                                // not sure why they're necessary here when none of the other cases use them
+                                //$this.val(val.replace(regex_dec_num,'').replace(regex_dec,dec_point));
+                                $this.val(val);
                             }
 
                             e.preventDefault();
@@ -28193,6 +28283,14 @@ var jqueryColorBox = function ($, document, window) {
                         }
 
                             // If the delete key was pressed, and the character immediately
+                            // after the caret is a thousands_separator character, simply
+                            // step over it.
+                        else if (code == 127 && this.value.slice(start, start + 1) == thousands_sep) {
+                            // Just prevent default but don't actually move the caret here because it's done in the keyup event
+                            e.preventDefault();
+                        }
+
+                            // If the backspace key was pressed, and the character immediately
                             // before the caret is a thousands_separator character, simply
                             // step over it.
                         else if (code == 8 && this.value.slice(start - 1, start) == thousands_sep) {
@@ -28206,13 +28304,13 @@ var jqueryColorBox = function ($, document, window) {
                             // If the caret is to the right of the decimal place, and the user is entering a
                             // number, remove the following character before putting in the new one.
                         else if (
-	    					decimals > 0 &&
-	    					start == end &&
-	    					this.value.length > decimals + 1 &&
-	    					start > this.value.length - decimals - 1 && isFinite(+chara) &&
-		    				!e.metaKey && !e.ctrlKey && !e.altKey && chara.length === 1
-	    				) {
-                            // If the character preceeding is not already a 0,
+							decimals > 0 &&
+							start == end &&
+							this.value.length > decimals + 1 &&
+							start > this.value.length - decimals - 1 && isFinite(+chara) &&
+							!e.metaKey && !e.ctrlKey && !e.altKey && chara.length === 1
+						) {
+                            // If the character preceding is not already a 0,
                             // replace it with one.
                             if (end === this.value.length) {
                                 val = this.value.slice(0, start - 1);
@@ -28234,33 +28332,52 @@ var jqueryColorBox = function ($, document, window) {
 
                         // Store the data on the element.
                         $this.data('numFormat', data);
+
                     },
 
                     /**
-	    			 * Handles keyup events, re-formatting numbers.
-	    			 *
-	    			 * @param object e			: the keyup event object.s
-	    			 *
-	    			 * @return void;
-	    			 */
+					 * Handles keyup events, re-formatting numbers.
+					 *
+					 * @param object e			: the keyup event object.s
+					 *
+					 * @return void;
+					 */
                     'keyup.format': function (e) {
+
                         // Store these variables for use below.
                         var $this = $(this),
-	    					data = $this.data('numFormat'),
-	    					code = (e.keyCode ? e.keyCode : e.which),
-	    					start = getSelection.apply(this, ['start']),
-	    					setPos;
+							data = $this.data('numFormat'),
+							code = (e.keyCode ? e.keyCode : e.which),
+							start = getSelection.apply(this, ['start']),
+							end = getSelection.apply(this, ['end']),
+							setPos;
+
+
+                        // Check for negative characters being entered at the start of the string.
+                        // If there's any kind of selection, just ignore the input.
+                        if (start === 0 && end === 0 && (code === 189 || code === 109)) {
+                            $this.val('-' + $this.val());
+
+                            start = 1;
+                            data.c = 1 - this.value.length;
+                            data.init = 1;
+
+                            $this.data('numFormat', data);
+
+                            setPos = this.value.length + data.c;
+                            setSelectionRange.apply(this, [setPos, setPos]);
+                        }
 
                         // Stop executing if the user didn't type a number key, a decimal, or a comma.
-                        if (this.value === '' || (code < 48 || code > 57) && (code < 96 || code > 105) && code !== 8) return;
+                        if (this.value === '' || (code < 48 || code > 57) && (code < 96 || code > 105) && code !== 8 && code !== 46 && code !== 110) return;
 
                         // Re-format the textarea.
                         $this.val($this.val());
 
                         if (decimals > 0) {
-                            // If we haven't marked this item as 'initialised'
+                            // If we haven't marked this item as 'initialized'
                             // then do so now. It means we should place the caret just
-                            // before the decimal. This will never be un-initialised before
+                            // before the decimal. This will never be un-initialized before
                             // the decimal character itself is entered.
                             if (data.init < 1) {
                                 start = this.value.length - decimals - (data.init < 0 ? 1 : 0);
@@ -28271,13 +28388,21 @@ var jqueryColorBox = function ($, document, window) {
                             }
 
                                 // Increase the cursor position if the caret is to the right
-                                // of the decimal place, and the character pressed isn't the delete key.
+                                // of the decimal place, and the character pressed isn't the backspace key.
                             else if (start > this.value.length - decimals && code != 8) {
                                 data.c++;
 
                                 // Store the data, now that it's changed.
                                 $this.data('numFormat', data);
                             }
+                        }
+
+                        // Move caret to the right after delete key pressed
+                        if (code == 46 && !data.isPartialSelection) {
+                            data.c++;
+
+                            // Store the data, now that it's changed.
+                            $this.data('numFormat', data);
                         }
 
                         //console.log( 'Setting pos: ', start, decimals, this.value.length + data.c, this.value.length, data.c );
@@ -28288,17 +28413,18 @@ var jqueryColorBox = function ($, document, window) {
                     },
 
                     /**
-	    			 * Reformat when pasting into the field.
-	    			 *
-	    			 * @param object e 		: jQuery event object.
-	    			 *
-	    			 * @return false : prevent default action.
-	    			 */
+					 * Reformat when pasting into the field.
+					 *
+					 * @param object e 		: jQuery event object.
+					 *
+					 * @return false : prevent default action.
+					 */
                     'paste.format': function (e) {
+
                         // Defint $this. It's used twice!.
                         var $this = $(this),
-	    					original = e.originalEvent,
-	    					val = null;
+							original = e.originalEvent,
+							val = null;
 
                         // Get the text content stream.
                         if (window.clipboardData && window.clipboardData.getData) { // IE
@@ -28314,26 +28440,28 @@ var jqueryColorBox = function ($, document, window) {
                         e.preventDefault();
                         return false;
                     }
+
                 })
 
-	    		// Loop each element (which isn't blank) and do the format.
-    			.each(function () {
-    			    var $this = $(this).data('numFormat', {
-    			        c: -(decimals + 1),
-    			        decimals: decimals,
-    			        thousands_sep: thousands_sep,
-    			        dec_point: dec_point,
-    			        regex_dec_num: regex_dec_num,
-    			        regex_dec: regex_dec,
-    			        init: false
-    			    });
+				// Loop each element (which isn't blank) and do the format.
+				.each(function () {
 
-    			    // Return if the element is empty.
-    			    if (this.value === '') return;
+				    var $this = $(this).data('numFormat', {
+				        c: -(decimals + 1),
+				        decimals: decimals,
+				        thousands_sep: thousands_sep,
+				        dec_point: dec_point,
+				        regex_dec_num: regex_dec_num,
+				        regex_dec: regex_dec,
+				        init: this.value.indexOf('.') ? true : false
+				    });
 
-    			    // Otherwise... format!!
-    			    $this.val($this.val());
-    			});
+				    // Return if the element is empty.
+				    if (this.value === '') return;
+
+				    // Otherwise... format!!
+				    $this.val($this.val());
+				});
             }
             else {
                 // return the collection.
@@ -28357,12 +28485,12 @@ var jqueryColorBox = function ($, document, window) {
     var origHookGet = null, origHookSet = null;
 
     // Check if a text valHook already exists.
-    if ($.valHooks.text) {
+    if ($.isPlainObject($.valHooks.text)) {
         // Preserve the original valhook function
         // we'll call this for values we're not
         // explicitly handling.
-        origHookGet = $.valHooks.text.get;
-        origHookSet = $.valHooks.text.set;
+        if ($.isFunction($.valHooks.text.get)) origHookGet = $.valHooks.text.get;
+        if ($.isFunction($.valHooks.text.set)) origHookSet = $.valHooks.text.set;
     }
     else {
         // Define an object for the new valhook.
@@ -28370,17 +28498,18 @@ var jqueryColorBox = function ($, document, window) {
     }
 
     /**
-	 * Define the valHook to return normalised field data against an input
-	 * which has been tagged by the number formatter.
-	 *
-	 * @param object el			: The raw DOM element that we're getting the value from.
-	 *
-	 * @return mixed : Returns the value that was written to the element as a
-	 *				   javascript number, or undefined to let jQuery handle it normally.
-	 */
+	* Define the valHook to return normalised field data against an input
+	* which has been tagged by the number formatter.
+	*
+	* @param object el			: The raw DOM element that we're getting the value from.
+	*
+	* @return mixed : Returns the value that was written to the element as a
+	*				  javascript number, or undefined to let jQuery handle it normally.
+	*/
     $.valHooks.text.get = function (el) {
+
         // Get the element, and its data.
-        var $this = $(el), num,
+        var $this = $(el), num, negative,
 			data = $this.data('numFormat');
 
         // Does this element have our data field?
@@ -28400,6 +28529,7 @@ var jqueryColorBox = function ($, document, window) {
             // Remove formatting, and return as number.
             if (el.value === '') return '';
 
+
             // Convert to a number.
             num = +(el.value
 				.replace(data.regex_dec_num, '')
@@ -28409,20 +28539,20 @@ var jqueryColorBox = function ($, document, window) {
             // Otherwise, simply return 0.
             // Return as a string... thats what we're
             // used to with .val()
-            return '' + (isFinite(num) ? num : 0);
+            return (el.value.indexOf('-') === 0 ? '-' : '') + (isFinite(num) ? num : 0);
         }
     };
 
     /**
-	 * A valhook which formats a number when run against an input
-	 * which has been tagged by the number formatter.
-	 *
-	 * @param object el		: The raw DOM element (input element).
-	 * @param float			: The number to set into the value field.
-	 *
-	 * @return mixed : Returns the value that was written to the element,
-	 *				   or undefined to let jQuery handle it normally.
-	 */
+	* A valhook which formats a number when run against an input
+	* which has been tagged by the number formatter.
+	*
+	* @param object el		: The raw DOM element (input element).
+	* @param float			: The number to set into the value field.
+	*
+	* @return mixed : Returns the value that was written to the element,
+	*				  or undefined to let jQuery handle it normally.
+	*/
     $.valHooks.text.set = function (el, val) {
         // Get the element, and its data.
         var $this = $(el),
@@ -28430,7 +28560,8 @@ var jqueryColorBox = function ($, document, window) {
 
         // Does this element have our data field?
         if (!data) {
-            // Check if the valhook function already existed
+
+            // Check if the valhook function already exists
             if ($.isFunction(origHookSet)) {
                 // There was, so go ahead and call it
                 return origHookSet(el, val);
@@ -28442,7 +28573,15 @@ var jqueryColorBox = function ($, document, window) {
             }
         }
         else {
-            return el.value = $.number(val, data.decimals, data.dec_point, data.thousands_sep)
+            var num = $.number(val, data.decimals, data.dec_point, data.thousands_sep);
+
+            // Make sure empties are set with correct signs.
+            //			if(val.indexOf('-') === 0 && +num === 0)
+            //			{
+            //				num = '-'+num;
+            //			}
+
+            return $.isFunction(origHookSet) ? origHookSet(el, num) : el.value = num;
         }
     };
 
@@ -28470,20 +28609,23 @@ var jqueryColorBox = function ($, document, window) {
         dec_point = (typeof dec_point === 'undefined') ? '.' : dec_point;
         decimals = !isFinite(+decimals) ? 0 : Math.abs(decimals);
 
-        // Work out the unicode representation for the decimal place.
+        // Work out the unicode representation for the decimal place and thousand sep.
         var u_dec = ('\\u' + ('0000' + (dec_point.charCodeAt(0).toString(16))).slice(-4));
+        var u_sep = ('\\u' + ('0000' + (thousands_sep.charCodeAt(0).toString(16))).slice(-4));
 
         // Fix the number, so that it's an actual number.
         number = (number + '')
+			.replace('\.', dec_point) // because the number if passed in as a float (having . as decimal point per definition) we need to replace this with the passed in decimal point character
+			.replace(new RegExp(u_sep, 'g'), '')
 			.replace(new RegExp(u_dec, 'g'), '.')
 			.replace(new RegExp('[^0-9+\-Ee.]', 'g'), '');
 
         var n = !isFinite(+number) ? 0 : +number,
-		    s = '',
-		    toFixedFix = function (n, decimals) {
-		        var k = Math.pow(10, decimals);
-		        return '' + Math.round(n * k) / k;
-		    };
+			s = '',
+			toFixedFix = function (n, decimals) {
+			    var k = Math.pow(10, decimals);
+			    return '' + Math.round(n * k) / k;
+			};
 
         // Fix for IE parseFloat(0.55).toFixed(0) = 0;
         s = (decimals ? toFixedFix(n, decimals) : '' + Math.round(n)).split('.');
@@ -28496,6 +28638,7 @@ var jqueryColorBox = function ($, document, window) {
         }
         return s.join(dec_point);
     }
+
 })(jQuery);
 ///#source 1 1 /Scripts/date.js
 Date.CultureInfo={name:"en-US",englishName:"English (United States)",nativeName:"English (United States)",dayNames:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],abbreviatedDayNames:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],shortestDayNames:["Su","Mo","Tu","We","Th","Fr","Sa"],firstLetterDayNames:["S","M","T","W","T","F","S"],monthNames:["January","February","March","April","May","June","July","August","September","October","November","December"],abbreviatedMonthNames:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],amDesignator:"AM",pmDesignator:"PM",firstDayOfWeek:0,twoDigitYearMax:2029,dateElementOrder:"mdy",formatPatterns:{shortDate:"M/d/yyyy",longDate:"dddd, MMMM dd, yyyy",shortTime:"h:mm tt",longTime:"h:mm:ss tt",fullDateTime:"dddd, MMMM dd, yyyy h:mm:ss tt",sortableDateTime:"yyyy-MM-ddTHH:mm:ss",universalSortableDateTime:"yyyy-MM-dd HH:mm:ssZ",rfc1123:"ddd, dd MMM yyyy HH:mm:ss GMT",monthDay:"MMMM dd",yearMonth:"MMMM, yyyy"},regexPatterns:{jan:/^jan(uary)?/i,feb:/^feb(ruary)?/i,mar:/^mar(ch)?/i,apr:/^apr(il)?/i,may:/^may/i,jun:/^jun(e)?/i,jul:/^jul(y)?/i,aug:/^aug(ust)?/i,sep:/^sep(t(ember)?)?/i,oct:/^oct(ober)?/i,nov:/^nov(ember)?/i,dec:/^dec(ember)?/i,sun:/^su(n(day)?)?/i,mon:/^mo(n(day)?)?/i,tue:/^tu(e(s(day)?)?)?/i,wed:/^we(d(nesday)?)?/i,thu:/^th(u(r(s(day)?)?)?)?/i,fri:/^fr(i(day)?)?/i,sat:/^sa(t(urday)?)?/i,future:/^next/i,past:/^last|past|prev(ious)?/i,add:/^(\+|after|from)/i,subtract:/^(\-|before|ago)/i,yesterday:/^yesterday/i,today:/^t(oday)?/i,tomorrow:/^tomorrow/i,now:/^n(ow)?/i,millisecond:/^ms|milli(second)?s?/i,second:/^sec(ond)?s?/i,minute:/^min(ute)?s?/i,hour:/^h(ou)?rs?/i,week:/^w(ee)?k/i,month:/^m(o(nth)?s?)?/i,day:/^d(ays?)?/i,year:/^y((ea)?rs?)?/i,shortMeridian:/^(a|p)/i,longMeridian:/^(a\.?m?\.?|p\.?m?\.?)/i,timezone:/^((e(s|d)t|c(s|d)t|m(s|d)t|p(s|d)t)|((gmt)?\s*(\+|\-)\s*\d\d\d\d?)|gmt)/i,ordinalSuffix:/^\s*(st|nd|rd|th)/i,timeContext:/^\s*(\:|a|p)/i},abbreviatedTimeZoneStandard:{GMT:"-000",EST:"-0400",CST:"-0500",MST:"-0600",PST:"-0700"},abbreviatedTimeZoneDST:{GMT:"-000",EDT:"-0500",CDT:"-0600",MDT:"-0700",PDT:"-0800"}};

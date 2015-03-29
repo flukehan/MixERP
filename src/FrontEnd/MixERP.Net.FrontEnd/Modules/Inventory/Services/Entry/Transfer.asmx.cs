@@ -103,22 +103,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                 models.Add(detail);
             }
 
-            var results = from rows in models
-                group rows by new {rows.ItemCode, rows.UnitName}
-                into aggregate
-                select new
-                {
-                    aggregate.Key.ItemCode,
-                    aggregate.Key.UnitName,
-                    Debit = aggregate.Where(row => row.TransferTypeEnum.Equals(TransactionTypeEnum.Debit)).Sum(row => row.Quantity),
-                    Credit = aggregate.Where(row => row.TransferTypeEnum.Equals(TransactionTypeEnum.Credit)).Sum(row => row.Quantity)
-                };
-
-            if ((from query in results where query.Debit != query.Credit select query).Any())
-            {
-                throw new MixERPException(Errors.ReferencingSidesNotEqual);
-            }
-
             return models;
         }
     }

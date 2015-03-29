@@ -31,6 +31,7 @@ BEGIN
         RETURN 0;
     END IF;
 
+
     CREATE TEMPORARY TABLE IF NOT EXISTS temp_stock_details
     (
         tran_type       transaction_type,
@@ -60,17 +61,6 @@ BEGIN
         USING ERRCODE='P5202';
     END IF;
 
-    IF EXISTS
-    (
-        SELECT item_code FROM temp_stock_details
-        GROUP BY item_code
-        HAVING SUM(CASE WHEN tran_type='Dr' THEN quantity ELSE quantity *-1 END) <> 0
-    ) THEN
-        RAISE EXCEPTION 'Referencing sides are not equal.'
-        USING ERRCODE='P5000';        
-    END IF;
-
-
     UPDATE temp_stock_details SET 
     item_id         = core.get_item_id_by_item_code(item_code),
     unit_id         = core.get_unit_id_by_unit_name(unit_name),
@@ -90,6 +80,15 @@ BEGIN
     base_quantity   = core.get_base_quantity_by_unit_id(unit_id, quantity),
     price           = core.get_item_cost_price(item_id, unit_id, NULL);
 
+    IF EXISTS
+    (
+        SELECT item_code FROM temp_stock_details
+        GROUP BY item_code
+        HAVING SUM(CASE WHEN tran_type='Dr' THEN base_quantity ELSE base_quantity *-1 END) <> 0
+    ) THEN
+        RAISE EXCEPTION 'Referencing sides are not equal.'
+        USING ERRCODE='P5000';        
+    END IF;
 
 
     IF EXISTS
@@ -170,11 +169,9 @@ LANGUAGE plpgsql;
 
 -- SELECT * FROM transactions.post_stock_journal(2, 2, 5, '1-1-2020', '22', 'Test', 
 -- ARRAY[
--- ROW('Cr', 'Store 1', 'RMBP', 'Piece', 1)::transactions.stock_adjustment_type,
--- ROW('Dr', 'Godown 1', 'RMBP', 'Piece', 1)::transactions.stock_adjustment_type,
--- ROW('Cr', 'Store 1', '11MBA', 'Piece', 1)::transactions.stock_adjustment_type,
--- ROW('Dr', 'Godown 1', '11MBA', 'Piece', 1)::transactions.stock_adjustment_type
+-- ROW('Cr', 'Store 1', 'RMBP', 'Dozen', 2)::transactions.stock_adjustment_type,
+-- ROW('Dr', 'Godown 1', 'RMBP', 'Piece', 24)::transactions.stock_adjustment_type
 -- ]
 -- );
-
-
+-- 
+-- 

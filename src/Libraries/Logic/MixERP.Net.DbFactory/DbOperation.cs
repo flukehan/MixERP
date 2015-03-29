@@ -68,7 +68,7 @@ namespace MixERP.Net.DbFactory
             {
                 if (ex.Code.StartsWith("P"))
                 {
-                    string errorMessage = GetDBErrorResource(ex.Code);
+                    string errorMessage = GetDBErrorResource(ex);
                     throw new MixERPException(errorMessage, ex);
                 }
 
@@ -76,10 +76,17 @@ namespace MixERP.Net.DbFactory
             }
         }
 
-        private static string GetDBErrorResource(string key)
+        private static string GetDBErrorResource(NpgsqlException ex)
         {
             Assembly ass = Assembly.GetAssembly(typeof (DbOperation));
-            return LocalizationHelper.GetResourceString(ass, "MixERP.Net.DbFactory.Resources.DbErrors", key);
+            string message = LocalizationHelper.GetResourceString(ass, "MixERP.Net.DbFactory.Resources.DbErrors", ex.Code);
+
+            if (message == ex.Code)
+            {
+                return ex.Message;
+            }
+
+            return message;
         }
 
         [CLSCompliant(false)]
@@ -109,7 +116,7 @@ namespace MixERP.Net.DbFactory
             {
                 if (ex.Code.StartsWith("P"))
                 {
-                    string errorMessage = GetDBErrorResource(ex.Code);
+                    string errorMessage = GetDBErrorResource(ex);
                     throw new MixERPException(errorMessage, ex);
                 }
 
@@ -141,7 +148,7 @@ namespace MixERP.Net.DbFactory
             {
                 if (ex.Code.StartsWith("P"))
                 {
-                    string errorMessage = GetDBErrorResource(ex.Code);
+                    string errorMessage = GetDBErrorResource(ex);
                     throw new MixERPException(errorMessage, ex);
                 }
 
@@ -173,7 +180,7 @@ namespace MixERP.Net.DbFactory
             {
                 if (ex.Code.StartsWith("P"))
                 {
-                    string errorMessage = GetDBErrorResource(ex.Code);
+                    string errorMessage = GetDBErrorResource(ex);
                     throw new MixERPException(errorMessage, ex);
                 }
 
@@ -213,7 +220,7 @@ namespace MixERP.Net.DbFactory
             {
                 if (ex.Code.StartsWith("P"))
                 {
-                    string errorMessage = GetDBErrorResource(ex.Code);
+                    string errorMessage = GetDBErrorResource(ex);
                     throw new MixERPException(errorMessage, ex);
                 }
 
@@ -265,7 +272,7 @@ namespace MixERP.Net.DbFactory
             {
                 if (ex.Code.StartsWith("P"))
                 {
-                    string errorMessage = GetDBErrorResource(ex.Code);
+                    string errorMessage = GetDBErrorResource(ex);
                     throw new MixERPException(errorMessage, ex);
                 }
 
@@ -339,7 +346,7 @@ namespace MixERP.Net.DbFactory
             {
                 if (ex.Code.StartsWith("P"))
                 {
-                    string errorMessage = GetDBErrorResource(ex.Code);
+                    string errorMessage = GetDBErrorResource(ex);
                     throw new MixERPException(errorMessage, ex);
                 }
 
