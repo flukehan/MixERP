@@ -19,8 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
+using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common;
@@ -42,11 +44,12 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
     public class Adjustment : WebService
     {
         [WebMethod]
-        public long Save(DateTime valueDate, string referenceNumber, string statementReference, List<StockAdjustmentDetail> models)
+        public long Save(DateTime valueDate, string referenceNumber, string statementReference, string models)
         {
             try
             {
-                foreach (StockAdjustmentDetail model in models)
+                Collection<StockAdjustmentDetail> stockAdjustmentModels = GetModels(models);
+                foreach (StockAdjustmentDetail model in stockAdjustmentModels)
                 {
                     if (model.TransferTypeEnum == TransactionTypeEnum.Credit)
                     {
@@ -63,13 +66,38 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                 int userId = CurrentUser.GetSignInView().UserId.ToInt();
                 long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
 
-                return Data.Transactions.StockAdjustment.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, models.ToCollection());
+                return Data.Transactions.StockAdjustment.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, stockAdjustmentModels);
             }
             catch (Exception ex)
             {
                 Log.Warning("Could not save inventory adjustment entry. {Exception}", ex);
                 throw;
             }
+        }
+
+        private static Collection<StockAdjustmentDetail> GetModels(string json)
+        {
+            Collection<StockAdjustmentDetail> models = new Collection<StockAdjustmentDetail>();
+
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            dynamic result = jss.Deserialize<dynamic>(json);
+
+            foreach (var item in result)
+            {
+                StockAdjustmentDetail detail = new StockAdjustmentDetail();
+                const TransactionTypeEnum typeEnum = TransactionTypeEnum.Credit;
+
+                detail.TransferTypeEnum = typeEnum;
+                detail.StoreName = Conversion.TryCastString(item["StoreName"]);
+                detail.ItemCode = Conversion.TryCastString(item["ItemCode"]);
+                detail.ItemName = Conversion.TryCastString(item["ItemName"]);
+                detail.UnitName = Conversion.TryCastString(item["UnitName"]);
+                detail.Quantity = Conversion.TryCastInteger(item["Quantity"]);
+
+                models.Add(detail);
+            }
+
+            return models;
         }
     }
 }
