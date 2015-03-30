@@ -56,15 +56,20 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
         actualInputText.blur(function () {
             var quantity = parseInt2($(this).parent().parent().find("td:nth-last-child(3)").html());
-            var actual = parseInt2($(this).val());
-
-            if (actual > quantity) {
+            var actual = ($(this).val());
+           
+            if (isNullOrWhiteSpace(actual)) {
+                $(this).val(quantity);
+                actual = quantity;
+            }
+           
+            if (parseInt2(actual) > quantity) {
                 makeDirty($(this).parent());
                 return;
             };
 
             removeDirty($(this).parent());
-
+           
             $(this).parent().parent().find("td:nth-last-child(1) input").val(quantity - actual);
         });
 
@@ -162,7 +167,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         data = appendParameter("", "valueDate", valueDate);
         data = appendParameter(data, "referenceNumber", referenceNumber);
         data = appendParameter(data, "statementReference", statementReference);
-        data = appendParameter(data, "models", models);
+        data = appendParameter(data, "models", JSON.stringify(models));
 
         data = getData(data);
 
