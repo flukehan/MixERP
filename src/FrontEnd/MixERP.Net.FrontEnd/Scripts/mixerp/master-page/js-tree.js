@@ -1,4 +1,6 @@
 ﻿$(function () {
+    var searchInput = $("#SearchInput");
+
     var tree = $("#tree");
 
     tree.jstree({
@@ -17,7 +19,7 @@
         "search": {
             "case_insensitive": true,
             "show_only_matches": true
-        },
+        }
     }).bind("select_node.jstree", function (e, data) {
         var href = data.node.a_attr.href;
         document.location.href = href;
