@@ -21,8 +21,8 @@ QUnit.test("grid.js, ->getSelectedCheckBoxItemIds", function (assert) {
 
     $('body').append(table);
 
-    var firstRow = $("tbody tr:eq(0) :checkbox");
-    var secondRow = $("tbody tr:eq(1) :checkbox");
+    var firstRow = table.find("tbody tr:eq(0) :checkbox");
+    var secondRow = table.find("tbody tr:eq(1) :checkbox");
 
     firstRow.prop('checked', true);// First row checked
     var expected = 100;

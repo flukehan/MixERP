@@ -1,8 +1,8 @@
 ﻿///<reference path="../bundles/scripts/master-page.min.js"/>
 window.currencySymbol = "Rs. ";
 window.currencyDecimalPlaces = "2";
-var item;
-var table = $("<table id='ItemDetail'> " +
+
+var itemTable = $("<table> " +
             "    <thead> " +
             "        <tr> " +
             "           <th>Item Name</th> " +
@@ -36,27 +36,27 @@ var table = $("<table id='ItemDetail'> " +
 
 QUnit.test("cell.js -> sumOfColumn", function (assert) {
     var expected = 259;
-    var actual = parseFloat2(sumOfColumn(table, 1));
+    var actual = parseFloat2(sumOfColumn(itemTable, 1));
 
     assert.equal(actual, expected, "The function returned expected value \"" + expected + "\".");
 
     expected = 33198;
-    actual = parseFloat2(sumOfColumn(table, 2));
+    actual = parseFloat2(sumOfColumn(itemTable, 2));
 
     assert.equal(actual, expected, "The function returned expected \"" + expected + "\".");
 });
 QUnit.test("cell.js -> getColumnText", function (assert) {
     var expected = 100;
-    var actual = parseFloat2(getColumnText(table, 1));
+    var actual = parseFloat2(getColumnText(itemTable, 1));
     assert.equal(actual, expected, "The function returned expected value \"" + expected + "\".");
 
     expected = 4000;
-    actual = parseFloat2(getColumnText(table, 2));
+    actual = parseFloat2(getColumnText(itemTable, 2));
 
     assert.equal(actual, expected, "The function returned expected value \"" + expected + "\".");
 
     expected = 2;
-    actual = parseFloat2(getColumnText(table, 4));
+    actual = parseFloat2(getColumnText(itemTable, 4));
 
     assert.equal(actual, expected, "The function returned expected value\"" + expected + "\".");
 
