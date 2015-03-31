@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang=en><head><meta charset=utf-8><title>Contributing as Developer</title><script src=/docs/assets/bundles/scripts.js>
+    </script><link href=/docs/assets/bundles/styles.min.css rel=stylesheet></head><body><div class="sticky contain-to-grid"><nav class=top-bar data-topbar><ul class=title-area><li class=name><h1><a href=/index.html><img src=/docs/assets/images/mixerp-logo.png></a></h1></li><li class="toggle-topbar menu-icon"><a href=javascript:void(0);><span></span></a></li></ul><section class=top-bar-section><ul class=right><li><a class=right-off-canvas-toggle href=javascript:void(0);> Sub Topics </a></li></ul></section></nav></div><div class=off-canvas-wrap data-offcanvas><div class=inner-wrap><aside class=right-off-canvas-menu><ul class=topics></ul></aside><div class=row><div class="large-12 large-centered columns"><div id=content><h1>Contributing as Developer</h1><p>We would love to have you with us in this project. However, you would need to sign the <a href=contributor-license-agreement.html>Contributor License Agreement</a> before submitting contributions.</p><p>Moreover, you will also need to create an account in <a href="http://mixerp.org/index.php?option=com_kunena&amp;view=category&amp;layout=list">MixERP Forum</a>, and ask your questions there.</p><h2>Copyright Header</h2><p>Each file (except *.designer.cs) must have the following license header.</p><pre><code class=lang-csharp>/**********************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+**********************************************************************/
+</code></pre><h2>Dependency</h2><p>Adding a new dependency needs to discussed with and approved by the repository owner (binodnp) beforehand.</p><h1>Coding Style</h1><ul><li>Use 4 spaces instead of a tab.</li><li>Namespaces, type names, member names, and parameter names must use complete words or standard abbreviations.</li></ul><p><strong>Pascal Case</strong></p><ul><li>Function and Methods.</li><li>Resource Strings (Except ScrudResource).</li><li>Enumerators. Name and Collection.</li><li>Class, Namespace.</li><li>Properties.</li><li>ASP.net Server Control and HTML Control ids.</li><li>Javascript class objects and event names.</li></ul><p><strong>Camel Case</strong></p><ul><li>Variables, Objects, and Parameters.</li></ul><p><strong>Lower Case Underscore</strong></p><ul><li>Database objects</li><li>Scrud Resources (*.resx)</li></ul><p><strong>Naming ASP.net Server Controls and Html Controls</strong></p><p>Names should be spelled in American English. The control id attribute should suffix the control name and type to suggest the type of control.</p><p><strong>Correct</strong></p><pre><code class=lang-markup>&lt;asp:TextBox ID=&quot;FirstNameTextBox&quot; runat=&quot;server&quot; /&gt;
+
+&lt;input type=&quot;text&quot; id=&quot;FirstNameInputText&quot; runat=&quot;server&quot; /&gt;
+
+&lt;asp:Button ID=&quot;SaveButton&quot; runat=&quot;server&quot; /&gt;
+
+&lt;input type=&quot;button&quot; id=&quot;SaveInputButton&quot; /&gt;
+
+&lt;button type=&quot;button&quot; id=&quot;SaveButton&quot; /&gt;
+</code></pre><p><strong>Incorrect</strong></p><pre><code class=lang-markup>&lt;asp:TextBox ID=&quot;txt_FirstName&quot; runat=&quot;server&quot; /&gt;
+
+&lt;input type=&quot;text&quot; id=&quot;FirstNameTB&quot; runat=&quot;server&quot; /&gt;
+
+&lt;asp:Button ID=&quot;SaveBtn&quot; runat=&quot;server&quot; /&gt;
+
+&lt;input type=&quot;button&quot; id=&quot;Save_Button&quot; /&gt;
+
+&lt;button type=&quot;button&quot; id=&quot;BtnSave&quot; /&gt;
+</code></pre><h2>Other Important Rules to Follow</h2><ul><li>Functions and methods names must always begin with verbs.</li><li>Class names should be singular nouns.</li><li>Collection, array, list, IEnumerable and similar objects should be plural.</li><li>Controls implementing IDisposable should always remove event handlers. Please do not set event delegate to null on Dispose() method.</li></ul><h2>Related Topics</h2><ul><li><a href=contribution-guidelines.html>Contribution Guidelines</a></li></ul></div></div></div><a class=exit-off-canvas></a><footer class=footer><div class="row full-width"><div class="small-12 medium-3 large-3 columns"><i class=fi-download></i><p> MixERP is an open source and free ERP software that provides a suite of useful modules to help you manage your day to day business activities, including but not limited to, sales, purchases, inventory management, finance, customer relationship management, and back-office. Developed with love by your friends at MixERP Inc. </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-lightbulb></i><p> Some sections in this documentation site are missing. This site is a <a href=index.html#community.md> community effort </a> and work in progress. </p><p> This work is licensed under a <a href=http://creativecommons.org/licenses/by-sa/4.0/ rel=license> Creative Commons Attribution-ShareAlike 4.0 International License </a> . </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-anchor></i><ul class=footer-links><li><a href=http://mixerp.org/forum target=_blank> MixERP Forums </a></li><li><a href=https://github.com/mixerp/mixerp/issues target=_blank> Submit an Issue </a></li><li><a href=https://github.com/mixerp/mixerp/releases target=_blank> Download Latest Release </a></li><li><a href=http://demo.mixerp.org/SignIn.aspx target=_blank> MixERP Demo Website </a></li></ul><br><br><br></div><div class="small-12 medium-3 large-3 columns"><i class=fi-comments></i><ul class=footer-links><li><a href=http://mixerp.org/ target=_blank> Project Website </a></li><li><a href=https://www.facebook.com/mixerp.official/ target=_blank> Follow MixERP on Facebook </a></li><li><a href=http://www.facebook.com/groups/183076085203506/ target=_blank> Facebook Discussion Group </a></li><li><a href=http://twitter.com/mixoferp/ target=_blank> Follow MixERP on Twitter </a></li><li style="list-style: none; display: inline"><ul></ul></li></ul><br><br><br></div></div></footer></div></div></body></html>
