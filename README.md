@@ -38,13 +38,13 @@ All transactions posted to the **v1** is supported and will be automatically upd
 #Where Can I Get Support?
 Please create an account in [MixERP Forums](http://mixerp.org/forum) and post your questions there. We will be happy to help.
 
-#Where is getting started guide?
-The getting started guide can be found under the directory:
+#Where is documentation?
+The documentation now lives in the "gh-pages" branch and is hosted on GitHub pages here:
 
-* src/docs (WebForms)
-* src-beta2/docs (MVC)
+[MixERP Documentation](http://docs.mixerp.org)
 
-NB, we are moving to MVC in the next version. Till then, WebForms will be fully supported.
+Similarly, the branch "gh-pages" is periodically merged into "master" branch. **Using firefox**, you can view the documentation locally by opening "index-ajax.html" on the root folder.
+
 
 ##Why Betas?
 
