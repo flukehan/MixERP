@@ -36,12 +36,7 @@ You **should**, instead, create a hierarchical office structure as shown in the 
 - [Voucher Verification](core-concepts/voucher-verification.md)
 - [Policy Engine](core-concepts/policy-engine.md)
 - [End of Day Operation](core-concepts/eod-operation.md)
-- [Widgets](core-concepts/widgets.md)
-
-## Introduction
- - [Account Management](account-management.md)
-  - [User Profile Management](profile-management.md)
-  - [Change Password](change-password.md)
+- [Change Password](core-concepts/change-password.md)
 
 ##Modules
 - [Sales](sales/index.md)

@@ -4,10 +4,9 @@
 
 * [Clone MixERP](clone-mixerp.md)
 * [Setting up Your Development Environment](setting-up-your-development-environment.md)
-* [Coding Conventions](coding-conventions.md)
-* [ScrudFactory](scrudfactory.md)
+* [Contribution Guidelines](../contribution-guidelines.md)
+* [ScrudFactory](scrud-factory.md)
 * [MixERP Reporting Engine](reporting-engine.md)
-* [MixERP Widgets](mixerp-widgets.md)
 
 **About PostgreSQL Server**
 

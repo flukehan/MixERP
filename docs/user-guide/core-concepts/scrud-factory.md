@@ -1,4 +1,4 @@
-#ScrudFactory
+#Working with ScrudFactory
 
 ScrudFactory is one of the various core modules of MixERP which facilitates rapid application development (RAD). ScrudFactory provides a common and consistent user interface, which helps you efficiently get you job done.
 

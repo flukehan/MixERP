@@ -38,7 +38,11 @@ def transform_links(contents):
 def get_title(contents):
     soup = BeautifulSoup(contents)
     headers = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
-    return headers[0].contents[0] or "MixERP Documentation"
+
+    try:
+        return headers[0].contents[0] 
+    except IndexError:
+        return "MixERP Documentation"
 
 def transform_file(file, layout):
     destination = file.replace(".md", ".html");
