@@ -14,7 +14,7 @@ The **Sales & Quotation** menu consists of the following sub-menus:
     </tr>
     <tr>
         <td>
-            [Sales Quotation](sales-quotation.md)
+            <a href="sales-quotation.md">Sales Quotation</a>
         </td>
         <td>
             This does not affect finance module. A quotation is generated and provided to a prospective customer.
@@ -22,7 +22,7 @@ The **Sales & Quotation** menu consists of the following sub-menus:
     </tr>
     <tr>
         <td>
-            [Sales Order](sales-order.md)
+            <a href="sales-order.md">Sales Order</a>
         </td>
         <td>
             This does not affect finance module. This book is used to post sales order against purchase orders sent by customers.
@@ -30,7 +30,7 @@ The **Sales & Quotation** menu consists of the following sub-menus:
     </tr>
     <tr>
         <td>
-            [Sales Delivery](sales-delivery.md)
+            <a href="sales-delivery.md">Sales Delivery</a>
         </td>
         <td>
             This has an effect on balance sheet. The stock item (or service) delivered is credited 
@@ -39,7 +39,7 @@ The **Sales & Quotation** menu consists of the following sub-menus:
     </tr>
     <tr>
         <td>
-            [Receipt](sales-receipt.md)
+            <a href="sales-receipt.md">Receipt</a>
         </td>
         <td>
             This has an effect on balance sheet. The party account is credited and either cash or bank account is debited.
@@ -48,7 +48,7 @@ The **Sales & Quotation** menu consists of the following sub-menus:
     </tr>
     <tr>
         <td>
-            [Direct Sales](direct-sales.md)
+            <a href="direct-sales.md">Direct Sales</a>
         </td>
         <td>
             This has an effect on balance sheet. Direct Sales will automatically create sales delivery and receipt.
@@ -56,7 +56,7 @@ The **Sales & Quotation** menu consists of the following sub-menus:
     </tr>
     <tr>
         <td>
-            [Sales Return](sales-return.md)
+            <a href="sales-return.md">Sales Return</a>
         </td>
         <td>
             This has an effect on balance sheet. The party account is credited and rejected items are debited 

@@ -34,7 +34,7 @@ Edit one of the following files using Visual Studio or any text editor of your c
 | Key                         | Configuration |
 |-----------------------------| -------------|
 | Server                      | The hostname or IP address of your development PostgreSQL Server instance. Usually "localhost". |
-| PostgreSQLBinDirectory      | The port on which the PostgreSQL server is listening. Usually "5432". |
+| Port                        | The port on which the PostgreSQL server is listening. Usually "5432". |
 | Database                    | The name of the database in which you have installed (run) MixERP database script |
 | UserId                      | MixERP database script will create a user mix_erp. Leave it as it is. |
 | Password                    | Password for the above user. The default password is "change-on-deployment". If you happen to change the password, change it here as well. |
