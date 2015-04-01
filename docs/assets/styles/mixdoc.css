@@ -1,5 +1,8 @@
-html, body, nav, ul, li {
+html, body, nav, ul, li, div, a {
     font-size: 14px !important;
+}
+
+html, body, nav, ul, li {
     color: #434544;
     line-height: 1.5;
 }
@@ -125,7 +128,7 @@ img {
 }
 
 .item-selector {
-    padding: 4px 24px;
+    padding: 4px 12px;
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAA81BMVEUAAAAAfrYAfrZ5udZ8u9cAfrZ0t9V0t9UAfrYAfrYAfrZqstJttNNrs9IAfrZUp8wulcJFoMhGoMlEn8gAfrYfjb49nMY9nMY7m8YdjL4fjb74+Pj19/ju9fe+6PPW7/Xf8fYAfrYRhrrK4uzV7/U5msWw1eW96PPv9vcBfrYDf7e/6fPz9vfg8fYCf7eo4/ENhLkQhrrO4+3L7PQTh7sTiLvM7PTR5e4ejb4pksEEgLc6m8bh7fLi7fLk7vPm7/NVqM1Yqc1jr9Brs9JzttXN4+0Zir3G4Oup4/Gv1OWTxt252ee62eeUx92o4vF5udbE3+oQSryJAAAAG3RSTlMADxAdHjA6PD9PX25ucK+/1tra29/i5ebm+/s4jNsSAAAAuUlEQVR4Xm2P5W7DQBCEnbQNM/Sc7KEZwsxcxvd/mvZ8VSVLmX/zaUezo11Vut7u9VDx35enx7ed+WXot39+8QRS+zVS9wMTABOCYT6MUrUDAOGWxQmcdAnaL4D52KVjjt99CYINEMv97FNGRgqMfgHtP4fM+2hJcH+RERrOuh27KkHhcQuEM9b1nCAV9aLlHDDxOs6koh67Qcb5++HVXjVFKalQHvl+q55KNETjLjYyI0QmPjuX1X4AQ3QWeDVDvE4AAAAASUVORK5CYII=") no-repeat scroll 4px 4px transparent;
 }
 

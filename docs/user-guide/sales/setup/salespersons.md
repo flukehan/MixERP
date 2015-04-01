@@ -15,7 +15,7 @@ This is an auto-generated and read-only field.
 
 **Sales Team Id**
 
-Select the sales team or search by clicking the icon <i class="item-selector"></i>
+Select the sales team or search by clicking the icon <i class="item-selector"></i>.
 
 **Salesperson Code**
 
@@ -35,7 +35,7 @@ Provide contact number information.
 
 **Account Id**
 
-Select the account to map the sales person to or search by clicking the item-selector icon<i class="item-selector"></i>
+Select the account to map the sales person to or search by clicking the item-selector icon<i class="item-selector"></i>.
 
 <div class="alert-box scrud radius">
     Since this form implements ScrudFactory helper module, the detailed explanation of this feature is not provided
