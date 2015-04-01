@@ -38,10 +38,10 @@ The date until this policy is valid; thenceforth, having no effect.
 
 <div class="alert-box scrud radius">
     Since this form implements ScrudFactory helper module, the detailed explanation of this feature is not provided
-    in this document. View <a href="../../core-concepts/scrud-factory.html">ScrudFactory Helper Module Documentation</a>
+    in this document. View <a href="../../core-concepts/scrud-factory.md">ScrudFactory Helper Module Documentation</a>
     for more information.
 </div>
 
 
 ##Related Topics
-* [MixERP User Guide](../../index.md)
+* [Policy Engine](../../core-concepts/policy-engine.md)

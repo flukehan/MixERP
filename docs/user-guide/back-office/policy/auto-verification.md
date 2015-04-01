@@ -2,15 +2,9 @@
 
 The **sys user** can automatically verify a transaction, provided that you have already configured it to do so.
 
-
+![Auto Verification Policy](images/auto-verification-policy.png)
 
 ##Fields
-
-
-**Office Id**
-
-Select the office in which the policy will take effect.
-
 
 **User Id**
 
@@ -53,13 +47,17 @@ The date on which this policy ends, thus, having no effect.
 
 Specify whether this policy is active. If this is switched off, the policy has no effect.
 
+**Office Id**
+
+Select the office in which the policy will take effect.
+
 
 <div class="alert-box scrud radius">
     Since this form implements ScrudFactory helper module, the detailed explanation of this feature is not provided
-    in this document. View <a href="../../core-concepts/scrud-factory.html">ScrudFactory Helper Module Documentation</a>
+    in this document. View <a href="../../core-concepts/scrud-factory.md">ScrudFactory Helper Module Documentation</a>
     for more information.
 </div>
 
 
 ##Related Topics
-* [MixERP User Guide](../../index.md)
+* [Policy Engine](../../core-concepts/policy-engine.md)
