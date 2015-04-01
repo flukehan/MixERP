@@ -1,5 +1,6 @@
 #Sales Teams
-It is a group of teams who market and sell products of your office.
+It is a group of salespersons who are involved in sales of one or
+more product of an organization.
 
 ![Sales Teams](images/sales-teams.png)
 

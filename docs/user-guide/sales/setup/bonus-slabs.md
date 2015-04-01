@@ -1,9 +1,9 @@
 #Bonus Slab for Salespersons
 Management must confirm that the salespeople are well encouraged.
 Salespersons can be allowed bonus,depending upon the amount (slab) 
-of business from their sales.For the success of any business, 
+of business from their sales. For the success of any business, 
 motivation of employee is the key factor. Many successful 
-organizations employ a mix of sales incentives.The most common ways 
+organizations employ a mix of sales incentives. The most common ways 
 to manage motivation is to use incentives. 
 
 
@@ -33,7 +33,12 @@ Choose the ending date of the bonus slab.
 
 **Checking Frequency Id**
 
-Select the bonus posting frequency i.e. EOM (End of Month), EOQ (End of Quarter), EOH (End of Half Year) or EOY (End of Year). 
+Select a bonus posting frequency from the checking frequencies:
+
+* EOM (End of Month)
+* EOQ (End of Quarter)
+* EOH (End of Half Year) 
+* EOY (End of Year). 
 
 **Account Id**
 

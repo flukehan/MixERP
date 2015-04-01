@@ -1,7 +1,7 @@
 #Recurring Invoice Setup
-Recurring Invoice Setup is used to define setup parameters for the
+Recurring invoice setup is used to define setup parameters for the
 recurring invoices. It is used to setup party, start date, end date,
-amount and payment term of the recurring invoices.
+amount, and payment term of the recurring invoices.
 
 ![Recurring Invoice Setup](images/recurring-invoice-setup.png)
 
@@ -42,15 +42,12 @@ Enter the recurring duration in days.
 
 **Recurs on Same Calendar Date**
 
-Click 'Yes' to choose recurrence date as mentioned above.
 
 **Recurring Amount**
 
-Specify the recurring amount of the items.
 
 **Account Id**
 
-Select the account to be mapped for recurring invoices.
 
 **Payment Term Id** 
 
