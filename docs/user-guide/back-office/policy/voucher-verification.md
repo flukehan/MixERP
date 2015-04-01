@@ -3,16 +3,13 @@
 When a transaction is posted to MixERP, it is sent to verification queue. The **Voucher Administrators** can
 then verify the transaction. A verified transaction can be either **approved** or **rejected**.
 
+![Voucher Verification Policy](images/voucher-verification-policy.png)
+
 ##Fields
 
 **Policy Id**
 
 This is an auto-generated and read-only field.
-
-
-**Office Id**
-
-Select the office in which the policy will take effect.
 
 
 **User Id**
@@ -60,6 +57,10 @@ The date on which this policy ends, thus, having no effect.
 **Is Active**
 
 Specify whether this policy is active. If this is switched off, the policy has no effect.
+
+**Office Id**
+
+Select the office in which the policy will take effect.
 
 
 <div class="alert-box scrud radius">
