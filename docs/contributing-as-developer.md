@@ -3,7 +3,7 @@
 We would love to have you with us in this project. However, you would need to sign the 
 [Contributor License Agreement](contributor-license-agreement.md) before submitting contributions.
 
-Moreover, you will also need to create an account in [MixERP Forum](http://mixerp.org/index.php?option=com_kunena&view=category&layout=list), and ask your questions there.
+Moreover, you will also need to create an account in [MixERP Forum](http://mixerp.org/forum), and ask your questions there.
 
 
 ##Copyright Header
