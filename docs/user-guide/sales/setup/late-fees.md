@@ -5,8 +5,6 @@ by its due date. Its use is normally related to business
 creditors. Late fees are generally calculated per day, per item 
 basis.The fee is based on a percentage of the amount due.
 
-![Late Fees](images/late-fees.png)
-
 ##Fields
 
 **Late Fee Id** 

@@ -11,8 +11,7 @@ the same date every year or according to user-defined calendars or
 dates relative to the last invoice date. This gives complete 
 flexibility to invoicing schedules.
 
-![Recurring Invoices](images/recurring-invoices-1.png)
-![Recurring Invoices](images/recurring-invoices-2.png)
+![Recurring Invoices](images/recurring-invoices.png)
 
 ##Fields
 
@@ -48,7 +47,7 @@ Provide a name for the recurring invoice.
 
 **Automatically Trigger on Sales**
 
- Click on ‘Yes’ to trigger on sales and ‘No’ to not trigger on sales.
+ Click on â€˜Yesâ€™ to trigger on sales and â€˜Noâ€™ to not trigger on sales.
 
 
 
