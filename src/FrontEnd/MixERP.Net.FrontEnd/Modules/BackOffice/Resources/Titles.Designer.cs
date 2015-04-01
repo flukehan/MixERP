@@ -709,6 +709,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Office.
+        /// </summary>
+        internal static string SelectOffice {
+            get {
+                return ResourceManager.GetString("SelectOffice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select User.
         /// </summary>
         internal static string SelectUser {

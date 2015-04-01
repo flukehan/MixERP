@@ -201,6 +201,9 @@
   <data name="P4030" xml:space="preserve">
     <value>Walang patakaran sa pag-verify natagpuan para sa user na ito.</value>
   </data>
+  <data name="P4031" xml:space="preserve">
+    <value>Mangyaring hilingin sa ibang tao upang i-verify ang iyong transaksyon.</value>
+  </data>
   <data name="P5000" xml:space="preserve">
     <value>Na tumutukoy sa gilid ay hindi katumbas.</value>
   </data>

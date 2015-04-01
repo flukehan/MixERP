@@ -201,6 +201,9 @@
   <data name="P4030" xml:space="preserve">
     <value>Tidak ada kebijakan verifikasi ditemukan untuk pengguna ini.</value>
   </data>
+  <data name="P4031" xml:space="preserve">
+    <value>Silakan meminta orang lain untuk memverifikasi transaksi Anda.</value>
+  </data>
   <data name="P5000" xml:space="preserve">
     <value>Mengacu sisi tidak sama.</value>
   </data>

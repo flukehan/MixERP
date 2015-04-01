@@ -47,6 +47,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                 scrud.DenyEdit = denyToNonAdmins;
                 scrud.DenyDelete = denyToNonAdmins;
 
+                scrud.ExcludeEdit = "user_id";
+
                 scrud.KeyColumn = "user_id";
 
                 scrud.TableSchema = "policy";
@@ -58,6 +60,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
+                scrud.UseDisplayViewsAsParents = true;
 
                 scrud.Text = Titles.AutoVerificationPolicy;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof (AutoVerification));
@@ -69,8 +72,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "office.users.user_id",
-                ConfigurationHelper.GetDbParameter("UserDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.users.user_id", ConfigurationHelper.GetDbParameter("UserDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id", ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
             return string.Join(",", displayFields);
         }
 
@@ -78,6 +81,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "office.users.user_id", "office.user_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_scrud_view");
             return string.Join(",", displayViews);
         }
     }

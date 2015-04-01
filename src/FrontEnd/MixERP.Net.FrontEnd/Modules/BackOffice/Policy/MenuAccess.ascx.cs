@@ -73,12 +73,32 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                     }
 
                     this.userSelect = new DropDownList();
-                    userSelect.ID = "UserSelect";
-                    field.Controls.Add(userSelect);
-                    this.userSelect.DataSource = Data.Admin.User.GetUsers();
+                    this.userSelect.ID = "UserSelect";
+                    field.Controls.Add(this.userSelect);
+
+                    this.userSelect.DataSource = Data.Admin.User.GetUserSelectorView();
                     this.userSelect.DataTextField = "UserName";
                     this.userSelect.DataValueField = "UserId";
                     this.userSelect.DataBind();
+
+                    formSegment.Controls.Add(field);
+                }
+
+                using (HtmlGenericControl field = HtmlControlHelper.GetField())
+                {
+                    using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.SelectOffice, "OfficeSelect"))
+                    {
+                        field.Controls.Add(label);
+                    }
+
+                    this.officeSelect = new DropDownList();
+                    this.officeSelect.ID = "OfficeSelect";
+                    field.Controls.Add(this.officeSelect);
+
+                    this.officeSelect.DataSource = Data.Admin.Office.GetOffices();
+                    this.officeSelect.DataTextField = "OfficeName";
+                    this.officeSelect.DataValueField = "OfficeId";
+                    this.officeSelect.DataBind();
 
                     formSegment.Controls.Add(field);
                 }
@@ -133,7 +153,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         private void SaveButton_Click(object sender, EventArgs e)
         {
             int userId = Conversion.TryCastInteger(this.userSelect.SelectedValue);
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int officeId = Conversion.TryCastInteger(this.officeSelect.SelectedValue);
+
             string menus = this.selectedMenusHidden.Value;
 
             if (userId.Equals(0) || officeId.Equals(0))
@@ -162,7 +183,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         private void BindGrid()
         {
             int userId = Conversion.TryCastInteger(this.userSelect.SelectedValue);
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int officeId = Conversion.TryCastInteger(this.officeSelect.SelectedValue);
             string culture = CurrentUser.GetSignInView().Culture;
 
             if (userId.Equals(0) || officeId.Equals(0))
@@ -212,6 +233,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         #region IDisposable
 
         private DropDownList userSelect;
+        private DropDownList officeSelect;
         private MixERPGridView grid;
         private Button showButton;
         private Button saveButton;
@@ -239,6 +261,12 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
             {
                 this.userSelect.Dispose();
                 this.userSelect = null;
+            }
+
+            if (this.officeSelect != null)
+            {
+                this.officeSelect.Dispose();
+                this.officeSelect = null;
             }
 
             if (this.grid != null)

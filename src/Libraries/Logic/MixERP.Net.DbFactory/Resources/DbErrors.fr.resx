@@ -201,6 +201,9 @@
   <data name="P4030" xml:space="preserve">
     <value>Aucune politique de vérification trouvé pour cet utilisateur.</value>
   </data>
+  <data name="P4031" xml:space="preserve">
+    <value>Se il vous plaît demander à quelqu'un de vérifier votre transaction.</value>
+  </data>
   <data name="P5000" xml:space="preserve">
     <value>Référencement côtés ne sont pas égaux.</value>
   </data>

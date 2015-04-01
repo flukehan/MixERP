@@ -42,6 +42,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
+                scrud.UseDisplayViewsAsParents = true;
 
                 scrud.Text = Titles.BankAccounts;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof (BankAccounts));

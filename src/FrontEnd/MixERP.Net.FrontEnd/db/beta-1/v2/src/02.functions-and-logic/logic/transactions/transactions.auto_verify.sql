@@ -100,6 +100,7 @@ BEGIN
     FROM
     policy.auto_verification_policy
     WHERE user_id=_transaction_posted_by
+    AND office_id = _office_id
     AND is_active=true
     AND now() >= effective_from
     AND now() <= ends_on;
@@ -573,8 +574,8 @@ BEGIN
     WHERE transaction_master_id = _tran_id;
 
     IF(_verification_status_id < 1) THEN
-            SELECT assert.fail('This transaction should have been verified.') INTO message;
-            RETURN message;
+        SELECT assert.fail('This transaction should have been verified.') INTO message;
+        RETURN message;
     END IF;
 
     SELECT assert.ok('End of test.') INTO message;  

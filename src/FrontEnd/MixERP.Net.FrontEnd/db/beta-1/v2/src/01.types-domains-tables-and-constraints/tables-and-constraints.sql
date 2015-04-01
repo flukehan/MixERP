@@ -398,3 +398,49 @@ LANGUAGE plpgsql;
 
 ALTER TABLE core.parties
 ALTER COLUMN party_name SET NOT NULL;
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'policy.voucher_verification_policy'::regclass
+        AND    attname = 'office_id'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE policy.voucher_verification_policy
+        ADD COLUMN office_id integer
+        REFERENCES office.offices(office_id);
+    END IF;
+
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'policy.auto_verification_policy'::regclass
+        AND    attname = 'office_id'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE policy.auto_verification_policy
+        ADD COLUMN office_id integer
+        REFERENCES office.offices(office_id);
+    END IF;
+    
+    UPDATE policy.voucher_verification_policy
+    SET office_id = (SELECT office_id FROM office.offices LIMIT 1)
+    WHERE office_id IS NULL;
+
+    UPDATE policy.auto_verification_policy
+    SET office_id = (SELECT office_id FROM office.offices LIMIT 1)
+    WHERE office_id IS NULL;
+
+    ALTER TABLE policy.voucher_verification_policy
+    ALTER COLUMN office_id SET NOT NULL;
+
+    ALTER TABLE policy.auto_verification_policy
+    ALTER COLUMN office_id SET NOT NULL;    
+END
+$$
+LANGUAGE plpgsql;

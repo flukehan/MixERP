@@ -32,6 +32,7 @@ $$
     DECLARE _purchase_verification_limit    public.money_strict2;
     DECLARE _verify_gl                      boolean;
     DECLARE _gl_verification_limit          public.money_strict2;
+    DECLARE _can_self_verify                boolean;
     DECLARE _posted_amount                  public.money_strict2;
     DECLARE _has_policy                     boolean=false;
     DECLARE _voucher_date                   date;
@@ -81,7 +82,8 @@ BEGIN
         can_verify_purchase_transactions,
         purchase_verification_limit,
         can_verify_gl_transactions,
-        gl_verification_limit
+        gl_verification_limit,
+        can_self_verify
     INTO
         _has_policy,
         _verify_sales,
@@ -89,14 +91,15 @@ BEGIN
         _verify_purchase,
         _purchase_verification_limit,
         _verify_gl,
-        _gl_verification_limit
+        _gl_verification_limit,
+        _can_self_verify
     FROM
     policy.voucher_verification_policy
     WHERE user_id=_user_id
+    AND office_id = _office_id
     AND is_active=true
     AND now() >= effective_from
     AND now() <= ends_on;
-
 
     IF(lower(_book) LIKE 'sales%') THEN
         IF(_verify_sales = false) THEN
@@ -133,6 +136,10 @@ BEGIN
         END IF;         
     END IF;
 
+    IF(NOT _can_self_verify AND _user_id = _transaction_posted_by) THEN
+        _can_approve := false;
+    END IF;
+
     IF(_has_policy=true) THEN
         IF(_can_approve = true) THEN
             UPDATE transactions.transaction_master
@@ -149,6 +156,9 @@ BEGIN
             PERFORM transactions.create_recurring_invoices(_transaction_master_id);
 
             RAISE NOTICE 'Done.';
+        ELSE
+            RAISE EXCEPTION 'Please ask someone else to verify your transaction.'
+            USING ERRCODE='P4031';
         END IF;
     ELSE
         RAISE EXCEPTION 'No verification policy found for this user.'
@@ -161,6 +171,7 @@ LANGUAGE plpgsql;
 
 
 --SELECT * FROM transactions.verify_transaction(65::bigint, 2, 2, 51::bigint, -3::smallint, '');
+--SELECT * FROM transactions.verify_transaction(133::bigint, 2, 2, 5::bigint, 2::smallint, 'ok'::national character varying);
 
 /**************************************************************************************************************************
 --------------------------------------------------------------------------------------------------------------------------

@@ -417,4 +417,7 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="SelectOffice" xml:space="preserve">
+    <value>Büro Select</value>
+  </data>
 </root>

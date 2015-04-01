@@ -417,4 +417,7 @@
   <data name="Name" xml:space="preserve">
     <value>名字</value>
   </data>
+  <data name="SelectOffice" xml:space="preserve">
+    <value>选择办事处</value>
+  </data>
 </root>

@@ -417,4 +417,7 @@
   <data name="Name" xml:space="preserve">
     <value>nama</value>
   </data>
+  <data name="SelectOffice" xml:space="preserve">
+    <value>pilih Office</value>
+  </data>
 </root>

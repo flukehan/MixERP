@@ -201,6 +201,9 @@
   <data name="P4030" xml:space="preserve">
     <value>Ingen verifiering policy hittades för denna användare.</value>
   </data>
+  <data name="P4031" xml:space="preserve">
+    <value>Vänligen be någon annan att verifiera din transaktion.</value>
+  </data>
   <data name="P5000" xml:space="preserve">
     <value>Hänvisning sidor är inte lika.</value>
   </data>

@@ -313,6 +313,15 @@ namespace MixERP.Net.DbFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please ask someone else to verify your transaction..
+        /// </summary>
+        internal static string P4031 {
+            get {
+                return ResourceManager.GetString("P4031", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Referencing sides are not equal..
         /// </summary>
         internal static string P5000 {

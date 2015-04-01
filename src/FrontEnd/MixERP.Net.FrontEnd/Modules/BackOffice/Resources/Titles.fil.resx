@@ -417,4 +417,7 @@
   <data name="Name" xml:space="preserve">
     <value>pangalan</value>
   </data>
+  <data name="SelectOffice" xml:space="preserve">
+    <value>Pumili ng Opisina</value>
+  </data>
 </root>

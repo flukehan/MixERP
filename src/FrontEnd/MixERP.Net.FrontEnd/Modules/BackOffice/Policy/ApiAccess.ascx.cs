@@ -60,6 +60,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
+                scrud.UseDisplayViewsAsParents = true;
 
                 scrud.Text = "API Access Policy";
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof (ApiAccess));

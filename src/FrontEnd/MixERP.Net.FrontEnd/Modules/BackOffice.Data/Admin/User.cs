@@ -33,9 +33,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
         /// An enumerator that allows foreach to be used to process the users in this collection.
         /// </returns>
 
-        public static IEnumerable<Entities.Office.User> GetUsers()
+        public static IEnumerable<Entities.Office.UserSelectorView> GetUserSelectorView()
         {
-            return Factory.Get<Entities.Office.User>("SELECT * FROM office.users ORDER BY user_name;");
+            return Factory.Get<Entities.Office.UserSelectorView>("SELECT * FROM office.user_selector_view ORDER BY user_name;");
         }
 
         /// <summary>Change password of the user to a new one.</summary>

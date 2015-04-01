@@ -201,6 +201,9 @@
   <data name="P4030" xml:space="preserve">
     <value>无验证策略找到此用户。</value>
   </data>
+  <data name="P4031" xml:space="preserve">
+    <value>请让别人来验证您的交易。</value>
+  </data>
   <data name="P5000" xml:space="preserve">
     <value>引用双方是不相等的。</value>
   </data>

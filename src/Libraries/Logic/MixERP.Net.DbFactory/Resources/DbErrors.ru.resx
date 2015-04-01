@@ -201,6 +201,9 @@
   <data name="P4030" xml:space="preserve">
     <value>Нет проверка политики нашли для этого пользователя.</value>
   </data>
+  <data name="P4031" xml:space="preserve">
+    <value>Пожалуйста, попросите кого-нибудь еще, чтобы проверить вашу сделку.</value>
+  </data>
   <data name="P5000" xml:space="preserve">
     <value>Ссылки на стороны не равны.</value>
   </data>

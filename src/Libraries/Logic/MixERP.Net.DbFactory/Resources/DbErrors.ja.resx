@@ -201,6 +201,9 @@
   <data name="P4030" xml:space="preserve">
     <value>このユーザーが見つかりませ検証ポリシーません。</value>
   </data>
+  <data name="P4031" xml:space="preserve">
+    <value>あなたのトランザクションを確認するために他の誰かに依頼してください。</value>
+  </data>
   <data name="P5000" xml:space="preserve">
     <value>参照辺が等しくない。</value>
   </data>

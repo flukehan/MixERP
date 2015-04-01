@@ -201,6 +201,9 @@
   <data name="P4030" xml:space="preserve">
     <value>Geen verificatie beleid gevonden voor deze gebruiker.</value>
   </data>
+  <data name="P4031" xml:space="preserve">
+    <value>Vraag dan iemand anders om uw transactie te controleren.</value>
+  </data>
   <data name="P5000" xml:space="preserve">
     <value>Verwijzen kanten zijn niet gelijk.</value>
   </data>

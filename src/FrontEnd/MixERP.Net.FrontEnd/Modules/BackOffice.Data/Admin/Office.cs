@@ -18,22 +18,23 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Collections.Generic;
+using System.Data.Common;
+using MixERP.Net.Common.Base;
 using MixERP.Net.Entities;
-using MixERP.Net.Entities.Policy;
 
-namespace MixERP.Net.Core.Modules.BackOffice.Data.Policy
+namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
 {
-    public static class Menu
+    public class Office
     {
-        public static IEnumerable<DbGetMenuPolicyResult> GetMenuPolicy(int userId, int officeId, string culture)
-        {
-            return Factory.Get<DbGetMenuPolicyResult>("SELECT * FROM policy.get_menu_policy(@0, @1, @2)", userId, officeId, culture);
-        }
+        /// <summary>Gets the collection of all offices.</summary>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the users in this collection.
+        /// </returns>
 
-        public static void SaveMenuPolicy(int userId, int officeId, string menus)
+        public static IEnumerable<Entities.Office.Office> GetOffices()
         {
-            const string sql = "SELECT * FROM policy.save_menu_policy(@0, @1, string_to_array(@2, ',')::varchar[]::int[]);";
-            Factory.NonQuery(sql, userId, officeId, menus);
+            return Factory.Get<Entities.Office.Office>("SELECT * FROM office.offices ORDER BY office_id;");
         }
     }
 }

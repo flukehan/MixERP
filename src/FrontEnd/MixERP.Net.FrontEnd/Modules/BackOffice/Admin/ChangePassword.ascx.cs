@@ -118,7 +118,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                 this.userSelect.DataTextField = "UserName";
                 this.userSelect.DataValueField = "UserId";
 
-                this.userSelect.DataSource = User.GetUsers();
+                this.userSelect.DataSource = User.GetUserSelectorView();
                 this.userSelect.DataBind();
 
 
