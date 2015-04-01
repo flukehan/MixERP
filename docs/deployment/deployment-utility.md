@@ -301,4 +301,4 @@ If you have questions, please join any of the following networks. We would love 
 Thank you for your valuable time. We look forward to build an outstanding community.
 
 ##Related Topics
-* [Deployment Documentation](index.md)
+* [Deployment Documentation](../admin.md)

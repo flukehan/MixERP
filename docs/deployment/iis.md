@@ -9,7 +9,7 @@ in your organization.
 Skip this section if you already got MixERP publish package from our delivery channel.
 </div>
 
-* [Clone MixERP](../../clone-mixerp)
+* [Clone MixERP](../developer/clone-mixerp.md)
 * Open MixERP in Microsoft Visual Studio Express.
 * Publish using MixERP Publish Profile in Visual Studio Express to your desired location.
 ![MixERP Published](iis/mixerp-published.jpg)
@@ -353,4 +353,4 @@ MixERP provides a highly parameterized design, so that you can parameterize almo
 </div>
 
 ##Related Topics
-* [Deployment Documentation](index.md)
+* [Deployment Documentation](../admin.md)

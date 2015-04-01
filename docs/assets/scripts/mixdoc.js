@@ -115,7 +115,6 @@ window.onload = function()
 {
     loadDocument();
     $(document).foundation();
-    $(document).foundation('topbar', 'reflow');
     $("#content").css("min-height", $(window).height() + "px");
 };
 
