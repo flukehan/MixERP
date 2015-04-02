@@ -453,4 +453,37 @@
   <data name="audit_ts" xml:space="preserve">
     <value>Timestamp Auditoria</value>
   </data>
+  <data name="card_type_code" xml:space="preserve">
+    <value>Tipo de Cartão de Código</value>
+  </data>
+  <data name="card_type_id" xml:space="preserve">
+    <value>Tipo de Cartão de Identificação</value>
+  </data>
+  <data name="card_type_name" xml:space="preserve">
+    <value>Tipo de cartão de nome</value>
+  </data>
+  <data name="customer_pays_fee" xml:space="preserve">
+    <value>Cliente paga Fee</value>
+  </data>
+  <data name="is_merchant_account" xml:space="preserve">
+    <value>É Conta Merchant</value>
+  </data>
+  <data name="merchant_account_id" xml:space="preserve">
+    <value>Conta Merchant Identificador</value>
+  </data>
+  <data name="merchant_fee_setup_id" xml:space="preserve">
+    <value>Taxa Merchant Setup Identificador</value>
+  </data>
+  <data name="payment_card_code" xml:space="preserve">
+    <value>Código de Cartões de Pagamento</value>
+  </data>
+  <data name="payment_card_id" xml:space="preserve">
+    <value>Cartões de Pagamento Identificador</value>
+  </data>
+  <data name="payment_card_name" xml:space="preserve">
+    <value>Cartões de Pagamento Nome</value>
+  </data>
+  <data name="bank_accounts_pkey" xml:space="preserve">
+    <value>Duplicar conta bancária.</value>
+  </data>
 </root>

@@ -43,6 +43,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
+                scrud.UseDisplayViewsAsParents = true;
 
                 scrud.Text = Titles.PartyTypes;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof (PartyTypes));
@@ -63,7 +64,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.party_type_account_selector_view");
 
             return string.Join(",", displayViews);
         }

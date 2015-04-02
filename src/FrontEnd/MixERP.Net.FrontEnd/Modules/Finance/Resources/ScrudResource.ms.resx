@@ -453,4 +453,37 @@
   <data name="cash_flow_heading_type" xml:space="preserve">
     <value>Jenis Tajuk aliran tunai</value>
   </data>
+  <data name="card_type_code" xml:space="preserve">
+    <value>Jenis Kad Kod</value>
+  </data>
+  <data name="card_type_id" xml:space="preserve">
+    <value>Jenis Kad Pengenalan</value>
+  </data>
+  <data name="card_type_name" xml:space="preserve">
+    <value>Jenis Kad Nama</value>
+  </data>
+  <data name="customer_pays_fee" xml:space="preserve">
+    <value>Pelanggan Membayar Yuran</value>
+  </data>
+  <data name="is_merchant_account" xml:space="preserve">
+    <value>Adakah Akaun Saudagar</value>
+  </data>
+  <data name="merchant_account_id" xml:space="preserve">
+    <value>Pengecam Akaun Saudagar</value>
+  </data>
+  <data name="merchant_fee_setup_id" xml:space="preserve">
+    <value>Bayaran Merchant Persediaan Identifier</value>
+  </data>
+  <data name="payment_card_code" xml:space="preserve">
+    <value>Kod Kad Pembayaran</value>
+  </data>
+  <data name="payment_card_id" xml:space="preserve">
+    <value>Pengecam Kad Pembayaran</value>
+  </data>
+  <data name="payment_card_name" xml:space="preserve">
+    <value>Pembayaran Nama Kad</value>
+  </data>
+  <data name="bank_accounts_pkey" xml:space="preserve">
+    <value>Pendua akaun bank.</value>
+  </data>
 </root>

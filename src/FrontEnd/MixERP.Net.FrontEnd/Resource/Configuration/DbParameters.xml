@@ -28,6 +28,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="BankAccountDisplayField" value="bank_name + ' (' + bank_branch + ')'" />
     <add key="BonusSlabDisplayField" value="bonus_slab_name" />
     <add key="BrandDisplayField" value="brand_code + ' (' + brand_name + ')'" />
+    <add key="CardTypeDisplayField" value="card_type_code + ' (' + card_type_name + ')'" />
     <add key="CashRepositoryDisplayField" value="cash_repository_code + ' (' + cash_repository_name + ')'" />
     <add key="CashFlowHeadingDisplayField" value="cash_flow_heading_code + ' (' + cash_flow_heading_name + ')'" />
     <add key="CompoundItemDisplayField" value="compound_item_code + ' (' + compound_item_name + ')'" />
@@ -49,6 +50,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     <add key="OfficeDisplayField" value="office_code + ' (' + office_name + ')'" />
     <add key="PartyDisplayField" value="party_code + ' (' + party_name + ')'" />
     <add key="PartyTypeDisplayField" value="party_type_code + ' (' + party_type_name + ')'" />
+    <add key="PaymentCardDisplayField" value="payment_card_code + ' (' + payment_card_name + ')'" />
     <add key="PaymentTermDisplayField" value="payment_term_code + ' (' + payment_term_name + ')'" />
     <add key="PriceTypeDisplayField" value="price_type_code + ' (' + price_type_name + ')'" />
     <add key="RecurrenceTypeDisplayField" value="recurrence_type_code + ' (' + recurrence_type_name + ')'" />

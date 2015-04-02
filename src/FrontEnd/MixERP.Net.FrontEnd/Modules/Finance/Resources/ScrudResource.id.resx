@@ -453,4 +453,37 @@
   <data name="tax" xml:space="preserve">
     <value>pajak</value>
   </data>
+  <data name="card_type_code" xml:space="preserve">
+    <value>Jenis Kartu Kode</value>
+  </data>
+  <data name="card_type_id" xml:space="preserve">
+    <value>Jenis Kartu Identifier</value>
+  </data>
+  <data name="card_type_name" xml:space="preserve">
+    <value>Jenis Kartu Nama</value>
+  </data>
+  <data name="customer_pays_fee" xml:space="preserve">
+    <value>Pelanggan Pays Fee</value>
+  </data>
+  <data name="is_merchant_account" xml:space="preserve">
+    <value>Apakah Merchant Account</value>
+  </data>
+  <data name="merchant_account_id" xml:space="preserve">
+    <value>Merchant Account Identifier</value>
+  </data>
+  <data name="merchant_fee_setup_id" xml:space="preserve">
+    <value>Merchant Fee Pengaturan Identifier</value>
+  </data>
+  <data name="payment_card_code" xml:space="preserve">
+    <value>Kartu Pembayaran Kode</value>
+  </data>
+  <data name="payment_card_id" xml:space="preserve">
+    <value>Kartu Pembayaran Identifier</value>
+  </data>
+  <data name="payment_card_name" xml:space="preserve">
+    <value>Pembayaran Kartu Nama</value>
+  </data>
+  <data name="bank_accounts_pkey" xml:space="preserve">
+    <value>Gandakan rekening bank.</value>
+  </data>
 </root>

@@ -40,8 +40,11 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.View = "recurring_invoice_setup_scrud_view";
                 scrud.Text = Titles.RecurringInvoiceSetup;
                 scrud.ExcludeEdit = "recurrence_type_id, recurring_frequency_id, recurring_duration, recurs_on_same_calendar_date, account_id";
+
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
+                scrud.UseDisplayViewsAsParents = true;
+
 
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof (RecurringInvoiceSetup));
 
@@ -79,7 +82,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
             ScrudHelper.AddDisplayView(displayViews, "core.recurring_invoices.recurring_invoice_id", "core.recurring_invoice_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.party_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.payment_terms.payment_term_id", "core.payment_term_scrud_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.recurring_invoice_account_selector_view");
             return string.Join(",", displayViews);
         }
     }

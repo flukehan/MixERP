@@ -23,6 +23,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
+                scrud.UseDisplayViewsAsParents = true;
 
                 scrud.Text = Titles.Stores;
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Stores));
@@ -46,7 +47,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "office.store_types.store_type_id", "office.store_type_scrud_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.cash_account_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "office.cash_repositories.cash_repository_id", "office.cash_repository_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.sales_taxes.sales_tax_id", "core.sales_tax_scrud_view");

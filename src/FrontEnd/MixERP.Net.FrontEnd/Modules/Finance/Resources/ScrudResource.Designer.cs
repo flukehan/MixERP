@@ -232,6 +232,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicate bank account..
+        /// </summary>
+        internal static string bank_accounts_pkey {
+            get {
+                return ResourceManager.GetString("bank_accounts_pkey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bank Address.
         /// </summary>
         internal static string bank_address {
@@ -273,6 +282,33 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string book {
             get {
                 return ResourceManager.GetString("book", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card Type Code.
+        /// </summary>
+        internal static string card_type_code {
+            get {
+                return ResourceManager.GetString("card_type_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card Type Id.
+        /// </summary>
+        internal static string card_type_id {
+            get {
+                return ResourceManager.GetString("card_type_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card Type Name.
+        /// </summary>
+        internal static string card_type_name {
+            get {
+                return ResourceManager.GetString("card_type_name", resourceCulture);
             }
         }
         
@@ -466,6 +502,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer Pays Fee.
+        /// </summary>
+        internal static string customer_pays_fee {
+            get {
+                return ResourceManager.GetString("customer_pays_fee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Debit.
         /// </summary>
         internal static string debit {
@@ -583,6 +628,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is Merchant Account.
+        /// </summary>
+        internal static string is_merchant_account {
+            get {
+                return ResourceManager.GetString("is_merchant_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Purchase.
         /// </summary>
         internal static string is_purchase {
@@ -660,6 +714,24 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string maintained_by_user_id {
             get {
                 return ResourceManager.GetString("maintained_by_user_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merchant Account Id.
+        /// </summary>
+        internal static string merchant_account_id {
+            get {
+                return ResourceManager.GetString("merchant_account_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merchant Fee Setup Id.
+        /// </summary>
+        internal static string merchant_fee_setup_id {
+            get {
+                return ResourceManager.GetString("merchant_fee_setup_id", resourceCulture);
             }
         }
         
@@ -777,6 +849,33 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string parent_office {
             get {
                 return ResourceManager.GetString("parent_office", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Card Code.
+        /// </summary>
+        internal static string payment_card_code {
+            get {
+                return ResourceManager.GetString("payment_card_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Card Id.
+        /// </summary>
+        internal static string payment_card_id {
+            get {
+                return ResourceManager.GetString("payment_card_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Card Name.
+        /// </summary>
+        internal static string payment_card_name {
+            get {
+                return ResourceManager.GetString("payment_card_name", resourceCulture);
             }
         }
         

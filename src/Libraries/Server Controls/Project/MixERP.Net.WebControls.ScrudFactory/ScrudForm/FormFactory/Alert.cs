@@ -36,8 +36,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (!string.IsNullOrWhiteSpace(ex.DBConstraintName))
             {
-                string fullyQualifiedResourceClassName = this.ResourceAssembly.GetName().Name + ".Resources." + this.GetResourceClassName();
-                message = LocalizationHelper.GetResourceString(this.ResourceAssembly, fullyQualifiedResourceClassName, ex.DBConstraintName);
+                message = this.GetLocalizedErrorMessage(ex);
             }
 
             this.messageLabel.Text = message;
@@ -51,6 +50,12 @@ namespace MixERP.Net.WebControls.ScrudFactory
             Log.Warning("ScrudFactory: {Message}/{Exception}.", message, ex);
 
             this.ResetForm();
+        }
+
+        private string GetLocalizedErrorMessage(MixERPException ex)
+        {
+            string fullyQualifiedResourceClassName = this.ResourceAssembly.GetName().Name + ".Resources." + this.GetResourceClassName();
+            return LocalizationHelper.GetResourceString(this.ResourceAssembly, fullyQualifiedResourceClassName, ex.DBConstraintName);
         }
 
         private void DisplaySuccess()

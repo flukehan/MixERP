@@ -549,4 +549,10 @@
   <data name="From" xml:space="preserve">
     <value>から</value>
   </data>
+  <data name="MerchantFeeSetup" xml:space="preserve">
+    <value>加盟店手数料の設定</value>
+  </data>
+  <data name="PaymentCards" xml:space="preserve">
+    <value>支払カード</value>
+  </data>
 </root>

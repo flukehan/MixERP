@@ -453,4 +453,37 @@
   <data name="debit" xml:space="preserve">
     <value>借方</value>
   </data>
+  <data name="card_type_code" xml:space="preserve">
+    <value>カードタイプコード</value>
+  </data>
+  <data name="card_type_id" xml:space="preserve">
+    <value>カードタイプ識別子</value>
+  </data>
+  <data name="card_type_name" xml:space="preserve">
+    <value>カードタイプ名</value>
+  </data>
+  <data name="customer_pays_fee" xml:space="preserve">
+    <value>お客様は料金を支払う</value>
+  </data>
+  <data name="is_merchant_account" xml:space="preserve">
+    <value>マーチャントアカウントはありますか</value>
+  </data>
+  <data name="merchant_account_id" xml:space="preserve">
+    <value>マーチャントアカウント識別子</value>
+  </data>
+  <data name="merchant_fee_setup_id" xml:space="preserve">
+    <value>加盟店手数料のセットアップ識別子</value>
+  </data>
+  <data name="payment_card_code" xml:space="preserve">
+    <value>支払カードのコード</value>
+  </data>
+  <data name="payment_card_id" xml:space="preserve">
+    <value>支払カード識別子</value>
+  </data>
+  <data name="payment_card_name" xml:space="preserve">
+    <value>支払カード名</value>
+  </data>
+  <data name="bank_accounts_pkey" xml:space="preserve">
+    <value>銀行口座を複製します。</value>
+  </data>
 </root>

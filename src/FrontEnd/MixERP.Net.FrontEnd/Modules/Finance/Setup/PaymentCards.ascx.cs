@@ -21,59 +21,44 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Sales.Resources;
+using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
 
-namespace MixERP.Net.Core.Modules.Sales.Setup
+namespace MixERP.Net.Core.Modules.Finance.Setup
 {
-    public partial class BonusSlabs : MixERPUserControl
+    public partial class PaymentCards : MixERPUserControl
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
             using (Scrud scrud = new Scrud())
             {
-                scrud.KeyColumn = "bonus_slab_id";
-
+                scrud.KeyColumn = "payment_card_id";
                 scrud.TableSchema = "core";
-                scrud.Table = "bonus_slabs";
-
+                scrud.Table = "payment_cards";
                 scrud.ViewSchema = "core";
-                scrud.View = "bonus_slab_scrud_view";
+                scrud.View = "payment_cards";
+                scrud.Text = Titles.PaymentCards;
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
-                scrud.UseDisplayViewsAsParents = true;
 
-                scrud.Text = Titles.AgentBonusSlabs;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (BonusSlabs));
-
-                this.AddScrudCustomValidatorErrorMessages();
-
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (PaymentCards));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-        }
-
-        private void AddScrudCustomValidatorErrorMessages()
-        {
-            string javascript = JSUtility.GetVar("dateErrorMessageLocalized", Warnings.DateErrorMessage);
-
-            Common.PageUtility.RegisterJavascript("SalesPerson_ScrudCustomValidatorMessages", javascript, this.Page, true);
         }
 
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id", ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.card_types.card_type_id", ConfigurationHelper.GetDbParameter("CardTypeDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequency_selector_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.bonus_slab_account_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.card_types.card_type_id", "core.card_types");
             return string.Join(",", displayViews);
         }
     }

@@ -772,6 +772,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merchant Fee Setup.
+        /// </summary>
+        internal static string MerchantFeeSetup {
+            get {
+                return ResourceManager.GetString("MerchantFeeSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Journal Entry.
         /// </summary>
         internal static string NewJournalEntry {
@@ -840,6 +849,15 @@ namespace MixERP.Net.Core.Modules.Finance.Resources {
         internal static string PartyName {
             get {
                 return ResourceManager.GetString("PartyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Cards.
+        /// </summary>
+        internal static string PaymentCards {
+            get {
+                return ResourceManager.GetString("PaymentCards", resourceCulture);
             }
         }
         

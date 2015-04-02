@@ -16,64 +16,55 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Sales.Resources;
+using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
 
-namespace MixERP.Net.Core.Modules.Sales.Setup
+namespace MixERP.Net.Core.Modules.Finance.Setup
 {
-    public partial class BonusSlabs : MixERPUserControl
+    public partial class MerchantFeeSetup : MixERPUserControl
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
             using (Scrud scrud = new Scrud())
             {
-                scrud.KeyColumn = "bonus_slab_id";
-
+                scrud.KeyColumn = "merchant_fee_setup_id";
                 scrud.TableSchema = "core";
-                scrud.Table = "bonus_slabs";
-
+                scrud.Table = "merchant_fee_setup";
                 scrud.ViewSchema = "core";
-                scrud.View = "bonus_slab_scrud_view";
+                scrud.View = "merchant_fee_setup";
+                scrud.Text = Titles.MerchantFeeSetup;
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.UseDisplayViewsAsParents = true;
 
-                scrud.Text = Titles.AgentBonusSlabs;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (BonusSlabs));
-
-                this.AddScrudCustomValidatorErrorMessages();
-
+                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(PaymentCards));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-        }
-
-        private void AddScrudCustomValidatorErrorMessages()
-        {
-            string javascript = JSUtility.GetVar("dateErrorMessageLocalized", Warnings.DateErrorMessage);
-
-            Common.PageUtility.RegisterJavascript("SalesPerson_ScrudCustomValidatorMessages", javascript, this.Page, true);
         }
 
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id", ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.bank_accounts.account_id", ConfigurationHelper.GetDbParameter("BankAccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.payment_cards.payment_card_id", ConfigurationHelper.GetDbParameter("PaymentCardDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequency_selector_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.bonus_slab_account_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.bank_accounts.account_id", "core.merchant_account_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.payment_cards.payment_card_id", "core.payment_cards");
             return string.Join(",", displayViews);
         }
     }

@@ -453,4 +453,37 @@
   <data name="parent_account_name" xml:space="preserve">
     <value>Ouderaccount Naam</value>
   </data>
+  <data name="card_type_code" xml:space="preserve">
+    <value>Card Type Code</value>
+  </data>
+  <data name="card_type_id" xml:space="preserve">
+    <value>Card Type Identifier</value>
+  </data>
+  <data name="card_type_name" xml:space="preserve">
+    <value>Card Type Naam</value>
+  </data>
+  <data name="customer_pays_fee" xml:space="preserve">
+    <value>Klant betaalt Fee</value>
+  </data>
+  <data name="is_merchant_account" xml:space="preserve">
+    <value>Is Merchant Account</value>
+  </data>
+  <data name="merchant_account_id" xml:space="preserve">
+    <value>Merchant Account Identifier</value>
+  </data>
+  <data name="merchant_fee_setup_id" xml:space="preserve">
+    <value>Merchant Fee Setup Identifier</value>
+  </data>
+  <data name="payment_card_code" xml:space="preserve">
+    <value>Payment Card Code</value>
+  </data>
+  <data name="payment_card_id" xml:space="preserve">
+    <value>Payment Card Identifier</value>
+  </data>
+  <data name="payment_card_name" xml:space="preserve">
+    <value>Payment Card Naam</value>
+  </data>
+  <data name="bank_accounts_pkey" xml:space="preserve">
+    <value>Dupliceren bankrekening.</value>
+  </data>
 </root>

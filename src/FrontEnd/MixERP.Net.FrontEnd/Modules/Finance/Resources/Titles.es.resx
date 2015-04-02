@@ -549,4 +549,10 @@
   <data name="From" xml:space="preserve">
     <value>desde</value>
   </data>
+  <data name="MerchantFeeSetup" xml:space="preserve">
+    <value>Configuración Fee Merchant</value>
+  </data>
+  <data name="PaymentCards" xml:space="preserve">
+    <value>Tarjetas de pago</value>
+  </data>
 </root>

@@ -46,7 +46,7 @@ BEGIN
         );
 
         CREATE UNIQUE INDEX api_access_policy_uix
-        ON policy.api_access_policy(user_id, poco_type_name, http_action_code, valid_till);
+        ON policy.api_access_policy(user_id, UPPER(poco_type_name), UPPER(http_action_code), valid_till);
     
     END IF;    
 END
@@ -441,6 +441,130 @@ BEGIN
 
     ALTER TABLE policy.auto_verification_policy
     ALTER COLUMN office_id SET NOT NULL;    
+END
+$$
+LANGUAGE plpgsql;
+
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'core.bank_accounts'::regclass
+        AND    attname = 'is_merchant_account'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE core.bank_accounts
+        ADD COLUMN is_merchant_account boolean NOT NULL DEFAULT(false);
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'core'
+        AND    c.relname = 'card_types'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE core.card_types
+        (
+            card_type_id                    integer PRIMARY KEY,
+            card_type_code                  national character varying(12) NOT NULL,
+            card_type_name                  national character varying(100) NOT NULL
+        );
+
+        CREATE UNIQUE INDEX card_types_card_type_code_uix
+        ON core.card_types(UPPER(card_type_code));
+
+        CREATE UNIQUE INDEX card_types_card_type_name_uix
+        ON core.card_types(UPPER(card_type_name));
+    END IF;
+    
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'core'
+        AND    c.relname = 'payment_cards'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE core.payment_cards
+        (
+            payment_card_id                     SERIAL NOT NULL PRIMARY KEY,
+            payment_card_code                   national character varying(12) NOT NULL,
+            payment_card_name                   national character varying(100) NOT NULL,
+            card_type_id                        integer NOT NULL REFERENCES core.card_types(card_type_id),            
+            audit_user_id                       integer NULL REFERENCES office.users(user_id),            
+            audit_ts                            TIMESTAMP WITH TIME ZONE NULL 
+                                                DEFAULT(NOW())            
+        );
+
+        CREATE UNIQUE INDEX payment_cards_payment_card_code_uix
+        ON core.payment_cards(UPPER(payment_card_code));
+
+        CREATE UNIQUE INDEX payment_cards_payment_card_name_uix
+        ON core.payment_cards(UPPER(payment_card_name));    
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'core'
+        AND    c.relname = 'payment_cards'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE core.payment_cards
+        (
+            payment_card_id                     SERIAL NOT NULL PRIMARY KEY,
+            payment_card_code                   national character varying(12) NOT NULL,
+            payment_card_name                   national character varying(100) NOT NULL,
+            card_type_id                        integer NOT NULL REFERENCES core.card_types(card_type_id),            
+            audit_user_id                       integer NULL REFERENCES office.users(user_id),            
+            audit_ts                            TIMESTAMP WITH TIME ZONE NULL 
+                                                DEFAULT(NOW())            
+        );
+
+        CREATE UNIQUE INDEX payment_cards_payment_card_code_uix
+        ON core.payment_cards(UPPER(payment_card_code));
+
+        CREATE UNIQUE INDEX payment_cards_payment_card_name_uix
+        ON core.payment_cards(UPPER(payment_card_name));    
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'core'
+        AND    c.relname = 'merchant_fee_setup'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE core.merchant_fee_setup
+        (
+            merchant_fee_setup_id               SERIAL NOT NULL PRIMARY KEY,
+            merchant_account_id                 bigint NOT NULL REFERENCES core.bank_accounts(account_id),
+            payment_card_id                     integer NOT NULL REFERENCES core.payment_cards(payment_card_id),
+            rate                                public.decimal_strict NOT NULL,
+            customer_pays_fee                   boolean NOT NULL DEFAULT(false),
+            audit_user_id                       integer NULL REFERENCES office.users(user_id),            
+            audit_ts                            TIMESTAMP WITH TIME ZONE NULL 
+                                                DEFAULT(NOW())            
+        );
+
+        CREATE UNIQUE INDEX merchant_fee_setup_merchant_account_id_payment_card_id_uix
+        ON core.merchant_fee_setup(merchant_account_id, payment_card_id);
+    END IF;    
 END
 $$
 LANGUAGE plpgsql;

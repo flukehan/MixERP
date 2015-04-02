@@ -453,4 +453,37 @@
   <data name="parent_account_name" xml:space="preserve">
     <value>Parent Nom du compte</value>
   </data>
+  <data name="card_type_code" xml:space="preserve">
+    <value>Type de carte code</value>
+  </data>
+  <data name="card_type_id" xml:space="preserve">
+    <value>Type de carte Identificateur</value>
+  </data>
+  <data name="card_type_name" xml:space="preserve">
+    <value>Type de carte Nom</value>
+  </data>
+  <data name="customer_pays_fee" xml:space="preserve">
+    <value>Le client paie Fee</value>
+  </data>
+  <data name="is_merchant_account" xml:space="preserve">
+    <value>Est compte marchand</value>
+  </data>
+  <data name="merchant_account_id" xml:space="preserve">
+    <value>Merchant Account Identifiant</value>
+  </data>
+  <data name="merchant_fee_setup_id" xml:space="preserve">
+    <value>Identifiant de configuration du droit de commerçant</value>
+  </data>
+  <data name="payment_card_code" xml:space="preserve">
+    <value>Code des cartes de paiement</value>
+  </data>
+  <data name="payment_card_id" xml:space="preserve">
+    <value>Identifier des cartes de paiement</value>
+  </data>
+  <data name="payment_card_name" xml:space="preserve">
+    <value>Paiement par carte Nom</value>
+  </data>
+  <data name="bank_accounts_pkey" xml:space="preserve">
+    <value>Dupliquer compte bancaire.</value>
+  </data>
 </root>

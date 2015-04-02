@@ -547,4 +547,10 @@
   <data name="FlaggedTransactions" xml:space="preserve">
     <value>Flagged Transactions</value>
   </data>
+  <data name="MerchantFeeSetup" xml:space="preserve">
+    <value>Merchant Fee Setup</value>
+  </data>
+  <data name="PaymentCards" xml:space="preserve">
+    <value>Payment Cards</value>
+  </data>
 </root>

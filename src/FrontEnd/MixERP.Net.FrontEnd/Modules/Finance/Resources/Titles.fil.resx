@@ -549,4 +549,10 @@
   <data name="IsEmployee" xml:space="preserve">
     <value>ay Empleyado</value>
   </data>
+  <data name="MerchantFeeSetup" xml:space="preserve">
+    <value>Setup Bayarin sa Merchant</value>
+  </data>
+  <data name="PaymentCards" xml:space="preserve">
+    <value>Mga Card pagbabayad</value>
+  </data>
 </root>

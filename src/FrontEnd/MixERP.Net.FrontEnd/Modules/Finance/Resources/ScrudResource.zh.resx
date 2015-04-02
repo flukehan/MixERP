@@ -453,4 +453,37 @@
   <data name="is_debit" xml:space="preserve">
     <value>是借记卡</value>
   </data>
+  <data name="card_type_code" xml:space="preserve">
+    <value>卡类型代码</value>
+  </data>
+  <data name="card_type_id" xml:space="preserve">
+    <value>卡类型标识符</value>
+  </data>
+  <data name="card_type_name" xml:space="preserve">
+    <value>卡类型名称</value>
+  </data>
+  <data name="customer_pays_fee" xml:space="preserve">
+    <value>客户交费</value>
+  </data>
+  <data name="is_merchant_account" xml:space="preserve">
+    <value>是商家帐户</value>
+  </data>
+  <data name="merchant_account_id" xml:space="preserve">
+    <value>商家帐户标识</value>
+  </data>
+  <data name="merchant_fee_setup_id" xml:space="preserve">
+    <value>商户手续费设置标识符</value>
+  </data>
+  <data name="payment_card_code" xml:space="preserve">
+    <value>支付卡代码</value>
+  </data>
+  <data name="payment_card_id" xml:space="preserve">
+    <value>支付卡标识</value>
+  </data>
+  <data name="payment_card_name" xml:space="preserve">
+    <value>支付卡名称</value>
+  </data>
+  <data name="bank_accounts_pkey" xml:space="preserve">
+    <value>重复的银行帐户。</value>
+  </data>
 </root>

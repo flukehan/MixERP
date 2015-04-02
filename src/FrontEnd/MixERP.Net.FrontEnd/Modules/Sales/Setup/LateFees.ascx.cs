@@ -40,8 +40,10 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.ViewSchema = "core";
                 scrud.View = "late_fee_scrud_view";
                 scrud.Text = Resources.Titles.LateFees;
+
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
+                scrud.UseDisplayViewsAsParents = true;
 
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof(LateFees));
                 this.ScrudPlaceholder.Controls.Add(scrud);
@@ -58,7 +60,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.late_fee_account_selector_view");
             return string.Join(",", displayViews);
         }
 

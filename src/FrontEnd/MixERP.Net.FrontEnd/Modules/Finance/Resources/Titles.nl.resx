@@ -549,4 +549,10 @@
   <data name="Factor" xml:space="preserve">
     <value>factor</value>
   </data>
+  <data name="MerchantFeeSetup" xml:space="preserve">
+    <value>Merchant Fee Setup</value>
+  </data>
+  <data name="PaymentCards" xml:space="preserve">
+    <value>betaalkaarten</value>
+  </data>
 </root>

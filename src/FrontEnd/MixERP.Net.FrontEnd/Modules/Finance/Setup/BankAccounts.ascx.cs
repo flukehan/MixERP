@@ -38,7 +38,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "bank_accounts";
                 scrud.ViewSchema = "core";
-                scrud.View = "bank_accounts";
+                scrud.View = "bank_account_scrud_view";
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
@@ -64,7 +64,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "office.users.user_id", "office.user_selector_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.bank_account_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_scrud_view");
             return string.Join(",", displayViews);
         }

@@ -549,4 +549,10 @@
   <data name="From" xml:space="preserve">
     <value>à partir de</value>
   </data>
+  <data name="MerchantFeeSetup" xml:space="preserve">
+    <value>Configuration de droit de commerçant</value>
+  </data>
+  <data name="PaymentCards" xml:space="preserve">
+    <value>Cartes de paiement</value>
+  </data>
 </root>

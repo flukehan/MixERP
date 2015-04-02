@@ -453,4 +453,37 @@
   <data name="parent_account_name" xml:space="preserve">
     <value>Родитель Имя счета</value>
   </data>
+  <data name="card_type_code" xml:space="preserve">
+    <value>Тип карты Код</value>
+  </data>
+  <data name="card_type_id" xml:space="preserve">
+    <value>Тип карты Identifier</value>
+  </data>
+  <data name="card_type_name" xml:space="preserve">
+    <value>Тип карты Имя</value>
+  </data>
+  <data name="customer_pays_fee" xml:space="preserve">
+    <value>Клиент платит взнос</value>
+  </data>
+  <data name="is_merchant_account" xml:space="preserve">
+    <value>Является Merchant Account</value>
+  </data>
+  <data name="merchant_account_id" xml:space="preserve">
+    <value>Merchant Account Идентификатор</value>
+  </data>
+  <data name="merchant_fee_setup_id" xml:space="preserve">
+    <value>Торговец Стоимость установки идентификатора</value>
+  </data>
+  <data name="payment_card_code" xml:space="preserve">
+    <value>Код платежных карт</value>
+  </data>
+  <data name="payment_card_id" xml:space="preserve">
+    <value>Идентификатор платежных карт</value>
+  </data>
+  <data name="payment_card_name" xml:space="preserve">
+    <value>Оплата Название карты</value>
+  </data>
+  <data name="bank_accounts_pkey" xml:space="preserve">
+    <value>Скопируйте банковский счет.</value>
+  </data>
 </root>

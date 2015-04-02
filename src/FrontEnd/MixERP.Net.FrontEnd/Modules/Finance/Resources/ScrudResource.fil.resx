@@ -453,4 +453,37 @@
   <data name="cash_flow_heading_type" xml:space="preserve">
     <value>Cashflow Uri Pamagat</value>
   </data>
+  <data name="card_type_code" xml:space="preserve">
+    <value>Uri ng Card Code</value>
+  </data>
+  <data name="card_type_id" xml:space="preserve">
+    <value>Pagkikilanlan Uri ng Card</value>
+  </data>
+  <data name="card_type_name" xml:space="preserve">
+    <value>Pangalan Uri ng Card</value>
+  </data>
+  <data name="customer_pays_fee" xml:space="preserve">
+    <value>Nagbabayad Customer Bayad</value>
+  </data>
+  <data name="is_merchant_account" xml:space="preserve">
+    <value>Ay Merchant Account</value>
+  </data>
+  <data name="merchant_account_id" xml:space="preserve">
+    <value>Pagkikilanlan Merchant Account</value>
+  </data>
+  <data name="merchant_fee_setup_id" xml:space="preserve">
+    <value>Pagkikilanlan Bayad Merchant Setup</value>
+  </data>
+  <data name="payment_card_code" xml:space="preserve">
+    <value>Code ng Pagbabayad Card</value>
+  </data>
+  <data name="payment_card_id" xml:space="preserve">
+    <value>Pagkikilanlan sa Pagbabayad Card</value>
+  </data>
+  <data name="payment_card_name" xml:space="preserve">
+    <value>Pangalan ng Pagbabayad Card</value>
+  </data>
+  <data name="bank_accounts_pkey" xml:space="preserve">
+    <value>Doblehin bank account.</value>
+  </data>
 </root>

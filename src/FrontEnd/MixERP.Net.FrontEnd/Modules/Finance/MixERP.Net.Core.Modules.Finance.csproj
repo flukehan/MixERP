@@ -105,6 +105,8 @@
     <Content Include="Reports\RetainedEarnings.ascx" />
     <Content Include="Reports\RetainedEarningsPopup.ascx" />
     <Content Include="packages.config" />
+    <Content Include="Setup\MerchantFeeSetup.ascx" />
+    <Content Include="Setup\PaymentCards.ascx" />
     <Content Include="Widgets\WorkflowWidget.ascx" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
@@ -348,6 +350,20 @@
     </Compile>
     <Compile Include="Setup\Currencies.ascx.designer.cs">
       <DependentUpon>Currencies.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\MerchantFeeSetup.ascx.cs">
+      <DependentUpon>MerchantFeeSetup.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\MerchantFeeSetup.ascx.designer.cs">
+      <DependentUpon>MerchantFeeSetup.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\PaymentCards.ascx.cs">
+      <DependentUpon>PaymentCards.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\PaymentCards.ascx.designer.cs">
+      <DependentUpon>PaymentCards.ascx</DependentUpon>
     </Compile>
     <Compile Include="StandingInstructions.ascx.cs">
       <DependentUpon>StandingInstructions.ascx</DependentUpon>

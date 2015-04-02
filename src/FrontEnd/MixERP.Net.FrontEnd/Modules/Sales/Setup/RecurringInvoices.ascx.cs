@@ -42,6 +42,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
+                scrud.UseDisplayViewsAsParents = true;
 
                 scrud.ResourceAssembly = Assembly.GetAssembly(typeof (RecurringInvoices));
 
@@ -77,7 +78,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
             ScrudHelper.AddDisplayView(displayViews, "core.frequencies.frequency_id", "core.frequencies");
             ScrudHelper.AddDisplayView(displayViews, "core.items.item_id", "core.item_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.payment_terms.payment_term_id", "core.payment_term_scrud_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.recurring_invoice_account_selector_view");
             return string.Join(",", displayViews);
         }
     }

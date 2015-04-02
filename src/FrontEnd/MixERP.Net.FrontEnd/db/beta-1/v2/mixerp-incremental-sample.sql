@@ -21131,21 +21131,21 @@ BEGIN
         SELECT 5, 'EOY', 'End of Year';
 
         INSERT INTO core.fiscal_year (fiscal_year_code, fiscal_year_name, starts_from, ends_on) 
-        VALUES ('FY1415', 'FY 2014/2015', '7/17/2014'::date, '7/16/2015'::date);
+        VALUES ('FY1415', 'FY 2014/2015', '2014-07-17'::date, '2015-07-16'::date);
 
         INSERT INTO core.frequency_setups (fiscal_year_code, frequency_setup_code, value_date, frequency_id) 
-        SELECT 'FY1415', 'Jul-Aug', '8/16/2014'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Aug-Sep', '9/16/2014'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Sep-Oc', '10/17/2014'::date, 3 UNION ALL
-        SELECT 'FY1415', 'Oct-Nov', '11/16/2014'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Nov-Dec', '12/15/2014'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Dec-Jan', '1/14/2015'::date, 4 UNION ALL
-        SELECT 'FY1415', 'Jan-Feb', '2/12/2015'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Feb-Mar', '3/14/2015'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Mar-Apr', '4/13/2015'::date, 3 UNION ALL
-        SELECT 'FY1415', 'Apr-May', '5/14/2015'::date, 2 UNION ALL
-        SELECT 'FY1415', 'May-Jun', '6/15/2015'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Jun-Jul', '7/16/2015'::date, 5;
+        SELECT 'FY1415', 'Jul-Aug', '2014-08-16'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Aug-Sep', '2014-09-16'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Sep-Oc',  '2014-10-17'::date, 3 UNION ALL
+        SELECT 'FY1415', 'Oct-Nov', '2014-11-16'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Nov-Dec', '2014-12-15'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Dec-Jan', '2015-01-14'::date, 4 UNION ALL
+        SELECT 'FY1415', 'Jan-Feb', '2015-02-12'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Feb-Mar', '2015-03-14'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Mar-Apr', '2015-04-13'::date, 3 UNION ALL
+        SELECT 'FY1415', 'Apr-May', '2015-05-14'::date, 2 UNION ALL
+        SELECT 'FY1415', 'May-Jun', '2015-06-15'::date, 2 UNION ALL
+        SELECT 'FY1415', 'Jun-Jul', '2015-07-16'::date, 5;
 
 
         INSERT INTO core.late_fee(late_fee_code, late_fee_name, is_flat_amount, rate)
@@ -21587,6 +21587,28 @@ SELECT
 FROM 
   core.ageing_slabs;
 
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/05.scrud-views/core/core.bank_accounts_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.bank_accounts_scrud_view;
+CREATE VIEW core.bank_accounts_scrud_view
+AS
+SELECT 
+    core.bank_accounts.account_id,
+    office.users.user_name,
+    office.offices.office_code || '(' || office.offices.office_name||')' AS office_name,
+	core.bank_accounts.bank_name,
+	core.bank_accounts.bank_branch,
+	core.bank_accounts.bank_contact_number,
+	core.bank_accounts.bank_address,
+	core.bank_accounts.bank_account_number,
+	core.bank_accounts.bank_account_type,
+	core.bank_accounts.relationship_officer_name
+FROM
+    core.bank_accounts
+INNER JOIN office.users
+ON core.bank_accounts.maintained_by_user_id = office.users.user_id
+INNER JOIN office.offices
+ON core.bank_accounts.office_id = office.offices.office_id; 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/05.scrud-views/core/core.bonus_slab_detail_scrud_view.sql --<--<--
 CREATE VIEW core.bonus_slab_detail_scrud_view
@@ -22505,6 +22527,7 @@ FROM office.departments;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/05.scrud-views/office/office.office_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS office.office_scrud_view;
 CREATE VIEW office.office_scrud_view
 AS
 SELECT 
@@ -22533,7 +22556,7 @@ FROM
 INNER JOIN core.currencies
 ON office.offices.currency_code = core.currencies.currency_code
 LEFT JOIN office.offices AS parent_office
-ON  office.offices.parent_office_id = parent_office.parent_office_id;
+ON  office.offices.office_id = parent_office.office_id;
 
 
 
@@ -26695,16 +26718,16 @@ $$
 BEGIN
     IF(core.get_locale() = 'en-US') THEN
         INSERT INTO office.offices(office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code, allow_transaction_posting)
-        SELECT 'MoF','Mix Open Foundation', 'MoF', '06/06/1989', 'Brooklyn','NY','','US','','','','info@mixof.org','http://mixof.org','0','0','NPR', false;
+        SELECT 'MoF','Mix Open Foundation', 'MoF', current_date, 'Brooklyn','NY','','US','','','','info@mixof.org','http://mixof.org','0','0','NPR', false;
 
         INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
-        SELECT 'MoF-NY-BK','Brooklyn Branch', 'MoF Brooklyn', '06/06/1989', 'Brooklyn','NY','12345555','US','','','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
+        SELECT 'MoF-NY-BK','Brooklyn Branch', 'MoF Brooklyn', current_date, 'Brooklyn','NY','12345555','US','','','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
 
         INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
-        SELECT 'MoF-NY-RV','Rio Vista Branch', 'MoF Rio Vista', '06/06/1989', 'Rio Vista', 'CA','','US','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
+        SELECT 'MoF-NY-RV','Rio Vista Branch', 'MoF Rio Vista', current_date, 'Rio Vista', 'CA','','US','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
 
         INSERT INTO office.offices(office_code,office_name,nick_name, registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number,currency_code,parent_office_id)
-        SELECT 'MoF-NP-KTM','Kathmandu Branch', 'MoF Kathmandu', '06/06/1989', 'Baneshwor', 'Kathmandu','Bagmati','NP','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
+        SELECT 'MoF-NP-KTM','Kathmandu Branch', 'MoF Kathmandu', current_date, 'Baneshwor', 'Kathmandu','Bagmati','NP','','64464554','','info@mixof.org','http://mixof.org','0','0','NPR',(SELECT office_id FROM office.offices WHERE office_code='MoF');
 
         PERFORM office.create_user((SELECT role_id FROM office.roles WHERE role_code='SYST'),1,(SELECT office_id FROM office.offices WHERE office_code='MoF'),'sys','','System');
         PERFORM office.create_user((SELECT role_id FROM office.roles WHERE role_code='ADMN'),1,(SELECT office_id FROM office.offices WHERE office_code='MoF'),'binod','binod','Binod', false);
@@ -26744,7 +26767,7 @@ $$
 BEGIN
     IF(core.get_locale() = 'en-US') THEN
         INSERT INTO policy.auto_verification_policy
-        SELECT 2, true, 0, true, 0, true, 0, '1-1-2010', '1-1-2020', true;
+        SELECT 2, true, 0, true, 0, true, 0, '2010-01-01', '2020-01-01', true;
     END IF;
 END
 $$
@@ -28248,7 +28271,7 @@ INSERT INTO resources (resource_id, path, key, value) VALUES (40, '\FrontEnd\Mix
 INSERT INTO resources (resource_id, path, key, value) VALUES (41, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'GridViewEmpty', 'Gridview is empty.');
 INSERT INTO resources (resource_id, path, key, value) VALUES (42, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'InvalidDate', 'Invalid date.');
 INSERT INTO resources (resource_id, path, key, value) VALUES (43, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'NewPasswordCannotBeOldPassword', 'New password can not be old password.');
-INSERT INTO resources (resource_id, path, key, value) VALUES (44, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'NotAuthorized', 'You are not authorized to access this resource at this time.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (44, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'NotAuthorized', 'You are not authorized to access this resources at this time.');
 INSERT INTO resources (resource_id, path, key, value) VALUES (45, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'NothingSelected', 'Nothing selected.');
 INSERT INTO resources (resource_id, path, key, value) VALUES (46, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'PleaseEnterCurrentPassword', 'Please enter your current password.');
 INSERT INTO resources (resource_id, path, key, value) VALUES (47, '\FrontEnd\MixERP.Net.FrontEnd\App_GlobalResources\Warnings.resx', 'PleaseEnterNewPassword', 'Please enter a new password.');
@@ -29200,7 +29223,7 @@ INSERT INTO resources (resource_id, path, key, value) VALUES (1175, '\FrontEnd\M
 INSERT INTO resources (resource_id, path, key, value) VALUES (1185, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'Fax', 'Fax');
 INSERT INTO resources (resource_id, path, key, value) VALUES (1195, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'PreparedOn', 'Prepared On');
 INSERT INTO resources (resource_id, path, key, value) VALUES (1205, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Titles.resx', 'UserId', 'User Id');
-INSERT INTO resources (resource_id, path, key, value) VALUES (1215, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'NotAuthorized', 'You are not authorized to access this resource at this time.');
+INSERT INTO resources (resource_id, path, key, value) VALUES (1215, '\FrontEnd\MixERP.Net.FrontEnd\obj\Release\Package\PackageTmp\App_GlobalResources\Warnings.resx', 'NotAuthorized', 'You are not authorized to access this resources at this time.');
 INSERT INTO resources (resource_id, path, key, value) VALUES (1225, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookInventoryOrder', 'Invalid SubTranBook "Inventory Order"');
 INSERT INTO resources (resource_id, path, key, value) VALUES (1235, '\Libraries\Logic\MixERP.Net.Entities\Resources\Warnings.resx', 'InvalidSubTranBookSalesSuspense', 'Invalid SubTranBook "Sales Suspense"');
 INSERT INTO resources (resource_id, path, key, value) VALUES (1245, '\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\Resources\Messages.resx', 'InvalidFile', 'Invalid file!');
@@ -29652,108 +29675,204 @@ INSERT INTO transaction_master (transaction_master_id, transaction_counter, tran
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (7, 4, '4-2014-12-04-2-2-5-11-31-11', 'Sales.Direct', '2014-12-04', '2014-12-04 11:31:11.132+00', 5, 2, NULL, 2, 1, '', 'Macbook Pro Late 2013 model, sold to Mr. James.', '2014-12-04 11:42:21.342+00', 1, 2, 'Automatically verified by workflow.', NULL, '2014-12-04 11:31:11.132+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (8, 5, '5-2014-12-04-2-2-5-11-32-11', 'Sales.Direct', '2014-12-04', '2014-12-04 11:32:11.287+00', 5, 2, NULL, 2, 1, '', 'Macbook Pro Late 2013 model, sold to Mr. Wilson.', '2014-12-04 11:43:04.222+00', 1, 2, 'Automatically verified by workflow.', NULL, '2014-12-04 11:32:11.287+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (9, 6, '6-2014-12-04-2-2-5-11-33-27', 'Sales.Direct', '2014-12-04', '2014-12-04 11:33:27.3+00', 5, 2, NULL, 2, 1, '', 'MixNP Classifieds sold to Mr. Martinez. #software', '2014-12-04 11:43:26.764+00', 1, 2, 'Automatically verified by workflow.', NULL, '2014-12-04 11:33:27.3+00');
-INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (11, 8, '8-2014-12-04-2-2-5-11-44-27', 'Sales.Delivery', '2014-12-04', '2014-12-04 11:44:27.437+00', 5, 2, NULL, 2, 7, '', 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(SQ# 2)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (11, 8, '8-2014-12-04-2-2-5-11-44-27', 'Sales.Delivery', '2014-12-04', '2014-12-04 11:44:27.437+00', 5, 2, NULL, 2, 7, '', 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 8)', '2014-12-04 11:44:27.812+00', 1, 2, 'Automatically verified by workflow.', NULL, '2014-12-04 11:44:27.437+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (14, 2, '2-2015-01-08-2-2-6-10-53-59', 'Purchase.Direct', '2015-01-08', '2015-01-08 10:53:59.268+00', 6, 2, NULL, 2, 8, '', 'Being Macbook items purchased from Justin Adams in cash', '2015-01-08 10:53:59.846+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-08 10:53:59.268+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (17, 5, '5-2015-01-08-2-2-6-11-13-24', 'Sales.Direct', '2015-01-08', '2015-01-08 11:13:24.333+00', 6, 2, NULL, 2, 5, '', 'Being Microsoft item sold to Noah Lewis in cash.', '2015-01-08 11:13:24.854+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-08 11:13:24.333+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (16, 4, '4-2015-01-08-2-2-6-11-10-51', 'Purchase.Direct', '2015-01-08', '2015-01-08 11:10:51.833+00', 6, 2, NULL, 2, 5, '', 'Being microsoft office premium edition purchased from  Mr Landon Rivera in cash.', '2015-01-08 11:10:52.593+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-08 11:10:51.833+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (13, 1, '1-2015-01-08-2-2-6-10-45-23', 'Sales.Direct', '2015-01-08', '2015-01-08 10:45:23.388+00', 6, 2, NULL, 2, 2, '', 'Being different items sold to David White.', '2015-01-08 10:45:36.391+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-08 10:45:23.388+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (15, 3, '3-2015-01-08-2-2-6-11-00-41', 'Sales.Direct', '2015-01-08', '2015-01-08 11:00:41.908+00', 6, 2, NULL, 2, 7, '', 'Being Apple items sold to Mr. Diego Cooper in cash.', '2015-01-08 11:00:42.611+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-08 11:00:41.908+00');
-INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (10, 7, '7-2014-12-04-2-2-5-11-43-54', 'Sales.Delivery', '2014-12-04', '2014-12-04 11:43:54.291+00', 5, 2, NULL, 2, 6, '', 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (10, 7, '7-2014-12-04-2-2-5-11-43-54', 'Sales.Delivery', '2014-12-04', '2014-12-04 11:43:54.291+00', 5, 2, NULL, 2, 6, '', 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', '2015-01-08 15:08:41.22+00', 1, 2, 'Automatically verified by workflow.', NULL, '2014-12-04 11:43:54.291+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (18, 6, '6-2015-01-08-2-2-9-17-36-56', 'Sales.Delivery', '2015-01-08', '2015-01-08 17:36:56.817+00', 9, 2, NULL, 2, 2, '', 'Delivery. PO received from Mr. Aidan. Quotation of various products sent to Mr. Aidan.', '2015-01-08 17:37:03.614+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-08 17:36:56.817+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (22, 4, '4-2015-01-10-2-2-11-16-10-18', 'Sales.Delivery', '2015-01-10', '2015-01-10 16:10:18.217+00', 11, 2, NULL, 2, 5, '', 'Delivery of quotation of Samsung and SFIX, sent to Mr. Anthony.', '2015-01-10 16:10:18.842+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-10 16:10:18.217+00');
@@ -29764,8 +29883,10 @@ INSERT INTO transaction_master (transaction_master_id, transaction_counter, tran
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (24, 6, '6-2015-01-10-2-2-11-16-18-13', 'Sales.Receipt', '2015-01-10', '2015-01-10 16:18:13.039+00', 11, 2, NULL, 2, 2, '', 'Cash received from Rivera Landon.', '2015-01-10 16:18:13.269+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-10 16:18:13.039+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (25, 7, '7-2015-01-10-2-2-11-16-21-04', 'Sales.Receipt', '2015-01-10', '2015-01-10 16:21:04.35+00', 11, 2, NULL, 2, 5, '', 'Being payment received from Mr. Tyler in cash.', '2015-01-10 16:21:04.572+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-10 16:21:04.35+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (26, 8, '8-2015-01-10-2-2-11-16-23-24', 'Sales.Receipt', '2015-01-10', '2015-01-10 16:23:24.286+00', 11, 2, NULL, 2, 5, '', 'Being payment received from Mr. Anthony in cash.', '2015-01-10 16:23:24.464+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-10 16:23:24.286+00');
-INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (27, 1, '1-2015-01-11-2-2-45-09-59-21', 'Purchase.Direct', '2015-01-11', '2015-01-11 09:59:21.484+00', 45, 2, NULL, 2, 3, '', 'Being Microsoft Office Premium Edition and Samsung Galaxy Tab 10.1
-
+INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (27, 1, '1-2015-01-11-2-2-45-09-59-21', 'Purchase.Direct', '2015-01-11', '2015-01-11 09:59:21.484+00', 45, 2, NULL, 2, 3, '', 'Being Microsoft Office Premium Edition and Samsung Galaxy Tab 10.1
+
+
+
 in cash from Mr.  Daniel for Human Resources', '2015-01-11 09:59:22.89+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-11 09:59:21.484+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (28, 2, '2-2015-01-11-2-2-45-10-21-20', 'Purchase.Direct', '2015-01-11', '2015-01-11 10:21:20.842+00', 45, 2, NULL, 2, 2, '', 'Being different apple products purchased from Mr. John in cash for General Administration.', '2015-01-11 10:21:21.486+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-11 10:21:20.842+00');
 INSERT INTO transaction_master (transaction_master_id, transaction_counter, transaction_code, book, value_date, transaction_ts, login_id, user_id, sys_user_id, office_id, cost_center_id, reference_number, statement_reference, last_verified_on, verified_by_user_id, verification_status_id, verification_reason, audit_user_id, audit_ts) VALUES (29, 3, '3-2015-01-11-2-2-45-10-26-56', 'Purchase.Direct', '2015-01-11', '2015-01-11 10:26:56.655+00', 45, 2, NULL, 2, 3, '', 'Being various iPad Products purchased from Mr. Evan.', '2015-01-11 10:26:57.228+00', 1, 2, 'Automatically verified by workflow.', NULL, '2015-01-11 10:26:56.655+00');
@@ -29888,80 +30009,152 @@ INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party
 INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (4, '2014-12-04', 'Sales.Quotation', 16, 1, '2014-12-04 11:39:24.535+00', 5, 2, 2, '', 'Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.', false, 4, 1, NULL, 0.0000, 1, NULL, '2014-12-04 11:39:24.535+00');
 INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (5, '2014-12-04', 'Sales.Quotation', 47, 1, '2014-12-04 11:40:32.362+00', 5, 2, 2, '', 'Quotation sent to Mr. Parker. #schintowski', false, 2, 1, NULL, 0.0000, 1, NULL, '2014-12-04 11:40:32.362+00');
 INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (6, '2014-12-04', 'Sales.Quotation', 23, 1, '2014-12-04 11:41:49.449+00', 5, 2, 2, '', 'Quotation to Ms. Lewis via Phillipe Jones.', false, 3, 1, NULL, 0.0000, 1, NULL, '2014-12-04 11:41:49.449+00');
-INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (7, '2014-12-04', 'Sales.Order', 5, 2, '2014-12-04 11:42:21.248+00', 5, 2, 2, '', 'Being quotation sent to Mr. Brown. #followup #important
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (7, '2014-12-04', 'Sales.Order', 5, 2, '2014-12-04 11:42:21.248+00', 5, 2, 2, '', 'Being quotation sent to Mr. Brown. #followup #important
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SQ# 1)', false, 1, 1, NULL, 0.0000, 1, NULL, '2014-12-04 11:42:21.248+00');
-INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (8, '2014-12-04', 'Sales.Order', 35, 1, '2014-12-04 11:43:04.003+00', 5, 2, 2, '', 'PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (8, '2014-12-04', 'Sales.Order', 35, 1, '2014-12-04 11:43:04.003+00', 5, 2, 2, '', 'PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SQ# 2)', true, 5, 1, NULL, 0.0000, 1, NULL, '2014-12-04 11:43:04.003+00');
-INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (9, '2014-12-04', 'Sales.Order', 16, 1, '2014-12-04 11:43:26.717+00', 5, 2, 2, '', 'PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (9, '2014-12-04', 'Sales.Order', 16, 1, '2014-12-04 11:43:26.717+00', 5, 2, 2, '', 'PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SQ# 4)', false, 4, 1, NULL, 0.0000, 1, NULL, '2014-12-04 11:43:26.717+00');
 INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (10, '2015-01-08', 'Sales.Quotation', 161, 1, '2015-01-08 15:08:40.892+00', 8, 2, 2, '', 'Being quotation sent to Mr. Peter Perkins.', false, 3, 1, NULL, 200.0000, 1, NULL, '2015-01-08 15:08:40.892+00');
 INSERT INTO non_gl_stock_master (non_gl_stock_master_id, value_date, book, party_id, price_type_id, transaction_ts, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id, audit_user_id, audit_ts) VALUES (43, '2015-01-08', 'Sales.Quotation', 404, 2, '2015-01-08 16:53:16.945+00', 9, 2, 2, '', 'Quotation of different items sent to Mr. Eddie.', true, 2, 1, NULL, 800.0000, 2, NULL, '2015-01-08 16:53:16.945+00');
@@ -30889,403 +31082,787 @@ INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, v
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (33, 8, '2014-12-04', 'Cr', 19, 'Macbook Pro Late 2013 model, sold to Mr. Wilson.', NULL, 'NPR', 180000.0000, 'NPR', 1, 180000.0000, NULL, '2014-12-04 11:32:11.287+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (34, 8, '2014-12-04', 'Cr', 69, 'Macbook Pro Late 2013 model, sold to Mr. Wilson.', NULL, 'NPR', 200.0000, 'NPR', 1, 200.0000, NULL, '2014-12-04 11:32:11.287+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (35, 9, '2014-12-04', 'Dr', 8, 'MixNP Classifieds sold to Mr. Martinez. #software', 1, 'NPR', 150000.0000, 'NPR', 1, 150000.0000, NULL, '2014-12-04 11:33:27.3+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (40, 10, '2014-12-04', 'Cr', 19, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (40, 10, '2014-12-04', 'Cr', 19, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', NULL, 'NPR', 80000.0000, 'NPR', 1, 80000.0000, NULL, '2014-12-04 11:43:54.291+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (41, 10, '2014-12-04', 'Cr', 77, 'P: 125000.0000 x R: 4 % = 5000.0000 (BK-NYC-STX)/Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (41, 10, '2014-12-04', 'Cr', 77, 'P: 125000.0000 x R: 4 % = 5000.0000 (BK-NYC-STX)/Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', NULL, 'NPR', 5000.0000, 'NPR', 1, 5000.0000, NULL, '2014-12-04 11:43:54.291+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (42, 10, '2014-12-04', 'Cr', 77, 'P: 125000.0000 x R: 4.875 % = 6093.7500 (BK-36047-STX)/Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (42, 10, '2014-12-04', 'Cr', 77, 'P: 125000.0000 x R: 4.875 % = 6093.7500 (BK-36047-STX)/Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', NULL, 'NPR', 6093.7500, 'NPR', 1, 6093.7500, NULL, '2014-12-04 11:43:54.291+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (46, 11, '2014-12-04', 'Cr', 19, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(SQ# 2)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (46, 11, '2014-12-04', 'Cr', 19, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 8)', NULL, 'NPR', 818000.0000, 'NPR', 1, 818000.0000, NULL, '2014-12-04 11:44:27.437+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (47, 12, '2014-12-04', 'Dr', 8, 'Cash received from Mr. Green.', 1, 'NPR', 1000000.0000, 'NPR', 1, 1000000.0000, 2, '2014-12-04 11:45:47.669+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (8, 5, '2014-12-04', 'Dr', 146, 'Being apple products sold to Smith.', NULL, 'NPR', 473000.0000, 'NPR', 1, 473000.0000, NULL, '2014-12-04 11:28:55.685+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (14, 6, '2014-12-04', 'Dr', 146, 'Being IPhone 6 Plus purchased by Mr. Jacob.', NULL, 'NPR', 103000.0000, 'NPR', 1, 103000.0000, NULL, '2014-12-04 11:30:05.163+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (21, 7, '2014-12-04', 'Dr', 146, 'Macbook Pro Late 2013 model, sold to Mr. James.', NULL, 'NPR', 180000.0000, 'NPR', 1, 180000.0000, NULL, '2014-12-04 11:31:11.132+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (29, 8, '2014-12-04', 'Dr', 146, 'Macbook Pro Late 2013 model, sold to Mr. Wilson.', NULL, 'NPR', 180000.0000, 'NPR', 1, 180000.0000, NULL, '2014-12-04 11:32:11.287+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (37, 10, '2014-12-04', 'Dr', 146, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (37, 10, '2014-12-04', 'Dr', 146, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', NULL, 'NPR', 80000.0000, 'NPR', 1, 80000.0000, NULL, '2014-12-04 11:43:54.291+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (43, 11, '2014-12-04', 'Dr', 146, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(SQ# 2)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (43, 11, '2014-12-04', 'Dr', 146, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 8)', NULL, 'NPR', 818000.0000, 'NPR', 1, 818000.0000, NULL, '2014-12-04 11:44:27.437+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (22, 7, '2014-12-04', 'Dr', 160, 'Macbook Pro Late 2013 model, sold to Mr. James.', NULL, 'NPR', 100.0000, 'NPR', 1, 100.0000, NULL, '2014-12-04 11:31:11.132+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (38, 10, '2014-12-04', 'Dr', 226, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (38, 10, '2014-12-04', 'Dr', 226, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', NULL, 'NPR', 136093.7500, 'NPR', 1, 136093.7500, NULL, '2014-12-04 11:43:54.291+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (44, 11, '2014-12-04', 'Dr', 245, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(SQ# 2)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (44, 11, '2014-12-04', 'Dr', 245, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 8)', NULL, 'NPR', 1005000.0000, 'NPR', 1, 1005000.0000, NULL, '2014-12-04 11:44:27.437+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (48, 12, '2014-12-04', 'Cr', 245, 'Cash received from Mr. Green.', NULL, 'NPR', 1000000.0000, 'NPR', 1, 1000000.0000, 2, '2014-12-04 11:45:47.669+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (55, 14, '2015-01-08', 'Dr', 19, 'Being Macbook items purchased from Justin Adams in cash', NULL, 'NPR', 31570000.0000, 'NPR', 1, 31570000.0000, NULL, '2015-01-08 10:53:59.268+00');
@@ -31332,11 +31909,15 @@ INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, v
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (99, 24, '2015-01-10', 'Dr', 8, 'Cash received from Rivera Landon.', 2, 'AUD', 387500.0000, 'NPR', 80, 31000000.0000, 2, '2015-01-10 16:18:13.039+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (101, 25, '2015-01-10', 'Dr', 8, 'Being payment received from Mr. Tyler in cash.', 1, 'HKD', 100000.0000, 'NPR', 28, 2800000.0000, 2, '2015-01-10 16:21:04.35+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (103, 26, '2015-01-10', 'Dr', 8, 'Being payment received from Mr. Anthony in cash.', 3, 'EUR', 525000.0000, 'NPR', 98, 51450000.0000, 2, '2015-01-10 16:23:24.286+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (105, 27, '2015-01-11', 'Dr', 19, 'Being Microsoft Office Premium Edition and Samsung Galaxy Tab 10.1
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (105, 27, '2015-01-11', 'Dr', 19, 'Being Microsoft Office Premium Edition and Samsung Galaxy Tab 10.1
+
+
+
 in cash from Mr.  Daniel for Human Resources', NULL, 'NPR', 1110000.0000, 'NPR', 1, 1110000.0000, NULL, '2015-01-11 09:59:21.484+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (106, 27, '2015-01-11', 'Cr', 8, 'Being Microsoft Office Premium Edition and Samsung Galaxy Tab 10.1
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (106, 27, '2015-01-11', 'Cr', 8, 'Being Microsoft Office Premium Edition and Samsung Galaxy Tab 10.1
+
+
+
 in cash from Mr.  Daniel for Human Resources', 1, 'NPR', 1110000.0000, 'NPR', 1, 1110000.0000, NULL, '2015-01-11 09:59:21.484+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (107, 28, '2015-01-11', 'Dr', 19, 'Being different apple products purchased from Mr. John in cash for General Administration.', NULL, 'NPR', 3520000.0000, 'NPR', 1, 3520000.0000, NULL, '2015-01-11 10:21:20.842+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (109, 28, '2015-01-11', 'Cr', 8, 'Being different apple products purchased from Mr. John in cash for General Administration.', 1, 'NPR', 3519800.0000, 'NPR', 1, 3519800.0000, NULL, '2015-01-11 10:21:20.842+00');
@@ -31352,103 +31933,199 @@ INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, v
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (24, 7, '2014-12-04', 'Cr', 137, 'Macbook Pro Late 2013 model, sold to Mr. James.', NULL, 'NPR', 225000.0000, 'NPR', 1, 225000.0000, NULL, '2014-12-04 11:31:11.132+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (32, 8, '2014-12-04', 'Cr', 137, 'Macbook Pro Late 2013 model, sold to Mr. Wilson.', NULL, 'NPR', 225000.0000, 'NPR', 1, 225000.0000, NULL, '2014-12-04 11:32:11.287+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (36, 9, '2014-12-04', 'Cr', 137, 'MixNP Classifieds sold to Mr. Martinez. #software', NULL, 'NPR', 150000.0000, 'NPR', 1, 150000.0000, NULL, '2014-12-04 11:33:27.3+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (39, 10, '2014-12-04', 'Cr', 137, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(SQ# 4)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (39, 10, '2014-12-04', 'Cr', 137, 'Delivery. PO. Quotation of IBM Thinkpad II Laptop sent to Mr. Martin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 9)', NULL, 'NPR', 125000.0000, 'NPR', 1, 125000.0000, NULL, '2014-12-04 11:43:54.291+00');
-INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (45, 11, '2014-12-04', 'Cr', 137, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(SQ# 2)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (45, 11, '2014-12-04', 'Cr', 137, 'Delivery. PO received from Mr. Green. Quotation of various Apple products sent to Ms. Green. #review.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(SQ# 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (SO# 8)', NULL, 'NPR', 1005000.0000, 'NPR', 1, 1005000.0000, NULL, '2014-12-04 11:44:27.437+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (61, 15, '2015-01-08', 'Cr', 137, 'Being Apple items sold to Mr.Diego Cooper in cash.', NULL, 'NPR', 1860000.0000, 'NPR', 1, 1860000.0000, NULL, '2015-01-08 11:00:41.908+00');
 INSERT INTO transaction_details (transaction_detail_id, transaction_master_id, value_date, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency, audit_user_id, audit_ts) VALUES (72, 17, '2015-01-08', 'Cr', 137, 'Being Microsoft item sold to Noah Lewis in cash.', NULL, 'NPR', 35000.0000, 'NPR', 1, 35000.0000, NULL, '2015-01-08 11:13:24.333+00');
@@ -33835,7 +34512,7 @@ BEGIN
         );
 
         CREATE UNIQUE INDEX api_access_policy_uix
-        ON policy.api_access_policy(user_id, poco_type_name, http_action_code, valid_till);
+        ON policy.api_access_policy(user_id, UPPER(poco_type_name), UPPER(http_action_code), valid_till);
     
     END IF;    
 END
@@ -34187,6 +34864,177 @@ LANGUAGE plpgsql;
 
 ALTER TABLE core.parties
 ALTER COLUMN party_name SET NOT NULL;
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'policy.voucher_verification_policy'::regclass
+        AND    attname = 'office_id'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE policy.voucher_verification_policy
+        ADD COLUMN office_id integer
+        REFERENCES office.offices(office_id);
+    END IF;
+
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'policy.auto_verification_policy'::regclass
+        AND    attname = 'office_id'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE policy.auto_verification_policy
+        ADD COLUMN office_id integer
+        REFERENCES office.offices(office_id);
+    END IF;
+    
+    UPDATE policy.voucher_verification_policy
+    SET office_id = (SELECT office_id FROM office.offices LIMIT 1)
+    WHERE office_id IS NULL;
+
+    UPDATE policy.auto_verification_policy
+    SET office_id = (SELECT office_id FROM office.offices LIMIT 1)
+    WHERE office_id IS NULL;
+
+    ALTER TABLE policy.voucher_verification_policy
+    ALTER COLUMN office_id SET NOT NULL;
+
+    ALTER TABLE policy.auto_verification_policy
+    ALTER COLUMN office_id SET NOT NULL;    
+END
+$$
+LANGUAGE plpgsql;
+
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'core.bank_accounts'::regclass
+        AND    attname = 'is_merchant_account'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE core.bank_accounts
+        ADD COLUMN is_merchant_account boolean NOT NULL DEFAULT(false);
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'core'
+        AND    c.relname = 'card_types'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE core.card_types
+        (
+            card_type_id                    integer PRIMARY KEY,
+            card_type_code                  national character varying(12) NOT NULL,
+            card_type_name                  national character varying(100) NOT NULL
+        );
+
+        CREATE UNIQUE INDEX card_types_card_type_code_uix
+        ON core.card_types(UPPER(card_type_code));
+
+        CREATE UNIQUE INDEX card_types_card_type_name_uix
+        ON core.card_types(UPPER(card_type_name));
+    END IF;
+    
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'core'
+        AND    c.relname = 'payment_cards'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE core.payment_cards
+        (
+            payment_card_id                     SERIAL NOT NULL PRIMARY KEY,
+            payment_card_code                   national character varying(12) NOT NULL,
+            payment_card_name                   national character varying(100) NOT NULL,
+            card_type_id                        integer NOT NULL REFERENCES core.card_types(card_type_id),            
+            audit_user_id                       integer NULL REFERENCES office.users(user_id),            
+            audit_ts                            TIMESTAMP WITH TIME ZONE NULL 
+                                                DEFAULT(NOW())            
+        );
+
+        CREATE UNIQUE INDEX payment_cards_payment_card_code_uix
+        ON core.payment_cards(UPPER(payment_card_code));
+
+        CREATE UNIQUE INDEX payment_cards_payment_card_name_uix
+        ON core.payment_cards(UPPER(payment_card_name));    
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'core'
+        AND    c.relname = 'payment_cards'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE core.payment_cards
+        (
+            payment_card_id                     SERIAL NOT NULL PRIMARY KEY,
+            payment_card_code                   national character varying(12) NOT NULL,
+            payment_card_name                   national character varying(100) NOT NULL,
+            card_type_id                        integer NOT NULL REFERENCES core.card_types(card_type_id),            
+            audit_user_id                       integer NULL REFERENCES office.users(user_id),            
+            audit_ts                            TIMESTAMP WITH TIME ZONE NULL 
+                                                DEFAULT(NOW())            
+        );
+
+        CREATE UNIQUE INDEX payment_cards_payment_card_code_uix
+        ON core.payment_cards(UPPER(payment_card_code));
+
+        CREATE UNIQUE INDEX payment_cards_payment_card_name_uix
+        ON core.payment_cards(UPPER(payment_card_name));    
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'core'
+        AND    c.relname = 'merchant_fee_setup'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE core.merchant_fee_setup
+        (
+            merchant_fee_setup_id               SERIAL NOT NULL PRIMARY KEY,
+            merchant_account_id                 bigint NOT NULL REFERENCES core.bank_accounts(account_id),
+            payment_card_id                     integer NOT NULL REFERENCES core.payment_cards(payment_card_id),
+            rate                                public.decimal_strict NOT NULL,
+            customer_pays_fee                   boolean NOT NULL DEFAULT(false),
+            audit_user_id                       integer NULL REFERENCES office.users(user_id),            
+            audit_ts                            TIMESTAMP WITH TIME ZONE NULL 
+                                                DEFAULT(NOW())            
+        );
+
+        CREATE UNIQUE INDEX merchant_fee_setup_merchant_account_id_payment_card_id_uix
+        ON core.merchant_fee_setup(merchant_account_id, payment_card_id);
+    END IF;    
+END
+$$
+LANGUAGE plpgsql;
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/audit/audit.get_office_id_by_login_id.sql --<--<--
 DROP FUNCTION IF EXISTS audit.get_office_id_by_login_id(bigint);
@@ -34898,6 +35746,7 @@ BEGIN
     FROM
     policy.auto_verification_policy
     WHERE user_id=_transaction_posted_by
+    AND office_id = _office_id
     AND is_active=true
     AND now() >= effective_from
     AND now() <= ends_on;
@@ -35371,8 +36220,8 @@ BEGIN
     WHERE transaction_master_id = _tran_id;
 
     IF(_verification_status_id < 1) THEN
-            SELECT assert.fail('This transaction should have been verified.') INTO message;
-            RETURN message;
+        SELECT assert.fail('This transaction should have been verified.') INTO message;
+        RETURN message;
     END IF;
 
     SELECT assert.ok('End of test.') INTO message;  
@@ -38940,6 +39789,7 @@ BEGIN
         RETURN 0;
     END IF;
 
+
     CREATE TEMPORARY TABLE IF NOT EXISTS temp_stock_details
     (
         tran_type       transaction_type,
@@ -38969,17 +39819,6 @@ BEGIN
         USING ERRCODE='P5202';
     END IF;
 
-    IF EXISTS
-    (
-        SELECT item_code FROM temp_stock_details
-        GROUP BY item_code
-        HAVING SUM(CASE WHEN tran_type='Dr' THEN quantity ELSE quantity *-1 END) <> 0
-    ) THEN
-        RAISE EXCEPTION 'Referencing sides are not equal.'
-        USING ERRCODE='P5000';        
-    END IF;
-
-
     UPDATE temp_stock_details SET 
     item_id         = core.get_item_id_by_item_code(item_code),
     unit_id         = core.get_unit_id_by_unit_name(unit_name),
@@ -38999,6 +39838,15 @@ BEGIN
     base_quantity   = core.get_base_quantity_by_unit_id(unit_id, quantity),
     price           = core.get_item_cost_price(item_id, unit_id, NULL);
 
+    IF EXISTS
+    (
+        SELECT item_code FROM temp_stock_details
+        GROUP BY item_code
+        HAVING SUM(CASE WHEN tran_type='Dr' THEN base_quantity ELSE base_quantity *-1 END) <> 0
+    ) THEN
+        RAISE EXCEPTION 'Referencing sides are not equal.'
+        USING ERRCODE='P5000';        
+    END IF;
 
 
     IF EXISTS
@@ -39079,14 +39927,12 @@ LANGUAGE plpgsql;
 
 -- SELECT * FROM transactions.post_stock_journal(2, 2, 5, '1-1-2020', '22', 'Test', 
 -- ARRAY[
--- ROW('Cr', 'Store 1', 'RMBP', 'Piece', 1)::transactions.stock_adjustment_type,
--- ROW('Dr', 'Godown 1', 'RMBP', 'Piece', 1)::transactions.stock_adjustment_type,
--- ROW('Cr', 'Store 1', '11MBA', 'Piece', 1)::transactions.stock_adjustment_type,
--- ROW('Dr', 'Godown 1', '11MBA', 'Piece', 1)::transactions.stock_adjustment_type
+-- ROW('Cr', 'Store 1', 'RMBP', 'Dozen', 2)::transactions.stock_adjustment_type,
+-- ROW('Dr', 'Godown 1', 'RMBP', 'Piece', 24)::transactions.stock_adjustment_type
 -- ]
 -- );
-
-
+-- 
+-- 
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.refresh_materialized_views.sql --<--<--
@@ -39559,6 +40405,7 @@ $$
     DECLARE _purchase_verification_limit    public.money_strict2;
     DECLARE _verify_gl                      boolean;
     DECLARE _gl_verification_limit          public.money_strict2;
+    DECLARE _can_self_verify                boolean;
     DECLARE _posted_amount                  public.money_strict2;
     DECLARE _has_policy                     boolean=false;
     DECLARE _voucher_date                   date;
@@ -39608,7 +40455,8 @@ BEGIN
         can_verify_purchase_transactions,
         purchase_verification_limit,
         can_verify_gl_transactions,
-        gl_verification_limit
+        gl_verification_limit,
+        can_self_verify
     INTO
         _has_policy,
         _verify_sales,
@@ -39616,14 +40464,15 @@ BEGIN
         _verify_purchase,
         _purchase_verification_limit,
         _verify_gl,
-        _gl_verification_limit
+        _gl_verification_limit,
+        _can_self_verify
     FROM
     policy.voucher_verification_policy
     WHERE user_id=_user_id
+    AND office_id = _office_id
     AND is_active=true
     AND now() >= effective_from
     AND now() <= ends_on;
-
 
     IF(lower(_book) LIKE 'sales%') THEN
         IF(_verify_sales = false) THEN
@@ -39660,6 +40509,10 @@ BEGIN
         END IF;         
     END IF;
 
+    IF(NOT _can_self_verify AND _user_id = _transaction_posted_by) THEN
+        _can_approve := false;
+    END IF;
+
     IF(_has_policy=true) THEN
         IF(_can_approve = true) THEN
             UPDATE transactions.transaction_master
@@ -39676,6 +40529,9 @@ BEGIN
             PERFORM transactions.create_recurring_invoices(_transaction_master_id);
 
             RAISE NOTICE 'Done.';
+        ELSE
+            RAISE EXCEPTION 'Please ask someone else to verify your transaction.'
+            USING ERRCODE='P4031';
         END IF;
     ELSE
         RAISE EXCEPTION 'No verification policy found for this user.'
@@ -39688,6 +40544,7 @@ LANGUAGE plpgsql;
 
 
 --SELECT * FROM transactions.verify_transaction(65::bigint, 2, 2, 51::bigint, -3::smallint, '');
+--SELECT * FROM transactions.verify_transaction(133::bigint, 2, 2, 5::bigint, 2::smallint, 'ok'::national character varying);
 
 /**************************************************************************************************************************
 --------------------------------------------------------------------------------------------------------------------------
@@ -40024,6 +40881,31 @@ UPDATE core.frequency_setups
 SET frequency_setup_code= 'Sep-Oct'
 WHERE frequency_setup_code= 'Sep-Oc';
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/card-types-payment-cards.sql --<--<--
+INSERT INTO core.card_types(card_type_id, card_type_code, card_type_name)
+SELECT 1, 'CRC', 'Credit Card'          UNION ALL
+SELECT 2, 'DRC', 'Debit Card'           UNION ALL
+SELECT 3, 'CHC', 'Charge Card'          UNION ALL
+SELECT 4, 'ATM', 'ATM Card'             UNION ALL
+SELECT 5, 'SVC', 'Store-value Card'     UNION ALL
+SELECT 6, 'FLC', 'Fleet Card'           UNION ALL
+SELECT 7, 'GFC', 'Gift Card'            UNION ALL
+SELECT 8, 'SCR', 'Scrip'                UNION ALL
+SELECT 9, 'ELP', 'Electronic Purse';
+
+
+INSERT INTO core.payment_cards(payment_card_code, payment_card_name, card_type_id)
+SELECT 'CR-VSA', 'Visa',                1 UNION ALL
+SELECT 'CR-AME', 'American Express',    1 UNION ALL
+SELECT 'CR-MAS', 'MasterCard',          1 UNION ALL
+SELECT 'DR-MAE', 'Maestro',             2 UNION ALL
+SELECT 'DR-MAS', 'MasterCard Debit',    2 UNION ALL
+SELECT 'DR-VSE', 'Visa Electron',       2 UNION ALL
+SELECT 'DR-VSD', 'Visa Debit',          2 UNION ALL
+SELECT 'DR-DEL', 'Delta',               2;
+
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/http-actions.sql --<--<--
 --This table should not be localized.
 WITH http_actions
@@ -40070,6 +40952,56 @@ ALTER COLUMN recurrence_type_id SET NOT NULL;
 ALTER TABLE core.recurring_invoices
 ALTER COLUMN recurring_frequency_id DROP NOT NULL;
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.account_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.account_scrud_view;
+
+CREATE VIEW core.account_scrud_view
+AS
+SELECT
+    core.accounts.account_id,
+    core.account_masters.account_master_code || ' (' || core.account_masters.account_master_name || ')' AS account_master,
+    core.accounts.account_number,
+    core.accounts.external_code,
+	core.currencies.currency_code || ' ('|| core.currencies.currency_name|| ')' currency,
+    core.accounts.account_name,
+    core.accounts.description,
+	core.accounts.confidential,
+	core.accounts.is_transaction_node,
+    core.accounts.sys_type,
+    core.accounts.account_master_id,
+    parent_account.account_number || ' (' || parent_account.account_name || ')' AS parent    
+FROM core.accounts
+INNER JOIN core.account_masters
+ON core.account_masters.account_master_id=core.accounts.account_master_id
+LEFT JOIN core.currencies
+ON core.accounts.currency_code = core.currencies.currency_code
+LEFT JOIN core.accounts parent_account
+ON parent_account.account_id=core.accounts.parent_account_id;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.bank_account_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.bank_account_scrud_view;
+
+CREATE VIEW core.bank_account_scrud_view
+AS
+SELECT
+    account_id,
+    office.users.user_name AS maintained_by,
+    office.offices.office_code || ' (' || office.offices.office_name || ')' AS office,
+    bank_name,
+    bank_branch,
+    bank_contact_number,
+    bank_address,
+    bank_account_number,
+    bank_account_type,
+    relationship_officer_name,
+    is_merchant_account
+FROM core.bank_accounts
+INNER JOIN office.users
+ON core.bank_accounts.maintained_by_user_id = office.users.user_id
+INNER JOIN office.offices
+ON core.bank_accounts.office_id = office.offices.office_id;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.recurring_invoice_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.recurring_invoice_scrud_view;
 
@@ -40111,6 +41043,98 @@ core.recurring_invoice_setup.party_id = core.parties.party_id
 INNER JOIN core.payment_terms ON 
 core.recurring_invoice_setup.payment_term_id = core.payment_terms.payment_term_id;
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.bank_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.bank_account_selector_view;
+
+CREATE VIEW core.bank_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+WHERE account_master_id = 10102;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.bonus_slab_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.bonus_slab_account_selector_view;
+
+CREATE VIEW core.bonus_slab_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+WHERE account_master_id >= 20400 --Expenses;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.cash_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.cash_account_selector_view;
+
+CREATE VIEW core.cash_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+WHERE account_master_id = 10101;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.late_fee_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.late_fee_account_selector_view;
+
+CREATE VIEW core.late_fee_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+--All income headings
+WHERE account_master_id >= 20100
+AND account_master_id < 20400;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.merchant_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.merchant_account_selector_view;
+
+CREATE VIEW core.merchant_account_selector_view
+AS
+SELECT * FROM core.bank_account_scrud_view
+WHERE is_merchant_account = true;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.party_type_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.party_type_account_selector_view;
+
+CREATE VIEW core.party_type_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+--Accounts Receivable, Accounts Payable
+WHERE account_master_id = ANY(ARRAY[10110, 15010]);
+
+SELECT * FROM core.accounts;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.recurring_invoice_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.recurring_invoice_account_selector_view;
+
+CREATE VIEW core.recurring_invoice_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+--All income headings
+WHERE account_master_id >= 20100
+AND account_master_id < 20400;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.salesperson_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.salesperson_account_selector_view;
+
+CREATE VIEW core.salesperson_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+--Current Assets, Accounts Receivable, Current Liabilities, Accounts Payable
+WHERE account_master_id = ANY(ARRAY[10100, 10110, 15000, 15010]);
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/office/office.user_selector_view.sql --<--<--
+DROP VIEW IF EXISTS office.user_selector_view;
+
+CREATE VIEW office.user_selector_view
+AS
+SELECT
+    office.users.user_id,
+    office.users.user_name,
+    office.users.full_name,
+    office.roles.role_name,
+    office.offices.office_name
+FROM
+    office.users
+INNER JOIN office.roles
+ON office.users.role_id = office.roles.role_id
+INNER JOIN office.offices
+ON office.users.office_id = office.offices.office_id
+WHERE NOT office.roles.is_system;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/06.sample-data/0.menus.sql --<--<--
 SELECT * FROM core.create_menu('API Access Policy', '~/Modules/BackOffice/Policy/ApiAccess.mix', 'SAA', 2, core.get_menu_id('SPM'));
 
@@ -40150,6 +41174,86 @@ SELECT * FROM core.create_menu_locale(core.get_menu_id('SAA'), 'id', 'API Kebija
 
 --FILIPINO
 SELECT * FROM core.create_menu_locale(core.get_menu_id('SAA'), 'fil', 'API Patakaran sa Pag-access');
+
+
+SELECT * FROM core.create_menu('Payment Cards', '~/Modules/Finance/Setup/PaymentCards.mix', 'PAC', 2, core.get_menu_id('FSM'));
+
+--FRENCH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'fr', 'Cartes de paiement');
+
+
+--GERMAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'de', 'Zahlungskarten');
+
+--RUSSIAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'ru', 'Платежные карты');
+
+--JAPANESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'ja', '支払カード');
+
+--SPANISH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'es', 'Tarjetas de pago');
+
+--DUTCH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'nl', 'betaalkaarten');
+
+--SIMPLIFIED CHINESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'zh', '支付卡');
+
+--PORTUGUESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'pt', 'Cartões de pagamento');
+
+--SWEDISH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'sv', 'Betalkort');
+
+--MALAY
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'ms', 'Kad Pembayaran');
+
+--INDONESIAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'id', 'Kartu Pembayaran');
+
+--FILIPINO
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'fil', 'Mga Card pagbabayad');
+
+SELECT * FROM core.create_menu('Merchant Fee Setup', '~/Modules/Finance/Setup/MerchantFeeSetup.mix', 'MFS', 2, core.get_menu_id('FSM'));
+
+--FRENCH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'fr', '');
+
+
+--GERMAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'de', 'Händler Fee-Setup');
+
+--RUSSIAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'ru', 'Торговец Стоимость установки');
+
+--JAPANESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'ja', '加盟店手数料の設定');
+
+--SPANISH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'es', 'Configuración Fee Merchant');
+
+--DUTCH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'nl', 'Merchant Fee Setup');
+
+--SIMPLIFIED CHINESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'zh', '商家安装费');
+
+--PORTUGUESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'pt', 'Setup Fee Merchant');
+
+--SWEDISH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'sv', 'Merchant Fee Setup');
+
+--MALAY
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'ms', 'Bayaran Merchant Persediaan');
+
+--INDONESIAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'id', 'Merchant Fee Pengaturan');
+
+--FILIPINO
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'fil', 'Setup Bayarin sa Merchant');
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/06.sample-data/1.remove-obsolete-menus.sql --<--<--
 DELETE FROM core.menu_locale

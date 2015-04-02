@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.ComponentModel;
 using System.Reflection;
 using System.Web.UI.WebControls;
 
@@ -207,6 +208,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         /// <summary>
         ///     The heading or title of this form.
         /// </summary>
+        [Localizable(true)]
         public string Text { get; set; }
 
         /// <summary>

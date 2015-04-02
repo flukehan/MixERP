@@ -453,4 +453,37 @@
   <data name="zip_code" xml:space="preserve">
     <value>ZIP Code</value>
   </data>
+  <data name="card_type_code" xml:space="preserve">
+    <value>Card Type Code</value>
+  </data>
+  <data name="card_type_id" xml:space="preserve">
+    <value>Card Type Id</value>
+  </data>
+  <data name="card_type_name" xml:space="preserve">
+    <value>Card Type Name</value>
+  </data>
+  <data name="customer_pays_fee" xml:space="preserve">
+    <value>Customer Pays Fee</value>
+  </data>
+  <data name="is_merchant_account" xml:space="preserve">
+    <value>Is Merchant Account</value>
+  </data>
+  <data name="merchant_account_id" xml:space="preserve">
+    <value>Merchant Account Id</value>
+  </data>
+  <data name="merchant_fee_setup_id" xml:space="preserve">
+    <value>Merchant Fee Setup Id</value>
+  </data>
+  <data name="payment_card_code" xml:space="preserve">
+    <value>Payment Card Code</value>
+  </data>
+  <data name="payment_card_id" xml:space="preserve">
+    <value>Payment Card Id</value>
+  </data>
+  <data name="payment_card_name" xml:space="preserve">
+    <value>Payment Card Name</value>
+  </data>
+  <data name="bank_accounts_pkey" xml:space="preserve">
+    <value>Duplicate bank account.</value>
+  </data>
 </root>

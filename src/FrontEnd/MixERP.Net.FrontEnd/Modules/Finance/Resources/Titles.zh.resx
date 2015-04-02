@@ -549,4 +549,10 @@
   <data name="Verify" xml:space="preserve">
     <value>确认</value>
   </data>
+  <data name="MerchantFeeSetup" xml:space="preserve">
+    <value>商家安装费</value>
+  </data>
+  <data name="PaymentCards" xml:space="preserve">
+    <value>支付卡</value>
+  </data>
 </root>

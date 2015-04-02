@@ -549,4 +549,10 @@
   <data name="From" xml:space="preserve">
     <value>от</value>
   </data>
+  <data name="MerchantFeeSetup" xml:space="preserve">
+    <value>Торговец Стоимость установки</value>
+  </data>
+  <data name="PaymentCards" xml:space="preserve">
+    <value>Платежные карты</value>
+  </data>
 </root>

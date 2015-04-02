@@ -453,4 +453,37 @@
   <data name="role_name" xml:space="preserve">
     <value>Nombre de función</value>
   </data>
+  <data name="card_type_code" xml:space="preserve">
+    <value>Tipo de tarjeta Código</value>
+  </data>
+  <data name="card_type_id" xml:space="preserve">
+    <value>Tipo de tarjeta de identificación</value>
+  </data>
+  <data name="card_type_name" xml:space="preserve">
+    <value>Tipo de Tarjeta de Nombre</value>
+  </data>
+  <data name="customer_pays_fee" xml:space="preserve">
+    <value>Cliente paga Fee</value>
+  </data>
+  <data name="is_merchant_account" xml:space="preserve">
+    <value>Es cuenta de comerciante</value>
+  </data>
+  <data name="merchant_account_id" xml:space="preserve">
+    <value>Identificador de cuenta de comerciante</value>
+  </data>
+  <data name="merchant_fee_setup_id" xml:space="preserve">
+    <value>Cuota Merchant Identificador de configuración</value>
+  </data>
+  <data name="payment_card_code" xml:space="preserve">
+    <value>Código de Tarjetas de Pago</value>
+  </data>
+  <data name="payment_card_id" xml:space="preserve">
+    <value>Identificador de Tarjetas de Pago</value>
+  </data>
+  <data name="payment_card_name" xml:space="preserve">
+    <value>Tarjetas de Pago Nombre</value>
+  </data>
+  <data name="bank_accounts_pkey" xml:space="preserve">
+    <value>Duplicar cuenta bancaria.</value>
+  </data>
 </root>
