@@ -1,5 +1,5 @@
 #Bonus Slab Details
-After Setting up [bonus slabs](bonus-slabs.md) we
+After setting up [bonus slabs](bonus-slabs.md) we
 can now define the commission rate for different level
 of sales volume made by the sales person under the chosen bonus slab. 
 Here, you can create various schemes for bonus or commission payments

@@ -3,7 +3,7 @@ A late fee is a charge imposed against a party by a company or
 organization for not paying a bill or returning a borrowed item
 by its due date. Its use is normally related to business
 creditors. Late fees are generally calculated per day, per item 
-basis.The fee is based on a percentage of the amount due.
+basis. The fee is based on a percentage of the amount due.
 
 ##Fields
 

@@ -1,12 +1,12 @@
 #Recurring Invoices
-The Recurring Invoice is a sophisticated system which saves hours of
+Recurring invoice is a sophisticated system which saves hours of
 effort entering the same invoices for each period. Once 
 the invoice details are entered they are never forgotten and are 
 billed on time and for the correct amounts. Recurring Invoicing 
 records details of contracts, including start, end and review dates. 
 Invoices may include hours/quantities multiplied by a rate or simple 
 value amounts. Each contract can be billed daily, on a particular day
-of the week, e.g. every Friday, or on the same day of every month, 
+of the week, e.g. every friday, or on the same day of every month, 
 the same date every year or according to user-defined calendars or 
 dates relative to the last invoice date. This gives complete 
 flexibility to invoicing schedules.
@@ -47,7 +47,7 @@ Provide a name for the recurring invoice.
 
 **Automatically Trigger on Sales**
 
- Click on ‘Yes’ to trigger on sales and ‘No’ to not trigger on sales.
+ Click on yes to trigger on sales.
 
 
 

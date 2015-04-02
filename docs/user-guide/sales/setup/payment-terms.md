@@ -1,13 +1,13 @@
 #Payment Terms
 Payment terms is defined as the terms required for payment of a 
-product.It is the condition under which a seller will complete a 
+product. It is the condition under which a seller will complete a 
 sale. Normally, these terms specify the period allowed to a buyer to
 pay off the amount due, and may demand cash in advance, cash on
 delivery, a deferred payment period or other similar provisions.
 These terms are an extension of how a vendor wants to treat a customer.
  
 Grace period may even be offered by vendors as a benefit
-of a purchase.The terms which dictate when a vendor must be paid, vary
+of a purchase. The terms which dictate when a vendor must be paid, vary
 in policy. Additionally, vendor financing is another payment term 
 where the customer pays interest but is allowed to repay the cost of
 the product they have received as they see fit.
