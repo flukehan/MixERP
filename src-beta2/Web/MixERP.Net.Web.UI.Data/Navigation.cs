@@ -50,10 +50,11 @@ namespace MixERP.Net.Web.UI.Data
                 return children;
             }
 
-            children.AddRange(_menus.Where(m => m.ParentMenuId.Equals(menuId)).ToList().Select(menu => new NavigationMenu
-            {
-                Menu = menu
-            }));
+            children.AddRange(
+                _menus.Where(m => m.ParentMenuId.Equals(menuId)).ToList().Select(menu => new NavigationMenu
+                {
+                    Menu = menu
+                }));
 
             if (children.Count <= 0) return children;
 

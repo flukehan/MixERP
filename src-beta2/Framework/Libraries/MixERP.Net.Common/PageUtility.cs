@@ -50,28 +50,24 @@ namespace MixERP.Net.Common
 
         public static bool MaxInvalidAttemptsReached(HttpSessionStateBase session)
         {
-            if (session != null)
+            if (session == null) return false;
+
+            int triedAttempts = InvalidPasswordAttempts(session);
+            int allowedAttemps =
+                Conversion.TryCastInteger(ConfigurationManager.AppSettings["MaxInvalidPasswordAttempts"]);
+
+            if (triedAttempts > 0)
             {
-                int triedAttempts = InvalidPasswordAttempts(session);
-                int allowedAttemps =
-                    Conversion.TryCastInteger(ConfigurationManager.AppSettings["MaxInvalidPasswordAttempts"]);
-
-                if (triedAttempts > 0)
-                {
-                    Log.Warning(
-                        "{Count} of {Allowed} allowed invalid sign-in attempts from {Host}/{IP} using {Browser}.",
-                        triedAttempts, allowedAttemps, GetUserHostAddress(), GetUserIpAddress(), GetBrowser().Browsers);
-                }
-
-                if (triedAttempts >= allowedAttemps)
-                {
-                    Log.Error("Disallowed access to {Host}/{IP} using {Browser}.", GetUserHostAddress(),
-                        GetUserIpAddress(), GetBrowser().Browsers);
-                    return true;
-                }
+                Log.Warning(
+                    "{Count} of {Allowed} allowed invalid sign-in attempts from {Host}/{IP} using {Browser}.",
+                    triedAttempts, allowedAttemps, GetUserHostAddress(), GetUserIpAddress(), GetBrowser().Browsers);
             }
 
-            return false;
+            if (triedAttempts < allowedAttemps) return false;
+
+            Log.Error("Disallowed access to {Host}/{IP} using {Browser}.", GetUserHostAddress(),
+                GetUserIpAddress(), GetBrowser().Browsers);
+            return true;
         }
 
         public static string GetUserIpAddress()

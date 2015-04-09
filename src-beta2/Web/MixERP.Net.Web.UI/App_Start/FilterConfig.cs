@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace MixERP.Net.Web.UI
 {
@@ -7,7 +6,7 @@ namespace MixERP.Net.Web.UI
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new AuthorizeAttribute()); 
+            filters.Add(new AuthorizeAttribute());
             filters.Add(new HandleErrorAttribute());
         }
     }
