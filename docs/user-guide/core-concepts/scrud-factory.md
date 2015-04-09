@@ -1,6 +1,7 @@
 #Working with ScrudFactory
 
-ScrudFactory is one of the various core modules of MixERP which facilitates rapid application development (RAD). ScrudFactory provides a common and consistent user interface, which helps you efficiently get you job done.
+ScrudFactory is one of the various core modules of MixERP which facilitates rapid application development (RAD). 
+ScrudFactory provides a common and consistent user interface, which helps you efficiently get your job done.
 
 #View Panel
 
@@ -34,7 +35,7 @@ The view panel consists of:
                 Displays an expanded view and resets the page to 1.
                 <br />
                 <br />
-                **Warning**: If your entity is a huge table, MixERP will only
+                <strong>Warning</strong>: If your entity is a huge table, MixERP will only
                 display 1000 rows with paging.
             </td>
         </tr>
@@ -44,11 +45,11 @@ The view panel consists of:
         </tr>
         <tr>
             <td>Edit Selected</td>
-            <td>Displays a form with the selected record for editing. See **selectors** below.</td>
+            <td>Displays a form with the selected record for editing. See <strong>selectors</strong> below.</td>
         </tr>
         <tr>
             <td>Delete Selected</td>
-            <td>Deletes the selected record. See **selectors** below.</td>
+            <td>Deletes the selected record. See <strong>selectors</strong> below.</td>
         </tr>
         <tr>
             <td>Print</td>
