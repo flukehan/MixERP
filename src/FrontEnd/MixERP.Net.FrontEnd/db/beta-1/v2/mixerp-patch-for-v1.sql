@@ -1,4 +1,55 @@
-﻿-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/00.db core/plpgunit/install/0.uninstall-unit-test.sql --<--<--
+﻿-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/00.db core/1.scrud.sql --<--<--
+CREATE OR REPLACE VIEW scrud.mixerp_table_view
+AS
+SELECT 
+    pg_tables.schemaname                                    AS table_schema, 
+    pg_tables.tablename                                     AS table_name, 
+    pg_attribute.attname                                    AS column_name,
+    constraint_name,
+    references_schema, 
+    references_table, 
+    references_field, 
+    pg_attribute.attnum                                     AS ordinal_position,
+    CASE pg_attribute.attnotnull 
+    WHEN false THEN 'YES' 
+    ELSE 'NO' END                                           AS is_nullable, 
+    (SELECT 
+        scrud.parse_default(pg_attrdef.adsrc) 
+        FROM pg_attrdef 
+        WHERE pg_attrdef.adrelid = pg_class.oid 
+        AND pg_attrdef.adnum = pg_attribute.attnum)         AS column_default,    
+    format_type(pg_attribute.atttypid, NULL)                AS data_type, 
+    format_type(pg_attribute.atttypid, NULL)                AS domain_name, 
+    CASE pg_attribute.atttypmod
+    WHEN -1 THEN NULL 
+    ELSE pg_attribute.atttypmod - 4
+    END                                         AS character_maximum_length,    
+    pg_constraint.conname AS "key", 
+    pc2.conname AS ckey
+FROM pg_tables
+INNER JOIN pg_class 
+ON pg_class.relname = pg_tables.tablename 
+AND pg_class.relnamespace = (SELECT oid FROM pg_namespace WHERE nspname=pg_tables.schemaname)
+INNER JOIN pg_attribute ON pg_class.oid = pg_attribute.attrelid 
+LEFT JOIN pg_constraint ON pg_constraint.contype = 'p'::"char" 
+    AND pg_constraint.conrelid = pg_class.oid AND
+    (pg_attribute.attnum = ANY (pg_constraint.conkey)) 
+LEFT JOIN pg_constraint AS pc2 ON pc2.contype = 'f'::"char" 
+    AND pc2.conrelid = pg_class.oid 
+    AND (pg_attribute.attnum = ANY (pc2.conkey))    
+LEFT JOIN scrud.relationship_view 
+ON pg_tables.schemaname = scrud.relationship_view.table_schema 
+    AND pg_tables.tablename = scrud.relationship_view.table_name 
+    AND pg_attribute.attname = scrud.relationship_view.column_name 
+WHERE pg_attribute.attname NOT IN
+    (
+        'audit_user_id', 'audit_ts'
+    )
+AND NOT pg_attribute.attisdropped
+AND pg_attribute.attnum > 0 
+ORDER BY pg_attribute.attnum;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/00.db core/plpgunit/install/0.uninstall-unit-test.sql --<--<--
 
 /********************************************************************************
 The PostgreSQL License
@@ -855,7 +906,7 @@ BEGIN
         );
 
         CREATE UNIQUE INDEX api_access_policy_uix
-        ON policy.api_access_policy(user_id, poco_type_name, http_action_code, valid_till);
+        ON policy.api_access_policy(user_id, UPPER(poco_type_name), UPPER(http_action_code), valid_till);
     
     END IF;    
 END
@@ -1201,6 +1252,181 @@ BEGIN
         ADD COLUMN income_tax_rate public.decimal_strict2 NOT NULL
         DEFAULT(0);
     END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+ALTER TABLE core.parties
+ALTER COLUMN party_name SET NOT NULL;
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'policy.voucher_verification_policy'::regclass
+        AND    attname = 'office_id'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE policy.voucher_verification_policy
+        ADD COLUMN office_id integer
+        REFERENCES office.offices(office_id);
+    END IF;
+
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'policy.auto_verification_policy'::regclass
+        AND    attname = 'office_id'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE policy.auto_verification_policy
+        ADD COLUMN office_id integer
+        REFERENCES office.offices(office_id);
+    END IF;
+    
+    UPDATE policy.voucher_verification_policy
+    SET office_id = (SELECT office_id FROM office.offices LIMIT 1)
+    WHERE office_id IS NULL;
+
+    UPDATE policy.auto_verification_policy
+    SET office_id = (SELECT office_id FROM office.offices LIMIT 1)
+    WHERE office_id IS NULL;
+
+    ALTER TABLE policy.voucher_verification_policy
+    ALTER COLUMN office_id SET NOT NULL;
+
+    ALTER TABLE policy.auto_verification_policy
+    ALTER COLUMN office_id SET NOT NULL;    
+END
+$$
+LANGUAGE plpgsql;
+
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'core.bank_accounts'::regclass
+        AND    attname = 'is_merchant_account'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE core.bank_accounts
+        ADD COLUMN is_merchant_account boolean NOT NULL DEFAULT(false);
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'core'
+        AND    c.relname = 'card_types'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE core.card_types
+        (
+            card_type_id                    integer PRIMARY KEY,
+            card_type_code                  national character varying(12) NOT NULL,
+            card_type_name                  national character varying(100) NOT NULL
+        );
+
+        CREATE UNIQUE INDEX card_types_card_type_code_uix
+        ON core.card_types(UPPER(card_type_code));
+
+        CREATE UNIQUE INDEX card_types_card_type_name_uix
+        ON core.card_types(UPPER(card_type_name));
+    END IF;
+    
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'core'
+        AND    c.relname = 'payment_cards'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE core.payment_cards
+        (
+            payment_card_id                     SERIAL NOT NULL PRIMARY KEY,
+            payment_card_code                   national character varying(12) NOT NULL,
+            payment_card_name                   national character varying(100) NOT NULL,
+            card_type_id                        integer NOT NULL REFERENCES core.card_types(card_type_id),            
+            audit_user_id                       integer NULL REFERENCES office.users(user_id),            
+            audit_ts                            TIMESTAMP WITH TIME ZONE NULL 
+                                                DEFAULT(NOW())            
+        );
+
+        CREATE UNIQUE INDEX payment_cards_payment_card_code_uix
+        ON core.payment_cards(UPPER(payment_card_code));
+
+        CREATE UNIQUE INDEX payment_cards_payment_card_name_uix
+        ON core.payment_cards(UPPER(payment_card_name));    
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'core'
+        AND    c.relname = 'payment_cards'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE core.payment_cards
+        (
+            payment_card_id                     SERIAL NOT NULL PRIMARY KEY,
+            payment_card_code                   national character varying(12) NOT NULL,
+            payment_card_name                   national character varying(100) NOT NULL,
+            card_type_id                        integer NOT NULL REFERENCES core.card_types(card_type_id),            
+            audit_user_id                       integer NULL REFERENCES office.users(user_id),            
+            audit_ts                            TIMESTAMP WITH TIME ZONE NULL 
+                                                DEFAULT(NOW())            
+        );
+
+        CREATE UNIQUE INDEX payment_cards_payment_card_code_uix
+        ON core.payment_cards(UPPER(payment_card_code));
+
+        CREATE UNIQUE INDEX payment_cards_payment_card_name_uix
+        ON core.payment_cards(UPPER(payment_card_name));    
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'core'
+        AND    c.relname = 'merchant_fee_setup'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE core.merchant_fee_setup
+        (
+            merchant_fee_setup_id               SERIAL NOT NULL PRIMARY KEY,
+            merchant_account_id                 bigint NOT NULL REFERENCES core.bank_accounts(account_id),
+            payment_card_id                     integer NOT NULL REFERENCES core.payment_cards(payment_card_id),
+            rate                                public.decimal_strict NOT NULL,
+            customer_pays_fee                   boolean NOT NULL DEFAULT(false),
+            account_id                          bigint NOT NULL REFERENCES core.accounts(account_id),
+            statement_reference                 national character varying(128) NOT NULL DEFAULT(''),
+            audit_user_id                       integer NULL REFERENCES office.users(user_id),            
+            audit_ts                            TIMESTAMP WITH TIME ZONE NULL 
+                                                DEFAULT(NOW())            
+        );
+
+        CREATE UNIQUE INDEX merchant_fee_setup_merchant_account_id_payment_card_id_uix
+        ON core.merchant_fee_setup(merchant_account_id, payment_card_id);
+    END IF;    
 END
 $$
 LANGUAGE plpgsql;
@@ -1627,6 +1853,117 @@ LANGUAGE plpgsql;
 --SELECT * FROM core.get_frequency_start_date('eoy'::text::integer, '2015-05-14');
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_item_selling_price.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer);
+CREATE FUNCTION core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer)
+RETURNS public.money_strict2
+AS
+$$
+    DECLARE _price          public.money_strict2;
+    DECLARE _unit_id        integer;
+    DECLARE _factor         decimal;
+    DECLARE _tax_rate       decimal;
+    DECLARE _includes_tax   boolean;
+    DECLARE _tax            public.money_strict2;
+BEGIN
+
+    --Fist pick the catalog price which matches all these fields:
+    --Item, Customer Type, Price Type, and Unit.
+    --This is the most effective price.
+    SELECT 
+        item_selling_prices.price, 
+        item_selling_prices.unit_id,
+        item_selling_prices.includes_tax
+    INTO 
+        _price, 
+        _unit_id,
+        _includes_tax       
+    FROM core.item_selling_prices
+    WHERE item_selling_prices.item_id=$1
+    AND item_selling_prices.party_type_id=$2
+    AND item_selling_prices.price_type_id =$3
+    AND item_selling_prices.unit_id = $4;
+
+    IF(_unit_id IS NULL) THEN
+        --We do not have a selling price of this item for the unit supplied.
+        --Let's see if this item has a price for other units.
+        SELECT 
+            item_selling_prices.price, 
+            item_selling_prices.unit_id,
+            item_selling_prices.includes_tax
+        INTO 
+            _price, 
+            _unit_id,
+            _includes_tax
+        FROM core.item_selling_prices
+        WHERE item_selling_prices.item_id=$1
+        AND item_selling_prices.party_type_id=$2
+        AND item_selling_prices.price_type_id =$3;
+    END IF;
+
+    IF(_price IS NULL) THEN
+        SELECT 
+            item_selling_prices.price, 
+            item_selling_prices.unit_id,
+            item_selling_prices.includes_tax
+        INTO 
+            _price, 
+            _unit_id,
+            _includes_tax
+        FROM core.item_selling_prices
+        WHERE item_selling_prices.item_id=$1
+        AND item_selling_prices.price_type_id =$3;
+    END IF;
+
+    
+    IF(_price IS NULL) THEN
+        --This item does not have selling price defined in the catalog.
+        --Therefore, getting the default selling price from the item definition.
+        SELECT 
+            selling_price, 
+            unit_id,
+            selling_price_includes_tax
+        INTO 
+            _price, 
+            _unit_id,
+            _includes_tax
+        FROM core.items
+        WHERE core.items.item_id = $1;
+    END IF;
+
+    IF(_includes_tax) THEN
+        _tax_rate := core.get_item_tax_rate($1);
+        _price := _price / ((100 + _tax_rate)/ 100);
+    END IF;
+
+    --Get the unitary conversion factor if the requested unit does not match with the price defition.
+    _factor := core.convert_unit($4, _unit_id);
+
+    RETURN _price * _factor;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+--SELECT * FROM core.get_item_selling_price(1, 1, 2, 1);
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_periods.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_periods
 (
@@ -1916,6 +2253,7 @@ BEGIN
     FROM
     policy.auto_verification_policy
     WHERE user_id=_transaction_posted_by
+    AND office_id = _office_id
     AND is_active=true
     AND now() >= effective_from
     AND now() <= ends_on;
@@ -2389,8 +2727,8 @@ BEGIN
     WHERE transaction_master_id = _tran_id;
 
     IF(_verification_status_id < 1) THEN
-            SELECT assert.fail('This transaction should have been verified.') INTO message;
-            RETURN message;
+        SELECT assert.fail('This transaction should have been verified.') INTO message;
+        RETURN message;
     END IF;
 
     SELECT assert.ok('End of test.') INTO message;  
@@ -4793,6 +5131,28 @@ DROP FUNCTION IF EXISTS transactions.post_receipt
     _cascading_tran_id                      bigint
 );
 
+DROP FUNCTION IF EXISTS transactions.post_receipt
+(
+    _user_id                                integer, 
+    _office_id                              integer, 
+    _login_id                               bigint,
+    _party_code                             national character varying(12), 
+    _currency_code                          national character varying(12), 
+    _amount                                 public.money_strict, 
+    _exchange_rate_debit                    public.decimal_strict, 
+    _exchange_rate_credit                   public.decimal_strict,
+    _reference_number                       national character varying(24), 
+    _statement_reference                    national character varying(128), 
+    _cost_center_id                         integer,
+    _cash_repository_id                     integer,
+    _posted_date                            date,
+    _bank_account_id                        bigint,
+    _payment_card_id                        integer,
+    _bank_instrument_code                   national character varying(128),
+    _bank_tran_code                         national character varying(128),
+    _cascading_tran_id                      bigint
+);
+
 CREATE FUNCTION transactions.post_receipt
 (
     _user_id                                integer, 
@@ -4808,7 +5168,8 @@ CREATE FUNCTION transactions.post_receipt
     _cost_center_id                         integer,
     _cash_repository_id                     integer,
     _posted_date                            date,
-    _bank_account_id                        integer,
+    _bank_account_id                        bigint,
+    _payment_card_id                        integer,
     _bank_instrument_code                   national character varying(128),
     _bank_tran_code                         national character varying(128),
     _cascading_tran_id                      bigint DEFAULT NULL
@@ -5295,7 +5656,6 @@ BEGIN
         quantity                        integer_strict,        
         unit_name                       text,
         unit_id                         integer,
-        in_stock                        numeric,
         base_quantity                   decimal,
         base_unit_id                    integer,                
         price                           money_strict,
@@ -5327,12 +5687,9 @@ BEGIN
         tax                                     money_strict
     ) ON COMMIT DROP;
     
-
-
     INSERT INTO temp_stock_details(store_id, item_code, quantity, unit_name, price, discount, shipping_charge, tax_form, tax)
     SELECT store_id, item_code, quantity, unit_name, price, discount, shipping_charge, tax_form, tax
     FROM explode_array(_details);
-
 
     UPDATE temp_stock_details 
     SET
@@ -5350,13 +5707,28 @@ BEGIN
         inventory_account_id            = core.get_inventory_account_id(item_id),
         cost_of_goods_sold_account_id   = core.get_cost_of_goods_sold_account_id(item_id);
 
-    UPDATE temp_stock_details
-    SET in_stock = core.count_item_in_stock(temp_stock_details.item_id, temp_stock_details.unit_id, temp_stock_details.store_id);
+    DROP TABLE IF EXISTS item_quantities_temp;
+    CREATE TEMPORARY TABLE item_quantities_temp
+    (
+        item_id             integer,
+        base_unit_id        integer,
+        store_id            integer,
+        total_sales         numeric,
+        in_stock            numeric
+    ) ON COMMIT DROP;
+
+    INSERT INTO item_quantities_temp(item_id, base_unit_id, store_id, total_sales)
+    SELECT item_id, base_unit_id, store_id, SUM(base_quantity)
+    FROM temp_stock_details
+    GROUP BY item_id, base_unit_id, store_id;
+
+    UPDATE item_quantities_temp
+    SET in_stock = core.count_item_in_stock(item_quantities_temp.item_id, item_quantities_temp.base_unit_id, item_quantities_temp.store_id);    
 
     IF EXISTS
     (
-        SELECT 0 FROM temp_stock_details
-        WHERE quantity > in_stock
+        SELECT 0 FROM item_quantities_temp
+        WHERE total_sales > in_stock
         LIMIT 1
     ) THEN
         RAISE EXCEPTION 'Insufficient item quantity'
@@ -5441,7 +5813,7 @@ BEGIN
     FROM temp_stock_details
     GROUP BY sales_account_id;
 
-    IF(_is_periodic = false) THEN
+    IF(NOT _is_periodic) THEN
         --Perpetutal Inventory Accounting System
 
         UPDATE temp_stock_details SET cost_of_goods_sold = transactions.get_cost_of_goods_sold(item_id, unit_id, store_id, quantity);
@@ -5546,7 +5918,7 @@ BEGIN
     
     PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
 
-    IF(_is_credit = false) THEN
+    IF(NOT _is_credit) THEN
         PERFORM transactions.post_receipt(_user_id, _office_id, _login_id, _party_code, _default_currency_code, _receivable, 1, 1, _reference_number, _statement_reference, _cost_center_id, _cash_repository_id, NULL, NULL, NULL, NULL, _transaction_master_id);
     ELSE
         PERFORM transactions.settle_party_due(_party_id, _office_id);
@@ -5562,8 +5934,8 @@ LANGUAGE plpgsql;
 --       SELECT * FROM transactions.post_sales('Sales.Direct', 2, 2, 5, '1-1-2020', 1, 'asdf', 'Test', false, NULL, 'JASMI-0002', 1, 1, 1, NULL, 1, false,
 --       ARRAY[
 --                  ROW(1, 'RMBP', 1, 'Piece',180000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
---                  ROW(1, '13MBA', 1, 'Dozen',130000, 300, 30, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
---                  ROW(1, '11MBA', 1, 'Piece',110000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type], 
+--                  ROW(1, 'RMBP', 1, 'Dozen',130000, 300, 30, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
+--                  ROW(1, 'RMBP', 1, 'Box',110000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type], 
 --       ARRAY[NULL::core.attachment_type], NULL::bigint[]);
 
 
@@ -5947,6 +6319,7 @@ BEGIN
         RETURN 0;
     END IF;
 
+
     CREATE TEMPORARY TABLE IF NOT EXISTS temp_stock_details
     (
         tran_type       transaction_type,
@@ -5976,17 +6349,6 @@ BEGIN
         USING ERRCODE='P5202';
     END IF;
 
-    IF EXISTS
-    (
-        SELECT item_code FROM temp_stock_details
-        GROUP BY item_code
-        HAVING SUM(CASE WHEN tran_type='Dr' THEN quantity ELSE quantity *-1 END) <> 0
-    ) THEN
-        RAISE EXCEPTION 'Referencing sides are not equal.'
-        USING ERRCODE='P5000';        
-    END IF;
-
-
     UPDATE temp_stock_details SET 
     item_id         = core.get_item_id_by_item_code(item_code),
     unit_id         = core.get_unit_id_by_unit_name(unit_name),
@@ -6006,6 +6368,15 @@ BEGIN
     base_quantity   = core.get_base_quantity_by_unit_id(unit_id, quantity),
     price           = core.get_item_cost_price(item_id, unit_id, NULL);
 
+    IF EXISTS
+    (
+        SELECT item_code FROM temp_stock_details
+        GROUP BY item_code
+        HAVING SUM(CASE WHEN tran_type='Dr' THEN base_quantity ELSE base_quantity *-1 END) <> 0
+    ) THEN
+        RAISE EXCEPTION 'Referencing sides are not equal.'
+        USING ERRCODE='P5000';        
+    END IF;
 
 
     IF EXISTS
@@ -6086,14 +6457,12 @@ LANGUAGE plpgsql;
 
 -- SELECT * FROM transactions.post_stock_journal(2, 2, 5, '1-1-2020', '22', 'Test', 
 -- ARRAY[
--- ROW('Cr', 'Store 1', 'RMBP', 'Piece', 1)::transactions.stock_adjustment_type,
--- ROW('Dr', 'Godown 1', 'RMBP', 'Piece', 1)::transactions.stock_adjustment_type,
--- ROW('Cr', 'Store 1', '11MBA', 'Piece', 1)::transactions.stock_adjustment_type,
--- ROW('Dr', 'Godown 1', '11MBA', 'Piece', 1)::transactions.stock_adjustment_type
+-- ROW('Cr', 'Store 1', 'RMBP', 'Dozen', 2)::transactions.stock_adjustment_type,
+-- ROW('Dr', 'Godown 1', 'RMBP', 'Piece', 24)::transactions.stock_adjustment_type
 -- ]
 -- );
-
-
+-- 
+-- 
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.refresh_materialized_views.sql --<--<--
@@ -6566,6 +6935,7 @@ $$
     DECLARE _purchase_verification_limit    public.money_strict2;
     DECLARE _verify_gl                      boolean;
     DECLARE _gl_verification_limit          public.money_strict2;
+    DECLARE _can_self_verify                boolean;
     DECLARE _posted_amount                  public.money_strict2;
     DECLARE _has_policy                     boolean=false;
     DECLARE _voucher_date                   date;
@@ -6615,7 +6985,8 @@ BEGIN
         can_verify_purchase_transactions,
         purchase_verification_limit,
         can_verify_gl_transactions,
-        gl_verification_limit
+        gl_verification_limit,
+        can_self_verify
     INTO
         _has_policy,
         _verify_sales,
@@ -6623,14 +6994,15 @@ BEGIN
         _verify_purchase,
         _purchase_verification_limit,
         _verify_gl,
-        _gl_verification_limit
+        _gl_verification_limit,
+        _can_self_verify
     FROM
     policy.voucher_verification_policy
     WHERE user_id=_user_id
+    AND office_id = _office_id
     AND is_active=true
     AND now() >= effective_from
     AND now() <= ends_on;
-
 
     IF(lower(_book) LIKE 'sales%') THEN
         IF(_verify_sales = false) THEN
@@ -6667,6 +7039,10 @@ BEGIN
         END IF;         
     END IF;
 
+    IF(NOT _can_self_verify AND _user_id = _transaction_posted_by) THEN
+        _can_approve := false;
+    END IF;
+
     IF(_has_policy=true) THEN
         IF(_can_approve = true) THEN
             UPDATE transactions.transaction_master
@@ -6683,6 +7059,9 @@ BEGIN
             PERFORM transactions.create_recurring_invoices(_transaction_master_id);
 
             RAISE NOTICE 'Done.';
+        ELSE
+            RAISE EXCEPTION 'Please ask someone else to verify your transaction.'
+            USING ERRCODE='P4031';
         END IF;
     ELSE
         RAISE EXCEPTION 'No verification policy found for this user.'
@@ -6695,6 +7074,7 @@ LANGUAGE plpgsql;
 
 
 --SELECT * FROM transactions.verify_transaction(65::bigint, 2, 2, 51::bigint, -3::smallint, '');
+--SELECT * FROM transactions.verify_transaction(133::bigint, 2, 2, 5::bigint, 2::smallint, 'ok'::national character varying);
 
 /**************************************************************************************************************************
 --------------------------------------------------------------------------------------------------------------------------
@@ -7031,6 +7411,31 @@ UPDATE core.frequency_setups
 SET frequency_setup_code= 'Sep-Oct'
 WHERE frequency_setup_code= 'Sep-Oc';
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/card-types-payment-cards.sql --<--<--
+INSERT INTO core.card_types(card_type_id, card_type_code, card_type_name)
+SELECT 1, 'CRC', 'Credit Card'          UNION ALL
+SELECT 2, 'DRC', 'Debit Card'           UNION ALL
+SELECT 3, 'CHC', 'Charge Card'          UNION ALL
+SELECT 4, 'ATM', 'ATM Card'             UNION ALL
+SELECT 5, 'SVC', 'Store-value Card'     UNION ALL
+SELECT 6, 'FLC', 'Fleet Card'           UNION ALL
+SELECT 7, 'GFC', 'Gift Card'            UNION ALL
+SELECT 8, 'SCR', 'Scrip'                UNION ALL
+SELECT 9, 'ELP', 'Electronic Purse';
+
+
+INSERT INTO core.payment_cards(payment_card_code, payment_card_name, card_type_id)
+SELECT 'CR-VSA', 'Visa',                1 UNION ALL
+SELECT 'CR-AME', 'American Express',    1 UNION ALL
+SELECT 'CR-MAS', 'MasterCard',          1 UNION ALL
+SELECT 'DR-MAE', 'Maestro',             2 UNION ALL
+SELECT 'DR-MAS', 'MasterCard Debit',    2 UNION ALL
+SELECT 'DR-VSE', 'Visa Electron',       2 UNION ALL
+SELECT 'DR-VSD', 'Visa Debit',          2 UNION ALL
+SELECT 'DR-DEL', 'Delta',               2;
+
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/http-actions.sql --<--<--
 --This table should not be localized.
 WITH http_actions
@@ -7077,6 +7482,56 @@ ALTER COLUMN recurrence_type_id SET NOT NULL;
 ALTER TABLE core.recurring_invoices
 ALTER COLUMN recurring_frequency_id DROP NOT NULL;
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.account_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.account_scrud_view;
+
+CREATE VIEW core.account_scrud_view
+AS
+SELECT
+    core.accounts.account_id,
+    core.account_masters.account_master_code || ' (' || core.account_masters.account_master_name || ')' AS account_master,
+    core.accounts.account_number,
+    core.accounts.external_code,
+	core.currencies.currency_code || ' ('|| core.currencies.currency_name|| ')' currency,
+    core.accounts.account_name,
+    core.accounts.description,
+	core.accounts.confidential,
+	core.accounts.is_transaction_node,
+    core.accounts.sys_type,
+    core.accounts.account_master_id,
+    parent_account.account_number || ' (' || parent_account.account_name || ')' AS parent    
+FROM core.accounts
+INNER JOIN core.account_masters
+ON core.account_masters.account_master_id=core.accounts.account_master_id
+LEFT JOIN core.currencies
+ON core.accounts.currency_code = core.currencies.currency_code
+LEFT JOIN core.accounts parent_account
+ON parent_account.account_id=core.accounts.parent_account_id;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.bank_account_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.bank_account_scrud_view;
+
+CREATE VIEW core.bank_account_scrud_view
+AS
+SELECT
+    account_id,
+    office.users.user_name AS maintained_by,
+    office.offices.office_code || ' (' || office.offices.office_name || ')' AS office,
+    bank_name,
+    bank_branch,
+    bank_contact_number,
+    bank_address,
+    bank_account_number,
+    bank_account_type,
+    relationship_officer_name,
+    is_merchant_account
+FROM core.bank_accounts
+INNER JOIN office.users
+ON core.bank_accounts.maintained_by_user_id = office.users.user_id
+INNER JOIN office.offices
+ON core.bank_accounts.office_id = office.offices.office_id;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.recurring_invoice_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.recurring_invoice_scrud_view;
 
@@ -7118,6 +7573,104 @@ core.recurring_invoice_setup.party_id = core.parties.party_id
 INNER JOIN core.payment_terms ON 
 core.recurring_invoice_setup.payment_term_id = core.payment_terms.payment_term_id;
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.bank_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.bank_account_selector_view;
+
+CREATE VIEW core.bank_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+WHERE account_master_id = 10102;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.bonus_slab_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.bonus_slab_account_selector_view;
+
+CREATE VIEW core.bonus_slab_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+WHERE account_master_id >= 20400; --Expenses
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.cash_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.cash_account_selector_view;
+
+CREATE VIEW core.cash_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+WHERE account_master_id = 10101;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.late_fee_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.late_fee_account_selector_view;
+
+CREATE VIEW core.late_fee_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+--All income headings
+WHERE account_master_id >= 20100
+AND account_master_id < 20400;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.merchant_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.merchant_account_selector_view;
+
+CREATE VIEW core.merchant_account_selector_view
+AS
+SELECT * FROM core.bank_account_scrud_view
+WHERE is_merchant_account = true;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.merchant_fee_setup_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.merchant_fee_setup_account_selector_view;
+
+CREATE VIEW core.merchant_fee_setup_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+WHERE account_master_id >= 20400; --Expenses
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.party_type_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.party_type_account_selector_view;
+
+CREATE VIEW core.party_type_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+--Accounts Receivable, Accounts Payable
+WHERE account_master_id = ANY(ARRAY[10110, 15010]);
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.recurring_invoice_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.recurring_invoice_account_selector_view;
+
+CREATE VIEW core.recurring_invoice_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+--All income headings
+WHERE account_master_id >= 20100
+AND account_master_id < 20400;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.salesperson_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.salesperson_account_selector_view;
+
+CREATE VIEW core.salesperson_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+--Current Assets, Accounts Receivable, Current Liabilities, Accounts Payable
+WHERE account_master_id = ANY(ARRAY[10100, 10110, 15000, 15010]);
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/office/office.user_selector_view.sql --<--<--
+DROP VIEW IF EXISTS office.user_selector_view;
+
+CREATE VIEW office.user_selector_view
+AS
+SELECT
+    office.users.user_id,
+    office.users.user_name,
+    office.users.full_name,
+    office.roles.role_name,
+    office.offices.office_name
+FROM
+    office.users
+INNER JOIN office.roles
+ON office.users.role_id = office.roles.role_id
+INNER JOIN office.offices
+ON office.users.office_id = office.offices.office_id
+WHERE NOT office.roles.is_system;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/06.sample-data/0.menus.sql --<--<--
 SELECT * FROM core.create_menu('API Access Policy', '~/Modules/BackOffice/Policy/ApiAccess.mix', 'SAA', 2, core.get_menu_id('SPM'));
 
@@ -7157,6 +7710,86 @@ SELECT * FROM core.create_menu_locale(core.get_menu_id('SAA'), 'id', 'API Kebija
 
 --FILIPINO
 SELECT * FROM core.create_menu_locale(core.get_menu_id('SAA'), 'fil', 'API Patakaran sa Pag-access');
+
+
+SELECT * FROM core.create_menu('Payment Cards', '~/Modules/Finance/Setup/PaymentCards.mix', 'PAC', 2, core.get_menu_id('FSM'));
+
+--FRENCH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'fr', 'Cartes de paiement');
+
+
+--GERMAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'de', 'Zahlungskarten');
+
+--RUSSIAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'ru', 'Платежные карты');
+
+--JAPANESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'ja', '支払カード');
+
+--SPANISH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'es', 'Tarjetas de pago');
+
+--DUTCH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'nl', 'betaalkaarten');
+
+--SIMPLIFIED CHINESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'zh', '支付卡');
+
+--PORTUGUESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'pt', 'Cartões de pagamento');
+
+--SWEDISH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'sv', 'Betalkort');
+
+--MALAY
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'ms', 'Kad Pembayaran');
+
+--INDONESIAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'id', 'Kartu Pembayaran');
+
+--FILIPINO
+SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'fil', 'Mga Card pagbabayad');
+
+SELECT * FROM core.create_menu('Merchant Fee Setup', '~/Modules/Finance/Setup/MerchantFeeSetup.mix', 'MFS', 2, core.get_menu_id('FSM'));
+
+--FRENCH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'fr', '');
+
+
+--GERMAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'de', 'Händler Fee-Setup');
+
+--RUSSIAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'ru', 'Торговец Стоимость установки');
+
+--JAPANESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'ja', '加盟店手数料の設定');
+
+--SPANISH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'es', 'Configuración Fee Merchant');
+
+--DUTCH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'nl', 'Merchant Fee Setup');
+
+--SIMPLIFIED CHINESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'zh', '商家安装费');
+
+--PORTUGUESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'pt', 'Setup Fee Merchant');
+
+--SWEDISH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'sv', 'Merchant Fee Setup');
+
+--MALAY
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'ms', 'Bayaran Merchant Persediaan');
+
+--INDONESIAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'id', 'Merchant Fee Pengaturan');
+
+--FILIPINO
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'fil', 'Setup Bayarin sa Merchant');
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/06.sample-data/1.remove-obsolete-menus.sql --<--<--
 DELETE FROM core.menu_locale

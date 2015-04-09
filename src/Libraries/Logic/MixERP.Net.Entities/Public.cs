@@ -126,18 +126,6 @@ namespace MixERP.Net.Entities.Public
 
     }
 
-    [FunctionName("each")]
-    [ExplicitColumns]
-    public class DbEachResult : PetaPocoDB.Record<DbEachResult> , IPoco
-    {
-        [Column("key")] 
-        public string Key { get; set; }
-
-        [Column("value")] 
-        public string Value { get; set; }
-
-    }
-
     [FunctionName("crosstab2")]
     [ExplicitColumns]
     public class DbCrosstab2Result : PetaPocoDB.Record<DbCrosstab2Result> , IPoco
@@ -150,27 +138,6 @@ namespace MixERP.Net.Entities.Public
 
         [Column("category_2")] 
         public string Category2 { get; set; }
-
-    }
-
-    [FunctionName("crosstab4")]
-    [ExplicitColumns]
-    public class DbCrosstab4Result : PetaPocoDB.Record<DbCrosstab4Result> , IPoco
-    {
-        [Column("row_name")] 
-        public string RowName { get; set; }
-
-        [Column("category_1")] 
-        public string Category1 { get; set; }
-
-        [Column("category_2")] 
-        public string Category2 { get; set; }
-
-        [Column("category_3")] 
-        public string Category3 { get; set; }
-
-        [Column("category_4")] 
-        public string Category4 { get; set; }
 
     }
 
@@ -207,6 +174,39 @@ namespace MixERP.Net.Entities.Public
 
         [Column("column_default")] 
         public string ColumnDefault { get; set; }
+
+    }
+
+    [FunctionName("each")]
+    [ExplicitColumns]
+    public class DbEachResult : PetaPocoDB.Record<DbEachResult> , IPoco
+    {
+        [Column("key")] 
+        public string Key { get; set; }
+
+        [Column("value")] 
+        public string Value { get; set; }
+
+    }
+
+    [FunctionName("crosstab4")]
+    [ExplicitColumns]
+    public class DbCrosstab4Result : PetaPocoDB.Record<DbCrosstab4Result> , IPoco
+    {
+        [Column("row_name")] 
+        public string RowName { get; set; }
+
+        [Column("category_1")] 
+        public string Category1 { get; set; }
+
+        [Column("category_2")] 
+        public string Category2 { get; set; }
+
+        [Column("category_3")] 
+        public string Category3 { get; set; }
+
+        [Column("category_4")] 
+        public string Category4 { get; set; }
 
     }
 

@@ -39,6 +39,28 @@ DROP FUNCTION IF EXISTS transactions.post_receipt
     _cascading_tran_id                      bigint
 );
 
+DROP FUNCTION IF EXISTS transactions.post_receipt
+(
+    _user_id                                integer, 
+    _office_id                              integer, 
+    _login_id                               bigint,
+    _party_code                             national character varying(12), 
+    _currency_code                          national character varying(12), 
+    _amount                                 public.money_strict, 
+    _exchange_rate_debit                    public.decimal_strict, 
+    _exchange_rate_credit                   public.decimal_strict,
+    _reference_number                       national character varying(24), 
+    _statement_reference                    national character varying(128), 
+    _cost_center_id                         integer,
+    _cash_repository_id                     integer,
+    _posted_date                            date,
+    _bank_account_id                        bigint,
+    _payment_card_id                        integer,
+    _bank_instrument_code                   national character varying(128),
+    _bank_tran_code                         national character varying(128),
+    _cascading_tran_id                      bigint
+);
+
 CREATE FUNCTION transactions.post_receipt
 (
     _user_id                                integer, 
@@ -54,7 +76,8 @@ CREATE FUNCTION transactions.post_receipt
     _cost_center_id                         integer,
     _cash_repository_id                     integer,
     _posted_date                            date,
-    _bank_account_id                        integer,
+    _bank_account_id                        bigint,
+    _payment_card_id                        integer,
     _bank_instrument_code                   national character varying(128),
     _bank_tran_code                         national character varying(128),
     _cascading_tran_id                      bigint DEFAULT NULL

@@ -18,6 +18,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Office;
@@ -34,6 +36,16 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
         public static IEnumerable<BankAccount> GetBankAccounts(int officeId)
         {
             return Factory.Get<BankAccount>("SELECT * FROM core.bank_accounts WHERE office_id=@0 ORDER BY account_id;", officeId);
+        }
+
+        public static IEnumerable<PaymentCard> GetPaymentCards()
+        {
+            return Factory.Get<PaymentCard>("SELECT * FROM core.payment_cards;");
+        }
+
+        public static bool IsMerchantAccount(long AccountId)
+        {
+            return Factory.Get<BankAccount>("SELECT * FROM core.bank_accounts WHERE account_id=@0 AND is_merchant_account;", AccountId).Count().Equals(1);
         }
 
         public static IEnumerable<CashRepository> GetCashRepositories()
@@ -55,5 +67,14 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
         {
             return Factory.Get<FlagType>("SELECT * FROM core.flag_types ORDER BY flag_type_id;");
         }
+
+        public static MerchantFeeSetup GetMerchantFeeSetup(long merchantAccountId, int paymentCardId)
+        {
+            return
+                Factory.Get<MerchantFeeSetup>(
+                    "SELECT * FROM core.merchant_fee_setup WHERE merchant_account_id=@0 AND payment_card_id=@1", merchantAccountId,
+                    paymentCardId).FirstOrDefault();
+        }
+
     }
 }

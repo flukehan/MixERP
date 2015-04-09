@@ -57,6 +57,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.bank_accounts.account_id", ConfigurationHelper.GetDbParameter("BankAccountDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.payment_cards.payment_card_id", ConfigurationHelper.GetDbParameter("PaymentCardDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
             return string.Join(",", displayFields);
         }
 
@@ -65,6 +66,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.bank_accounts.account_id", "core.merchant_account_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.payment_cards.payment_card_id", "core.payment_cards");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.merchant_fee_setup_account_selector_view");
             return string.Join(",", displayViews);
         }
     }

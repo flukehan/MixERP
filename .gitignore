@@ -9,3 +9,6 @@ src-beta2/Web/MixERP.Net.Web.UI/Resource/Static/Attachments
 src-beta2/Web/MixERP.Net.Web.UI/Resource/Static/Emails
 src-beta2/Web/MixERP.Net.Web.UI/Resource/Backups
 src-beta2/Web/MixERP.Net.Web.UI/Resource/Temp
+*.exe
+*.suo
+*.user

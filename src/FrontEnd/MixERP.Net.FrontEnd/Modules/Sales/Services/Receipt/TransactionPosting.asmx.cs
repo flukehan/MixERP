@@ -33,7 +33,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
     public class TransactionPosting : WebService
     {
         [WebMethod]
-        public long Save(string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, int bankAccountId, string bankInstrumentCode, string bankTransactionCode)
+        public long Save(string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, long bankAccountId, int paymentCardId, string bankInstrumentCode, string bankTransactionCode)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 
                 return PostTransaction(partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate,
                     referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId,
-                    bankInstrumentCode, bankTransactionCode);
+                    paymentCardId, bankInstrumentCode, bankTransactionCode);
             }
             catch (Exception ex)
             {
@@ -86,13 +86,13 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
             }
         }
 
-        private static long PostTransaction(string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, int bankAccountId, string bankInstrumentCode, string bankTransactionCode)
+        private static long PostTransaction(string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, long bankAccountId, int paymentCardId, string bankInstrumentCode, string bankTransactionCode)
         {
             int userId = CurrentUser.GetSignInView().UserId.ToInt();
             int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
             long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
 
-            long transactionMasterID = Data.Transactions.Receipt.PostTransaction(userId, officeId, loginId, partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, bankInstrumentCode, bankTransactionCode);
+            long transactionMasterID = Data.Transactions.Receipt.PostTransaction(userId, officeId, loginId, partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, paymentCardId, bankInstrumentCode, bankTransactionCode);
 
             return transactionMasterID;
         }

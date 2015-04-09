@@ -557,6 +557,8 @@ BEGIN
             payment_card_id                     integer NOT NULL REFERENCES core.payment_cards(payment_card_id),
             rate                                public.decimal_strict NOT NULL,
             customer_pays_fee                   boolean NOT NULL DEFAULT(false),
+            account_id                          bigint NOT NULL REFERENCES core.accounts(account_id),
+            statement_reference                 national character varying(128) NOT NULL DEFAULT(''),
             audit_user_id                       integer NULL REFERENCES office.users(user_id),            
             audit_ts                            TIMESTAMP WITH TIME ZONE NULL 
                                                 DEFAULT(NOW())            

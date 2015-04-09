@@ -60,6 +60,12 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
             this.CashRepositoryLiteral.Text = Titles.CashRepository;
             this.WhichBankLiteral.Text = Titles.WhichBank;
             this.PostedDateLiteral.Text = Titles.PostedDate;
+
+            this.PaymentCardLiteral.Text = "Select Payment Card";
+            this.MerchantFeeLiteral.Text = "Merchant Fee (In percent)";
+            this.CustomerPaysFeesLiteral.Text = "Customer Pays Fees";
+            this.YesLiteral.Text = "Yes";
+            
             this.InstrumentCodeLiteral.Text = Titles.InstrumentCode;
             this.BankTransactionCodeLiteral.Text = Titles.BankTransactionCode;
             this.ReferenceNumberLiteral.Text = Titles.ReferenceNumber;

@@ -25,9 +25,9 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class Receipt
     {
-        public static long PostTransaction(int userId, int officeId, long loginId, string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, int bankAccountId, string bankInstrumentCode, string bankTransactionCode)
+        public static long PostTransaction(int userId, int officeId, long loginId, string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, long bankAccountId, int paymentCardId, string bankInstrumentCode, string bankTransactionCode)
         {
-            const string sql = "SELECT transactions.post_receipt(@UserId, @OfficeId, @LoginId, @PartyCode, @CurrencyCode, @Amount, @DebitExchangeRate, @CreditExchangeRate, @ReferenceNumber, @StatementReference, @CostCenterId, @CashRepositoryId, @PostedDate, @BankAccountId, @BankInstrumentCode, @BankTransactionCode); ";
+            const string sql = "SELECT transactions.post_receipt(@UserId, @OfficeId, @LoginId, @PartyCode, @CurrencyCode, @Amount, @DebitExchangeRate, @CreditExchangeRate, @ReferenceNumber, @StatementReference, @CostCenterId, @CashRepositoryId, @PostedDate, @BankAccountId, @PaymentCardId, @BankInstrumentCode, @BankTransactionCode); ";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@UserId", userId);
@@ -40,7 +40,15 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
                 command.Parameters.AddWithValue("@CreditExchangeRate", creditExchangeRate);
                 command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
                 command.Parameters.AddWithValue("@StatementReference", statementReference);
-                command.Parameters.AddWithValue("@CostCenterId", costCenterId);
+
+                if (costCenterId.Equals(0))
+                {
+                    command.Parameters.AddWithValue("@CostCenterId", DBNull.Value);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@CostCenterId", costCenterId);
+                }
 
                 if (cashRepositoryId.Equals(0))
                 {
@@ -58,6 +66,15 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
                 else
                 {
                     command.Parameters.AddWithValue("@BankAccountId", bankAccountId);
+                }
+
+                if (paymentCardId.Equals(0))
+                {
+                    command.Parameters.AddWithValue("@PaymentCardId", DBNull.Value);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@PaymentCardId", paymentCardId);
                 }
 
                 if (postedDate == null)

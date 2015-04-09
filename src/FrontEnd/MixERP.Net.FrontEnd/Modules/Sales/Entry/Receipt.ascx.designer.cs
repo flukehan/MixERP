@@ -157,6 +157,42 @@ namespace MixERP.Net.Core.Modules.Sales.Entry {
         protected global::System.Web.UI.WebControls.Literal WhichBankLiteral;
         
         /// <summary>
+        /// PaymentCardLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal PaymentCardLiteral;
+        
+        /// <summary>
+        /// MerchantFeeLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal MerchantFeeLiteral;
+        
+        /// <summary>
+        /// CustomerPaysFeesLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal CustomerPaysFeesLiteral;
+        
+        /// <summary>
+        /// YesLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal YesLiteral;
+        
+        /// <summary>
         /// PostedDateLiteral control.
         /// </summary>
         /// <remarks>

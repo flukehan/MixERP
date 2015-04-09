@@ -41,6 +41,11 @@ var cashButton = $("#CashButton");
 var bankButton = $("#BankButton");
 var cashRepositorySelect = $("#CashRepositorySelect");
 var bankSelect = $("#BankSelect");
+
+var merchantFeeInputText = $("#MerchantFeeInputText");
+var customerPaysFeeRadio = $("#CustomerPaysFeeRadio");
+
+var paymentCardSelect = $("#PaymentCardSelect");
 var postedDateTextBox = $("#PostedDateTextBox");
 var referenceNumberInputText = $("#ReferenceNumberInputText");
 
@@ -105,10 +110,11 @@ saveButton.click(function () {
     var cashRepositoryId = parseInt2(cashRepositorySelect.getSelectedValue());
     var postedDate = Date.parseExact(postedDateTextBox.val(), window.shortDateFormat);
     var bankAccountId = parseInt2(bankSelect.getSelectedValue());
+    var paymentCardId = parseInt2(paymentCardSelect.getSelectedValue());
     var bankInstrumentCode = instrumentCodeInputText.val();
     var bankTransactionCode = transactionCodeInputText.val();
 
-    var ajaxSaveReceipt = saveReceipt(partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, bankInstrumentCode, bankTransactionCode);
+    var ajaxSaveReceipt = saveReceipt(partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, paymentCardId, bankInstrumentCode, bankTransactionCode);
 
     ajaxSaveReceipt.success(function (msg) {
         var id = msg.d;
@@ -120,7 +126,7 @@ saveButton.click(function () {
     });
 });
 
-function saveReceipt(partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, bankInstrumentCode, bankTransactionCode) {
+function saveReceipt(partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, paymentCardId, bankInstrumentCode, bankTransactionCode) {
     url = "/Modules/Sales/Services/Receipt/TransactionPosting.asmx/Save";
     data = appendParameter("", "partyCode", partyCode);
     data = appendParameter(data, "currencyCode", currencyCode);
@@ -133,6 +139,7 @@ function saveReceipt(partyCode, currencyCode, amount, debitExchangeRate, creditE
     data = appendParameter(data, "cashRepositoryId", cashRepositoryId);
     data = appendParameter(data, "postedDate", postedDate);
     data = appendParameter(data, "bankAccountId", bankAccountId);
+    data = appendParameter(data, "paymentCardId", paymentCardId);
     data = appendParameter(data, "bankInstrumentCode", bankInstrumentCode);
     data = appendParameter(data, "bankTransactionCode", bankTransactionCode);
     data = getData(data);
@@ -175,6 +182,42 @@ creditExchangeRateInputText.keyup(function () {
     updateTotal();
 });
 
+
+bankSelect.change(function () {
+    var accountId = parseInt2(bankSelect.getSelectedValue());
+    loadPaymentCards(accountId);
+});
+
+paymentCardSelect.change(function () {
+    var merchantAccountId = parseInt2(bankSelect.getSelectedValue());
+    var paymentCardId = parseInt2(paymentCardSelect.getSelectedValue());
+
+    customerPaysFeeRadio.removeProp("checked");
+    merchantFeeInputText.val("");
+
+    if (!(merchantAccountId && paymentCardId)) {
+        return;
+    };
+
+
+    var ajaxMerchantFeeSetup = getMerchantFeeSetup(merchantAccountId, paymentCardId);
+
+    ajaxMerchantFeeSetup.success(function(msg) {
+
+        var rate = msg.d.Rate;
+        var customerPaysFee = msg.d.CustomerPaysFee;
+        merchantFeeInputText.val(rate);
+
+        if (customerPaysFee) {
+            customerPaysFeeRadio.prop("checked", "checked");
+        };
+    });
+
+    ajaxMerchantFeeSetup.fail(function(xhr) {
+        logAjaxErrorMessage(xhr);
+    });
+
+});
 
 function updateTotal() {
     if (currencySelect.getSelectedValue() === homeCurrency) {
@@ -246,9 +289,29 @@ function loadBankAccounts() {
     ajaxDataBind(url, bankSelect);
 };
 
+
+function loadPaymentCards(merchantAccountId) {
+    url = "/Modules/Sales/Services/Receipt/Accounts.asmx/GetPaymentCards";
+
+    data = appendParameter("", "merchantAccountId", merchantAccountId);
+    data = getData(data);
+
+    ajaxDataBind(url, paymentCardSelect, data);
+};
+
 //Ajax Requests
 
 function getHomeCurrency() {
     url = "/Modules/Sales/Services/Receipt/Currencies.asmx/GetHomeCurrency";
     return getAjax(url);
+};
+
+function getMerchantFeeSetup(merchantAccountId, paymentCardId) {
+    url = "/Modules/Sales/Services/Receipt/Accounts.asmx/GetMerchantFeeSetup";
+
+    data = appendParameter("", "merchantAccountId", merchantAccountId);
+    data = appendParameter(data, "paymentCardId", paymentCardId);
+    data = getData(data);
+
+    return getAjax(url, data);
 };

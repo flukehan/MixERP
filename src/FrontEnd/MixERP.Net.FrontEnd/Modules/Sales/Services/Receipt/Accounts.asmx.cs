@@ -51,6 +51,33 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         }
 
         [WebMethod]
+        public Collection<ListItem> GetPaymentCards(long merchantAccountId)
+        {
+            Collection<ListItem> values = new Collection<ListItem>();
+
+            bool isMerchantAccount = Data.Helpers.Accounts.IsMerchantAccount(merchantAccountId);
+
+            if (!isMerchantAccount)
+            {
+                return values;
+            }
+
+            foreach (PaymentCard card in Data.Helpers.Accounts.GetPaymentCards())
+            {
+                values.Add(new ListItem(card.PaymentCardName, card.PaymentCardId.ToString(CultureInfo.InvariantCulture)));
+            }
+
+            return values;
+        }
+
+        [WebMethod]
+        public MerchantFeeSetup GetMerchantFeeSetup(long merchantAccountId, int paymentCardId)
+        {
+            return Data.Helpers.Accounts.GetMerchantFeeSetup(merchantAccountId, paymentCardId);
+        }
+
+
+        [WebMethod]
         public Collection<ListItem> GetCashRepositories()
         {
             int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();

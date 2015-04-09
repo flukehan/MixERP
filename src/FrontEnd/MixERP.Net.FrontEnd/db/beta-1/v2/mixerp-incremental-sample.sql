@@ -33655,6 +33655,57 @@ COMMENT ON COLUMN core.zip_codes.audit_ts IS 'Contains the date and timestamp of
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/refresh-materialized-views.sql --<--<--
 SELECT * FROM transactions.refresh_materialized_views(1);
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/00.db core/1.scrud.sql --<--<--
+CREATE OR REPLACE VIEW scrud.mixerp_table_view
+AS
+SELECT 
+    pg_tables.schemaname                                    AS table_schema, 
+    pg_tables.tablename                                     AS table_name, 
+    pg_attribute.attname                                    AS column_name,
+    constraint_name,
+    references_schema, 
+    references_table, 
+    references_field, 
+    pg_attribute.attnum                                     AS ordinal_position,
+    CASE pg_attribute.attnotnull 
+    WHEN false THEN 'YES' 
+    ELSE 'NO' END                                           AS is_nullable, 
+    (SELECT 
+        scrud.parse_default(pg_attrdef.adsrc) 
+        FROM pg_attrdef 
+        WHERE pg_attrdef.adrelid = pg_class.oid 
+        AND pg_attrdef.adnum = pg_attribute.attnum)         AS column_default,    
+    format_type(pg_attribute.atttypid, NULL)                AS data_type, 
+    format_type(pg_attribute.atttypid, NULL)                AS domain_name, 
+    CASE pg_attribute.atttypmod
+    WHEN -1 THEN NULL 
+    ELSE pg_attribute.atttypmod - 4
+    END                                         AS character_maximum_length,    
+    pg_constraint.conname AS "key", 
+    pc2.conname AS ckey
+FROM pg_tables
+INNER JOIN pg_class 
+ON pg_class.relname = pg_tables.tablename 
+AND pg_class.relnamespace = (SELECT oid FROM pg_namespace WHERE nspname=pg_tables.schemaname)
+INNER JOIN pg_attribute ON pg_class.oid = pg_attribute.attrelid 
+LEFT JOIN pg_constraint ON pg_constraint.contype = 'p'::"char" 
+    AND pg_constraint.conrelid = pg_class.oid AND
+    (pg_attribute.attnum = ANY (pg_constraint.conkey)) 
+LEFT JOIN pg_constraint AS pc2 ON pc2.contype = 'f'::"char" 
+    AND pc2.conrelid = pg_class.oid 
+    AND (pg_attribute.attnum = ANY (pc2.conkey))    
+LEFT JOIN scrud.relationship_view 
+ON pg_tables.schemaname = scrud.relationship_view.table_schema 
+    AND pg_tables.tablename = scrud.relationship_view.table_name 
+    AND pg_attribute.attname = scrud.relationship_view.column_name 
+WHERE pg_attribute.attname NOT IN
+    (
+        'audit_user_id', 'audit_ts'
+    )
+AND NOT pg_attribute.attisdropped
+AND pg_attribute.attnum > 0 
+ORDER BY pg_attribute.attnum;
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/00.db core/plpgunit/install/0.uninstall-unit-test.sql --<--<--
 
 /********************************************************************************
@@ -35023,6 +35074,8 @@ BEGIN
             payment_card_id                     integer NOT NULL REFERENCES core.payment_cards(payment_card_id),
             rate                                public.decimal_strict NOT NULL,
             customer_pays_fee                   boolean NOT NULL DEFAULT(false),
+            account_id                          bigint NOT NULL REFERENCES core.accounts(account_id),
+            statement_reference                 national character varying(128) NOT NULL DEFAULT(''),
             audit_user_id                       integer NULL REFERENCES office.users(user_id),            
             audit_ts                            TIMESTAMP WITH TIME ZONE NULL 
                                                 DEFAULT(NOW())            
@@ -35456,6 +35509,117 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM core.get_frequency_start_date('eoy'::text::integer, '2015-05-14');
 
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_item_selling_price.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer);
+CREATE FUNCTION core.get_item_selling_price(item_id_ integer, party_type_id_ integer, price_type_id_ integer, unit_id_ integer)
+RETURNS public.money_strict2
+AS
+$$
+    DECLARE _price          public.money_strict2;
+    DECLARE _unit_id        integer;
+    DECLARE _factor         decimal;
+    DECLARE _tax_rate       decimal;
+    DECLARE _includes_tax   boolean;
+    DECLARE _tax            public.money_strict2;
+BEGIN
+
+    --Fist pick the catalog price which matches all these fields:
+    --Item, Customer Type, Price Type, and Unit.
+    --This is the most effective price.
+    SELECT 
+        item_selling_prices.price, 
+        item_selling_prices.unit_id,
+        item_selling_prices.includes_tax
+    INTO 
+        _price, 
+        _unit_id,
+        _includes_tax       
+    FROM core.item_selling_prices
+    WHERE item_selling_prices.item_id=$1
+    AND item_selling_prices.party_type_id=$2
+    AND item_selling_prices.price_type_id =$3
+    AND item_selling_prices.unit_id = $4;
+
+    IF(_unit_id IS NULL) THEN
+        --We do not have a selling price of this item for the unit supplied.
+        --Let's see if this item has a price for other units.
+        SELECT 
+            item_selling_prices.price, 
+            item_selling_prices.unit_id,
+            item_selling_prices.includes_tax
+        INTO 
+            _price, 
+            _unit_id,
+            _includes_tax
+        FROM core.item_selling_prices
+        WHERE item_selling_prices.item_id=$1
+        AND item_selling_prices.party_type_id=$2
+        AND item_selling_prices.price_type_id =$3;
+    END IF;
+
+    IF(_price IS NULL) THEN
+        SELECT 
+            item_selling_prices.price, 
+            item_selling_prices.unit_id,
+            item_selling_prices.includes_tax
+        INTO 
+            _price, 
+            _unit_id,
+            _includes_tax
+        FROM core.item_selling_prices
+        WHERE item_selling_prices.item_id=$1
+        AND item_selling_prices.price_type_id =$3;
+    END IF;
+
+    
+    IF(_price IS NULL) THEN
+        --This item does not have selling price defined in the catalog.
+        --Therefore, getting the default selling price from the item definition.
+        SELECT 
+            selling_price, 
+            unit_id,
+            selling_price_includes_tax
+        INTO 
+            _price, 
+            _unit_id,
+            _includes_tax
+        FROM core.items
+        WHERE core.items.item_id = $1;
+    END IF;
+
+    IF(_includes_tax) THEN
+        _tax_rate := core.get_item_tax_rate($1);
+        _price := _price / ((100 + _tax_rate)/ 100);
+    END IF;
+
+    --Get the unitary conversion factor if the requested unit does not match with the price defition.
+    _factor := core.convert_unit($4, _unit_id);
+
+    RETURN _price * _factor;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
+--SELECT * FROM core.get_item_selling_price(1, 1, 2, 1);
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_periods.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_periods
@@ -38624,6 +38788,28 @@ DROP FUNCTION IF EXISTS transactions.post_receipt
     _cascading_tran_id                      bigint
 );
 
+DROP FUNCTION IF EXISTS transactions.post_receipt
+(
+    _user_id                                integer, 
+    _office_id                              integer, 
+    _login_id                               bigint,
+    _party_code                             national character varying(12), 
+    _currency_code                          national character varying(12), 
+    _amount                                 public.money_strict, 
+    _exchange_rate_debit                    public.decimal_strict, 
+    _exchange_rate_credit                   public.decimal_strict,
+    _reference_number                       national character varying(24), 
+    _statement_reference                    national character varying(128), 
+    _cost_center_id                         integer,
+    _cash_repository_id                     integer,
+    _posted_date                            date,
+    _bank_account_id                        bigint,
+    _payment_card_id                        integer,
+    _bank_instrument_code                   national character varying(128),
+    _bank_tran_code                         national character varying(128),
+    _cascading_tran_id                      bigint
+);
+
 CREATE FUNCTION transactions.post_receipt
 (
     _user_id                                integer, 
@@ -38639,7 +38825,8 @@ CREATE FUNCTION transactions.post_receipt
     _cost_center_id                         integer,
     _cash_repository_id                     integer,
     _posted_date                            date,
-    _bank_account_id                        integer,
+    _bank_account_id                        bigint,
+    _payment_card_id                        integer,
     _bank_instrument_code                   national character varying(128),
     _bank_tran_code                         national character varying(128),
     _cascading_tran_id                      bigint DEFAULT NULL
@@ -41057,7 +41244,7 @@ DROP VIEW IF EXISTS core.bonus_slab_account_selector_view;
 CREATE VIEW core.bonus_slab_account_selector_view
 AS
 SELECT * FROM core.account_scrud_view
-WHERE account_master_id >= 20400 --Expenses;
+WHERE account_master_id >= 20400; --Expenses
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.cash_account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.cash_account_selector_view;
@@ -41085,6 +41272,14 @@ AS
 SELECT * FROM core.bank_account_scrud_view
 WHERE is_merchant_account = true;
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.merchant_fee_setup_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.merchant_fee_setup_account_selector_view;
+
+CREATE VIEW core.merchant_fee_setup_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+WHERE account_master_id >= 20400; --Expenses
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.party_type_account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.party_type_account_selector_view;
 
@@ -41093,8 +41288,6 @@ AS
 SELECT * FROM core.account_scrud_view
 --Accounts Receivable, Accounts Payable
 WHERE account_master_id = ANY(ARRAY[10110, 15010]);
-
-SELECT * FROM core.accounts;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.recurring_invoice_account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.recurring_invoice_account_selector_view;
