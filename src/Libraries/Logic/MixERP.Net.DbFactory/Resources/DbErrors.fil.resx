@@ -222,6 +222,15 @@
   <data name="P5101" xml:space="preserve">
     <value>Hindi maaaring mag-post ng transaksyon sa panahon ng pinaghihigpitang mode transaksyon.</value>
   </data>
+  <data name="P5102" xml:space="preserve">
+    <value>Dulo ng araw operasyon ay na gumanap.</value>
+  </data>
+  <data name="P5103" xml:space="preserve">
+    <value>Nakalipas na napetsahan ang mga transaksyon sa queue ng pag-verify.</value>
+  </data>
+  <data name="P5104" xml:space="preserve">
+    <value>Paki-verify ang mga transaksyon bago isagawa pagtatapos ng araw na operasyon.</value>
+  </data>
   <data name="P5110" xml:space="preserve">
     <value>Hindi ka maaaring magbigay ng impormasyon sa buwis sa pagbebenta para sa mga non taxable benta.</value>
   </data>

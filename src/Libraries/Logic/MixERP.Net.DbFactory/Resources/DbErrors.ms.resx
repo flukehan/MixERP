@@ -222,6 +222,15 @@
   <data name="P5101" xml:space="preserve">
     <value>Tidak boleh menghantar transaksi semasa mod transaksi yang terhad.</value>
   </data>
+  <data name="P5102" xml:space="preserve">
+    <value>Akhir operasi hari sudah dilakukan.</value>
+  </data>
+  <data name="P5103" xml:space="preserve">
+    <value>Transaksi bertarikh lalu dalam barisan pengesahan.</value>
+  </data>
+  <data name="P5104" xml:space="preserve">
+    <value>Sila sahkan transaksi sebelum persembahan akhir operasi hari.</value>
+  </data>
   <data name="P5110" xml:space="preserve">
     <value>Anda tidak boleh memberikan maklumat cukai jualan untuk jualan tidak dikenakan cukai.</value>
   </data>

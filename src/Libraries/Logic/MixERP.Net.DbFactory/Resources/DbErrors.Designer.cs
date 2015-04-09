@@ -376,6 +376,33 @@ namespace MixERP.Net.DbFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End of day operation was already performed..
+        /// </summary>
+        internal static string P5102 {
+            get {
+                return ResourceManager.GetString("P5102", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Past dated transactions in verification queue..
+        /// </summary>
+        internal static string P5103 {
+            get {
+                return ResourceManager.GetString("P5103", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please verify transactions before performing end of day operation..
+        /// </summary>
+        internal static string P5104 {
+            get {
+                return ResourceManager.GetString("P5104", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You cannot provide sales tax information for non taxable sales..
         /// </summary>
         internal static string P5110 {

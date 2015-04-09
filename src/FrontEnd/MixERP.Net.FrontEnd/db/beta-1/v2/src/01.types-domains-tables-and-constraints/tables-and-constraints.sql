@@ -570,3 +570,9 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+ALTER TABLE core.item_cost_prices
+DROP COLUMN IF EXISTS includes_tax;
+
+ALTER TABLE core.items
+DROP COLUMN IF EXISTS cost_price_includes_tax CASCADE;

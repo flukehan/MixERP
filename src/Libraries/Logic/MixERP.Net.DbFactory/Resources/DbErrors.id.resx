@@ -222,6 +222,15 @@
   <data name="P5101" xml:space="preserve">
     <value>Tidak dapat mengirim transaksi selama modus transaksi terbatas.</value>
   </data>
+  <data name="P5102" xml:space="preserve">
+    <value>Akhir hari operasi sudah dilakukan.</value>
+  </data>
+  <data name="P5103" xml:space="preserve">
+    <value>Tanggal transaksi terakhir dalam antrian verifikasi.</value>
+  </data>
+  <data name="P5104" xml:space="preserve">
+    <value>Silakan verifikasi transaksi sebelum melakukan akhir hari operasi.</value>
+  </data>
   <data name="P5110" xml:space="preserve">
     <value>Anda tidak dapat memberikan informasi pajak penjualan untuk penjualan non pajak.</value>
   </data>

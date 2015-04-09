@@ -222,6 +222,15 @@
   <data name="P5101" xml:space="preserve">
     <value>Kann Transaktion während eingeschränkte Transaktionsmodus nicht erlaubt.</value>
   </data>
+  <data name="P5102" xml:space="preserve">
+    <value>Am Ende des Tages Operation wurde bereits durchgeführt.</value>
+  </data>
+  <data name="P5103" xml:space="preserve">
+    <value>Vergangenheit datiert Transaktionen Überprüfung Warteschlange.</value>
+  </data>
+  <data name="P5104" xml:space="preserve">
+    <value>Bitte überprüfen Transaktionen, bevor am Ende des Tages den Betrieb.</value>
+  </data>
   <data name="P5110" xml:space="preserve">
     <value>Sie können keine Umsatzsteuer Informationen für nicht steuerpflichtige Umsätze.</value>
   </data>

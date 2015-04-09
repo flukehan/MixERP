@@ -222,6 +222,15 @@
   <data name="P5101" xml:space="preserve">
     <value>No se puede publicar la transacción durante el modo de operación restringida.</value>
   </data>
+  <data name="P5102" xml:space="preserve">
+    <value>Fin de la operación de día ya se realizó.</value>
+  </data>
+  <data name="P5103" xml:space="preserve">
+    <value>Transacciones con fecha del pasado en la cola de verificación.</value>
+  </data>
+  <data name="P5104" xml:space="preserve">
+    <value>Por favor, verificar las transacciones antes de realizar la operación final de día.</value>
+  </data>
   <data name="P5110" xml:space="preserve">
     <value>No se puede proporcionar información impuesto sobre las ventas para las ventas de los no imponibles.</value>
   </data>

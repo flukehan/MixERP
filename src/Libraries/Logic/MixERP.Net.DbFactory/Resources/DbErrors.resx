@@ -222,6 +222,15 @@
   <data name="P5101" xml:space="preserve">
     <value>Cannot post transaction during restricted transaction mode.</value>
   </data>
+  <data name="P5102" xml:space="preserve">
+    <value>End of day operation was already performed.</value>
+  </data>
+  <data name="P5103" xml:space="preserve">
+    <value>Past dated transactions in verification queue.</value>
+  </data>
+  <data name="P5104" xml:space="preserve">
+    <value>Please verify transactions before performing end of day operation.</value>
+  </data>
   <data name="P5110" xml:space="preserve">
     <value>You cannot provide sales tax information for non taxable sales.</value>
   </data>

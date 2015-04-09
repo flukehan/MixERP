@@ -222,6 +222,15 @@
   <data name="P5101" xml:space="preserve">
     <value>Не можете прикреплять сделки в режиме ограниченного сделки.</value>
   </data>
+  <data name="P5102" xml:space="preserve">
+    <value>Конец дня работы уже была выполнена.</value>
+  </data>
+  <data name="P5103" xml:space="preserve">
+    <value>Прошедшие датированные операции в очереди проверки.</value>
+  </data>
+  <data name="P5104" xml:space="preserve">
+    <value>Пожалуйста, проверьте сделок перед выполнением конце дня работы.</value>
+  </data>
   <data name="P5110" xml:space="preserve">
     <value>Вы не можете предоставить налога с продаж информации для не облагаемых продаж.</value>
   </data>

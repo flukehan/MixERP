@@ -222,6 +222,15 @@
   <data name="P5101" xml:space="preserve">
     <value>Kan transactie niet posten tijdens beperkte transactie mode.</value>
   </data>
+  <data name="P5102" xml:space="preserve">
+    <value>Einde van de dag operatie werd reeds uitgevoerd.</value>
+  </data>
+  <data name="P5103" xml:space="preserve">
+    <value>Verleden gedateerd transacties in verificatie wachtrij.</value>
+  </data>
+  <data name="P5104" xml:space="preserve">
+    <value>Controleert transacties voordat eind van de dag gebruik.</value>
+  </data>
   <data name="P5110" xml:space="preserve">
     <value>U kunt omzetbelasting informatie voor niet belastbare omzet niet bieden.</value>
   </data>

@@ -222,6 +222,15 @@
   <data name="P5101" xml:space="preserve">
     <value>Kan inte posta transaktion under transaktionsläget begränsad.</value>
   </data>
+  <data name="P5102" xml:space="preserve">
+    <value>Slutet av dagen operation redan utförts.</value>
+  </data>
+  <data name="P5103" xml:space="preserve">
+    <value>Tidigare daterad transaktioner i verifierings kö.</value>
+  </data>
+  <data name="P5104" xml:space="preserve">
+    <value>Vänligen kontrollera transaktioner innan du utför dagens slut drift.</value>
+  </data>
   <data name="P5110" xml:space="preserve">
     <value>Du kan inte ge moms informationen för icke skattepliktiga försäljning.</value>
   </data>

@@ -222,6 +222,15 @@
   <data name="P5101" xml:space="preserve">
     <value>在限制交易模式不能发布交易。</value>
   </data>
+  <data name="P5102" xml:space="preserve">
+    <value>已经进行的日常运作结束。</value>
+  </data>
+  <data name="P5103" xml:space="preserve">
+    <value>近月交易验证队列。</value>
+  </data>
+  <data name="P5104" xml:space="preserve">
+    <value>执行日常运作结束前请核实交易。</value>
+  </data>
   <data name="P5110" xml:space="preserve">
     <value>你不能提供营业税的信息非应税销售。</value>
   </data>

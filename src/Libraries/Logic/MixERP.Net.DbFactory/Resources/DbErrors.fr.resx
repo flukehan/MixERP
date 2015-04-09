@@ -222,6 +222,15 @@
   <data name="P5101" xml:space="preserve">
     <value>Vous ne pouvez pas poster transaction pendant le mode de transaction restreint.</value>
   </data>
+  <data name="P5102" xml:space="preserve">
+    <value>Fin de l'opération de jour a déjà été effectuée.</value>
+  </data>
+  <data name="P5103" xml:space="preserve">
+    <value>Transactions datées passées en attente de vérification.</value>
+  </data>
+  <data name="P5104" xml:space="preserve">
+    <value>Se il vous plaît vérifier les transactions avant d'effectuer fin de l'opération de jour.</value>
+  </data>
   <data name="P5110" xml:space="preserve">
     <value>Vous ne pouvez pas fournir des informations de la taxe de vente pour les ventes non imposables.</value>
   </data>

@@ -222,6 +222,15 @@
   <data name="P5101" xml:space="preserve">
     <value>制限されたトランザクションモードの間に取引を投稿することはできません。</value>
   </data>
+  <data name="P5102" xml:space="preserve">
+    <value>一日の動作の終了は、既に実施した。</value>
+  </data>
+  <data name="P5103" xml:space="preserve">
+    <value>検証·キュー内の過去の日付の取引。</value>
+  </data>
+  <data name="P5104" xml:space="preserve">
+    <value>日操作の終了を実行する前に取引を確認してください。</value>
+  </data>
   <data name="P5110" xml:space="preserve">
     <value>あなたは非課税販売の売上税情報を提供することはできません。</value>
   </data>

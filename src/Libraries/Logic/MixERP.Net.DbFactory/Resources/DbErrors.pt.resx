@@ -222,6 +222,15 @@
   <data name="P5101" xml:space="preserve">
     <value>Não é possível postar transação durante o modo de operação restrito.</value>
   </data>
+  <data name="P5102" xml:space="preserve">
+    <value>Fim da operação do dia já foi realizada.</value>
+  </data>
+  <data name="P5103" xml:space="preserve">
+    <value>Passado transações datado em fila de verificação.</value>
+  </data>
+  <data name="P5104" xml:space="preserve">
+    <value>Por favor, verifique antes de realizar transações final da operação do dia.</value>
+  </data>
   <data name="P5110" xml:space="preserve">
     <value>Você não pode fornecer informações de imposto sobre vendas para vendas não tributáveis.</value>
   </data>
