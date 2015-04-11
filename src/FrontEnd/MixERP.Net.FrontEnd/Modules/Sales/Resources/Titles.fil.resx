@@ -429,4 +429,16 @@
   <data name="WhichBank" xml:space="preserve">
     <value>Aling Bank?</value>
   </data>
+  <data name="CustomerPaysFees" xml:space="preserve">
+    <value>Nagbabayad Customer Mga Bayarin</value>
+  </data>
+  <data name="MerchantFeeInPercent" xml:space="preserve">
+    <value>Bayad sa Merchant (Sa porsiyento)</value>
+  </data>
+  <data name="SelectPaymentCard" xml:space="preserve">
+    <value>Pumili ng Card Pagbabayad</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>oo</value>
+  </data>
 </root>

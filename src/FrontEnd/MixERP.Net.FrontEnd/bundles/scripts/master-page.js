@@ -51094,17 +51094,9 @@ $(function () {
 });
 
 ///#source 1 1 /Scripts/mixerp/master-page/keyboard.js
-//Swallow the CTRL + P combination
-jQuery(document).bind("keyup keydown", function (e) {
-    if (e.ctrlKey && e.keyCode == 80) {
-        e.preventDefault();
-        return false;
-    }
-
-    return true;
-});
-
 $(document).ready(function () {
+    var searchInput = $("#SearchInput");
+
     shortcut.add("CTRL+M", function () {
         searchInput.focus();
     });

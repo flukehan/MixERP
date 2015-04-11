@@ -429,4 +429,16 @@
   <data name="WhichBank" xml:space="preserve">
     <value>Qué Banco?</value>
   </data>
+  <data name="CustomerPaysFees" xml:space="preserve">
+    <value>Cliente paga Honorarios</value>
+  </data>
+  <data name="MerchantFeeInPercent" xml:space="preserve">
+    <value>Cuota Merchant (Porcentaje)</value>
+  </data>
+  <data name="SelectPaymentCard" xml:space="preserve">
+    <value>Seleccionar Tarjetas de Pago</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>sí</value>
+  </data>
 </root>

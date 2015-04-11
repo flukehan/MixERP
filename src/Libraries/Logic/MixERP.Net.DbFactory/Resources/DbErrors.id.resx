@@ -237,6 +237,12 @@
   <data name="P5111" xml:space="preserve">
     <value>Informasi transaksi bank tidak valid disediakan.</value>
   </data>
+  <data name="P5112" xml:space="preserve">
+    <value>Informasi kartu pembayaran yang tidak valid.</value>
+  </data>
+  <data name="P5113" xml:space="preserve">
+    <value>Tidak dapat menemukan akun untuk mengirim biaya merchant fee.</value>
+  </data>
   <data name="P5201" xml:space="preserve">
     <value>Sebuah entri penyesuaian saham tidak dapat berisi barang debit (s).</value>
   </data>

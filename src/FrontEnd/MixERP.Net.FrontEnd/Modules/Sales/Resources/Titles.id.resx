@@ -429,4 +429,16 @@
   <data name="WhichBank" xml:space="preserve">
     <value>Bank mana?</value>
   </data>
+  <data name="CustomerPaysFees" xml:space="preserve">
+    <value>Pelanggan Pays Biaya</value>
+  </data>
+  <data name="MerchantFeeInPercent" xml:space="preserve">
+    <value>Merchant Fee (Dalam persen)</value>
+  </data>
+  <data name="SelectPaymentCard" xml:space="preserve">
+    <value>Pilih Kartu Pembayaran</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Iya Nih</value>
+  </data>
 </root>

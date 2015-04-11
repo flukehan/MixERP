@@ -237,6 +237,12 @@
   <data name="P5111" xml:space="preserve">
     <value>Maklumat transaksi bank tidak sah disediakan.</value>
   </data>
+  <data name="P5112" xml:space="preserve">
+    <value>Maklumat kad pembayaran tidak sah.</value>
+  </data>
+  <data name="P5113" xml:space="preserve">
+    <value>Tidak dapat mencari akaun untuk menyiarkan perbelanjaan yuran saudagar.</value>
+  </data>
   <data name="P5201" xml:space="preserve">
     <value>A kemasukan pelarasan saham tidak boleh mengandungi item debit (s).</value>
   </data>

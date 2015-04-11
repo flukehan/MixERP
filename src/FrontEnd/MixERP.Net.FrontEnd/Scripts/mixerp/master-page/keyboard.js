@@ -1,14 +1,6 @@
-﻿//Swallow the CTRL + P combination
-jQuery(document).bind("keyup keydown", function (e) {
-    if (e.ctrlKey && e.keyCode == 80) {
-        e.preventDefault();
-        return false;
-    }
+﻿$(document).ready(function () {
+    var searchInput = $("#SearchInput");
 
-    return true;
-});
-
-$(document).ready(function () {
     shortcut.add("CTRL+M", function () {
         searchInput.focus();
     });

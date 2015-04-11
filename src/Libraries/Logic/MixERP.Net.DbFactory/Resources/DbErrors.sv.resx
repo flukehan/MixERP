@@ -237,6 +237,12 @@
   <data name="P5111" xml:space="preserve">
     <value>Transaktionsinformation Ogiltig bank tillhandahålls.</value>
   </data>
+  <data name="P5112" xml:space="preserve">
+    <value>Ogiltig informations betalkort.</value>
+  </data>
+  <data name="P5113" xml:space="preserve">
+    <value>Kunde inte hitta ett konto för att posta handelsfartyg avgift kostnader.</value>
+  </data>
   <data name="P5201" xml:space="preserve">
     <value>Ett lager justering posten kan inte innehålla debetpost (er).</value>
   </data>

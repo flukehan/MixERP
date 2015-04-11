@@ -1437,6 +1437,31 @@ DROP COLUMN IF EXISTS includes_tax;
 ALTER TABLE core.items
 DROP COLUMN IF EXISTS cost_price_includes_tax CASCADE;
 
+DO
+$$
+BEGIN
+    IF EXISTS
+    (
+        SELECT * FROM information_schema.check_constraints
+        WHERE constraint_name = 'payment_terms_check'
+    ) THEN
+        ALTER TABLE core.payment_terms
+        RENAME CONSTRAINT payment_terms_check TO payment_terms_chk;
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+
+ALTER TABLE core.ageing_slabs
+DROP CONSTRAINT IF EXISTS ageing_slabs_to_days_check;
+
+DROP VIEW IF EXISTS core.ageing_slab_scrud_view;
+
+ALTER TABLE core.ageing_slabs
+ALTER COLUMN to_days TYPE public.integer_strict2;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/audit/audit.get_office_id_by_login_id.sql --<--<--
 DROP FUNCTION IF EXISTS audit.get_office_id_by_login_id(bigint);
 
@@ -7535,6 +7560,18 @@ LEFT JOIN core.currencies
 ON core.accounts.currency_code = core.currencies.currency_code
 LEFT JOIN core.accounts parent_account
 ON parent_account.account_id=core.accounts.parent_account_id;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.ageing_slab_scrud_view.sql --<--<--
+CREATE VIEW core.ageing_slab_scrud_view
+AS
+SELECT 
+  ageing_slabs.ageing_slab_id, 
+  ageing_slabs.ageing_slab_name, 
+  ageing_slabs.from_days, 
+  ageing_slabs.to_days
+FROM 
+  core.ageing_slabs;
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.bank_account_scrud_view.sql --<--<--
 DROP VIEW IF EXISTS core.bank_account_scrud_view;

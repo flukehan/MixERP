@@ -237,6 +237,12 @@
   <data name="P5111" xml:space="preserve">
     <value>Impormasyon Di-wastong bank transaksyon na ibinigay.</value>
   </data>
+  <data name="P5112" xml:space="preserve">
+    <value>Di-wastong impormasyon ng card sa pagbabayad.</value>
+  </data>
+  <data name="P5113" xml:space="preserve">
+    <value>Hindi mahanap ang isang account upang mag-post ng gastos bayad sa merchant.</value>
+  </data>
   <data name="P5201" xml:space="preserve">
     <value>Ang isang adjustment sa stock entry ay hindi maaaring maglaman ng debit (mga) item.</value>
   </data>

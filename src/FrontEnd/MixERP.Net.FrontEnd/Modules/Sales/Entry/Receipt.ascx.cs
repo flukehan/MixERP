@@ -61,10 +61,10 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
             this.WhichBankLiteral.Text = Titles.WhichBank;
             this.PostedDateLiteral.Text = Titles.PostedDate;
 
-            this.PaymentCardLiteral.Text = "Select Payment Card";
-            this.MerchantFeeLiteral.Text = "Merchant Fee (In percent)";
-            this.CustomerPaysFeesLiteral.Text = "Customer Pays Fees";
-            this.YesLiteral.Text = "Yes";
+            this.PaymentCardLiteral.Text = Titles.SelectPaymentCard;
+            this.MerchantFeeLiteral.Text = Titles.MerchantFeeInPercent;
+            this.CustomerPaysFeesLiteral.Text = Titles.CustomerPaysFees;
+            this.YesLiteral.Text = Titles.Yes;
             
             this.InstrumentCodeLiteral.Text = Titles.InstrumentCode;
             this.BankTransactionCodeLiteral.Text = Titles.BankTransactionCode;

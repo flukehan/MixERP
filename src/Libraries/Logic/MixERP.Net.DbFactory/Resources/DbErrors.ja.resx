@@ -237,6 +237,12 @@
   <data name="P5111" xml:space="preserve">
     <value>無効な銀行取引情報を提供。</value>
   </data>
+  <data name="P5112" xml:space="preserve">
+    <value>無効な支払いカード情報。</value>
+  </data>
+  <data name="P5113" xml:space="preserve">
+    <value>加盟店手数料費を投稿するアカウントが見つかりませんでした。</value>
+  </data>
   <data name="P5201" xml:space="preserve">
     <value>ストック調整エントリは、デビット項目（複数可）を含めることはできません。</value>
   </data>

@@ -429,4 +429,16 @@
   <data name="WhichBank" xml:space="preserve">
     <value>どの銀行？</value>
   </data>
+  <data name="CustomerPaysFees" xml:space="preserve">
+    <value>お客様は料金を支払う</value>
+  </data>
+  <data name="MerchantFeeInPercent" xml:space="preserve">
+    <value>加盟店手数料（パーセント）</value>
+  </data>
+  <data name="SelectPaymentCard" xml:space="preserve">
+    <value>セレクト支払カード</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>はい</value>
+  </data>
 </root>

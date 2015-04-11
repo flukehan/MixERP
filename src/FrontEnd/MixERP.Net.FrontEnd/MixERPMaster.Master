@@ -52,7 +52,7 @@
                     </a>
                     <div id="Search">
                         <div class="ui icon  input" style="width: 100%;">
-                            <input type="text" id="SearchInput">
+                            <input type="text" id="SearchInput" autocomplete="off">
                             <i class="search link icon"></i>
                         </div>
                     </div>

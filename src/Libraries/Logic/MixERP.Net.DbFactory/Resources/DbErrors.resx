@@ -237,6 +237,12 @@
   <data name="P5111" xml:space="preserve">
     <value>Invalid bank transaction information provided.</value>
   </data>
+  <data name="P5112" xml:space="preserve">
+    <value>Invalid payment card information.</value>
+  </data>
+  <data name="P5113" xml:space="preserve">
+    <value>Could not find an account to post merchant fee expenses.</value>
+  </data>
   <data name="P5201" xml:space="preserve">
     <value>A stock adjustment entry can not contain debit item(s).</value>
   </data>

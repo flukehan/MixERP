@@ -237,6 +237,12 @@
   <data name="P5111" xml:space="preserve">
     <value>Ungültige Banktransaktionsinformationen zur Verfügung gestellt.</value>
   </data>
+  <data name="P5112" xml:space="preserve">
+    <value>Ungültige Kreditkarteninformationen.</value>
+  </data>
+  <data name="P5113" xml:space="preserve">
+    <value>Konnte nicht gefunden werden Sie ein Konto, um Kaufgebühr Ausgaben veröffentlichen.</value>
+  </data>
   <data name="P5201" xml:space="preserve">
     <value>Eine Aktie Einstellung Eintrag kann nicht Debit Position (en) enthalten.</value>
   </data>

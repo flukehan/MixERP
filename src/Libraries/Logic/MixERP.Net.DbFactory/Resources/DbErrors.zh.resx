@@ -237,6 +237,12 @@
   <data name="P5111" xml:space="preserve">
     <value>提供了无效的银行交易的信息。</value>
   </data>
+  <data name="P5112" xml:space="preserve">
+    <value>无效的支付卡信息。</value>
+  </data>
+  <data name="P5113" xml:space="preserve">
+    <value>找不到一个帐户后商家手续费支出。</value>
+  </data>
   <data name="P5201" xml:space="preserve">
     <value>A股进入调整，不能包含借记项目（S）。</value>
   </data>

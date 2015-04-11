@@ -237,6 +237,12 @@
   <data name="P5111" xml:space="preserve">
     <value>Informações sobre a transação bancária fornecido é inválido.</value>
   </data>
+  <data name="P5112" xml:space="preserve">
+    <value>Informações de cartão de pagamento inválido.</value>
+  </data>
+  <data name="P5113" xml:space="preserve">
+    <value>Não foi possível encontrar uma conta para postar despesas de taxa de comerciante.</value>
+  </data>
   <data name="P5201" xml:space="preserve">
     <value>Uma entrada de ajustamento não pode conter item (s) débito.</value>
   </data>

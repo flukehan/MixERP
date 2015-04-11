@@ -237,6 +237,12 @@
   <data name="P5111" xml:space="preserve">
     <value>Información de la transacción bancaria inválida proporcionada.</value>
   </data>
+  <data name="P5112" xml:space="preserve">
+    <value>Información de tarjeta de pago válida.</value>
+  </data>
+  <data name="P5113" xml:space="preserve">
+    <value>No se pudo encontrar una cuenta para publicar los gastos de honorarios de comerciante.</value>
+  </data>
   <data name="P5201" xml:space="preserve">
     <value>Una entrada de ajuste de valores no puede contener punto (s) de débito.</value>
   </data>

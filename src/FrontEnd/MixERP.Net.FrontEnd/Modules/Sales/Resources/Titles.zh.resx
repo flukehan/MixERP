@@ -429,4 +429,16 @@
   <data name="WhichBank" xml:space="preserve">
     <value>哪家银行？</value>
   </data>
+  <data name="CustomerPaysFees" xml:space="preserve">
+    <value>客户支付费用</value>
+  </data>
+  <data name="MerchantFeeInPercent" xml:space="preserve">
+    <value>商户手续费（百分比）</value>
+  </data>
+  <data name="SelectPaymentCard" xml:space="preserve">
+    <value>选择支付卡</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是的</value>
+  </data>
 </root>

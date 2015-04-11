@@ -421,6 +421,24 @@ namespace MixERP.Net.DbFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid payment card information..
+        /// </summary>
+        internal static string P5112 {
+            get {
+                return ResourceManager.GetString("P5112", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not find an account to post merchant fee expenses..
+        /// </summary>
+        internal static string P5113 {
+            get {
+                return ResourceManager.GetString("P5113", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A stock adjustment entry can not contain debit item(s)..
         /// </summary>
         internal static string P5201 {

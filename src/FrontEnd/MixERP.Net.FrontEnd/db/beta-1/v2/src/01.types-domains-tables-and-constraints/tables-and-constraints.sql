@@ -576,3 +576,27 @@ DROP COLUMN IF EXISTS includes_tax;
 
 ALTER TABLE core.items
 DROP COLUMN IF EXISTS cost_price_includes_tax CASCADE;
+
+DO
+$$
+BEGIN
+    IF EXISTS
+    (
+        SELECT * FROM information_schema.check_constraints
+        WHERE constraint_name = 'payment_terms_check'
+    ) THEN
+        ALTER TABLE core.payment_terms
+        RENAME CONSTRAINT payment_terms_check TO payment_terms_chk;
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+
+ALTER TABLE core.ageing_slabs
+DROP CONSTRAINT IF EXISTS ageing_slabs_to_days_check;
+
+DROP VIEW IF EXISTS core.ageing_slab_scrud_view;
+
+ALTER TABLE core.ageing_slabs
+ALTER COLUMN to_days TYPE public.integer_strict2;

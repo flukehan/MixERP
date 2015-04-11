@@ -429,4 +429,16 @@
   <data name="WhichBank" xml:space="preserve">
     <value>Какой банк?</value>
   </data>
+  <data name="CustomerPaysFees" xml:space="preserve">
+    <value>Заказчик оплачивает сборы</value>
+  </data>
+  <data name="MerchantFeeInPercent" xml:space="preserve">
+    <value>Торговец Стоимость (в процентах)</value>
+  </data>
+  <data name="SelectPaymentCard" xml:space="preserve">
+    <value>Выберите платежных карт</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Да</value>
+  </data>
 </root>

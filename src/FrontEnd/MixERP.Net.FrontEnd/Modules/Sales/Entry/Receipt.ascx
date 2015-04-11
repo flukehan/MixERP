@@ -89,10 +89,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 </label>
                 <input type="text" id="FinalDueAmountInputText" readonly="readonly" class="currency text-right" />
             </div>
-
-            <button type="button" id="SaveButton" class="ui small submit button green">
-                <asp:Literal runat="server" ID="SaveLiteral" />
-            </button>
         </div>
         <div class="four wide column">
             <div class="field">
@@ -198,6 +194,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 </label>
                 <textarea id="StatementReferenceTextArea" rows="3"></textarea>
             </div>
+            <button type="button" id="SaveButton" class="ui small submit button green">
+                <asp:Literal runat="server" ID="SaveLiteral" />
+            </button>
         </div>
     </div>
 </div>

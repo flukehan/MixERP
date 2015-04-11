@@ -429,4 +429,16 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="CustomerPaysFees" xml:space="preserve">
+    <value>Customer Pays Fees</value>
+  </data>
+  <data name="MerchantFeeInPercent" xml:space="preserve">
+    <value>Merchant Fee (In percent)</value>
+  </data>
+  <data name="SelectPaymentCard" xml:space="preserve">
+    <value>Select Payment Card</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
 </root>

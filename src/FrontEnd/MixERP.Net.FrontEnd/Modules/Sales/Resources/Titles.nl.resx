@@ -429,4 +429,16 @@
   <data name="WhichBank" xml:space="preserve">
     <value>Welke Bank?</value>
   </data>
+  <data name="CustomerPaysFees" xml:space="preserve">
+    <value>Klant betaalt Vergoedingen</value>
+  </data>
+  <data name="MerchantFeeInPercent" xml:space="preserve">
+    <value>Merchant Fee (in procenten)</value>
+  </data>
+  <data name="SelectPaymentCard" xml:space="preserve">
+    <value>Select Payment Card</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja Well</value>
+  </data>
 </root>

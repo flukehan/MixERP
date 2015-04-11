@@ -223,6 +223,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer Pays Fees.
+        /// </summary>
+        internal static string CustomerPaysFees {
+            get {
+                return ResourceManager.GetString("CustomerPaysFees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deliver To.
         /// </summary>
         internal static string DeliverTo {
@@ -435,6 +444,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string LateFees {
             get {
                 return ResourceManager.GetString("LateFees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merchant Fee (In percent).
+        /// </summary>
+        internal static string MerchantFeeInPercent {
+            get {
+                return ResourceManager.GetString("MerchantFeeInPercent", resourceCulture);
             }
         }
         
@@ -763,6 +781,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Payment Card.
+        /// </summary>
+        internal static string SelectPaymentCard {
+            get {
+                return ResourceManager.GetString("SelectPaymentCard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shipper.
         /// </summary>
         internal static string Shipper {
@@ -993,6 +1020,15 @@ namespace MixERP.Net.Core.Modules.Sales.Resources {
         internal static string WorldSalesStatistics {
             get {
                 return ResourceManager.GetString("WorldSalesStatistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        internal static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

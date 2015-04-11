@@ -237,6 +237,12 @@
   <data name="P5111" xml:space="preserve">
     <value>Informations de transaction bancaire fourni non valide.</value>
   </data>
+  <data name="P5112" xml:space="preserve">
+    <value>Informations de carte de paiement valide.</value>
+  </data>
+  <data name="P5113" xml:space="preserve">
+    <value>Impossible de trouver un compte pour publier dépenses de frais de marchand.</value>
+  </data>
   <data name="P5201" xml:space="preserve">
     <value>Une entrée d'ajustement des stocks ne peut pas contenir article (s) de débit.</value>
   </data>

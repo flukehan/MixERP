@@ -112,15 +112,6 @@ namespace MixERP.Net.Core.Modules.Sales.Entry {
         protected global::System.Web.UI.WebControls.Literal FinalDueAmountInBaseCurrencyLiteral;
         
         /// <summary>
-        /// SaveLiteral control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal SaveLiteral;
-        
-        /// <summary>
         /// ReceiptTypeLiteral control.
         /// </summary>
         /// <remarks>
@@ -245,5 +236,14 @@ namespace MixERP.Net.Core.Modules.Sales.Entry {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal StatementReferenceLiteral;
+        
+        /// <summary>
+        /// SaveLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal SaveLiteral;
     }
 }

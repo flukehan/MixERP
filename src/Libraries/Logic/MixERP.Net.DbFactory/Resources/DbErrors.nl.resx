@@ -237,6 +237,12 @@
   <data name="P5111" xml:space="preserve">
     <value>Ongeldige bank transactie-informatie verstrekt.</value>
   </data>
+  <data name="P5112" xml:space="preserve">
+    <value>Ongeldige betaalkaart informatie.</value>
+  </data>
+  <data name="P5113" xml:space="preserve">
+    <value>Kon een account aan handelaar vergoeding kosten te posten niet vinden.</value>
+  </data>
   <data name="P5201" xml:space="preserve">
     <value>Een voorraad aanpassing item kan debet artikel (en) bevatten.</value>
   </data>
