@@ -49,10 +49,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
     $(function () {
         //EOD Notices from PostgreSQL Server
-        $.connection.dayOperationHub.client.getNotification = function (msg) {
+        $.connection.dayOperationHub.client.getNotification = function (msg, condition) {
             AddItem(msg);
 
-            if (msg.substr(0, 5).toLowerCase() === "error") {
+            if (condition.toLowerCase() === "error") {
                 receivingData = false;
 
                 $(".blue").removeClass("blue").addClass("red");

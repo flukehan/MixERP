@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNet.SignalR;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Events;
 using MixERP.Net.Core.Modules.Finance.Resources;
 
 namespace MixERP.Net.Core.Modules.Finance.Hubs
@@ -28,9 +29,9 @@ namespace MixERP.Net.Core.Modules.Finance.Hubs
             operation.Perform(loginId);
         }
 
-        private void EOD_NotificationReceived(object sender, Common.Events.MixERPPGEventArgs e)
-        {
-            this.Clients.Caller.getNotification(e.AdditionalInformation);
+        private void EOD_NotificationReceived(object sender, MixERPPGEventArgs e)
+        {            
+            this.Clients.Caller.getNotification(e.AdditionalInformation, e.Condition);
         }
     }
 }

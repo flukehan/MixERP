@@ -37,7 +37,7 @@ BEGIN
         USING ERRCODE='P3007';
     ELSE    
         IF(this.completed OR this.completed_on IS NOT NULL) THEN
-            RAISE WARNING 'End of day operation was already performed.'
+            RAISE EXCEPTION 'End of day operation was already performed.'
             USING ERRCODE='P5102';
             _is_error        := true;
         END IF;
@@ -49,7 +49,7 @@ BEGIN
         WHERE value_date < _value_date
         AND verification_status_id = 0
     ) THEN
-        RAISE WARNING 'Past dated transactions in verification queue.'
+        RAISE EXCEPTION 'Past dated transactions in verification queue.'
         USING ERRCODE='P5103';
         _is_error        := true;
     END IF;
@@ -60,7 +60,7 @@ BEGIN
         WHERE value_date = _value_date
         AND verification_status_id = 0
     ) THEN
-        RAISE WARNING 'Please verify transactions before performing end of day operation.'
+        RAISE EXCEPTION 'Please verify transactions before performing end of day operation.'
         USING ERRCODE='P5104';
         _is_error        := true;
     END IF;

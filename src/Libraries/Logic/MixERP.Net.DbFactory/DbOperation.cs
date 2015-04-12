@@ -321,13 +321,20 @@ namespace MixERP.Net.DbFactory
                             }
                             catch (NpgsqlException ex)
                             {
+                                string errorMessage = ex.Message;
+
+                                if (ex.Code.StartsWith("P"))
+                                {
+                                    errorMessage = GetDBErrorResource(ex);
+                                }
+
                                 EventHandler<DbNotificationArgs> listen = this.Listen;
 
                                 if (listen != null)
                                 {
                                     DbNotificationArgs args = new DbNotificationArgs
                                     {
-                                        Message = ex.Message
+                                        Message = errorMessage
                                     };
 
                                     listen(this, args);
@@ -353,6 +360,7 @@ namespace MixERP.Net.DbFactory
                 throw;
             }
         }
+
 
         private static Collection<string> GetCommandTextParameterCollection(string commandText)
         {

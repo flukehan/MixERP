@@ -19,8 +19,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Data;
+using System.Linq;
+using System.Reflection;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Events;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.DbFactory;
 using Npgsql;
 
@@ -104,25 +107,26 @@ namespace MixERP.Net.Core.Modules.Finance.Data
 
         private void Listen(object sender, DbNotificationArgs e)
         {
-            var notificationReceived = this.NotificationReceived;
+            EventHandler<MixERPPGEventArgs> notificationReceived = this.NotificationReceived;
 
             if (notificationReceived != null)
             {
-                if (e.Notice == null && !string.IsNullOrWhiteSpace(e.Message))
-                {
-                    MixERPPGEventArgs args = new MixERPPGEventArgs(e.Message, "error", 0);
-                    notificationReceived(this, args);
-                    return;
-                }
-
                 if (e.Notice != null && e.Notice.Severity.ToUpperInvariant().Equals("INFO"))
                 {
                     MixERPPGEventArgs args = new MixERPPGEventArgs(e.Notice.Message, e.Notice.Detail, 0);
 
                     notificationReceived(this, args);
+                    return;
+                }
+
+                if (!string.IsNullOrWhiteSpace(e.Message))
+                {
+                    MixERPPGEventArgs args = new MixERPPGEventArgs(e.Message, "error", 0);
+                    notificationReceived(this, args);
                 }
             }
         }
+
     }
 
     public class EODStatus
