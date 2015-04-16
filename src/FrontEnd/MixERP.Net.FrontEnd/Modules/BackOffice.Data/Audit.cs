@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
     {
         public static DbGetOfficeInformationModelResult GetOfficeInformationModel(int userId)
         {
-            return Factory.Get<DbGetOfficeInformationModelResult>("SELECT * FROM audit.get_office_information_model(@0);", userId).FirstOrDefault();
+            return Factory.Get<DbGetOfficeInformationModelResult>("SELECT * FROM audit.get_office_information_model(@0::integer);", userId).FirstOrDefault();
         }
     }
 }
