@@ -885,4 +885,7 @@
   <data name="income_tax_rate" xml:space="preserve">
     <value>Rate ng Buwis sa Kita</value>
   </data>
+  <data name="sales_tax_exempts_price_to_chk" xml:space="preserve">
+    <value>Ang field na "Presyo Mula sa 'ay dapat na mas mababa sa" Presyo Upang. "</value>
+  </data>
 </root>
