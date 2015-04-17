@@ -1816,6 +1816,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The field &quot;PriceFrom&quot; must be less than &quot;PriceTo&quot;..
+        /// </summary>
+        internal static string sales_tax_exempts_price_to_chk {
+            get {
+                return ResourceManager.GetString("sales_tax_exempts_price_to_chk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sales Tax Id.
         /// </summary>
         internal static string sales_tax_id {
