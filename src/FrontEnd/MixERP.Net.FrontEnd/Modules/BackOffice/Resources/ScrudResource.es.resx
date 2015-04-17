@@ -885,4 +885,7 @@
   <data name="income_tax_rate" xml:space="preserve">
     <value>Ingresos Tasa de Impuesto</value>
   </data>
+  <data name="sales_tax_exempts_price_to_chk" xml:space="preserve">
+    <value>El campo "Desde precio" debe ser inferior "a precio".</value>
+  </data>
 </root>
