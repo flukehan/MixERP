@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS transactions.post_sales
+﻿DROP FUNCTION IF EXISTS transactions.post_sales
 (
     _book_name                              national character varying(12),
     _office_id                              integer,
@@ -380,7 +380,7 @@ BEGIN
     PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
 
     IF(NOT _is_credit) THEN
-        PERFORM transactions.post_receipt(_user_id, _office_id, _login_id, _party_code, _default_currency_code, _receivable, 1, 1, _reference_number, _statement_reference, _cost_center_id, _cash_repository_id, NULL, NULL, NULL, NULL, _transaction_master_id);
+        PERFORM transactions.post_receipt(_user_id, _office_id, _login_id, _party_code, _default_currency_code, _receivable, 1, 1, _reference_number, _statement_reference, _cost_center_id, _cash_repository_id, NULL, NULL, NULL, NULL, NULL, _transaction_master_id);
     ELSE
         PERFORM transactions.settle_party_due(_party_id, _office_id);
     END IF;
