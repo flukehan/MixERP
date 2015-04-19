@@ -885,4 +885,7 @@
   <data name="income_tax_rate" xml:space="preserve">
     <value>Penghasilan Tarif Pajak</value>
   </data>
+  <data name="sales_tax_exempts_price_to_chk" xml:space="preserve">
+    <value>Lapangan "Harga Dari 'harus kurang dari" Harga Untuk. "</value>
+  </data>
 </root>

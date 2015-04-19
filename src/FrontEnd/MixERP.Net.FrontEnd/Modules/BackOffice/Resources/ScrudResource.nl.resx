@@ -885,4 +885,7 @@
   <data name="income_tax_rate" xml:space="preserve">
     <value>Income Tax Rate</value>
   </data>
+  <data name="sales_tax_exempts_price_to_chk" xml:space="preserve">
+    <value>Het veld Prijs tot "Prijs Van 'moet kleiner zijn dan". "</value>
+  </data>
 </root>

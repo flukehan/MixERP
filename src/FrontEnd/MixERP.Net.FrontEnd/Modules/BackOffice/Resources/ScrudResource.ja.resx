@@ -885,4 +885,7 @@
   <data name="income_tax_rate" xml:space="preserve">
     <value>所得税率</value>
   </data>
+  <data name="sales_tax_exempts_price_to_chk" xml:space="preserve">
+    <value>フィールド価格へ」」からの価格未満でなければなりません"。"</value>
+  </data>
 </root>
