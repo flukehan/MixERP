@@ -48,7 +48,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 
         public static decimal GetItemCostPrice(string itemCode, string partyCode, int unitId)
         {
-            return Factory.Scalar<decimal>("SELECT core.get_item_cost_price(core.get_item_id_by_item_code(@0), core.get_party_id_by_party_code(@1), @2);", itemCode, partyCode, unitId);
+            return Factory.Scalar<decimal>("SELECT core.get_item_cost_price(core.get_item_id_by_item_code(@0)::integer, core.get_party_id_by_party_code(@1)::bigint, @2::integer);", itemCode, partyCode, unitId);
         }
 
         public static IEnumerable<Item> GetItems()
@@ -58,7 +58,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 
         public static decimal GetItemSellingPrice(string itemCode, string partyCode, int priceTypeId, int unitId)
         {
-            return Factory.Scalar<decimal>("SELECT core.get_item_selling_price(core.get_item_id_by_item_code(@0), core.get_party_type_id_by_party_code(@1), @2, @3);", itemCode, partyCode, priceTypeId, unitId);
+            return Factory.Scalar<decimal>("SELECT core.get_item_selling_price(core.get_item_id_by_item_code(@0)::integer, core.get_party_type_id_by_party_code(@1)::integer, @2::integer, @3::integer);", itemCode, partyCode, priceTypeId, unitId);
         }
 
         public static IEnumerable<Item> GetStockItems()
