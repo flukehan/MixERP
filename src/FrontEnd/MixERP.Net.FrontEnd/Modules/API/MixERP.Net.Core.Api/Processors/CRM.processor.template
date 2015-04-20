@@ -587,7 +587,7 @@ class PostGreSqlSchemaReader : SchemaReader
             WHERE (table_type='BASE TABLE')
             AND table_schema = @schemaname;";
 
-    const string COLUMN_SQL=@"SELECT * FROM public.poco_get_table_function_definition(@schemaname, @tableName);";
+    const string COLUMN_SQL=@"SELECT * FROM public.poco_get_table_function_definition(@schemaname::text, @tableName::text);";
     
 }
 

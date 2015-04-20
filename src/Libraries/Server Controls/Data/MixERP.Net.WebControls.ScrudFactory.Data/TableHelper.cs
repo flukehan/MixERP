@@ -69,7 +69,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
         public static IEnumerable<DbPocoGetTableFunctionDefinitionResult> GetColumns(string schema, string table)
         {
-            const string sql = "SELECT * FROM public.poco_get_table_function_definition(@0, @1)";
+            const string sql = "SELECT * FROM public.poco_get_table_function_definition(@0::text, @1::text)";
             return Factory.Get<DbPocoGetTableFunctionDefinitionResult>(sql, schema, table);
         }
     }

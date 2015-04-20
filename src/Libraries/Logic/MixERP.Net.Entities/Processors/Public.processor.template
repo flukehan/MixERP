@@ -594,7 +594,7 @@ class PostGreSqlSchemaReader : SchemaReader
             WHERE relkind='c'
             AND nspname=@schemaname;";
 
-    const string COLUMN_SQL=@"SELECT * FROM public.poco_get_table_function_definition(@schemaname, @tableName);";
+    const string COLUMN_SQL=@"SELECT * FROM public.poco_get_table_function_definition(@schemaname::text, @tableName::text);";
     
 }
 
