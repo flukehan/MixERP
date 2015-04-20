@@ -23,7 +23,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
 
-<script src="/Scripts/Datamaps/d3.min.js"></script>
+<script src="/Scripts/d3.min.js"></script>
 <script src="/Scripts/Datamaps/topojson.js"></script>
 <script src="/Scripts/Datamaps/datamaps.all.min.js"></script>
 <script src="/Scripts/mixerp/utitlities/country-codes.js"></script>
