@@ -12,7 +12,7 @@ namespace MixERP.Net.WebControls.Common.Data
     {
         public static ApplicationDateModel GetApplicationDates(int officeId)
         {
-            const string sql = "SELECT @OfficeId AS office_id, core.get_date(@OfficeId) AS today, core.get_month_start_date(@OfficeId) AS month_start_date,core.get_month_end_date(@OfficeId) AS month_end_date, core.get_quarter_start_date(@OfficeId) AS quarter_start_date, core.get_quarter_end_date(@OfficeId) AS quarter_end_date, core.get_fiscal_half_start_date(@OfficeId) AS fiscal_half_start_date, core.get_fiscal_half_end_date(@OfficeId) AS fiscal_half_end_date, core.get_fiscal_year_start_date(@OfficeId) AS fiscal_year_start_date, core.get_fiscal_year_end_date(@OfficeId) AS fiscal_year_end_date;";
+            const string sql = "SELECT @OfficeId AS office_id, core.get_date(@OfficeId::integer) AS today, core.get_month_start_date(@OfficeId::integer) AS month_start_date,core.get_month_end_date(@OfficeId::integer) AS month_end_date, core.get_quarter_start_date(@OfficeId::integer) AS quarter_start_date, core.get_quarter_end_date(@OfficeId::integer) AS quarter_end_date, core.get_fiscal_half_start_date(@OfficeId::integer) AS fiscal_half_start_date, core.get_fiscal_half_end_date(@OfficeId::integer) AS fiscal_half_end_date, core.get_fiscal_year_start_date(@OfficeId::integer) AS fiscal_year_start_date, core.get_fiscal_year_end_date(@OfficeId::integer) AS fiscal_year_end_date;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
@@ -53,7 +53,7 @@ namespace MixERP.Net.WebControls.Common.Data
 
         public static DateTime GetDate(int officeId)
         {
-            const string sql = "SELECT core.get_date(@OfficeId);";
+            const string sql = "SELECT core.get_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
@@ -63,7 +63,7 @@ namespace MixERP.Net.WebControls.Common.Data
 
         public static DateTime GetFiscalHalfEndDate(int officeId)
         {
-            const string sql = "SELECT core.get_fiscal_half_end_date(@OfficeId);";
+            const string sql = "SELECT core.get_fiscal_half_end_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
@@ -73,7 +73,7 @@ namespace MixERP.Net.WebControls.Common.Data
 
         public static DateTime GetFiscalHalfStartDate(int officeId)
         {
-            const string sql = "SELECT core.get_fiscal_half_start_date(@OfficeId);";
+            const string sql = "SELECT core.get_fiscal_half_start_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
@@ -83,7 +83,7 @@ namespace MixERP.Net.WebControls.Common.Data
 
         public static DateTime GetFiscalYearEndDate(int officeId)
         {
-            const string sql = "SELECT core.get_fiscal_year_end_date(@OfficeId);";
+            const string sql = "SELECT core.get_fiscal_year_end_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
@@ -93,7 +93,7 @@ namespace MixERP.Net.WebControls.Common.Data
 
         public static DateTime GetFiscalYearStartDate(int officeId)
         {
-            const string sql = "SELECT core.get_fiscal_year_start_date(@OfficeId);";
+            const string sql = "SELECT core.get_fiscal_year_start_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
@@ -103,7 +103,7 @@ namespace MixERP.Net.WebControls.Common.Data
 
         public static DateTime GetMonthEndtDate(int officeId)
         {
-            const string sql = "SELECT core.get_month_end_date(@OfficeId);";
+            const string sql = "SELECT core.get_month_end_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
@@ -113,7 +113,7 @@ namespace MixERP.Net.WebControls.Common.Data
 
         public static DateTime GetMonthStartDate(int officeId)
         {
-            const string sql = "SELECT core.get_month_start_date(@OfficeId);";
+            const string sql = "SELECT core.get_month_start_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
@@ -123,7 +123,7 @@ namespace MixERP.Net.WebControls.Common.Data
 
         public static DateTime GetQuarterEndDate(int officeId)
         {
-            const string sql = "SELECT core.get_quarter_end_date(@OfficeId);";
+            const string sql = "SELECT core.get_quarter_end_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
@@ -133,7 +133,7 @@ namespace MixERP.Net.WebControls.Common.Data
 
         public static DateTime GetQuarterStartDate(int officeId)
         {
-            const string sql = "SELECT core.get_quarter_start_date(@OfficeId);";
+            const string sql = "SELECT core.get_quarter_start_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
