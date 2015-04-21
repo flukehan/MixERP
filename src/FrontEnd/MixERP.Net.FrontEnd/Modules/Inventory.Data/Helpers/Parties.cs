@@ -62,7 +62,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 
         private static DbGetPartyTransactionSummaryResult GetPartyDue(int officeId, string partyCode)
         {
-            return Factory.Get<DbGetPartyTransactionSummaryResult>("SELECT * FROM transactions.get_party_transaction_summary(@0, core.get_party_id_by_party_code(@1));", officeId, partyCode).FirstOrDefault();
+            return Factory.Get<DbGetPartyTransactionSummaryResult>("SELECT * FROM transactions.get_party_transaction_summary(@0::integer, core.get_party_id_by_party_code(@1)::bigint);", officeId, partyCode).FirstOrDefault();
         }
     }
 }

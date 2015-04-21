@@ -34,7 +34,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Transactions
         public static long Add(int officeId, int userId, long loginId, DateTime valueDate, string referenceNumber, string statementReference, Collection<StockAdjustmentDetail> details)
         {
             string detailParameter = ParameterHelper.CreateStockTransferModelParameter(details);
-            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_stock_adjustment(@OfficeId, @UserId, @LoginId, @ValueDate, @ReferenceNumber, @StatementReference, ARRAY[{0}]);", detailParameter);
+            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_stock_adjustment(@OfficeId::integer, @UserId::integer, @LoginId::bigint, @ValueDate::date, @ReferenceNumber::national character varying(24), @StatementReference::text, ARRAY[{0}]);", detailParameter);
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {

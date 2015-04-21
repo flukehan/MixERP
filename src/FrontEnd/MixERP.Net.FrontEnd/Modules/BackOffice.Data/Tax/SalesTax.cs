@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
         /// <returns>The sales tax.</returns>
         public static decimal GetSalesTax(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, decimal price, int quantity, decimal discount, decimal shippingCharge, int salesTaxId)
         {
-            const string sql = "SELECT COALESCE(SUM(tax), 0) FROM transactions.get_sales_tax(@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10);";
+            const string sql = "SELECT COALESCE(SUM(tax), 0) FROM transactions.get_sales_tax(@0::national character varying(12),@1::integer,@2::national character varying(12),@3::national character varying(12),@4::integer,@5::national character varying(12),@6::public.money_strict2,@7::public.integer_strict2,@8::public.money_strict2,@9::public.money_strict2,@10::integer);";
             return Factory.Scalar<decimal>(sql, tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId);
         }
 
@@ -90,7 +90,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
 
         public static int GetSalesTaxId(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, int unitId, decimal price)
         {
-            const string sql = "SELECT transactions.get_sales_tax_id(@0, @1, @2, @3, @4, @5, @6, @7);";
+            const string sql = "SELECT transactions.get_sales_tax_id(@0::national character varying(12), @1::integer, @2::national character varying(12), @3::national character varying(12), @4::integer, @5::national character varying(12), @6::integer, @7::public.money_strict);";
             return Factory.Scalar<int>(sql, tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price);
         }
     }

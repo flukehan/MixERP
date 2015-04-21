@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Reports
     {
         public static IEnumerable<DbGetSalesByOfficesResult> GetSalesByOffice(int officeId)
         {
-            return Factory.Get<DbGetSalesByOfficesResult>("SELECT * FROM transactions.get_sales_by_offices(@0, 1000)", officeId);
+            return Factory.Get<DbGetSalesByOfficesResult>("SELECT * FROM transactions.get_sales_by_offices(@0::integer, 1000)", officeId);
         }
 
         public static IEnumerable<DbGetSalesByOfficesResult> GetSalesByOffice()

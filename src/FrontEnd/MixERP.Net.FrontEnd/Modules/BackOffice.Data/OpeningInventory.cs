@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
     {
         public static bool Exists(int officeId)
         {
-            const string sql = "SELECT * FROM transactions.opening_inventory_exists(@OfficeId);";
+            const string sql = "SELECT * FROM transactions.opening_inventory_exists(@OfficeId::integer);";
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {

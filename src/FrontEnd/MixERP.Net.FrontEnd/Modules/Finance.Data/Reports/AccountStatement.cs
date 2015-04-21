@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
                 return null;
             }
 
-            const string sql = "SELECT * FROM transactions.get_account_statement(@0::date, @1::date, @2, core.get_account_id_by_account_number(@3), @4) ORDER BY id;";
+            const string sql = "SELECT * FROM transactions.get_account_statement(@0::date, @1::date, @2::integer, core.get_account_id_by_account_number(@3)::bigint, @4::integer) ORDER BY id;";
             return Factory.Get<DbGetAccountStatementResult>(sql, from, to, userId, accountNumber, officeId);
         }
     }

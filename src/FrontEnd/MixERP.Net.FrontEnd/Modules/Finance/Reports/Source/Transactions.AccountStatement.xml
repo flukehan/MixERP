@@ -89,7 +89,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         account_number,
         account
         FROM transactions.get_account_statement
-        (@From::date, @To::date, @UserId, core.get_account_id_by_account_number(@AccountNumber), @OfficeId)
+        (@From::date, @To::date, @UserId::integer, core.get_account_id_by_account_number(@AccountNumber)::bigint, @OfficeId::integer)
         ORDER BY id;
       </Query>
       <Parameters>

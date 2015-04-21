@@ -19,11 +19,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Data;
-using System.Linq;
-using System.Reflection;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Events;
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.DbFactory;
 using Npgsql;
 
@@ -35,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data
 
         public static EODStatus GetStatus(int officeId)
         {
-            const string sql = "SELECT transactions.get_value_date(@OfficeId) AS value_date, transactions.is_eod_initialized(@OfficeId, transactions.get_value_date(@OfficeId)) AS eod_initialized;";
+            const string sql = "SELECT transactions.get_value_date(@OfficeId::integer) AS value_date, transactions.is_eod_initialized(@OfficeId::integer, transactions.get_value_date(@OfficeId::integer)::date) AS eod_initialized;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
@@ -57,7 +54,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data
 
         public static DateTime GetValueDate(int officeId)
         {
-            const string sql = "SELECT transactions.get_value_date(@OfficeId);";
+            const string sql = "SELECT transactions.get_value_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
@@ -68,7 +65,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data
 
         public static void Initialize(int userId, int officeId)
         {
-            const string sql = "SELECT * FROM transactions.initialize_eod_operation(@UserId, @OfficeId, transactions.get_value_date(@OfficeId));";
+            const string sql = "SELECT * FROM transactions.initialize_eod_operation(@UserId::integer, @OfficeId::integer, transactions.get_value_date(@OfficeId::integer)::date);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@UserId", userId);
@@ -80,7 +77,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data
 
         public static void Initialize(int userId, int officeId, DateTime valueDate)
         {
-            const string sql = "SELECT * FROM transactions.initialize_eod_operation(@UserId, @OfficeId, @ValueDate);";
+            const string sql = "SELECT * FROM transactions.initialize_eod_operation(@UserId::integer, @OfficeId::integer, @ValueDate::date);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@UserId", userId);
@@ -93,7 +90,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data
 
         public void Perform(long loginId)
         {
-            const string sql = "SELECT * FROM transactions.perform_eod_operation(@LoginId);";
+            const string sql = "SELECT * FROM transactions.perform_eod_operation(@LoginId::bigint);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@LoginId", loginId);
@@ -107,26 +104,25 @@ namespace MixERP.Net.Core.Modules.Finance.Data
 
         private void Listen(object sender, DbNotificationArgs e)
         {
-            EventHandler<MixERPPGEventArgs> notificationReceived = this.NotificationReceived;
+            var notificationReceived = this.NotificationReceived;
 
             if (notificationReceived != null)
             {
+                if (e.Notice == null && !string.IsNullOrWhiteSpace(e.Message))
+                {
+                    MixERPPGEventArgs args = new MixERPPGEventArgs(e.Message, "error", 0);
+                    notificationReceived(this, args);
+                    return;
+                }
+
                 if (e.Notice != null && e.Notice.Severity.ToUpperInvariant().Equals("INFO"))
                 {
                     MixERPPGEventArgs args = new MixERPPGEventArgs(e.Notice.Message, e.Notice.Detail, 0);
 
                     notificationReceived(this, args);
-                    return;
-                }
-
-                if (!string.IsNullOrWhiteSpace(e.Message))
-                {
-                    MixERPPGEventArgs args = new MixERPPGEventArgs(e.Message, "error", 0);
-                    notificationReceived(this, args);
                 }
             }
         }
-
     }
 
     public class EODStatus

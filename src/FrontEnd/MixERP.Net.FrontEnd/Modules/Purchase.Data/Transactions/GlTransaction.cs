@@ -54,7 +54,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
             string detail = StockMasterDetailHelper.CreateStockMasterDetailParameter(details);
             string attachment = AttachmentHelper.CreateAttachmentModelParameter(attachments);
 
-            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_purchase(@BookName, @OfficeId, @UserId, @LoginId, @ValueDate, @CostCenterId, @ReferenceNumber, @StatementReference, @IsCredit, @PartyCode, @PriceTypeId, @ShipperId, @StoreId, ARRAY[{0}]::bigint[], ARRAY[{1}], ARRAY[{2}])", tranIds, detail, attachment);
+            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_purchase(@BookName::national character varying(12), @OfficeId::integer, @UserId::integer, @LoginId::bigint, @ValueDate::date, @CostCenterId::integer, @ReferenceNumber::national character varying(12), @StatementReference::text, @IsCredit::boolean, @PartyCode::national character varying(12), @PriceTypeId::integer, @ShipperId::integer, @StoreId::integer, ARRAY[{0}]::bigint[], ARRAY[{1}], ARRAY[{2}])", tranIds, detail, attachment);
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@BookName", book);
