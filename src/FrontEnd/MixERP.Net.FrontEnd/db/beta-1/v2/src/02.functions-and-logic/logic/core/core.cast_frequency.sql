@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS core.cast_frequency(text) CASCADE;
+DROP FUNCTION IF EXISTS core.cast_frequency(_frequency_code text) CASCADE;
 
-CREATE FUNCTION core.cast_frequency(text)
+CREATE FUNCTION core.cast_frequency(_frequency_code text)
 RETURNS integer
 IMMUTABLE
 AS

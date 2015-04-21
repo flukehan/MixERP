@@ -1,8 +1,6 @@
 DROP FUNCTION IF EXISTS office.get_department_id_by_code(text);
 
-DROP FUNCTION IF EXISTS office.get_department_id_by_department_code(text);
-
-CREATE FUNCTION office.get_department_id_by_department_code(_department_code text)
+CREATE FUNCTION office.get_department_id_by_code(_department_code text)
 RETURNS integer
 STABLE
 AS

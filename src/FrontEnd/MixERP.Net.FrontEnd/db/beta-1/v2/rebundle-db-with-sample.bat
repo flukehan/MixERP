@@ -4,3 +4,4 @@
 
 cscript merge-files.vbs mixerp-incremental-sample.sql ..\v1\mixerp-sample.sql mixerp.sql
 del mixerp.sql
+pause

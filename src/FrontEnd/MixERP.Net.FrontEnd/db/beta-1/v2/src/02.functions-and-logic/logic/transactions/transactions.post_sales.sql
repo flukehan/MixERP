@@ -175,7 +175,8 @@ BEGIN
         base_unit_id        integer,
         store_id            integer,
         total_sales         numeric,
-        in_stock            numeric
+        in_stock            numeric,
+        maintain_stock      boolean
     ) ON COMMIT DROP;
 
     INSERT INTO item_quantities_temp(item_id, base_unit_id, store_id, total_sales)
@@ -184,12 +185,20 @@ BEGIN
     GROUP BY item_id, base_unit_id, store_id;
 
     UPDATE item_quantities_temp
-    SET in_stock = core.count_item_in_stock(item_quantities_temp.item_id, item_quantities_temp.base_unit_id, item_quantities_temp.store_id);    
+    SET maintain_stock = core.items.maintain_stock
+    FROM core.items
+    WHERE item_quantities_temp.item_id = core.items.item_id;
+    
+    UPDATE item_quantities_temp
+    SET in_stock = core.count_item_in_stock(item_quantities_temp.item_id, item_quantities_temp.base_unit_id, item_quantities_temp.store_id)
+    WHERE maintain_stock;
+
 
     IF EXISTS
     (
         SELECT 0 FROM item_quantities_temp
         WHERE total_sales > in_stock
+        AND maintain_stock
         LIMIT 1
     ) THEN
         RAISE EXCEPTION 'Insufficient item quantity'

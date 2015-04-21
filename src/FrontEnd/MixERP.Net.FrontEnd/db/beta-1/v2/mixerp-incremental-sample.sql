@@ -35234,6 +35234,57 @@ $$
 LANGUAGE plpgsql;
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/core/core.get_attachment_lookup_info.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_attachment_lookup_info(national character varying(50));
+
+CREATE FUNCTION core.get_attachment_lookup_info(_book national character varying(50))
+RETURNS text
+STABLE
+AS
+$$
+BEGIN
+    RETURN resource || resource_key
+    FROM core.attachment_lookup
+    WHERE book=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/core/core.get_country_id_by_country_code.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_country_id_by_country_code(national character varying(12));
+
+CREATE FUNCTION core.get_country_id_by_country_code(_country_code national character varying(12))
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN country_id
+    FROM core.countries
+    WHERE country_code = $1;
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/core/core.get_county_id_by_county_code.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_county_id_by_county_code(national character varying(12));
+
+CREATE FUNCTION core.get_county_id_by_county_code(_county_code national character varying(12))
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN county_id
+    FROM core.counties
+    WHERE county_code = $1;
+END
+$$
+LANGUAGE plpgsql;
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/core/core.get_frequency_setup_end_date_frequency_setup_id.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_frequency_setup_end_date_frequency_setup_id(_frequency_setup_id integer);
 DROP FUNCTION IF EXISTS core.get_frequency_setup_end_date_by_frequency_setup_id(_frequency_setup_id integer);
@@ -35306,7 +35357,7 @@ LANGUAGE plpgsql;
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/core/core.get_menu_id_by_menu_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_menu_id_by_menu_code(national character varying(250));
 
-CREATE FUNCTION core.get_menu_id_by_menu_code(national character varying(250))
+CREATE FUNCTION core.get_menu_id_by_menu_code(_menu_code national character varying(250))
 RETURNS integer
 STABLE
 AS
@@ -35375,10 +35426,49 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.cast_frequency.sql --<--<--
-DROP FUNCTION IF EXISTS core.cast_frequency(text) CASCADE;
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/core/core.get_state_id_by_state_code.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_state_id_by_state_code(national character varying(12));
 
-CREATE FUNCTION core.cast_frequency(text)
+CREATE FUNCTION core.get_state_id_by_state_code(_state_code national character varying(12))
+RETURNS integer
+AS
+$$
+BEGIN
+    RETURN
+        state_id
+    FROM
+        core.states
+    WHERE
+        state_code = $1;
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.append_if_not_null.sql --<--<--
+DROP FUNCTION IF EXISTS core.append_if_not_null(text, text);
+
+CREATE FUNCTION core.append_if_not_null(_source text, _to_append text)
+RETURNS text
+IMMUTABLE
+AS
+$$
+BEGIN
+	IF($1 IS NULL) THEN
+	    RETURN '';
+	END IF;
+
+	RETURN $1 || $2;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.cast_frequency.sql --<--<--
+DROP FUNCTION IF EXISTS core.cast_frequency(_frequency_code text) CASCADE;
+
+CREATE FUNCTION core.cast_frequency(_frequency_code text)
 RETURNS integer
 IMMUTABLE
 AS
@@ -35485,6 +35575,109 @@ $$
 LANGUAGE plpgsql;
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_account_id_by_account_number.sql --<--<--
+CREATE OR REPLACE FUNCTION core.get_account_id_by_account_number(_account_number text)
+RETURNS bigint
+STABLE
+AS
+$$
+BEGIN
+    RETURN
+		account_id
+    FROM core.accounts
+    WHERE account_number=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_account_id_by_shipper_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_account_id_by_shipper_id(integer);
+
+CREATE FUNCTION core.get_account_id_by_shipper_id(_shipper_id integer)
+RETURNS bigint
+STABLE
+AS
+$$
+BEGIN
+    RETURN
+        core.shippers.account_id
+    FROM
+        core.shippers
+    WHERE
+        core.shippers.shipper_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_account_master_id_by_account_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_account_master_id_by_account_id(bigint) CASCADE;
+
+CREATE FUNCTION core.get_account_master_id_by_account_id(_account_id bigint)
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN core.accounts.account_master_id
+    FROM core.accounts
+    WHERE core.accounts.account_id= $1;
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_account_master_id_by_account_master_code.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_account_master_id_by_account_master_code(text);
+
+CREATE FUNCTION core.get_account_master_id_by_account_master_code(_account_master_code text)
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN core.account_masters.account_master_id
+    FROM core.account_masters
+    WHERE core.account_masters.account_master_code = $1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_account_name_by_account_id.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_account_name_by_account_id(bigint);
+
+CREATE FUNCTION core.get_account_name_by_account_id(_account_id bigint)
+RETURNS text
+STABLE
+AS
+$$
+BEGIN
+    RETURN account_name
+    FROM core.accounts
+    WHERE account_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_field.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_field(this public.hstore, _column_name text);
+
+CREATE FUNCTION core.get_field(_hstore public.hstore, _column_name text)
+RETURNS text
+AS
+$$
+   DECLARE _field_value text;
+BEGIN
+    _field_value := _hstore->_column_name;
+    RETURN _field_value;
+END
+$$
+LANGUAGE plpgsql;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_frequency_end_date.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_frequency_end_date(_frequency_id integer, _value_date date);
 
@@ -35538,6 +35731,87 @@ $$
 LANGUAGE plpgsql;
 
 --SELECT * FROM core.get_frequency_start_date('eoy'::text::integer, '2015-05-14');
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_item_cost_price.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer);
+CREATE FUNCTION core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer)
+RETURNS money_strict2
+AS
+$$
+    DECLARE _price money_strict2;
+    DECLARE _unit_id integer;
+    DECLARE _factor decimal;
+   
+BEGIN
+
+    --Fist pick the catalog price which matches all these fields:
+    --Item, Customer Type, Price Type, and Unit.
+    --This is the most effective price.
+    SELECT 
+        item_cost_prices.price, 
+        item_cost_prices.unit_id
+    INTO 
+        _price, 
+        _unit_id   
+    FROM core.item_cost_prices
+    WHERE item_cost_prices.item_id=$1
+    AND item_cost_prices.party_id=$2
+    AND item_cost_prices.unit_id = $3;
+
+    IF(_unit_id IS NULL) THEN
+        --We do not have a cost price of this item for the unit supplied.
+        --Let's see if this item has a price for other units.
+        SELECT 
+            item_cost_prices.price, 
+            item_cost_prices.unit_id
+        INTO 
+            _price, 
+            _unit_id           
+        FROM core.item_cost_prices
+        WHERE item_cost_prices.item_id=$1
+        AND item_cost_prices.party_id=$2;
+    END IF;
+
+    
+    IF(_price IS NULL) THEN
+        --This item does not have cost price defined in the catalog.
+        --Therefore, getting the default cost price from the item definition.
+        SELECT 
+            cost_price, 
+            unit_id            
+        INTO 
+            _price, 
+            _unit_id           
+        FROM core.items
+        WHERE core.items.item_id = $1;
+    END IF;
+
+        --Get the unitary conversion factor if the requested unit does not match with the price defition.
+    _factor := core.convert_unit($3, _unit_id);
+
+    RETURN _price * _factor;
+END
+$$
+LANGUAGE plpgsql;
+
+
+/**************************************************************************************************************************
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+'########::'##:::::::'########:::'######:::'##::::'##:'##::: ##:'####:'########::::'########:'########::'######::'########:
+ ##.... ##: ##::::::: ##.... ##:'##... ##:: ##:::: ##: ###:: ##:. ##::... ##..:::::... ##..:: ##.....::'##... ##:... ##..::
+ ##:::: ##: ##::::::: ##:::: ##: ##:::..::: ##:::: ##: ####: ##:: ##::::: ##:::::::::: ##:::: ##::::::: ##:::..::::: ##::::
+ ########:: ##::::::: ########:: ##::'####: ##:::: ##: ## ## ##:: ##::::: ##:::::::::: ##:::: ######:::. ######::::: ##::::
+ ##.....::: ##::::::: ##.....::: ##::: ##:: ##:::: ##: ##. ####:: ##::::: ##:::::::::: ##:::: ##...:::::..... ##:::: ##::::
+ ##:::::::: ##::::::: ##:::::::: ##::: ##:: ##:::: ##: ##:. ###:: ##::::: ##:::::::::: ##:::: ##:::::::'##::: ##:::: ##::::
+ ##:::::::: ########: ##::::::::. ######:::. #######:: ##::. ##:'####:::: ##:::::::::: ##:::: ########:. ######::::: ##::::
+..:::::::::........::..::::::::::......:::::.......:::..::::..::....:::::..:::::::::::..:::::........:::......::::::..:::::
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+**************************************************************************************************************************/
+
+
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_item_selling_price.sql --<--<--
@@ -35714,6 +35988,24 @@ $$
 LANGUAGE plpgsql;
 
 --SELECT * FROM office.get_income_tax_rate(2);
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/office/office.has_child_offices.sql --<--<--
+DROP FUNCTION IF EXISTS office.has_child_offices(integer);
+
+CREATE FUNCTION office.has_child_offices(_office_id integer)
+RETURNS boolean
+AS
+$$
+BEGIN
+    IF EXISTS(SELECT 0 FROM office.offices WHERE parent_office_id=$1 LIMIT 1) THEN
+        RETURN true;
+    END IF;
+
+    RETURN false;
+END
+$$
+LANGUAGE plpgsql;
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/policy/policy.save_menu_policy.sql --<--<--
 DROP FUNCTION IF EXISTS policy.save_menu_policy
@@ -39490,7 +39782,8 @@ BEGIN
         base_unit_id        integer,
         store_id            integer,
         total_sales         numeric,
-        in_stock            numeric
+        in_stock            numeric,
+        maintain_stock      boolean
     ) ON COMMIT DROP;
 
     INSERT INTO item_quantities_temp(item_id, base_unit_id, store_id, total_sales)
@@ -39499,12 +39792,20 @@ BEGIN
     GROUP BY item_id, base_unit_id, store_id;
 
     UPDATE item_quantities_temp
-    SET in_stock = core.count_item_in_stock(item_quantities_temp.item_id, item_quantities_temp.base_unit_id, item_quantities_temp.store_id);    
+    SET maintain_stock = core.items.maintain_stock
+    FROM core.items
+    WHERE item_quantities_temp.item_id = core.items.item_id;
+    
+    UPDATE item_quantities_temp
+    SET in_stock = core.count_item_in_stock(item_quantities_temp.item_id, item_quantities_temp.base_unit_id, item_quantities_temp.store_id)
+    WHERE maintain_stock;
+
 
     IF EXISTS
     (
         SELECT 0 FROM item_quantities_temp
         WHERE total_sales > in_stock
+        AND maintain_stock
         LIMIT 1
     ) THEN
         RAISE EXCEPTION 'Insufficient item quantity'
@@ -39695,7 +39996,7 @@ BEGIN
     PERFORM transactions.auto_verify(_transaction_master_id, _office_id);
 
     IF(NOT _is_credit) THEN
-        PERFORM transactions.post_receipt(_user_id, _office_id, _login_id, _party_code, _default_currency_code, _receivable, 1, 1, _reference_number, _statement_reference, _cost_center_id, _cash_repository_id, NULL, NULL, NULL, NULL, _transaction_master_id);
+        PERFORM transactions.post_receipt(_user_id, _office_id, _login_id, _party_code, _default_currency_code, _receivable, 1, 1, _reference_number, _statement_reference, _cost_center_id, _cash_repository_id, NULL, NULL, NULL, NULL, NULL, _transaction_master_id);
     ELSE
         PERFORM transactions.settle_party_due(_party_id, _office_id);
     END IF;
@@ -41164,12 +41465,65 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_department_id_by_department_code.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_cash_repository_id_by_cash_repository_code.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_cash_repository_id_by_cash_repository_code(text);
+
+CREATE FUNCTION office.get_cash_repository_id_by_cash_repository_code(_cash_repository_code text)
+RETURNS integer
+AS
+$$
+BEGIN
+    RETURN
+    (
+        SELECT cash_repository_id
+        FROM office.cash_repositories
+        WHERE cash_repository_code=$1
+    );
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_cash_repository_id_by_cash_repository_name.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_cash_repository_id_by_cash_repository_name(text);
+
+CREATE FUNCTION office.get_cash_repository_id_by_cash_repository_name(_cash_repository_name text)
+RETURNS integer
+AS
+$$
+BEGIN
+    RETURN
+    (
+        SELECT cash_repository_id
+        FROM office.cash_repositories
+        WHERE cash_repository_name=$1
+    );
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_cost_center_id_by_cost_center_code.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_cost_center_id_by_cost_center_code(text);
+
+CREATE FUNCTION office.get_cost_center_id_by_cost_center_code(_cost_center_code text)
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN cost_center_id
+    FROM office.cost_centers
+    WHERE cost_center_code=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_department_id_by_code.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_department_id_by_code(text);
 
-DROP FUNCTION IF EXISTS office.get_department_id_by_department_code(text);
-
-CREATE FUNCTION office.get_department_id_by_department_code(text)
+CREATE FUNCTION office.get_department_id_by_code(_department_code text)
 RETURNS integer
 STABLE
 AS
@@ -41181,6 +41535,243 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_department_id_by_department_code.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_department_id_by_code(text);
+
+DROP FUNCTION IF EXISTS office.get_department_id_by_department_code(text);
+
+CREATE FUNCTION office.get_department_id_by_department_code(_department_code text)
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN department_id
+    FROM office.departments
+    WHERE department_code=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_office_id_by_cash_repository_id.sql --<--<--
+CREATE OR REPLACE FUNCTION office.get_office_id_by_cash_repository_id(_cash_repository_id integer)
+RETURNS integer
+AS
+$$
+BEGIN
+        RETURN office_id
+        FROM office.cash_repositories
+        WHERE cash_repository_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_office_id_by_store_id.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_office_id_by_store_id(integer);
+
+CREATE FUNCTION office.get_office_id_by_store_id(_store_id integer)
+RETURNS integer
+AS
+$$
+BEGIN
+        RETURN office_id
+        FROM office.stores
+        WHERE store_id=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_role_id_by_role_code.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_role_id_by_role_code(text);
+
+CREATE FUNCTION office.get_role_id_by_role_code(_role_code text)
+RETURNS integer
+AS
+$$
+BEGIN
+        RETURN
+        role_id
+        FROM office.roles
+        WHERE role_code=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_role_id_by_role_name.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_role_id_by_role_name(text);
+
+CREATE FUNCTION office.get_role_id_by_role_name(_role_name text)
+RETURNS integer
+AS
+$$
+BEGIN
+        RETURN
+        role_id
+        FROM office.roles
+        WHERE role_name=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_store_id_by_store_code.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_store_id_by_store_code(text);
+
+CREATE FUNCTION office.get_store_id_by_store_code(_store_code text)
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN
+    (
+        SELECT store_id
+        FROM office.stores
+        WHERE store_code=$1
+    );
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_store_id_by_store_name.sql --<--<--
+CREATE OR REPLACE FUNCTION office.get_store_id_by_store_name(_store_name text)
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN
+    (
+        SELECT store_id
+        FROM office.stores
+        WHERE store_name=$1
+    );
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_store_name_by_store_id.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_store_name_by_store_id(integer);
+
+CREATE FUNCTION office.get_store_name_by_store_id(_store_id integer)
+RETURNS text
+AS
+$$
+BEGIN
+    RETURN
+    (
+        SELECT store_name
+        FROM office.stores
+        WHERE store_id=$1
+    );
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.get_store_type_id_by_store_type_code.sql --<--<--
+DROP FUNCTION IF EXISTS office.get_store_type_id_by_store_type_code(text);
+
+CREATE FUNCTION office.get_store_type_id_by_store_type_code(_store_type_code text)
+RETURNS integer
+STABLE
+AS
+$$
+BEGIN
+    RETURN store_type_id
+    FROM office.store_types
+    WHERE store_type_code=$1;
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.is_admin.sql --<--<--
+CREATE OR REPLACE FUNCTION office.is_admin(_user_id integer)
+RETURNS boolean
+AS
+$$
+BEGIN
+    RETURN
+    (
+        SELECT office.roles.is_admin FROM office.users
+        INNER JOIN office.roles
+        ON office.users.role_id = office.roles.role_id
+        WHERE office.users.user_id=$1
+    );
+END
+$$
+LANGUAGE PLPGSQL;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.is_sys.sql --<--<--
+CREATE OR REPLACE FUNCTION office.is_sys(_user_id integer)
+RETURNS boolean
+AS
+$$
+BEGIN
+    RETURN
+    (
+        SELECT office.roles.is_system FROM office.users
+        INNER JOIN office.roles
+        ON office.users.role_id = office.roles.role_id
+        WHERE office.users.user_id=$1
+    );
+END
+$$
+LANGUAGE PLPGSQL;
+
+
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.is_sys_user.sql --<--<--
+CREATE OR REPLACE FUNCTION office.is_sys_user(_user_id integer)
+RETURNS boolean
+AS
+$$
+BEGIN
+    IF EXISTS
+    (
+        SELECT * FROM office.users
+        WHERE user_id=$1
+        AND role_id IN
+        (
+            SELECT office.roles.role_id FROM office.roles WHERE office.roles.role_code='SYST'
+        )
+    ) THEN
+        RETURN true;
+    END IF;
+
+    RETURN false;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/office/office.is_valid_office_id.sql --<--<--
+DROP FUNCTION IF EXISTS office.is_valid_office_id(integer);
+
+CREATE FUNCTION office.is_valid_office_id(_office_id integer)
+RETURNS boolean
+AS
+$$
+BEGIN
+        IF EXISTS(SELECT 1 FROM office.offices WHERE office_id=$1) THEN
+                RETURN true;
+        END IF;
+
+        RETURN false;
+END
+$$
+LANGUAGE plpgsql;
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/01.frequencies-payment-terms-late-fee.sql.sql --<--<--
 UPDATE core.frequency_setups
