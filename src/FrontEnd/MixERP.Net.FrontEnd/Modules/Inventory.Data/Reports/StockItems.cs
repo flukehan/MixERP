@@ -25,10 +25,10 @@ using MixERP.Net.Entities.Transactions;
 namespace MixERP.Net.Core.Modules.Inventory.Data.Reports
 {
     public static class StockItems
-    {
+    { 
         public static IEnumerable<DbListClosingStockResult> ListClosingStock(int storeId)
         {
-            return Factory.Get<DbListClosingStockResult>("SELECT * FROM transactions.list_closing_stock(@0);", storeId);
+            return Factory.Get<DbListClosingStockResult>("SELECT * FROM transactions.list_closing_stock(@0::integer);", storeId);
         }
 
         public static IEnumerable<DbGetStockAccountStatementResult> GetAccountStatement(DateTime @from, DateTime to, int userId, string itemCode, int storeId)

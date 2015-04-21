@@ -20,8 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <configuration>
   <appSettings>
-    <add key="DatabaseInstallScript" value="db/beta-1/v1/mixerp-blank.sql"/>
-    <add key="SampleDatabaseInstallScript" value="db/beta-1/v1/mixerp-sample.sql"/>
+    <add key="DatabaseInstallScript" value="db/beta-1/v2/mixerp-incremental-blank-db.sql"/>
+    <add key="SampleDatabaseInstallScript" value="db/beta-1/v2/mixerp-incremental-sample.sql"/>
     <add key="WritableDirectories" value="Resource/Backups, Resource/Temp, Resource/Static/Attachments, Resource/Static/Emails" />
     <add key="ApplicationLogDirectory" value="C:\mixerp-logs" />
     <add key="MinimumLogLevel" value="Information" />

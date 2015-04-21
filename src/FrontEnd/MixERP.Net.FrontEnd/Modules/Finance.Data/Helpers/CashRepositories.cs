@@ -36,20 +36,20 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static decimal GetBalance(int? cashRepositoryId, string currencyCode)
         {
-            return Factory.Scalar<decimal>("SELECT transactions.get_cash_repository_balance(@0, @1);", cashRepositoryId,
+            return Factory.Scalar<decimal>("SELECT transactions.get_cash_repository_balance(@0::integer, @1::national character varying(12));", cashRepositoryId,
                 currencyCode);
         }
 
         public static decimal GetBalance(int cashRepositoryId)
         {
-            return Factory.Scalar<decimal>("SELECT transactions.get_cash_repository_balance(@0);", cashRepositoryId);
+            return Factory.Scalar<decimal>("SELECT transactions.get_cash_repository_balance(@0::integer);", cashRepositoryId);
         }
 
         public static decimal GetBalance(string cashRepositoryCode)
         {
             return
                 Factory.Scalar<decimal>(
-                    "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@0));",
+                    "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@0)::integer);",
                     cashRepositoryCode);
         }
 
@@ -57,7 +57,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
         {
             return
                 Factory.Scalar<decimal>(
-                    "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@0), @1);",
+                    "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@0)::integer, @1::national character varying(12));",
                     cashRepositoryCode, currencyCode);
         }
 

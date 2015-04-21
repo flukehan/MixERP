@@ -28,7 +28,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
     {
         public static DataTable GetRetainedEarningStatementDataTable(DateTime date, int officeId, int factor)
         {
-            const string sql = "SELECT * FROM transactions.get_retained_earnings_statement(@Date, @OfficeId, @Factor);";
+            const string sql = "SELECT * FROM transactions.get_retained_earnings_statement(@Date::date, @OfficeId::integer, @Factor::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@Date", date);

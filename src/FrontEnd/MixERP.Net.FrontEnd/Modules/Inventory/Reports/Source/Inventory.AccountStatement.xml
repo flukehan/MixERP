@@ -101,7 +101,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         balance,
         statement_reference
         FROM transactions.get_stock_account_statement
-        (@From::date, @To::date, @UserId, @ItemCode, @StoreId)
+        (@From::date, @To::date, @UserId::integer, @ItemCode::text, @StoreId::integer)
         ORDER BY id;
       </Query>
       <Parameters>

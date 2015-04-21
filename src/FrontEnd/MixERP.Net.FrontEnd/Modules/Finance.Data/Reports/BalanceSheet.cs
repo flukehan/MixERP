@@ -28,7 +28,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
     {
         public static DataTable GetBalanceSheet(DateTime previousPeriod, DateTime currentPeriod, int userId, int officeId, int factor)
         {
-            const string sql = "SELECT * FROM transactions.get_balance_sheet(@Previous, @Current, @UserId, @OfficeId, @Factor)";
+            const string sql = "SELECT * FROM transactions.get_balance_sheet(@Previous::date, @Current::date, @UserId::integer, @OfficeId::integer, @Factor::integer)";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@Previous", previousPeriod);

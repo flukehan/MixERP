@@ -30,7 +30,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
     {
         public static DataTable GetDirectCashFlowStatement(DateTime from, DateTime to, int userId, int officeId, decimal factor)
         {
-            const string sql = "SELECT transactions.get_cash_flow_statement(@From::date, @To::date, @UserId, @OfficeId, @Factor);";
+            const string sql = "SELECT transactions.get_cash_flow_statement(@From::date, @To::date, @UserId::integer, @OfficeId::integer, @Factor::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@From", from);

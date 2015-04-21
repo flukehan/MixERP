@@ -50,11 +50,11 @@ BEGIN
 
     IF NOT EXISTS(SELECT 0 FROM office.users WHERE user_name='sys') THEN
         INSERT INTO office.users(role_id, department_id, office_id, user_name, password, full_name)
-        SELECT office.get_role_id_by_role_code('SYST'), office.get_department_id_by_code('SUP'), _office_id, 'sys', '', 'System';
+        SELECT office.get_role_id_by_role_code('SYST'), office.get_department_id_by_department_code('SUP'), _office_id, 'sys', '', 'System';
     END IF;
         
     INSERT INTO office.users(role_id, department_id, office_id,user_name,password, full_name, elevated)
-    SELECT office.get_role_id_by_role_code('ADMN'), office.get_department_id_by_code('SUP'), _office_id, _user_name, _password, _admin_name, true
+    SELECT office.get_role_id_by_role_code('ADMN'), office.get_department_id_by_department_code('SUP'), _office_id, _user_name, _password, _admin_name, true
     RETURNING user_id INTO _user_id;
 
     INSERT INTO policy.menu_access(office_id, menu_id, user_id)

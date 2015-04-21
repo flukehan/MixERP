@@ -57,7 +57,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static void Verify(long tranId, int officeId, int userId, long loginId, short verificationStatusId, string reason)
         {
-            const string sql = "SELECT * FROM transactions.verify_transaction(@TranId::bigint, @OfficeId, @UserId, @LoginId::bigint, @VerificationStatusId::smallint, @Reason);";
+            const string sql = "SELECT * FROM transactions.verify_transaction(@TranId::bigint, @OfficeId::integer, @UserId::integer, @LoginId::bigint, @VerificationStatusId::smallint, @Reason::national character varying);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@TranId", tranId);
@@ -200,7 +200,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
                         #region Auto Verification
 
-                        sql = "SELECT * FROM transactions.auto_verify(@TranId, @OfficeId);";
+                        sql = "SELECT * FROM transactions.auto_verify(@TranId::bigint, @OfficeId::integer);";
                         using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
                         {
                             command.Parameters.AddWithValue("@TranId", transactionMasterId);

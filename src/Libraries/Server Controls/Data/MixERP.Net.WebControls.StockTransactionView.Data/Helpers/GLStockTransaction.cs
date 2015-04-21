@@ -28,7 +28,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data.Helpers
     {
         public static IEnumerable<DbGetProductViewResult> GetView(int userId, string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
         {
-            return Factory.Get<DbGetProductViewResult>("SELECT * FROM transactions.get_product_view(@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10);", userId, book, officeId, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
+            return Factory.Get<DbGetProductViewResult>("SELECT * FROM transactions.get_product_view(@0::integer, @1::text, @2::integer, @3::date, @4::date, @5::national character varying(12), @6::text, @7::text, @8::national character varying(50), @9::national character varying(24), @10::text);", userId, book, officeId, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory.Data
     {
         public static IEnumerable<DbGetJournalViewResult> GetJournalView(int userId, int officeId, DateTime from, DateTime to, long tranId, string tranCode, string book, string referenceNumber, string statementReference, string postedBy, string office, string status, string verifiedBy, string reason)
         {
-            const string sql = "SELECT * FROM transactions.get_journal_view(@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11, @12, @13);";
+            const string sql = "SELECT * FROM transactions.get_journal_view(@0::integer, @1::integer, @2::date, @3::date, @4::bigint, @5::national character varying(50), @6::national character varying(50), @7::national character varying(50), @8::national character varying(50), @9::national character varying(50), @10::national character varying(50), @11::national character varying(50), @12::national character varying(50), @13::national character varying(50));";
             return Factory.Get<DbGetJournalViewResult>(sql, userId, officeId, from, to, tranId, tranCode, book, referenceNumber, statementReference, postedBy, office, status, verifiedBy, reason);
         }
     }
