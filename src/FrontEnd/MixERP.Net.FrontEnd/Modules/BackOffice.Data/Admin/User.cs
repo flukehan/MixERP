@@ -47,7 +47,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
         {
             try
             {
-                Factory.NonQuery("SELECT * FROM policy.change_password(@0, @1, @2);", adminUserId, username, password);
+                Factory.NonQuery("SELECT * FROM policy.change_password(@0::text, @1::text, @2::text);", adminUserId, username, password);
             }
             catch (DbException ex)
             {

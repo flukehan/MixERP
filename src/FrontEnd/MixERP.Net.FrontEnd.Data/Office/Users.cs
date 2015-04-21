@@ -37,7 +37,7 @@ namespace MixERP.Net.FrontEnd.Data.Office
         {
             try
             {
-                return Factory.Scalar<bool>("SELECT * FROM policy.change_password(@0, @1, @2);", userName, currentPassword, newPassword);
+                return Factory.Scalar<bool>("SELECT * FROM policy.change_password(@0::text, @1::text, @2::text);", userName, currentPassword, newPassword);
             }
             catch (NpgsqlException ex)
             {
@@ -75,7 +75,7 @@ namespace MixERP.Net.FrontEnd.Data.Office
         {
             SignInResult result = new SignInResult();
 
-            const string sql = "SELECT * FROM office.sign_in(@OfficeId, @UserName, @Password, @Browser, @IPAddress, @RemoteUser, @Culture, @Challenge);";
+            const string sql = "SELECT * FROM office.sign_in(@OfficeId::public.integer_strict, @UserName::text, @Password::text, @Browser::text, @IPAddress::text, @RemoteUser::text, @Culture::text, @Challenge::text);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);

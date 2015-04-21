@@ -26,7 +26,7 @@ namespace MixERP.Net.FrontEnd.Data.Core
     {
         public static IEnumerable<Entities.Core.Menu> GetMenuCollection(int officeId, int userId, string culture)
         {
-            return Factory.Get<Entities.Core.Menu>("SELECT * FROM policy.get_menu(@0, @1, @2) ORDER BY menu_id;", userId, officeId, culture);
+            return Factory.Get<Entities.Core.Menu>("SELECT * FROM policy.get_menu(@0::integer, @1::integer, @2::text) ORDER BY menu_id;", userId, officeId, culture);
         }
     }
 }
