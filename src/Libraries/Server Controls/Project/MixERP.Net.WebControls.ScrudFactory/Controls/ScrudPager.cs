@@ -195,13 +195,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
 
                 anchor.InnerText = pageNumber.ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
 
-                if (this.QueryString == "modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden")
+                if (this.QueryString == "modal=1&CallBackFunctionName=processCallBackActions&AssociatedControlId=PartyIdHidden")
                 {
-                    anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}&modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden", this.CurrentPageUrl, pageNumber);
+                    anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}&modal=1&CallBackFunctionName=processCallBackActions&AssociatedControlId=PartyIdHidden", this.CurrentPageUrl, pageNumber);
                 }
-                else if (this.QueryString == (string.Format(CultureInfo.InvariantCulture, "page={0}&modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden", this.CurrentPage)))
+                else if (this.QueryString == (string.Format(CultureInfo.InvariantCulture, "page={0}&modal=1&CallBackFunctionName=processCallBackActions&AssociatedControlId=PartyIdHidden", this.CurrentPage)))
                 {
-                    anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}&modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden", this.CurrentPageUrl, pageNumber);
+                    anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}&modal=1&CallBackFunctionName=processCallBackActions&AssociatedControlId=PartyIdHidden", this.CurrentPageUrl, pageNumber);
                 }
                 else
                 {
@@ -228,15 +228,15 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
                     anchor.Controls.Add(icon);
                 }
 
-                if (this.QueryString == "modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden")
+                if (this.QueryString == "modal=1&CallBackFunctionName=processCallBackActions&AssociatedControlId=PartyIdHidden")
                 {
-                    anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}&modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden", this.CurrentPageUrl, pageNumber);
+                    anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}&modal=1&CallBackFunctionName=processCallBackActions&AssociatedControlId=PartyIdHidden", this.CurrentPageUrl, pageNumber);
                     return anchor;
                 }
                 
-                if (this.QueryString == (string.Format(CultureInfo.InvariantCulture, "page={0}&modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden", this.CurrentPage)))
+                if (this.QueryString == (string.Format(CultureInfo.InvariantCulture, "page={0}&modal=1&CallBackFunctionName=processCallBackActions&AssociatedControlId=PartyIdHidden", this.CurrentPage)))
                 {
-                    anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}&modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden", this.CurrentPageUrl, pageNumber);
+                    anchor.HRef = string.Format(CultureInfo.InvariantCulture, "{0}?page={1}&modal=1&CallBackFunctionName=processCallBackActions&AssociatedControlId=PartyIdHidden", this.CurrentPageUrl, pageNumber);
                     return anchor;
                 }
 

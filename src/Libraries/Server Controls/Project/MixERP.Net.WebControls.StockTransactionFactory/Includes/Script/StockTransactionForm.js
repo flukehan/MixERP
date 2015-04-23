@@ -63,7 +63,7 @@ var costCenterSelect = $("#CostCenterSelect");
 
 var dateTextBox = $("#DateTextBox");
 var discountInputText = $("#DiscountInputText");
-
+    
 var errorLabel = $("#ErrorLabel");
 var errorLabelBottom = $("#ErrorLabelBottom");
 
@@ -170,6 +170,7 @@ $(document).ready(function () {
 });
 
 function initializeAjaxData() {
+   
     processCallBackActions();
 
     loadPriceTypes();
@@ -1060,12 +1061,12 @@ var showShippingAddress = function () {
 //Utilities
 function addShortcuts() {
     shortcut.add("F2", function () {
-        url = "/Modules/Inventory/Setup/PartiesPopup.mix?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=PartyIdHidden";
+        url = "/Modules/Inventory/Setup/PartiesPopup.mix?modal=1&CallBackFunctionName=processCallBackActions&AssociatedControlId=PartyIdHidden";
         showWindow(url);
     });
 
     shortcut.add("F4", function () {
-        url = "/Modules/Inventory/Setup/ItemsPopup.mix?modal=1&CallBackFunctionName=initializeAjaxData&AssociatedControlId=ItemIdHidden";
+        url = "/Modules/Inventory/Setup/ItemsPopup.mix?modal=1&CallBackFunctionName=processCallBackActions&AssociatedControlId=ItemIdHidden";
         showWindow(url);
     });
 

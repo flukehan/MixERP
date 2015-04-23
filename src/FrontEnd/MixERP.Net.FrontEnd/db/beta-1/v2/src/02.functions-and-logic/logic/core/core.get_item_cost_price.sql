@@ -1,9 +1,9 @@
 ﻿DROP FUNCTION IF EXISTS core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer);
 CREATE FUNCTION core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer)
-RETURNS money_strict2
+RETURNS public.money_strict2
 AS
 $$
-    DECLARE _price money_strict2;
+    DECLARE _price public.money_strict2;
     DECLARE _unit_id integer;
     DECLARE _factor decimal;
    
