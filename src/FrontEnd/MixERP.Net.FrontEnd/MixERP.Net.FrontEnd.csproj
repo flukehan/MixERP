@@ -445,6 +445,13 @@
     </Compile>
     <Compile Include="Hubs\BaseHub.cs" />
     <Compile Include="Hubs\Startup.cs" />
+    <Compile Include="Install.aspx.cs">
+      <DependentUpon>Install.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Install.aspx.designer.cs">
+      <DependentUpon>Install.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MixERPBlankMaster.Master.cs">
       <DependentUpon>MixERPBlankMaster.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -703,6 +710,7 @@
     <Content Include="db\beta-1\v2\mixerp-incremental-blank-db.sql" />
     <Content Include="db\beta-1\v2\mixerp-incremental-sample.sql" />
     <Content Include="db\index.html" />
+    <Content Include="Install.aspx" />
     <Content Include="MixERP.Installation.xml" />
     <Content Include="Modules\Default.aspx" />
     <Content Include="Resource\Backups\index.html" />
