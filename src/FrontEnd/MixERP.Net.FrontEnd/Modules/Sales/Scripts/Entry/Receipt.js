@@ -256,6 +256,7 @@ var toggleTransactionType = function (e) {
         if (!$("#BankFormGroup").is(":visible")) {
             $("#BankFormGroup").show(500);
             $("#CashFormGroup").hide();
+            loadCashRepositories();
             return;
         };
     };
@@ -264,6 +265,11 @@ var toggleTransactionType = function (e) {
         if (!$("#CashFormGroup").is(":visible")) {
             $("#CashFormGroup").show(500);
             $("#BankFormGroup").hide();
+            loadBankAccounts();
+            loadCostCenters();
+            postedDateTextBox.val("");
+            instrumentCodeInputText.val("");
+            transactionCodeInputText.val("");
             return;
         };
     };
