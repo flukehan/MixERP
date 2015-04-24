@@ -38,6 +38,14 @@ namespace MixERP.Net.FrontEnd.Base
             get { return AccessLevel.PolicyBased; }
         }
 
+        public bool IsRestrictedMode
+        {
+            get
+            {
+                return !CurrentUser.GetSignInView().AllowTransactionPosting.ToBool();                
+            }
+        }
+
         public void Initialize()
         {
             Log.Verbose("{Control} initialized.", this);

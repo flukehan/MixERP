@@ -51,6 +51,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Confirmation
                 checklist.ViewPath = "/Modules/Purchase/DirectPurchase.mix";
                 checklist.AddNewPath = "/Modules/Purchase/Entry/DirectPurchase.mix";
                 checklist.UserId = CurrentUser.GetSignInView().UserId.ToInt();
+                checklist.RestrictedTransactionMode = this.IsRestrictedMode;
 
                 this.Placeholder1.Controls.Add(checklist);
             }

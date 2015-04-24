@@ -56,6 +56,13 @@ namespace MixERP.Net.WebControls.TransactionChecklist
 
         private void OkButton_Click(object sender, EventArgs e)
         {
+            if (this.RestrictedTransactionMode)
+            {
+                this.messageLabel.Text = Labels.CannotWithdrawTransaction;
+                this.messageLabel.CssClass = "ui block message red vpad12";
+                return;
+            }
+
             string tranId = this.GetTranId();
 
             if (string.IsNullOrWhiteSpace(tranId))

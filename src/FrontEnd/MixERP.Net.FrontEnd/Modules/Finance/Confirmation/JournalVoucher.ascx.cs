@@ -42,6 +42,7 @@ namespace MixERP.Net.Core.Modules.Finance.Confirmation
                 checklist.AddNewPath = "~/Modules/Finance/Entry/JournalVoucher.mix";
                 checklist.GlAdvicePath = "~/Modules/Finance/Reports/GLAdviceReport.mix";
                 checklist.UserId = CurrentUser.GetSignInView().UserId.ToInt();
+                checklist.RestrictedTransactionMode = this.IsRestrictedMode;
 
                 this.Placeholder1.Controls.Add(checklist);
             }

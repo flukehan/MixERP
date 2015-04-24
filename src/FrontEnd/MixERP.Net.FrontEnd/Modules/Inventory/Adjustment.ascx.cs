@@ -27,13 +27,14 @@ using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.Entities;
+using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Inventory
 {
-    public partial class Adjustment : MixERPUserControl
+    public partial class Adjustment : MixERPUserControl, ITransaction
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {

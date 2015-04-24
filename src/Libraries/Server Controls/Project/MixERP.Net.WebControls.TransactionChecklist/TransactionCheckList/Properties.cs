@@ -46,5 +46,6 @@ namespace MixERP.Net.WebControls.TransactionChecklist
         public string ViewReportButtonText { get; set; }
         public new Unit Width { get; set; }
         public int UserId { get; set; }
+        public bool RestrictedTransactionMode { get; set; }
     }
 }

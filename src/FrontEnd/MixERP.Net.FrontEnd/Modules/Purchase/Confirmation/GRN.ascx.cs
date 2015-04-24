@@ -54,6 +54,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Confirmation
                 checklist.ViewPath = "/Modules/Purchase/GRN.mix";
                 checklist.AddNewPath = "/Modules/Purchase/Entry/GRN.mix";
                 checklist.UserId = CurrentUser.GetSignInView().UserId.ToInt();
+                checklist.RestrictedTransactionMode = this.IsRestrictedMode;
 
                 this.Placeholder1.Controls.Add(checklist);
             }

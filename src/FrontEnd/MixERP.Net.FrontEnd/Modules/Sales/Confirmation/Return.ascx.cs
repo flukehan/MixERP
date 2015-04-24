@@ -51,6 +51,7 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
                 checklist.ViewPath = "~/Modules/Sales/Return.mix";
                 checklist.AddNewPath = "~/Modules/Sales/Entry/Return.mix";
                 checklist.UserId = CurrentUser.GetSignInView().UserId.ToInt();
+                checklist.RestrictedTransactionMode = this.IsRestrictedMode;
 
                 this.Placeholder1.Controls.Add(checklist);
             }
