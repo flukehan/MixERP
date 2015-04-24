@@ -16,20 +16,33 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Data.Office;
 
 namespace MixERP.Net.FrontEnd
 {
     public partial class Install : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
+            if (Offices.GetOffices().Any())
+            {
+                this.Response.Redirect("~/SignIn.aspx");
+            }
 
+            this.RegisterJavascript();
+        }
+
+        private void RegisterJavascript()
+        {
+            string script = JSUtility.GetVar("allFieldsRequiredLocalized", Resources.Labels.AllFieldsRequired);
+            script += JSUtility.GetVar("confirmedPasswordDoesNotMatch", Resources.Labels.ConfirmedPasswordDoesNotMatch);
+
+            PageUtility.RegisterJavascript("InstallPage_Vars", script, this.Page, true);
         }
     }
 }

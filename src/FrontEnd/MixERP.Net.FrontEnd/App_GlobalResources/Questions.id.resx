@@ -123,4 +123,7 @@
   <data name="AreYouSure" xml:space="preserve">
     <value>Apakah Anda yakin Anda tahu apa yang Anda lakukan?</value>
   </data>
+  <data name="WhatIsYourHomeCurrency" xml:space="preserve">
+    <value>Apa Rumah Anda Mata?</value>
+  </data>
 </root>

@@ -25,5 +25,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
     <!--Must be a physical path and application pool identity user must be able to write to it.-->
     <add key="ApplicationLogDirectory" value="C:\mixerp-logs" />
     <add key="Cultures" value="de, en, es, fil, fr, id, ja, ms, nl, pt, ru, sv, zh" />
+    <add key="Mode" value="Development" />
   </appSettings>
 </configuration>

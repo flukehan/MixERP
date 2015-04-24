@@ -123,4 +123,7 @@
   <data name="CannotAccessAccount" xml:space="preserve">
     <value>Cannot access your account?</value>
   </data>
+  <data name="WhatIsYourHomeCurrency" xml:space="preserve">
+    <value>What Is Your Home Currency?</value>
+  </data>
 </root>

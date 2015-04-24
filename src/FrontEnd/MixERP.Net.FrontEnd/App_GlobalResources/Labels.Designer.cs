@@ -61,6 +61,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All fields are required..
+        /// </summary>
+        internal static string AllFieldsRequired {
+            get {
+                return ResourceManager.GetString("AllFieldsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The confirmed password does not match..
+        /// </summary>
+        internal static string ConfirmedPasswordDoesNotMatch {
+            get {
+                return ResourceManager.GetString("ConfirmedPasswordDoesNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to days.
         /// </summary>
         internal static string DaysLowerCase {

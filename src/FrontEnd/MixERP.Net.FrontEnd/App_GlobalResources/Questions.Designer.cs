@@ -77,5 +77,14 @@ namespace Resources {
                 return ResourceManager.GetString("CannotAccessAccount", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What Is Your Home Currency?.
+        /// </summary>
+        internal static string WhatIsYourHomeCurrency {
+            get {
+                return ResourceManager.GetString("WhatIsYourHomeCurrency", resourceCulture);
+            }
+        }
     }
 }

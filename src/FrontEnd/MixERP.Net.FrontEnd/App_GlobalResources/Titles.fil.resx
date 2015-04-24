@@ -213,4 +213,43 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="AboutYourOffice" xml:space="preserve">
+    <value>Tungkol sa Iyong Opisina</value>
+  </data>
+  <data name="CreateaUserAccountforYourself" xml:space="preserve">
+    <value>Lumikha ng User Account para sa Iyong Sarili</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>Ang Code ng Salapi</value>
+  </data>
+  <data name="CurrencyName" xml:space="preserve">
+    <value>Pangalan ng pera</value>
+  </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>Simbolo ng pera</value>
+  </data>
+  <data name="HundredthName" xml:space="preserve">
+    <value>pang-isang daan Pangalan</value>
+  </data>
+  <data name="InstallMixERP" xml:space="preserve">
+    <value>I-install ang MixERP</value>
+  </data>
+  <data name="OfficeName" xml:space="preserve">
+    <value>Pangalan ng Office</value>
+  </data>
+  <data name="OfficeNickName" xml:space="preserve">
+    <value>Pangalan ng Office Nick</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>Petsa ng Pagpaparehistro</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>I-save ang</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>pagtitipid</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Ang iyong Pangalan</value>
+  </data>
 </root>

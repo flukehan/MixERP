@@ -132,4 +132,10 @@
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>Uppgiften slutfördes med framgång.</value>
   </data>
+  <data name="AllFieldsRequired" xml:space="preserve">
+    <value>Alla fält är obligatoriska.</value>
+  </data>
+  <data name="ConfirmedPasswordDoesNotMatch" xml:space="preserve">
+    <value>Bekräfta lösenord matchar inte.</value>
+  </data>
 </root>

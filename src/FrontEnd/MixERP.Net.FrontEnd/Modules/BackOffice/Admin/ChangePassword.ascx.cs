@@ -37,7 +37,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
     {
         public override AccessLevel AccessLevel
         {
-            get { return AccessLevel.LocalhostAdmin; }
+            get
+            {
+                return AccessLevel.LocalhostAdmin;
+            }
         }
 
         public override void OnControlLoad(object sender, EventArgs e)
@@ -55,7 +58,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
 
         protected override void CreateChildControls()
         {
-            this.panel = new HtmlGenericControl();                        
+            this.panel = new HtmlGenericControl();
             this.CreateHeader(this.panel);
             this.CreateDivider(this.panel);
             this.CreateFormSegment(this.panel);

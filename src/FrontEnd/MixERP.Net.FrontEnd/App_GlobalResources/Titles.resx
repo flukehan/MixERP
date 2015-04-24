@@ -213,4 +213,55 @@
   <data name="Update" xml:space="preserve">
     <value>Update</value>
   </data>
+  <data name="AboutYourOffice" xml:space="preserve">
+    <value>About Your Office</value>
+  </data>
+  <data name="ConfirmPassword1" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="CreateaUserAccountforYourself" xml:space="preserve">
+    <value>Create a User Account for Yourself</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>Currency Code</value>
+  </data>
+  <data name="CurrencyName" xml:space="preserve">
+    <value>Currency Name</value>
+  </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>Currency Symbol</value>
+  </data>
+  <data name="HundredthName" xml:space="preserve">
+    <value>Hundredth Name</value>
+  </data>
+  <data name="InstallMixERP" xml:space="preserve">
+    <value>Install MixERP</value>
+  </data>
+  <data name="OfficeCode1" xml:space="preserve">
+    <value>Office Code</value>
+  </data>
+  <data name="OfficeName" xml:space="preserve">
+    <value>Office Name</value>
+  </data>
+  <data name="OfficeNickName" xml:space="preserve">
+    <value>Office Nick Name</value>
+  </data>
+  <data name="Password1" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>Registration Date</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Saving</value>
+  </data>
+  <data name="Username1" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Your Name</value>
+  </data>
 </root>

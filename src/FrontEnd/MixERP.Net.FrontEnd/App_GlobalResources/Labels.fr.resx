@@ -132,4 +132,10 @@
   <data name="YourPasswordWasChanged" xml:space="preserve">
     <value>Votre mot de passe a été changé.</value>
   </data>
+  <data name="AllFieldsRequired" xml:space="preserve">
+    <value>Tous les champs sont requis.</value>
+  </data>
+  <data name="ConfirmedPasswordDoesNotMatch" xml:space="preserve">
+    <value>Le mot de passe de confirmation ne correspond pas.</value>
+  </data>
 </root>

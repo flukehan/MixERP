@@ -13,17 +13,8 @@ Tell us what you like to see in the CRM Module! Not sure? Then what about review
 
 ##Demo Sites Updated
 
-We have a few demo servers to access the project:
-
-**United States**
-
 * [chamlang.mixerp.org](http://chamlang.mixerp.org)
-* [nemjung.mixerp.org](http://) 
-
-**Kathmandu**
-
-* [kanjirowa.mixerp.org](http://kanjirowa.mixerp.org)
-* [nilgiri.mixerp.org](http://nilgiri.mixerp.org)
+* [nemjung.mixerp.org](http://nemjung.mixerp.org) 
 
 ##Beta 1 Version 2 is Coming Soon
 

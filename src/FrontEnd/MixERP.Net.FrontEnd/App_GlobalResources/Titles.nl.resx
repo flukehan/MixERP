@@ -213,4 +213,43 @@
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Bevestig Wachtwoord</value>
   </data>
+  <data name="AboutYourOffice" xml:space="preserve">
+    <value>Over uw kantoor</value>
+  </data>
+  <data name="CreateaUserAccountforYourself" xml:space="preserve">
+    <value>Maak een gebruikersaccount voor uzelf</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>valuta Code</value>
+  </data>
+  <data name="CurrencyName" xml:space="preserve">
+    <value>munt Naam</value>
+  </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>valutasymbool</value>
+  </data>
+  <data name="HundredthName" xml:space="preserve">
+    <value>honderdste Naam</value>
+  </data>
+  <data name="InstallMixERP" xml:space="preserve">
+    <value>Installeer MixERP</value>
+  </data>
+  <data name="OfficeName" xml:space="preserve">
+    <value>Vestiging Naam</value>
+  </data>
+  <data name="OfficeNickName" xml:space="preserve">
+    <value>Office Nick Name</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>registratie Datum</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Opslaan</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>besparing</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>jouw Naam</value>
+  </data>
 </root>

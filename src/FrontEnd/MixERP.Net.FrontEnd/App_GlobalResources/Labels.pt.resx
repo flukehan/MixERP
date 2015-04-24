@@ -132,4 +132,10 @@
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>A tarefa foi concluída com sucesso.</value>
   </data>
+  <data name="AllFieldsRequired" xml:space="preserve">
+    <value>Todos os campos são necessários.</value>
+  </data>
+  <data name="ConfirmedPasswordDoesNotMatch" xml:space="preserve">
+    <value>A senha de confirmação não corresponde.</value>
+  </data>
 </root>

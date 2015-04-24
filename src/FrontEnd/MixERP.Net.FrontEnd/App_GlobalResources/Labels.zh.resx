@@ -132,4 +132,10 @@
   <data name="YourPasswordWasChanged" xml:space="preserve">
     <value>您的密码已更改。</value>
   </data>
+  <data name="AllFieldsRequired" xml:space="preserve">
+    <value>所有字段是必需的。</value>
+  </data>
+  <data name="ConfirmedPasswordDoesNotMatch" xml:space="preserve">
+    <value>确认密码不匹配。</value>
+  </data>
 </root>

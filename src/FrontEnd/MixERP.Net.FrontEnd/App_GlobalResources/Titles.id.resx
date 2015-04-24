@@ -213,4 +213,43 @@
   <data name="Password" xml:space="preserve">
     <value>Kata Sandi</value>
   </data>
+  <data name="AboutYourOffice" xml:space="preserve">
+    <value>Tentang Kantor Anda</value>
+  </data>
+  <data name="CreateaUserAccountforYourself" xml:space="preserve">
+    <value>Buat Akun Pengguna untuk Diri Sendiri</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>Kode Mata Uang</value>
+  </data>
+  <data name="CurrencyName" xml:space="preserve">
+    <value>Nama Mata Uang</value>
+  </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>Mata Simbol</value>
+  </data>
+  <data name="HundredthName" xml:space="preserve">
+    <value>keseratus Nama</value>
+  </data>
+  <data name="InstallMixERP" xml:space="preserve">
+    <value>Instal MixERP</value>
+  </data>
+  <data name="OfficeName" xml:space="preserve">
+    <value>Nama Office</value>
+  </data>
+  <data name="OfficeNickName" xml:space="preserve">
+    <value>Nama Kantor Nick</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>Tanggal Registrasi</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Simpan</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>hemat</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Nama Anda</value>
+  </data>
 </root>

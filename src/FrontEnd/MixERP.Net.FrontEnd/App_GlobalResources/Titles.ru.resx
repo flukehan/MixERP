@@ -213,4 +213,43 @@
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Подтвердите Пароль</value>
   </data>
+  <data name="AboutYourOffice" xml:space="preserve">
+    <value>О вашем офисе</value>
+  </data>
+  <data name="CreateaUserAccountforYourself" xml:space="preserve">
+    <value>Создание учетной записи пользователя для себя</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>Код валюты</value>
+  </data>
+  <data name="CurrencyName" xml:space="preserve">
+    <value>Название валюты</value>
+  </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>Символ валюты</value>
+  </data>
+  <data name="HundredthName" xml:space="preserve">
+    <value>Сотый Имя</value>
+  </data>
+  <data name="InstallMixERP" xml:space="preserve">
+    <value>Установите MixERP</value>
+  </data>
+  <data name="OfficeName" xml:space="preserve">
+    <value>Имя офиса</value>
+  </data>
+  <data name="OfficeNickName" xml:space="preserve">
+    <value>Имя Офисная Ник</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>Дата Регистрации</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>экономия</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Ваше Имя</value>
+  </data>
 </root>
