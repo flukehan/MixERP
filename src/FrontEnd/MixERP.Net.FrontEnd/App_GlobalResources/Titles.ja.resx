@@ -213,4 +213,43 @@
   <data name="OfficeCode" xml:space="preserve">
     <value>オフィスコード</value>
   </data>
+  <data name="AboutYourOffice" xml:space="preserve">
+    <value>あなたのオフィスについて</value>
+  </data>
+  <data name="CreateaUserAccountforYourself" xml:space="preserve">
+    <value>あなた自身のためのユーザーアカウントを作成</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>通貨コード</value>
+  </data>
+  <data name="CurrencyName" xml:space="preserve">
+    <value>通貨の名前</value>
+  </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>通貨記号</value>
+  </data>
+  <data name="HundredthName" xml:space="preserve">
+    <value>百名</value>
+  </data>
+  <data name="InstallMixERP" xml:space="preserve">
+    <value>MixERPをインストール</value>
+  </data>
+  <data name="OfficeName" xml:space="preserve">
+    <value>オフィス名</value>
+  </data>
+  <data name="OfficeNickName" xml:space="preserve">
+    <value>オフィスニックネーム</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>登録日</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>節約</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>あなたの名前</value>
+  </data>
 </root>

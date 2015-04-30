@@ -213,4 +213,43 @@
   <data name="OfficeCode" xml:space="preserve">
     <value>Code de bureau</value>
   </data>
+  <data name="AboutYourOffice" xml:space="preserve">
+    <value>A propos de votre bureau</value>
+  </data>
+  <data name="CreateaUserAccountforYourself" xml:space="preserve">
+    <value>Créez un compte d'utilisateur pour vous-même</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>code de devise</value>
+  </data>
+  <data name="CurrencyName" xml:space="preserve">
+    <value>Nom de la devise</value>
+  </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>Symbole monétaire</value>
+  </data>
+  <data name="HundredthName" xml:space="preserve">
+    <value>Nom centième</value>
+  </data>
+  <data name="InstallMixERP" xml:space="preserve">
+    <value>Installez MixERP</value>
+  </data>
+  <data name="OfficeName" xml:space="preserve">
+    <value>Nom du bureau</value>
+  </data>
+  <data name="OfficeNickName" xml:space="preserve">
+    <value>Nom Bureau Nick</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>Date d'inscription</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>économie</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>votre Nom</value>
+  </data>
 </root>

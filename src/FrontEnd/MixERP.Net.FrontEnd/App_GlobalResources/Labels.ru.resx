@@ -132,4 +132,10 @@
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>Задача была успешно завершена.</value>
   </data>
+  <data name="AllFieldsRequired" xml:space="preserve">
+    <value>Все поля обязательны для заполнения.</value>
+  </data>
+  <data name="ConfirmedPasswordDoesNotMatch" xml:space="preserve">
+    <value>Подтверждение пароля не совпадают.</value>
+  </data>
 </root>

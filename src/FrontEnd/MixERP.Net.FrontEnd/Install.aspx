@@ -17,200 +17,154 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 --%>
 
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Install.aspx.cs" Inherits="MixERP.Net.FrontEnd.Install" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Install.aspx.cs" Inherits="MixERP.Net.FrontEnd.Install" Culture="auto" UICulture="auto" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link href="Scripts/semantic-ui/semantic.min.css" rel="stylesheet" />
+    <link href="Scripts/semantic-ui/semantic.min.css" rel="stylesheet"/>
     <script src="Scripts/jquery-1.9.1.js"></script>
     <script src="Scripts/semantic-ui/semantic.min.js"></script>
     <script src="bundles/scripts/libraries.js"></script>
     <style type="text/css">
-        body {
-            background-color: #FFF;
-        }
+        body { background-color: #FFF; }
     </style>
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div class="ui page grid">
-            <div class="column">
-                <img src="Resource/Static/images/mixerp-logo-light.png" />
+<form id="form1" runat="server">
+    <div class="ui page grid">
+        <div class="column">
+            <img src="Resource/Static/images/mixerp-logo-light.png"/>
+            <div class="ui header">
+                <div class="content">
+                    <asp:Literal runat="server" Text="<%$Resources:Titles, InstallMixERP %>"/>
+                </div>
+            </div>
+
+            <div class="ui small form segment" style="width: 700px;">
                 <div class="ui header">
                     <div class="content">
-                        Install MixERP
+                        <asp:Literal runat="server" Text="<%$Resources:Titles, AboutYourOffice %>"/>
                     </div>
                 </div>
-
-                <div class="ui small form segment" style="width: 700px;">
-                    <div class="ui header">
-                        <div class="content">
-                            About Your Office
-                        </div>
-                    </div>
-                    <div class="ui divider"></div>
+                <div class="ui divider"></div>
+                <div class="field">
+                    <label for="OfficeNameInputText">
+                        <asp:Literal runat="server" Text="<%$Resources:Titles, OfficeName %>"/>
+                    </label>
+                    <input type="text" maxlength="150" id="OfficeNameInputText"/>
+                </div>
+                <div class="three fields">
                     <div class="field">
-                        <label for="OfficeNameInputText">Office Name</label>
-                        <input type="text" maxlength="150" id="OfficeNameInputText" />
+                        <label for="OfficeCodeInputText">
+                            <asp:Literal runat="server" Text="<%$Resources:Titles, OfficeCode %>"/>
+                        </label>
+                        <input type="text" maxlength="12" id="OfficeCodeInputText"/>
                     </div>
-                    <div class="three fields">
-                        <div class="field">
-                            <label for="OfficeCodeInputText">Office Code</label>
-                            <input type="text" maxlength="12" id="OfficeCodeInputText" />
-                        </div>
-                        <div class="field">
-                            <label for="NickNameInputText">Office Nick Name</label>
-                            <input type="text" maxlength="50" id="NickNameInputText" />
-                        </div>
-                        <div class="field">
-                            <label for="RegistrationDateInputText">Registration Date</label>
-                            <input type="text" maxlength="50" id="RegistrationDateInputText" />
-                        </div>
+                    <div class="field">
+                        <label for="NickNameInputText">
+                            <asp:Literal runat="server" Text="<%$Resources:Titles, OfficeNickName %>"/>
+                        </label>
+                        <input type="text" maxlength="50" id="NickNameInputText"/>
                     </div>
-
-                    <div class="ui header">
-                        <div class="content">
-                            What Is Your Home Currency?
-                        </div>
+                    <div class="field">
+                        <label for="RegistrationDateInputText">
+                            <asp:Literal runat="server" Text="<%$Resources:Titles, RegistrationDate %>"/>
+                        </label>
+                        <input type="text" maxlength="50" id="RegistrationDateInputText"/>
                     </div>
-                    <div class="ui divider"></div>
-                    <div class="four fields">
-                        <div class="field">
-                            <label for="CurrencyCodeInputText">Currency Code</label>
-                            <input type="text" maxlength="12" id="CurrencyCodeInputText" />
-                        </div>
-                        <div class="field">
-                            <label for="CurrencySymbolInputText">Currency Symbol</label>
-                            <input type="text" maxlength="48" id="CurrencySymbolInputText" />
-                        </div>
-                        <div class="field">
-                            <label for="CurrencyNameInputText">Currency Name</label>
-                            <input type="text" maxlength="48" id="CurrencyNameInputText" />
-                        </div>
-                        <div class="field">
-                            <label for="HundredthNameInputText">Hundredth Name</label>
-                            <input type="text" maxlength="48" id="HundredthNameInputText" />
-                        </div>
-                    </div>
-
-                    <div class="ui header">
-                        <div class="content">
-                            Create a User Account for Yourself
-                        </div>
-                    </div>
-                    <div class="ui divider"></div>
-                    <div class="two fields">
-                        <div class="field">
-                            <label for="AdminNameInputText">Your Name</label>
-                            <input type="text" maxlength="100" id="AdminNameInputText" />
-                        </div>
-                        <div class="field">
-                            <label for="UserNameInputText">User Name</label>
-                            <input type="text" maxlength="50" id="UserNameInputText" />
-                        </div>
-                    </div>
-                    <div class="two fields">
-                        <div class="field">
-                            <label for="PasswordInputPassword">Password</label>
-                            <input type="text" maxlength="50" id="PasswordInputPassword" />
-                        </div>
-                        <div class="field">
-                            <label for="ConfirmPasswordInputPassword">Confirm Password</label>
-                            <input type="text" maxlength="50" id="ConfirmPasswordInputPassword" />
-                        </div>
-                    </div>
-
-                    <button type="button" class="ui small red button" id="SaveButton">Save</button>
                 </div>
-                <div class="ui page dimmer">
+
+                <div class="ui header">
                     <div class="content">
-                        <div class="center">
-                            <div class="ui yellow huge icon header">
-                                <i class="ui inverted yellow setting loading icon"></i>Saving<div class="ui yellow sub header">Just a moment, please!</div>
+                        <asp:Literal runat="server" Text="<%$Resources:Questions, WhatIsYourHomeCurrency %>"/>
+                    </div>
+                </div>
+                <div class="ui divider"></div>
+                <div class="four fields">
+                    <div class="field">
+                        <label for="CurrencyCodeInputText">
+                            <asp:Literal runat="server" Text="<%$Resources:Titles, CurrencyCode %>"/>
+                        </label>
+                        <input type="text" maxlength="12" id="CurrencyCodeInputText"/>
+                    </div>
+                    <div class="field">
+                        <label for="CurrencySymbolInputText">
+                            <asp:Literal runat="server" Text="<%$Resources:Titles, CurrencySymbol %>"/>
+                        </label>
+                        <input type="text" maxlength="48" id="CurrencySymbolInputText"/>
+                    </div>
+                    <div class="field">
+                        <label for="CurrencyNameInputText">
+                            <asp:Literal runat="server" Text="<%$Resources:Titles, CurrencyName %>"/>
+                        </label>
+                        <input type="text" maxlength="48" id="CurrencyNameInputText"/>
+                    </div>
+                    <div class="field">
+                        <label for="HundredthNameInputText">
+                            <asp:Literal runat="server" Text="<%$Resources:Titles, HundredthName %>"/>
+                        </label>
+                        <input type="text" maxlength="48" id="HundredthNameInputText"/>
+                    </div>
+                </div>
+
+                <div class="ui header">
+                    <div class="content">
+                        <asp:Literal runat="server" Text="<%$Resources:Titles, CreateaUserAccountforYourself %>"/>
+                    </div>
+                </div>
+                <div class="ui divider"></div>
+                <div class="two fields">
+                    <div class="field">
+                        <label for="AdminNameInputText">
+                            <asp:Literal runat="server" Text="<%$Resources:Titles, YourName %>"/>
+                        </label>
+                        <input type="text" maxlength="100" id="AdminNameInputText"/>
+                    </div>
+                    <div class="field">
+                        <label for="UsernameInputText">
+                            <asp:Literal runat="server" Text="<%$Resources:Titles, Username %>"/>
+                        </label>
+                        <input type="text" maxlength="50" id="UsernameInputText"/>
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <label for="PasswordInputPassword">
+                            <asp:Literal runat="server" Text="<%$Resources:Titles, Password %>"/>
+                        </label>
+                        <input type="password" maxlength="50" id="PasswordInputPassword"/>
+                    </div>
+                    <div class="field">
+                        <label for="ConfirmPasswordInputPassword">
+                            <asp:Literal runat="server" Text="<%$Resources:Titles, ConfirmPassword %>"/>
+                        </label>
+                        <input type="password" maxlength="50" id="ConfirmPasswordInputPassword"/>
+                    </div>
+                </div>
+
+                <button type="button" class="ui small red button" id="SaveButton">
+                    <asp:Literal runat="server" Text="<%$Resources:Titles, Save %>"/>
+                </button>
+            </div>
+            <div class="ui page dimmer">
+                <div class="content">
+                    <div class="center">
+                        <div class="ui yellow huge icon header">
+                            <i class="ui inverted yellow setting loading icon"></i>
+                            <asp:Literal runat="server" Text="<%$Resources:Titles, Saving %>"/>
+                            <div class="ui yellow sub header">
+                                <asp:Literal runat="server" Text="<%$Resources:Labels, JustAMomentPlease %>"/>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+</form>
+<script src="Scripts/Pages/Install.aspx.js"></script>
 </body>
-<script type="text/javascript">
-    var isValid = true;
-    var officeName = $('#OfficeNameInputText');
-    var officeCode = $('#OfficeCodeInputText');
-    var nickName = $('#NickNameInputText');
-    var registrationDate = $('#RegistrationDateInputText');
-    var currencyCode = $('#CurrencyCodeInputText');
-    var currencySymbol = $('#CurrencySymbolInputText');
-    var currencyName = $('#CurrencyNameInputText');
-    var hundredthName = $('#HundredthNameInputText');
-    var adminName = $('#AdminNameInputText');
-    var userName = $('#UserNameInputText');
-    var password = $('#PasswordInputPassword');
-    var confirmPassword = $('#ConfirmPasswordInputPassword');
-    var saveButton = $('#SaveButton');
-
-    var validateFields = function () {
-        if (isNullOrWhiteSpace(officeName.val()) || isNullOrWhiteSpace(officeCode.val()) || isNullOrWhiteSpace(nickName.val()) || isNullOrWhiteSpace(registrationDate.val()) || isNullOrWhiteSpace(currencyCode.val()) || isNullOrWhiteSpace(currencySymbol.val()) || isNullOrWhiteSpace(currencyName.val()) || isNullOrWhiteSpace(hundredthName.val()) || isNullOrWhiteSpace(adminName.val()) || isNullOrWhiteSpace(userName.val()) || isNullOrWhiteSpace(password.val()) || isNullOrWhiteSpace(confirmPassword.val())) {
-            isValid = false;
-            alert('Please input all fields');
-        } else {
-            isValid = true;
-        }
-        if (isValid) {
-            validatePassword();
-        }
-    };
-
-    var validatePassword = function () {
-        if (password.val() !== confirmPassword.val()) {
-            isValid = false;
-            alert('Password not equal.');
-        } else {
-            isValid = true;
-        }
-    };
-
-    saveButton.click(function () {
-
-        validateFields();
-
-        if (isValid) {
-            $(".dimmer").dimmer('show');
-            var url = "/Services/Install.asmx/SaveOffice";
-            data = appendParameter("", "officeCode", officeCode.val());
-            data = appendParameter(data, "officeName", officeName.val());
-            data = appendParameter(data, "nickName", nickName.val());
-            data = appendParameter(data, "registrationDate", registrationDate.val());
-            data = appendParameter(data, "currencyCode", currencyCode.val());
-            data = appendParameter(data, "currencySymbol", currencySymbol.val());
-            data = appendParameter(data, "currencyName", currencyName.val());
-            data = appendParameter(data, "hundredthName", hundredthName.val());
-            data = appendParameter(data, "adminName", adminName.val());
-            data = appendParameter(data, "userName", userName.val());
-            data = appendParameter(data, "password", password.val());
-            data = appendParameter(data, "confirmPassword", confirmPassword.val());
-            data = getData(data);
-            var saveOffice = getAjax(url, data);
-
-            saveOffice.success(function (msg) {
-                if (msg.d) {
-                    window.location = "/SignIn.aspx";
-                } else {
-                    window.location = "/Install.aspx";
-                }
-            });
-
-            saveOffice.error(function (xhr) {
-                $(".dimmer").dimmer('hide');
-                alert(xhr.responseText);
-            });
-        }
-    });
-
-</script>
 </html>

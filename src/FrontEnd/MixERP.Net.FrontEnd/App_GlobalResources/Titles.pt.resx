@@ -213,4 +213,43 @@
   <data name="ConfirmPassword" xml:space="preserve">
     <value>confirme Sua Senha</value>
   </data>
+  <data name="AboutYourOffice" xml:space="preserve">
+    <value>Sobre seu escritório</value>
+  </data>
+  <data name="CreateaUserAccountforYourself" xml:space="preserve">
+    <value>Criar uma conta de usuário para você</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>Código da Moeda</value>
+  </data>
+  <data name="CurrencyName" xml:space="preserve">
+    <value>Nome da Moeda</value>
+  </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>Símbolo de moeda</value>
+  </data>
+  <data name="HundredthName" xml:space="preserve">
+    <value>Nome Hundredth</value>
+  </data>
+  <data name="InstallMixERP" xml:space="preserve">
+    <value>instale MixERP</value>
+  </data>
+  <data name="OfficeName" xml:space="preserve">
+    <value>Nome de Agência</value>
+  </data>
+  <data name="OfficeNickName" xml:space="preserve">
+    <value>Nome Escritório Nick</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>Data De Registro</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salvar</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>economia</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>seu Nome</value>
+  </data>
 </root>

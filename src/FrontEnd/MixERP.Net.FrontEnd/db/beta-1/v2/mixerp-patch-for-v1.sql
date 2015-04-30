@@ -2078,14 +2078,15 @@ LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_item_cost_price.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer);
-CREATE FUNCTION core.get_item_cost_price(item_id_ integer, party_id_ bigint, unit_id_ integer)
-RETURNS money_strict2
+
+DROP FUNCTION IF EXISTS core.get_item_cost_price(item_id_ integer, unit_id_ integer, party_id_ bigint);
+CREATE FUNCTION core.get_item_cost_price(item_id_ integer, unit_id_ integer, party_id_ bigint)
+RETURNS public.money_strict2
 AS
 $$
-    DECLARE _price money_strict2;
+    DECLARE _price public.money_strict2;
     DECLARE _unit_id integer;
-    DECLARE _factor decimal;
-   
+    DECLARE _factor decimal;   
 BEGIN
 
     --Fist pick the catalog price which matches all these fields:
@@ -2099,8 +2100,8 @@ BEGIN
         _unit_id   
     FROM core.item_cost_prices
     WHERE item_cost_prices.item_id=$1
-    AND item_cost_prices.party_id=$2
-    AND item_cost_prices.unit_id = $3;
+    AND item_cost_prices.party_id=$3
+    AND item_cost_prices.unit_id = $2;
 
     IF(_unit_id IS NULL) THEN
         --We do not have a cost price of this item for the unit supplied.
@@ -2113,7 +2114,7 @@ BEGIN
             _unit_id           
         FROM core.item_cost_prices
         WHERE item_cost_prices.item_id=$1
-        AND item_cost_prices.party_id=$2;
+        AND item_cost_prices.party_id=$3;
     END IF;
 
     
@@ -2131,7 +2132,7 @@ BEGIN
     END IF;
 
         --Get the unitary conversion factor if the requested unit does not match with the price defition.
-    _factor := core.convert_unit($3, _unit_id);
+    _factor := core.convert_unit($2, _unit_id);
 
     RETURN _price * _factor;
 END
@@ -2313,6 +2314,75 @@ $$
 LANGUAGE plpgsql;
 
 --SELECT * FROM core.get_periods('1-1-2000', '1-1-2020');
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/office/office.add_office.sql --<--<--
+DROP FUNCTION IF EXISTS office.add_office
+(
+    _office_code            national character varying(12),
+    _office_name            national character varying(150),
+    _nick_name              national character varying(50),
+    _registration_date      date,
+    _currency_code          national character varying(12),
+    _currency_symbol        national character varying(12),
+    _currency_name          national character varying(48),
+    _hundredth_name         national character varying(48),
+    _admin_name             national character varying(100),
+    _user_name              national character varying(50),
+    _password               national character varying(48)
+);
+
+CREATE FUNCTION office.add_office
+(
+    _office_code            national character varying(12),
+    _office_name            national character varying(150),
+    _nick_name              national character varying(50),
+    _registration_date      date,
+    _currency_code          national character varying(12),
+    _currency_symbol        national character varying(12),
+    _currency_name          national character varying(48),
+    _hundredth_name         national character varying(48),
+    _admin_name             national character varying(100),
+    _user_name              national character varying(50),
+    _password               national character varying(48)
+)
+RETURNS void 
+VOLATILE AS
+$$
+    DECLARE _office_id      integer;
+    DECLARE _user_id		integer;
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 0 
+        FROM core.currencies
+        WHERE currency_code=_currency_code
+    ) THEN
+        INSERT INTO core.currencies(currency_code, currency_symbol, currency_name, hundredth_name)
+        SELECT _currency_code, _currency_symbol, _currency_name, _hundredth_name;
+    END IF;
+
+
+    INSERT INTO office.offices(office_code, office_name, nick_name, registration_date, currency_code)
+    SELECT _office_code, _office_name, _nick_name, _registration_date, _currency_code
+    RETURNING office_id INTO _office_id;
+
+    IF NOT EXISTS(SELECT 0 FROM office.users WHERE user_name='sys') THEN
+        INSERT INTO office.users(role_id, department_id, office_id, user_name, password, full_name)
+        SELECT office.get_role_id_by_role_code('SYST'), office.get_department_id_by_department_code('SUP'), _office_id, 'sys', '', 'System';
+    END IF;
+        
+    INSERT INTO office.users(role_id, department_id, office_id,user_name,password, full_name, elevated)
+    SELECT office.get_role_id_by_role_code('ADMN'), office.get_department_id_by_department_code('SUP'), _office_id, _user_name, _password, _admin_name, true
+    RETURNING user_id INTO _user_id;
+
+    INSERT INTO policy.menu_access(office_id, menu_id, user_id)
+    SELECT _office_id, core.menus.menu_id, _user_id
+    FROM core.menus;
+
+    RETURN;
+END;
+$$
+LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/office/office.get_income_tax_rate.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_income_tax_rate(_office_id integer);

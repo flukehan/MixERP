@@ -132,4 +132,10 @@
   <data name="YourPasswordWasChanged" xml:space="preserve">
     <value>Your password was changed.</value>
   </data>
+  <data name="AllFieldsRequired" xml:space="preserve">
+    <value>Semua bidang yang diperlukan.</value>
+  </data>
+  <data name="ConfirmedPasswordDoesNotMatch" xml:space="preserve">
+    <value>Sandi konfirmasi tidak cocok.</value>
+  </data>
 </root>

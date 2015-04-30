@@ -8,13 +8,14 @@ using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.Entities;
+using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.BackOffice.OTS
 {
-    public partial class OpeningInventory : MixERPUserControl
+    public partial class OpeningInventory : MixERPUserControl, ITransaction
     {
         public override AccessLevel AccessLevel
         {

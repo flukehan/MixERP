@@ -19,10 +19,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using MixERP.Net.DbFactory;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Office;
-using Npgsql;
 
 namespace MixERP.Net.FrontEnd.Data.Office
 {
@@ -33,27 +31,14 @@ namespace MixERP.Net.FrontEnd.Data.Office
             return Factory.Get<DbGetOfficesResult>("SELECT * FROM office.get_offices();");
         }
 
-        public static bool SaveOffice(string officeCode, string officeName, string nickName, DateTime registrationDate,
-            string currencyCode,string currencySymbol, string currencyName, string hundredthName, string adminName, string userName,
-            string password)
+        public static void SaveOffice(string officeCode, string officeName, string nickName, DateTime registrationDate,
+            string currencyCode, string currencySymbol, string currencyName, string hundredthName, string adminName,
+            string username, string password)
         {
-            string sql =
-                "SELECT * FROM office.add_office(@OfficeCode, @OfficeName, @NickName, @RegistrationDate, @CurrencyCode, @CurrencySymbol, @CurrencyName, @HundredthName, @AdminName, @UserName, @Password);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@OfficeCode", officeCode);
-                command.Parameters.AddWithValue("@OfficeName", officeName);
-                command.Parameters.AddWithValue("@NickName", nickName);
-                command.Parameters.AddWithValue("@RegistrationDate", registrationDate);
-                command.Parameters.AddWithValue("@CurrencyCode", currencyCode);
-                command.Parameters.AddWithValue("@CurrencySymbol", currencySymbol);
-                command.Parameters.AddWithValue("@CurrencyName", currencyName);
-                command.Parameters.AddWithValue("@HundredthName", hundredthName);
-                command.Parameters.AddWithValue("@AdminName", adminName);
-                command.Parameters.AddWithValue("@UserName", userName);
-                command.Parameters.AddWithValue("@Password", password);
-                return DbOperation.ExecuteNonQuery(command);
-            }
+            const string sql = "SELECT * FROM office.add_office(@0::varchar(12), @1::varchar(150), @2::varchar(50), @3::date, @4::varchar(12), @5::varchar(12), @6::varchar(48), @7::varchar(48), @8::varchar(100), @9::varchar(50), @10::varchar(48));";
+
+            Factory.NonQuery(sql, officeCode, officeName, nickName, registrationDate, currencyCode,
+                currencySymbol, currencyName, hundredthName, adminName, username, password);
         }
     }
 }

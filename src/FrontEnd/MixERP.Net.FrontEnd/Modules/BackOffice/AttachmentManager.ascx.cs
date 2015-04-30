@@ -30,18 +30,21 @@ namespace MixERP.Net.Core.Modules.BackOffice
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (Attachment attachment = new Attachment())
+            if (!this.IsRestrictedMode)
             {
-                attachment.ShowSaveButton = true;
-                this.Placeholder1.Controls.Add(attachment);
+                this.TitleLiteral.Text = Titles.UploadAttachments;
+
+                using (Attachment attachment = new Attachment())
+                {
+                    attachment.ShowSaveButton = true;
+                    this.Placeholder1.Controls.Add(attachment);
+                }
             }
 
             this.RegisterJavascript();
-            this.TitleLiteral.Text = Titles.UploadAttachments;
             this.SubTitleLiteral.Text = Titles.ViewAttachments;
             this.OKLiteral.Text = Titles.OK;
             this.SetOverridePath();
-            
         }
 
         private void RegisterJavascript()

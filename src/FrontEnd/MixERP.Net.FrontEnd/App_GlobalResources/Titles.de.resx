@@ -213,4 +213,43 @@
   <data name="OfficeCode" xml:space="preserve">
     <value>Büro-Code</value>
   </data>
+  <data name="AboutYourOffice" xml:space="preserve">
+    <value>Über Ihr Büro</value>
+  </data>
+  <data name="CreateaUserAccountforYourself" xml:space="preserve">
+    <value>Erstellen Sie ein Benutzerkonto für sich selbst</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>Währungscode</value>
+  </data>
+  <data name="CurrencyName" xml:space="preserve">
+    <value>Währungsbezeichnung</value>
+  </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>Währungssymbol</value>
+  </data>
+  <data name="HundredthName" xml:space="preserve">
+    <value>hundertsten Namen</value>
+  </data>
+  <data name="InstallMixERP" xml:space="preserve">
+    <value>Installieren MixERP</value>
+  </data>
+  <data name="OfficeName" xml:space="preserve">
+    <value>Büroname</value>
+  </data>
+  <data name="OfficeNickName" xml:space="preserve">
+    <value>Office-Nickname</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>Registrierungsdatum</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Sparen</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Ihren Namen</value>
+  </data>
 </root>

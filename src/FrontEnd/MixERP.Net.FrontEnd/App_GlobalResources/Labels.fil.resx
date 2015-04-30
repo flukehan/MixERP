@@ -132,4 +132,10 @@
   <data name="JustAMomentPlease" xml:space="preserve">
     <value>Sandali lamang, mangyaring!</value>
   </data>
+  <data name="AllFieldsRequired" xml:space="preserve">
+    <value>Lahat ng mga patlang ay kinakailangan.</value>
+  </data>
+  <data name="ConfirmedPasswordDoesNotMatch" xml:space="preserve">
+    <value>Ang kumpirmahin password ay hindi tumutugma.</value>
+  </data>
 </root>

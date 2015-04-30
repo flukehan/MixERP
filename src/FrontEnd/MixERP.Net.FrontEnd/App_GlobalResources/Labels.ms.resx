@@ -132,4 +132,10 @@
   <data name="JustAMomentPlease" xml:space="preserve">
     <value>Hanya seketika, sila!</value>
   </data>
+  <data name="AllFieldsRequired" xml:space="preserve">
+    <value>Semua medan yang diperlukan.</value>
+  </data>
+  <data name="ConfirmedPasswordDoesNotMatch" xml:space="preserve">
+    <value>Kata laluan yang mengesahkan tidak sama.</value>
+  </data>
 </root>

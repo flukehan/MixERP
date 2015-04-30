@@ -22,12 +22,13 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Purchase.Resources;
+using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Purchase
 {
-    public partial class Reorder : MixERPUserControl
+    public partial class Reorder : MixERPUserControl, ITransaction
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {

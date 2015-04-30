@@ -132,4 +132,10 @@
   <data name="TaskCompletedSuccessfully" xml:space="preserve">
     <value>タスクが正常に完了した。</value>
   </data>
+  <data name="AllFieldsRequired" xml:space="preserve">
+    <value>全て必須項目です。</value>
+  </data>
+  <data name="ConfirmedPasswordDoesNotMatch" xml:space="preserve">
+    <value>確認パスワードが一致しません。</value>
+  </data>
 </root>

@@ -132,4 +132,10 @@
   <data name="YourPasswordWasChanged" xml:space="preserve">
     <value>Uw wachtwoord is gewijzigd.</value>
   </data>
+  <data name="AllFieldsRequired" xml:space="preserve">
+    <value>Alle Felder sind erforderlich.</value>
+  </data>
+  <data name="ConfirmedPasswordDoesNotMatch" xml:space="preserve">
+    <value>Das bestätigen Kennwort nicht übereinstimmt.</value>
+  </data>
 </root>

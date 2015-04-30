@@ -213,4 +213,43 @@
   <data name="OfficeCode" xml:space="preserve">
     <value>办公代码</value>
   </data>
+  <data name="AboutYourOffice" xml:space="preserve">
+    <value>关于您的办公室</value>
+  </data>
+  <data name="CreateaUserAccountforYourself" xml:space="preserve">
+    <value>为自己创建一个用户帐户</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>货币代码</value>
+  </data>
+  <data name="CurrencyName" xml:space="preserve">
+    <value>货币名称</value>
+  </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>货币符号</value>
+  </data>
+  <data name="HundredthName" xml:space="preserve">
+    <value>百名称</value>
+  </data>
+  <data name="InstallMixERP" xml:space="preserve">
+    <value>安装MixERP</value>
+  </data>
+  <data name="OfficeName" xml:space="preserve">
+    <value>办事处名称</value>
+  </data>
+  <data name="OfficeNickName" xml:space="preserve">
+    <value>办公室昵称</value>
+  </data>
+  <data name="RegistrationDate" xml:space="preserve">
+    <value>注册日期</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>节约</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>你的名字</value>
+  </data>
 </root>

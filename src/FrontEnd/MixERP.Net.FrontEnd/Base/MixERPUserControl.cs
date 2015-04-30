@@ -22,6 +22,7 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Extensions;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Cache;
 using Serilog;
@@ -35,6 +36,14 @@ namespace MixERP.Net.FrontEnd.Base
         public override AccessLevel AccessLevel
         {
             get { return AccessLevel.PolicyBased; }
+        }
+
+        public bool IsRestrictedMode
+        {
+            get
+            {
+                return !CurrentUser.GetSignInView().AllowTransactionPosting.ToBool();                
+            }
         }
 
         public void Initialize()
@@ -59,18 +68,21 @@ namespace MixERP.Net.FrontEnd.Base
 
         private void CheckAccessLevel()
         {
-            if ((this.AccessLevel.Equals(AccessLevel.AdminOnly) || this.AccessLevel.Equals(AccessLevel.LocalhostAdmin)) &&
-                !CurrentUser.GetSignInView().IsAdmin.ToBool())
-            {
-                Log.Information("Access to {Control} is denied to {User} from {IP}.", this,
-                    CurrentUser.GetSignInView().UserName, CurrentUser.GetSignInView().IpAddress);
+            bool isDevelopmentMode = ConfigurationHelper.GetMixERPParameter("Mode").ToUpperInvariant().Equals("DEVELOPMENT");
+            bool isLocalHost = PageUtility.IsLocalhost(this.Page);
+            bool hasAccess = !this.AccessLevel.Equals(AccessLevel.AdminOnly) ||
+                             this.AccessLevel.Equals(AccessLevel.LocalhostAdmin) &&
+                             !CurrentUser.GetSignInView().IsAdmin.ToBool();
 
-                this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
+            if (hasAccess && isDevelopmentMode)
+            {
+                if (this.AccessLevel.Equals(AccessLevel.LocalhostAdmin) && !isLocalHost)
+                {
+                    hasAccess = false;
+                }
             }
 
-            bool isLocalHost = PageUtility.IsLocalhost(this.Page);
-
-            if (this.AccessLevel.Equals(AccessLevel.LocalhostAdmin) && !isLocalHost)
+            if (!hasAccess)
             {
                 Log.Information("Access to {Control} is denied to {User} from {IP}.", this,
                     CurrentUser.GetSignInView().UserName, CurrentUser.GetSignInView().IpAddress);

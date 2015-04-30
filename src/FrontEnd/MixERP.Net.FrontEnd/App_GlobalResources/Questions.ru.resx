@@ -123,4 +123,7 @@
   <data name="CannotAccessAccount" xml:space="preserve">
     <value>Не можете войти в аккаунт?</value>
   </data>
+  <data name="WhatIsYourHomeCurrency" xml:space="preserve">
+    <value>Что Является ли ваш дом валюте?</value>
+  </data>
 </root>
