@@ -58,7 +58,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
                 ids = string.Join(",", tranIds);
             }
 
-            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_sales(@BookName::national character varying(12), @OfficeId::integer, @UserId::integer, @LoginId::bigint, @ValueDate::date, @CostCenterId::integer, @ReferenceNumber::national character varying(24), @StatementReference::text, @IsCredit::boolean, @PaymentTermId::integer, @PartyCode::national character varying(12), @PriceTypeId::integer, @SalespersonId::integer, @ShipperId::integer, @ShippingAddressCode::national character varying(12), @StoreId::integer, @NonTaxable::boolean, ARRAY[{0}], ARRAY[{1}], ARRAY[{2}])", detail, attachment, ids);
+            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_sales(@BookName::national character varying(48), @OfficeId::integer, @UserId::integer, @LoginId::bigint, @ValueDate::date, @CostCenterId::integer, @ReferenceNumber::national character varying(24), @StatementReference::text, @IsCredit::boolean, @PaymentTermId::integer, @PartyCode::national character varying(12), @PriceTypeId::integer, @SalespersonId::integer, @ShipperId::integer, @ShippingAddressCode::national character varying(12), @StoreId::integer, @NonTaxable::boolean, ARRAY[{0}], ARRAY[{1}], ARRAY[{2}])", detail, attachment, ids);
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
