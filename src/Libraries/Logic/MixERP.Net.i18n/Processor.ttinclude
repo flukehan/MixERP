@@ -1,0 +1,61 @@
+﻿<#@ template language="C#" hostspecific="True" #>
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Configuration" #>
+<#@ assembly name="System.Windows.Forms" #>
+<#@ assembly name="$(SolutionDir)FrontEnd\MixERP.Net.FrontEnd\bin\Npgsql.dll" #>
+<#@ assembly name="$(SolutionDir)FrontEnd\MixERP.Net.FrontEnd\bin\Mono.Security.dll" #>
+<#@ import namespace="Npgsql" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Data.Common" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Globalization" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Configuration" #>
+<#@ import namespace="System.Windows.Forms" #>
+<#+
+	private string NpgsqlConnectionString="Server=localhost;Port=5432;Database=mixerp;User Id=postgres;Password=binod;";
+
+	public class DbResource
+	{
+		public string ResourceClass { get; set; }
+		public string ResourceKey { get; set; }
+		public string InvariantString { get; set; }
+	}
+
+	public IEnumerable<DbResource> GetResources()
+	{
+		List<DbResource> resources = new List<DbResource>();
+
+		const string sql = "SELECT resource_class, key, value FROM localization.resources ORDER BY resource_class, key;";
+		using (NpgsqlConnection connection = new NpgsqlConnection(NpgsqlConnectionString))
+		{
+			using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
+			{
+			    connection.Open();
+				using(NpgsqlDataReader reader = command.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						resources.Add(new DbResource
+						{
+							ResourceClass = reader.GetString(0),
+							ResourceKey = reader.GetString(1),
+							InvariantString = reader.GetString(2)
+						});
+					}
+				}
+			}
+		}
+
+		return resources;
+	}
+
+	#>

@@ -28,6 +28,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </head>
 <body id="SignInBody">
     <form id="form1" runat="server">
+        <asp:Literal ID="TestLiteral" runat="server" />
         <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
         <script type="text/javascript" src="/bundles/scripts/libraries.min.js"></script>
         <script type="text/javascript" src="/Scripts/jssha1.5/src/sha.js"></script>

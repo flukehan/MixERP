@@ -600,3 +600,36 @@ DROP VIEW IF EXISTS core.ageing_slab_scrud_view;
 
 ALTER TABLE core.ageing_slabs
 ALTER COLUMN to_days TYPE public.integer_strict2;
+
+
+DO
+$$
+BEGIN
+    IF EXISTS
+    (
+        SELECT TRUE
+        FROM   pg_attribute 
+        WHERE  attrelid = 'localization.resources'::regclass
+        AND    attname = 'path'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE localization.resources
+        RENAME COLUMN path TO resource_class;
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+DROP TABLE IF EXISTS localization.localized_resources CASCADE;
+
+CREATE TABLE localization.localized_resources
+(
+    resource_id             integer NOT NULL REFERENCES localization.resources(resource_id),
+    culture_code            text NOT NULL REFERENCES localization.cultures(culture_code),
+    value                   text NOT NULL
+);
+
+CREATE UNIQUE INDEX localized_resources_culture_key_uix
+ON localization.localized_resources
+(resource_id, UPPER(culture_code));
+
