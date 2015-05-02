@@ -6,7 +6,6 @@ ALTER TABLE transactions.stock_details DISABLE TRIGGER restrict_delete_trigger;
 
 DELETE FROM transactions.customer_receipts;
 DELETE FROM transactions.transaction_details;
-DELETE FROM localization.resources;
 DELETE FROM transactions.non_gl_stock_tax_details;
 DELETE FROM transactions.non_gl_stock_details;
 DELETE FROM transactions.non_gl_stock_master;
