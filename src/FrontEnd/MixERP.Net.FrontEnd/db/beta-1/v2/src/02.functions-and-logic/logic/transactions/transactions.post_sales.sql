@@ -23,7 +23,7 @@
 
 DROP FUNCTION IF EXISTS transactions.post_sales
 (
-    _book_name                              national character varying(12),
+    _book_name                              national character varying(48),
     _office_id                              integer,
     _user_id                                integer,
     _login_id                               bigint,
@@ -47,7 +47,7 @@ DROP FUNCTION IF EXISTS transactions.post_sales
 
 CREATE FUNCTION transactions.post_sales
 (
-    _book_name                              national character varying(12),
+    _book_name                              national character varying(48),
     _office_id                              integer,
     _user_id                                integer,
     _login_id                               bigint,
