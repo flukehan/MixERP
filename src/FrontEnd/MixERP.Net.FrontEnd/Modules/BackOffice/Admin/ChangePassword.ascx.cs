@@ -26,9 +26,9 @@ using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.BackOffice.Data.Admin;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using Serilog;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Admin

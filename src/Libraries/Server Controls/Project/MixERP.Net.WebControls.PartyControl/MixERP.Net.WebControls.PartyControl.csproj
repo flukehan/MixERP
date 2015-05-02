@@ -52,38 +52,21 @@
     <Compile Include="ControlHelper.cs" />
     <Compile Include="PartyControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Titles.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.resx</DependentUpon>
-    </Compile>
     <Compile Include="Sources\TabBody.cs" />
     <Compile Include="Sources\Tabs.cs" />
     <Compile Include="Sources\Header.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="PartyControl.js" />
-    <EmbeddedResource Include="Resources\Titles.de.resx" />
-    <EmbeddedResource Include="Resources\Titles.es.resx" />
-    <EmbeddedResource Include="Resources\Titles.fil.resx" />
-    <EmbeddedResource Include="Resources\Titles.fr.resx" />
-    <EmbeddedResource Include="Resources\Titles.id.resx" />
-    <EmbeddedResource Include="Resources\Titles.ja.resx" />
-    <EmbeddedResource Include="Resources\Titles.ms.resx" />
-    <EmbeddedResource Include="Resources\Titles.nl.resx" />
-    <EmbeddedResource Include="Resources\Titles.pt.resx" />
-    <EmbeddedResource Include="Resources\Titles.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Titles.ru.resx" />
-    <EmbeddedResource Include="Resources\Titles.sv.resx" />
-    <EmbeddedResource Include="Resources\Titles.zh.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Logic\MixERP.Net.i18n\MixERP.Net.i18n.csproj">
+      <Project>{2ECD1C2E-D7D0-4A24-896A-E625B0566DB5}</Project>
+      <Name>MixERP.Net.i18n</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -24,6 +24,7 @@ using System.Web.UI;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.FrontEnd.Base
 {
@@ -55,21 +56,21 @@ namespace MixERP.Net.FrontEnd.Base
             script += JSUtility.GetVar("currencyDecimalPlaces", LocalizationHelper.GetCurrencyDecimalPlaces());
             script += JSUtility.GetVar("currencySymbol", LocalizationHelper.GetCurrencySymbol());
 
-            script += JSUtility.GetVar("duplicateEntryLocalized", Resources.Warnings.DuplicateEntry);
-            script += JSUtility.GetVar("selectLocalized", Resources.Titles.Select);
-            script += JSUtility.GetVar("noneLocalized", Resources.Titles.None);
-            script += JSUtility.GetVar("invalidDateWarningLocalized", Resources.Warnings.InvalidDate);
-            script += JSUtility.GetVar("areYouSureLocalized", Resources.Questions.AreYouSure);
-            script += JSUtility.GetVar("nothingSelectedLocalized", Resources.Warnings.NothingSelected);
-            script += JSUtility.GetVar("yesLocalized", Resources.Titles.Yes);
-            script += JSUtility.GetVar("noLocalized", Resources.Titles.No);
+            script += JSUtility.GetVar("duplicateEntryLocalized", Warnings.DuplicateEntry);
+            script += JSUtility.GetVar("selectLocalized", Titles.Select);
+            script += JSUtility.GetVar("noneLocalized", Titles.None);
+            script += JSUtility.GetVar("invalidDateWarningLocalized", Warnings.InvalidDate);
+            script += JSUtility.GetVar("areYouSureLocalized", Questions.AreYouSure);
+            script += JSUtility.GetVar("nothingSelectedLocalized", Warnings.NothingSelected);
+            script += JSUtility.GetVar("yesLocalized", Titles.Yes);
+            script += JSUtility.GetVar("noLocalized", Titles.No);
 
-            script += JSUtility.GetVar("daysLowerCaseLocalized", Resources.Labels.DaysLowerCase);
-            script += JSUtility.GetVar("gridViewEmptyWarningLocalized", Resources.Warnings.GridViewEmpty);
+            script += JSUtility.GetVar("daysLowerCaseLocalized", Labels.DaysLowerCase);
+            script += JSUtility.GetVar("gridViewEmptyWarningLocalized", Warnings.GridViewEmpty);
 
-            script += JSUtility.GetVar("duplicateFileLocalized", Resources.Warnings.DuplicateFiles);
+            script += JSUtility.GetVar("duplicateFileLocalized", Warnings.DuplicateFiles);
 
-            script += JSUtility.GetVar("taskCompletedSuccessfullyLocalized", Resources.Labels.TaskCompletedSuccessfully);
+            script += JSUtility.GetVar("taskCompletedSuccessfullyLocalized", Labels.TaskCompletedSuccessfully);
 
 
             script += JSUtility.GetVar("today", DateTime.Now.ToShortDateString());
@@ -78,22 +79,22 @@ namespace MixERP.Net.FrontEnd.Base
             script += JSUtility.GetVar("decimalSeparator", LocalizationHelper.GetDecimalSeparator());
             script += JSUtility.GetVar("currencyDecimalPlaces", LocalizationHelper.GetCurrencyDecimalPlaces());
 
-            script += JSUtility.GetVar("duplicateEntryLocalized", Resources.Warnings.DuplicateEntry);
+            script += JSUtility.GetVar("duplicateEntryLocalized", Warnings.DuplicateEntry);
 
-            script += JSUtility.GetVar("selectLocalized", Resources.Titles.Select);
-            script += JSUtility.GetVar("noneLocalized", Resources.Titles.None);
-            script += JSUtility.GetVar("invalidDateWarningLocalized", Resources.Warnings.InvalidDate);
-            script += JSUtility.GetVar("areYouSureLocalized", Resources.Questions.AreYouSure);
-            script += JSUtility.GetVar("nothingSelectedLocalized", Resources.Warnings.NothingSelected);
-            script += JSUtility.GetVar("yesLocalized", Resources.Titles.Yes);
-            script += JSUtility.GetVar("noLocalized", Resources.Titles.No);
+            script += JSUtility.GetVar("selectLocalized", Titles.Select);
+            script += JSUtility.GetVar("noneLocalized", Titles.None);
+            script += JSUtility.GetVar("invalidDateWarningLocalized", Warnings.InvalidDate);
+            script += JSUtility.GetVar("areYouSureLocalized", Questions.AreYouSure);
+            script += JSUtility.GetVar("nothingSelectedLocalized", Warnings.NothingSelected);
+            script += JSUtility.GetVar("yesLocalized", Titles.Yes);
+            script += JSUtility.GetVar("noLocalized", Titles.No);
 
-            script += JSUtility.GetVar("daysLowerCaseLocalized", Resources.Labels.DaysLowerCase);
-            script += JSUtility.GetVar("gridViewEmptyWarningLocalized", Resources.Warnings.GridViewEmpty);
+            script += JSUtility.GetVar("daysLowerCaseLocalized", Labels.DaysLowerCase);
+            script += JSUtility.GetVar("gridViewEmptyWarningLocalized", Warnings.GridViewEmpty);
 
-            script += JSUtility.GetVar("duplicateFileLocalized", Resources.Warnings.DuplicateFiles);
+            script += JSUtility.GetVar("duplicateFileLocalized", Warnings.DuplicateFiles);
 
-            script += JSUtility.GetVar("taskCompletedSuccessfullyLocalized", Resources.Labels.TaskCompletedSuccessfully);
+            script += JSUtility.GetVar("taskCompletedSuccessfullyLocalized", Labels.TaskCompletedSuccessfully);
 
             PageUtility.RegisterJavascript("MixERPMasterPage", script, this.Page, true);
         }

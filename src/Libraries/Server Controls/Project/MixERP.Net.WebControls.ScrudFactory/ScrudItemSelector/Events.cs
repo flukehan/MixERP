@@ -39,8 +39,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                 foreach (ListItem item in dropDownList.Items)
                 {
-                    item.Text = ScrudLocalizationHelper.GetResourceString(this.ResourceAssembly,
-                        this.GetResourceClassName(), item.Text);
+                    item.Text = ScrudLocalizationHelper.GetResourceString(this.GetResourceClassName(), item.Text);
                 }
             }
         }
@@ -101,8 +100,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                     if (!string.IsNullOrWhiteSpace(cellText))
                     {
                         cellText =
-                            ScrudLocalizationHelper.GetResourceString(this.ResourceAssembly, this.GetResourceClassName(),
-                                cellText);
+                            ScrudLocalizationHelper.GetResourceString(this.GetResourceClassName(), cellText);
                         e.Row.Cells[i].Text = cellText;
                     }
                 }

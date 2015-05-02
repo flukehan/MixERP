@@ -26,11 +26,13 @@ using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Finance.Resources;
+using MixERP.Net.Core.Modules.Finance.Data.Helpers;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.TransactionGovernor;
 using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.Flag;
 
@@ -62,7 +64,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             {
                 if (accountId > 0)
                 {
-                    accountNumber = Data.Helpers.AccountHelper.GetAccountNumberByAccountId(accountId);
+                    accountNumber = AccountHelper.GetAccountNumberByAccountId(accountId);
 
                     this.accountNumberInputText.Value = accountNumber;
                 }
@@ -118,7 +120,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
             int userId = CurrentUser.GetSignInView().UserId.ToInt();
 
-            TransactionGovernor.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
+            Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
 
             this.BindGridView();
             this.CreateAccountOverviewPanel(this.accountOverviewTab);

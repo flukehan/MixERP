@@ -252,21 +252,6 @@
     <Compile Include="Reports\PurchaseReturnReport.ascx.designer.cs">
       <DependentUpon>PurchaseReturnReport.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\ScrudResource.Designer.cs">
-      <DependentUpon>ScrudResource.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Resources\Titles.Designer.cs">
-      <DependentUpon>Titles.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Resources\Warnings.Designer.cs">
-      <DependentUpon>Warnings.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="Return.ascx.cs">
       <DependentUpon>Return.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -302,6 +287,10 @@
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
       <Project>{BDE918B1-DD9B-41C9-A41F-F3DDEC18B6D8}</Project>
       <Name>MixERP.Net.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.i18n\MixERP.Net.i18n.csproj">
+      <Project>{2ECD1C2E-D7D0-4A24-896A-E625B0566DB5}</Project>
+      <Name>MixERP.Net.i18n</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.TransactionGovernor\MixERP.Net.TransactionGovernor.csproj">
       <Project>{0AACF4DB-8332-4C4B-96DF-2BF6AEA68473}</Project>
@@ -343,56 +332,6 @@
       <Project>{af16ea95-9b7e-44e0-8bba-7c2a3895afbf}</Project>
       <Name>MixERP.Net.Core.Modules.Purchase.Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\ScrudResource.de.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.es.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.fil.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.fr.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.id.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.ja.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.ms.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.nl.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.pt.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ScrudResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\ScrudResource.ru.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.sv.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.zh.resx" />
-    <EmbeddedResource Include="Resources\Titles.de.resx" />
-    <EmbeddedResource Include="Resources\Titles.es.resx" />
-    <EmbeddedResource Include="Resources\Titles.fil.resx" />
-    <EmbeddedResource Include="Resources\Titles.fr.resx" />
-    <EmbeddedResource Include="Resources\Titles.id.resx" />
-    <EmbeddedResource Include="Resources\Titles.ja.resx" />
-    <EmbeddedResource Include="Resources\Titles.ms.resx" />
-    <EmbeddedResource Include="Resources\Titles.nl.resx" />
-    <EmbeddedResource Include="Resources\Titles.pt.resx" />
-    <EmbeddedResource Include="Resources\Titles.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Titles.ru.resx" />
-    <EmbeddedResource Include="Resources\Titles.sv.resx" />
-    <EmbeddedResource Include="Resources\Titles.zh.resx" />
-    <EmbeddedResource Include="Resources\Warnings.de.resx" />
-    <EmbeddedResource Include="Resources\Warnings.es.resx" />
-    <EmbeddedResource Include="Resources\Warnings.fil.resx" />
-    <EmbeddedResource Include="Resources\Warnings.fr.resx" />
-    <EmbeddedResource Include="Resources\Warnings.id.resx" />
-    <EmbeddedResource Include="Resources\Warnings.ja.resx" />
-    <EmbeddedResource Include="Resources\Warnings.ms.resx" />
-    <EmbeddedResource Include="Resources\Warnings.nl.resx" />
-    <EmbeddedResource Include="Resources\Warnings.pt.resx" />
-    <EmbeddedResource Include="Resources\Warnings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Warnings.ru.resx" />
-    <EmbeddedResource Include="Resources\Warnings.sv.resx" />
-    <EmbeddedResource Include="Resources\Warnings.zh.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

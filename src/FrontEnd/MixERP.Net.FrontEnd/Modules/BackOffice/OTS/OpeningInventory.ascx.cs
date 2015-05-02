@@ -6,11 +6,11 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.BackOffice.OTS

@@ -19,7 +19,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Web.UI.HtmlControls;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.StockTransactionFactory.Resources;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 
 namespace MixERP.Net.WebControls.StockTransactionFactory
 {
@@ -27,7 +28,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
     {
         private void AddCashTransactionDivCell(HtmlTableRow row)
         {
-            using (HtmlTableCell cell = Helpers.TableHelper.GetFieldCell())
+            using (HtmlTableCell cell = TableHelper.GetFieldCell())
             {
                 if (this.ShowTransactionType)
                 {

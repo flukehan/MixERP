@@ -19,14 +19,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
@@ -52,8 +51,6 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.ExcludeEdit = "password, user_name";
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Users));
-
                 bool denyToNonAdmins = !CurrentUser.GetSignInView().IsAdmin.ToBool();
 
                 scrud.DenyAdd = denyToNonAdmins;
@@ -67,9 +64,12 @@ namespace MixERP.Net.Core.Modules.BackOffice
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id", ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "office.roles.role_id", ConfigurationHelper.GetDbParameter("RoleDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "office.departments.department_id", ConfigurationHelper.GetDbParameter("DepartmentDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id",
+                ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.roles.role_id",
+                ConfigurationHelper.GetDbParameter("RoleDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.departments.department_id",
+                ConfigurationHelper.GetDbParameter("DepartmentDisplayField"));
             return string.Join(",", displayFields);
         }
 

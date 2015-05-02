@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Core.Modules.Finance.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Reflection;
+using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Finance.Setup
 {
@@ -41,7 +41,6 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.View = "ageing_slab_scrud_view";
 
                 scrud.Text = Titles.AgeingSlabs;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(AgeingSlabs));
 
                 this.AddScrudCustomValidatorErrorMessages();
 
@@ -55,7 +54,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
         {
             string javascript = JSUtility.GetVar("compareDaysErrorMessageLocalized", Warnings.CompareDaysErrorMessage);
 
-            Common.PageUtility.RegisterJavascript("AgeingSlabs_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
+            PageUtility.RegisterJavascript("AgeingSlabs_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
 
         }
     }

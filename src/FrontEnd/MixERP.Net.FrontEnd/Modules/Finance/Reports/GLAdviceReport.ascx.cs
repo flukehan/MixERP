@@ -23,8 +23,9 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reflection;
 using MixERP.Net.Common;
-using MixERP.Net.Core.Modules.Finance.Resources;
+using MixERP.Net.Core.Modules.Finance.Data.Helpers;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.ReportEngine;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
@@ -40,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             {
                 if (!string.IsNullOrWhiteSpace(tranCode))
                 {
-                    tranId = Data.Helpers.Transaction.GetTranIdByTranCode(tranCode).ToString(CultureInfo.InvariantCulture);
+                    tranId = Transaction.GetTranIdByTranCode(tranCode).ToString(CultureInfo.InvariantCulture);
                 }
             }
 
@@ -52,7 +53,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
                 report.RunningTotalText = Titles.RunningTotal;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof (GLAdviceReport));
                 report.Path = "~/Modules/Finance/Reports/Source/Transactions.GLEntry.xml";
                 report.AutoInitialize = true;
 

@@ -19,9 +19,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Reflection;
-using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Finance.Setup
 {
@@ -38,7 +38,6 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.View = "cost_center_scrud_view";
 
                 scrud.Text = Titles.CostCenters;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (CostCenters));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }

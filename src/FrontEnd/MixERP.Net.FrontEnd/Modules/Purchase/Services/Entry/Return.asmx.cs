@@ -27,6 +27,7 @@ using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.TransactionGovernor.Transactions;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using Serilog;
@@ -47,12 +48,12 @@ namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
             {
                 if (!StockTransaction.IsValidStockTransactionByTransactionMasterId(tranId))
                 {
-                    throw new InvalidOperationException(Resources.Warnings.InvalidStockTransaction);
+                    throw new InvalidOperationException(Warnings.InvalidStockTransaction);
                 }
 
                 if (!StockTransaction.IsValidPartyByTransactionMasterId(tranId, partyCode))
                 {
-                    throw new InvalidOperationException(Resources.Warnings.InvalidParty);
+                    throw new InvalidOperationException(Warnings.InvalidParty);
                 }
 
                 Collection<StockDetail> details = CollectionHelper.GetStockMasterDetailCollection(data, storeId);

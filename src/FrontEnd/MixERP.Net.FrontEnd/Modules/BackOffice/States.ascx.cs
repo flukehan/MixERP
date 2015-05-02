@@ -19,11 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
@@ -43,7 +42,6 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (States));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
@@ -51,7 +49,8 @@ namespace MixERP.Net.Core.Modules.BackOffice
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.countries.country_id", ConfigurationHelper.GetDbParameter("CountryDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.countries.country_id",
+                ConfigurationHelper.GetDbParameter("CountryDisplayField"));
             return string.Join(",", displayFields);
         }
 

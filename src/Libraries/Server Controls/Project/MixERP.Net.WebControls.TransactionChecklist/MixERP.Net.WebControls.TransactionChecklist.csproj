@@ -53,26 +53,6 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Resources\Labels.Designer.cs">
-      <DependentUpon>Labels.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Resources\Questions.Designer.cs">
-      <DependentUpon>Questions.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Resources\Titles.Designer.cs">
-      <DependentUpon>Titles.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Resources\Warnings.Designer.cs">
-      <DependentUpon>Warnings.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="TransactionCheckList\Base.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\TransactionChecklistResourceHelper.cs" />
@@ -111,6 +91,10 @@
       <Project>{0ef8a910-9603-477e-9ef7-aae9aea46160}</Project>
       <Name>MixERP.Net.HtmlParser</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Logic\MixERP.Net.i18n\MixERP.Net.i18n.csproj">
+      <Project>{2ECD1C2E-D7D0-4A24-896A-E625B0566DB5}</Project>
+      <Name>MixERP.Net.i18n</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Logic\MixERP.Net.Messaging\MixERP.Net.Messaging.Email.csproj">
       <Project>{D29B7B60-76B2-4A00-A8FA-7654519AFCD4}</Project>
       <Name>MixERP.Net.Messaging.Email</Name>
@@ -124,71 +108,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Labels.de.resx" />
-    <EmbeddedResource Include="Resources\Labels.es.resx" />
-    <EmbeddedResource Include="Resources\Labels.fil.resx" />
-    <EmbeddedResource Include="Resources\Labels.fr.resx" />
-    <EmbeddedResource Include="Resources\Labels.id.resx" />
-    <EmbeddedResource Include="Resources\Labels.ja.resx" />
-    <EmbeddedResource Include="Resources\Labels.ms.resx" />
-    <EmbeddedResource Include="Resources\Labels.nl.resx" />
-    <EmbeddedResource Include="Resources\Labels.pt.resx" />
-    <EmbeddedResource Include="Resources\Labels.resx">
-      <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Labels.ru.resx" />
-    <EmbeddedResource Include="Resources\Labels.sv.resx" />
-    <EmbeddedResource Include="Resources\Labels.zh.resx" />
-    <EmbeddedResource Include="Resources\Questions.de.resx" />
-    <EmbeddedResource Include="Resources\Questions.es.resx" />
-    <EmbeddedResource Include="Resources\Questions.fil.resx" />
-    <EmbeddedResource Include="Resources\Questions.fr.resx" />
-    <EmbeddedResource Include="Resources\Questions.id.resx" />
-    <EmbeddedResource Include="Resources\Questions.ja.resx" />
-    <EmbeddedResource Include="Resources\Questions.ms.resx" />
-    <EmbeddedResource Include="Resources\Questions.nl.resx" />
-    <EmbeddedResource Include="Resources\Questions.pt.resx" />
-    <EmbeddedResource Include="Resources\Questions.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Questions.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Questions.ru.resx" />
-    <EmbeddedResource Include="Resources\Questions.sv.resx" />
-    <EmbeddedResource Include="Resources\Questions.zh.resx" />
-    <EmbeddedResource Include="Resources\Titles.de.resx" />
-    <EmbeddedResource Include="Resources\Titles.es.resx" />
-    <EmbeddedResource Include="Resources\Titles.fil.resx" />
-    <EmbeddedResource Include="Resources\Titles.fr.resx" />
-    <EmbeddedResource Include="Resources\Titles.id.resx" />
-    <EmbeddedResource Include="Resources\Titles.ja.resx" />
-    <EmbeddedResource Include="Resources\Titles.ms.resx" />
-    <EmbeddedResource Include="Resources\Titles.nl.resx" />
-    <EmbeddedResource Include="Resources\Titles.pt.resx" />
-    <EmbeddedResource Include="Resources\Titles.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Titles.ru.resx" />
-    <EmbeddedResource Include="Resources\Titles.sv.resx" />
-    <EmbeddedResource Include="Resources\Titles.zh.resx" />
-    <EmbeddedResource Include="Resources\Warnings.de.resx" />
-    <EmbeddedResource Include="Resources\Warnings.es.resx" />
-    <EmbeddedResource Include="Resources\Warnings.fil.resx" />
-    <EmbeddedResource Include="Resources\Warnings.fr.resx" />
-    <EmbeddedResource Include="Resources\Warnings.id.resx" />
-    <EmbeddedResource Include="Resources\Warnings.ja.resx" />
-    <EmbeddedResource Include="Resources\Warnings.ms.resx" />
-    <EmbeddedResource Include="Resources\Warnings.nl.resx" />
-    <EmbeddedResource Include="Resources\Warnings.pt.resx" />
-    <EmbeddedResource Include="Resources\Warnings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Warnings.ru.resx" />
-    <EmbeddedResource Include="Resources\Warnings.sv.resx" />
-    <EmbeddedResource Include="Resources\Warnings.zh.resx" />
     <EmbeddedResource Include="Scripts\TransactionChecklist.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

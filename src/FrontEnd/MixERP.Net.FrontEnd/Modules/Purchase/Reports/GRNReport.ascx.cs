@@ -38,7 +38,6 @@ namespace MixERP.Net.Core.Modules.Purchase.Reports
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
                 report.AutoInitialize = true;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof (DirectPurchaseInvoiceReport));
                 report.Path = "~/Modules/Purchase/Reports/Source/Purchase.GRN.xml";
 
                 this.Controls.Add(report);

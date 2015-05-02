@@ -27,6 +27,7 @@ using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using Serilog;
 
@@ -62,7 +63,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 
                         if (available < model.Quantity)
                         {
-                            throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.Warnings.InsufficientStockWarning, available, model.UnitName, model.ItemCode));
+                            throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Warnings.InsufficientStockWarning, available, model.UnitName, model.ItemCode));
                         }
                     }
                 }

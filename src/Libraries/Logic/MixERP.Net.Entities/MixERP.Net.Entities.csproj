@@ -74,11 +74,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\Warnings.Designer.cs">
-      <DependentUpon>Warnings.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="Transactions.cs">
       <DependentUpon>Transactions.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -132,6 +127,10 @@
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.i18n\MixERP.Net.i18n.csproj">
+      <Project>{2ECD1C2E-D7D0-4A24-896A-E625B0566DB5}</Project>
+      <Name>MixERP.Net.i18n</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -183,24 +182,6 @@
     <None Include="Processors\Office.processor.template" />
     <None Include="Processors\Core.processor.template" />
     <None Include="Templates\Generator.template" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Warnings.de.resx" />
-    <EmbeddedResource Include="Resources\Warnings.es.resx" />
-    <EmbeddedResource Include="Resources\Warnings.fil.resx" />
-    <EmbeddedResource Include="Resources\Warnings.fr.resx" />
-    <EmbeddedResource Include="Resources\Warnings.id.resx" />
-    <EmbeddedResource Include="Resources\Warnings.ja.resx" />
-    <EmbeddedResource Include="Resources\Warnings.ms.resx" />
-    <EmbeddedResource Include="Resources\Warnings.nl.resx" />
-    <EmbeddedResource Include="Resources\Warnings.pt.resx" />
-    <EmbeddedResource Include="Resources\Warnings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Warnings.ru.resx" />
-    <EmbeddedResource Include="Resources\Warnings.sv.resx" />
-    <EmbeddedResource Include="Resources\Warnings.zh.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

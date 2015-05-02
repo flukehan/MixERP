@@ -18,10 +18,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Reflection;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
@@ -43,8 +43,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.ViewSchema = "office";
                 scrud.View = "role_scrud_view";
 
-                scrud.Text = Resources.Titles.Roles;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Roles));
+                scrud.Text = Titles.Roles;
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }

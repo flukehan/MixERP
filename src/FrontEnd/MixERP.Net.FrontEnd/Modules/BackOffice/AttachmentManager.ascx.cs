@@ -20,8 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.AttachmentFactory;
 
 namespace MixERP.Net.Core.Modules.BackOffice

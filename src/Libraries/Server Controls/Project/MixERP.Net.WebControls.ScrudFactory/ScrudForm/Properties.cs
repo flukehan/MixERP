@@ -174,11 +174,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
         public string PrintButtonIconCssClass { get; set; }
 
         /// <summary>
-        ///     Assembly containing resource files.
-        /// </summary>
-        public Assembly ResourceAssembly { get; set; }
-
-        /// <summary>
         ///     Use this parameter to override the "ResourceClassName" key in the configuration file.
         ///     ResourceClassName contains localized resource strings of database table column names.
         /// </summary>

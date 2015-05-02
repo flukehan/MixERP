@@ -17,13 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Collections.Generic;
-using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities;
 using MixERP.Net.HtmlParser.ImageSerializer;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.Messaging.Email;
-using MixERP.Net.WebControls.TransactionChecklist.Resources;
 
 namespace MixERP.Net.WebControls.TransactionChecklist.Helpers
 {

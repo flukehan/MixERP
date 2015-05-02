@@ -21,12 +21,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.DbFactory.Resources;
+using MixERP.Net.i18n.Resources;
 using Npgsql;
 using Serilog;
 
@@ -78,8 +77,7 @@ namespace MixERP.Net.DbFactory
 
         private static string GetDBErrorResource(NpgsqlException ex)
         {
-            Assembly ass = Assembly.GetAssembly(typeof (DbOperation));
-            string message = LocalizationHelper.GetResourceString(ass, "MixERP.Net.DbFactory.Resources.DbErrors", ex.Code);
+            string message = DbErrors.Get(ex.Code);
 
             if (message == ex.Code)
             {
@@ -311,7 +309,9 @@ namespace MixERP.Net.DbFactory
                         {
                             try
                             {
-                                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                                using (
+                                    NpgsqlConnection connection =
+                                        new NpgsqlConnection(DbConnection.GetConnectionString()))
                                 {
                                     command.Connection = connection;
                                     connection.Notice += Connection_Notice;
@@ -361,7 +361,6 @@ namespace MixERP.Net.DbFactory
             }
         }
 
-
         private static Collection<string> GetCommandTextParameterCollection(string commandText)
         {
             Collection<string> parameters = new Collection<string>();
@@ -397,7 +396,8 @@ namespace MixERP.Net.DbFactory
 
                 if (!match)
                 {
-                    throw new InvalidOperationException(string.Format(LocalizationHelper.GetCurrentUICulture(), Warnings.InvalidParameterName, npgsqlParameter.ParameterName));
+                    throw new InvalidOperationException(string.Format(LocalizationHelper.GetCurrentUICulture(),
+                        Warnings.InvalidParameterName, npgsqlParameter.ParameterName));
                 }
             }
 

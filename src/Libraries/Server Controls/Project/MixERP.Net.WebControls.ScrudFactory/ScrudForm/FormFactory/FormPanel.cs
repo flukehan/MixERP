@@ -23,7 +23,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
@@ -143,7 +143,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             using (DataTable table = new DataTable())
             {
                 table.Locale = Thread.CurrentThread.CurrentCulture;
-                this.LoadForm(this.formContainer, table, this.ResourceAssembly);
+                this.LoadForm(this.formContainer, table);
             }
         }
 

@@ -21,7 +21,7 @@ using System;
 using System.Globalization;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
-using MixERP.Net.WebControls.Common.Resources;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.Common
 {

@@ -22,7 +22,7 @@ using System.Collections.ObjectModel;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Base;
-using MixERP.Net.WebControls.StockTransactionViewFactory.Resources;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.StockTransactionViewFactory
 {

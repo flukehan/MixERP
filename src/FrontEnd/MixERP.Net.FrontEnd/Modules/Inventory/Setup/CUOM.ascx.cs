@@ -19,11 +19,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
@@ -44,7 +44,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.DisplayViews = GetDisplayViews();
 
                 scrud.Text = Titles.CompoundUnitsOfMeasure;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (CUOM));
 
                 this.AddScrudCustomValidatorErrorMessages();
 
@@ -54,15 +53,17 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
 
         private void AddScrudCustomValidatorErrorMessages()
         {
-            string javascript = JSUtility.GetVar("compareCompoundUnitOfMeasureErrorMessageLocalized", Errors.CompoundUnitOfMeasureErrorMessage);
+            string javascript = JSUtility.GetVar("compareCompoundUnitOfMeasureErrorMessageLocalized",
+                Errors.CompoundUnitOfMeasureErrorMessage);
 
-            Common.PageUtility.RegisterJavascript("CompoundUnit_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
+            PageUtility.RegisterJavascript("CompoundUnit_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
         }
 
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.units.unit_id", ConfigurationHelper.GetDbParameter("UnitDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.units.unit_id",
+                ConfigurationHelper.GetDbParameter("UnitDisplayField"));
             return string.Join(",", displayFields);
         }
 

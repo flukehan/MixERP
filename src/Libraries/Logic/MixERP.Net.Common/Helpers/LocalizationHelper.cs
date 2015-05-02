@@ -130,40 +130,9 @@ namespace MixERP.Net.Common.Helpers
             return culture.NumberFormat.NumberDecimalDigits;
         }
 
-        public static string GetResourceString(Assembly assembly, string fullyQualifiedClassName, string key)
+        public static string GetResourceString(string resourceClassName, string key)
         {
-            if (assembly == null)
-            {
-                throw new ArgumentNullException("assembly");
-            }
-
-            var baseType = BuildManager.GetGlobalAsaxType().BaseType;
-
-            if (baseType != null && baseType.Assembly.Equals(assembly))
-            {
-                return GetDefaultAssemblyResourceString(UnqualifyResourceNamespace(assembly, fullyQualifiedClassName), key);
-            }
-
-            ResourceManager r = new ResourceManager(fullyQualifiedClassName, assembly);
-            string value;
-
-            try
-            {
-                value = r.GetString(key, GetCurrentUICulture());
-
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    Log.Error("Resource could not be found for the key {Key} on {Class}.", key, fullyQualifiedClassName);
-                    return key;
-                }
-            }
-            catch (MissingManifestResourceException)
-            {
-                Log.Error("Resource could not be found for the key {Key} on {Class}.", key, fullyQualifiedClassName);
-                return key;
-            }
-
-            return value;
+            return i18n.ResourceManager.GetString(resourceClassName, key);
         }
 
         public static string GetShortDateFormat()

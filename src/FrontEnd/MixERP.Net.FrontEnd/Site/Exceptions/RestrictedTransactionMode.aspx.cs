@@ -21,6 +21,7 @@ using System;
 using System.Web.UI.HtmlControls;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.FrontEnd.Site.Exceptions
 {
@@ -32,7 +33,7 @@ namespace MixERP.Net.FrontEnd.Site.Exceptions
 
             using (HtmlGenericControl header = new HtmlGenericControl("h1"))
             {
-                header.InnerText = Resources.Titles.RestrictedTransactionMode;
+                header.InnerText = Titles.RestrictedTransactionMode;
                 this.Placeholder1.Controls.Add(header);
             }
 
@@ -43,13 +44,13 @@ namespace MixERP.Net.FrontEnd.Site.Exceptions
 
             using (HtmlGenericControl p = new HtmlGenericControl("p"))
             {
-                p.InnerText = Resources.Warnings.RestrictedTransactionMode;
+                p.InnerText = Warnings.RestrictedTransactionMode;
                 this.Placeholder1.Controls.Add(p);
             }
 
             using (HtmlAnchor anchor = new HtmlAnchor())
             {
-                anchor.InnerText = Resources.Titles.BackToPreviousPage;
+                anchor.InnerText = Titles.BackToPreviousPage;
                 anchor.HRef = "javascript:history.go(-1);";
                 anchor.Attributes.Add("class", "ui pink button");
                 this.Placeholder1.Controls.Add(anchor);

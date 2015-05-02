@@ -25,11 +25,12 @@ using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Inventory.Resources;
+using MixERP.Net.Core.Modules.Inventory.Data.Reports;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Inventory
@@ -301,7 +302,7 @@ namespace MixERP.Net.Core.Modules.Inventory
             }
 
 
-            this.grid.DataSource = Data.Reports.StockItems.ListClosingStock(storeId);
+            this.grid.DataSource = StockItems.ListClosingStock(storeId);
             this.grid.DataBind();
         }
 
@@ -323,7 +324,7 @@ namespace MixERP.Net.Core.Modules.Inventory
         {
             for (int i = 0; i < e.Row.Cells.Count - 2; i++)
             {
-                e.Row.Cells[i].Text = LocalizationHelper.GetResourceString(Assembly.GetAssembly(typeof (Adjustment)), "MixERP.Net.Core.Modules.Inventory.Resources.Titles", e.Row.Cells[i].Text);
+                e.Row.Cells[i].Text = Titles.Get(e.Row.Cells[i].Text);
             }
         }
 

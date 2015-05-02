@@ -24,10 +24,9 @@ using System.Globalization;
 using System.Reflection;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.ReportEngine;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
@@ -60,7 +59,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 report.AddParameterToCollection(parameter1);
                 report.AddParameterToCollection(parameter2);
                 report.RunningTotalText = Titles.RunningTotal;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof(GLAdviceReport));
                 report.Path = "~/Modules/Finance/Reports/Source/Transactions.AccountStatement.xml";
                 report.AutoInitialize = true;
 

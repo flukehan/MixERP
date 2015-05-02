@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.i18n.Resources;
 using Npgsql;
 using PetaPoco;
 
@@ -80,8 +81,7 @@ namespace MixERP.Net.Entities
 
         private static string GetDBErrorResource(NpgsqlException ex)
         {
-            Assembly ass = GetAssemblyByName("MixERP.Net.DbFactory");
-            string message = LocalizationHelper.GetResourceString(ass, "MixERP.Net.DbFactory.Resources.DbErrors", ex.Code);
+            string message = DbErrors.Get(ex.Code);
 
             if (message == ex.Code)
             {

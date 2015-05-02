@@ -23,9 +23,9 @@ using System.Web.UI.HtmlControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Sales.Data.Reports;
-using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Sales.Widgets

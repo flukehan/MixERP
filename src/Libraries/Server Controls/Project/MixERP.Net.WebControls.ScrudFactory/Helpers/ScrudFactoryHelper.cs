@@ -23,10 +23,10 @@ using System.Threading;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.ScrudFactory.Controls;
 using MixERP.Net.WebControls.ScrudFactory.Controls.ListControls;
 using MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {
@@ -103,7 +103,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             }
         }
 
-        internal static void AddField(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, string defaultValue, bool isSerial, bool isNullable, string dataType, string domain, int maxLength, string parentTableSchema, string parentTable, string parentTableColumn, string displayFields, string displayViews, bool useDisplayFieldAsParent, string selectedValues, string errorCssClass, Assembly assembly, bool disabled)
+        internal static void AddField(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, string defaultValue, bool isSerial, bool isNullable, string dataType, string domain, int maxLength, string parentTableSchema, string parentTable, string parentTableColumn, string displayFields, string displayViews, bool useDisplayFieldAsParent, string selectedValues, string errorCssClass, bool disabled)
         {
             if (isSerial)
             {
@@ -124,37 +124,37 @@ namespace MixERP.Net.WebControls.ScrudFactory.Helpers
             {
                 if (ScrudTypes.Strings.Contains(dataType))
                 {
-                    ScrudTextBox.AddTextBox(htmlTable, resourceClassName, columnName, dataType, defaultValue, isNullable, maxLength, errorCssClass, assembly, disabled);
+                    ScrudTextBox.AddTextBox(htmlTable, resourceClassName, columnName, dataType, defaultValue, isNullable, maxLength, errorCssClass, disabled);
                 }
 
                 if (ScrudTypes.Shorts.Contains(dataType) || ScrudTypes.Integers.Contains(dataType) || ScrudTypes.Longs.Contains(dataType))
                 {
-                    ScrudNumberTextBox.AddNumberTextBox(htmlTable, resourceClassName, columnName, defaultValue, isSerial, isNullable, maxLength, domain, errorCssClass, assembly, disabled);
+                    ScrudNumberTextBox.AddNumberTextBox(htmlTable, resourceClassName, columnName, defaultValue, isSerial, isNullable, maxLength, domain, errorCssClass, disabled);
                 }
 
                 if (ScrudTypes.Decimals.Contains(dataType))
                 {
-                    ScrudDecimalTextBox.AddDecimalTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, domain, errorCssClass, assembly, disabled);
+                    ScrudDecimalTextBox.AddDecimalTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, maxLength, domain, errorCssClass, disabled);
                 }
 
                 if (ScrudTypes.Bools.Contains(dataType))
                 {
-                    ScrudRadioButtonList.AddRadioButtonList(htmlTable, resourceClassName, columnName, isNullable, Titles.Yes + "," + Titles.No, "true,false", defaultValue, errorCssClass, assembly, disabled);
+                    ScrudRadioButtonList.AddRadioButtonList(htmlTable, resourceClassName, columnName, isNullable, Titles.Yes + "," + Titles.No, "true,false", defaultValue, errorCssClass, disabled);
                 }
 
                 if (ScrudTypes.Dates.Contains(dataType))
                 {
-                    ScrudDateTextBox.AddDateTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, errorCssClass, assembly, disabled);
+                    ScrudDateTextBox.AddDateTextBox(htmlTable, resourceClassName, columnName, defaultValue, isNullable, errorCssClass, disabled);
                 }
 
                 if (ScrudTypes.Files.Contains(dataType))
                 {
-                    ScrudFileUpload.AddFileUpload(htmlTable, resourceClassName, columnName, isNullable, errorCssClass, assembly);
+                    ScrudFileUpload.AddFileUpload(htmlTable, resourceClassName, columnName, isNullable, errorCssClass);
                 }
             }
             else
             {
-                ScrudDropDownList.AddDropDownList(htmlTable, resourceClassName, itemSelectorPath, columnName, isNullable, parentTableSchema, parentTable, parentTableColumn, defaultValue, displayFields, displayViews, useDisplayFieldAsParent, selectedValues, errorCssClass, assembly, disabled);
+                ScrudDropDownList.AddDropDownList(htmlTable, resourceClassName, itemSelectorPath, columnName, isNullable, parentTableSchema, parentTable, parentTableColumn, defaultValue, displayFields, displayViews, useDisplayFieldAsParent, selectedValues, errorCssClass, disabled);
             }
         }
 

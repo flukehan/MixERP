@@ -23,10 +23,11 @@ using System.Web.UI.HtmlControls;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
+using MixERP.Net.Core.Modules.BackOffice.Data;
 using MixERP.Net.Entities.Audit;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Widgets
 {
@@ -107,7 +108,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Widgets
                 return;
             }
 
-            DbGetOfficeInformationModelResult model = Data.Audit.GetOfficeInformationModel(userId);
+            DbGetOfficeInformationModelResult model = Audit.GetOfficeInformationModel(userId);
 
             using (HtmlGenericControl ul = new HtmlGenericControl("ul"))
             {

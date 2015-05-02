@@ -23,7 +23,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {

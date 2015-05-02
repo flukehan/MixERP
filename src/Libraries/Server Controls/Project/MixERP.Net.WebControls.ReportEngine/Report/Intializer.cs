@@ -54,12 +54,12 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.SetDecimalFields();
             this.SetRunningTotalFields();
             this.SetDataSources();
-            this.SetTitle(this.ResourceAssembly);
-            this.SetTopSection(this.ResourceAssembly);
-            this.SetBodySection(this.ResourceAssembly);
+            this.SetTitle();
+            this.SetTopSection();
+            this.SetBodySection();
             this.SetGridViews();
-            this.SetBottomSection(this.ResourceAssembly);
-            this.InstallReport(this.ResourceAssembly);
+            this.SetBottomSection();
+            this.InstallReport();
             this.AddJavascript();
             this.CleanUp();
         }
@@ -107,7 +107,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        private void InstallReport(Assembly callingAssembly)
+        private void InstallReport()
         {
             if (this.IsValid())
             {
@@ -123,7 +123,7 @@ namespace MixERP.Net.WebControls.ReportEngine
                     string menuCode = reportNode.Attributes["MenuCode"].Value;
                     string parentMenuCode = reportNode.Attributes["ParentMenuCode"].Value;
                     int level = Conversion.TryCastInteger(reportNode.Attributes["Level"].Value);
-                    string menuText = ReportParser.ParseExpression(reportNode.Attributes["MenuText"].Value, this.dataTableCollection, callingAssembly);
+                    string menuText = ReportParser.ParseExpression(reportNode.Attributes["MenuText"].Value, this.dataTableCollection);
 
                     string path = reportNode.Attributes["Path"].Value;
 
@@ -191,18 +191,18 @@ namespace MixERP.Net.WebControls.ReportEngine
             return xml.Replace(node.OuterXml, pieChart);
         }
 
-        private void SetBodySection(Assembly callingAssembly)
+        private void SetBodySection()
         {
             string bodySection = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/Body/Content");
-            bodySection = ReportParser.ParseExpression(bodySection, this.dataTableCollection, callingAssembly);
+            bodySection = ReportParser.ParseExpression(bodySection, this.dataTableCollection);
             bodySection = ReportParser.ParseDataSource(bodySection, this.dataTableCollection);
             this.bodyContentsLiteral.Text = bodySection;
         }
 
-        private void SetBottomSection(Assembly callingAssembly)
+        private void SetBottomSection()
         {
             string bottomSection = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/BottomSection");
-            bottomSection = ReportParser.ParseExpression(bottomSection, this.dataTableCollection, callingAssembly);
+            bottomSection = ReportParser.ParseExpression(bottomSection, this.dataTableCollection);
             bottomSection = ReportParser.ParseDataSource(bottomSection, this.dataTableCollection);
             bottomSection = this.SetPieCharts(bottomSection);
 
@@ -391,10 +391,10 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        private void SetTitle(Assembly callingAssembly)
+        private void SetTitle()
         {
             string title = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/Title");
-            string reportTitle = ReportParser.ParseExpression(title, this.dataTableCollection, callingAssembly);
+            string reportTitle = ReportParser.ParseExpression(title, this.dataTableCollection);
 
             this.reportTitleLiteral.Text = @"<h2>" + reportTitle + @"</h2>";
             this.reportTitleHidden.Value = reportTitle;
@@ -405,10 +405,10 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        private void SetTopSection(Assembly callingAssembly)
+        private void SetTopSection()
         {
             string topSection = XmlHelper.GetNodeText(this.reportPath, "/MixERPReport/TopSection");
-            topSection = ReportParser.ParseExpression(topSection, this.dataTableCollection, callingAssembly);
+            topSection = ReportParser.ParseExpression(topSection, this.dataTableCollection);
             topSection = ReportParser.ParseDataSource(topSection, this.dataTableCollection);
             topSection = this.SetPieCharts(topSection);
             this.topSectionLiteral.Text = topSection;

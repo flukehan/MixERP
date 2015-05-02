@@ -21,7 +21,7 @@ using System.Globalization;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.TransactionChecklist.Resources;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.TransactionChecklist
 {

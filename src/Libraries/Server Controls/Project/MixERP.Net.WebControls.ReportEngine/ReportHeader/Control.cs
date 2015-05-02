@@ -30,8 +30,6 @@ namespace MixERP.Net.WebControls.ReportEngine
     {
         private string html;
 
-        public Assembly ResourceAssembly { get; set; }
-
         public string GetHtml()
         {
             return this.html;
@@ -88,7 +86,7 @@ namespace MixERP.Net.WebControls.ReportEngine
         private void PrepareReportHeader()
         {
             string header = File.ReadAllText(this.Page.Server.MapPath(this.GetPath()));
-            this.html = ReportParser.ParseExpression(header, null, this.ResourceAssembly);
+            this.html = ReportParser.ParseExpression(header, null);
         }
     }
 }

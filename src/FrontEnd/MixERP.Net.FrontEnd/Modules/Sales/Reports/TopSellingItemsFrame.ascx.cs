@@ -32,7 +32,6 @@ namespace MixERP.Net.Core.Modules.Sales.Reports
             {
                 report.AutoInitialize = true;
                 report.NoHeader = true;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof (TopSellingItems));
                 report.Path = "~/Modules/Sales/Reports/Source/TopSellingProductsOfAllTime.xml";
                 this.Controls.Add(report);
             }

@@ -21,7 +21,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Web.UI.HtmlControls;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls
 {
@@ -193,7 +193,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls
                     anchor.Attributes.Add("class", "item");
                 }
 
-                anchor.InnerText = pageNumber.ToString(System.Threading.Thread.CurrentThread.CurrentCulture);
+                anchor.InnerText = pageNumber.ToString(Thread.CurrentThread.CurrentCulture);
 
                 if (this.QueryString == "modal=1&CallBackFunctionName=processCallBackActions&AssociatedControlId=PartyIdHidden")
                 {

@@ -67,16 +67,6 @@
     <Compile Include="Helpers\ScrudProgressTemplate.cs" />
     <Compile Include="Helpers\ScrudTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Errors.Designer.cs">
-      <DependentUpon>Errors.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Resources\Titles.Designer.cs">
-      <DependentUpon>Titles.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="ScrudForm\FormFactory\Alert.cs" />
     <Compile Include="ScrudForm\Pager.cs" />
     <Compile Include="ScrudForm\Validation.cs" />
@@ -118,38 +108,6 @@
     <None Include="Mix Open Foundation.snk" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Errors.de.resx" />
-    <EmbeddedResource Include="Resources\Errors.es.resx" />
-    <EmbeddedResource Include="Resources\Errors.fil.resx" />
-    <EmbeddedResource Include="Resources\Errors.fr.resx" />
-    <EmbeddedResource Include="Resources\Errors.id.resx" />
-    <EmbeddedResource Include="Resources\Errors.ja.resx" />
-    <EmbeddedResource Include="Resources\Errors.ms.resx" />
-    <EmbeddedResource Include="Resources\Errors.nl.resx" />
-    <EmbeddedResource Include="Resources\Errors.pt.resx" />
-    <EmbeddedResource Include="Resources\Errors.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Errors.ru.resx" />
-    <EmbeddedResource Include="Resources\Errors.sv.resx" />
-    <EmbeddedResource Include="Resources\Errors.zh.resx" />
-    <EmbeddedResource Include="Resources\Titles.de.resx" />
-    <EmbeddedResource Include="Resources\Titles.es.resx" />
-    <EmbeddedResource Include="Resources\Titles.fil.resx" />
-    <EmbeddedResource Include="Resources\Titles.fr.resx" />
-    <EmbeddedResource Include="Resources\Titles.id.resx" />
-    <EmbeddedResource Include="Resources\Titles.ja.resx" />
-    <EmbeddedResource Include="Resources\Titles.ms.resx" />
-    <EmbeddedResource Include="Resources\Titles.nl.resx" />
-    <EmbeddedResource Include="Resources\Titles.pt.resx" />
-    <EmbeddedResource Include="Resources\Titles.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Titles.ru.resx" />
-    <EmbeddedResource Include="Resources\Titles.sv.resx" />
-    <EmbeddedResource Include="Resources\Titles.zh.resx" />
     <EmbeddedResource Include="Scrud.js" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +118,10 @@
     <ProjectReference Include="..\..\..\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
       <Project>{BDE918B1-DD9B-41C9-A41F-F3DDEC18B6D8}</Project>
       <Name>MixERP.Net.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Logic\MixERP.Net.i18n\MixERP.Net.i18n.csproj">
+      <Project>{2ECD1C2E-D7D0-4A24-896A-E625B0566DB5}</Project>
+      <Name>MixERP.Net.i18n</Name>
     </ProjectReference>
     <ProjectReference Include="..\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
       <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>

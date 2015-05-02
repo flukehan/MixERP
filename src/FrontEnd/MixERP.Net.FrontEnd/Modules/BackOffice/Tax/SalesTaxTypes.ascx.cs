@@ -18,10 +18,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Reflection;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Tax
 {
@@ -41,7 +40,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
 
                 scrud.Text = Titles.SalesTaxTypes;
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (SalesTaxTypes));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }

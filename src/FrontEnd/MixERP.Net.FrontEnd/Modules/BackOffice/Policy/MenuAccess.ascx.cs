@@ -18,23 +18,28 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Domains;
-using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
+using MixERP.Net.Core.Modules.BackOffice.Data.Admin;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.Common;
+using Menu = MixERP.Net.Core.Modules.BackOffice.Data.Policy.Menu;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Policy
 {
     public partial class MenuAccess : MixERPUserControl
     {
+        public override AccessLevel AccessLevel
+        {
+            get { return AccessLevel.LocalhostAdmin; }
+        }
+
         public override void OnControlLoad(object sender, EventArgs e)
         {
             this.CreateFormPanel(this.Placeholder1);
@@ -76,7 +81,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                     this.userSelect.ID = "UserSelect";
                     field.Controls.Add(this.userSelect);
 
-                    this.userSelect.DataSource = Data.Admin.User.GetUserSelectorView();
+                    this.userSelect.DataSource = User.GetUserSelectorView();
                     this.userSelect.DataTextField = "UserName";
                     this.userSelect.DataValueField = "UserId";
                     this.userSelect.DataBind();
@@ -95,7 +100,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                     this.officeSelect.ID = "OfficeSelect";
                     field.Controls.Add(this.officeSelect);
 
-                    this.officeSelect.DataSource = Data.Admin.Office.GetOffices();
+                    this.officeSelect.DataSource = Office.GetOffices();
                     this.officeSelect.DataTextField = "OfficeName";
                     this.officeSelect.DataValueField = "OfficeId";
                     this.officeSelect.DataBind();
@@ -162,7 +167,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                 return;
             }
 
-            Data.Policy.Menu.SaveMenuPolicy(userId, officeId, menus);
+            Menu.SaveMenuPolicy(userId, officeId, menus);
             this.BindGrid();
         }
 
@@ -191,7 +196,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                 return;
             }
 
-            grid.DataSource = Data.Policy.Menu.GetMenuPolicy(userId, officeId, culture);
+            grid.DataSource = Menu.GetMenuPolicy(userId, officeId, culture);
             grid.DataBind();
         }
 
@@ -199,9 +204,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         {
             if (e.Row.RowType == DataControlRowType.Header)
             {
-                for (int i = 0; i < e.Row.Cells.Count -1; i++)
+                for (int i = 0; i < e.Row.Cells.Count - 1; i++)
                 {
-                    e.Row.Cells[i].Text = this.GetLocalizedResource(e.Row.Cells[i].Text);                    
+                    e.Row.Cells[i].Text = this.GetLocalizedResource(e.Row.Cells[i].Text);
                 }
             }
 
@@ -224,11 +229,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
 
         private string GetLocalizedResource(string key)
         {
-            Assembly ass = Assembly.GetAssembly(typeof(MenuAccess));
-            string fqName = ass.GetName().Name + ".Resources.Titles";
-            return LocalizationHelper.GetResourceString(ass, fqName, key);
+            return Titles.Get(key);
         }
-
 
         #region IDisposable
 
@@ -240,7 +242,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         private HiddenField selectedMenusHidden;
         private bool disposed;
 
-        public sealed override void Dispose()
+        public override sealed void Dispose()
         {
             if (!this.disposed)
             {
@@ -300,13 +302,5 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         }
 
         #endregion
-
-        public override AccessLevel AccessLevel
-        {
-            get
-            {
-                return AccessLevel.LocalhostAdmin;
-            }
-        }
     }
 }

@@ -22,9 +22,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
@@ -50,7 +50,6 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.DisplayViews = GetDisplayViews();
 
                 scrud.Text = Titles.CashRepositories;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (CashRepositories));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }

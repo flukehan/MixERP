@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.TransactionChecklist
 {
@@ -62,7 +63,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             {
                 subTitleHeading.TagName = "h2";
                 this.subTitleLiteral = new Literal();
-                this.subTitleLiteral.Text = Resources.Labels.TransactionPostedSuccessfully;
+                this.subTitleLiteral.Text = Labels.TransactionPostedSuccessfully;
                 subTitleHeading.Controls.Add(this.subTitleLiteral);
                 p.Controls.Add(subTitleHeading);
             }

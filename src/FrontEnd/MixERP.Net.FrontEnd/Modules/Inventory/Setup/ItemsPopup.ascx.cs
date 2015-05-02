@@ -19,11 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
@@ -44,7 +43,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.ExcludeEdit = "item_code, maintain_stock, item_group_id";
 
                 scrud.Text = Titles.Items;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (ItemsPopup));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
@@ -53,14 +51,22 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.item_types.item_type_id", ConfigurationHelper.GetDbParameter("ItemTypeDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id", ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.brands.brand_id", ConfigurationHelper.GetDbParameter("BrandDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id", ConfigurationHelper.GetDbParameter("PartyDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.units.unit_id", ConfigurationHelper.GetDbParameter("UnitDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.sales_taxes.sales_tax_id", ConfigurationHelper.GetDbParameter("SalesTaxDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.shipping_mail_types.shipping_mail_type_id", ConfigurationHelper.GetDbParameter("ShippingMailTypeDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.shipping_package_shapes.shipping_package_shape_id", ConfigurationHelper.GetDbParameter("ShippingPackageShapeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.item_types.item_type_id",
+                ConfigurationHelper.GetDbParameter("ItemTypeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id",
+                ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.brands.brand_id",
+                ConfigurationHelper.GetDbParameter("BrandDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id",
+                ConfigurationHelper.GetDbParameter("PartyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.units.unit_id",
+                ConfigurationHelper.GetDbParameter("UnitDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.sales_taxes.sales_tax_id",
+                ConfigurationHelper.GetDbParameter("SalesTaxDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.shipping_mail_types.shipping_mail_type_id",
+                ConfigurationHelper.GetDbParameter("ShippingMailTypeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.shipping_package_shapes.shipping_package_shape_id",
+                ConfigurationHelper.GetDbParameter("ShippingPackageShapeDisplayField"));
 
             return string.Join(",", displayFields);
         }
@@ -75,8 +81,10 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
             ScrudHelper.AddDisplayView(displayViews, "core.parties.party_id", "core.supplier_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.sales_taxes.sales_tax_id", "core.sales_tax_scrud_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.shipping_mail_types.shipping_mail_type_id", "core.shipping_mail_type_selector_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.shipping_package_shapes.shipping_package_shape_id", "core.shipping_package_shape_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.shipping_mail_types.shipping_mail_type_id",
+                "core.shipping_mail_type_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.shipping_package_shapes.shipping_package_shape_id",
+                "core.shipping_package_shape_selector_view");
 
             return string.Join(",", displayViews);
         }

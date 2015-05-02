@@ -19,11 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
@@ -42,7 +41,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.DisplayViews = GetDisplayViews();
 
                 scrud.Text = Titles.ItemGroups;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (ItemGroups));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
@@ -50,9 +48,12 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id", ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.sales_taxes.sales_tax_id", ConfigurationHelper.GetDbParameter("SalesTaxDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id",
+                ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.sales_taxes.sales_tax_id",
+                ConfigurationHelper.GetDbParameter("SalesTaxDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id",
+                ConfigurationHelper.GetDbParameter("AccountDisplayField"));
 
             return string.Join(",", displayFields);
         }

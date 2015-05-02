@@ -19,11 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Sales.Setup
 {
@@ -41,7 +40,6 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.Text = Titles.AgentBonusSlabAssignment;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (BonusSlabAssignment));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }

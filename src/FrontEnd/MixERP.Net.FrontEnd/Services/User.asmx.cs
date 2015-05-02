@@ -17,22 +17,24 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.ComponentModel;
 using System.Threading;
 using System.Web;
+using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
-using Resources;
+using MixERP.Net.i18n.Resources;
 using Serilog;
 
 namespace MixERP.Net.FrontEnd.Services
 {
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
-    [System.Web.Script.Services.ScriptService]
+    [ToolboxItem(false)]
+    [ScriptService]
     public class User : WebService
     {
         [WebMethod(EnableSession = true)]

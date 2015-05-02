@@ -21,6 +21,7 @@ using System;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.TransactionChecklist;
 
 namespace MixERP.Net.Core.Modules.Finance.Confirmation
@@ -31,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Finance.Confirmation
         {
             using (TransactionChecklistForm checklist = new TransactionChecklistForm())
             {
-                checklist.Text = Resources.Titles.JournalVoucherEntry;
+                checklist.Text = Titles.JournalVoucherEntry;
                 checklist.DisplayWithdrawButton = true;
                 checklist.DisplayPrintGlEntryButton = true;
                 checklist.DisplayAttachmentButton = true;

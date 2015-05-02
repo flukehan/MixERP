@@ -26,7 +26,7 @@ using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
-using Resources;
+using MixERP.Net.i18n.Resources;
 using Serilog;
 
 namespace MixERP.Net.FrontEnd.Site.Account

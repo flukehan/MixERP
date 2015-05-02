@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
-using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.ReportEngine;
+
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -38,7 +39,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
                 report.RunningTotalText = Titles.RunningTotal;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof (GLAdviceReport));
                 report.Path = "~/Modules/Finance/Reports/Source/Transactions.StockTransaction.xml";
                 report.AutoInitialize = true;
 

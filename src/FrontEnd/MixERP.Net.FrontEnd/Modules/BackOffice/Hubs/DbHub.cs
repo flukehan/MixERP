@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-using Serilog;
+
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -27,7 +27,8 @@ using System.Web.Hosting;
 using Microsoft.AspNet.SignalR;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Models;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
+using MixERP.Net.i18n.Resources;
+using Serilog;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Hubs
 {

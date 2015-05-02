@@ -19,9 +19,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Reflection;
-using MixERP.Net.Core.Modules.CRM.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.CRM.Setup
 {
@@ -39,7 +39,6 @@ namespace MixERP.Net.Core.Modules.CRM.Setup
                 scrud.View = "lead_sources";
 
                 scrud.Text = Titles.LeadSources;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (LeadSources));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }

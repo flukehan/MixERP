@@ -19,11 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
@@ -46,7 +45,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.DisplayViews = GetDisplayViews();
 
                 scrud.Text = Titles.ShippingAddressMaintenance;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (ShippingAddresses));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
@@ -55,7 +53,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id", ConfigurationHelper.GetDbParameter("PartyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id",
+                ConfigurationHelper.GetDbParameter("PartyDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.countries.country_id", "country_name");
             ScrudHelper.AddDisplayField(displayFields, "core.states.state_id", "state_name");
             return string.Join(",", displayFields);

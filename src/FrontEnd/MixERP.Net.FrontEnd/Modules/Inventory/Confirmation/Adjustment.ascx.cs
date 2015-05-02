@@ -22,6 +22,7 @@ using System;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.TransactionChecklist;
 
 namespace MixERP.Net.Core.Modules.Inventory.Confirmation
@@ -32,8 +33,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Confirmation
         {
             using (TransactionChecklistForm checklist = new TransactionChecklistForm())
             {
-                checklist.ViewReportButtonText = Resources.Titles.ViewThisAdjustment;
-                checklist.Text = Resources.Titles.StockAdjustment;
+                checklist.ViewReportButtonText = Titles.ViewThisAdjustment;
+                checklist.Text = Titles.StockAdjustment;
                 checklist.AttachmentBookName = "transaction";
                 checklist.OverridePath = "/Modules/Inventory/Adjustment.mix";
                 checklist.DisplayWithdrawButton = true;

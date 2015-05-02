@@ -33,7 +33,6 @@ namespace MixERP.Net.WebControls.ReportEngine
             if (!this.NoHeader)
             {
                 this.header = new ReportHeader();
-                this.header.ResourceAssembly = this.ResourceAssembly;
                 this.header.Path = ConfigurationHelper.GetReportParameter("HeaderPath");
                 this.reportBody.Controls.Add(this.header);
             }

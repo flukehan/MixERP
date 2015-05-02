@@ -19,11 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Sales.Setup
 {
@@ -46,7 +45,6 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.UseDisplayViewsAsParents = true;
 
                 scrud.Text = Titles.AgentBonusSlabs;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (BonusSlabs));
 
                 this.AddScrudCustomValidatorErrorMessages();
 
@@ -58,14 +56,17 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         {
             string javascript = JSUtility.GetVar("dateErrorMessageLocalized", Warnings.DateErrorMessage);
 
-            Common.PageUtility.RegisterJavascript("SalesPerson_ScrudCustomValidatorMessages", javascript, this.Page, true);
+            Common.PageUtility.RegisterJavascript("SalesPerson_ScrudCustomValidatorMessages", javascript, this.Page,
+                true);
         }
 
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id", ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id",
+                ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id",
+                ConfigurationHelper.GetDbParameter("AccountDisplayField"));
             return string.Join(",", displayFields);
         }
 

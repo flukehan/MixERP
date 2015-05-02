@@ -2,7 +2,7 @@
 using Microsoft.AspNet.SignalR;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Events;
-using MixERP.Net.Core.Modules.Finance.Resources;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Finance.Hubs
 {

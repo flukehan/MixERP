@@ -25,16 +25,16 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls
 {
     internal static class ScrudFileUpload
     {
-        public static void AddFileUpload(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string errorCssClass, Assembly assembly)
+        public static void AddFileUpload(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string errorCssClass)
         {
-            string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
+            string label = ScrudLocalizationHelper.GetResourceString(resourceClassName, columnName);
             FileUpload fileUpload = GetFileUpload(columnName + "_fileupload");
             RegularExpressionValidator validator = GetImageValidator(fileUpload, errorCssClass);
 

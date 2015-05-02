@@ -27,11 +27,14 @@ using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Inventory.Resources;
+using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
+using MixERP.Net.Core.Modules.Inventory.Data.Reports;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.TransactionGovernor;
 using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.Flag;
 
@@ -63,7 +66,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
             {
                 if (itemId > 0)
                 {
-                    itemCode = Data.Helpers.Items.GetItemCodeByItemId(itemId);
+                    itemCode = Items.GetItemCodeByItemId(itemId);
 
                     this.itemCodeInputText.Value = itemCode;
                 }
@@ -119,7 +122,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
 
             int userId = CurrentUser.GetSignInView().UserId.ToInt();
 
-            TransactionGovernor.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
+            Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
 
             this.BindGridView();
             this.CreateAccountOverviewPanel(this.accountOverviewTab);
@@ -504,7 +507,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
                 return;
             }
 
-            this.statementGridView.DataSource = Data.Reports.StockItems.GetAccountStatement(from, to, userId, itemCode, storeId);
+            this.statementGridView.DataSource = StockItems.GetAccountStatement(from, to, userId, itemCode, storeId);
             this.statementGridView.DataBound += this.StatementGridViewDataBound;
             this.statementGridView.DataBind();
         }

@@ -17,18 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
     internal static class ScrudRadioButtonList
     {
-        internal static void AddRadioButtonList(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string keys, string values, string selectedValue, string errorCssClass, Assembly assembly, bool disabled)
+        internal static void AddRadioButtonList(HtmlTable htmlTable, string resourceClassName, string columnName, bool isNullable, string keys, string values, string selectedValue, string errorCssClass, bool disabled)
         {
             if (htmlTable == null)
             {
@@ -37,7 +37,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
             using (RadioButtonList radioButtonList = GetRadioButtonList(columnName + "_radiobuttonlist", keys, values, selectedValue))
             {
-                string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
+                string label = ScrudLocalizationHelper.GetResourceString(resourceClassName, columnName);
 
                 radioButtonList.Enabled = !disabled;
 

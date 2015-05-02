@@ -22,6 +22,7 @@ using System.Linq;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Data.Office;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.FrontEnd
 {
@@ -39,8 +40,8 @@ namespace MixERP.Net.FrontEnd
 
         private void RegisterJavascript()
         {
-            string script = JSUtility.GetVar("allFieldsRequiredLocalized", Resources.Labels.AllFieldsRequired);
-            script += JSUtility.GetVar("confirmedPasswordDoesNotMatch", Resources.Labels.ConfirmedPasswordDoesNotMatch);
+            string script = JSUtility.GetVar("allFieldsRequiredLocalized", Labels.AllFieldsRequired);
+            script += JSUtility.GetVar("confirmedPasswordDoesNotMatch", Labels.ConfirmedPasswordDoesNotMatch);
 
             PageUtility.RegisterJavascript("InstallPage_Vars", script, this.Page, true);
         }

@@ -18,14 +18,15 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags")]
+    [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags")]
     public partial class Flags : MixERPUserControl
     {
         public override void OnControlLoad(object sender, EventArgs e)
@@ -40,7 +41,6 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.View = "flag_type_scrud_view";
 
                 scrud.Text = Titles.Flags;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Flags));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }

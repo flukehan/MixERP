@@ -16,13 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Tax
 {
@@ -42,7 +42,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (StateSalesTaxes));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
@@ -50,10 +49,14 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.states.state_id", ConfigurationHelper.GetDbParameter("StateDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.entities.entity_id", ConfigurationHelper.GetDbParameter("EntityDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.industries.industry_id", ConfigurationHelper.GetDbParameter("IndustryDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id", ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.states.state_id",
+                ConfigurationHelper.GetDbParameter("StateDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.entities.entity_id",
+                ConfigurationHelper.GetDbParameter("EntityDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.industries.industry_id",
+                ConfigurationHelper.GetDbParameter("IndustryDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id",
+                ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
             return string.Join(",", displayFields);
         }
 

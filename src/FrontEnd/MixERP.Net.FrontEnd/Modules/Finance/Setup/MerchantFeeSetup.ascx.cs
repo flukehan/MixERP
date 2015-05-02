@@ -16,17 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Finance.Setup
 {
@@ -47,7 +44,6 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.UseDisplayViewsAsParents = true;
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(PaymentCards));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }

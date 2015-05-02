@@ -50,7 +50,6 @@ namespace MixERP.Net.FrontEnd.Reports.Assets
         {
             using (ReportHeader header = new ReportHeader())
             {
-                header.ResourceAssembly = Assembly.GetAssembly(typeof(Header));
                 this.Placeholder1.Controls.Add(header);
             }
         }

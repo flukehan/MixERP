@@ -21,17 +21,18 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Extensions;
-using MixERP.Net.Core.Modules.Inventory.Resources;
+using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
+using MixERP.Net.Core.Modules.Inventory.Data.Transactions;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using Serilog;
 
 namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
@@ -53,7 +54,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                 {
                     if (model.TransferTypeEnum == TransactionTypeEnum.Credit)
                     {
-                        decimal existingQuantity = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreName);
+                        decimal existingQuantity = Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreName);
 
                         if (existingQuantity < model.Quantity)
                         {
@@ -66,7 +67,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                 int userId = CurrentUser.GetSignInView().UserId.ToInt();
                 long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
 
-                return Data.Transactions.StockTransfer.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, stockTransferModels);
+                return StockTransfer.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, stockTransferModels);
             }
             catch (Exception ex)
             {

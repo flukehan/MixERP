@@ -22,6 +22,7 @@ using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Sales.Widgets
 {
@@ -36,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
         {
             int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
-            this.TitleLiteral.Text = Resources.Titles.SalesByMonthInThousands;
+            this.TitleLiteral.Text = Titles.SalesByMonthInThousands;
 
             this.SalesByMonthGridView.Attributes.Add("style", "display:none;");
             this.SalesByMonthGridView.DataSource = Data.Reports.SalesByMonth.GetSalesByOffice(officeId);

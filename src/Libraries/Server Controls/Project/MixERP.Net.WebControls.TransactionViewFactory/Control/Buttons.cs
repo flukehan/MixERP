@@ -1,7 +1,7 @@
-﻿using MixERP.Net.WebControls.TransactionViewFactory.Resources;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.TransactionViewFactory
 {

@@ -19,12 +19,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
@@ -48,7 +47,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
 
                 scrud.Description = Labels.PartyDescription;
                 scrud.Text = Titles.Parties;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (PartiesPopup));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
 
@@ -64,13 +62,20 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.party_types.party_type_id", ConfigurationHelper.GetDbParameter("PartyTypeDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id", ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code", ConfigurationHelper.GetDbParameter("CurrencyDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.countries.country_id", ConfigurationHelper.GetDbParameter("CountryDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.states.state_id", ConfigurationHelper.GetDbParameter("StateDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.entities.entity_id", ConfigurationHelper.GetDbParameter("EntityDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.industries.industry_id", ConfigurationHelper.GetDbParameter("IndustryDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.party_types.party_type_id",
+                ConfigurationHelper.GetDbParameter("PartyTypeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id",
+                ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code",
+                ConfigurationHelper.GetDbParameter("CurrencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.countries.country_id",
+                ConfigurationHelper.GetDbParameter("CountryDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.states.state_id",
+                ConfigurationHelper.GetDbParameter("StateDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.entities.entity_id",
+                ConfigurationHelper.GetDbParameter("EntityDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.industries.industry_id",
+                ConfigurationHelper.GetDbParameter("IndustryDisplayField"));
             return string.Join(",", displayFields);
         }
 

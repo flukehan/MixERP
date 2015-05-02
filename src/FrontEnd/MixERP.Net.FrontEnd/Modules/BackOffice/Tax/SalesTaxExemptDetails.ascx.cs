@@ -19,11 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Tax
 {
@@ -43,7 +42,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (SalesTaxExemptDetails));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
@@ -51,20 +49,28 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.sales_tax_exempts.sales_tax_exempt_id", ConfigurationHelper.GetDbParameter("SalesTaxExemptDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.entities.entity_id", ConfigurationHelper.GetDbParameter("EntityDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.industries.industry_id", ConfigurationHelper.GetDbParameter("IndustryDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id", ConfigurationHelper.GetDbParameter("PartyDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.party_types.party_type_id", ConfigurationHelper.GetDbParameter("PartyTypeDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.items.item_id", ConfigurationHelper.GetDbParameter("ItemDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id", ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.sales_tax_exempts.sales_tax_exempt_id",
+                ConfigurationHelper.GetDbParameter("SalesTaxExemptDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.entities.entity_id",
+                ConfigurationHelper.GetDbParameter("EntityDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.industries.industry_id",
+                ConfigurationHelper.GetDbParameter("IndustryDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id",
+                ConfigurationHelper.GetDbParameter("PartyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.party_types.party_type_id",
+                ConfigurationHelper.GetDbParameter("PartyTypeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.items.item_id",
+                ConfigurationHelper.GetDbParameter("ItemDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id",
+                ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.sales_tax_exempts.sales_tax_exempt_id", "core.sales_tax_exempt_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.sales_tax_exempts.sales_tax_exempt_id",
+                "core.sales_tax_exempt_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.entities.entity_id", "core.entity_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.industries.industry_id", "core.industry_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.party_types.party_type_id", "core.party_type_scrud_view");

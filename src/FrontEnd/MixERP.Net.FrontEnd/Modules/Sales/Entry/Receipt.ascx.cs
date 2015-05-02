@@ -20,8 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.PartyControl;
 using System;
-using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.Entities.Contracts;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Sales.Entry
 {

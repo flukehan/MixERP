@@ -25,6 +25,7 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.DbFactory;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.i18n.Resources;
 using Npgsql;
 using Serilog;
 
@@ -75,12 +76,12 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
         {
             if (details == null)
             {
-                throw new InvalidOperationException(Resources.Errors.NoTransactionToPost);
+                throw new InvalidOperationException(Errors.NoTransactionToPost);
             }
 
             if (details.Count.Equals(0))
             {
-                throw new InvalidOperationException(Resources.Errors.NoTransactionToPost);
+                throw new InvalidOperationException(Errors.NoTransactionToPost);
             }
 
             decimal debitTotal = (from detail in details select detail.LocalCurrencyDebit).Sum();
@@ -88,7 +89,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
             if (debitTotal != creditTotal)
             {
-                throw new InvalidOperationException(Resources.Errors.ReferencingSidesNotEqual);
+                throw new InvalidOperationException(Errors.ReferencingSidesNotEqual);
             }
 
             var decimalPlaces = LocalizationHelper.GetCurrencyDecimalPlaces();
@@ -97,7 +98,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                 where Decimal.Round(detail.Credit*detail.ExchangeRate, decimalPlaces) != Decimal.Round(detail.LocalCurrencyCredit, decimalPlaces) || Decimal.Round(detail.Debit*detail.ExchangeRate, decimalPlaces) != Decimal.Round(detail.LocalCurrencyDebit, decimalPlaces)
                 select detail).Any())
             {
-                throw new InvalidOperationException(Resources.Errors.ReferencingSidesNotEqual);
+                throw new InvalidOperationException(Errors.ReferencingSidesNotEqual);
             }
 
             using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
@@ -130,12 +131,12 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
                             if (model.Credit > 0 && model.Debit > 0)
                             {
-                                throw new InvalidOperationException(Resources.Errors.BothSidesCannotHaveValue);
+                                throw new InvalidOperationException(Errors.BothSidesCannotHaveValue);
                             }
 
                             if (model.LocalCurrencyCredit > 0 && model.LocalCurrencyDebit > 0)
                             {
-                                throw new InvalidOperationException(Resources.Errors.BothSidesCannotHaveValue);
+                                throw new InvalidOperationException(Errors.BothSidesCannotHaveValue);
                             }
 
                             decimal amountInCurrency;

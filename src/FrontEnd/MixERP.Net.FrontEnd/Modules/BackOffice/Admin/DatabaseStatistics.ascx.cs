@@ -21,9 +21,9 @@ using System;
 using System.Reflection;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Core.Modules.BackOffice.Data.Admin;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Admin
 {
@@ -95,7 +95,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                 scrud.View = "db_stat";
 
                 scrud.Text = Titles.DatabaseStatistics;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (DatabaseStatistics));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }

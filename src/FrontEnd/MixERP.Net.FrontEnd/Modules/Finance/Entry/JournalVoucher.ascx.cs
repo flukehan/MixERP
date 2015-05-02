@@ -22,6 +22,7 @@ using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.AttachmentFactory;
 
 namespace MixERP.Net.Core.Modules.Finance.Entry
@@ -30,25 +31,25 @@ namespace MixERP.Net.Core.Modules.Finance.Entry
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            this.TitleLabel.Text = Resources.Titles.JournalVoucherEntry;
-            this.ValueDateLiteral.Text = Resources.Titles.ValueDate;
-            this.ReferenceNumberLiteral.Text = Resources.Titles.ReferenceNumber;
-            this.StatementReferenceLiteral.Text = Resources.Titles.StatementReference;
-            this.AccountNumberLiteral.Text = Resources.Titles.AccountNumber;
-            this.AccountLiteral.Text = Resources.Titles.Account;
-            this.CashRepositoryLiteral.Text = Resources.Titles.CashRepository;
-            this.CurrencyLiteral.Text = Resources.Titles.Currency;
-            this.DebitLiteral.Text = Resources.Titles.Debit;
-            this.CreditLiteral.Text = Resources.Titles.Credit;
-            this.ERLiteral.Text = Resources.Titles.ER;
-            this.LCDebitLiteral.Text = Resources.Titles.LCDebit;
-            this.LCCreditLiteral.Text = Resources.Titles.LCCredit;
-            this.ActionLiteral.Text = Resources.Titles.Action;
-            this.CostCenterLiteral.Text = Resources.Titles.CostCenter;
-            this.DebitTotalLiteral.Text = Resources.Titles.DebitTotal;
-            this.CreditTotalLiteral.Text = Resources.Titles.CreditTotal;
-            this.PostTransactionLiteral.Text = Resources.Titles.PostTransaction;
-            this.AddInputButton.Value = Resources.Titles.Add;
+            this.TitleLabel.Text = Titles.JournalVoucherEntry;
+            this.ValueDateLiteral.Text = Titles.ValueDate;
+            this.ReferenceNumberLiteral.Text = Titles.ReferenceNumber;
+            this.StatementReferenceLiteral.Text = Titles.StatementReference;
+            this.AccountNumberLiteral.Text = Titles.AccountNumber;
+            this.AccountLiteral.Text = Titles.Account;
+            this.CashRepositoryLiteral.Text = Titles.CashRepository;
+            this.CurrencyLiteral.Text = Titles.Currency;
+            this.DebitLiteral.Text = Titles.Debit;
+            this.CreditLiteral.Text = Titles.Credit;
+            this.ERLiteral.Text = Titles.ER;
+            this.LCDebitLiteral.Text = Titles.LCDebit;
+            this.LCCreditLiteral.Text = Titles.LCCredit;
+            this.ActionLiteral.Text = Titles.Action;
+            this.CostCenterLiteral.Text = Titles.CostCenter;
+            this.DebitTotalLiteral.Text = Titles.DebitTotal;
+            this.CreditTotalLiteral.Text = Titles.CreditTotal;
+            this.PostTransactionLiteral.Text = Titles.PostTransaction;
+            this.AddInputButton.Value = Titles.Add;
             this.ValueDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
 
             using (Attachment attachment = new Attachment())

@@ -19,9 +19,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Reflection;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
@@ -38,7 +38,6 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.View = "country_scrud_view";
                 scrud.Text = Titles.Countries;
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Countries));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }

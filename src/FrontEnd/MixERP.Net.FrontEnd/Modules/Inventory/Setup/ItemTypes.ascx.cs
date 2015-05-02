@@ -18,10 +18,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
-using System.Reflection;
-using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
@@ -38,8 +37,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.View = "item_type_scrud_view";
                 scrud.Text = Titles.ItemTypes;
 
-
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (ItemTypes));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }

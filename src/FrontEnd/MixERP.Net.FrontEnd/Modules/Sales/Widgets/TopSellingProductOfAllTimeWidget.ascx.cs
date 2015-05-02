@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Sales.Widgets
 {
@@ -26,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            this.TopSellingProductsLiteral.Text = Resources.Titles.TopSellingProductsOfAllTime;
+            this.TopSellingProductsLiteral.Text = Titles.TopSellingProductsOfAllTime;
 
             this.TopSellingProductsGridView.Attributes.Add("style", "display:none;");
             this.TopSellingProductsGridView.DataSource = Data.Reports.TopSellingProducts.GetTopSellingProductsOfAllTimeByOffice();

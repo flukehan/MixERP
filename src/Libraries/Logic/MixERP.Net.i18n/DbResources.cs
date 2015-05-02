@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using MixERP.Net.DbFactory;
+using System.Threading;
 using Npgsql;
 
 namespace MixERP.Net.i18n
@@ -13,7 +13,7 @@ namespace MixERP.Net.i18n
             const string sql = "SELECT * FROM localization.localized_resource_view;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                using (DataTable table = DbOperation.GetDataTable(command))
+                using (DataTable table = GetDataTable(command))
                 {
                     if (table == null || table.Rows == null)
                     {
@@ -31,6 +31,26 @@ namespace MixERP.Net.i18n
             }
 
             return resources;
+        }
+
+        private static DataTable GetDataTable(NpgsqlCommand command)
+        {
+            string connectionString = ConfigurationHelper.GetConnectionString();
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            {
+                command.Connection = connection;
+
+                using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
+                {
+                    using (DataTable dataTable = new DataTable())
+                    {
+                        dataTable.Locale = Thread.CurrentThread.CurrentCulture;
+                        adapter.Fill(dataTable);
+                        return dataTable;
+                    }
+                }
+            }
         }
     }
 }

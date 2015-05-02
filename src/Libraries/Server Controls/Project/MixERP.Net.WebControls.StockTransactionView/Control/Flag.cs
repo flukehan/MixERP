@@ -22,9 +22,9 @@ using System.Web.UI;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.Flag;
 using MixERP.Net.WebControls.StockTransactionViewFactory.Helpers;
-using MixERP.Net.WebControls.StockTransactionViewFactory.Resources;
 
 namespace MixERP.Net.WebControls.StockTransactionViewFactory
 {

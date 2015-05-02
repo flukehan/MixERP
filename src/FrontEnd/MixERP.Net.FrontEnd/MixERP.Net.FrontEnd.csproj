@@ -147,266 +147,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\Labels.de.designer.cs">
-      <DependentUpon>Labels.de.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.Designer.cs">
-      <DependentUpon>Labels.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.es.designer.cs">
-      <DependentUpon>Labels.es.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.fil.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.fil.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.fr.designer.cs">
-      <DependentUpon>Labels.fr.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.id.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.id.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.ja.designer.cs">
-      <DependentUpon>Labels.ja.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.ms.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.ms.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.nl.designer.cs">
-      <DependentUpon>Labels.nl.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.pt.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.pt.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.ru.designer.cs">
-      <DependentUpon>Labels.ru.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.sv.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.sv.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Labels.zh.designer.cs">
-      <DependentUpon>Labels.zh.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.de.designer.cs">
-      <DependentUpon>Questions.de.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.Designer.cs">
-      <DependentUpon>Questions.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.es.designer.cs">
-      <DependentUpon>Questions.es.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.fil.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Questions.fil.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.fr.designer.cs">
-      <DependentUpon>Questions.fr.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.id.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Questions.id.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.ja.designer.cs">
-      <DependentUpon>Questions.ja.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.ms.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Questions.ms.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.nl.designer.cs">
-      <DependentUpon>Questions.nl.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.pt.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Questions.pt.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.ru.designer.cs">
-      <DependentUpon>Questions.ru.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.sv.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Questions.sv.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Questions.zh.designer.cs">
-      <DependentUpon>Questions.zh.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.de.designer.cs">
-      <DependentUpon>Titles.de.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.Designer.cs">
-      <DependentUpon>Titles.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.es.designer.cs">
-      <DependentUpon>Titles.es.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.fil.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.fil.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.fr.designer.cs">
-      <DependentUpon>Titles.fr.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.id.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.id.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.ja.designer.cs">
-      <DependentUpon>Titles.ja.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.ms.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.ms.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.nl.designer.cs">
-      <DependentUpon>Titles.nl.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.pt.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.pt.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.ru.designer.cs">
-      <DependentUpon>Titles.ru.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.sv.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.sv.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Titles.zh.designer.cs">
-      <DependentUpon>Titles.zh.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.de.designer.cs">
-      <DependentUpon>Warnings.de.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.Designer.cs">
-      <DependentUpon>Warnings.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.es.designer.cs">
-      <DependentUpon>Warnings.es.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.fil.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Warnings.fil.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.fr.designer.cs">
-      <DependentUpon>Warnings.fr.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.id.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Warnings.id.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.ja.designer.cs">
-      <DependentUpon>Warnings.ja.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.ms.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Warnings.ms.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.nl.designer.cs">
-      <DependentUpon>Warnings.nl.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.pt.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Warnings.pt.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.ru.designer.cs">
-      <DependentUpon>Warnings.ru.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.sv.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Warnings.sv.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Warnings.zh.designer.cs">
-      <DependentUpon>Warnings.zh.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="Base\MixERPMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -562,134 +302,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\Labels.de.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.de.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Labels.es.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.es.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Labels.fr.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.fr.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Labels.ja.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.ja.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Labels.nl.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.nl.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Labels.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Labels.ru.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.ru.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Labels.zh.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.zh.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Questions.de.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.de.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Questions.es.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.es.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Questions.fr.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.fr.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Questions.ja.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.ja.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Questions.nl.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.nl.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Questions.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.Designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Questions.ru.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.ru.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Questions.zh.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.zh.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.de.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.de.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.es.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.es.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.fr.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.fr.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.ja.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.ja.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.nl.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.nl.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.ru.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.ru.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.zh.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.zh.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.de.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.de.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.es.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.es.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.fr.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.fr.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.ja.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.ja.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.nl.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.nl.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.Designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.ru.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.ru.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.zh.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.zh.designer.cs</LastGenOutput>
-    </Content>
     <Content Include="App_Themes\MixERP\mixerp.css">
       <DependentUpon>mixerp.less</DependentUpon>
     </Content>
@@ -718,33 +330,50 @@
     <Content Include="MixERP.Installation.xml" />
     <Content Include="Modules\Default.aspx" />
     <Content Include="Resource\Backups\index.html" />
-    <Content Include="Resource\Configuration\AttachmentFactoryParameters.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Configuration\ApiConfiguration.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Configuration\MixERP.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Configuration\MessagingParameters.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Configuration\DbServer.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Resource\Configuration\ApiConfiguration.xml" />
+    <Content Include="Resource\Configuration\AttachmentFactoryParameters.xml" />
+    <Content Include="Resource\Configuration\DbParameters.xml" />
+    <Content Include="Resource\Configuration\DbServer.xml" />
+    <Content Include="Resource\Configuration\index.html" />
+    <Content Include="Resource\Configuration\MessagingParameters.xml" />
+    <Content Include="Resource\Configuration\MixERP.xml" />
+    <Content Include="Resource\Configuration\Parameters.xml" />
+    <Content Include="Resource\Configuration\ReportParameters.xml" />
+    <Content Include="Resource\Configuration\ScrudParameters.xml" />
+    <Content Include="Resource\Configuration\Switches.xml" />
     <Content Include="Resource\Configuration\TransactionChecklistParameters.xml" />
+    <Content Include="Resource\Frameworks\index.html" />
+    <Content Include="Resource\Icons\bottom-16.png" />
+    <Content Include="Resource\Icons\calendar-16.png" />
     <Content Include="Resource\Icons\checklist-16.png" />
+    <Content Include="Resource\Icons\close-16.png" />
+    <Content Include="Resource\Icons\delete-16.png" />
+    <Content Include="Resource\Icons\email-16.png" />
+    <Content Include="Resource\Icons\filter-16.png" />
+    <Content Include="Resource\Icons\find-16.png" />
     <Content Include="Resource\Icons\index.html" />
     <Content Include="Resource\Icons\insert-16.png" />
+    <Content Include="Resource\Icons\password-16.png" />
+    <Content Include="Resource\Icons\pdf-16.png" />
     <Content Include="Resource\Icons\print-16.png" />
+    <Content Include="Resource\Icons\search-16.png" />
+    <Content Include="Resource\Icons\signout-16.png" />
     <Content Include="Resource\Icons\top-16.png" />
+    <Content Include="Resource\Logo\index.html" />
+    <Content Include="Resource\Static\AccessIsDenied.html" />
+    <Content Include="Resource\Static\Attachments\7200469__MG_4019.jpg" />
+    <Content Include="Resource\Static\Attachments\index.html" />
     <Content Include="Resource\Static\Emails\index.html" />
     <Content Include="Resource\Static\images\index.html" />
+    <Content Include="Resource\Static\images\mixerp-logo-light.png" />
+    <Content Include="Resource\Static\images\mixerp-logo.png" />
     <Content Include="Resource\Static\images\not-image-file.png" />
+    <Content Include="Resource\Static\images\spinner.gif" />
     <Content Include="Resource\Static\Templates\EmailTemplate.html" />
     <Content Include="Resource\Static\Templates\index.html" />
+    <Content Include="Resource\Static\Templates\ModalTemplate.html" />
     <Content Include="Resource\Temp\Images\index.html" />
+    <Content Include="Resource\Temp\index.html" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\ajax-file-upload.js" />
     <Content Include="packages.config" />
@@ -1164,9 +793,6 @@
     <Content Include="Services\User.asmx" />
     <Content Include="Site\Account\ChangePassword.aspx" />
     <Content Include="Site\Account\SignOut.aspx" />
-    <Content Include="Resource\Static\AccessIsDenied.html" />
-    <Content Include="Resource\Static\Attachments\index.html" />
-    <Content Include="Resource\Static\Templates\ModalTemplate.html" />
     <Content Include="Dashboard\Index.aspx" />
     <Content Include="General\ItemSelector.aspx" />
     <Content Include="Global.asax" />
@@ -1184,24 +810,6 @@
     <Content Include="Reports\Sources\Office.Login.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Resource\Configuration\index.html" />
-    <Content Include="Resource\Configuration\ScrudParameters.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Configuration\ReportParameters.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Icons\bottom-16.png" />
-    <Content Include="Resource\Icons\calendar-16.png" />
-    <Content Include="Resource\Icons\close-16.png" />
-    <Content Include="Resource\Icons\email-16.png" />
-    <Content Include="Resource\Icons\filter-16.png" />
-    <Content Include="Resource\Icons\find-16.png" />
-    <Content Include="Resource\Icons\password-16.png" />
-    <Content Include="Resource\Icons\pdf-16.png" />
-    <Content Include="Resource\Icons\search-16.png" />
-    <Content Include="Resource\Icons\signout-16.png" />
-    <Content Include="Resource\Temp\index.html" />
     <Content Include="Site\AccessIsDenied.aspx" />
     <Content Include="Site\RuntimeError.aspx" />
     <Content Include="Scripts\chartjs\Chart.min.js" />
@@ -1211,17 +819,13 @@
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\shortcut.js" />
     <Content Include="SignIn.aspx" />
-    <Content Include="Resource\Static\images\spinner.gif" />
     <Content Include="Reports\Print.html" />
-    <Content Include="Resource\Icons\delete-16.png" />
-    <Content Include="Resource\Static\images\mixerp-logo-light.png" />
     <Content Include="bundles\stylesheets\master-page.css">
       <DependentUpon>master-page.css.bundle</DependentUpon>
     </Content>
     <Content Include="bundles\stylesheets\master-page.min.css">
       <DependentUpon>master-page.css</DependentUpon>
     </Content>
-    <Content Include="Resource\Static\images\mixerp-logo.png" />
     <Content Include="bundles\stylesheets\parties-popup.css">
       <DependentUpon>parties-popup.css.bundle</DependentUpon>
     </Content>
@@ -1250,13 +854,6 @@
       <DependentUpon>mixerp.css</DependentUpon>
     </Content>
     <Content Include="Reports\Assets\ReadMe.txt" />
-    <Content Include="Resource\Configuration\Switches.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Configuration\Parameters.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Configuration\DbParameters.xml" />
     <Content Include="..\..\mixerp.licenseheader">
       <Link>mixerp.licenseheader</Link>
     </Content>
@@ -1321,8 +918,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Handlers\" />
-    <Folder Include="Resource\Frameworks\" />
-    <Folder Include="Resource\Logo\" />
+    <Folder Include="Resource\i18n\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
@@ -1389,88 +985,6 @@
       <Project>{d7037326-f14d-4359-bb87-3637bb9d93ee}</Project>
       <Name>MixERP.Net.Core.Api</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Labels.fil.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.fil.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Labels.id.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.id.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Labels.ms.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.ms.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Labels.pt.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.pt.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Labels.sv.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Labels.sv.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Questions.fil.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.fil.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Questions.id.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.id.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Questions.ms.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.ms.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Questions.pt.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.pt.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Questions.sv.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Questions.sv.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.fil.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.fil.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.id.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.id.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.ms.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.ms.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.pt.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.pt.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Titles.sv.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Titles.sv.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.fil.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.fil.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.id.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.id.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.ms.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.ms.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.pt.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.pt.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Warnings.sv.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Warnings.sv.designer.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

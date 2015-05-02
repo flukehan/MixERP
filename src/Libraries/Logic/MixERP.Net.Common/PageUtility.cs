@@ -25,6 +25,7 @@ using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using MixERP.Net.i18n.Resources;
 using Serilog;
 
 namespace MixERP.Net.Common
@@ -272,7 +273,7 @@ namespace MixERP.Net.Common
 
             if (page == null)
             {
-                throw new InvalidOperationException(Resources.Warnings.CouldNotRegisterJavascript);
+                throw new InvalidOperationException(Warnings.CouldNotRegisterJavascript);
             }
 
             ScriptManager.RegisterStartupScript(page, typeof (Page), key, javaScript, addScriptTags);

@@ -140,16 +140,6 @@
       <DependentUpon>OpportunityFollowup.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\ScrudResource.Designer.cs">
-      <DependentUpon>ScrudResource.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Resources\Titles.Designer.cs">
-      <DependentUpon>Titles.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="Setup\LeadSources.ascx.cs">
       <DependentUpon>LeadSources.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -183,6 +173,10 @@
       <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
       <Name>MixERP.Net.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.i18n\MixERP.Net.i18n.csproj">
+      <Project>{2ECD1C2E-D7D0-4A24-896A-E625B0566DB5}</Project>
+      <Name>MixERP.Net.i18n</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\MixERP.Net.WebControls.ScrudFactory.csproj">
       <Project>{07DDCE95-A18F-4A35-B892-CE09EAD2AA65}</Project>
       <Name>MixERP.Net.WebControls.ScrudFactory</Name>
@@ -199,40 +193,6 @@
       <Project>{cbb57f23-b95e-4328-a786-8d1248eea525}</Project>
       <Name>MixERP.Net.Core.Modules.CRM.data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\ScrudResource.de.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.es.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.fil.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.fr.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.id.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.ja.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.ms.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.nl.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.pt.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ScrudResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\ScrudResource.ru.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.sv.resx" />
-    <EmbeddedResource Include="Resources\ScrudResource.zh.resx" />
-    <EmbeddedResource Include="Resources\Titles.de.resx" />
-    <EmbeddedResource Include="Resources\Titles.es.resx" />
-    <EmbeddedResource Include="Resources\Titles.fil.resx" />
-    <EmbeddedResource Include="Resources\Titles.fr.resx" />
-    <EmbeddedResource Include="Resources\Titles.id.resx" />
-    <EmbeddedResource Include="Resources\Titles.ja.resx" />
-    <EmbeddedResource Include="Resources\Titles.ms.resx" />
-    <EmbeddedResource Include="Resources\Titles.nl.resx" />
-    <EmbeddedResource Include="Resources\Titles.pt.resx" />
-    <EmbeddedResource Include="Resources\Titles.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Titles.ru.resx" />
-    <EmbeddedResource Include="Resources\Titles.sv.resx" />
-    <EmbeddedResource Include="Resources\Titles.zh.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

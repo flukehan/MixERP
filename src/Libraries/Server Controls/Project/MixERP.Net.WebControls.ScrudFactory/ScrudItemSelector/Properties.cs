@@ -50,8 +50,6 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         public string ResourceClassName { get; set; }
 
-        public Assembly ResourceAssembly { get; set; }
-
         public string TopPanelCssClass { get; set; }
 
         public string TopPanelTableCssClass { get; set; }

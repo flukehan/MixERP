@@ -38,7 +38,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
                 report.AutoInitialize = true;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof (InventoryTransferReport));
                 report.Path = "~/Modules/Inventory/Reports/Source/Inventory.Adjustment.xml";
 
                 this.Controls.Add(report);

@@ -19,14 +19,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Policy
 {
@@ -63,7 +62,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                 scrud.UseDisplayViewsAsParents = true;
 
                 scrud.Text = Titles.AutoVerificationPolicy;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (AutoVerification));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
@@ -72,8 +70,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "office.users.user_id", ConfigurationHelper.GetDbParameter("UserDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id", ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.users.user_id",
+                ConfigurationHelper.GetDbParameter("UserDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id",
+                ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
             return string.Join(",", displayFields);
         }
 

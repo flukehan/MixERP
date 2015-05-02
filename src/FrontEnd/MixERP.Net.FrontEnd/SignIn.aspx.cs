@@ -31,8 +31,7 @@ using MixERP.Net.Entities.Office;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Data.Helpers;
 using MixERP.Net.FrontEnd.Data.Office;
-using MixERP.Net.i18n;
-using Resources;
+using MixERP.Net.i18n.Resources;
 using Serilog;
 
 namespace MixERP.Net.FrontEnd

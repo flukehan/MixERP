@@ -19,11 +19,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Tax
 {
@@ -43,8 +43,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (SalesTaxExempts));
-
                 this.AddScrudCustomValidatorErrorMessages();
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
@@ -56,16 +54,21 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
             string javascript = JSUtility.GetVar("dateErrorMessageLocalized", Warnings.DateErrorMessage);
             javascript += JSUtility.GetVar("comparePriceErrorMessageLocalized", Warnings.ComparePriceErrorMessage);
 
-            Common.PageUtility.RegisterJavascript("SalesTaxExempts_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
+            PageUtility.RegisterJavascript("SalesTaxExempts_ScrudCustomValidatorErrorMessages", javascript, this.Page,
+                true);
         }
 
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.tax_master.tax_master_id", ConfigurationHelper.GetDbParameter("TaxMasterDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.tax_exempt_types.tax_exempt_type_id", ConfigurationHelper.GetDbParameter("TaxExemptTypeDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.sales_taxes.sales_tax_id", ConfigurationHelper.GetDbParameter("SalesTaxDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "office.stores.store_id", ConfigurationHelper.GetDbParameter("StoreDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.tax_master.tax_master_id",
+                ConfigurationHelper.GetDbParameter("TaxMasterDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.tax_exempt_types.tax_exempt_type_id",
+                ConfigurationHelper.GetDbParameter("TaxExemptTypeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.sales_taxes.sales_tax_id",
+                ConfigurationHelper.GetDbParameter("SalesTaxDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.stores.store_id",
+                ConfigurationHelper.GetDbParameter("StoreDisplayField"));
             return string.Join(",", displayFields);
         }
 
@@ -73,7 +76,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         {
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.tax_master.tax_master_id", "core.tax_master_scrud_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.tax_exempt_types.tax_exempt_type_id", "core.tax_exempt_type_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.tax_exempt_types.tax_exempt_type_id",
+                "core.tax_exempt_type_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.sales_taxes.sales_tax_id", "core.sales_tax_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "office.stores.store_id", "office.store_scrud_view");
 

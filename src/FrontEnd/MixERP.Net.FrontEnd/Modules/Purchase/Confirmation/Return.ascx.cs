@@ -23,6 +23,7 @@ using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.TransactionChecklist;
 
 namespace MixERP.Net.Core.Modules.Purchase.Confirmation
@@ -35,9 +36,9 @@ namespace MixERP.Net.Core.Modules.Purchase.Confirmation
 
             using (TransactionChecklistForm checklist = new TransactionChecklistForm())
             {
-                checklist.Text = Resources.Titles.PurchaseReturn;
-                checklist.ViewReportButtonText = Resources.Titles.ViewThisReturn;
-                checklist.EmailReportButtonText = Resources.Titles.EmailThisReturn;
+                checklist.Text = Titles.PurchaseReturn;
+                checklist.ViewReportButtonText = Titles.ViewThisReturn;
+                checklist.EmailReportButtonText = Titles.EmailThisReturn;
                 checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Purchase, SubTranBook.Return, transactionMasterId);
                 checklist.AttachmentBookName = "transaction";
                 checklist.OverridePath = "/Modules/Purchase/Return.mix";

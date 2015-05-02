@@ -21,14 +21,14 @@ using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     internal static class ScrudTextBox
     {
-        internal static void AddTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string dataType, string defaultValue, bool isNullable, int maxLength, string errorCssClass, Assembly assembly, bool disabled)
+        internal static void AddTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string dataType, string defaultValue, bool isNullable, int maxLength, string errorCssClass, bool disabled)
         {
             if (htmlTable == null)
             {
@@ -49,7 +49,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 
             using (TextBox textBox = GetTextBox(columnName + "_textbox", maxLength))
             {
-                string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
+                string label = ScrudLocalizationHelper.GetResourceString(resourceClassName, columnName);
 
 
                 if (dataType.ToUpperInvariant().Equals("COLOR"))

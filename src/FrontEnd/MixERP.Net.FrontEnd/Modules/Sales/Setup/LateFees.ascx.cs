@@ -1,6 +1,9 @@
-﻿using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
-
+﻿using System;
+using System.Collections.Generic;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -20,12 +23,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.FrontEnd.Controls;
-
 namespace MixERP.Net.Core.Modules.Sales.Setup
 {
     public partial class LateFees : MixERPUserControl
@@ -39,13 +36,12 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.Table = "late_fee";
                 scrud.ViewSchema = "core";
                 scrud.View = "late_fee_scrud_view";
-                scrud.Text = Resources.Titles.LateFees;
+                scrud.Text = Titles.LateFees;
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.UseDisplayViewsAsParents = true;
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(LateFees));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
@@ -53,7 +49,8 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id",
+                ConfigurationHelper.GetDbParameter("AccountDisplayField"));
             return string.Join(",", displayFields);
         }
 
@@ -63,6 +60,5 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
             ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.late_fee_account_selector_view");
             return string.Join(",", displayViews);
         }
-
     }
 }

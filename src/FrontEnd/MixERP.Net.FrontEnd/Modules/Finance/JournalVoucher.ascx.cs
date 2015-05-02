@@ -19,10 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using MixERP.Net.Common.Extensions;
-using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.TransactionViewFactory;
 
 namespace MixERP.Net.Core.Modules.Finance

@@ -96,7 +96,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
             return string.Empty;
         }
 
-        public static string ParseExpression(string expression, Collection<DataTable> dataTableCollection, Assembly assembly)
+        public static string ParseExpression(string expression, Collection<DataTable> dataTableCollection)
         {
             if (string.IsNullOrWhiteSpace(expression))
             {
@@ -128,9 +128,8 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
                     string[] resource = res.Split('.');
 
                     string key = resource[2];
-                    string fullyQualifiedResourceClassName = assembly.GetName().Name + "." + resource[0] + "." + resource[1];
 
-                    expression = expression.Replace(word, LocalizationHelper.GetResourceString(assembly, fullyQualifiedResourceClassName, key));
+                    expression = expression.Replace(word, LocalizationHelper.GetResourceString(resource[1], key));
                 }
                 else if (word.StartsWith("{DataSource", StringComparison.OrdinalIgnoreCase) && word.ToLower(CultureInfo.InvariantCulture).Contains("runningtotalfieldvalue"))
                 {

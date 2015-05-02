@@ -22,7 +22,9 @@ namespace MixERP.Net.i18n
                 culture = new CultureInfo(cultureCode);
             }
 
-            IDictionary<string, string> cache = MemoryCache.Default["Resources"] as IDictionary<string, string>;
+
+            var cacheItem = MemoryCache.Default.Get("Resources");
+            IDictionary<string, string> cache = (IDictionary<string, string>)cacheItem;
 
             if (cache == null || cache.Count.Equals(0))
             {
@@ -40,15 +42,22 @@ namespace MixERP.Net.i18n
             }
 
             //Fall back to parent culture
-            if (!string.IsNullOrWhiteSpace(culture.Parent.Name))
+            while (true)
             {
-                cacheKey = resourceClass + "." + culture.Parent.Name + "." + resourceKey;
-                cache.TryGetValue(cacheKey, out result);
-
-                if (result != null)
+                if (!string.IsNullOrWhiteSpace(culture.Parent.Name))
                 {
-                    return result;
+                    cacheKey = resourceClass + "." + culture.Parent.Name + "." + resourceKey;
+                    cache.TryGetValue(cacheKey, out result);
+
+                    if (result != null)
+                    {
+                        return result;
+                    }
+
+                    culture = culture.Parent;
+                    continue;
                 }
+                break;
             }
 
             //Fall back to invariant culture
@@ -62,6 +71,12 @@ namespace MixERP.Net.i18n
 
             return result;
         }
+
+        private static string GetFallBackResource(ref IDictionary<string, string> cache, CultureInfo culture, string resourceClass, string resourceKey)
+        {
+            return null;
+        }
+
 
         private static void InitializeResources()
         {

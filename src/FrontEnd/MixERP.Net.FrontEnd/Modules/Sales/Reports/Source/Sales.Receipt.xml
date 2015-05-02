@@ -137,7 +137,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
       </tr>
     </table>
     <br />
-    <strong>{Resources.Labels.ThankYouForYourBusiness}</strong>
+    <strong>{Labels.ThankYouForYourBusiness}</strong>
   </BottomSection>
   <DataSources>
     <DataSource>

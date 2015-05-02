@@ -21,9 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Finance.Setup
 {
@@ -44,7 +44,6 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.Text = Titles.ChartOfAccounts;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (COA));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }

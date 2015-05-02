@@ -24,9 +24,9 @@ using System.Globalization;
 using System.Reflection;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
-using MixERP.Net.Core.Modules.Inventory.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.ReportEngine;
 
 namespace MixERP.Net.Core.Modules.Inventory.Reports
@@ -58,7 +58,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
                 report.AddParameterToCollection(parameter1);
                 report.AddParameterToCollection(parameter2);
                 report.RunningTotalText = Titles.RunningTotal;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof (AccountStatementReport));
                 report.Path = "~/Modules/Inventory/Reports/Source/Inventory.AccountStatement.xml";
                 report.AutoInitialize = true;
 

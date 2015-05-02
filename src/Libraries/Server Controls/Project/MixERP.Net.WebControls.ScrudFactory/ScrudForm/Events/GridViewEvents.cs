@@ -53,7 +53,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                     {
                         var cellText = e.Row.Cells[i].Text;
 
-                        cellText = ScrudLocalizationHelper.GetResourceString(this.ResourceAssembly, this.GetResourceClassName(), cellText);
+                        cellText = ScrudLocalizationHelper.GetResourceString(this.GetResourceClassName(), cellText);
 
                         e.Row.Cells[i].Text = cellText;
                     }

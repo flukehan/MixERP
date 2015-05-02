@@ -22,7 +22,7 @@ using System.Globalization;
 using System.Reflection;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {

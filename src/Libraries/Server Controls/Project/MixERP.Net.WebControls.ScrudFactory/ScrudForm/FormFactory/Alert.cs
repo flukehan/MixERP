@@ -20,7 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
+using MixERP.Net.i18n.Resources;
 using Serilog;
 
 namespace MixERP.Net.WebControls.ScrudFactory
@@ -54,8 +54,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetLocalizedErrorMessage(MixERPException ex)
         {
-            string fullyQualifiedResourceClassName = this.ResourceAssembly.GetName().Name + ".Resources." + this.GetResourceClassName();
-            return LocalizationHelper.GetResourceString(this.ResourceAssembly, fullyQualifiedResourceClassName, ex.DBConstraintName);
+            return i18n.ResourceManager.GetString(this.GetResourceClassName(), ex.DBConstraintName);
         }
 
         private void DisplaySuccess()

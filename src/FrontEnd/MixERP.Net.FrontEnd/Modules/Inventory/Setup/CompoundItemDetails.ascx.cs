@@ -17,14 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Inventory.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {
@@ -45,12 +43,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
                 scrud.DisplayViews = GetDisplayViews();
 
                 scrud.Text = Titles.CompoundItemDetails;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(CompoundItemDetails));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-
-            
         }
 
         private static string GetDisplayFields()
@@ -68,7 +63,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.compound_items.compound_item_id", "core.compound_item_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.compound_items.compound_item_id",
+                "core.compound_item_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.items.item_id", "core.item_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.units.unit_id", "core.unit_scrud_view");
             return string.Join(",", displayViews);

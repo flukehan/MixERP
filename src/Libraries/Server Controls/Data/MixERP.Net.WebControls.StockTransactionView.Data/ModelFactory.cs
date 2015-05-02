@@ -24,6 +24,7 @@ using MixERP.Net.Common;
 using MixERP.Net.DbFactory;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.StockTransactionViewFactory.Data.Models;
 using Npgsql;
 
@@ -116,7 +117,9 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data
                     model.StatementReference += Environment.NewLine;
                 }
 
-                model.StatementReference += "(" + Entities.Helpers.TransactionBookHelper.GetBookAcronym(tranBook, subTranBook) + "# " + string.Join(",", ids) + ")";
+                model.StatementReference += "(" +
+                                            Entities.Helpers.TransactionBookHelper.GetBookAcronym(tranBook, subTranBook) +
+                                            "# " + string.Join(",", ids) + ")";
             }
 
             return model;
@@ -141,7 +144,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data
                         return SalesOrder.GetSalesOrderViewCommand(ids);
 
                     case SubTranBook.Payment:
-                        throw new InvalidOperationException(Resources.Errors.InvalidSubTranBookSalesPayment);
+                        throw new InvalidOperationException(Errors.InvalidSubTranBookSalesPayment);
                     case SubTranBook.Quotation:
                         return SalesQuotation.GetSalesQuotationViewCommand(ids);
 
@@ -156,7 +159,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data
             switch (subTranBook)
             {
                 case SubTranBook.Delivery:
-                    throw new InvalidOperationException(Resources.Errors.InvalidSubTranBookPurchaseDelivery);
+                    throw new InvalidOperationException(Errors.InvalidSubTranBookPurchaseDelivery);
                 case SubTranBook.Direct:
                     break;
 
@@ -170,9 +173,9 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data
                     break;
 
                 case SubTranBook.Quotation:
-                    throw new InvalidOperationException(Resources.Errors.InvalidSubTranBookPurchaseQuotation);
+                    throw new InvalidOperationException(Errors.InvalidSubTranBookPurchaseQuotation);
                 case SubTranBook.Receipt:
-                    throw new InvalidOperationException(Resources.Errors.InvalidSubTranBookPurchaseReceipt);
+                    throw new InvalidOperationException(Errors.InvalidSubTranBookPurchaseReceipt);
             }
 
             return null;

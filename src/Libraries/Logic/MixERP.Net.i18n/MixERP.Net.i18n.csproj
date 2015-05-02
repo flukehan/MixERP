@@ -45,8 +45,10 @@
       <HintPath>..\..\..\packages\Npgsql.2.2.3\lib\net45\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheProvider.cs" />
+    <Compile Include="ConfigurationHelper.cs" />
     <Compile Include="Resources.cs">
       <DependentUpon>Resources.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -73,12 +76,6 @@
     <None Include="Generator.ttinclude" />
     <None Include="Mix Open Foundation.snk" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MixERP.Net.DbFactory\MixERP.Net.DbFactory.csproj">
-      <Project>{8FD9661C-2473-4581-8722-18B08D4DB252}</Project>
-      <Name>MixERP.Net.DbFactory</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

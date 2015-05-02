@@ -19,11 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Sales.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Sales.Setup
 {
@@ -43,8 +42,6 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (PaymentTerms));
-
                 this.AddScrudCustomValidatorErrorMessages();
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
@@ -56,14 +53,17 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
             string javascript = JSUtility.GetVar("dueFrequencyErrorMessageLocalized", Warnings.DueFrequencyErrorMessage);
             javascript += JSUtility.GetVar("lateFeeErrorMessageLocalized", Warnings.LateFeeErrorMessage);
 
-            Common.PageUtility.RegisterJavascript("PaymentTerm_ScrudCustomValidatorErrorMessages", javascript, this.Page, true);
+            Common.PageUtility.RegisterJavascript("PaymentTerm_ScrudCustomValidatorErrorMessages", javascript, this.Page,
+                true);
         }
 
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id", ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.late_fee.late_fee_id", ConfigurationHelper.GetDbParameter("LateFeeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id",
+                ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.late_fee.late_fee_id",
+                ConfigurationHelper.GetDbParameter("LateFeeDisplayField"));
             return string.Join(",", displayFields);
         }
 

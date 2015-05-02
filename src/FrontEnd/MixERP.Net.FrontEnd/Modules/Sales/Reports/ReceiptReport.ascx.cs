@@ -38,7 +38,6 @@ namespace MixERP.Net.Core.Modules.Sales.Reports
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
                 report.AutoInitialize = true;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof(ReceiptReport));
                 report.Path = "~/Modules/Sales/Reports/Source/Sales.Receipt.xml";
 
                 this.Controls.Add(report);

@@ -24,11 +24,9 @@ using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.ScrudFactory.Data;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
@@ -49,7 +47,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             using (DataTable table = new DataTable())
             {
                 table.Locale = Thread.CurrentThread.CurrentCulture;
-                this.LoadForm(this.formContainer, table, this.ResourceAssembly);
+                this.LoadForm(this.formContainer, table);
             }
         }
 
@@ -99,7 +97,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
                     //Load the form again in the container with values
                     //retrieved from database.
-                    this.LoadForm(this.formContainer, table, this.ResourceAssembly, true);
+                    this.LoadForm(this.formContainer, table, true);
                     this.gridPanel.Attributes["style"] = "display:none;";
                     this.formPanel.Attributes["style"] = "display:block;";
                 }
@@ -141,7 +139,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         using (DataTable table = new DataTable())
                         {
                             //Load the form again.
-                            this.LoadForm(this.formContainer, table, this.ResourceAssembly);
+                            this.LoadForm(this.formContainer, table);
                         }
 
                         //Refresh the grid.
@@ -181,7 +179,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         {
                             table.Locale = Thread.CurrentThread.CurrentCulture;
 
-                            this.LoadForm(this.formContainer, table, this.ResourceAssembly);
+                            this.LoadForm(this.formContainer, table);
                         }
 
                         //Refresh the grid.

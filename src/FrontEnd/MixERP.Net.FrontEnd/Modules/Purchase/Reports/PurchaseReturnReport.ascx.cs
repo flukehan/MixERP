@@ -39,7 +39,6 @@ namespace MixERP.Net.Core.Modules.Purchase.Reports
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
                 report.AutoInitialize = true;
-                report.ResourceAssembly = Assembly.GetAssembly(typeof (PurchaseReturnReport));
                 report.Path = "~/Modules/Purchase/Reports/Source/Purchase.Return.xml";
 
                 this.Controls.Add(report);

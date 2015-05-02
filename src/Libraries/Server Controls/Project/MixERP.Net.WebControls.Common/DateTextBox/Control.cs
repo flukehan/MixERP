@@ -21,10 +21,11 @@ using System;
 using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.jQueryHelper;
 using MixERP.Net.Common.Models;
 using MixERP.Net.Entities;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.Common.Helpers;
-using MixERP.Net.WebControls.Common.Resources;
 
 namespace MixERP.Net.WebControls.Common
 {
@@ -69,7 +70,7 @@ namespace MixERP.Net.WebControls.Common
                 this.Controls.Add(this.compareValidator);
             }
 
-            Net.Common.jQueryHelper.jQueryUI.AddjQueryUIDatePicker(this.Page, this.textBox.ID, this.MinDate, this.MaxDate);
+            jQueryUI.AddjQueryUIDatePicker(this.Page, this.textBox.ID, this.MinDate, this.MaxDate);
 
             base.CreateChildControls();
         }

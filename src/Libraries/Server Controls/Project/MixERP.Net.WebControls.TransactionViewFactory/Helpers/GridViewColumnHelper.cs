@@ -2,7 +2,7 @@
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.TransactionViewFactory.Resources;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.TransactionViewFactory.Helpers
 {

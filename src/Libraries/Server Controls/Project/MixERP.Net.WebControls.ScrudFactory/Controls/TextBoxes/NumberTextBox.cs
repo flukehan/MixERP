@@ -17,19 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
     internal static class ScrudNumberTextBox
     {
-        internal static void AddNumberTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isSerial, bool isNullable, int maxLength, string domain, string errorCssClass, Assembly assembly, bool disabled)
+        internal static void AddNumberTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isSerial, bool isNullable, int maxLength, string domain, string errorCssClass, bool disabled)
         {
             if (htmlTable == null)
             {
@@ -45,7 +45,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             {
                 using (CompareValidator numberValidator = GetNumberValidator(textBox, domain, errorCssClass))
                 {
-                    string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
+                    string label = ScrudLocalizationHelper.GetResourceString(resourceClassName, columnName);
 
                     if (!string.IsNullOrWhiteSpace(defaultValue))
                     {

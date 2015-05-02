@@ -17,12 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Core.Modules.BackOffice.Resources;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
 using System;
-using System.Reflection;
+using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
@@ -39,7 +37,6 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.View = "industry_scrud_view";
                 scrud.Text = Titles.Industries;
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof(Industries));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }

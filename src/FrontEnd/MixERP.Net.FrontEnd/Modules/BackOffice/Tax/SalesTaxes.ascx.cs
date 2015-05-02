@@ -19,11 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Tax
 {
@@ -43,7 +42,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (SalesTaxes));
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
         }
@@ -51,9 +49,12 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.tax_master.tax_master_id", ConfigurationHelper.GetDbParameter("TaxMasterDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id", ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.tax_base_amount_types.tax_base_amount_type_code", ConfigurationHelper.GetDbParameter("TaxBaseAmountTypeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.tax_master.tax_master_id",
+                ConfigurationHelper.GetDbParameter("TaxMasterDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id",
+                ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.tax_base_amount_types.tax_base_amount_type_code",
+                ConfigurationHelper.GetDbParameter("TaxBaseAmountTypeDisplayField"));
             return string.Join(",", displayFields);
         }
 
@@ -62,7 +63,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
             List<string> displayViews = new List<string>();
             ScrudHelper.AddDisplayView(displayViews, "core.tax_master.tax_master_id", "core.tax_master_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_scrud_view");
-            ScrudHelper.AddDisplayView(displayViews, "core.tax_base_amount_types.tax_base_amount_type_code", "core.tax_base_amount_type_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.tax_base_amount_types.tax_base_amount_type_code",
+                "core.tax_base_amount_type_selector_view");
             return string.Join(",", displayViews);
         }
     }

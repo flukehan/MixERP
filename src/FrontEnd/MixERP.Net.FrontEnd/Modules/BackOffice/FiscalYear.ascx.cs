@@ -20,9 +20,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Reflection;
 using MixERP.Net.Common.Domains;
-using MixERP.Net.Core.Modules.BackOffice.Resources;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
@@ -45,7 +45,6 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.View = "fiscal_year_scrud_view";
 
                 scrud.Text = Titles.FiscalYear;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (FiscalYear));
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }

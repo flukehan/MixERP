@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ScrudFactory;
 using System;
 using System.Linq;
 using System.Reflection;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.General
 {
@@ -39,7 +39,6 @@ namespace MixERP.Net.FrontEnd.General
                 selector.GridViewPagerCssClass = "ui menu";
                 selector.GridViewRowCssClass = "";
                 selector.GridViewAlternateRowCssClass = "alt";
-                selector.ResourceAssembly = this.GetAssembly();
                 selector.ResourceClassName = this.GetResourceClassName();
 
                 this.SelectorPlaceholder.Controls.Add(selector);
@@ -52,7 +51,7 @@ namespace MixERP.Net.FrontEnd.General
 
             if (string.IsNullOrWhiteSpace(assembly))
             {
-                return Assembly.GetAssembly(typeof(ItemSelector));
+                return Assembly.GetAssembly(typeof (ItemSelector));
             }
 
             return this.GetAssemblyByName(assembly);

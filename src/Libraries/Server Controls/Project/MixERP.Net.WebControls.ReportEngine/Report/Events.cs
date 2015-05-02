@@ -88,17 +88,8 @@ namespace MixERP.Net.WebControls.ReportEngine
                     string cellText = e.Row.Cells[i].Text;
 
                     string className = ConfigurationHelper.GetReportParameter("ResourceClassName");
-                    string localized;
 
-                    if (this.ResourceAssembly != null)
-                    {
-                        string fullyQualifiedResourceClassName = this.ResourceAssembly.GetName().Name + ".Resources." + className;
-                        localized = LocalizationHelper.GetResourceString(this.ResourceAssembly, fullyQualifiedResourceClassName, cellText);
-                    }
-                    else
-                    {
-                        localized = LocalizationHelper.GetDefaultAssemblyResourceString(className, cellText);
-                    }
+                    string localized = LocalizationHelper.GetResourceString(className, cellText);
 
                     cellText = localized;
                     e.Row.Cells[i].Text = cellText;

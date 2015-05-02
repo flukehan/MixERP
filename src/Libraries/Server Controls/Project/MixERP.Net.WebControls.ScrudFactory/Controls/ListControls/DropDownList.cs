@@ -17,10 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Data;
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 using System;
 using System.Data;
 using System.Linq;
@@ -29,15 +25,18 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Extensions;
-using FormHelper = MixERP.Net.WebControls.ScrudFactory.Data.FormHelper;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.WebControls.ScrudFactory.Data;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
     internal static class ScrudDropDownList
     {
-        internal static void AddDropDownList(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, bool useDisplayViewsAsParent, string selectedValues, string errorCssClass, Assembly assembly, bool disabled)
+        internal static void AddDropDownList(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, bool useDisplayViewsAsParent, string selectedValues, string errorCssClass, bool disabled)
         {
-            string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
+            string label = ScrudLocalizationHelper.GetResourceString(resourceClassName, columnName);
 
             using (DropDownList dropDownList = GetDropDownList(columnName + "_dropdownlist"))
             {
@@ -50,7 +49,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 {
                     SetDisplayFields(dropDownList, table, tableSchema, tableName, tableColumn, displayFields);
 
-                    using (HtmlAnchor itemSelectorAnchor = GetItemSelector(dropDownList.ClientID, itemSelectorPath, tableSchema, tableName, tableColumn, displayViews, assembly, resourceClassName, label))
+                    using (HtmlAnchor itemSelectorAnchor = GetItemSelector(dropDownList.ClientID, itemSelectorPath, tableSchema, tableName, tableColumn, displayViews, resourceClassName, label))
                     {
                         if (disabled)
                         {
@@ -128,11 +127,10 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
         /// <param name="tableName">Target Table</param>
         /// <param name="tableColumn"></param>
         /// <param name="displayViews">Scrud DisplayView Expressions</param>
-        /// <param name="assembly">Target Assembly Name which contains localization resources of the table.</param>
         /// <param name="resourceClassName">The resource class name containing localization.</param>
         /// <param name="columnNameLocalized">Localized name of the column to which item selector is bound to.</param>
         /// <returns></returns>
-        private static HtmlAnchor GetItemSelector(string associatedControlId, string itemSelectorPath, string tableSchema, string tableName, string tableColumn, string displayViews, Assembly assembly, string resourceClassName, string columnNameLocalized)
+        private static HtmlAnchor GetItemSelector(string associatedControlId, string itemSelectorPath, string tableSchema, string tableName, string tableColumn, string displayViews, string resourceClassName, string columnNameLocalized)
         {
             if (string.IsNullOrWhiteSpace(displayViews))
             {
@@ -167,8 +165,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                 itemSelectorAnchor.Attributes.Add("data-title", columnNameLocalized);
 
                 itemSelectorAnchor.HRef = itemSelectorPath + "?Schema=" + schema + "&View=" + view +
-                                          "&AssociatedControlId=" + associatedControlId + "&Assembly=" +
-                                          assembly.GetName().Name + "&ResourceClassName=" + resourceClassName;
+                                          "&AssociatedControlId=" + associatedControlId + "&ResourceClassName=" + resourceClassName;
 
                 return itemSelectorAnchor;
             }

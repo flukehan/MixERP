@@ -21,6 +21,7 @@ using System;
 using System.Web.UI.HtmlControls;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.FrontEnd.Site
 {
@@ -32,7 +33,7 @@ namespace MixERP.Net.FrontEnd.Site
 
             using (HtmlGenericControl header = new HtmlGenericControl("h1"))
             {
-                header.InnerText = Resources.Warnings.AccessIsDenied;
+                header.InnerText = Warnings.AccessIsDenied;
                 this.Placeholder1.Controls.Add(header);
             }
 
@@ -43,7 +44,7 @@ namespace MixERP.Net.FrontEnd.Site
 
             using (HtmlGenericControl p = new HtmlGenericControl("p"))
             {
-                p.InnerText = Resources.Warnings.NotAuthorized;
+                p.InnerText = Warnings.NotAuthorized;
                 this.Placeholder1.Controls.Add(p);
             }
         }

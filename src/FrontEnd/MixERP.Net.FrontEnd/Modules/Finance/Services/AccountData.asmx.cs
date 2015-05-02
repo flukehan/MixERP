@@ -28,10 +28,10 @@ using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Data.Helpers;
-using MixERP.Net.Core.Modules.Finance.Resources;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Office;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {

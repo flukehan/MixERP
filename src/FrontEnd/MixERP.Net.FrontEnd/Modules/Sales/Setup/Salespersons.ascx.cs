@@ -19,11 +19,10 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;
-using MixERP.Net.WebControls.ScrudFactory;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Sales.Setup
 {
@@ -50,9 +49,7 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
 
                 scrud.SelectedValues = GetSelectedValues();
 
-                scrud.Text = Resources.Titles.SalesPersons;
-                scrud.ResourceAssembly = Assembly.GetAssembly(typeof (Salespersons));
-
+                scrud.Text = Titles.SalesPersons;
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
@@ -71,7 +68,8 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.salesperson_account_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id",
+                "core.salesperson_account_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.sales_teams.sales_team_id", "core.sales_team_scrud_view");
             return string.Join(",", displayViews);
         }

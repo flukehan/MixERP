@@ -25,6 +25,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.ReportEngine;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
 
@@ -32,16 +33,17 @@ namespace MixERP.Net.FrontEnd.Reports
 {
     public partial class ReportViewer : MixERPWebReportPage
     {
-        private Button updateButton = new Button();
-
         #region IDisposable
+
         private Report report;
+
         #endregion
+
+        private Button updateButton = new Button();
 
         protected void Page_Init(object sender, EventArgs e)
         {
             this.report = new Report();
-            this.report.ResourceAssembly = Assembly.GetAssembly(typeof(ReportViewer));
             this.report.AutoInitialize = false;
             this.Placeholder1.Controls.Add(this.report);
             this.AddParameters();
@@ -110,7 +112,7 @@ namespace MixERP.Net.FrontEnd.Reports
             }
 
             this.updateButton.ID = "UpdateButton";
-            this.updateButton.Text = Resources.Titles.Update;
+            this.updateButton.Text = Titles.Update;
             this.updateButton.CssClass = "myButton report-button";
             this.updateButton.Click += this.UpdateButton_Click;
 

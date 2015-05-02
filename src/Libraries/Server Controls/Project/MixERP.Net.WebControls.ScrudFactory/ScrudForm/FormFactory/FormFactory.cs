@@ -132,7 +132,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             return list;
         }
 
-        private void LoadForm(Panel container, DataTable values, Assembly assembly, bool editing = false)
+        private void LoadForm(Panel container, DataTable values, bool editing = false)
         {
             using (HtmlTable htmlTable = new HtmlTable())
             {
@@ -179,7 +179,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                                 this.GetItemSelectorPath(), columnName, defaultValue, isSerial, isNullable, dataType,
                                 domain, maxLength, parentTableSchema, parentTable, parentTableColumn, this.DisplayFields,
                                 this.DisplayViews, this.UseDisplayViewsAsParents, this.SelectedValues,
-                                this.GetErrorCssClass(), assembly, disabled);
+                                this.GetErrorCssClass(), disabled);
                         }
                     }
                 }

@@ -23,8 +23,9 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
+using MixERP.Net.Common.jQueryHelper;
+using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
-using MixERP.Net.WebControls.ScrudFactory.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
@@ -47,7 +48,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
             return date.ToString("f");
         }
 
-        internal static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, string validatorCssClass, Assembly assembly, bool disabled)
+        internal static void AddDateTextBox(HtmlTable htmlTable, string resourceClassName, string columnName, string defaultValue, bool isNullable, string validatorCssClass, bool disabled)
         {
             if (htmlTable == null)
             {
@@ -63,9 +64,9 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 
             using (TextBox textBox = ScrudTextBox.GetTextBox(id, 100))
             {
-                Net.Common.jQueryHelper.jQueryUI.AddjQueryUIDatePicker(null, id, null, null);
+                jQueryUI.AddjQueryUIDatePicker(null, id, null, null);
 
-                string label = ScrudLocalizationHelper.GetResourceString(assembly, resourceClassName, columnName);
+                string label = ScrudLocalizationHelper.GetResourceString(resourceClassName, columnName);
 
                 textBox.Text = GetLocalizedDate(defaultValue);
                 textBox.ReadOnly = disabled;
