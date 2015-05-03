@@ -70,9 +70,16 @@ namespace MixERP.Net.FrontEnd.Base
         {
             bool isDevelopmentMode = ConfigurationHelper.GetMixERPParameter("Mode").ToUpperInvariant().Equals("DEVELOPMENT");
             bool isLocalHost = PageUtility.IsLocalhost(this.Page);
-            bool hasAccess = !this.AccessLevel.Equals(AccessLevel.AdminOnly) ||
-                             this.AccessLevel.Equals(AccessLevel.LocalhostAdmin) &&
-                             !CurrentUser.GetSignInView().IsAdmin.ToBool();
+            bool adminOnly = (this.AccessLevel.Equals(AccessLevel.AdminOnly) ||
+                              this.AccessLevel.Equals(AccessLevel.LocalhostAdmin));
+
+
+            bool hasAccess = true;
+
+            if (adminOnly)
+            {
+                hasAccess = CurrentUser.GetSignInView().IsAdmin.ToBool();
+            }
 
             if (hasAccess && isDevelopmentMode)
             {

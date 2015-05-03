@@ -10,7 +10,7 @@ DROP FUNCTION IF EXISTS transactions.post_non_gl_transaction
     _party_code                             national character varying(12),
     _price_type_id                          integer,
     _is_non_taxable_sales                   boolean,
-    _salesperson_id                        integer,
+    _salesperson_id                         integer,
     _shipper_id                             integer,
     _shipping_address_code                  national character varying(12),
     _store_id                               integer,
@@ -33,7 +33,7 @@ CREATE FUNCTION transactions.post_non_gl_transaction
     _party_code                             national character varying(12),
     _price_type_id                          integer,
     _is_non_taxable_sales                   boolean,
-    _salesperson_id                        integer,
+    _salesperson_id                         integer,
     _shipper_id                             integer,
     _shipping_address_code                  national character varying(12),
     _store_id                               integer,
@@ -49,7 +49,7 @@ $$
     DECLARE _non_gl_stock_master_id         bigint;
     DECLARE _non_gl_stock_detail_id         bigint;
     DECLARE _shipping_address_id            bigint;
-    DECLARE _shipping_charge                money_strict2;
+    DECLARE _shipping_charge                public.money_strict2;
     DECLARE _tran_type                      transaction_type;
     DECLARE this                            RECORD;
 BEGIN
@@ -70,18 +70,18 @@ BEGIN
         store_id                        integer,
         item_code                       text,
         item_id                         integer, 
-        quantity                        integer_strict,
+        quantity                        public.integer_strict,
         unit_name                       text,
         unit_id                         integer,
         base_quantity                   decimal,
         base_unit_id                    integer,                
-        price                           money_strict,
-        cost_of_goods_sold              money_strict2 DEFAULT(0),
-        discount                        money_strict2,
-        shipping_charge                 money_strict2,
+        price                           public.money_strict,
+        cost_of_goods_sold              public.money_strict2 DEFAULT(0),
+        discount                        public.money_strict2,
+        shipping_charge                 public.money_strict2,
         tax_form                        text,
         sales_tax_id                    integer,
-        tax                             money_strict2
+        tax                             public.money_strict2
     ) ON COMMIT DROP;
 
 
@@ -97,9 +97,9 @@ BEGIN
         state_sales_tax_id                      integer,
         county_sales_tax_id                     integer,
         account_id                              integer,
-        principal                               money_strict,
-        rate                                    decimal_strict,
-        tax                                     money_strict
+        principal                               public.money_strict,
+        rate                                    public.decimal_strict,
+        tax                                     public.money_strict
     ) ON COMMIT DROP;
 
     INSERT INTO temp_stock_details(store_id, item_code, quantity, unit_name, price, discount, shipping_charge, tax_form, tax)

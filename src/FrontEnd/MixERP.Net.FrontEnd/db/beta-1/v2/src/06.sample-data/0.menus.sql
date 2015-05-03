@@ -80,7 +80,7 @@ SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'fil', 'Mga Card 
 SELECT * FROM core.create_menu('Merchant Fee Setup', '~/Modules/Finance/Setup/MerchantFeeSetup.mix', 'MFS', 2, core.get_menu_id('FSM'));
 
 --FRENCH
-SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'fr', '');
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'fr', 'Configuration de frais de Merchant');
 
 
 --GERMAN
@@ -115,3 +115,41 @@ SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'id', 'Merchant F
 
 --FILIPINO
 SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'fil', 'Setup Bayarin sa Merchant');
+
+SELECT * FROM core.create_menu('Report Writer', '~/Modules/BackOffice/Admin/ReportWriter.mix', 'RW', 2, core.get_menu_id('SAT'));
+
+--FRENCH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'fr', 'Report Writer');
+
+--GERMAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'de', 'Report Writer');
+
+--RUSSIAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'ru', 'генератор отчетов');
+
+--JAPANESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'ja', '報告書作成');
+
+--SPANISH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'es', 'Report Writer');
+
+--DUTCH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'nl', 'Report Writer');
+
+--SIMPLIFIED CHINESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'zh', '报表生成器');
+
+--PORTUGUESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'pt', 'Report Writer');
+
+--SWEDISH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'sv', 'Report Writer');
+
+--MALAY
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'ms', 'Laporan Penulis');
+
+--INDONESIAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'id', 'laporan Penulis');
+
+--FILIPINO
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'fil', 'Report Writer');

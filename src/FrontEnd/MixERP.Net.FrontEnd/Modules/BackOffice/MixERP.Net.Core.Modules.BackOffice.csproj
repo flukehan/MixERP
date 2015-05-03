@@ -97,6 +97,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin\ReportWriter.ascx" />
     <Content Include="Counters.ascx" />
     <Content Include="Counties.ascx" />
     <Content Include="Countries.ascx" />
@@ -109,9 +110,11 @@
     <Content Include="Mix Open Foundation.snk" />
     <Content Include="OTS\OpeningInventory.ascx" />
     <Content Include="Policy\ApiAccess.ascx" />
+    <Content Include="Scripts\Admin\ReportWriter.ascx..js" />
     <Content Include="Scripts\Admin\DatabaseBackup.ascx.js" />
     <Content Include="Scripts\AttachmentManager.ascx.js" />
     <Content Include="packages.config" />
+    <Content Include="Services\Admin\ReportWriter.asmx" />
     <Content Include="Services\OTS\OpeningInventory.asmx" />
     <Content Include="Widgets\LinksWidget.ascx" />
     <Content Include="Widgets\OfficeInformationWidget.ascx" />
@@ -198,6 +201,13 @@
     </Compile>
     <Compile Include="Admin\NewCompany.ascx.designer.cs">
       <DependentUpon>NewCompany.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ReportWriter.ascx.cs">
+      <DependentUpon>ReportWriter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ReportWriter.ascx.designer.cs">
+      <DependentUpon>ReportWriter.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Restore.ascx.cs">
       <DependentUpon>Restore.ascx</DependentUpon>
@@ -357,6 +367,10 @@
     </Compile>
     <Compile Include="Roles.ascx.designer.cs">
       <DependentUpon>Roles.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Admin\ReportWriter.asmx.cs">
+      <DependentUpon>ReportWriter.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\Attachments.asmx.cs">
       <DependentUpon>Attachments.asmx</DependentUpon>
