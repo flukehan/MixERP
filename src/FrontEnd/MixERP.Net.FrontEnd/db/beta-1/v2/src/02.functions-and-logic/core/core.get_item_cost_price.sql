@@ -30,7 +30,7 @@ BEGIN
             item_cost_prices.unit_id
         INTO 
             _price, 
-            _unit_id,
+            _unit_id
                    FROM core.item_cost_prices
         WHERE item_cost_prices.item_id=$1
         AND item_cost_prices.party_id =$3;
