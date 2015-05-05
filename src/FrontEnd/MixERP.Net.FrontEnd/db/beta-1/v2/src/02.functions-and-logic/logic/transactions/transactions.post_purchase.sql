@@ -21,7 +21,7 @@ DROP FUNCTION IF EXISTS transactions.post_purchase
 
 CREATE FUNCTION transactions.post_purchase
 (
-    _book_name                              national character varying(12),
+    _book_name                              national character varying(48),
     _office_id                              integer,
     _user_id                                integer,
     _login_id                               bigint,
