@@ -18,14 +18,18 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 --%>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ReportWriter.ascx.cs" Inherits="MixERP.Net.Core.Modules.BackOffice.Admin.ReportWriter" %>
 <style type="text/css">
-    .ui.form textarea { max-height: 1200px; }
+    .ui.form textarea {
+        max-height: 1200px;
+    }
 
-    .full.height.form, .full.height.form .field, .full.height.form .field textarea { height: 100%; }
+    .full.height.form, .full.height.form .field, .full.height.form .field textarea {
+        height: 100%;
+    }
 </style>
 
 <h1>Report Writer</h1>
 <div class="ui blue buttons">
-    <button class="ui button">
+    <button class="ui button" onclick="showReports();">
         <i class="folder open icon"></i>Open
     </button>
     <button class="ui button" id="SaveButton">
@@ -88,11 +92,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         <div class="four fields">
             <div class="running-total-fields field">
                 <label>Running Total Fields (Indices)</label>
-                <input type="text"/>
+                <input type="text" />
             </div>
             <div class="running-total-text field">
                 <label>Running Total Text Footer Index</label>
-                <input type="text"/>
+                <input type="text" />
             </div>
         </div>
         <div id="Parameters">
@@ -136,11 +140,19 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
     <div class="ui form" style="width: 400px;">
         <div class="field">
             <label>Report Title</label>
-            <input type="text" id="TitleInputText"/>
+            <input type="text" id="TitleInputText" />
         </div>
         <div class="field">
             <label>Report File Name</label>
-            <input type="text" id="FileNameInputText"/>
+            <input type="text" id="FileNameInputText" />
+        </div>
+        <div class="field">
+            <label>Menu Code</label>
+            <input type="text" id="MenuCodeInputText" />
+        </div>
+        <div class="field">
+            <label>Parent Menu Code</label>
+            <input type="text" id="ParentMenuCodeInputText" />
         </div>
     </div>
 </div>
@@ -184,7 +196,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="field">
                     <label>Add GridView</label>
                     <div class="ui checkbox">
-                        <input type="checkbox" id="AddGridViewCheckBox"/>
+                        <input type="checkbox" id="AddGridViewCheckBox" />
                         <label>Yes</label>
                     </div>
                 </div>
@@ -234,7 +246,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             <div class="two fields">
                 <div class="field">
                     <label>Resource Class Name</label>
-                    <input type="text" id="ResourceClassNameInputText"/>
+                    <input type="text" id="ResourceClassNameInputText" />
                 </div>
                 <div class="field">
                     <label>Resource Name</label>
@@ -243,6 +255,30 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             </div>
             <button class="ui small positive button" id="AddResourceButton">Add</button>
         </div>
+    </div>
+</div>
+
+<div class="ui large modal" id="ReportModal">
+    <i class="close icon"></i>
+    <div class="header">
+        Open a Report
+    </div>
+    <div class="content">
+        <table class="ui table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>CreatedOn</th>
+                    <th>LastAccessedOn</th>
+                    <th>LastWrittenOn</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="actions">
+        <div class="ui black button">Close</div>
     </div>
 </div>
 

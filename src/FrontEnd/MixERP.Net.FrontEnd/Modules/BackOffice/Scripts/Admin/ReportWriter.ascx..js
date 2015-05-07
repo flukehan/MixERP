@@ -25,7 +25,8 @@ var fileNameInputText = $("#FileNameInputText");
 var topSectionTextArea = $("#TopSectionTextArea");
 var bodyTextArea = $("#BodyTextArea");
 var bottomSectionTextArea = $("#BottomSectionTextArea");
-
+var menuCodeInputText = $("#MenuCodeInputText");
+var parentMenuCodeInputText = $("#ParentMenuCodeInputText");
 
 saveButton.click(function() {
     if (!confirm("Are you sure?")) {
@@ -34,11 +35,14 @@ saveButton.click(function() {
 
     var title = titleInputText.val();
     var fileName = fileNameInputText.val();
+    var menuCode = menuCodeInputText.val();
+    var parentMenuCode = parentMenuCodeInputText.val();
     var topSection = topSectionTextArea.val();
     var body = bodyTextArea.val();
     var bottomSection = bottomSectionTextArea.val();
 
-    var ajaxSaveReport = saveReport(title, fileName, topSection, body, bottomSection, dataSources, gridViews);
+
+    var ajaxSaveReport = saveReport(title, fileName, menuCode, parentMenuCode, topSection, body, bottomSection, dataSources, gridViews);
 
     ajaxSaveReport.success(function(msg) {
         alert(msg.d);
@@ -50,24 +54,6 @@ saveButton.click(function() {
 
 });
 
-
-function saveReport(title, fileName, topSection, body, bottomSection, dataSources, gridViews) {
-    var url = "/Modules/BackOffice/Services/Admin/ReportWriter.asmx/SaveReport";
-    var data = appendParameter("", "title", title);
-    data = appendParameter(data, "fileName", fileName);
-    data = appendParameter(data, "topSection", topSection);
-    data = appendParameter(data, "body", body);
-    data = appendParameter(data, "bottomSection", bottomSection);
-    data = appendParameter(data, "dataSources", JSON.stringify(dataSources));
-    data = appendParameter(data, "gridViews", JSON.stringify(gridViews));
-
-    data = getData(data);
-
-
-    alert(JSON.stringify(gridViews));
-
-    return getAjax(url, data);
-};
 
 addResourceButton.click(function() {
     var resourceClass = resourceClassNameInputText.val();
@@ -137,7 +123,7 @@ dataSourceIndexSelect.blur(function() {
 
 $(document).ready(function() {
     addParameter();
-    var height = $(window).height() - 550;
+    var height = $(window).height() - 250;
     $(".attached.tab.segment").css("height", height + "px");
 });
 
@@ -251,16 +237,6 @@ function appendTable(object, target, runningTotalFieldIndices, runningTotalTextI
     target.html("").append(table);
 };
 
-function getTable(sql, parameters) {
-    var url = "/Modules/BackOffice/Services/Admin/ReportWriter.asmx/GetTable";
-    var data = appendParameter("", "sql", sql);
-    data = appendParameter(data, "parameters", JSON.stringify(parameters));
-
-    data = getData(data);
-
-    return getAjax(url, data);
-};
-
 function saveDataSource() {
     var currentIndex = getCurrentDataSourceCounter();
     dataSources[currentIndex - 1] = getDataSource();
@@ -337,6 +313,10 @@ function setCurrentDataSourceCounter(val) {
 
 function getTotalDataSourceCounter() {
     return parseInt2($(".datasource.label .total").html());
+};
+
+function setTotalDataSourceCounter(value) {
+    return $(".datasource.label .total").html(parseInt2(value));
 };
 
 function addParameter(name, type, testVal) {
@@ -485,5 +465,145 @@ function insertAtCursor(myField, myValue) {
             + myField.value.substring(endPos, myField.value.length);
     } else {
         myField.value += myValue;
-    }
-}
+    };
+};
+
+function showReports() {
+    var ajaxGetReports = getReports();
+
+    ajaxGetReports.success(function(msg) {
+        createRows(msg.d);
+        $("#ReportModal").modal("show");
+    });
+
+    ajaxGetReports.fail(function(xhr) {
+        alert(xhr.responseText);
+    });
+};
+
+function createRows(collection) {
+    var body = $("#ReportModal table tbody");
+    body.html("");
+
+    for (var i = 0; i < collection.length; i++) {
+        var row = $("<tr/>");
+
+        var nameCell = $("<td/>");
+        var createdOnCell = $("<td/>");
+        var lastAccessOnCell = $("<td/>");
+        var lastWrittenOnCell = $("<td/>");
+
+        var nameAnchor = $("<a/>");
+        nameAnchor.html(collection[i].FileName);
+        nameAnchor.attr("onclick", "openReport(this);");
+
+
+        nameCell.append(nameAnchor).appendTo(row);
+        createdOnCell.html(collection[i].CreatedOn).appendTo(row);
+        lastAccessOnCell.html(collection[i].LastAccessedOn).appendTo(row);
+        lastWrittenOnCell.html(collection[i].LastWrittenOn).appendTo(row);
+
+        body.append(row);
+    };
+};
+
+function openReport(el) {
+    var path = $(el).html();
+
+    if (!path) {
+        return;
+    };
+
+    var ajaxGetDefinition = getDefinition(path);
+
+    ajaxGetDefinition.success(function(msg) {
+        loadDefinition(msg.d);
+        $("#ReportModal").modal("hide");
+    });
+
+    ajaxGetDefinition.fail(function(xhr) {
+        alert(xhr.responseText);
+    });
+
+};
+
+function loadDefinition(definition) {
+    titleInputText.val(definition.Title);
+    fileNameInputText.val(definition.FileName);
+
+    if (definition.MenuCode) {
+        menuCodeInputText.val(definition.MenuCode);
+    };
+
+    if (definition.ParentMenuCode) {
+        parentMenuCodeInputText.val(definition.ParentMenuCode);
+    };
+
+    if (definition.TopSection) {
+        topSectionTextArea.val(definition.TopSection);
+    };
+
+    if (definition.Body) {
+        bodyTextArea.val(definition.Body);
+    };
+
+
+    if (definition.BottomSection) {
+        bottomSectionTextArea.val(definition.BottomSection);
+    };
+
+    if (definition.DataSources) {
+        dataSources = definition.DataSources;
+        var total = definition.DataSources.length;
+        setTotalDataSourceCounter(total.toString());
+        loadDataSource(0);
+    };
+
+    if (definition.GridViews) {
+        gridViews = definition.GridViews;
+    };
+};
+
+function getReports() {
+    var url = "/Modules/BackOffice/Services/Admin/ReportWriter.asmx/GetReports";
+    return getAjax(url);
+};
+
+function getDefinition(fileName) {
+    var url = "/Modules/BackOffice/Services/Admin/ReportWriter.asmx/GetDefinition";
+    var data = appendParameter("", "fileName", fileName);
+    data = getData(data);
+
+    return getAjax(url, data);
+};
+
+
+function saveReport(title, fileName, menuCode, parentMenuCode, topSection, body, bottomSection, dataSources, gridViews) {
+    var url = "/Modules/BackOffice/Services/Admin/ReportWriter.asmx/SaveReport";
+    var data = appendParameter("", "title", title);
+    data = appendParameter(data, "fileName", fileName);
+    data = appendParameter(data, "menuCode", menuCode);
+    data = appendParameter(data, "parentMenuCode", parentMenuCode);
+    data = appendParameter(data, "topSection", topSection);
+    data = appendParameter(data, "body", body);
+    data = appendParameter(data, "bottomSection", bottomSection);
+    data = appendParameter(data, "dataSources", JSON.stringify(dataSources));
+    data = appendParameter(data, "gridViews", JSON.stringify(gridViews));
+
+    data = getData(data);
+
+
+    alert(JSON.stringify(gridViews));
+
+    return getAjax(url, data);
+};
+
+function getTable(sql, parameters) {
+    var url = "/Modules/BackOffice/Services/Admin/ReportWriter.asmx/GetTable";
+    var data = appendParameter("", "sql", sql);
+    data = appendParameter(data, "parameters", JSON.stringify(parameters));
+
+    data = getData(data);
+
+    return getAjax(url, data);
+};

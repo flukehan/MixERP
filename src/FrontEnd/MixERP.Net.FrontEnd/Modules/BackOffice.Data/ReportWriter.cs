@@ -29,13 +29,13 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
 {
     public class ReportWriter
     {
-        public static DataTable GetTable(string sql, Collection<ReportParameters> parameters)
+        public static DataTable GetTable(string sql, Collection<ReportParameter> parameters)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(GetConnectionString()))
             {
                 using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
                 {
-                    foreach (ReportParameters parameter in parameters)
+                    foreach (ReportParameter parameter in parameters)
                     {
                         if (parameter != null && !string.IsNullOrWhiteSpace(parameter.Name))
                         {
@@ -79,10 +79,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
             public string Query { get; set; }
             public string RunningTotalFieldIndices { get; set; }
             public string RunningTotalTextColumnIndex { get; set; }
-            public IEnumerable<ReportParameters> Parameters { get; set; }
+            public IEnumerable<ReportParameter> Parameters { get; set; }
         }
 
-        public class ReportParameters
+        public class ReportParameter
         {
             public string Name { get; set; }
             public string Type { get; set; }

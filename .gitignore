@@ -5,10 +5,12 @@ src/FrontEnd/MixERP.Net.FrontEnd/Resource/Static/Attachments
 src/FrontEnd/MixERP.Net.FrontEnd/Resource/Static/Emails
 src/FrontEnd/MixERP.Net.FrontEnd/Resource/Backups
 src/FrontEnd/MixERP.Net.FrontEnd/Resource/Temp
+src/FrontEnd/MixERP.Net.FrontEnd/Resource/CustomReports
 src-beta2/Web/MixERP.Net.Web.UI/Resource/Static/Attachments
 src-beta2/Web/MixERP.Net.Web.UI/Resource/Static/Emails
 src-beta2/Web/MixERP.Net.Web.UI/Resource/Backups
 src-beta2/Web/MixERP.Net.Web.UI/Resource/Temp
+src-beta2/Web/MixERP.Net.Web.UI/Resource/CustomReports
 *.exe
 *.suo
 *.user

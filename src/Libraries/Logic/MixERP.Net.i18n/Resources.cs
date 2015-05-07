@@ -1253,6 +1253,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Please close this window and save your existing work before you will be signed off automatically.
+		/// </summary>
+		public static string EODBegunSaveYourWork 
+		{
+			get
+			{
+				return Get("EODBegunSaveYourWork");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for <h2>Hi,</h2><p>Please find the attached document.</p><p>Thank you.<br />MixERP</p>
 		/// </summary>
 		public static string EmailBody 
@@ -8515,6 +8526,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("DueDate");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for End of Day Processing Has Begun
+		/// </summary>
+		public static string EODBegun 
+		{
+			get
+			{
+				return Get("EODBegun");
 			}
 		}
 		

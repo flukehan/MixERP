@@ -1730,6 +1730,68 @@ $$
 LANGUAGE plpgsql;
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/core/core.get_item_cost_price.sql --<--<--
+DROP FUNCTION IF EXISTS core.get_item_cost_price(integer, integer, bigint);
+CREATE FUNCTION core.get_item_cost_price(item_id_ integer, unit_id_ integer, party_id_ bigint)
+RETURNS public.money_strict2
+AS
+$$
+    DECLARE _price public.money_strict2;
+    DECLARE _unit_id integer;
+    DECLARE _factor decimal;
+   
+BEGIN
+    --Fist pick the catalog price which matches all these fields:
+    --Item, Unit, and Supplier.
+    --This is the most effective price.
+    SELECT 
+        item_cost_prices.price, 
+        item_cost_prices.unit_id
+       INTO 
+        _price, 
+        _unit_id
+           FROM core.item_cost_prices
+    WHERE item_cost_prices.item_id = $1
+    AND item_cost_prices.unit_id = $2
+    AND item_cost_prices.party_id =$3;
+
+    IF(_unit_id IS NULL) THEN
+        --We do not have a cost price of this item for the unit supplied.
+        --Let's see if this item has a price for other units.
+        SELECT 
+            item_cost_prices.price, 
+            item_cost_prices.unit_id
+        INTO 
+            _price, 
+            _unit_id,
+                   FROM core.item_cost_prices
+        WHERE item_cost_prices.item_id=$1
+        AND item_cost_prices.party_id =$3;
+    END IF;
+
+    
+    IF(_price IS NULL) THEN
+        --This item does not have cost price defined in the catalog.
+        --Therefore, getting the default cost price from the item definition.
+        SELECT 
+            cost_price, 
+            unit_id
+        INTO 
+            _price, 
+            _unit_id
+        FROM core.items
+        WHERE core.items.item_id = $1;
+    END IF;
+
+       --Get the unitary conversion factor if the requested unit does not match with the price defition.
+    _factor := core.convert_unit($2, _unit_id);
+
+    RETURN _price * _factor;
+END
+$$
+LANGUAGE plpgsql;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/core/core.get_menu_id_by_menu_code.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_menu_id_by_menu_code(national character varying(250));
 
@@ -1849,6 +1911,11 @@ AS
 $$
     DECLARE _resource_id    integer;
 BEGIN
+    IF(COALESCE(_culture_code, '') = '') THEN
+        PERFORM localization.add_resource(_resource_class, _key, _value);
+        RETURN;
+    END IF;
+
     SELECT resource_id INTO _resource_id
     FROM localization.resources
     WHERE resource_class = _resource_class
@@ -4938,6 +5005,226 @@ SELECT transactions.create_routine('POST-LF', 'transactions.post_late_fee', 250)
 --SELECT * FROM transactions.post_late_fee(2, 5, 2, transactions.get_value_date(2));
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.post_non_gl_transaction.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.post_non_gl_transaction
+(
+    _book_name                              national character varying(12),
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _value_date                             date,
+    _reference_number                       national character varying(24),
+    _statement_reference                    text,
+    _party_code                             national character varying(12),
+    _price_type_id                          integer,
+    _is_non_taxable_sales                   boolean,
+    _salesperson_id                         integer,
+    _shipper_id                             integer,
+    _shipping_address_code                  national character varying(12),
+    _store_id                               integer,
+    _tran_ids                               bigint[],
+    _details                                transactions.stock_detail_type[],
+    _attachments                            core.attachment_type[]
+
+);
+
+
+CREATE FUNCTION transactions.post_non_gl_transaction
+(
+    _book_name                              national character varying(48),
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _value_date                             date,
+    _reference_number                       national character varying(24),
+    _statement_reference                    text,
+    _party_code                             national character varying(12),
+    _price_type_id                          integer,
+    _is_non_taxable_sales                   boolean,
+    _salesperson_id                         integer,
+    _shipper_id                             integer,
+    _shipping_address_code                  national character varying(12),
+    _store_id                               integer,
+    _tran_ids                               bigint[],
+    _details                                transactions.stock_detail_type[],
+    _attachments                            core.attachment_type[]
+
+)
+RETURNS bigint
+AS
+$$
+    DECLARE _party_id                       bigint;
+    DECLARE _non_gl_stock_master_id         bigint;
+    DECLARE _non_gl_stock_detail_id         bigint;
+    DECLARE _shipping_address_id            bigint;
+    DECLARE _shipping_charge                public.money_strict2;
+    DECLARE _tran_type                      transaction_type;
+    DECLARE this                            RECORD;
+BEGIN
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, _book_name, _value_date) = false) THEN
+        RETURN 0;
+    END IF;
+
+    _party_id                               := core.get_party_id_by_party_code(_party_code);
+    _shipping_address_id                    := core.get_shipping_address_id_by_shipping_address_code(_shipping_address_code, _party_id);
+
+    DROP TABLE IF EXISTS temp_stock_details CASCADE;
+
+    CREATE TEMPORARY TABLE temp_stock_details
+    (
+        id                              SERIAL PRIMARY KEY,
+        non_gl_stock_master_id          bigint, 
+        tran_type                       transaction_type, 
+        store_id                        integer,
+        item_code                       text,
+        item_id                         integer, 
+        quantity                        public.integer_strict,
+        unit_name                       text,
+        unit_id                         integer,
+        base_quantity                   decimal,
+        base_unit_id                    integer,                
+        price                           public.money_strict,
+        cost_of_goods_sold              public.money_strict2 DEFAULT(0),
+        discount                        public.money_strict2,
+        shipping_charge                 public.money_strict2,
+        tax_form                        text,
+        sales_tax_id                    integer,
+        tax                             public.money_strict2
+    ) ON COMMIT DROP;
+
+
+    DROP TABLE IF EXISTS temp_stock_tax_details;
+    
+    CREATE TEMPORARY TABLE temp_stock_tax_details
+    (
+        id                                      SERIAL,
+        temp_stock_detail_id                    integer REFERENCES temp_stock_details(id),
+        sales_tax_detail_code                   text,
+        stock_detail_id                         bigint,
+        sales_tax_detail_id                     integer,
+        state_sales_tax_id                      integer,
+        county_sales_tax_id                     integer,
+        account_id                              integer,
+        principal                               public.money_strict,
+        rate                                    public.decimal_strict,
+        tax                                     public.money_strict
+    ) ON COMMIT DROP;
+
+    INSERT INTO temp_stock_details(store_id, item_code, quantity, unit_name, price, discount, shipping_charge, tax_form, tax)
+    SELECT store_id, item_code, quantity, unit_name, price, discount, shipping_charge, tax_form, tax
+    FROM explode_array(_details);
+
+    UPDATE temp_stock_details 
+    SET
+        tran_type                   = _tran_type,
+        sales_tax_id                = core.get_sales_tax_id_by_sales_tax_code(tax_form),
+        item_id                     = core.get_item_id_by_item_code(item_code),
+        unit_id                     = core.get_unit_id_by_unit_name(unit_name),
+        base_quantity               = core.get_base_quantity_by_unit_name(unit_name, quantity),
+        base_unit_id                = core.get_base_unit_id_by_unit_name(unit_name);
+
+    IF EXISTS
+    (
+            SELECT 1 FROM temp_stock_details AS details
+            WHERE core.is_valid_unit_id(details.unit_id, details.item_id) = false
+            LIMIT 1
+    ) THEN
+        RAISE EXCEPTION 'Item/unit mismatch.'
+        USING ERRCODE='P3201';
+    END IF;
+
+    SELECT SUM(COALESCE(shipping_charge, 0))                    INTO _shipping_charge FROM temp_stock_details;
+
+    IF(_is_non_taxable_sales) THEN
+        IF EXISTS(SELECT * FROM temp_stock_details WHERE sales_tax_id IS NOT NULL LIMIT 1) THEN
+            RAISE EXCEPTION 'You cannot provide sales tax information for non taxable sales.'
+            USING ERRCODE='P5110';
+        END IF;
+    END IF;
+
+
+    FOR this IN SELECT * FROM temp_stock_details ORDER BY id
+    LOOP
+        INSERT INTO temp_stock_tax_details
+        (
+            temp_stock_detail_id,
+            sales_tax_detail_code,
+            account_id, 
+            sales_tax_detail_id, 
+            state_sales_tax_id, 
+            county_sales_tax_id, 
+            principal, 
+            rate, 
+            tax
+        )
+        SELECT 
+            this.id, 
+            sales_tax_detail_code,
+            account_id, 
+            sales_tax_detail_id, 
+            state_sales_tax_id, 
+            county_sales_tax_id, 
+            taxable_amount, 
+            rate, 
+            tax
+        FROM transactions.get_sales_tax('Sales', _store_id, _party_code, _shipping_address_code, _price_type_id, this.item_code, this.price, this.quantity, this.discount, this.shipping_charge, this.sales_tax_id);
+    END LOOP;
+
+    UPDATE temp_stock_details
+    SET tax =
+    (SELECT SUM(COALESCE(temp_stock_tax_details.tax, 0)) FROM temp_stock_tax_details
+    WHERE temp_stock_tax_details.temp_stock_detail_id = temp_stock_details.id);
+
+    _non_gl_stock_master_id          := nextval(pg_get_serial_sequence('transactions.non_gl_stock_master', 'non_gl_stock_master_id'));
+
+    UPDATE temp_stock_details SET non_gl_stock_master_id = _non_gl_stock_master_id;
+    
+    INSERT INTO transactions.non_gl_stock_master(non_gl_stock_master_id, value_date, book, party_id, price_type_id, login_id, user_id, office_id, reference_number, statement_reference, non_taxable, salesperson_id, shipper_id, shipping_address_id, shipping_charge, store_id) 
+    SELECT _non_gl_stock_master_id, _value_date, _book_name, _party_id, _price_type_id, _login_id, _user_id, _office_id, _reference_number, _statement_reference, _is_non_taxable_sales, _salesperson_id, _shipper_id, _shipping_address_id, _shipping_charge, _store_id;
+
+
+    FOR this IN SELECT * FROM temp_stock_details ORDER BY id
+    LOOP
+        _non_gl_stock_detail_id        := nextval(pg_get_serial_sequence('transactions.non_gl_stock_details', 'non_gl_stock_detail_id'));
+
+        INSERT INTO transactions.non_gl_stock_details(non_gl_stock_detail_id, non_gl_stock_master_id, value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, tax)    
+        SELECT _non_gl_stock_detail_id, non_gl_stock_master_id, _value_date, item_id, quantity, unit_id, base_quantity, base_unit_id, price, discount, shipping_charge, sales_tax_id, COALESCE(this.tax, 0) 
+        FROM temp_stock_details
+        WHERE id = this.id;
+
+
+        INSERT INTO transactions.non_gl_stock_tax_details(non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax)
+        SELECT _non_gl_stock_detail_id, sales_tax_detail_id, state_sales_tax_id, county_sales_tax_id, principal, rate, tax
+        FROM temp_stock_tax_details
+        WHERE temp_stock_detail_id = this.id;
+        
+    END LOOP;
+
+    IF(array_length(_tran_ids, 1) > 0 AND _tran_ids != ARRAY[NULL::bigint]) THEN
+        INSERT INTO transactions.non_gl_stock_master_relations(order_non_gl_stock_master_id, quotation_non_gl_stock_master_id)
+        SELECT _non_gl_stock_master_id, explode_array(_tran_ids);
+    END IF;
+
+    IF(array_length(_attachments, 1) > 0 AND _attachments != ARRAY[NULL::core.attachment_type]) THEN
+        INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment)
+        SELECT _user_id, 'transactions.non_gl_stock_master', 'non_gl_stock_master_id', _non_gl_stock_master_id, original_file_name, file_extension, file_path, comment 
+        FROM explode_array(_attachments);
+    END IF;
+
+    
+    RETURN _non_gl_stock_master_id;
+END;
+$$
+LANGUAGE plpgsql;
+
+-- SELECT * FROM transactions.post_non_gl_transaction('Sales.Order', 2, 2, 5, '1-1-2020', '1', 'asdf', 'JASMI-0002', 1, false, 1, 1, '',  1, null::bigint[],
+-- ARRAY[
+--            ROW(1, 'RMBP', 1, 'Piece',180000, 0, 200, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
+--            ROW(1, '13MBA', 1, 'Dozen',130000, 300, 30, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type,
+--            ROW(1, '11MBA', 1, 'Piece',110000, 5000, 50, 'MoF-NY-BK-STX', 0)::transactions.stock_detail_type], 
+-- ARRAY[NULL::core.attachment_type]);
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/transactions/transactions.post_purchase.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.post_purchase
 (
@@ -6157,7 +6444,7 @@ DROP FUNCTION IF EXISTS transactions.post_sales
 
 DROP FUNCTION IF EXISTS transactions.post_sales
 (
-    _book_name                              national character varying(12),
+    _book_name                              national character varying(48),
     _office_id                              integer,
     _user_id                                integer,
     _login_id                               bigint,
@@ -6181,7 +6468,7 @@ DROP FUNCTION IF EXISTS transactions.post_sales
 
 CREATE FUNCTION transactions.post_sales
 (
-    _book_name                              national character varying(12),
+    _book_name                              national character varying(48),
     _office_id                              integer,
     _user_id                                integer,
     _login_id                               bigint,
@@ -8372,8 +8659,7 @@ BEGIN
     DELETE FROM localization.localized_resources;
     DELETE FROM localization.resources;
 
-    ALTER SEQUENCE resources_resource_id_seq RESTART WITH 1;
-
+    ALTER SEQUENCE localization.resources_resource_id_seq RESTART WITH 1;
 
     PERFORM localization.add_resource('CommonResource', 'DateMustBeGreaterThan', 'Invalid date. Must be greater than "{0}".');
     PERFORM localization.add_resource('CommonResource', 'DateMustBeLessThan', 'Invalid date. Must be less than "{0}".');
@@ -23880,6 +24166,46 @@ $$
 LANGUAGE plpgsql;
 
 
+SELECT * FROM localization.add_localized_resource('Titles', '', 'EODBegun', 'End of Day Processing Has Begun');
+SELECT * FROM localization.add_localized_resource('Labels', '', 'EODBegunSaveYourWork', 'Please close this window and save your existing work before you will be signed off automatically.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'zh', 'EODBegun', '日处理结束已经开始');
+SELECT * FROM localization.add_localized_resource('Labels', 'zh', 'EODBegunSaveYourWork', '请关闭此窗口并保存现有的工作之前，你会被自动签字。');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'nl', 'EODBegun', 'Eind van Dag Processing is begonnen');
+SELECT * FROM localization.add_localized_resource('Labels', 'nl', 'EODBegunSaveYourWork', 'Sluit dit venster en sla uw bestaand werk voordat wordt u automatisch afgemeld.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'fil', 'EODBegun', 'Dulo ng Processing Day ay sinimulan');
+SELECT * FROM localization.add_localized_resource('Labels', 'fil', 'EODBegunSaveYourWork', 'Mangyaring isara ang window na ito at i-save ang iyong mga umiiral na trabaho bago kayo ay naka-sign off awtomatikong.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'fr', 'EODBegun', 'Fin du traitement Day Has Begun');
+SELECT * FROM localization.add_localized_resource('Labels', 'fr', 'EODBegunSaveYourWork', 'S''il vous plaît fermer cette fenêtre et enregistrer votre travail existant avant vous serez connecté automatiquement hors tension.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'de', 'EODBegun', 'Tagesendverarbeitung hat begonnen');
+SELECT * FROM localization.add_localized_resource('Labels', 'de', 'EODBegunSaveYourWork', 'Schließen Sie dieses Fenster und speichern Sie Ihre existierenden Werk, bevor Sie sich automatisch signiert werden.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'id', 'EODBegun', 'Akhir Hari Pengolahan Telah Dimulai');
+SELECT * FROM localization.add_localized_resource('Labels', 'id', 'EODBegunSaveYourWork', 'Silakan tutup jendela ini dan menyimpan pekerjaan yang ada sebelum Anda akan ditandatangani secara otomatis.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'ja', 'EODBegun', '日処理の終了が始まりました');
+SELECT * FROM localization.add_localized_resource('Labels', 'ja', 'EODBegunSaveYourWork', 'このウィンドウを閉じて、あなたは自動的にオフに署名される前に、既存の作業を保存してください。');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'ms', 'EODBegun', 'Akhir Pemprosesan Hari Telah Bermula');
+SELECT * FROM localization.add_localized_resource('Labels', 'ms', 'EODBegunSaveYourWork', 'Sila tutup tetingkap ini dan menyimpan kerja yang sedia ada anda sebelum anda akan ditandatangani secara automatik.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'pt', 'EODBegun', 'Fim de Processamento dia começou');
+SELECT * FROM localization.add_localized_resource('Labels', 'pt', 'EODBegunSaveYourWork', 'Por favor, feche esta janela e salvar seu trabalho existente antes de ser assinado fora automaticamente.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'ru', 'EODBegun', 'Конец дня обработка Бегун');
+SELECT * FROM localization.add_localized_resource('Labels', 'ru', 'EODBegunSaveYourWork', 'Пожалуйста, закройте это окно и сохранить существующую работу, прежде чем будет подписан автоматически.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'es', 'EODBegun', 'Fin de Procesamiento día ha comenzado');
+SELECT * FROM localization.add_localized_resource('Labels', 'es', 'EODBegunSaveYourWork', 'Por favor, cierre esta ventana y guardar su trabajo existente antes se le inscribió apaga automáticamente.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'sv', 'EODBegun', 'Slut på dagens slut har börjat');
+SELECT * FROM localization.add_localized_resource('Labels', 'sv', 'EODBegunSaveYourWork', 'Stäng fönstret och spara din befintliga arbete innan du kommer att undertecknas av automatiskt.');
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/recurrence-types.sql --<--<--
 WITH recurrence_types
 AS
@@ -24325,7 +24651,7 @@ SELECT * FROM core.create_menu_locale(core.get_menu_id('PAC'), 'fil', 'Mga Card 
 SELECT * FROM core.create_menu('Merchant Fee Setup', '~/Modules/Finance/Setup/MerchantFeeSetup.mix', 'MFS', 2, core.get_menu_id('FSM'));
 
 --FRENCH
-SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'fr', '');
+SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'fr', 'Configuration de frais de Merchant');
 
 
 --GERMAN
@@ -24360,6 +24686,44 @@ SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'id', 'Merchant F
 
 --FILIPINO
 SELECT * FROM core.create_menu_locale(core.get_menu_id('MFS'), 'fil', 'Setup Bayarin sa Merchant');
+
+SELECT * FROM core.create_menu('Report Writer', '~/Modules/BackOffice/Admin/ReportWriter.mix', 'RW', 2, core.get_menu_id('SAT'));
+
+--FRENCH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'fr', 'Report Writer');
+
+--GERMAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'de', 'Report Writer');
+
+--RUSSIAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'ru', 'генератор отчетов');
+
+--JAPANESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'ja', '報告書作成');
+
+--SPANISH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'es', 'Report Writer');
+
+--DUTCH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'nl', 'Report Writer');
+
+--SIMPLIFIED CHINESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'zh', '报表生成器');
+
+--PORTUGUESE
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'pt', 'Report Writer');
+
+--SWEDISH
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'sv', 'Report Writer');
+
+--MALAY
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'ms', 'Laporan Penulis');
+
+--INDONESIAN
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'id', 'laporan Penulis');
+
+--FILIPINO
+SELECT * FROM core.create_menu_locale(core.get_menu_id('RW'), 'fil', 'Report Writer');
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/06.sample-data/1.remove-obsolete-menus.sql --<--<--

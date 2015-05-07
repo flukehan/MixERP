@@ -15524,3 +15524,43 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+
+SELECT * FROM localization.add_localized_resource('Titles', '', 'EODBegun', 'End of Day Processing Has Begun');
+SELECT * FROM localization.add_localized_resource('Labels', '', 'EODBegunSaveYourWork', 'Please close this window and save your existing work before you will be signed off automatically.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'zh', 'EODBegun', '日处理结束已经开始');
+SELECT * FROM localization.add_localized_resource('Labels', 'zh', 'EODBegunSaveYourWork', '请关闭此窗口并保存现有的工作之前，你会被自动签字。');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'nl', 'EODBegun', 'Eind van Dag Processing is begonnen');
+SELECT * FROM localization.add_localized_resource('Labels', 'nl', 'EODBegunSaveYourWork', 'Sluit dit venster en sla uw bestaand werk voordat wordt u automatisch afgemeld.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'fil', 'EODBegun', 'Dulo ng Processing Day ay sinimulan');
+SELECT * FROM localization.add_localized_resource('Labels', 'fil', 'EODBegunSaveYourWork', 'Mangyaring isara ang window na ito at i-save ang iyong mga umiiral na trabaho bago kayo ay naka-sign off awtomatikong.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'fr', 'EODBegun', 'Fin du traitement Day Has Begun');
+SELECT * FROM localization.add_localized_resource('Labels', 'fr', 'EODBegunSaveYourWork', 'S''il vous plaît fermer cette fenêtre et enregistrer votre travail existant avant vous serez connecté automatiquement hors tension.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'de', 'EODBegun', 'Tagesendverarbeitung hat begonnen');
+SELECT * FROM localization.add_localized_resource('Labels', 'de', 'EODBegunSaveYourWork', 'Schließen Sie dieses Fenster und speichern Sie Ihre existierenden Werk, bevor Sie sich automatisch signiert werden.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'id', 'EODBegun', 'Akhir Hari Pengolahan Telah Dimulai');
+SELECT * FROM localization.add_localized_resource('Labels', 'id', 'EODBegunSaveYourWork', 'Silakan tutup jendela ini dan menyimpan pekerjaan yang ada sebelum Anda akan ditandatangani secara otomatis.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'ja', 'EODBegun', '日処理の終了が始まりました');
+SELECT * FROM localization.add_localized_resource('Labels', 'ja', 'EODBegunSaveYourWork', 'このウィンドウを閉じて、あなたは自動的にオフに署名される前に、既存の作業を保存してください。');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'ms', 'EODBegun', 'Akhir Pemprosesan Hari Telah Bermula');
+SELECT * FROM localization.add_localized_resource('Labels', 'ms', 'EODBegunSaveYourWork', 'Sila tutup tetingkap ini dan menyimpan kerja yang sedia ada anda sebelum anda akan ditandatangani secara automatik.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'pt', 'EODBegun', 'Fim de Processamento dia começou');
+SELECT * FROM localization.add_localized_resource('Labels', 'pt', 'EODBegunSaveYourWork', 'Por favor, feche esta janela e salvar seu trabalho existente antes de ser assinado fora automaticamente.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'ru', 'EODBegun', 'Конец дня обработка Бегун');
+SELECT * FROM localization.add_localized_resource('Labels', 'ru', 'EODBegunSaveYourWork', 'Пожалуйста, закройте это окно и сохранить существующую работу, прежде чем будет подписан автоматически.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'es', 'EODBegun', 'Fin de Procesamiento día ha comenzado');
+SELECT * FROM localization.add_localized_resource('Labels', 'es', 'EODBegunSaveYourWork', 'Por favor, cierre esta ventana y guardar su trabajo existente antes se le inscribió apaga automáticamente.');
+
+SELECT * FROM localization.add_localized_resource('Titles', 'sv', 'EODBegun', 'Slut på dagens slut har börjat');
+SELECT * FROM localization.add_localized_resource('Labels', 'sv', 'EODBegunSaveYourWork', 'Stäng fönstret och spara din befintliga arbete innan du kommer att undertecknas av automatiskt.');

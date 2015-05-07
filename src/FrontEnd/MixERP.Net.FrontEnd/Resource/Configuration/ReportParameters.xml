@@ -40,6 +40,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
     <add key="QRCodeTypeNumber" value ="-1" />
     <add key="LogoPath" value="~/Resource/Static/images/mixerp-logo-light.png" />
     <add key="HeaderPath" value="~/Reports/Assets/Header.html" />
+    <add key="ReportContainer" value="~/Resource/CustomReports/" />
     
     <add key="DbServer" value="localhost" />
     <add key="DbServerPort" value="5432" />

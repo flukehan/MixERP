@@ -327,6 +327,7 @@
     <Content Include="db\beta-1\v2\mixerp-incremental-sample.sql" />
     <Content Include="db\index.html" />
     <Content Include="Install.aspx" />
+    <Content Include="License.txt" />
     <Content Include="MixERP.Installation.xml" />
     <Content Include="Modules\Default.aspx" />
     <Content Include="Resource\Backups\index.html" />

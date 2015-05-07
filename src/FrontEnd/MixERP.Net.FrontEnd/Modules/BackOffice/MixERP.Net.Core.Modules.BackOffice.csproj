@@ -304,6 +304,10 @@
     <Compile Include="Industries.ascx.designer.cs">
       <DependentUpon>Industries.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\ReportBuilder.cs" />
+    <Compile Include="Models\ReportDefinition.cs" />
+    <Compile Include="Models\ReportParser.cs" />
     <Compile Include="Offices.ascx.cs">
       <DependentUpon>Offices.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

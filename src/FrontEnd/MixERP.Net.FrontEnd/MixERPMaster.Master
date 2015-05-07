@@ -69,14 +69,12 @@
                             <i class="home icon"></i>
                             <asp:Literal runat="server" ID="BranchNameLiteral" />
                         </a>
-                        <div class="ui simple dropdown item">
+                        <div class="ui simple dropdown item" id="NotificationMenu">
                             <i class="mail icon"></i>
                             <asp:Literal runat="server" ID="NotificationLiteral" />
+                            <span></span>
                             <i class="dropdown icon"></i>
-                            <div id="Notification" class="ui menu">
-                                <div class="ui" style="padding: 24px;">
-                                    Placeholder for showing notifications.
-                                </div>
+                            <div id="Notification" class="ui vertical menu">
                             </div>
                         </div>
                         <a class="item" href="http://docs.mixerp.org/" target="_blank">
@@ -119,14 +117,50 @@
                 </footer>
             </div>
         </div>
+        <div class="ui small modal" id="EODModal">
+            <i class="close icon"></i>
+            <div class="ui icon header">
+                <i class="loading spinner icon"></i>
+                <%=MixERP.Net.i18n.Resources.Titles.EODBegun %>
+            </div>
+            <div class="content">
+                <p>
+                    <%=MixERP.Net.i18n.Resources.Labels.EODBegunSaveYourWork %>
+                </p>
+                <div style="margin-left: 150px;">
+                    <div class="ui circular segment" style="width: 120px; height: 120px;">
+                        <h2 class="ui large header" style="font-size: 36px;"></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div class="ui button">
+                    <%=MixERP.Net.i18n.Resources.Titles.Cancel %>
+                </div>
+                <div class="ui button">
+                    <%=MixERP.Net.i18n.Resources.Titles.OK %>
+                </div>
+            </div>
+        </div>
         <asp:ContentPlaceHolder ID="BottomScriptContentPlaceholder" runat="server">
         </asp:ContentPlaceHolder>
         <script src="/signalr/hubs"></script>
         <script type="text/javascript">
             $(function () {
+                var started = false;
+
                 $.connection.baseHub.client.terminate = function (c) {
                     if (typeof terminateListener === "function") {
                         terminateListener(c);
+                    };
+
+                    $("#EODModal .circular.segment h2").html(c + "%");
+
+                    if (!started) {
+                        $("#NotificationMenu span").addClass("ui red label").html("1");
+                        $("#EODModal").modal("show");
+                        $("#Notification").append("<div class=\"item\" onclick=\"$('#EODModal').modal('show');\">" + "<%=MixERP.Net.i18n.Resources.Titles.EODBegun %>" + "</div>");
+                        started = true;
                     };
 
                     if (c === 100) {
