@@ -76,7 +76,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
             {
                 ReportParser parser = new ReportParser(fileName);
 
-                return parser.definition;
+                return parser.Definition;
             }
 
             return new ReportDefinition();

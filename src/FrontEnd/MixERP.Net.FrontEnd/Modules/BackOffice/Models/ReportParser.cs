@@ -32,17 +32,14 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
         private static readonly string reportContainer =
             HostingEnvironment.MapPath(ConfigurationHelper.GetReportParameter("ReportContainer"));
 
-        //private readonly ReportDefinition definition;
-
         internal ReportParser(string fileName)
         {
             this.FileName = fileName;
-            this.definition = new ReportDefinition();
+            this.Definition = new ReportDefinition();
             this.Parse();
-            //this.Definition = this.definition;
         }
 
-        internal ReportDefinition definition { get; set; }
+        internal ReportDefinition Definition { get; set; }
         internal string FileName { get; set; }
 
         private void Parse()
@@ -50,6 +47,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
             string file = Path.Combine(reportContainer, this.FileName);
 
             XmlDocument xml = new XmlDocument();
+            xml.PreserveWhitespace = true;
             xml.Load(file);
 
             this.ParseTitle(xml);
@@ -69,13 +67,13 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
 
             if (title != null)
             {
-                this.definition.Title = title.InnerText;
+                this.Definition.Title = title.InnerText;
             }
         }
 
         private void ParseFileName()
         {
-            this.definition.FileName = this.FileName;
+            this.Definition.FileName = this.FileName;
         }
 
         private void ParseMenuCode(XmlDocument xml)
@@ -86,7 +84,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
             {
                 if (menu.Attributes != null && menu.Attributes["MenuCode"] != null)
                 {
-                    this.definition.MenuCode = menu.Attributes["MenuCode"].Value;
+                    this.Definition.MenuCode = menu.Attributes["MenuCode"].Value;
                 }
             }
         }
@@ -99,7 +97,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
             {
                 if (menu.Attributes != null && menu.Attributes["ParentMenuCode"] != null)
                 {
-                    this.definition.ParentMenuCode = menu.Attributes["ParentMenuCode"].Value;
+                    this.Definition.ParentMenuCode = menu.Attributes["ParentMenuCode"].Value;
                 }
             }
         }
@@ -110,7 +108,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
 
             if (topSection != null)
             {
-                    this.definition.TopSection = topSection.InnerXml;
+                    this.Definition.TopSection = topSection.InnerXml;
             }
         }
 
@@ -124,7 +122,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
 
                 if (content != null)
                 {
-                    this.definition.Body = content.InnerXml;
+                    this.Definition.Body = content.InnerXml;
                 }
             }
         }
@@ -135,7 +133,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
 
             if (bottomSection != null)
             {
-                this.definition.BottomSection = bottomSection.InnerXml;
+                this.Definition.BottomSection = bottomSection.InnerXml;
             }
         }
 
@@ -208,7 +206,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
                 }
             }
 
-            this.definition.DataSources = dataSources;
+            this.Definition.DataSources = dataSources;
         }
 
         private void ParseGridViews(XmlDocument xml)
@@ -245,7 +243,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
                 }
             }
 
-            this.definition.GridViews = grids;
+            this.Definition.GridViews = grids;
         }
     }
 }

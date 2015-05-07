@@ -101,8 +101,8 @@ namespace MixERP.Net.Entities.Localization
         [Column("resource_id")] 
         public int ResourceId { get; set; }
 
-        [Column("path")] 
-        public string Path { get; set; }
+        [Column("resource_class")] 
+        public string ResourceClass { get; set; }
 
         [Column("key")] 
         public string Key { get; set; }
@@ -126,15 +126,29 @@ namespace MixERP.Net.Entities.Localization
     }
 
     [TableName("localization.localized_resources")]
-    [PrimaryKey("id")]
     [ExplicitColumns]
     public class LocalizedResource : PetaPocoDB.Record<LocalizedResource> , IPoco
     {
-        [Column("id")] 
-        public int Id { get; set; }
+        [Column("resource_id")] 
+        public int ResourceId { get; set; }
 
         [Column("culture_code")] 
         public string CultureCode { get; set; }
+
+        [Column("value")] 
+        public string Value { get; set; }
+
+    }
+
+    [TableName("localization.resource_view")]
+    [ExplicitColumns]
+    public class ResourceView : PetaPocoDB.Record<ResourceView> , IPoco
+    {
+        [Column("resource_class")] 
+        public string ResourceClass { get; set; }
+
+        [Column("culture")] 
+        public string Culture { get; set; }
 
         [Column("key")] 
         public string Key { get; set; }
@@ -144,18 +158,12 @@ namespace MixERP.Net.Entities.Localization
 
     }
 
-    [TableName("localization.localized_resources_view")]
+    [TableName("localization.localized_resource_view")]
     [ExplicitColumns]
-    public class LocalizedResourcesView : PetaPocoDB.Record<LocalizedResourcesView> , IPoco
+    public class LocalizedResourceView : PetaPocoDB.Record<LocalizedResourceView> , IPoco
     {
-        [Column("resource")] 
-        public string Resource { get; set; }
-
         [Column("key")] 
         public string Key { get; set; }
-
-        [Column("culture_code")] 
-        public string CultureCode { get; set; }
 
         [Column("value")] 
         public string Value { get; set; }

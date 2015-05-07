@@ -324,8 +324,26 @@ namespace MixERP.Net.Core.Modules.Inventory
         {
             for (int i = 0; i < e.Row.Cells.Count - 2; i++)
             {
-                e.Row.Cells[i].Text = Titles.Get(e.Row.Cells[i].Text);
+                if (!IsEmptyCell(e.Row.Cells[i]))
+                {
+                    e.Row.Cells[i].Text = Titles.Get(e.Row.Cells[i].Text);
+                }
             }
+        }
+
+        public bool IsEmptyCell(TableCell cell)
+        {
+            if (string.IsNullOrWhiteSpace(cell.Text))
+            {
+                return true;
+            }
+
+            if (cell.Text.ToUpperInvariant().Equals("&NBSP;"))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         #endregion
