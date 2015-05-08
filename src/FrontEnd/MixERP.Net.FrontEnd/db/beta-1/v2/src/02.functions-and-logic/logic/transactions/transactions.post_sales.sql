@@ -1,4 +1,4 @@
-﻿DROP FUNCTION IF EXISTS transactions.post_sales
+DROP FUNCTION IF EXISTS transactions.post_sales
 (
     _book_name                              national character varying(12),
     _office_id                              integer,
@@ -100,6 +100,12 @@ BEGIN
     _cash_account_id                        := core.get_cash_account_id_by_store_id(_store_id);
     _cash_repository_id                     := core.get_cash_repository_id_by_store_id(_store_id);
     _is_cash                                := core.is_cash_account_id(_cash_account_id);
+
+
+    IF(NOT _is_credit AND NOT _is_cash) THEN
+        RAISE EXCEPTION 'Cannot post sales. Invalid cash account mapping on store.'
+        USING ERRCODE='P1302';
+    END IF; 
 
     IF(NOT _is_cash) THEN
         _cash_repository_id                 := NULL;

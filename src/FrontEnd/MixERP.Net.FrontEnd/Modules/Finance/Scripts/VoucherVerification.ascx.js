@@ -31,7 +31,7 @@ $(document).ready(function () {
     var transactionGridView = $("#TransactionGridView");
     var approveButton = $("#ApproveButton");
     var rejectButton = $("#RejectButton");
-    var modal = $(".ui.modal");
+    var modal = $("#ActionModal");
     var verifyButton = $("#VerifyButton");
 
     function getSelectedItem() {

@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS core.get_party_name_by_party_id(bigint);
+
 CREATE FUNCTION core.get_party_name_by_party_id(bigint)
 RETURNS text
 AS

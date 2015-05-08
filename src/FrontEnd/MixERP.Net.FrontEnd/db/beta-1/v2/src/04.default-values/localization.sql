@@ -15564,3 +15564,19 @@ SELECT * FROM localization.add_localized_resource('Labels', 'es', 'EODBegunSaveY
 
 SELECT * FROM localization.add_localized_resource('Titles', 'sv', 'EODBegun', 'Slut på dagens slut har börjat');
 SELECT * FROM localization.add_localized_resource('Labels', 'sv', 'EODBegunSaveYourWork', 'Stäng fönstret och spara din befintliga arbete innan du kommer att undertecknas av automatiskt.');
+
+
+SELECT * FROM localization.add_localized_resource('DbErrors', '', 'P1302', 'Cannot post sales. Invalid cash account mapping on store.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'sv', 'P1302', 'Det går inte att lägga försäljningen. Ogiltig likvidkonto kartläggning på butiken.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'es', 'P1302', 'No se puede publicar ventas. Asignación de cuentas de efectivo no válida en la tienda.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'ru', 'P1302', 'Не можете прикреплять продаж. Неверный отображение денежный счет на складе.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'pt', 'P1302', 'Não é possível postar vendas. Inválida de mapeamento de conta em dinheiro na loja.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'ms', 'P1302', 'Tidak boleh hantar jualan. Pemetaan akaun tunai tidak sah di kedai.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'ja', 'P1302', '販売を投稿することはできません。ストアの無効な現金アカウントマッピング。');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'de', 'P1302', 'Kann Umsatz nicht erlaubt. Ungültige Geldkonto-Mapping auf Laden.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'fr', 'P1302', 'Vous ne pouvez pas afficher des ventes. Invalid compte de trésorerie cartographie sur la boutique.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'fil', 'P1302', 'Hindi maaaring mag-post ng mga benta. Hindi wastong mapping cash account sa store.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'nl', 'P1302', 'Kan de verkoop niet plaatsen. Ongeldige geldrekening mapping op te slaan.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'zh', 'P1302', '不能发布销售。在商店无效的现金帐户的映射。');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'id', 'P1302', 'Tidak dapat mengirim penjualan. Pemetaan rekening kas tidak valid di toko.');
+

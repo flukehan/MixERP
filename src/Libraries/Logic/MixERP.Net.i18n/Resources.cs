@@ -88,6 +88,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Cannot post sales. Invalid cash account mapping on store.
+		/// </summary>
+		public static string P1302 
+		{
+			get
+			{
+				return Get("P1302");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Invalid data.
 		/// </summary>
 		public static string P3000 

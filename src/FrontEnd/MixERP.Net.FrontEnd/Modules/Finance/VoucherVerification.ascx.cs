@@ -146,6 +146,7 @@ namespace MixERP.Net.Core.Modules.Finance
         {
             using (HtmlGenericControl modal = HtmlControlHelper.GetModal())
             {
+                modal.ID = "ActionModal";
                 this.AddHeader(modal);
                 this.AddContent(modal);
                 this.AddActions(modal);
