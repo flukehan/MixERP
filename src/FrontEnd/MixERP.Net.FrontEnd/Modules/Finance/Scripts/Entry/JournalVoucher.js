@@ -86,6 +86,7 @@ $(document).ready(function() {
     "use strict";
     addShortcuts();
     initializeAjaxData();
+    createCascadingPair(accountSelect, accountNumberInputText);
 });
 
 function initializeAjaxData() {
