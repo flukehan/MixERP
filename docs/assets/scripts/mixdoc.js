@@ -52,6 +52,10 @@ function processImages(html) {
         var el = $(this);
         var src = path + el.attr("src");
         $(this).attr("src", src);
+
+        var anchor = $("<a/>");
+        anchor.prop("href", src);
+        $(this).wrap(anchor);
     });
 
     return markup;

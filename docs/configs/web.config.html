@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang=en><head><meta charset=utf-8><title>Web Configuration File (web.config)</title><script src=/docs/assets/bundles/scripts.js>
 
-    
-    </script><link href=/docs/assets/bundles/styles.min.css rel=stylesheet><link href="http://fonts.googleapis.com/css?family=Raleway:300" rel=stylesheet type=text/css><link href="http://fonts.googleapis.com/css?family=Open+Sans" rel=stylesheet type=text/css></head><body><div class="sticky contain-to-grid"><nav class=top-bar data-topbar><ul class=title-area><li class=name><h1><a href=/index.html><img src=/docs/assets/images/mixerp-logo.png></a></h1></li><li class="toggle-topbar menu-icon"><a href=javascript:void(0);><span></span></a></li></ul><section class=top-bar-section><ul class=right><li><a class=right-off-canvas-toggle href=javascript:void(0);> Sub Topics </a></li></ul></section></nav></div><div class=off-canvas-wrap data-offcanvas><div class=inner-wrap><aside class=right-off-canvas-menu><ul class=topics></ul></aside><div class=row><div class="large-12 large-centered columns"><div id=content><h1>Web Configuration File (web.config)</h1><p>Web.config is the default configuration file for all IIS sites. It is an XML document that provides numerous configuration possibilities for a web application, however that is out of the scope of this document.</p><p>Let's dive deeper into the required sections and settings related to MixERP application configuration.</p><h2>No Viewstate</h2><p>Yes, that's right! No viewstate.</p><pre><code class=lang-xml>&lt;system.web&gt;
+
+    </script><link href=//cdn.rawgit.com/noelboss/featherlight/1.2.3/release/featherlight.min.css type=text/css rel=stylesheet title="Featherlight Styles"><link href=/docs/assets/bundles/styles.min.css rel=stylesheet><link href="http://fonts.googleapis.com/css?family=Raleway:300" rel=stylesheet type=text/css><link href="http://fonts.googleapis.com/css?family=Open+Sans" rel=stylesheet type=text/css></head><body><div class="sticky contain-to-grid"><nav class=top-bar data-topbar><ul class=title-area><li class=name><h1><a href=/index.html><img src=/docs/assets/images/mixerp-logo.png></a></h1></li><li class="toggle-topbar menu-icon"><a href=javascript:void(0);><span></span></a></li></ul><section class=top-bar-section><ul class=right><li><a class=right-off-canvas-toggle href=javascript:void(0);> Sub Topics </a></li></ul></section></nav></div><div class=off-canvas-wrap data-offcanvas><div class=inner-wrap><aside class=right-off-canvas-menu><ul class=topics></ul></aside><div class=row><div class="large-12 large-centered columns"><div id=content><h1>Web Configuration File (web.config)</h1><p>Web.config is the default configuration file for all IIS sites. It is an XML document that provides numerous configuration possibilities for a web application, however that is out of the scope of this document.</p><p>Let's dive deeper into the required sections and settings related to MixERP application configuration.</p><h2>No Viewstate</h2><p>Yes, that's right! No viewstate.</p><pre><code class=lang-xml>&lt;system.web&gt;
     &lt;pages enableViewState=&quot;false&quot; enableViewStateMac=&quot;false&quot; enableEventValidation=&quot;false&quot; /&gt;
 &lt;/system.web&gt;
 </code></pre><h2>No Dynamic ClientID</h2><p>Turn off the magic HTML ClientID's.</p><pre><code class=lang-xml>&lt;system.web&gt;
@@ -40,30 +40,44 @@
     &lt;add key=&quot;ScrudConfigFileLocation&quot; value=&quot;/Resource/Configuration/ScrudParameters.xml&quot; /&gt;
     &lt;add key=&quot;SwitchConfigFileLocation&quot; value=&quot;/Resource/Configuration/Switches.xml&quot; /&gt;
 &lt;/appSettings&gt;
-</code></pre><p><strong>MaxInvalidPasswordAttempts</strong></p><p>Maximum number of invalid password attempts, after which no more sign in attempt will be allowed.</p><p><strong>DisplayErrorDetails</strong></p><p>Display detailed error information. Turn this off (false) on production site.</p><p><strong>APIConfigFileLocation .. SwitchConfigFileLocation</strong></p><p>The path of configuration files relative to web application root directory.</p><h2>Related Topics</h2><ul><li><a href=../admin.html>Administrator Documentation</a></li></ul></div></div></div><a class=exit-off-canvas></a><footer class=footer><div class="row full-width"><div class="small-12 medium-3 large-3 columns"><i class=fi-download></i><p> MixERP is an open source and free ERP software that provides a suite of useful modules to help you manage your day to day business activities, including but not limited to, sales, purchases, inventory management, finance, customer relationship management, and back-office. Developed with love by your friends at MixERP Inc. </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-lightbulb></i><p> Some sections in this documentation site are missing. This site is a <a href=index.html#community.md> community effort </a> and work in progress. </p><p> This work is licensed under a <a href=http://creativecommons.org/licenses/by-sa/4.0/ rel=license> Creative Commons Attribution-ShareAlike 4.0 International License </a> . </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-anchor></i><ul class=footer-links><li><a href=http://mixerp.org/forum target=_blank> MixERP Forums </a></li><li><a href=https://github.com/mixerp/mixerp/issues target=_blank> Submit an Issue </a></li><li><a href=https://github.com/mixerp/mixerp/releases target=_blank> Download Latest Release </a></li><li><a href=http://demo.mixerp.org/SignIn.aspx target=_blank> MixERP Demo Website </a></li></ul><br><br><br></div><div class="small-12 medium-3 large-3 columns"><i class=fi-comments></i><ul class=footer-links><li><a href=http://mixerp.org/ target=_blank> Project Website </a></li><li><a href=https://www.facebook.com/mixerp.official/ target=_blank> Follow MixERP on Facebook </a></li><li><a href=http://www.facebook.com/groups/183076085203506/ target=_blank> Facebook Discussion Group </a></li><li><a href=http://twitter.com/mixoferp/ target=_blank> Follow MixERP on Twitter </a></li><li style="list-style: none; display: inline"><ul></ul></li></ul><br><br><br></div></div></footer></div></div><script>
-    window.onload = function() {
-        $(document).foundation();
-        createSubTopics();
-    };
+</code></pre><p><strong>MaxInvalidPasswordAttempts</strong></p><p>Maximum number of invalid password attempts, after which no more sign in attempt will be allowed.</p><p><strong>DisplayErrorDetails</strong></p><p>Display detailed error information. Turn this off (false) on production site.</p><p><strong>APIConfigFileLocation .. SwitchConfigFileLocation</strong></p><p>The path of configuration files relative to web application root directory.</p><h2>Related Topics</h2><ul><li><a href=../admin.html>Administrator Documentation</a></li></ul></div></div></div><a class=exit-off-canvas></a><footer class=footer><div class="row full-width"><div class="small-12 medium-3 large-3 columns"><i class=fi-download></i><p> MixERP is an open source and free ERP software that provides a suite of useful modules to help you manage your day to day business activities, including but not limited to, sales, purchases, inventory management, finance, customer relationship management, and back-office. Developed with love by your friends at MixERP Inc. </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-lightbulb></i><p> Some sections in this documentation site are missing. This site is a <a href=index.html#community.md> community effort </a> and work in progress. </p><p> This work is licensed under a <a href=http://creativecommons.org/licenses/by-sa/4.0/ rel=license> Creative Commons Attribution-ShareAlike 4.0 International License </a> . </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-anchor></i><ul class=footer-links><li><a href=http://mixerp.org/forum target=_blank> MixERP Forums </a></li><li><a href=https://github.com/mixerp/mixerp/issues target=_blank> Submit an Issue </a></li><li><a href=https://github.com/mixerp/mixerp/releases target=_blank> Download Latest Release </a></li><li><a href=http://demo.mixerp.org/SignIn.aspx target=_blank> MixERP Demo Website </a></li></ul><br><br><br></div><div class="small-12 medium-3 large-3 columns"><i class=fi-comments></i><ul class=footer-links><li><a href=http://mixerp.org/ target=_blank> Project Website </a></li><li><a href=https://www.facebook.com/mixerp.official/ target=_blank> Follow MixERP on Facebook </a></li><li><a href=http://www.facebook.com/groups/183076085203506/ target=_blank> Facebook Discussion Group </a></li><li><a href=http://twitter.com/mixoferp/ target=_blank> Follow MixERP on Twitter </a></li><li style="list-style: none; display: inline"><ul></ul></li></ul><br><br><br></div></div></footer></div></div><script src=//cdn.rawgit.com/noelboss/featherlight/1.2.3/release/featherlight.min.js type=text/javascript charset=utf-8></script><script>
+        window.onload = function () {
 
-    function createSubTopics() {
-        $("#content").find("h1, h2, h3").each(function() {
-            var topics = $(".topics");
-            var $section = $(this);
-            var safeName = $section.attr("id");
-            var id;
-            var text = $section.text();
+            var createLinkedImages = function () {
+                $("#content").find("img").each(function () {
+                    var el = $(this);
+                    var src = el.attr("src");
 
-            if (!safeName) {
-                safeName = text.trim().replace(/\s+/g, '-').replace(/[^-,'A-Za-z0-9]+/g, '').toLowerCase();
-                id = window.escape(safeName);
-                $section.attr("id", id);
+                    var anchor = $("<a/>");
+                    anchor.prop("href", "#");
+                    anchor.attr("data-featherlight", src);
+                    el.wrap(anchor);
+                });
             };
 
-            id = window.escape(safeName);
-            var anchor = "<li><a class='item' href='#" + id + "'>" + text + "</a></li>";
-            topics.append(anchor);
-        });
-    };
+            $(document).foundation();
+            createSubTopics();
+            createLinkedImages();
+        };
 
-</script></body></html>
+        function createSubTopics() {
+            $("#content").find("h1, h2, h3").each(function () {
+                var topics = $(".topics");
+                var $section = $(this);
+                var safeName = $section.attr("id");
+                var id;
+                var text = $section.text();
+
+                if (!safeName) {
+                    safeName = text.trim().replace(/\s+/g, '-').replace(/[^-,'A-Za-z0-9]+/g, '').toLowerCase();
+                    id = window.escape(safeName);
+                    $section.attr("id", id);
+                };
+
+                id = window.escape(safeName);
+                var anchor = "<li><a class='item' href='#" + id + "'>" + text + "</a></li>";
+                topics.append(anchor);
+            });
+        };
+
+    </script></body></html>

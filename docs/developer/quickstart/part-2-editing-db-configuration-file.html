@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang=en><head><meta charset=utf-8><title>Editing DB Configuration</title><script src=/docs/assets/bundles/scripts.js>
 
-    
-    </script><link href=/docs/assets/bundles/styles.min.css rel=stylesheet><link href="http://fonts.googleapis.com/css?family=Raleway:300" rel=stylesheet type=text/css><link href="http://fonts.googleapis.com/css?family=Open+Sans" rel=stylesheet type=text/css></head><body><div class="sticky contain-to-grid"><nav class=top-bar data-topbar><ul class=title-area><li class=name><h1><a href=/index.html><img src=/docs/assets/images/mixerp-logo.png></a></h1></li><li class="toggle-topbar menu-icon"><a href=javascript:void(0);><span></span></a></li></ul><section class=top-bar-section><ul class=right><li><a class=right-off-canvas-toggle href=javascript:void(0);> Sub Topics </a></li></ul></section></nav></div><div class=off-canvas-wrap data-offcanvas><div class=inner-wrap><aside class=right-off-canvas-menu><ul class=topics></ul></aside><div class=row><div class="large-12 large-centered columns"><div id=content><h1>Editing DB Configuration</h1><p>Edit one of the following files using Visual Studio or any text editor of your choice.</p><p><strong>WebForms</strong></p><p><code>src/FrontEnd/MixERP.Net.FrontEnd/Resource/Configuration/DbServer.xml</code></p><p><strong>MVC</strong></p><p><code>src-beta2/Web/MixERP.Net.Web.UI/Resource/Configuration/DbServer.xml</code></p><h2>File Contents</h2><pre><code class=lang-xml>&lt;configuration&gt;
+
+    </script><link href=//cdn.rawgit.com/noelboss/featherlight/1.2.3/release/featherlight.min.css type=text/css rel=stylesheet title="Featherlight Styles"><link href=/docs/assets/bundles/styles.min.css rel=stylesheet><link href="http://fonts.googleapis.com/css?family=Raleway:300" rel=stylesheet type=text/css><link href="http://fonts.googleapis.com/css?family=Open+Sans" rel=stylesheet type=text/css></head><body><div class="sticky contain-to-grid"><nav class=top-bar data-topbar><ul class=title-area><li class=name><h1><a href=/index.html><img src=/docs/assets/images/mixerp-logo.png></a></h1></li><li class="toggle-topbar menu-icon"><a href=javascript:void(0);><span></span></a></li></ul><section class=top-bar-section><ul class=right><li><a class=right-off-canvas-toggle href=javascript:void(0);> Sub Topics </a></li></ul></section></nav></div><div class=off-canvas-wrap data-offcanvas><div class=inner-wrap><aside class=right-off-canvas-menu><ul class=topics></ul></aside><div class=row><div class="large-12 large-centered columns"><div id=content><h1>Editing DB Configuration</h1><p>Edit one of the following files using Visual Studio or any text editor of your choice.</p><p><strong>WebForms</strong></p><p><code>src/FrontEnd/MixERP.Net.FrontEnd/Resource/Configuration/DbServer.xml</code></p><p><strong>MVC</strong></p><p><code>src-beta2/Web/MixERP.Net.Web.UI/Resource/Configuration/DbServer.xml</code></p><h2>File Contents</h2><pre><code class=lang-xml>&lt;configuration&gt;
   &lt;appSettings&gt;
     &lt;add key=&quot;Server&quot; value=&quot;localhost&quot; /&gt;
     &lt;add key=&quot;Port&quot; value=&quot;5432&quot; /&gt;
@@ -14,30 +14,44 @@
     &lt;add key=&quot;DatabaseBackupDirectory&quot; value=&quot;/Resource/Backups/&quot; /&gt;
   &lt;/appSettings&gt;
 &lt;/configuration&gt;
-</code></pre><h3>Configuration Explained</h3><table><thead><tr><th>Key</th><th>Configuration</th></tr></thead><tbody><tr><td>Server</td><td>The hostname or IP address of your development PostgreSQL Server instance. Usually "localhost".</td></tr><tr><td>Port</td><td>The port on which the PostgreSQL server is listening. Usually "5432".</td></tr><tr><td>Database</td><td>The name of the database in which you have installed (run) MixERP database script</td></tr><tr><td>UserId</td><td>MixERP database script will create a user mix_erp. Leave it as it is.</td></tr><tr><td>Password</td><td>Password for the above user. The default password is "change-on-deployment". If you happen to change the password, change it here as well.</td></tr><tr><td>PostgreSQLBinDirectory</td><td>Depending upon where you installed PostgreSQL server, provide the correct location of the bin directory.</td></tr><tr><td>DatabaseBackupDirectory</td><td>Provide the path where you want to keep your database backups. If you host MixERP, make sure that the IIS user has write access to the path.</td></tr></tbody></table><h2>Related Topics</h2><ul><li><a href=part-1-installing-database.html>Part 1: Installing Database</a></li><li><a href=../../../index.html>Documentation Home</a></li></ul></div></div></div><a class=exit-off-canvas></a><footer class=footer><div class="row full-width"><div class="small-12 medium-3 large-3 columns"><i class=fi-download></i><p> MixERP is an open source and free ERP software that provides a suite of useful modules to help you manage your day to day business activities, including but not limited to, sales, purchases, inventory management, finance, customer relationship management, and back-office. Developed with love by your friends at MixERP Inc. </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-lightbulb></i><p> Some sections in this documentation site are missing. This site is a <a href=index.html#community.md> community effort </a> and work in progress. </p><p> This work is licensed under a <a href=http://creativecommons.org/licenses/by-sa/4.0/ rel=license> Creative Commons Attribution-ShareAlike 4.0 International License </a> . </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-anchor></i><ul class=footer-links><li><a href=http://mixerp.org/forum target=_blank> MixERP Forums </a></li><li><a href=https://github.com/mixerp/mixerp/issues target=_blank> Submit an Issue </a></li><li><a href=https://github.com/mixerp/mixerp/releases target=_blank> Download Latest Release </a></li><li><a href=http://demo.mixerp.org/SignIn.aspx target=_blank> MixERP Demo Website </a></li></ul><br><br><br></div><div class="small-12 medium-3 large-3 columns"><i class=fi-comments></i><ul class=footer-links><li><a href=http://mixerp.org/ target=_blank> Project Website </a></li><li><a href=https://www.facebook.com/mixerp.official/ target=_blank> Follow MixERP on Facebook </a></li><li><a href=http://www.facebook.com/groups/183076085203506/ target=_blank> Facebook Discussion Group </a></li><li><a href=http://twitter.com/mixoferp/ target=_blank> Follow MixERP on Twitter </a></li><li style="list-style: none; display: inline"><ul></ul></li></ul><br><br><br></div></div></footer></div></div><script>
-    window.onload = function() {
-        $(document).foundation();
-        createSubTopics();
-    };
+</code></pre><h3>Configuration Explained</h3><table><thead><tr><th>Key</th><th>Configuration</th></tr></thead><tbody><tr><td>Server</td><td>The hostname or IP address of your development PostgreSQL Server instance. Usually "localhost".</td></tr><tr><td>Port</td><td>The port on which the PostgreSQL server is listening. Usually "5432".</td></tr><tr><td>Database</td><td>The name of the database in which you have installed (run) MixERP database script</td></tr><tr><td>UserId</td><td>MixERP database script will create a user mix_erp. Leave it as it is.</td></tr><tr><td>Password</td><td>Password for the above user. The default password is "change-on-deployment". If you happen to change the password, change it here as well.</td></tr><tr><td>PostgreSQLBinDirectory</td><td>Depending upon where you installed PostgreSQL server, provide the correct location of the bin directory.</td></tr><tr><td>DatabaseBackupDirectory</td><td>Provide the path where you want to keep your database backups. If you host MixERP, make sure that the IIS user has write access to the path.</td></tr></tbody></table><h2>Related Topics</h2><ul><li><a href=part-1-installing-database.html>Part 1: Installing Database</a></li><li><a href=../../../index.html>Documentation Home</a></li></ul></div></div></div><a class=exit-off-canvas></a><footer class=footer><div class="row full-width"><div class="small-12 medium-3 large-3 columns"><i class=fi-download></i><p> MixERP is an open source and free ERP software that provides a suite of useful modules to help you manage your day to day business activities, including but not limited to, sales, purchases, inventory management, finance, customer relationship management, and back-office. Developed with love by your friends at MixERP Inc. </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-lightbulb></i><p> Some sections in this documentation site are missing. This site is a <a href=index.html#community.md> community effort </a> and work in progress. </p><p> This work is licensed under a <a href=http://creativecommons.org/licenses/by-sa/4.0/ rel=license> Creative Commons Attribution-ShareAlike 4.0 International License </a> . </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-anchor></i><ul class=footer-links><li><a href=http://mixerp.org/forum target=_blank> MixERP Forums </a></li><li><a href=https://github.com/mixerp/mixerp/issues target=_blank> Submit an Issue </a></li><li><a href=https://github.com/mixerp/mixerp/releases target=_blank> Download Latest Release </a></li><li><a href=http://demo.mixerp.org/SignIn.aspx target=_blank> MixERP Demo Website </a></li></ul><br><br><br></div><div class="small-12 medium-3 large-3 columns"><i class=fi-comments></i><ul class=footer-links><li><a href=http://mixerp.org/ target=_blank> Project Website </a></li><li><a href=https://www.facebook.com/mixerp.official/ target=_blank> Follow MixERP on Facebook </a></li><li><a href=http://www.facebook.com/groups/183076085203506/ target=_blank> Facebook Discussion Group </a></li><li><a href=http://twitter.com/mixoferp/ target=_blank> Follow MixERP on Twitter </a></li><li style="list-style: none; display: inline"><ul></ul></li></ul><br><br><br></div></div></footer></div></div><script src=//cdn.rawgit.com/noelboss/featherlight/1.2.3/release/featherlight.min.js type=text/javascript charset=utf-8></script><script>
+        window.onload = function () {
 
-    function createSubTopics() {
-        $("#content").find("h1, h2, h3").each(function() {
-            var topics = $(".topics");
-            var $section = $(this);
-            var safeName = $section.attr("id");
-            var id;
-            var text = $section.text();
+            var createLinkedImages = function () {
+                $("#content").find("img").each(function () {
+                    var el = $(this);
+                    var src = el.attr("src");
 
-            if (!safeName) {
-                safeName = text.trim().replace(/\s+/g, '-').replace(/[^-,'A-Za-z0-9]+/g, '').toLowerCase();
-                id = window.escape(safeName);
-                $section.attr("id", id);
+                    var anchor = $("<a/>");
+                    anchor.prop("href", "#");
+                    anchor.attr("data-featherlight", src);
+                    el.wrap(anchor);
+                });
             };
 
-            id = window.escape(safeName);
-            var anchor = "<li><a class='item' href='#" + id + "'>" + text + "</a></li>";
-            topics.append(anchor);
-        });
-    };
+            $(document).foundation();
+            createSubTopics();
+            createLinkedImages();
+        };
 
-</script></body></html>
+        function createSubTopics() {
+            $("#content").find("h1, h2, h3").each(function () {
+                var topics = $(".topics");
+                var $section = $(this);
+                var safeName = $section.attr("id");
+                var id;
+                var text = $section.text();
+
+                if (!safeName) {
+                    safeName = text.trim().replace(/\s+/g, '-').replace(/[^-,'A-Za-z0-9]+/g, '').toLowerCase();
+                    id = window.escape(safeName);
+                    $section.attr("id", id);
+                };
+
+                id = window.escape(safeName);
+                var anchor = "<li><a class='item' href='#" + id + "'>" + text + "</a></li>";
+                topics.append(anchor);
+            });
+        };
+
+    </script></body></html>
