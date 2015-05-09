@@ -1,31 +1,45 @@
 ﻿<!DOCTYPE html>
 <html lang=en><head><meta charset=utf-8><title>Salespersons</title><script src=/docs/assets/bundles/scripts.js>
 
-    
-    </script><link href=/docs/assets/bundles/styles.min.css rel=stylesheet><link href="http://fonts.googleapis.com/css?family=Raleway:300" rel=stylesheet type=text/css><link href="http://fonts.googleapis.com/css?family=Open+Sans" rel=stylesheet type=text/css></head><body><div class="sticky contain-to-grid"><nav class=top-bar data-topbar><ul class=title-area><li class=name><h1><a href=/index.html><img src=/docs/assets/images/mixerp-logo.png></a></h1></li><li class="toggle-topbar menu-icon"><a href=javascript:void(0);><span></span></a></li></ul><section class=top-bar-section><ul class=right><li><a class=right-off-canvas-toggle href=javascript:void(0);> Sub Topics </a></li></ul></section></nav></div><div class=off-canvas-wrap data-offcanvas><div class=inner-wrap><aside class=right-off-canvas-menu><ul class=topics></ul></aside><div class=row><div class="large-12 large-centered columns"><div id=content><h1>Salespersons</h1><p>Salesperson is an individual who markets and sells products of your office, individually or together with a <a href=sales-team.html>team</a>. The success of a salesperson is usually measured by the amount of sales he or she is able to make during a given period and how good that person is in influencing individuals to make a purchase order.</p><p><img src=images/salespersons.png alt=Salespersons></p><h2>Fields</h2><p><strong>Salesperson Id</strong></p><p>This is an auto-generated and read-only field.</p><p><strong>Sales Team Id</strong></p><p>Select the sales team or search by clicking the icon <i class=item-selector></i>.</p><p><strong>Salesperson Code</strong></p><p>Provide a unique code for the salesperson.</p><p><strong>Salesperson Name</strong></p><p>Provide the name of the salesperson.</p><p><strong>Address</strong></p><p>Provide the address of the salesperson.</p><p><strong>Contact Number</strong></p><p>Provide contact number information.</p><p><strong>Account Id</strong></p><p>Select the account to map the sales person to or search by clicking the item-selector icon<i class=item-selector></i>.</p><div class="alert-box scrud radius"> Since this form implements ScrudFactory helper module, the detailed explanation of this feature is not provided in this document. View <a href=../../core-concepts/scrud-factory.html>ScrudFactory Helper Module Documentation</a> for more information. </div><h2>Related Topics</h2><ul><li><a href=../setup-and-maintenance.html>Setup and Maintenance</a></li></ul></div></div></div><a class=exit-off-canvas></a><footer class=footer><div class="row full-width"><div class="small-12 medium-3 large-3 columns"><i class=fi-download></i><p> MixERP is an open source and free ERP software that provides a suite of useful modules to help you manage your day to day business activities, including but not limited to, sales, purchases, inventory management, finance, customer relationship management, and back-office. Developed with love by your friends at MixERP Inc. </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-lightbulb></i><p> Some sections in this documentation site are missing. This site is a <a href=index.html#community.md> community effort </a> and work in progress. </p><p> This work is licensed under a <a href=http://creativecommons.org/licenses/by-sa/4.0/ rel=license> Creative Commons Attribution-ShareAlike 4.0 International License </a> . </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-anchor></i><ul class=footer-links><li><a href=http://mixerp.org/forum target=_blank> MixERP Forums </a></li><li><a href=https://github.com/mixerp/mixerp/issues target=_blank> Submit an Issue </a></li><li><a href=https://github.com/mixerp/mixerp/releases target=_blank> Download Latest Release </a></li><li><a href=http://demo.mixerp.org/SignIn.aspx target=_blank> MixERP Demo Website </a></li></ul><br><br><br></div><div class="small-12 medium-3 large-3 columns"><i class=fi-comments></i><ul class=footer-links><li><a href=http://mixerp.org/ target=_blank> Project Website </a></li><li><a href=https://www.facebook.com/mixerp.official/ target=_blank> Follow MixERP on Facebook </a></li><li><a href=http://www.facebook.com/groups/183076085203506/ target=_blank> Facebook Discussion Group </a></li><li><a href=http://twitter.com/mixoferp/ target=_blank> Follow MixERP on Twitter </a></li><li style="list-style: none; display: inline"><ul></ul></li></ul><br><br><br></div></div></footer></div></div><script>
-    window.onload = function() {
-        $(document).foundation();
-        createSubTopics();
-    };
 
-    function createSubTopics() {
-        $("#content").find("h1, h2, h3").each(function() {
-            var topics = $(".topics");
-            var $section = $(this);
-            var safeName = $section.attr("id");
-            var id;
-            var text = $section.text();
+    </script><link href=//cdn.rawgit.com/noelboss/featherlight/1.2.3/release/featherlight.min.css type=text/css rel=stylesheet title="Featherlight Styles"><link href=/docs/assets/bundles/styles.min.css rel=stylesheet><link href="http://fonts.googleapis.com/css?family=Raleway:300" rel=stylesheet type=text/css><link href="http://fonts.googleapis.com/css?family=Open+Sans" rel=stylesheet type=text/css></head><body><div class="sticky contain-to-grid"><nav class=top-bar data-topbar><ul class=title-area><li class=name><h1><a href=/index.html><img src=/docs/assets/images/mixerp-logo.png></a></h1></li><li class="toggle-topbar menu-icon"><a href=javascript:void(0);><span></span></a></li></ul><section class=top-bar-section><ul class=right><li><a class=right-off-canvas-toggle href=javascript:void(0);> Sub Topics </a></li></ul></section></nav></div><div class=off-canvas-wrap data-offcanvas><div class=inner-wrap><aside class=right-off-canvas-menu><ul class=topics></ul></aside><div class=row><div class="large-12 large-centered columns"><div id=content><h1>Salespersons</h1><p>Salesperson is an individual who markets and sells products of your office, individually or together with a <a href=sales-team.html>team</a>. The success of a salesperson is usually measured by the amount of sales he or she is able to make during a given period and how good that person is in influencing individuals to make a purchase order.</p><p><img src=images/salespersons.png alt=Salespersons></p><h2>Fields</h2><p><strong>Salesperson Id</strong></p><p>This is an auto-generated and read-only field.</p><p><strong>Sales Team Id</strong></p><p>Select the sales team or search by clicking the icon <i class=item-selector></i>.</p><p><strong>Salesperson Code</strong></p><p>Provide a unique code for the salesperson.</p><p><strong>Salesperson Name</strong></p><p>Provide the name of the salesperson.</p><p><strong>Address</strong></p><p>Provide the address of the salesperson.</p><p><strong>Contact Number</strong></p><p>Provide contact number information.</p><p><strong>Account Id</strong></p><p>Select the account to map the sales person to or search by clicking the item-selector icon<i class=item-selector></i>.</p><div class="alert-box scrud radius"> Since this form implements ScrudFactory helper module, the detailed explanation of this feature is not provided in this document. View <a href=../../core-concepts/scrud-factory.html>ScrudFactory Helper Module Documentation</a> for more information. </div><h2>Related Topics</h2><ul><li><a href=../setup-and-maintenance.html>Setup and Maintenance</a></li></ul></div></div></div><a class=exit-off-canvas></a><footer class=footer><div class="row full-width"><div class="small-12 medium-3 large-3 columns"><i class=fi-download></i><p> MixERP is an open source and free ERP software that provides a suite of useful modules to help you manage your day to day business activities, including but not limited to, sales, purchases, inventory management, finance, customer relationship management, and back-office. Developed with love by your friends at MixERP Inc. </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-lightbulb></i><p> Some sections in this documentation site are missing. This site is a <a href=index.html#community.md> community effort </a> and work in progress. </p><p> This work is licensed under a <a href=http://creativecommons.org/licenses/by-sa/4.0/ rel=license> Creative Commons Attribution-ShareAlike 4.0 International License </a> . </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-anchor></i><ul class=footer-links><li><a href=http://mixerp.org/forum target=_blank> MixERP Forums </a></li><li><a href=https://github.com/mixerp/mixerp/issues target=_blank> Submit an Issue </a></li><li><a href=https://github.com/mixerp/mixerp/releases target=_blank> Download Latest Release </a></li><li><a href=http://demo.mixerp.org/SignIn.aspx target=_blank> MixERP Demo Website </a></li></ul><br><br><br></div><div class="small-12 medium-3 large-3 columns"><i class=fi-comments></i><ul class=footer-links><li><a href=http://mixerp.org/ target=_blank> Project Website </a></li><li><a href=https://www.facebook.com/mixerp.official/ target=_blank> Follow MixERP on Facebook </a></li><li><a href=http://www.facebook.com/groups/183076085203506/ target=_blank> Facebook Discussion Group </a></li><li><a href=http://twitter.com/mixoferp/ target=_blank> Follow MixERP on Twitter </a></li><li style="list-style: none; display: inline"><ul></ul></li></ul><br><br><br></div></div></footer></div></div><script src=//cdn.rawgit.com/noelboss/featherlight/1.2.3/release/featherlight.min.js type=text/javascript charset=utf-8></script><script>
+        window.onload = function () {
 
-            if (!safeName) {
-                safeName = text.trim().replace(/\s+/g, '-').replace(/[^-,'A-Za-z0-9]+/g, '').toLowerCase();
-                id = window.escape(safeName);
-                $section.attr("id", id);
+            var createLinkedImages = function () {
+                $("#content").find("img").each(function () {
+                    var el = $(this);
+                    var src = el.attr("src");
+
+                    var anchor = $("<a/>");
+                    anchor.prop("href", "#");
+                    anchor.attr("data-featherlight", src);
+                    el.wrap(anchor);
+                });
             };
 
-            id = window.escape(safeName);
-            var anchor = "<li><a class='item' href='#" + id + "'>" + text + "</a></li>";
-            topics.append(anchor);
-        });
-    };
+            $(document).foundation();
+            createSubTopics();
+            createLinkedImages();
+        };
 
-</script></body></html>
+        function createSubTopics() {
+            $("#content").find("h1, h2, h3").each(function () {
+                var topics = $(".topics");
+                var $section = $(this);
+                var safeName = $section.attr("id");
+                var id;
+                var text = $section.text();
+
+                if (!safeName) {
+                    safeName = text.trim().replace(/\s+/g, '-').replace(/[^-,'A-Za-z0-9]+/g, '').toLowerCase();
+                    id = window.escape(safeName);
+                    $section.attr("id", id);
+                };
+
+                id = window.escape(safeName);
+                var anchor = "<li><a class='item' href='#" + id + "'>" + text + "</a></li>";
+                topics.append(anchor);
+            });
+        };
+
+    </script></body></html>

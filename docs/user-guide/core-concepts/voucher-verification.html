@@ -1,31 +1,45 @@
 ﻿<!DOCTYPE html>
 <html lang=en><head><meta charset=utf-8><title>Voucher Verification</title><script src=/docs/assets/bundles/scripts.js>
 
-    
-    </script><link href=/docs/assets/bundles/styles.min.css rel=stylesheet><link href="http://fonts.googleapis.com/css?family=Raleway:300" rel=stylesheet type=text/css><link href="http://fonts.googleapis.com/css?family=Open+Sans" rel=stylesheet type=text/css></head><body><div class="sticky contain-to-grid"><nav class=top-bar data-topbar><ul class=title-area><li class=name><h1><a href=/index.html><img src=/docs/assets/images/mixerp-logo.png></a></h1></li><li class="toggle-topbar menu-icon"><a href=javascript:void(0);><span></span></a></li></ul><section class=top-bar-section><ul class=right><li><a class=right-off-canvas-toggle href=javascript:void(0);> Sub Topics </a></li></ul></section></nav></div><div class=off-canvas-wrap data-offcanvas><div class=inner-wrap><aside class=right-off-canvas-menu><ul class=topics></ul></aside><div class=row><div class="large-12 large-centered columns"><div id=content><h2>Voucher Verification</h2><p>The verification module is a feature of MixERP's Transaction Posting Engine. The workflow provides <strong>MC (maker/checker)</strong> verification system where the transactions entered by users are presented to a group of delegated users collectively known as <strong>Voucher Administrators</strong>. Once a transaction is posted, it is sent to the <strong>verification queue</strong>. The VAs can then take further actions on what to do with the transactions in the queue.</p><p>Moreover, on a default installation, <strong>makers</strong> are generally restricted users able to only post a transaction, and cannot take decisions on their own. However, makers can <strong>withdraw</strong> their own transaction(s) stating a reason why they want it to be withdrawn. When a transaction is withdrawn, it is not sent to the <a href=verification-queue.html>Verification Queue</a>, and thus has no effect on the balance sheet.</p><p><img src=images/verification-workflow.png alt="Verification Workflow"></p><p>Furthermore, as seen in the above diagram, a transaction can be automatically verified by the workflow engine. According to your configuration, the TransactionGovernor module will automatically take actions to reject or approve vouchers in verification queue. This could be beneficial for offices having a relatively tight budget, since you would not need to appoint additional employee(s) to check the queue.</p><div class="alert-box secondary radius"> The automatic verification feature can be a real time-saver for certain scenarios where you could "mix" the automatic and manual verification system. For example, you could turn on the auto-verification for transactions less than a specified amount, and for larger transactions you can *examine what's going on under the hood* in the real time. </div><h2>Transaction Checklists</h2><p>Once you post a sales transaction, the module <strong>TransactionChecklist</strong> further helps application users to take necessary actions such as:</p><ul><li><a href=withdraw-transaction.html>Withdraw the Posted Transaction</a>.</li><li>View the Document.</li><li>Send the Document as an Email Attachment to the Customer.</li><li>Create &amp; Print Customer Copy of the Document.</li><li>Print Receipt.*</li><li>Print GL Entry.*</li><li><a href=attachment-manager.html>Upload Attachments for the Document</a>.</li></ul><div class="secondary label"> * where applicable </div><h2>Related Topics</h2><ul><li><a href=../sales/index.html>Sales Module</a></li><li><a href=../index.html>MixERP User Guide</a></li></ul></div></div></div><a class=exit-off-canvas></a><footer class=footer><div class="row full-width"><div class="small-12 medium-3 large-3 columns"><i class=fi-download></i><p> MixERP is an open source and free ERP software that provides a suite of useful modules to help you manage your day to day business activities, including but not limited to, sales, purchases, inventory management, finance, customer relationship management, and back-office. Developed with love by your friends at MixERP Inc. </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-lightbulb></i><p> Some sections in this documentation site are missing. This site is a <a href=index.html#community.md> community effort </a> and work in progress. </p><p> This work is licensed under a <a href=http://creativecommons.org/licenses/by-sa/4.0/ rel=license> Creative Commons Attribution-ShareAlike 4.0 International License </a> . </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-anchor></i><ul class=footer-links><li><a href=http://mixerp.org/forum target=_blank> MixERP Forums </a></li><li><a href=https://github.com/mixerp/mixerp/issues target=_blank> Submit an Issue </a></li><li><a href=https://github.com/mixerp/mixerp/releases target=_blank> Download Latest Release </a></li><li><a href=http://demo.mixerp.org/SignIn.aspx target=_blank> MixERP Demo Website </a></li></ul><br><br><br></div><div class="small-12 medium-3 large-3 columns"><i class=fi-comments></i><ul class=footer-links><li><a href=http://mixerp.org/ target=_blank> Project Website </a></li><li><a href=https://www.facebook.com/mixerp.official/ target=_blank> Follow MixERP on Facebook </a></li><li><a href=http://www.facebook.com/groups/183076085203506/ target=_blank> Facebook Discussion Group </a></li><li><a href=http://twitter.com/mixoferp/ target=_blank> Follow MixERP on Twitter </a></li><li style="list-style: none; display: inline"><ul></ul></li></ul><br><br><br></div></div></footer></div></div><script>
-    window.onload = function() {
-        $(document).foundation();
-        createSubTopics();
-    };
 
-    function createSubTopics() {
-        $("#content").find("h1, h2, h3").each(function() {
-            var topics = $(".topics");
-            var $section = $(this);
-            var safeName = $section.attr("id");
-            var id;
-            var text = $section.text();
+    </script><link href=//cdn.rawgit.com/noelboss/featherlight/1.2.3/release/featherlight.min.css type=text/css rel=stylesheet title="Featherlight Styles"><link href=/docs/assets/bundles/styles.min.css rel=stylesheet><link href="http://fonts.googleapis.com/css?family=Raleway:300" rel=stylesheet type=text/css><link href="http://fonts.googleapis.com/css?family=Open+Sans" rel=stylesheet type=text/css></head><body><div class="sticky contain-to-grid"><nav class=top-bar data-topbar><ul class=title-area><li class=name><h1><a href=/index.html><img src=/docs/assets/images/mixerp-logo.png></a></h1></li><li class="toggle-topbar menu-icon"><a href=javascript:void(0);><span></span></a></li></ul><section class=top-bar-section><ul class=right><li><a class=right-off-canvas-toggle href=javascript:void(0);> Sub Topics </a></li></ul></section></nav></div><div class=off-canvas-wrap data-offcanvas><div class=inner-wrap><aside class=right-off-canvas-menu><ul class=topics></ul></aside><div class=row><div class="large-12 large-centered columns"><div id=content><h2>Voucher Verification</h2><p>The verification module is a feature of MixERP's Transaction Posting Engine. The workflow provides <strong>MC (maker/checker)</strong> verification system where the transactions entered by users are presented to a group of delegated users collectively known as <strong>Voucher Administrators</strong>. Once a transaction is posted, it is sent to the <strong>verification queue</strong>. The VAs can then take further actions on what to do with the transactions in the queue.</p><p>Moreover, on a default installation, <strong>makers</strong> are generally restricted users able to only post a transaction, and cannot take decisions on their own. However, makers can <strong>withdraw</strong> their own transaction(s) stating a reason why they want it to be withdrawn. When a transaction is withdrawn, it is not sent to the <a href=verification-queue.html>Verification Queue</a>, and thus has no effect on the balance sheet.</p><p><img src=images/verification-workflow.png alt="Verification Workflow"></p><p>Furthermore, as seen in the above diagram, a transaction can be automatically verified by the workflow engine. According to your configuration, the TransactionGovernor module will automatically take actions to reject or approve vouchers in verification queue. This could be beneficial for offices having a relatively tight budget, since you would not need to appoint additional employee(s) to check the queue.</p><div class="alert-box secondary radius"> The automatic verification feature can be a real time-saver for certain scenarios where you could "mix" the automatic and manual verification system. For example, you could turn on the auto-verification for transactions less than a specified amount, and for larger transactions you can *examine what's going on under the hood* in the real time. </div><h2>Transaction Checklists</h2><p>Once you post a sales transaction, the module <strong>TransactionChecklist</strong> further helps application users to take necessary actions such as:</p><ul><li><a href=withdraw-transaction.html>Withdraw the Posted Transaction</a>.</li><li>View the Document.</li><li>Send the Document as an Email Attachment to the Customer.</li><li>Create &amp; Print Customer Copy of the Document.</li><li>Print Receipt.*</li><li>Print GL Entry.*</li><li><a href=attachment-manager.html>Upload Attachments for the Document</a>.</li></ul><div class="secondary label"> * where applicable </div><h2>Related Topics</h2><ul><li><a href=../sales/index.html>Sales Module</a></li><li><a href=../index.html>MixERP User Guide</a></li></ul></div></div></div><a class=exit-off-canvas></a><footer class=footer><div class="row full-width"><div class="small-12 medium-3 large-3 columns"><i class=fi-download></i><p> MixERP is an open source and free ERP software that provides a suite of useful modules to help you manage your day to day business activities, including but not limited to, sales, purchases, inventory management, finance, customer relationship management, and back-office. Developed with love by your friends at MixERP Inc. </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-lightbulb></i><p> Some sections in this documentation site are missing. This site is a <a href=index.html#community.md> community effort </a> and work in progress. </p><p> This work is licensed under a <a href=http://creativecommons.org/licenses/by-sa/4.0/ rel=license> Creative Commons Attribution-ShareAlike 4.0 International License </a> . </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-anchor></i><ul class=footer-links><li><a href=http://mixerp.org/forum target=_blank> MixERP Forums </a></li><li><a href=https://github.com/mixerp/mixerp/issues target=_blank> Submit an Issue </a></li><li><a href=https://github.com/mixerp/mixerp/releases target=_blank> Download Latest Release </a></li><li><a href=http://demo.mixerp.org/SignIn.aspx target=_blank> MixERP Demo Website </a></li></ul><br><br><br></div><div class="small-12 medium-3 large-3 columns"><i class=fi-comments></i><ul class=footer-links><li><a href=http://mixerp.org/ target=_blank> Project Website </a></li><li><a href=https://www.facebook.com/mixerp.official/ target=_blank> Follow MixERP on Facebook </a></li><li><a href=http://www.facebook.com/groups/183076085203506/ target=_blank> Facebook Discussion Group </a></li><li><a href=http://twitter.com/mixoferp/ target=_blank> Follow MixERP on Twitter </a></li><li style="list-style: none; display: inline"><ul></ul></li></ul><br><br><br></div></div></footer></div></div><script src=//cdn.rawgit.com/noelboss/featherlight/1.2.3/release/featherlight.min.js type=text/javascript charset=utf-8></script><script>
+        window.onload = function () {
 
-            if (!safeName) {
-                safeName = text.trim().replace(/\s+/g, '-').replace(/[^-,'A-Za-z0-9]+/g, '').toLowerCase();
-                id = window.escape(safeName);
-                $section.attr("id", id);
+            var createLinkedImages = function () {
+                $("#content").find("img").each(function () {
+                    var el = $(this);
+                    var src = el.attr("src");
+
+                    var anchor = $("<a/>");
+                    anchor.prop("href", "#");
+                    anchor.attr("data-featherlight", src);
+                    el.wrap(anchor);
+                });
             };
 
-            id = window.escape(safeName);
-            var anchor = "<li><a class='item' href='#" + id + "'>" + text + "</a></li>";
-            topics.append(anchor);
-        });
-    };
+            $(document).foundation();
+            createSubTopics();
+            createLinkedImages();
+        };
 
-</script></body></html>
+        function createSubTopics() {
+            $("#content").find("h1, h2, h3").each(function () {
+                var topics = $(".topics");
+                var $section = $(this);
+                var safeName = $section.attr("id");
+                var id;
+                var text = $section.text();
+
+                if (!safeName) {
+                    safeName = text.trim().replace(/\s+/g, '-').replace(/[^-,'A-Za-z0-9]+/g, '').toLowerCase();
+                    id = window.escape(safeName);
+                    $section.attr("id", id);
+                };
+
+                id = window.escape(safeName);
+                var anchor = "<li><a class='item' href='#" + id + "'>" + text + "</a></li>";
+                topics.append(anchor);
+            });
+        };
+
+    </script></body></html>
