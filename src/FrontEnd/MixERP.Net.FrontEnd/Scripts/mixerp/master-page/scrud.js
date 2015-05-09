@@ -1,4 +1,5 @@
 ﻿function pageLoad() {
+    initializeItemSelector();
     $(".item-selector").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
     $(".preview").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
 };

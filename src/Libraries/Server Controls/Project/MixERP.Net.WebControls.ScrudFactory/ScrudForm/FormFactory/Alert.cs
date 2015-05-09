@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Resources;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
@@ -54,7 +56,16 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         private string GetLocalizedErrorMessage(MixERPException ex)
         {
-            return i18n.ResourceManager.GetString(this.GetResourceClassName(), ex.DBConstraintName);
+            try
+            {
+                return i18n.ResourceManager.GetString(this.GetResourceClassName(), ex.DBConstraintName);
+            }
+            catch (MissingManifestResourceException)
+            {
+                //swallow
+            }
+
+            return ex.Message;
         }
 
         private void DisplaySuccess()
