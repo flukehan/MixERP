@@ -18,7 +18,7 @@ Tell us what you like to see in the CRM Module! Not sure? Then what about review
 
 ##Beta 1 Version 2 is Coming Soon
 
-Please stay tuned to updates and releases because we are planning to release the second version of the first Beta release with added features and improved functions within March 2015. Case you find any issues with the project , please feel free to post on [MixERP forums](http://mixerp.org/forum). Let us know how we can help you.
+Please stay tuned to updates and releases because we are planning to release the second version of the first Beta release with added features and improved functions within May end 2015. Case you find any issues with the project , please feel free to post on [MixERP forums](http://mixerp.org/forum). Let us know how we can help you.
 
 [Beta 1 Version 2 Milestone](https://github.com/mixerp/mixerp/milestones/Beta%201%20Version%202%20%28QA%29)
 
@@ -29,13 +29,22 @@ All transactions posted to the **v1** is supported and will be automatically upd
 #Where Can I Get Support?
 Please create an account in [MixERP Forums](http://mixerp.org/forum) and post your questions there. We will be happy to help.
 
+If you can afford to, please consider making a donation for continued development of MixERP project.
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+
 #Where is documentation?
 The documentation now lives in the "gh-pages" branch and is hosted on GitHub pages here:
 
 [MixERP Documentation](http://docs.mixerp.org)
 
 Similarly, the branch "gh-pages" is periodically merged into "master" branch. **Using firefox**, you can view the documentation locally by opening "index-ajax.html" on the root folder.
-
 
 ##Why Betas?
 
@@ -138,6 +147,7 @@ MixERP has a very wide range of features which are tightly integrated with each 
 
 ##How Can I Support MixERP?
 
+* Donate to MixERP project.
 * Translate MixERP in your language.
 * Support MixERP by providing ASP.net 4.5 and PostgreSQL hosting.
 * Build and host MixERP on your development server.
