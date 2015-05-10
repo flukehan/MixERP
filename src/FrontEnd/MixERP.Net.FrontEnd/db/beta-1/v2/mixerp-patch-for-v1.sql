@@ -1494,6 +1494,29 @@ ON localization.localized_resources
 (resource_id, UPPER(culture_code));
 
 
+ALTER TABLE core.item_groups
+ALTER COLUMN sales_account_id SET DEFAULT(core.get_account_id_by_account_number('30100'));
+
+ALTER TABLE core.item_groups
+ALTER COLUMN sales_discount_account_id SET DEFAULT(core.get_account_id_by_account_number('40270'));
+
+ALTER TABLE core.item_groups
+ALTER COLUMN sales_return_account_id SET DEFAULT(core.get_account_id_by_account_number('20701'));
+
+ALTER TABLE core.item_groups
+ALTER COLUMN purchase_account_id SET DEFAULT(core.get_account_id_by_account_number('40100'));
+
+ALTER TABLE core.item_groups
+ALTER COLUMN purchase_discount_account_id SET DEFAULT(core.get_account_id_by_account_number('30700'));
+
+ALTER TABLE core.item_groups
+ALTER COLUMN inventory_account_id SET DEFAULT(core.get_account_id_by_account_number('10700'));
+
+ALTER TABLE core.item_groups
+ALTER COLUMN cost_of_goods_sold_account_id SET DEFAULT(core.get_account_id_by_account_number('40200'));
+
+
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/audit/audit.get_office_id_by_login_id.sql --<--<--
 DROP FUNCTION IF EXISTS audit.get_office_id_by_login_id(bigint);
@@ -24215,6 +24238,22 @@ SELECT * FROM localization.add_localized_resource('Titles', 'sv', 'EODBegun', 'S
 SELECT * FROM localization.add_localized_resource('Labels', 'sv', 'EODBegunSaveYourWork', 'Stäng fönstret och spara din befintliga arbete innan du kommer att undertecknas av automatiskt.');
 
 
+SELECT * FROM localization.add_localized_resource('DbErrors', '', 'P1302', 'Cannot post sales. Invalid cash account mapping on store.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'sv', 'P1302', 'Det går inte att lägga försäljningen. Ogiltig likvidkonto kartläggning på butiken.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'es', 'P1302', 'No se puede publicar ventas. Asignación de cuentas de efectivo no válida en la tienda.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'ru', 'P1302', 'Не можете прикреплять продаж. Неверный отображение денежный счет на складе.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'pt', 'P1302', 'Não é possível postar vendas. Inválida de mapeamento de conta em dinheiro na loja.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'ms', 'P1302', 'Tidak boleh hantar jualan. Pemetaan akaun tunai tidak sah di kedai.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'ja', 'P1302', '販売を投稿することはできません。ストアの無効な現金アカウントマッピング。');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'de', 'P1302', 'Kann Umsatz nicht erlaubt. Ungültige Geldkonto-Mapping auf Laden.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'fr', 'P1302', 'Vous ne pouvez pas afficher des ventes. Invalid compte de trésorerie cartographie sur la boutique.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'fil', 'P1302', 'Hindi maaaring mag-post ng mga benta. Hindi wastong mapping cash account sa store.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'nl', 'P1302', 'Kan de verkoop niet plaatsen. Ongeldige geldrekening mapping op te slaan.');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'zh', 'P1302', '不能发布销售。在商店无效的现金帐户的映射。');
+SELECT * FROM localization.add_localized_resource('DbErrors', 'id', 'P1302', 'Tidak dapat mengirim penjualan. Pemetaan rekening kas tidak valid di toko.');
+
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/recurrence-types.sql --<--<--
 WITH recurrence_types
 AS
@@ -24399,7 +24438,8 @@ DROP VIEW IF EXISTS core.bank_account_selector_view;
 CREATE VIEW core.bank_account_selector_view
 AS
 SELECT * FROM core.account_scrud_view
-WHERE account_master_id = 10102;
+WHERE account_master_id = 10102
+ORDER BY account_id;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.bonus_slab_account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.bonus_slab_account_selector_view;
@@ -24407,7 +24447,8 @@ DROP VIEW IF EXISTS core.bonus_slab_account_selector_view;
 CREATE VIEW core.bonus_slab_account_selector_view
 AS
 SELECT * FROM core.account_scrud_view
-WHERE account_master_id >= 20400; --Expenses
+WHERE account_master_id >= 20400
+ORDER BY account_id; --Expenses
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.cash_account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.cash_account_selector_view;
@@ -24415,14 +24456,36 @@ DROP VIEW IF EXISTS core.cash_account_selector_view;
 CREATE VIEW core.cash_account_selector_view
 AS
 SELECT * FROM core.account_scrud_view
-WHERE account_master_id = 10101;
+WHERE account_master_id = 10101
+ORDER BY account_id;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.cost_of_sales_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.cost_of_sales_account_selector_view;
+
+CREATE VIEW core.cost_of_sales_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+--Cost of Sales
+WHERE account_master_id = 20400
+ORDER BY account_id;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.inventory_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.inventory_account_selector_view;
+
+CREATE VIEW core.inventory_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+--Current Assets
+WHERE account_master_id = 10100
+ORDER BY account_id;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.item_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.item_selector_view;
 
 CREATE VIEW core.item_selector_view
 AS
-SELECT * FROM core.items;
+SELECT * FROM core.items
+ORDER BY item_id;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.late_fee_account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.late_fee_account_selector_view;
@@ -24432,7 +24495,8 @@ AS
 SELECT * FROM core.account_scrud_view
 --All income headings
 WHERE account_master_id >= 20100
-AND account_master_id < 20400;
+AND account_master_id < 20400
+ORDER BY account_id;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.merchant_account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.merchant_account_selector_view;
@@ -24440,7 +24504,8 @@ DROP VIEW IF EXISTS core.merchant_account_selector_view;
 CREATE VIEW core.merchant_account_selector_view
 AS
 SELECT * FROM core.bank_account_scrud_view
-WHERE is_merchant_account = true;
+WHERE is_merchant_account = true
+ORDER BY account_id;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.merchant_fee_setup_account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.merchant_fee_setup_account_selector_view;
@@ -24448,7 +24513,8 @@ DROP VIEW IF EXISTS core.merchant_fee_setup_account_selector_view;
 CREATE VIEW core.merchant_fee_setup_account_selector_view
 AS
 SELECT * FROM core.account_scrud_view
-WHERE account_master_id >= 20400; --Expenses
+WHERE account_master_id >= 20400
+ORDER BY account_id; --Expenses
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.party_type_account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.party_type_account_selector_view;
@@ -24457,7 +24523,30 @@ CREATE VIEW core.party_type_account_selector_view
 AS
 SELECT * FROM core.account_scrud_view
 --Accounts Receivable, Accounts Payable
-WHERE account_master_id = ANY(ARRAY[10110, 15010]);
+WHERE account_master_id = ANY(ARRAY[10110, 15010])
+ORDER BY account_id;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.purcahse_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.purcahse_account_selector_view;
+
+CREATE VIEW core.purcahse_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+WHERE account_master_id = 2 --Profit and Loss Account
+AND COALESCE(parent, '') <> ''
+ORDER BY account_id;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.purchase_discount_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.purchase_discount_account_selector_view;
+
+CREATE VIEW core.purchase_discount_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+--All income headings
+WHERE account_master_id >= 20100
+AND account_master_id < 20400
+ORDER BY account_id;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.recurring_invoice_account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.recurring_invoice_account_selector_view;
@@ -24467,7 +24556,37 @@ AS
 SELECT * FROM core.account_scrud_view
 --All income headings
 WHERE account_master_id >= 20100
-AND account_master_id < 20400;
+AND account_master_id < 20400
+ORDER BY account_id;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.revenue_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.revenue_account_selector_view;
+
+CREATE VIEW core.revenue_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+WHERE account_master_id = 20100
+ORDER BY account_id;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.sales_discount_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.sales_discount_account_selector_view;
+
+CREATE VIEW core.sales_discount_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+WHERE account_master_id >= 20400
+ORDER BY account_id; --Expenses
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.sales_return_account_selector_view.sql --<--<--
+DROP VIEW IF EXISTS core.sales_return_account_selector_view;
+
+CREATE VIEW core.sales_return_account_selector_view
+AS
+SELECT * FROM core.account_scrud_view
+WHERE account_master_id >= 15000
+AND account_master_id <= 15100
+ORDER BY account_id; --Liabilities
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/core/core.salesperson_account_selector_view.sql --<--<--
 DROP VIEW IF EXISTS core.salesperson_account_selector_view;
@@ -24476,7 +24595,8 @@ CREATE VIEW core.salesperson_account_selector_view
 AS
 SELECT * FROM core.account_scrud_view
 --Current Assets, Accounts Receivable, Current Liabilities, Accounts Payable
-WHERE account_master_id = ANY(ARRAY[10100, 10110, 15000, 15010]);
+WHERE account_master_id = ANY(ARRAY[10100, 10110, 15000, 15010])
+ORDER BY account_id;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.selector-views/office/office.user_selector_view.sql --<--<--
 DROP VIEW IF EXISTS office.user_selector_view;

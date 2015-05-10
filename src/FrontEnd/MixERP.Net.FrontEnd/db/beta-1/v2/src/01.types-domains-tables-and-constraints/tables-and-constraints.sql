@@ -633,3 +633,26 @@ CREATE UNIQUE INDEX localized_resources_culture_key_uix
 ON localization.localized_resources
 (resource_id, UPPER(culture_code));
 
+
+ALTER TABLE core.item_groups
+ALTER COLUMN sales_account_id SET DEFAULT(core.get_account_id_by_account_number('30100'));
+
+ALTER TABLE core.item_groups
+ALTER COLUMN sales_discount_account_id SET DEFAULT(core.get_account_id_by_account_number('40270'));
+
+ALTER TABLE core.item_groups
+ALTER COLUMN sales_return_account_id SET DEFAULT(core.get_account_id_by_account_number('20701'));
+
+ALTER TABLE core.item_groups
+ALTER COLUMN purchase_account_id SET DEFAULT(core.get_account_id_by_account_number('40100'));
+
+ALTER TABLE core.item_groups
+ALTER COLUMN purchase_discount_account_id SET DEFAULT(core.get_account_id_by_account_number('30700'));
+
+ALTER TABLE core.item_groups
+ALTER COLUMN inventory_account_id SET DEFAULT(core.get_account_id_by_account_number('10700'));
+
+ALTER TABLE core.item_groups
+ALTER COLUMN cost_of_goods_sold_account_id SET DEFAULT(core.get_account_id_by_account_number('40200'));
+
+
