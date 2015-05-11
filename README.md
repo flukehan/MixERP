@@ -31,6 +31,8 @@ Please create an account in [MixERP Forums](http://mixerp.org/forum) and post yo
 
 If you can afford to, please consider [making a donation](http://www.mixerp.org/donate) for continued development of MixERP project.
 
+<a href="http://www.mixerp.org/donate"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"/></a>
+
 
 #Where is documentation?
 The documentation now lives in the "gh-pages" branch and is hosted on GitHub pages here:
