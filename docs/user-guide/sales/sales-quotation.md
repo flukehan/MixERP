@@ -130,15 +130,7 @@ Click this button or **hit CTRL + RETURN** to add the current line to the grid.
 
 **Attachments**
 
-Depending on your configuration, you can upload several attachments for this quotation.
-A default installation of MixERP allow you to upload :
-
-* Image Files (JPEG, GIF, PNG)
-* Word Documents (DOC, DOCX)
-* Spreadsheets (CSV, TSV, XLS, XLSX)
-* PDF documents
-
-See the video below on how to upload attachments.
+See [Inline Attachment Manager](../../user-guide/core-concepts/inline-attachment-manager.md)
 
 **Shipping Address**
 
@@ -186,8 +178,9 @@ Click this button to save the quotation.
 
 ![Sales Quotation View](images/sales-quotation-view.png)
 
-The sales quotation view associates a few useful functions that could make your life easier by automating some
-repetitive tasks such as data entry.
+As soon as you post a sales quotation, it appears in this view. You can then take further actions
+like automating, merging, and/or flagging transactions, both individually or in batches.
+
 
 ##Merge Batch to Sales Order
 

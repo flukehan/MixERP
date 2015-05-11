@@ -40,6 +40,7 @@ and produce reports of all child offices it contains.
 ##Core Concepts
 - [Date Expressions](core-concepts/date-expressions.md)
 - [Understanding MixERP Menu](core-concepts/understanding-menu.md)
+- [Inline Attachment Manager](core-concepts/inline-attachment-manager.md)
 - [Understanding and Configuring Taxes](core-concepts/understanding-and-configuring-taxes.md)
 - [Working with ScrudFactory](core-concepts/scrud-factory.md)
 - [Flags](core-concepts/flags.md)
