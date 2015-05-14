@@ -1,6 +1,4 @@
-DROP VIEW IF EXISTS core.account_scrud_view;
-
-CREATE VIEW core.account_scrud_view
+CREATE OR REPLACE VIEW core.account_scrud_view
 AS
 SELECT
     core.accounts.account_id,

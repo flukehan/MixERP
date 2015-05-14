@@ -23,10 +23,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
   <appSettings>
     <add key="Server" value="localhost" />
     <add key="Port" value="5432" />
-    <add key="Database" value="mixerp" />
+    <add key="Database" value="mixerp2" />
     <add key="UserId" value="mix_erp" />
     <add key="Password" value="change-on-deployment" />
-
+    <add key="Catalogs" value="mixerp, mixerp2, mixerp4" />
+    
     <add key="PostgreSQLBinDirectory" value="C:\Program Files\PostgreSQL\9.4\bin\" />
     <add key="DatabaseBackupDirectory" value="/Resource/Backups/" />
   </appSettings>

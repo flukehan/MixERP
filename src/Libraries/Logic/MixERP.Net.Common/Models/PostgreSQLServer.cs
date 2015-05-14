@@ -29,7 +29,7 @@ namespace MixERP.Net.Common.Models
             this.DatabaseBackupDirectory = ConfigurationHelper.GetDbServerParameter("DatabaseBackupDirectory");
             this.PortNumber = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port"));
             this.HostName = ConfigurationHelper.GetDbServerParameter("Server");
-            this.DatabaseName = ConfigurationHelper.GetDbServerParameter("Database");
+            this.DatabaseName = CookieHelper.GetCatalog();
             this.UserId = ConfigurationHelper.GetDbServerParameter("UserId");
             this.Password = ConfigurationHelper.GetDbServerParameter("Password");
         }

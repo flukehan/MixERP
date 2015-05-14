@@ -29016,7 +29016,7 @@ SELECT
     recurring_invoice_code, 
     recurring_invoice_name, 
     item_id, 
-    recurring_frequency_id, 
+    COALESCE(recurring_frequency_id, 2), 
     recurring_amount,
     auto_trigger_on_sales,
     core.get_payment_term_id_by_payment_term_code('07-D'),
@@ -30113,6 +30113,82 @@ END
 $$
 LANGUAGE plpgsql;
 
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.create_card_type.sql --<--<--
+DROP FUNCTION IF EXISTS core.create_card_type
+(
+    _card_type_id       integer, 
+    _card_type_code     national character varying(12),
+    _card_type_name     national character varying(100)
+);
+
+CREATE FUNCTION core.create_card_type
+(
+    _card_type_id       integer, 
+    _card_type_code     national character varying(12),
+    _card_type_name     national character varying(100)
+)
+RETURNS void
+AS
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT * FROM core.card_types
+        WHERE card_type_id = _card_type_id
+    ) THEN
+        INSERT INTO core.card_types(card_type_id, card_type_code, card_type_name)
+        SELECT _card_type_id, _card_type_code, _card_type_name;
+    ELSE
+        UPDATE core.card_types
+        SET 
+            card_type_id =      _card_type_id, 
+            card_type_code =    _card_type_code, 
+            card_type_name =    _card_type_name
+        WHERE
+            card_type_id =      _card_type_id;
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.create_payment_card.sql --<--<--
+DROP FUNCTION IF EXISTS core.create_payment_card
+(
+    _payment_card_code      national character varying(12),
+    _payment_card_name      national character varying(100),
+    _card_type_id           integer
+);
+
+CREATE FUNCTION core.create_payment_card
+(
+    _payment_card_code      national character varying(12),
+    _payment_card_name      national character varying(100),
+    _card_type_id           integer
+)
+RETURNS void
+AS
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT * FROM core.payment_cards
+        WHERE payment_card_code = _payment_card_code
+    ) THEN
+        INSERT INTO core.payment_cards(payment_card_code, payment_card_name, card_type_id)
+        SELECT _payment_card_code, _payment_card_name, _card_type_id;
+    ELSE
+        UPDATE core.payment_cards
+        SET 
+            payment_card_code =     _payment_card_code, 
+            payment_card_name =     _payment_card_name,
+            card_type_id =          _card_type_id
+        WHERE
+            payment_card_code =     _payment_card_code;
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/logic/core/core.get_account_id_by_account_number.sql --<--<--
 CREATE OR REPLACE FUNCTION core.get_account_id_by_account_number(_account_number text)
@@ -36613,28 +36689,25 @@ SET frequency_setup_code= 'Sep-Oct'
 WHERE frequency_setup_code= 'Sep-Oc';
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/card-types-payment-cards.sql --<--<--
-INSERT INTO core.card_types(card_type_id, card_type_code, card_type_name)
-SELECT 1, 'CRC', 'Credit Card'          UNION ALL
-SELECT 2, 'DRC', 'Debit Card'           UNION ALL
-SELECT 3, 'CHC', 'Charge Card'          UNION ALL
-SELECT 4, 'ATM', 'ATM Card'             UNION ALL
-SELECT 5, 'SVC', 'Store-value Card'     UNION ALL
-SELECT 6, 'FLC', 'Fleet Card'           UNION ALL
-SELECT 7, 'GFC', 'Gift Card'            UNION ALL
-SELECT 8, 'SCR', 'Scrip'                UNION ALL
-SELECT 9, 'ELP', 'Electronic Purse';
+SELECT * FROM core.create_card_type(1, 'CRC', 'Credit Card'          );
+SELECT * FROM core.create_card_type(2, 'DRC', 'Debit Card'           );
+SELECT * FROM core.create_card_type(3, 'CHC', 'Charge Card'          );
+SELECT * FROM core.create_card_type(4, 'ATM', 'ATM Card'             );
+SELECT * FROM core.create_card_type(5, 'SVC', 'Store-value Card'     );
+SELECT * FROM core.create_card_type(6, 'FLC', 'Fleet Card'           );
+SELECT * FROM core.create_card_type(7, 'GFC', 'Gift Card'            );
+SELECT * FROM core.create_card_type(8, 'SCR', 'Scrip'                );
+SELECT * FROM core.create_card_type(9, 'ELP', 'Electronic Purse'     );
 
 
-INSERT INTO core.payment_cards(payment_card_code, payment_card_name, card_type_id)
-SELECT 'CR-VSA', 'Visa',                1 UNION ALL
-SELECT 'CR-AME', 'American Express',    1 UNION ALL
-SELECT 'CR-MAS', 'MasterCard',          1 UNION ALL
-SELECT 'DR-MAE', 'Maestro',             2 UNION ALL
-SELECT 'DR-MAS', 'MasterCard Debit',    2 UNION ALL
-SELECT 'DR-VSE', 'Visa Electron',       2 UNION ALL
-SELECT 'DR-VSD', 'Visa Debit',          2 UNION ALL
-SELECT 'DR-DEL', 'Delta',               2;
-
+SELECT * FROM core.create_payment_card('CR-VSA', 'Visa',                1);
+SELECT * FROM core.create_payment_card('CR-AME', 'American Express',    1);
+SELECT * FROM core.create_payment_card('CR-MAS', 'MasterCard',          1);
+SELECT * FROM core.create_payment_card('DR-MAE', 'Maestro',             2);
+SELECT * FROM core.create_payment_card('DR-MAS', 'MasterCard Debit',    2);
+SELECT * FROM core.create_payment_card('DR-VSE', 'Visa Electron',       2);
+SELECT * FROM core.create_payment_card('DR-VSD', 'Visa Debit',          2);
+SELECT * FROM core.create_payment_card('DR-DEL', 'Delta',               2);
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/http-actions.sql --<--<--
@@ -52241,6 +52314,22 @@ SELECT * FROM localization.add_localized_resource('DbErrors', 'zh', 'P1302', '�
 SELECT * FROM localization.add_localized_resource('DbErrors', 'id', 'P1302', 'Tidak dapat mengirim penjualan. Pemetaan rekening kas tidak valid di toko.');
 
 
+SELECT * FROM localization.add_localized_resource('Titles', '', 'SelectCompany', 'Select Company');
+SELECT * FROM localization.add_localized_resource('Titles', 'zh', 'SelectCompany', '选择公司');
+SELECT * FROM localization.add_localized_resource('Titles', 'nl', 'SelectCompany', 'Selecteer Company');
+SELECT * FROM localization.add_localized_resource('Titles', 'fil', 'SelectCompany', 'Piliin ang Company');
+SELECT * FROM localization.add_localized_resource('Titles', 'fr', 'SelectCompany', 'Sélectionnez Société');
+SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectCompany', 'Wählen Sie die Firma');
+SELECT * FROM localization.add_localized_resource('Titles', 'id', 'SelectCompany', 'Pilih Perusahaan');
+SELECT * FROM localization.add_localized_resource('Titles', 'ja', 'SelectCompany', '選択して会社');
+SELECT * FROM localization.add_localized_resource('Titles', 'ms', 'SelectCompany', 'Pilih Syarikat');
+SELECT * FROM localization.add_localized_resource('Titles', 'pt', 'SelectCompany', 'Selecione Empresa');
+SELECT * FROM localization.add_localized_resource('Titles', 'ru', 'SelectCompany', 'Выберите компании');
+SELECT * FROM localization.add_localized_resource('Titles', 'es', 'SelectCompany', 'Seleccione la empresa');
+SELECT * FROM localization.add_localized_resource('Titles', 'sv', 'SelectCompany', 'Välj företag');
+
+
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/recurrence-types.sql --<--<--
 WITH recurrence_types
@@ -52269,9 +52358,7 @@ ALTER TABLE core.recurring_invoices
 ALTER COLUMN recurring_frequency_id DROP NOT NULL;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.account_scrud_view.sql --<--<--
-DROP VIEW IF EXISTS core.account_scrud_view;
-
-CREATE VIEW core.account_scrud_view
+CREATE OR REPLACE VIEW core.account_scrud_view
 AS
 SELECT
     core.accounts.account_id,
@@ -52307,9 +52394,7 @@ FROM
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.bank_account_scrud_view.sql --<--<--
-DROP VIEW IF EXISTS core.bank_account_scrud_view;
-
-CREATE VIEW core.bank_account_scrud_view
+CREATE OR REPLACE VIEW core.bank_account_scrud_view
 AS
 SELECT
     account_id,

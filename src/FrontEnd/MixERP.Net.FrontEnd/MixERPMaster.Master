@@ -66,6 +66,10 @@
                             <i class="options icon"></i>
                         </a>
                         <a class="item">
+                            <i class="database icon"></i>
+                            <asp:Literal runat="server" ID="CatalogLiteral" />
+                        </a>
+                        <a class="item">
                             <i class="home icon"></i>
                             <asp:Literal runat="server" ID="BranchNameLiteral" />
                         </a>
@@ -149,7 +153,11 @@
             $(function () {
                 var started = false;
 
-                $.connection.baseHub.client.terminate = function (c) {
+                $.connection.baseHub.client.terminate = function (c, cat) {
+                    if (top.catalog !== cat) {
+                        return;
+                    };
+
                     if (typeof terminateListener === "function") {
                         terminateListener(c);
                     };

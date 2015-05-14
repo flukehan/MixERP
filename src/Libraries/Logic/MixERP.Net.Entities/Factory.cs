@@ -16,6 +16,28 @@ namespace MixERP.Net.Entities
     public sealed class Factory
     {
         private const string ProviderName = "Npgsql";
+
+        public static IEnumerable<T> Get<T>(string catalog, string sql, params object[] args)
+        {
+            try
+            {
+                using (Database db = new Database(GetConnectionString(catalog), ProviderName))
+                {
+                    return db.Query<T>(sql, args);
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                if (ex.Code.StartsWith("P"))
+                {
+                    string errorMessage = GetDBErrorResource(ex);
+                    throw new MixERPException(errorMessage, ex);
+                }
+
+                throw;
+            }
+        }
+
         public static IEnumerable<T> Get<T>(string sql, params object[] args)
         {
             try
@@ -97,12 +119,19 @@ namespace MixERP.Net.Entities
                    SingleOrDefault(assembly => assembly.GetName().Name == name);
         }
 
-        public static string GetConnectionString()
+        public static string GetConnectionString(string catalog = "")
         {
+            string database = CookieHelper.GetCatalog();
+
+            if (!string.IsNullOrWhiteSpace(catalog))
+            {
+                database = catalog;
+            }
+
             var connectionStringBuilder = new NpgsqlConnectionStringBuilder
             {
                 Host = ConfigurationHelper.GetDbServerParameter("Server"),
-                Database = ConfigurationHelper.GetDbServerParameter("Database"),
+                Database = database,
                 UserName = ConfigurationHelper.GetDbServerParameter("UserId"),
                 Password = ConfigurationHelper.GetDbServerParameter("Password"),
                 Port = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port")),

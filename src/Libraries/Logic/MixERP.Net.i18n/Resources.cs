@@ -11104,6 +11104,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Select Company
+		/// </summary>
+		public static string SelectCompany 
+		{
+			get
+			{
+				return Get("SelectCompany");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Select Customer
 		/// </summary>
 		public static string SelectCustomer 

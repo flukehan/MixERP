@@ -4,6 +4,7 @@ var rememberInputCheckBox = $("#RememberInputCheckBox");
 var branchSelect = $("#BranchSelect");
 var languageSelect = $("#LanguageSelect");
 var signInButton = $("#SignInButton");
+var companySelect = $("#CompanySelect");
 
 $(document).ready(function () {
     usernameInputText.val('binod');
@@ -30,13 +31,14 @@ $(document).ready(function () {
 signInButton.click(function() {
     $(".dimmer").dimmer('show');
 
+    var catalog = companySelect.getSelectedValue();
     var username = usernameInputText.val();
     var rememberMe = rememberInputCheckBox.is(":checked");
     var branchId = parseInt2(branchSelect.getSelectedValue());
     var language = languageSelect.getSelectedValue();
     var password = getPassword(username, passwordInputPassword.val(), challenge);
-
-    var ajaxAuthenticate = authenticate(username, password, rememberMe, language, branchId);
+    
+    var ajaxAuthenticate = authenticate(catalog, username, password, rememberMe, language, branchId);
 
     $(".form").addClass("loading");
 
@@ -56,6 +58,24 @@ signInButton.click(function() {
     });
 });
 
+companySelect.change(function() {
+    $(".form").addClass("loading");
+
+    var catalog = $(this).getSelectedValue();
+
+    var ajaxGetOffices = getOffices(catalog);
+
+    ajaxGetOffices.success(function (msg) {
+        bindBranchSelect(msg.d);
+        $(".form").removeClass("loading");
+    });
+
+    ajaxGetOffices.fail(function(xhr) {
+        $(".form").removeClass("loading");
+        window.location = window.location.href.split('?')[0] + "?Message=" + JSON.parse(xhr.responseText).Message;
+    });
+});
+
 function getRedirectUrl() {
     var url = getQueryStringByName("ReturnUrl");
 
@@ -67,14 +87,36 @@ function getRedirectUrl() {
     return url;
 };
 
+function bindBranchSelect(data) {
+    branchSelect.html("");
+
+    var list = "";
+
+    $.each(data, function (index, item) {
+        list += "<option value='" + item.OfficeId + "'>" + item.OfficeName + "</option>";
+    });
+
+    branchSelect.html(list);
+};
+
 
 function makeDirty() {
     $(".field").addClass("error");
 };
 
-function authenticate(username, password, rememberMe, language, branchId) {
+function getOffices(catalog) {
+    var url = "/Services/Office.asmx/GetOffices";
+    var data = appendParameter("", "catalog", catalog);
+
+    data = getData(data);
+
+    return getAjax(url, data);
+};
+
+function authenticate(catalog, username, password, rememberMe, language, branchId) {
     var url = "/Services/User.asmx/Authenticate";
-    var data = appendParameter("", "username", username);
+    var data = appendParameter("", "catalog", catalog);
+    data = appendParameter(data, "username", username);
     data = appendParameter(data, "password", password);
     data = appendParameter(data, "rememberMe", rememberMe);
     data = appendParameter(data, "language", language);

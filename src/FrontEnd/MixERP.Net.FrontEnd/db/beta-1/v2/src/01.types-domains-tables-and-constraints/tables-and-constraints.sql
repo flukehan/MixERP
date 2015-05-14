@@ -168,7 +168,7 @@ SELECT
     recurring_invoice_code, 
     recurring_invoice_name, 
     item_id, 
-    recurring_frequency_id, 
+    COALESCE(recurring_frequency_id, 2), 
     recurring_amount,
     auto_trigger_on_sales,
     core.get_payment_term_id_by_payment_term_code('07-D'),

@@ -95,8 +95,10 @@
     <Compile Include="Extensions\NullableTypes.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Helpers\CacheFactory.cs" />
+    <Compile Include="Helpers\CatalogHelper.cs" />
     <Compile Include="Helpers\CollectionHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
+    <Compile Include="Helpers\CookieHelper.cs" />
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Helpers\DropDownListHelper.cs" />
     <Compile Include="Helpers\ExpressionHelper.cs" />

@@ -247,6 +247,10 @@
       <DependentUpon>Install.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Services\Office.asmx.cs">
+      <DependentUpon>Office.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Services\User.asmx.cs">
       <DependentUpon>User.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -581,6 +585,7 @@
     <Content Include="Scripts\qunit\qunit-1.17.1.css" />
     <Content Include="Scripts\qunit\qunit-1.17.1.js" />
     <Content Include="Services\Install.asmx" />
+    <Content Include="Services\Office.asmx" />
     <Content Include="Tests\all-tests.js">
       <DependentUpon>all-tests.js.bundle</DependentUpon>
     </Content>

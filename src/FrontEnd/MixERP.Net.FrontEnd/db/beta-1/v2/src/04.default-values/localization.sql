@@ -15580,3 +15580,19 @@ SELECT * FROM localization.add_localized_resource('DbErrors', 'nl', 'P1302', 'Ka
 SELECT * FROM localization.add_localized_resource('DbErrors', 'zh', 'P1302', '不能发布销售。在商店无效的现金帐户的映射。');
 SELECT * FROM localization.add_localized_resource('DbErrors', 'id', 'P1302', 'Tidak dapat mengirim penjualan. Pemetaan rekening kas tidak valid di toko.');
 
+
+SELECT * FROM localization.add_localized_resource('Titles', '', 'SelectCompany', 'Select Company');
+SELECT * FROM localization.add_localized_resource('Titles', 'zh', 'SelectCompany', '选择公司');
+SELECT * FROM localization.add_localized_resource('Titles', 'nl', 'SelectCompany', 'Selecteer Company');
+SELECT * FROM localization.add_localized_resource('Titles', 'fil', 'SelectCompany', 'Piliin ang Company');
+SELECT * FROM localization.add_localized_resource('Titles', 'fr', 'SelectCompany', 'Sélectionnez Société');
+SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectCompany', 'Wählen Sie die Firma');
+SELECT * FROM localization.add_localized_resource('Titles', 'id', 'SelectCompany', 'Pilih Perusahaan');
+SELECT * FROM localization.add_localized_resource('Titles', 'ja', 'SelectCompany', '選択して会社');
+SELECT * FROM localization.add_localized_resource('Titles', 'ms', 'SelectCompany', 'Pilih Syarikat');
+SELECT * FROM localization.add_localized_resource('Titles', 'pt', 'SelectCompany', 'Selecione Empresa');
+SELECT * FROM localization.add_localized_resource('Titles', 'ru', 'SelectCompany', 'Выберите компании');
+SELECT * FROM localization.add_localized_resource('Titles', 'es', 'SelectCompany', 'Seleccione la empresa');
+SELECT * FROM localization.add_localized_resource('Titles', 'sv', 'SelectCompany', 'Välj företag');
+
+
