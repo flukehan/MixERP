@@ -11,10 +11,6 @@ if (typeof Sys !== "undefined") {
     });
 };
 
-$(document).ready(function () {
-    initializeItemSelector();
-});
-
 var initializeItemSelector = function () {
     var itemSelector = $("[role=item-selector]");
     var modalTemplatePath = "/Resource/Static/Templates/ModalTemplate.html"; //Todo:parameterize this path
