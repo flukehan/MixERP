@@ -673,3 +673,8 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+DROP INDEX IF EXISTS core.compound_units_base_unit_id_uix;
+
+CREATE UNIQUE INDEX compound_units_base_unit_id_uix
+ON core.compound_units(base_unit_id);
