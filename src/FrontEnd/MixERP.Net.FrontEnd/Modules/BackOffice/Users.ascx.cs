@@ -51,7 +51,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.ExcludeEdit = "password, user_name";
 
-                bool denyToNonAdmins = !CurrentUser.GetSignInView().IsAdmin.ToBool();
+                bool denyToNonAdmins = !AppUsers.GetCurrentLogin().View.IsAdmin.ToBool();
 
                 scrud.DenyAdd = denyToNonAdmins;
                 scrud.DenyEdit = denyToNonAdmins;

@@ -41,13 +41,13 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             try
             {
-                if (!CurrentUser.GetSignInView().IsAdmin.ToBool())
+                if (!AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
                 {
                     return false;
                 }
 
-                int userId = CurrentUser.GetSignInView().UserId.ToInt();
-                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 Data.EODOperation.Initialize(userId, officeId);
 
@@ -105,7 +105,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
         private static void SuggestDateReload()
         {
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
             Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates();
 
             if (applicationDates != null)

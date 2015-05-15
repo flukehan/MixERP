@@ -93,15 +93,6 @@ namespace MixERP.Net.Entities.Public
     
 
 
-    [TableName("public.count")]
-    [ExplicitColumns]
-    public class Count : PetaPocoDB.Record<Count> , IPoco
-    {
-        [Column("count")] 
-        public long? _Count { get; set; }
-
-    }
-
     [TableName("public.db_stat")]
     [ExplicitColumns]
     public class DbStat : PetaPocoDB.Record<DbStat> , IPoco

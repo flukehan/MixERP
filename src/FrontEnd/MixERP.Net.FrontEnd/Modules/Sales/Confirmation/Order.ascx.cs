@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
                 checklist.ReportPath = "~/Modules/Sales/Reports/SalesOrderReport.mix";
                 checklist.ViewPath = "/Modules/Sales/Order.mix";
                 checklist.AddNewPath = "/Modules/Sales/Entry/Order.mix";
-                checklist.UserId = CurrentUser.GetSignInView().UserId.ToInt();
+                checklist.UserId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 checklist.RestrictedTransactionMode = this.IsRestrictedMode;
 
                 this.Placeholder1.Controls.Add(checklist);

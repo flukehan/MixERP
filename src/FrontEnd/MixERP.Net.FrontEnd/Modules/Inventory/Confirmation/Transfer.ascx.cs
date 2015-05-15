@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Confirmation
                 checklist.ReportPath = "~/Modules/Inventory/Reports/InventoryTransferReport.mix";
                 checklist.ViewPath = "/Modules/Inventory/Transfer.mix";
                 checklist.AddNewPath = "/Modules/Inventory/Entry/Transfer.mix";
-                checklist.UserId = CurrentUser.GetSignInView().UserId.ToInt();
+                checklist.UserId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 checklist.RestrictedTransactionMode = this.IsRestrictedMode;
 
                 this.Placeholder1.Controls.Add(checklist);

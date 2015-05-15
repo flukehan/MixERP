@@ -118,7 +118,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             const string resource = "account_statement";
             const string resourceKey = "transaction_code";
 
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
 
             Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
 
@@ -453,7 +453,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.fromDateTextBox = new DateTextBox();
             this.fromDateTextBox.ID = "FromDateTextBox";
             this.fromDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
-            this.fromDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            this.fromDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
             using (HtmlGenericControl field = this.GetDateField(Titles.From, this.fromDateTextBox))
             {
@@ -486,7 +486,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.toDateTextBox = new DateTextBox();
             this.toDateTextBox.ID = "ToDateTextBox";
             this.toDateTextBox.Mode = FrequencyType.FiscalYearEndDate;
-            this.toDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            this.toDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
             using (HtmlGenericControl field = this.GetDateField(Titles.To, this.toDateTextBox))
             {
@@ -498,9 +498,9 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             DateTime from = Conversion.TryCastDate(this.fromDateTextBox.Text);
             DateTime to = Conversion.TryCastDate(this.toDateTextBox.Text);
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
             string accountNumber = this.accountNumberInputText.Value;
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
             this.statementGridView.DataSource = Data.Reports.AccountStatement.GetAccountStatement(from, to, userId, accountNumber, officeId);
             this.statementGridView.DataBound += this.StatementGridViewDataBound;

@@ -45,8 +45,8 @@ namespace MixERP.Net.Core.Modules.Purchase
                 view.DbTableName = "transactions.non_gl_stock_master";
                 view.PrimaryKey = "non_gl_stock_master_id";
 
-                view.UserId = CurrentUser.GetSignInView().UserId.ToInt();
-                view.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                view.UserId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+                view.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 this.Placeholder1.Controls.Add(view);
             }

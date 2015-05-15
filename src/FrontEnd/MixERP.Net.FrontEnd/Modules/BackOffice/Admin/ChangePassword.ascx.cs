@@ -182,7 +182,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             {
                 User user = new User();
 
-                user.SetNewPassword(CurrentUser.GetSignInView().UserId.ToInt(), username, password);
+                user.SetNewPassword(AppUsers.GetCurrentLogin().View.UserId.ToInt(), username, password);
 
                 this.messageLabel.InnerText = Titles.PasswordUpdated;
             }

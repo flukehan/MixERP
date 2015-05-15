@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
 
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
             this.TitleLiteral.Text = Titles.SalesByMonthInThousands;
 

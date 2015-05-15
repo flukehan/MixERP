@@ -63,7 +63,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             if (Switches.AllowParentAccountInGlTransaction())
             {
-                if (CurrentUser.GetSignInView().IsAdmin.ToBool())
+                if (AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
                 {
                     return GetValues(AccountHelper.GetAccounts());
                 }
@@ -72,7 +72,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 return GetValues(AccountHelper.GetNonConfidentialAccounts());
             }
 
-            if (CurrentUser.GetSignInView().IsAdmin.ToBool())
+            if (AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
             {
                 return GetValues(AccountHelper.GetChildAccounts());
             }
@@ -85,7 +85,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
             foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(officeId))
             {
@@ -101,7 +101,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             if (AccountHelper.IsCashAccount(accountNumber))
             {
-                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
                 foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(officeId))
                 {
                     values.Add(new ListItem(cashRepository.CashRepositoryName, cashRepository.CashRepositoryCode));
@@ -203,7 +203,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod]
         public Collection<ListItem> ListAccounts()
         {
-            if (CurrentUser.GetSignInView().IsAdmin.ToBool())
+            if (AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
             {
                 return GetValues(AccountHelper.GetAccounts());
             }

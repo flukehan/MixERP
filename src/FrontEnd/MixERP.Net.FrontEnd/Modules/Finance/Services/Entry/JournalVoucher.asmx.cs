@@ -46,9 +46,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services.Entry
         {
             try
             {
-                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-                int userId = CurrentUser.GetSignInView().UserId.ToInt();
-                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+                long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
                 const int verificationStatusId = 2;
 
                 Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
@@ -62,8 +62,8 @@ namespace MixERP.Net.Core.Modules.Finance.Services.Entry
 
         [WebMethod]
         public decimal GetExchangeRate(string currencyCode)
-        {            
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+        {
+            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
             decimal exchangeRate = Transaction.GetExchangeRate(officeId, currencyCode);
 
             return exchangeRate;
@@ -74,9 +74,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services.Entry
         {
             try
             {
-                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-                int userId = CurrentUser.GetSignInView().UserId.ToInt();
-                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+                long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
                 const int verificationStatusId = -3;
 
                 Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
@@ -144,9 +144,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services.Entry
                     throw new InvalidOperationException("Referencing sides are not equal.");
                 }
 
-                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-                int userId = CurrentUser.GetSignInView().UserId.ToInt();
-                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+                long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
 
                 return Transaction.Add(valueDate, officeId, userId, loginId, costCenterId, referenceNumber, details, attachments);
             }

@@ -45,8 +45,8 @@ namespace MixERP.Net.FrontEnd.Base
             script += JSUtility.GetVar("today", DateTime.Now.ToShortDateString());
             script += JSUtility.GetVar("now", DateTime.Now.ToString(CultureInfo.InvariantCulture));
 
-            script += JSUtility.GetVar("user", CurrentUser.GetSignInView().UserName);
-            script += JSUtility.GetVar("office", CurrentUser.GetSignInView().OfficeName);
+            script += JSUtility.GetVar("user", AppUsers.GetCurrentLogin().View.UserName);
+            script += JSUtility.GetVar("office", AppUsers.GetCurrentLogin().View.OfficeName);
 
             script += JSUtility.GetVar("shortDateFormat", LocalizationHelper.GetShortDateFormat());
             script += JSUtility.GetVar("longDateFormat", LocalizationHelper.GetLongDateFormat());
@@ -95,7 +95,7 @@ namespace MixERP.Net.FrontEnd.Base
             script += JSUtility.GetVar("duplicateFileLocalized", Warnings.DuplicateFiles);
 
             script += JSUtility.GetVar("taskCompletedSuccessfullyLocalized", Labels.TaskCompletedSuccessfully);
-            script += JSUtility.GetVar("catalog", CookieHelper.GetCatalog());
+            script += JSUtility.GetVar("catalog", AppUsers.GetCurrentLogin().Catalog);
 
             PageUtility.RegisterJavascript("MixERPMasterPage", script, this.Page, true);
         }

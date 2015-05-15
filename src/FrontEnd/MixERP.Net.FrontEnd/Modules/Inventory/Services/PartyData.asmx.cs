@@ -73,7 +73,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public DbGetPartyTransactionSummaryResult GetPartyDue(string partyCode)
         {
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
             return Parties.GetPartyDue(partyCode, officeId);
         }
 

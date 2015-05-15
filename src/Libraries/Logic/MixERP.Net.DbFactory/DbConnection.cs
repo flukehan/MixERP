@@ -25,10 +25,16 @@ namespace MixERP.Net.DbFactory
 {
     public static class DbConnection
     {
-        public static string GetConnectionString()
+        public static string GetConnectionString(string catalog = "")
         {
             string host = ConfigurationHelper.GetDbServerParameter("Server");
-            string database = CookieHelper.GetCatalog();
+            string database = ConfigurationHelper.GetDbServerParameter("Database");
+
+            if (!string.IsNullOrWhiteSpace(catalog))
+            {
+                database = catalog;
+            }
+
             string userId = ConfigurationHelper.GetDbServerParameter("UserId");
             string password = ConfigurationHelper.GetDbServerParameter("Password");
             int port = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port"));

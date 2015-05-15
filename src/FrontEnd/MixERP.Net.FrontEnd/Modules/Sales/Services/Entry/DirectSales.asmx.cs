@@ -68,9 +68,9 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                     }
                 }
 
-                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
-                int userId = CurrentUser.GetSignInView().UserId.ToInt();
-                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
+                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+                long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
 
                 return Data.Transactions.DirectSales.Add(officeId, userId, loginId, valueDate, storeId, isCredit, paymentTermId, partyCode, salespersonId, priceTypeId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, statementReference, attachments, nonTaxable);
             }

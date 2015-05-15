@@ -74,11 +74,11 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
 
         private static string GetDictionaryValue(string key)
         {
-            string loginId = HttpContext.Current.User.Identity.Name;
+            string globalLoginId = HttpContext.Current.User.Identity.Name;
 
-            if (!string.IsNullOrWhiteSpace(loginId))
+            if (!string.IsNullOrWhiteSpace(globalLoginId))
             {
-                string cacheKey = "Dictionary" + loginId;
+                string cacheKey = "Dictionary" + globalLoginId;
 
                 Dictionary<string, object> dictionary = CacheFactory.GetFromDefaultCacheByKey(cacheKey) as Dictionary<string, object>;
 

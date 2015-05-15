@@ -1095,6 +1095,9 @@ namespace MixERP.Net.Entities.Transactions
         [Column("cascading_tran_id")] 
         public long? CascadingTranId { get; set; }
 
+        [Column("book_date")] 
+        public DateTime BookDate { get; set; }
+
     }
 
     [FunctionName("get_journal_view")]
@@ -1102,7 +1105,7 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetJournalViewResult : PetaPocoDB.Record<DbGetJournalViewResult> , IPoco
     {
         [Column("transaction_master_id")] 
-        public string TransactionMasterId { get; set; }
+        public long TransactionMasterId { get; set; }
 
         [Column("transaction_code")] 
         public string TransactionCode { get; set; }
@@ -1153,7 +1156,7 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetStockAccountStatementResult : PetaPocoDB.Record<DbGetStockAccountStatementResult> , IPoco
     {
         [Column("id")] 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Column("value_date")] 
         public DateTime ValueDate { get; set; }
@@ -1177,7 +1180,7 @@ namespace MixERP.Net.Entities.Transactions
         public string Book { get; set; }
 
         [Column("item_id")] 
-        public string ItemId { get; set; }
+        public int ItemId { get; set; }
 
         [Column("item_code")] 
         public string ItemCode { get; set; }
@@ -1195,7 +1198,7 @@ namespace MixERP.Net.Entities.Transactions
         public string ApprovedBy { get; set; }
 
         [Column("verification_status")] 
-        public string VerificationStatus { get; set; }
+        public int VerificationStatus { get; set; }
 
         [Column("flag_bg")] 
         public string FlagBg { get; set; }
@@ -1255,7 +1258,7 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetProductViewResult : PetaPocoDB.Record<DbGetProductViewResult> , IPoco
     {
         [Column("id")] 
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         [Column("value_date")] 
         public DateTime ValueDate { get; set; }
@@ -1315,10 +1318,10 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetTrialBalanceResult : PetaPocoDB.Record<DbGetTrialBalanceResult> , IPoco
     {
         [Column("id")] 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Column("account_id")] 
-        public string AccountId { get; set; }
+        public int AccountId { get; set; }
 
         [Column("account_number")] 
         public string AccountNumber { get; set; }
@@ -1351,7 +1354,7 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetBalanceSheetResult : PetaPocoDB.Record<DbGetBalanceSheetResult> , IPoco
     {
         [Column("id")] 
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         [Column("item")] 
         public string Item { get; set; }
@@ -1363,7 +1366,7 @@ namespace MixERP.Net.Entities.Transactions
         public decimal CurrentPeriod { get; set; }
 
         [Column("account_id")] 
-        public string AccountId { get; set; }
+        public int AccountId { get; set; }
 
         [Column("account_number")] 
         public string AccountNumber { get; set; }
@@ -1378,7 +1381,7 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetReorderViewFunctionResult : PetaPocoDB.Record<DbGetReorderViewFunctionResult> , IPoco
     {
         [Column("item_id")] 
-        public string ItemId { get; set; }
+        public int ItemId { get; set; }
 
         [Column("item_code")] 
         public string ItemCode { get; set; }
@@ -1387,7 +1390,7 @@ namespace MixERP.Net.Entities.Transactions
         public string ItemName { get; set; }
 
         [Column("unit_id")] 
-        public string UnitId { get; set; }
+        public int UnitId { get; set; }
 
         [Column("unit")] 
         public string Unit { get; set; }
@@ -1396,13 +1399,13 @@ namespace MixERP.Net.Entities.Transactions
         public decimal QuantityOnHand { get; set; }
 
         [Column("reorder_level")] 
-        public string ReorderLevel { get; set; }
+        public int ReorderLevel { get; set; }
 
         [Column("reorder_quantity")] 
-        public string ReorderQuantity { get; set; }
+        public int ReorderQuantity { get; set; }
 
         [Column("preferred_supplier_id")] 
-        public string PreferredSupplierId { get; set; }
+        public long PreferredSupplierId { get; set; }
 
         [Column("preferred_supplier")] 
         public string PreferredSupplier { get; set; }
@@ -1420,7 +1423,7 @@ namespace MixERP.Net.Entities.Transactions
     public class DbListClosingStockResult : PetaPocoDB.Record<DbListClosingStockResult> , IPoco
     {
         [Column("item_id")] 
-        public string ItemId { get; set; }
+        public int ItemId { get; set; }
 
         [Column("item_code")] 
         public string ItemCode { get; set; }
@@ -1429,13 +1432,13 @@ namespace MixERP.Net.Entities.Transactions
         public string ItemName { get; set; }
 
         [Column("unit_id")] 
-        public string UnitId { get; set; }
+        public int UnitId { get; set; }
 
         [Column("unit_name")] 
         public string UnitName { get; set; }
 
         [Column("quantity")] 
-        public string Quantity { get; set; }
+        public int Quantity { get; set; }
 
     }
 
@@ -1444,7 +1447,7 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetRetainedEarningsStatementResult : PetaPocoDB.Record<DbGetRetainedEarningsStatementResult> , IPoco
     {
         [Column("id")] 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Column("value_date")] 
         public DateTime ValueDate { get; set; }
@@ -1471,7 +1474,7 @@ namespace MixERP.Net.Entities.Transactions
         public string Book { get; set; }
 
         [Column("account_id")] 
-        public string AccountId { get; set; }
+        public int AccountId { get; set; }
 
         [Column("account_number")] 
         public string AccountNumber { get; set; }
@@ -1489,7 +1492,7 @@ namespace MixERP.Net.Entities.Transactions
         public string ApprovedBy { get; set; }
 
         [Column("verification_status")] 
-        public string VerificationStatus { get; set; }
+        public int VerificationStatus { get; set; }
 
     }
 
@@ -1498,10 +1501,10 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetTopSellingProductsByOfficeResult : PetaPocoDB.Record<DbGetTopSellingProductsByOfficeResult> , IPoco
     {
         [Column("id")] 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Column("office_id")] 
-        public string OfficeId { get; set; }
+        public int OfficeId { get; set; }
 
         [Column("office_code")] 
         public string OfficeCode { get; set; }
@@ -1510,7 +1513,7 @@ namespace MixERP.Net.Entities.Transactions
         public string OfficeName { get; set; }
 
         [Column("item_id")] 
-        public string ItemId { get; set; }
+        public int ItemId { get; set; }
 
         [Column("item_code")] 
         public string ItemCode { get; set; }
@@ -1528,10 +1531,10 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetTopSellingProductsOfAllTimeResult : PetaPocoDB.Record<DbGetTopSellingProductsOfAllTimeResult> , IPoco
     {
         [Column("id")] 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Column("item_id")] 
-        public string ItemId { get; set; }
+        public int ItemId { get; set; }
 
         [Column("item_code")] 
         public string ItemCode { get; set; }
@@ -1549,7 +1552,7 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetAccountStatementResult : PetaPocoDB.Record<DbGetAccountStatementResult> , IPoco
     {
         [Column("id")] 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Column("value_date")] 
         public DateTime ValueDate { get; set; }
@@ -1576,7 +1579,7 @@ namespace MixERP.Net.Entities.Transactions
         public string Book { get; set; }
 
         [Column("account_id")] 
-        public string AccountId { get; set; }
+        public int AccountId { get; set; }
 
         [Column("account_number")] 
         public string AccountNumber { get; set; }
@@ -1594,7 +1597,7 @@ namespace MixERP.Net.Entities.Transactions
         public string ApprovedBy { get; set; }
 
         [Column("verification_status")] 
-        public string VerificationStatus { get; set; }
+        public int VerificationStatus { get; set; }
 
         [Column("flag_bg")] 
         public string FlagBg { get; set; }
@@ -1609,10 +1612,10 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetIncomeExpenditureStatementResult : PetaPocoDB.Record<DbGetIncomeExpenditureStatementResult> , IPoco
     {
         [Column("id")] 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Column("account_id")] 
-        public string AccountId { get; set; }
+        public int AccountId { get; set; }
 
         [Column("account_number")] 
         public string AccountNumber { get; set; }
@@ -1654,13 +1657,13 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetSalesTaxResult : PetaPocoDB.Record<DbGetSalesTaxResult> , IPoco
     {
         [Column("id")] 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Column("sales_tax_detail_id")] 
-        public string SalesTaxDetailId { get; set; }
+        public int SalesTaxDetailId { get; set; }
 
         [Column("sales_tax_id")] 
-        public string SalesTaxId { get; set; }
+        public int SalesTaxId { get; set; }
 
         [Column("sales_tax_detail_code")] 
         public string SalesTaxDetailCode { get; set; }
@@ -1672,7 +1675,7 @@ namespace MixERP.Net.Entities.Transactions
         public bool IsUseTax { get; set; }
 
         [Column("account_id")] 
-        public string AccountId { get; set; }
+        public int AccountId { get; set; }
 
         [Column("price")] 
         public decimal Price { get; set; }
@@ -1690,10 +1693,10 @@ namespace MixERP.Net.Entities.Transactions
         public decimal TaxableAmount { get; set; }
 
         [Column("state_sales_tax_id")] 
-        public string StateSalesTaxId { get; set; }
+        public int StateSalesTaxId { get; set; }
 
         [Column("county_sales_tax_id")] 
-        public string CountySalesTaxId { get; set; }
+        public int CountySalesTaxId { get; set; }
 
         [Column("rate")] 
         public decimal Rate { get; set; }
@@ -1708,7 +1711,7 @@ namespace MixERP.Net.Entities.Transactions
         public string RoundingType { get; set; }
 
         [Column("rounding_places")] 
-        public string RoundingPlaces { get; set; }
+        public int RoundingPlaces { get; set; }
 
         [Column("tax")] 
         public decimal Tax { get; set; }
@@ -1720,7 +1723,7 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetReceiptViewResult : PetaPocoDB.Record<DbGetReceiptViewResult> , IPoco
     {
         [Column("id")] 
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         [Column("value_date")] 
         public DateTime ValueDate { get; set; }
@@ -1786,7 +1789,7 @@ namespace MixERP.Net.Entities.Transactions
     public class DbGetNonGlProductViewResult : PetaPocoDB.Record<DbGetNonGlProductViewResult> , IPoco
     {
         [Column("id")] 
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         [Column("value_date")] 
         public DateTime ValueDate { get; set; }
@@ -1831,7 +1834,7 @@ namespace MixERP.Net.Entities.Transactions
     public class StockDetailType : PetaPocoDB.Record<StockDetailType> , IPoco
     {
         [Column("store_id")] 
-        public string StoreId { get; set; }
+        public int StoreId { get; set; }
 
         [Column("item_code")] 
         public string ItemCode { get; set; }
@@ -1864,13 +1867,13 @@ namespace MixERP.Net.Entities.Transactions
     public class PurchaseReorderType : PetaPocoDB.Record<PurchaseReorderType> , IPoco
     {
         [Column("item_id")] 
-        public string ItemId { get; set; }
+        public int ItemId { get; set; }
 
         [Column("supplier_code")] 
         public string SupplierCode { get; set; }
 
         [Column("unit_id")] 
-        public string UnitId { get; set; }
+        public int UnitId { get; set; }
 
         [Column("price")] 
         public decimal Price { get; set; }
@@ -1930,13 +1933,13 @@ namespace MixERP.Net.Entities.Transactions
     public class SalesTaxType : PetaPocoDB.Record<SalesTaxType> , IPoco
     {
         [Column("id")] 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Column("sales_tax_detail_id")] 
-        public string SalesTaxDetailId { get; set; }
+        public int SalesTaxDetailId { get; set; }
 
         [Column("sales_tax_id")] 
-        public string SalesTaxId { get; set; }
+        public int SalesTaxId { get; set; }
 
         [Column("sales_tax_detail_code")] 
         public string SalesTaxDetailCode { get; set; }
@@ -1948,7 +1951,7 @@ namespace MixERP.Net.Entities.Transactions
         public bool IsUseTax { get; set; }
 
         [Column("account_id")] 
-        public string AccountId { get; set; }
+        public int AccountId { get; set; }
 
         [Column("price")] 
         public decimal Price { get; set; }
@@ -1966,10 +1969,10 @@ namespace MixERP.Net.Entities.Transactions
         public decimal TaxableAmount { get; set; }
 
         [Column("state_sales_tax_id")] 
-        public string StateSalesTaxId { get; set; }
+        public int StateSalesTaxId { get; set; }
 
         [Column("county_sales_tax_id")] 
-        public string CountySalesTaxId { get; set; }
+        public int CountySalesTaxId { get; set; }
 
         [Column("rate")] 
         public decimal Rate { get; set; }
@@ -1984,7 +1987,7 @@ namespace MixERP.Net.Entities.Transactions
         public string RoundingType { get; set; }
 
         [Column("rounding_places")] 
-        public string RoundingPlaces { get; set; }
+        public int RoundingPlaces { get; set; }
 
         [Column("tax")] 
         public decimal Tax { get; set; }

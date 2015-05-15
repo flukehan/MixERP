@@ -17,33 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Common.Helpers;
-
 namespace MixERP.Net.Common.Models
 {
     public sealed class PostgreSQLServer
     {
-        public PostgreSQLServer()
-        {
-            this.BinDirectory = ConfigurationHelper.GetDbServerParameter("PostgreSQLBinDirectory");
-            this.DatabaseBackupDirectory = ConfigurationHelper.GetDbServerParameter("DatabaseBackupDirectory");
-            this.PortNumber = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port"));
-            this.HostName = ConfigurationHelper.GetDbServerParameter("Server");
-            this.DatabaseName = CookieHelper.GetCatalog();
-            this.UserId = ConfigurationHelper.GetDbServerParameter("UserId");
-            this.Password = ConfigurationHelper.GetDbServerParameter("Password");
-        }
-
-        public PostgreSQLServer(int portNumber, string hostName, string databaseName, string userId, string password, string binDirectory)
-        {
-            this.PortNumber = portNumber;
-            this.HostName = hostName;
-            this.DatabaseName = databaseName;
-            this.UserId = userId;
-            this.Password = password;
-            this.BinDirectory = binDirectory;
-        }
-
         public string BinDirectory { get; set; }
         public string DatabaseBackupDirectory { get; set; }
         public string DatabaseName { get; set; }

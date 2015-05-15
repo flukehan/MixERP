@@ -62,7 +62,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
                 return 1;
             }
 
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
             decimal exchangeRate = Data.Helpers.Transaction.GetExchangeRate(officeId, sourceCurrencyCode, destinationCurrencyCode);
 
@@ -72,7 +72,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         [WebMethod]
         public string GetHomeCurrency()
         {
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
             return Data.Helpers.Currencies.GetHomeCurrency(officeId);
         }
     }

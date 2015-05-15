@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
                     throw new ArgumentNullException("id");
                 }
 
-                if (CurrentUser.GetSignInView().UserId.ToInt() > 0)
+                if (AppUsers.GetCurrentLogin().View.UserId.ToInt() > 0)
                 {
                     return this.DeleteImage(Data.Attachments.DeleteReturningPath(id));
                 }
@@ -100,7 +100,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
                 }
 
                 Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
-                int userId = CurrentUser.GetSignInView().UserId.ToInt();
+                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
 
                 return Data.Attachments.Save(userId, book, id, attachments);
             }

@@ -165,6 +165,7 @@
     <Compile Include="Base\TransactionCheckListControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Cache\AppUsers.cs" />
     <Compile Include="Controls\Scrud.cs" />
     <Compile Include="Dashboard\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
@@ -206,7 +207,6 @@
     <Compile Include="MixERPReportMaster.Master.designer.cs">
       <DependentUpon>MixERPReportMaster.Master</DependentUpon>
     </Compile>
-    <Compile Include="Cache\CurrentUser.cs" />
     <Compile Include="Modules\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

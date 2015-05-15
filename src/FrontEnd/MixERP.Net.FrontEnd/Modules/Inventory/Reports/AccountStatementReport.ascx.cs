@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
             DateTime to = Conversion.TryCastDate(this.Page.Request["To"]);
             int storeId = Conversion.TryCastInteger(this.Page.Request["StoreId"]);
 
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
 
 
             Collection<KeyValuePair<string, object>> parameter1 = new Collection<KeyValuePair<string, object>>();

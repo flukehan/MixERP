@@ -93,44 +93,6 @@ namespace MixERP.Net.Entities.Policy
     
 
 
-    [TableName("policy.lock_outs")]
-    [PrimaryKey("lock_out_id")]
-    [ExplicitColumns]
-    public class LockOut : PetaPocoDB.Record<LockOut> , IPoco
-    {
-        [Column("lock_out_id")] 
-        public long LockOutId { get; set; }
-
-        [Column("user_id")] 
-        public int UserId { get; set; }
-
-        [Column("lock_out_time")] 
-        public DateTime LockOutTime { get; set; }
-
-        [Column("lock_out_till")] 
-        public DateTime LockOutTill { get; set; }
-
-    }
-
-    [TableName("policy.menu_access")]
-    [PrimaryKey("access_id")]
-    [ExplicitColumns]
-    public class MenuAccess : PetaPocoDB.Record<MenuAccess> , IPoco
-    {
-        [Column("access_id")] 
-        public long AccessId { get; set; }
-
-        [Column("office_id")] 
-        public int OfficeId { get; set; }
-
-        [Column("menu_id")] 
-        public int MenuId { get; set; }
-
-        [Column("user_id")] 
-        public int? UserId { get; set; }
-
-    }
-
     [TableName("policy.store_policies")]
     [PrimaryKey("store_policy_id")]
     [ExplicitColumns]
@@ -432,12 +394,50 @@ namespace MixERP.Net.Entities.Policy
 
     }
 
+    [TableName("policy.lock_outs")]
+    [PrimaryKey("lock_out_id")]
+    [ExplicitColumns]
+    public class LockOut : PetaPocoDB.Record<LockOut> , IPoco
+    {
+        [Column("lock_out_id")] 
+        public long LockOutId { get; set; }
+
+        [Column("user_id")] 
+        public int UserId { get; set; }
+
+        [Column("lock_out_time")] 
+        public DateTime LockOutTime { get; set; }
+
+        [Column("lock_out_till")] 
+        public DateTime LockOutTill { get; set; }
+
+    }
+
+    [TableName("policy.menu_access")]
+    [PrimaryKey("access_id")]
+    [ExplicitColumns]
+    public class MenuAccess : PetaPocoDB.Record<MenuAccess> , IPoco
+    {
+        [Column("access_id")] 
+        public long AccessId { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+        [Column("menu_id")] 
+        public int MenuId { get; set; }
+
+        [Column("user_id")] 
+        public int? UserId { get; set; }
+
+    }
+
     [FunctionName("get_menu")]
     [ExplicitColumns]
     public class DbGetMenuResult : PetaPocoDB.Record<DbGetMenuResult> , IPoco
     {
         [Column("menu_id")] 
-        public string MenuId { get; set; }
+        public int MenuId { get; set; }
 
         [Column("menu_text")] 
         public string MenuText { get; set; }
@@ -449,10 +449,10 @@ namespace MixERP.Net.Entities.Policy
         public string MenuCode { get; set; }
 
         [Column("level")] 
-        public string Level { get; set; }
+        public short Level { get; set; }
 
         [Column("parent_menu_id")] 
-        public string ParentMenuId { get; set; }
+        public int ParentMenuId { get; set; }
 
     }
 
@@ -461,13 +461,13 @@ namespace MixERP.Net.Entities.Policy
     public class DbGetMenuPolicyResult : PetaPocoDB.Record<DbGetMenuPolicyResult> , IPoco
     {
         [Column("row_number")] 
-        public string RowNumber { get; set; }
+        public long RowNumber { get; set; }
 
         [Column("access")] 
         public bool Access { get; set; }
 
         [Column("menu_id")] 
-        public string MenuId { get; set; }
+        public int MenuId { get; set; }
 
         [Column("menu_code")] 
         public string MenuCode { get; set; }

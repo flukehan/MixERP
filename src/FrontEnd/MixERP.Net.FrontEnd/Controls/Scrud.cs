@@ -27,10 +27,10 @@ namespace MixERP.Net.FrontEnd.Controls
     {
         public Scrud()
         {
-            this.UserId = CurrentUser.GetSignInView().UserId.ToInt();
-            this.UserName = CurrentUser.GetSignInView().UserName;
-            this.OfficeCode = CurrentUser.GetSignInView().OfficeName;
-            this.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            this.UserId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+            this.UserName = AppUsers.GetCurrentLogin().View.UserName;
+            this.OfficeCode = AppUsers.GetCurrentLogin().View.OfficeName;
+            this.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
         }
     }
 }

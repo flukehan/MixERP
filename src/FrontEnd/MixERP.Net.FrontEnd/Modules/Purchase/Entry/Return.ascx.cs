@@ -46,7 +46,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Entry
                 product.Text = Titles.PurchaseReturn;
                 product.ShowPriceTypes = true;
                 product.ShowStore = true;
-                product.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                product.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 this.Placeholder1.Controls.Add(product);
             }

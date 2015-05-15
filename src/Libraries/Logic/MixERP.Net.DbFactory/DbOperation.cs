@@ -297,7 +297,7 @@ namespace MixERP.Net.DbFactory
             return false;
         }
 
-        public void ListenNonQuery(NpgsqlCommand command)
+        public void ListenNonQuery(string catalog, NpgsqlCommand command)
         {
             try
             {
@@ -311,7 +311,7 @@ namespace MixERP.Net.DbFactory
                             {
                                 using (
                                     NpgsqlConnection connection =
-                                        new NpgsqlConnection(DbConnection.GetConnectionString()))
+                                        new NpgsqlConnection(DbConnection.GetConnectionString(catalog)))
                                 {
                                     command.Connection = connection;
                                     connection.Notice += Connection_Notice;

@@ -101,7 +101,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Widgets
 
         private void CreateContent(HtmlGenericControl container)
         {
-            int userId = CurrentUser.GetSignInView().UserId.ToInt();
+            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
 
             if (userId.Equals(0))
             {

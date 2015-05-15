@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Entry
                 form.ItemPopupUrl = "/Modules/Inventory/Setup/ItemsPopup.mix?modal=1&CallBackFunctionName=loadItems&AssociatedControlId=ItemIdHidden";
                 form.ItemIdQuerySericeUrl = "/Modules/Inventory/Services/ItemData.asmx/GetItemCodeByItemId";
                 form.ValidateSides = true;
-                form.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                form.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 this.Placeholder1.Controls.Add(form);
             }

@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         {
             using (Scrud scrud = new Scrud())
             {
-                bool denyToNonAdmins = !CurrentUser.GetSignInView().IsAdmin.ToBool();
+                bool denyToNonAdmins = !AppUsers.GetCurrentLogin().View.IsAdmin.ToBool();
 
                 scrud.DenyAdd = denyToNonAdmins;
                 scrud.DenyEdit = denyToNonAdmins;

@@ -88,9 +88,10 @@ namespace MixERP.Net.Core.Modules.Finance.Data
             }
         }
 
-        public void Perform(long loginId)
+        public void Perform(string catalog, long loginId)
         {
             const string sql = "SELECT * FROM transactions.perform_eod_operation(@LoginId::bigint);";
+            
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@LoginId", loginId);
@@ -98,7 +99,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data
 
                 DbOperation operation = new DbOperation();
                 operation.Listen += this.Listen;
-                operation.ListenNonQuery(command);
+                operation.ListenNonQuery(catalog, command);
             }
         }
 

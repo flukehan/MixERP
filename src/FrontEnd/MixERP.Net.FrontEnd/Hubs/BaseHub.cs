@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using Microsoft.AspNet.SignalR;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.FrontEnd.Hubs
 {
@@ -28,7 +29,7 @@ namespace MixERP.Net.FrontEnd.Hubs
     {
         public void Terminate(int counter)
         {
-            string catalog = CookieHelper.GetCatalog();
+            string catalog = AppUsers.GetCurrentLogin().Catalog;
             this.Clients.All.terminate(counter, catalog);
         }
     }

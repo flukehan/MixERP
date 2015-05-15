@@ -39,8 +39,8 @@ namespace MixERP.Net.Core.Modules.Purchase
                 view.PreviewUrl = "~/Modules/Purchase/Reports/PurchaseReturnReport.mix";
                 view.ChecklistUrl = "~/Modules/Purchase/Confirmation/Return.mix";
 
-                view.UserId = CurrentUser.GetSignInView().UserId.ToInt();
-                view.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                view.UserId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+                view.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 this.Placeholder1.Controls.Add(view);
             }

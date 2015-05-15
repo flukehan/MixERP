@@ -44,9 +44,9 @@ namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
                     throw new ArgumentNullException("details");
                 }
 
-                long loginId = CurrentUser.GetSignInView().LoginId.ToLong();
-                int userId = CurrentUser.GetSignInView().UserId.ToInt();
-                int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
+                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 return Data.Transactions.Reorder.Save(loginId, userId, officeId, details);
             }

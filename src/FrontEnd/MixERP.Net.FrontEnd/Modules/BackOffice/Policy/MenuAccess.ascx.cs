@@ -189,7 +189,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         {
             int userId = Conversion.TryCastInteger(this.userSelect.SelectedValue);
             int officeId = Conversion.TryCastInteger(this.officeSelect.SelectedValue);
-            string culture = CurrentUser.GetSignInView().Culture;
+            string culture = AppUsers.GetCurrentLogin().View.Culture;
 
             if (userId.Equals(0) || officeId.Equals(0))
             {

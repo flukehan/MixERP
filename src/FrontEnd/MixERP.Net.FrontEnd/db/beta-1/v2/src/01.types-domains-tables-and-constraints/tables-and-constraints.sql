@@ -656,3 +656,20 @@ ALTER TABLE core.item_groups
 ALTER COLUMN cost_of_goods_sold_account_id SET DEFAULT(core.get_account_id_by_account_number('40200'));
 
 
+DO
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'transactions.transaction_master'::regclass
+        AND    attname = 'book_date'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE transactions.transaction_master
+        ADD COLUMN book_date date NOT NULL DEFAULT(NOW());
+    END IF;
+END
+$$
+LANGUAGE plpgsql;

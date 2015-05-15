@@ -17,15 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Web;
-using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
-using MixERP.Net.DbFactory;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities;
-using MixERP.Net.Entities.Models.Policy;
 using MixERP.Net.Entities.Office;
 using Npgsql;
 
@@ -37,7 +34,8 @@ namespace MixERP.Net.FrontEnd.Data.Office
         {
             try
             {
-                return Factory.Scalar<bool>("SELECT * FROM policy.change_password(@0::text, @1::text, @2::text);", userName, currentPassword, newPassword);
+                return Factory.Scalar<bool>("SELECT * FROM policy.change_password(@0::text, @1::text, @2::text);",
+                    userName, currentPassword, newPassword);
             }
             catch (NpgsqlException ex)
             {
@@ -45,59 +43,75 @@ namespace MixERP.Net.FrontEnd.Data.Office
             }
         }
 
-        public static SignInView GetSignInView(long loginId)
+        public static GlobalLogin GetGloblalLogin(long globalLoginId)
         {
-            return Factory.Get<SignInView>("SELECT * FROM office.sign_in_view WHERE login_id=@0;", loginId).FirstOrDefault();
+            string catalog = GetDatabase(globalLoginId);
+
+            SignInView view =  Factory.Get<SignInView>(catalog, "SELECT * FROM office.sign_in_view WHERE login_id=@0;", globalLoginId).FirstOrDefault();
+
+            if (view != null)
+            {
+                GlobalLogin login = new GlobalLogin
+                {
+                    GlobalLoginId = globalLoginId,
+                    Catalog = catalog,
+                    LoginId = view.LoginId,
+                    View = view
+                };
+
+                return login;
+            }
+
+            return null;
         }
 
-        public static long SignIn(int officeId, string userName, string password, string culture, bool remember, string challenge, HttpContext context)
+        public static string GetDatabase(long globalLoginId)
+        {
+            const string sql = "SELECT catalog FROM public.global_logins WHERE global_login_id=@0;";
+            return Factory.Scalar<string>(Factory.MetaDatabase, sql, globalLoginId);
+        }
+
+        public static long SignIn(string catalog, int officeId, string userName, string password, string culture, bool remember,
+            string challenge, HttpContext context)
         {
             if (context != null)
             {
                 string remoteAddress = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
                 string remoteUser = HttpContext.Current.Request.ServerVariables["REMOTE_USER"];
 
-                SignInResult result = SignIn(officeId, userName, password, context.Request.UserAgent, remoteAddress, remoteUser, culture, challenge);
+                DbSignInResult result = SignIn(officeId, userName, password, context.Request.UserAgent, remoteAddress,
+                    remoteUser, culture, challenge);
 
                 if (result.LoginId == 0)
                 {
                     throw new MixERPException(result.Message);
                 }
-                return result.LoginId;
+
+
+                long globalLoginId = GetGlobalLogin(catalog, result.LoginId);
+
+                return globalLoginId;
             }
 
             return 0;
         }
 
-
-        [Obsolete("Replace DataTable with a Poco Class.")]
-        private static SignInResult SignIn(int officeId, string userName, string password, string browser, string remoteAddress, string remoteUser, string culture, string challenge)
+        private static long GetGlobalLogin(string catalog, long loginId)
         {
-            SignInResult result = new SignInResult();
+            const string sql =
+                "INSERT INTO public.global_logins(catalog, login_id) SELECT @0::text, @1::bigint RETURNING global_login_id;";
 
-            const string sql = "SELECT * FROM office.sign_in(@OfficeId::public.integer_strict, @UserName::text, @Password::text, @Browser::text, @IPAddress::text, @RemoteUser::text, @Culture::text, @Challenge::text);";
-            using (NpgsqlCommand command = new NpgsqlCommand(sql))
-            {
-                command.Parameters.AddWithValue("@OfficeId", officeId);
-                command.Parameters.AddWithValue("@UserName", userName);
-                command.Parameters.AddWithValue("@Password", password);
-                command.Parameters.AddWithValue("@Browser", browser);
-                command.Parameters.AddWithValue("@IPAddress", remoteAddress);
-                command.Parameters.AddWithValue("@RemoteUser", remoteUser);
-                command.Parameters.AddWithValue("@Culture", culture);
-                command.Parameters.AddWithValue("@Challenge", challenge);
+            return Factory.Scalar<long>(Factory.MetaDatabase, sql, catalog, loginId);
+        }
 
-                using (DataTable table = DbOperation.GetDataTable(command))
-                {
-                    if (table.Rows != null && table.Rows.Count.Equals(1))
-                    {
-                        result.LoginId = Conversion.TryCastLong(table.Rows[0]["login_id"]);
-                        result.Message = Conversion.TryCastString(table.Rows[0]["message"]);
-                    }
-                }
-            }
+        private static DbSignInResult SignIn(int officeId, string userName, string password, string browser,
+            string remoteAddress, string remoteUser, string culture, string challenge)
+        {
+            const string sql =
+                "SELECT * FROM office.sign_in(@0::public.integer_strict, @1::text, @2::text, @3::text, @4::text, @5::text, @6::text, @7::text);";
 
-            return result;
+            return Factory.Get<DbSignInResult>(sql, officeId, userName, password, browser, remoteAddress, remoteUser,
+                culture, challenge).FirstOrDefault();
         }
     }
 }

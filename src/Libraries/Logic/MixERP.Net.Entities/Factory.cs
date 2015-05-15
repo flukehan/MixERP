@@ -16,6 +16,8 @@ namespace MixERP.Net.Entities
     public sealed class Factory
     {
         private const string ProviderName = "Npgsql";
+        public static string MetaDatabase = ConfigurationHelper.GetDbServerParameter("MetaDatabase");
+
 
         public static IEnumerable<T> Get<T>(string catalog, string sql, params object[] args)
         {
@@ -40,30 +42,14 @@ namespace MixERP.Net.Entities
 
         public static IEnumerable<T> Get<T>(string sql, params object[] args)
         {
-            try
-            {
-                using (Database db = new Database(GetConnectionString(), ProviderName))
-                {
-                    return db.Query<T>(sql, args);
-                }
-            }
-            catch (NpgsqlException ex)
-            {
-                if (ex.Code.StartsWith("P"))
-                {
-                    string errorMessage = GetDBErrorResource(ex);
-                    throw new MixERPException(errorMessage, ex);
-                }
-
-                throw;
-            }
+            return Get<T>(string.Empty, sql, args);
         }
 
-        public static T Scalar<T>(string sql, params object[] args)
+        public static T Scalar<T>(string catalog, string sql, params object[] args)
         {
             try
             {
-                using (Database db = new Database(GetConnectionString(), ProviderName))
+                using (Database db = new Database(GetConnectionString(catalog), ProviderName))
                 {
                     return db.ExecuteScalar<T>(sql, args);
                 }
@@ -80,11 +66,16 @@ namespace MixERP.Net.Entities
             }
         }
 
-        public static void NonQuery(string sql, params object[] args)
+        public static T Scalar<T>(string sql, params object[] args)
+        {
+            return Scalar<T>(string.Empty, sql, args);
+        }
+
+        public static void NonQuery(string catalog, string sql, params object[] args)
         {
             try
             {
-                using (Database db = new Database(GetConnectionString(), ProviderName))
+                using (Database db = new Database(GetConnectionString(catalog), ProviderName))
                 {
                     db.Execute(sql, args);
                 }
@@ -101,6 +92,11 @@ namespace MixERP.Net.Entities
             }
         }
 
+        public static void NonQuery(string sql, params object[] args)
+        {
+            NonQuery(string.Empty, sql, args);
+        }
+
         private static string GetDBErrorResource(NpgsqlException ex)
         {
             string message = DbErrors.Get(ex.Code);
@@ -113,15 +109,9 @@ namespace MixERP.Net.Entities
             return message;
         }
 
-        private static Assembly GetAssemblyByName(string name)
-        {
-            return AppDomain.CurrentDomain.GetAssemblies().
-                   SingleOrDefault(assembly => assembly.GetName().Name == name);
-        }
-
         public static string GetConnectionString(string catalog = "")
         {
-            string database = CookieHelper.GetCatalog();
+            string database = ConfigurationHelper.GetDbServerParameter("Database");
 
             if (!string.IsNullOrWhiteSpace(catalog))
             {

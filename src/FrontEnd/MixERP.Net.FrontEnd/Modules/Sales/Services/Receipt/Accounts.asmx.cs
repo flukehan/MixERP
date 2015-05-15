@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         [WebMethod]
         public Collection<ListItem> GetBankAccounts()
         {
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
             Collection<ListItem> values = new Collection<ListItem>();
 
             foreach (BankAccount bankAccount in Data.Helpers.Accounts.GetBankAccounts(officeId))
@@ -80,7 +80,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         [WebMethod]
         public Collection<ListItem> GetCashRepositories()
         {
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
             Collection<ListItem> values = new Collection<ListItem>();
 
             foreach (CashRepository cashRepository in Data.Helpers.Accounts.GetCashRepositories(officeId))

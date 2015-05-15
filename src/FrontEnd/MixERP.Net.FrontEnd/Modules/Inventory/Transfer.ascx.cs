@@ -40,8 +40,8 @@ namespace MixERP.Net.Core.Modules.Inventory
                 view.PreviewUrl = "~/Modules/Inventory/Reports/InventoryTransferReport.mix";
                 view.ChecklistUrl = "~/Modules/Inventory/Confirmation/Transfer.mix";
 
-                view.UserId = CurrentUser.GetSignInView().UserId.ToInt();
-                view.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                view.UserId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+                view.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 this.Placeholder1.Controls.Add(view);
             }

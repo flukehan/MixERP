@@ -175,7 +175,7 @@ namespace MixERP.Net.Entities.Localization
     public class DbGetLocalizationTableResult : PetaPocoDB.Record<DbGetLocalizationTableResult> , IPoco
     {
         [Column("row_number")] 
-        public string RowNumber { get; set; }
+        public long RowNumber { get; set; }
 
         [Column("key")] 
         public string Key { get; set; }

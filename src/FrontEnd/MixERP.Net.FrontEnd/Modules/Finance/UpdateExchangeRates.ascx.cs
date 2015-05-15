@@ -28,8 +28,8 @@ namespace MixERP.Net.Core.Modules.Finance
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            this.OfficeInputText.Value = CurrentUser.GetSignInView().OfficeName;
-            this.CurrencyInputText.Value = CurrentUser.GetSignInView().CurrencyCode;
+            this.OfficeInputText.Value = AppUsers.GetCurrentLogin().View.OfficeName;
+            this.CurrencyInputText.Value = AppUsers.GetCurrentLogin().View.CurrencyCode;
         }
     }
 }

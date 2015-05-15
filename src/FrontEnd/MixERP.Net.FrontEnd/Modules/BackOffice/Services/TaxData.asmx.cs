@@ -67,7 +67,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
         [WebMethod]
         public Collection<ListItem> GetSalesTaxes(string tranBook)
         {
-            int officeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
             Collection<ListItem> values = new Collection<ListItem>();
 

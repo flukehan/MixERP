@@ -42,7 +42,7 @@ namespace MixERP.Net.FrontEnd.Base
         {
             get
             {
-                return !CurrentUser.GetSignInView().AllowTransactionPosting.ToBool();                
+                return !AppUsers.GetCurrentLogin().View.AllowTransactionPosting.ToBool();                
             }
         }
 
@@ -59,7 +59,7 @@ namespace MixERP.Net.FrontEnd.Base
         {
             if (this is ITransaction)
             {
-                if (!CurrentUser.GetSignInView().AllowTransactionPosting.ToBool())
+                if (!AppUsers.GetCurrentLogin().View.AllowTransactionPosting.ToBool())
                 {
                     this.Server.Transfer("~/Site/Exceptions/RestrictedTransactionMode.aspx");
                 }
@@ -78,7 +78,7 @@ namespace MixERP.Net.FrontEnd.Base
 
             if (adminOnly)
             {
-                hasAccess = CurrentUser.GetSignInView().IsAdmin.ToBool();
+                hasAccess = AppUsers.GetCurrentLogin().View.IsAdmin.ToBool();
             }
 
             if (hasAccess && isDevelopmentMode)
@@ -92,7 +92,7 @@ namespace MixERP.Net.FrontEnd.Base
             if (!hasAccess)
             {
                 Log.Information("Access to {Control} is denied to {User} from {IP}.", this,
-                    CurrentUser.GetSignInView().UserName, CurrentUser.GetSignInView().IpAddress);
+                    AppUsers.GetCurrentLogin().View.UserName, AppUsers.GetCurrentLogin().View.IpAddress);
 
                 this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
             }

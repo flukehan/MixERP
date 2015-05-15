@@ -29,6 +29,7 @@ using System.Web.Routing;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities.Office;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -115,6 +116,7 @@ namespace MixERP.Net.FrontEnd
                 config.EnsureInitialized();
             });
 
+            GlobalLogin.CreateTable();
         }
 
         private string GetLogDirectory()

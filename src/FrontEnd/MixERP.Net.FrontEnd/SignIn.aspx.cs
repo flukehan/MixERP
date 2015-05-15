@@ -61,11 +61,11 @@ namespace MixERP.Net.FrontEnd
             {
                 if (this.User.Identity.IsAuthenticated)
                 {
-                    long signInId = Conversion.TryCastLong(this.User.Identity.Name);
+                    long globalLoginId = Conversion.TryCastLong(this.User.Identity.Name);
 
-                    if (signInId > 0)
+                    if (globalLoginId > 0)
                     {
-                        CurrentUser.SetSignInView();
+                        AppUsers.SetCurrentLogin();
                         this.RedirectToDashboard();
                     }
                 }
@@ -76,7 +76,7 @@ namespace MixERP.Net.FrontEnd
         private void BindCompanies()
         {
             string catalogs = ConfigurationHelper.GetDbServerParameter("Catalogs");
-            string defaultCatalog = CookieHelper.GetCatalog();
+            string defaultCatalog = AppUsers.GetCurrentLogin().Catalog;
 
             if (!string.IsNullOrWhiteSpace(catalogs))
             {

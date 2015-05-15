@@ -51,8 +51,6 @@ namespace MixERP.Net.FrontEnd.Services
             }
 
             CatalogHelper.ValidateCatalog(catalog);
-            CookieHelper.SetCatalog(catalog);
-
             return this.Login(catalog, branchId, username, password, language, rememberMe, challenge, this.Context);
         }
 
@@ -72,14 +70,14 @@ namespace MixERP.Net.FrontEnd.Services
         {
             try
             {
-                long signInId = Data.Office.User.SignIn(officeId, userName, password, culture, rememberMe, challenge, context);
+                long globalLoginId = Data.Office.User.SignIn(catalog, officeId, userName, password, culture, rememberMe, challenge, context);
 
                 Log.Information("{UserName} signed in to office : #{OfficeId} from {IP}.", userName, officeId, context.Request.ServerVariables["REMOTE_ADDR"]);
 
-                if (signInId > 0)
+                if (globalLoginId > 0)
                 {
-                    CurrentUser.SetSignInView(signInId);
-                    MixERPWebpage.SetAuthenticationTicket(this.Context.Response, signInId, rememberMe);
+                    AppUsers.SetCurrentLogin(globalLoginId);
+                    MixERPWebpage.SetAuthenticationTicket(this.Context.Response, globalLoginId, rememberMe);
 
 
                     return "OK";

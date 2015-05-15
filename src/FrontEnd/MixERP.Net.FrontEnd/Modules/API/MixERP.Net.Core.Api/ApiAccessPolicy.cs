@@ -15,11 +15,11 @@ namespace MixERP.Net.Core.Api
             this.Type = type;
             this.Action = action;
 
-            this.LoginId = Conversion.TryCastLong(HttpContext.Current.User.Identity.Name);
+            this.GlobalLoginId = Conversion.TryCastLong(HttpContext.Current.User.Identity.Name);
         }
 
         private Type Type { get; set; }
-        private long LoginId { get; set; }
+        private long GlobalLoginId { get; set; }
         private string Action { get; set; }
 
         internal void Authorize()
@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Api
                 return;
             }
 
-            if (this.LoginId <= 0)
+            if (this.GlobalLoginId <= 0)
             {
                 return;
             }
@@ -56,7 +56,7 @@ namespace MixERP.Net.Core.Api
                     "AND poco_type_name=@1 " +
                     "AND http_action_code=@2 " +
                     "AND valid_till > NOW()",
-                    this.LoginId,
+                    this.GlobalLoginId,
                     this.Type.FullName,
                     this.Action).FirstOrDefault();
 

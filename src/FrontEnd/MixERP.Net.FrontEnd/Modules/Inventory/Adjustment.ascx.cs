@@ -283,7 +283,7 @@ namespace MixERP.Net.Core.Modules.Inventory
 
                 this.valueDateTextBox = new DateTextBox();
                 this.valueDateTextBox.ID = "ValueDateTextBox";
-                this.valueDateTextBox.OfficeId = CurrentUser.GetSignInView().OfficeId.ToInt();
+                this.valueDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
                 this.valueDateTextBox.Mode = FrequencyType.Today;
 
                 field.Controls.Add(this.valueDateTextBox);

@@ -26,7 +26,9 @@ using System.Text;
 using System.Web.Hosting;
 using Microsoft.AspNet.SignalR;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.Common.Models;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using Serilog;
 
@@ -43,10 +45,21 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
                 return;
             }
 
-            PostgreSQLServer server = new PostgreSQLServer();
+            PostgreSQLServer server = new PostgreSQLServer
+            {
+                BinDirectory = ConfigurationHelper.GetDbServerParameter("PostgreSQLBinDirectory"),
+                DatabaseBackupDirectory = ConfigurationHelper.GetDbServerParameter("DatabaseBackupDirectory"),
+                DatabaseName = AppUsers.GetCurrentLogin().Catalog,
+                HostName = ConfigurationHelper.GetDbServerParameter("Server"),
+                PortNumber = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port")),
+                UserId = ConfigurationHelper.GetDbServerParameter("UserId"),
+                Password = ConfigurationHelper.GetDbServerParameter("Password")
+            };
+
             server.Validate();
 
-            if (server.IsValid && !string.IsNullOrWhiteSpace(server.BinDirectory) && !string.IsNullOrWhiteSpace(server.DatabaseBackupDirectory))
+            if (server.IsValid && !string.IsNullOrWhiteSpace(server.BinDirectory) &&
+                !string.IsNullOrWhiteSpace(server.DatabaseBackupDirectory))
             {
                 this.Backup(server, fileName);
                 return;
@@ -71,7 +84,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
                     message.Append(Labels.DatabaseBackupSuccessful);
                     message.Append("&nbsp;");
                     message.Append("<a href='");
-                    message.Append(PageUtility.ResolveUrl(Path.Combine(server.DatabaseBackupDirectory, fileName + ".backup")));
+                    message.Append(
+                        PageUtility.ResolveUrl(Path.Combine(server.DatabaseBackupDirectory, fileName + ".backup")));
                     message.Append("'");
                     message.Append(" target='_blank'>");
                     message.Append(Labels.ClickHereToDownload);
@@ -131,8 +145,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
             Collection<string> commands = new Collection<string>();
             commands.Add("@echo off");
             commands.Add("SET PGPASSWORD=" + server.Password);
-            string command = @"""{0}"" --host ""{1}"" --port {2} --username ""{3}"" --format custom --blobs --verbose --file ""{4}"" ""{5}""";
-            command = string.Format(CultureInfo.InvariantCulture, command, pgDumpPath, server.HostName, server.PortNumber, server.UserId, fileName, server.DatabaseName);
+            string command =
+                @"""{0}"" --host ""{1}"" --port {2} --username ""{3}"" --format custom --blobs --verbose --file ""{4}"" ""{5}""";
+            command = string.Format(CultureInfo.InvariantCulture, command, pgDumpPath, server.HostName,
+                server.PortNumber, server.UserId, fileName, server.DatabaseName);
             commands.Add(command);
             commands.Add("exit");
 
