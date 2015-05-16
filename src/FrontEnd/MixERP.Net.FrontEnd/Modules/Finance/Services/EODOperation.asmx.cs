@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
-                Data.EODOperation.Initialize(userId, officeId);
+                Data.EODOperation.Initialize(AppUsers.GetDatabase(), userId, officeId);
 
                 ForceLogOff(officeId);
 

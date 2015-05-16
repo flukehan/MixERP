@@ -178,6 +178,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.fromDateTextBox = new DateTextBox();
                 this.fromDateTextBox.ID = "FromDateTextBox";
                 this.fromDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
+                this.fromDateTextBox.Catalog = AppUsers.GetDatabase();
                 this.fromDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.fromDateTextBox);
@@ -222,6 +223,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.toDateTextBox = new DateTextBox();
                 this.toDateTextBox.ID = "ToDateTextBox";
                 this.toDateTextBox.Mode = FrequencyType.FiscalYearEndDate;
+                this.toDateTextBox.Catalog = AppUsers.GetDatabase();
                 this.toDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.toDateTextBox);
@@ -241,7 +243,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
-            this.plAccountGridView.DataSource = Data.Reports.ProfitAndLossAccount.GetPLAccount(from, to, userId, officeId, compact, factor);
+            this.plAccountGridView.DataSource = Data.Reports.ProfitAndLossAccount.GetPLAccount(AppUsers.GetDatabase(), from, to, userId, officeId, compact, factor);
             this.plAccountGridView.DataBind();
         }
 

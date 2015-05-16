@@ -41,7 +41,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 return;
             }
 
-            Entities.Models.Transactions.Verification model = Verification.GetVerificationStatus(transactionMasterId);
+            Entities.Models.Transactions.Verification model = Verification.GetVerificationStatus(this.Catalog, transactionMasterId);
 
             switch (model.VerificationStatusId)
             {

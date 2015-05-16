@@ -28,7 +28,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
 {
     public static class CashFlow
     {
-        public static DataTable GetDirectCashFlowStatement(DateTime from, DateTime to, int userId, int officeId, decimal factor)
+        public static DataTable GetDirectCashFlowStatement(string catalog, DateTime from, DateTime to, int userId, int officeId, decimal factor)
         {
             const string sql = "SELECT transactions.get_cash_flow_statement(@From::date, @To::date, @UserId::integer, @OfficeId::integer, @Factor::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddWithValue("@Factor", factor);
 
-                return JSONHelper.JsonToDataTable(Conversion.TryCastString(DbOperation.GetScalarValue(command)));
+                return JSONHelper.JsonToDataTable(Conversion.TryCastString(DbOperation.GetScalarValue(catalog, command)));
             }
         }
     }

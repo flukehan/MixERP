@@ -25,9 +25,10 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
     public static class PriceTypes
     {
-        public static IEnumerable<PriceType> GetPriceTypes()
+        public static IEnumerable<PriceType> GetPriceTypes(string catalog)
         {
-            return Factory.Get<PriceType>("SELECT * FROM core.price_types ORDER BY price_type_id;");
+            const string sql = "SELECT * FROM core.price_types ORDER BY price_type_id;";
+            return Factory.Get<PriceType>(catalog, sql);
         }
     }
 }

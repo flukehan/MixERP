@@ -54,6 +54,7 @@ namespace MixERP.Net.Core.Modules.Finance
 
                 view.UserId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 view.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                view.Catalog = AppUsers.GetDatabase();
 
                 this.Controls.Add(view);
             }

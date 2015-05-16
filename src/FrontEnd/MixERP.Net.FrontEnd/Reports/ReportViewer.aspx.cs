@@ -20,13 +20,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Reflection;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.ReportEngine;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
 
 namespace MixERP.Net.FrontEnd.Reports
@@ -35,7 +35,7 @@ namespace MixERP.Net.FrontEnd.Reports
     {
         #region IDisposable
 
-        private Report report;
+        private WebReport report;
 
         #endregion
 
@@ -43,7 +43,8 @@ namespace MixERP.Net.FrontEnd.Reports
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            this.report = new Report();
+            this.report = new WebReport();
+            this.report.Catalog = AppUsers.GetDatabase();
             this.report.AutoInitialize = false;
             this.Placeholder1.Controls.Add(this.report);
             this.AddParameters();

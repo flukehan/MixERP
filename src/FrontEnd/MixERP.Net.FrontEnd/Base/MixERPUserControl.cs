@@ -42,7 +42,7 @@ namespace MixERP.Net.FrontEnd.Base
         {
             get
             {
-                return !AppUsers.GetCurrentLogin().View.AllowTransactionPosting.ToBool();                
+                return !AppUsers.GetCurrentLogin().View.AllowTransactionPosting.ToBool();
             }
         }
 
@@ -68,31 +68,46 @@ namespace MixERP.Net.FrontEnd.Base
 
         private void CheckAccessLevel()
         {
-            bool isDevelopmentMode = ConfigurationHelper.GetMixERPParameter("Mode").ToUpperInvariant().Equals("DEVELOPMENT");
-            bool isLocalHost = PageUtility.IsLocalhost(this.Page);
-            bool adminOnly = (this.AccessLevel.Equals(AccessLevel.AdminOnly) ||
-                              this.AccessLevel.Equals(AccessLevel.LocalhostAdmin));
-
-
+            var login = AppUsers.GetCurrentLogin();
             bool hasAccess = true;
+            string userName = string.Empty;
+            string ipAddress = string.Empty;
 
-            if (adminOnly)
+            if (login == null || login.View == null)
             {
-                hasAccess = AppUsers.GetCurrentLogin().View.IsAdmin.ToBool();
+                hasAccess = false;
             }
-
-            if (hasAccess && isDevelopmentMode)
+            else
             {
-                if (this.AccessLevel.Equals(AccessLevel.LocalhostAdmin) && !isLocalHost)
+                userName = AppUsers.GetCurrentLogin().View.UserName;
+                ipAddress = AppUsers.GetCurrentLogin().View.IpAddress;
+
+                bool isDevelopmentMode = ConfigurationHelper.GetMixERPParameter("Mode").ToUpperInvariant().Equals("DEVELOPMENT");
+                bool isLocalHost = PageUtility.IsLocalhost(this.Page);
+                bool adminOnly = (this.AccessLevel.Equals(AccessLevel.AdminOnly) ||
+                                  this.AccessLevel.Equals(AccessLevel.LocalhostAdmin));
+
+
+
+                if (adminOnly)
                 {
-                    hasAccess = false;
+                    hasAccess = AppUsers.GetCurrentLogin().View.IsAdmin.ToBool();
                 }
+
+                if (hasAccess && isDevelopmentMode)
+                {
+                    if (this.AccessLevel.Equals(AccessLevel.LocalhostAdmin) && !isLocalHost)
+                    {
+                        hasAccess = false;
+                    }
+                }
+
             }
 
             if (!hasAccess)
             {
                 Log.Information("Access to {Control} is denied to {User} from {IP}.", this,
-                    AppUsers.GetCurrentLogin().View.UserName, AppUsers.GetCurrentLogin().View.IpAddress);
+                    userName, ipAddress);
 
                 this.Page.Server.Transfer("~/Site/AccessIsDenied.aspx");
             }

@@ -25,7 +25,7 @@ using MixERP.Net.Common;
 namespace MixERP.Net.WebControls.ReportEngine
 {
     [ToolboxData("<{0}:Report runat=server></{0}:Report>")]
-    public sealed partial class Report : CompositeControl
+    public partial class Report : CompositeControl
     {
         protected override void CreateChildControls()
         {

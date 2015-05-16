@@ -76,7 +76,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             }
 
             using (
-                var table = FormHelper.GetTable(this.GetSchema(), this.GetView(),
+                var table = FormHelper.GetTable(this.Catalog, this.GetSchema(), this.GetView(),
                     this.filterSelect.SelectedItem.Value, this.filterInputText.Text, 10, "1"))
             {
                 this.searchGridView.DataSource = table;

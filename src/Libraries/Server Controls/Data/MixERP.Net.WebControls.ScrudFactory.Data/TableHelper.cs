@@ -30,7 +30,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 {
     public static class TableHelper
     {
-        public static DataTable GetTable(string schema, string tableName, string exclusion)
+        public static DataTable GetTable(string catalog, string schema, string tableName, string exclusion)
         {
             string sql;
 
@@ -52,7 +52,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                         command.Parameters.AddWithValue(paramNames[i], exclusions[i].Trim());
                     }
 
-                    return DbOperation.GetDataTable(command);
+                    return DbOperation.GetDataTable(catalog, command);
                 }
             }
 
@@ -63,14 +63,14 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 command.Parameters.AddWithValue("@Schema", schema);
                 command.Parameters.AddWithValue("@TableName", tableName);
 
-                return DbOperation.GetDataTable(command);
+                return DbOperation.GetDataTable(catalog, command);
             }
         }
 
-        public static IEnumerable<DbPocoGetTableFunctionDefinitionResult> GetColumns(string schema, string table)
+        public static IEnumerable<DbPocoGetTableFunctionDefinitionResult> GetColumns(string catalog, string schema, string table)
         {
             const string sql = "SELECT * FROM public.poco_get_table_function_definition(@0::text, @1::text)";
-            return Factory.Get<DbPocoGetTableFunctionDefinitionResult>(sql, schema, table);
+            return Factory.Get<DbPocoGetTableFunctionDefinitionResult>(catalog, sql, schema, table);
         }
     }
 }

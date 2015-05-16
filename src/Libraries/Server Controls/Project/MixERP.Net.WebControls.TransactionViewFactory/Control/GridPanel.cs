@@ -59,7 +59,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
             string verifiedBy = this.verifiedByInputText.Value;
             string reason = this.reasonInputText.Value;
 
-            this.transactionGridView.DataSource = Data.Journal.GetJournalView(userId, officeId, from, to, tranId, tranCode, book, referenceNumber, statementReference, postedBy, office, status, verifiedBy, reason);
+            this.transactionGridView.DataSource = Data.Journal.GetJournalView(this.Catalog, userId, officeId, from, to, tranId, tranCode, book, referenceNumber, statementReference, postedBy, office, status, verifiedBy, reason);
             this.transactionGridView.DataBind();
         }
     }

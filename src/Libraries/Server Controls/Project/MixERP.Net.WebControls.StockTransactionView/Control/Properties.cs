@@ -24,6 +24,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
     public partial class StockTransactionView
     {
         public string AddNewUrl { get; set; }
+        public string Catalog { get; set; }
         public TranBook Book { get; set; }
         public string ChecklistUrl { get; set; }
         public string PreviewUrl { get; set; }

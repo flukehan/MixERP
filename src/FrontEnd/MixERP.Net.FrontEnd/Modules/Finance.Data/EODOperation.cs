@@ -30,14 +30,14 @@ namespace MixERP.Net.Core.Modules.Finance.Data
     {
         public event EventHandler<MixERPPGEventArgs> NotificationReceived;
 
-        public static EODStatus GetStatus(int officeId)
+        public static EODStatus GetStatus(string catalog, int officeId)
         {
             const string sql = "SELECT transactions.get_value_date(@OfficeId::integer) AS value_date, transactions.is_eod_initialized(@OfficeId::integer, transactions.get_value_date(@OfficeId::integer)::date) AS eod_initialized;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
 
-                using (DataTable table = DbOperation.GetDataTable(command))
+                using (DataTable table = DbOperation.GetDataTable(catalog, command))
                 {
                     if (table.Rows != null && table.Rows.Count.Equals(1))
                     {
@@ -52,18 +52,18 @@ namespace MixERP.Net.Core.Modules.Finance.Data
             return null;
         }
 
-        public static DateTime GetValueDate(int officeId)
+        public static DateTime GetValueDate(string catalog, int officeId)
         {
             const string sql = "SELECT transactions.get_value_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
 
-                return Conversion.TryCastDate(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastDate(DbOperation.GetScalarValue(catalog, command));
             }
         }
 
-        public static void Initialize(int userId, int officeId)
+        public static void Initialize(string catalog, int userId, int officeId)
         {
             const string sql = "SELECT * FROM transactions.initialize_eod_operation(@UserId::integer, @OfficeId::integer, transactions.get_value_date(@OfficeId::integer)::date);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
@@ -71,11 +71,11 @@ namespace MixERP.Net.Core.Modules.Finance.Data
                 command.Parameters.AddWithValue("@UserId", userId);
                 command.Parameters.AddWithValue("@OfficeId", officeId);
 
-                DbOperation.ExecuteNonQuery(command);
+                DbOperation.ExecuteNonQuery(catalog, command);
             }
         }
 
-        public static void Initialize(int userId, int officeId, DateTime valueDate)
+        public static void Initialize(string catalog, int userId, int officeId, DateTime valueDate)
         {
             const string sql = "SELECT * FROM transactions.initialize_eod_operation(@UserId::integer, @OfficeId::integer, @ValueDate::date);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
@@ -84,7 +84,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddWithValue("@ValueDate", valueDate);
 
-                DbOperation.ExecuteNonQuery(command);
+                DbOperation.ExecuteNonQuery(catalog, command);
             }
         }
 

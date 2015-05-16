@@ -37,7 +37,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             this.container = new Panel();
             this.AddJavascript();
             this.LoadItemSelector(this.container);
-            this.Initialize();
+            this.Initialize(this.Catalog);
             this.Controls.Add(this.container);
         }
 

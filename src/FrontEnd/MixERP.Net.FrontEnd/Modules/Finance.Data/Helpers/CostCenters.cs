@@ -25,9 +25,10 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
     public static class CostCenters
     {
-        public static IEnumerable<CostCenter> GetCostCenters()
+        public static IEnumerable<CostCenter> GetCostCenters(string catalog)
         {
-            return Factory.Get<CostCenter>("SELECT * FROM office.cost_centers ORDER BY cost_center_id");
+            const string sql = "SELECT * FROM office.cost_centers ORDER BY cost_center_id;";
+            return Factory.Get<CostCenter>(catalog, sql);
         }
     }
 }

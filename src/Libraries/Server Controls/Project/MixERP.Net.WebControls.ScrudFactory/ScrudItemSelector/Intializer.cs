@@ -23,13 +23,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudItemSelector
     {
-        private void Initialize()
+        private void Initialize(string catalog)
         {
-            this.LoadParmeters();
-            this.LoadGridView();
+            this.LoadParmeters(catalog);
+            this.LoadGridView(catalog);
         }
 
-        private void LoadGridView()
+        private void LoadGridView(string catalog)
         {
             if (string.IsNullOrWhiteSpace(this.GetSchema()))
             {
@@ -40,14 +40,14 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            using (var table = FormHelper.GetTable(this.GetSchema(), this.GetView(), "", "", 10, "1"))
+            using (var table = FormHelper.GetTable(catalog, this.GetSchema(), this.GetView(), "", "", 10, "1"))
             {
                 this.searchGridView.DataSource = table;
                 this.searchGridView.DataBind();
             }
         }
 
-        private void LoadParmeters()
+        private void LoadParmeters(string catalog)
         {
             if (string.IsNullOrWhiteSpace(this.GetSchema()))
             {
@@ -58,7 +58,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            this.filterSelect.DataSource = TableHelper.GetColumns(this.GetSchema(), this.GetView());
+            this.filterSelect.DataSource = TableHelper.GetColumns(catalog, this.GetSchema(), this.GetView());
             this.filterSelect.DataBind();
         }
     }

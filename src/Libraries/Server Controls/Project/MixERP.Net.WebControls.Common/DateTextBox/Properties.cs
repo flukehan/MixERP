@@ -109,6 +109,23 @@ namespace MixERP.Net.WebControls.Common
             }
         }
 
+
+        private string catalog;
+
+        public string Catalog
+        {
+            get
+            {
+                this.EnsureChildControls();
+                return this.catalog;
+            }
+            set
+            {
+                this.EnsureChildControls();
+                this.catalog = value;
+            }
+        }
+
         public bool Required { get; set; }
 
         public string Text

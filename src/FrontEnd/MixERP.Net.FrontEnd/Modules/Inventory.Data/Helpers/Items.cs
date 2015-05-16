@@ -26,59 +26,74 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
     public static class Items
     {
-        public static decimal CountItemInStock(string itemCode, int unitId, int storeId)
+        public static decimal CountItemInStock(string catalog,string itemCode, int unitId, int storeId)
         {
-            return Factory.Scalar<decimal>("SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@0), @1, @2);", itemCode, unitId, storeId);
+            const string sql = "SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@0), @1, @2);";
+            return Factory.Scalar<decimal>(catalog, sql, itemCode, unitId, storeId);
         }
 
-        public static decimal CountItemInStock(string itemCode, string unitName, int storeId)
+        public static decimal CountItemInStock(string catalog,string itemCode, string unitName, int storeId)
         {
-            return Factory.Scalar<decimal>("SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@0), core.get_unit_id_by_unit_name(@1), @2);", itemCode, unitName, storeId);
+            const string sql =
+                "SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@0), core.get_unit_id_by_unit_name(@1), @2);";
+            return Factory.Scalar<decimal>(catalog, sql, itemCode, unitName, storeId);
         }
 
-        public static decimal CountItemInStock(string itemCode, string unitName, string storeName)
+        public static decimal CountItemInStock(string catalog,string itemCode, string unitName, string storeName)
         {
-            return Factory.Scalar<decimal>("SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@0), core.get_unit_id_by_unit_name(@1), office.get_store_id_by_store_name(@2));", itemCode, unitName, storeName);
+            const string sql =
+                "SELECT core.count_item_in_stock(core.get_item_id_by_item_code(@0), core.get_unit_id_by_unit_name(@1), office.get_store_id_by_store_name(@2));";
+            return Factory.Scalar<decimal>(catalog, sql, itemCode, unitName, storeName);
         }
 
-        public static string GetItemCodeByItemId(int itemId)
+        public static string GetItemCodeByItemId(string catalog,int itemId)
         {
-            return Factory.Scalar<string>("SELECT item_code FROM core.items WHERE item_id=@0;", itemId);
+            const string sql = "SELECT item_code FROM core.items WHERE item_id=@0;";
+            return Factory.Scalar<string>(catalog, sql, itemId);
         }
 
-        public static decimal GetItemCostPrice(string itemCode, string partyCode, int unitId)
+        public static decimal GetItemCostPrice(string catalog,string itemCode, string partyCode, int unitId)
         {
-            return Factory.Scalar<decimal>("SELECT core.get_item_cost_price(core.get_item_id_by_item_code(@0)::integer, core.get_party_id_by_party_code(@1)::bigint, @2::integer);", itemCode, partyCode, unitId);
+            const string sql =
+                "SELECT core.get_item_cost_price(core.get_item_id_by_item_code(@0)::integer, core.get_party_id_by_party_code(@1)::bigint, @2::integer);";
+            return Factory.Scalar<decimal>(catalog, sql, itemCode, partyCode, unitId);
         }
 
-        public static IEnumerable<Item> GetItems()
+        public static IEnumerable<Item> GetItems(string catalog)
         {
-            return Factory.Get<Item>("SELECT * FROM core.items ORDER BY item_id");
+            const string sql = "SELECT * FROM core.items ORDER BY item_id";
+            return Factory.Get<Item>(catalog, sql);
         }
 
-        public static decimal GetItemSellingPrice(string itemCode, string partyCode, int priceTypeId, int unitId)
+        public static decimal GetItemSellingPrice(string catalog, string itemCode, string partyCode, int priceTypeId, int unitId)
         {
-            return Factory.Scalar<decimal>("SELECT core.get_item_selling_price(core.get_item_id_by_item_code(@0)::integer, core.get_party_type_id_by_party_code(@1)::integer, @2::integer, @3::integer);", itemCode, partyCode, priceTypeId, unitId);
+            const string sql =
+                "SELECT core.get_item_selling_price(core.get_item_id_by_item_code(@0)::integer, core.get_party_type_id_by_party_code(@1)::integer, @2::integer, @3::integer);";
+            return Factory.Scalar<decimal>(catalog, sql, itemCode, partyCode, priceTypeId, unitId);
         }
 
-        public static IEnumerable<Item> GetStockItems()
+        public static IEnumerable<Item> GetStockItems(string catalog)
         {
-            return Factory.Get<Item>("SELECT * FROM core.items WHERE maintain_stock ORDER BY item_id");
+            const string sql = "SELECT * FROM core.items WHERE maintain_stock ORDER BY item_id";
+            return Factory.Get<Item>(catalog, sql);
         }
 
-        public static decimal GetTaxRate(string itemCode)
+        public static decimal GetTaxRate(string catalog, string itemCode)
         {
-            return Factory.Scalar<decimal>("SELECT core.get_item_tax_rate(core.get_item_id_by_item_code(@0));", itemCode);
+            const string sql = "SELECT core.get_item_tax_rate(core.get_item_id_by_item_code(@0));";
+            return Factory.Scalar<decimal>(catalog, sql, itemCode);
         }
 
-        public static bool IsStockItem(string itemCode)
+        public static bool IsStockItem(string catalog, string itemCode)
         {
-            return Factory.Scalar<bool>("SELECT core.is_stock_item(@0);", itemCode);
+            const string sql = "SELECT core.is_stock_item(@0);";
+            return Factory.Scalar<bool>(catalog, sql, itemCode);
         }
 
-        public static bool ItemExistsByCode(string itemCode)
+        public static bool ItemExistsByCode(string catalog, string itemCode)
         {
-            return Factory.Get<Item>("SELECT * FROM core.items WHERE core.items.item_code=@0;", itemCode).Count().Equals(1);
+            const string sql = "SELECT * FROM core.items WHERE core.items.item_code=@0;";
+            return Factory.Get<Item>(catalog, sql, itemCode).Count().Equals(1);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {
     public static class Parties
     {
-        public static string GetEmailAddress(TranBook tranBook, SubTranBook subTranBook, long tranId)
+        public static string GetEmailAddress(string catalog, TranBook tranBook, SubTranBook subTranBook, long tranId)
         {
             string sql = "SELECT core.get_email_address_by_party_id(party_id) FROM transactions.non_gl_stock_master WHERE non_gl_stock_master_id=@TranId;";
 
@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
             {
                 command.Parameters.AddWithValue("@TranId", tranId);
 
-                return Conversion.TryCastString(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastString(DbOperation.GetScalarValue(catalog, command));
             }
         }
     }

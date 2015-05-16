@@ -48,7 +48,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
         {
             Collection<long> values = this.GetSelectedValues();
 
-            if (this.IsValid())
+            if (this.IsValid(this.Catalog))
             {
                 if (string.IsNullOrWhiteSpace(this.MergeToGRNButtonUrl))
                 {

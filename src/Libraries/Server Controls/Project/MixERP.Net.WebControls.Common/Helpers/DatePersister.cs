@@ -26,14 +26,14 @@ namespace MixERP.Net.WebControls.Common.Helpers
 {
     internal static class DatePersister
     {
-        public static ApplicationDateModel GetApplicationDates(int officeId)
+        public static ApplicationDateModel GetApplicationDates(string catalog, int officeId)
         {
             Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates();
             bool persist = false;
 
             if (applicationDates == null || applicationDates.Count.Equals(0))
             {
-                applicationDates = Data.Frequency.GetApplicationDates();
+                applicationDates = Data.Frequency.GetApplicationDates(catalog);
                 persist = true;
             }
             else
@@ -45,7 +45,7 @@ namespace MixERP.Net.WebControls.Common.Helpers
                         int modelOfficeId = applicationDates[i].OfficeId;
 
                         applicationDates.Remove(applicationDates[i]);
-                        applicationDates.Add(Data.Frequency.GetApplicationDates(modelOfficeId));
+                        applicationDates.Add(Data.Frequency.GetApplicationDates(catalog, modelOfficeId));
                         persist = true;
                     }
                 }

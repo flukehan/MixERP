@@ -22,7 +22,6 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Helpers;
 using MixERP.Net.WebControls.Common;
@@ -72,7 +71,8 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
                         {
                             if (printAnchor != null)
                             {
-                                printAnchor.Attributes.Add("onclick", "showWindow('" + popUpQuotationPreviewUrl + "');return false;");
+                                printAnchor.Attributes.Add("onclick",
+                                    "showWindow('" + popUpQuotationPreviewUrl + "');return false;");
                             }
                         }
                     }
@@ -116,20 +116,23 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
 
             if (this.IsNonGlTransaction)
             {
-                this.productViewGridView.DataSource = NonGlStockTransaction.GetView(userId, bookName, officeId, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
+                this.productViewGridView.DataSource = NonGlStockTransaction.GetView(this.Catalog, userId, bookName, officeId, dateFrom,
+                    dateTo, office, party, priceType, user, referenceNumber, statementReference);
                 this.productViewGridView.DataBind();
                 return;
             }
 
             if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Receipt)
             {
-                this.productViewGridView.DataSource = CustomerReceipts.GetView(userId, officeId, dateFrom, dateTo, office, party, user, referenceNumber, statementReference);
+                this.productViewGridView.DataSource = CustomerReceipts.GetView(this.Catalog, userId, officeId, dateFrom, dateTo,
+                    office, party, user, referenceNumber, statementReference);
                 this.productViewGridView.DataBind();
                 return;
             }
 
 
-            this.productViewGridView.DataSource = GLStockTransaction.GetView(userId, bookName, officeId, dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
+            this.productViewGridView.DataSource = GLStockTransaction.GetView(this.Catalog, userId, bookName, officeId, dateFrom,
+                dateTo, office, party, priceType, user, referenceNumber, statementReference);
             this.productViewGridView.DataBind();
         }
     }

@@ -46,8 +46,8 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
                 product.ShowCostCenter = true;
                 product.ShowSalesType = true;
                 product.VerifyStock = true;
+                product.Catalog = AppUsers.GetDatabase();
                 product.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-
 
                 this.Placeholder1.Controls.Add(product);
             }

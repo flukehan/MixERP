@@ -121,7 +121,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                 this.userSelect.DataTextField = "UserName";
                 this.userSelect.DataValueField = "UserId";
 
-                this.userSelect.DataSource = User.GetUserSelectorView();
+                this.userSelect.DataSource = User.GetUserSelectorView(AppUsers.GetDatabase());
                 this.userSelect.DataBind();
 
 
@@ -182,7 +182,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             {
                 User user = new User();
 
-                user.SetNewPassword(AppUsers.GetCurrentLogin().View.UserId.ToInt(), username, password);
+                user.SetNewPassword(AppUsers.GetDatabase(), AppUsers.GetCurrentLogin().View.UserId.ToInt(), username, password);
 
                 this.messageLabel.InnerText = Titles.PasswordUpdated;
             }

@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class DirectSales
     {
-        public static long Add(int officeId, int userId, long loginId, DateTime valueDate, int storeId, bool isCredit, int paymentTermId, string partyCode, int agentId, int priceTypeId, Collection<StockDetail> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string referenceNumber, string statementReference, Collection<Attachment> attachments, bool nonTaxable)
+        public static long Add(string catalog, int officeId, int userId, long loginId, DateTime valueDate, int storeId, bool isCredit, int paymentTermId, string partyCode, int agentId, int priceTypeId, Collection<StockDetail> details, int shipperId, string shippingAddressCode, decimal shippingCharge, int costCenterId, string referenceNumber, string statementReference, Collection<Attachment> attachments, bool nonTaxable)
         {
             StockMaster stockMaster = new StockMaster();
 
@@ -41,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
             stockMaster.SalespersonId = agentId;
             stockMaster.StoreId = storeId;
 
-            long transactionMasterId = GlTransaction.Add("Sales.Direct", valueDate, officeId, userId, loginId, costCenterId, referenceNumber, statementReference, stockMaster, details, attachments, nonTaxable, null);
+            long transactionMasterId = GlTransaction.Add(catalog, "Sales.Direct", valueDate, officeId, userId, loginId, costCenterId, referenceNumber, statementReference, stockMaster, details, attachments, nonTaxable, null);
 
             return transactionMasterId;
         }

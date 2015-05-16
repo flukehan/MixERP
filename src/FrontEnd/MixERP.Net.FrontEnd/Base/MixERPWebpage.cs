@@ -66,7 +66,7 @@ namespace MixERP.Net.FrontEnd.Base
         }
 
         public void RequestLoginPage()
-        {
+        {            
             FormsAuthentication.SignOut();
             Log.Information("User {UserName} was signed off.", AppUsers.GetCurrentLogin().View.UserName);
 
@@ -178,7 +178,7 @@ namespace MixERP.Net.FrontEnd.Base
                 return;
             }
 
-            this.menus = Data.Core.Menu.GetMenuCollection(officeId, userId, culture).ToArray();
+            this.menus = Data.Core.Menu.GetMenuCollection(AppUsers.GetDatabase(), officeId, userId, culture).ToArray();
 
             if (!this.VerifyAccess())
             {
@@ -309,7 +309,14 @@ namespace MixERP.Net.FrontEnd.Base
 
         private static void SetCulture()
         {
-            string cultureName = AppUsers.GetCurrentLogin().View.Culture;
+            var logins = AppUsers.GetCurrentLogin();
+
+            if (logins == null || logins.View == null)
+            {
+                return;
+            }
+
+            string cultureName = logins.View.Culture;
 
             if (string.IsNullOrWhiteSpace(cultureName))
             {

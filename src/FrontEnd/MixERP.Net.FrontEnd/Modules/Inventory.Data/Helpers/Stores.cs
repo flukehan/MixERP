@@ -25,9 +25,10 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
     public static class Stores
     {
-        public static IEnumerable<Store> GetStores(int officeId)
+        public static IEnumerable<Store> GetStores(string catalog, int officeId)
         {
-            return Factory.Get<Store>("SELECT * FROM office.stores WHERE office_id IN (SELECT office.get_office_ids(@0));", officeId);
+            const string sql = "SELECT * FROM office.stores WHERE office_id IN (SELECT office.get_office_ids(@0));";
+            return Factory.Get<Store>(catalog, sql, officeId);
         }
     }
 }

@@ -1,7 +1,6 @@
-﻿using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.Flag;
-using System;
+﻿using System;
 using System.Web.UI.WebControls;
+using MixERP.Net.WebControls.Flag;
 
 namespace MixERP.Net.WebControls.TransactionViewFactory
 {
@@ -16,7 +15,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
 
             int userId = this.UserId;
 
-            TransactionGovernor.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
+            TransactionGovernor.Flags.CreateFlag(this.Catalog, userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
 
             this.BindGrid();
         }
@@ -25,7 +24,6 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
         {
             this.BindGrid();
         }
-
 
         private void TransactionGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {

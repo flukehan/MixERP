@@ -17,17 +17,22 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System.Collections.ObjectModel;
 using MixERP.Net.DbFactory;
 using Npgsql;
-using System.Collections.ObjectModel;
 
 namespace MixERP.Net.TransactionGovernor.Data
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags"
+        )]
     public static class Flags
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flag")]
-        public static void CreateFlag(int userId, int flagTypeId, string resourceName, string resourceKey, Collection<string> resourceIds)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms",
+            MessageId = "Flag"),
+         System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms",
+             MessageId = "flag")]
+        public static void CreateFlag(string catalog, int userId, int flagTypeId, string resourceName,
+            string resourceKey, Collection<string> resourceIds)
         {
             if (resourceIds == null)
             {
@@ -46,7 +51,7 @@ namespace MixERP.Net.TransactionGovernor.Data
                     command.Parameters.AddWithValue("@ResourceKey", resourceKey);
                     command.Parameters.AddWithValue("@ResourceId", resourceId);
 
-                    DbOperation.ExecuteNonQuery(command);
+                    DbOperation.ExecuteNonQuery(catalog, command);
                 }
             }
         }

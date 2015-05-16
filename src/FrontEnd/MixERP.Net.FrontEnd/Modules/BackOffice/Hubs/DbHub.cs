@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
             {
                 BinDirectory = ConfigurationHelper.GetDbServerParameter("PostgreSQLBinDirectory"),
                 DatabaseBackupDirectory = ConfigurationHelper.GetDbServerParameter("DatabaseBackupDirectory"),
-                DatabaseName = AppUsers.GetCurrentLogin().Catalog,
+                DatabaseName = AppUsers.GetDatabase(),
                 HostName = ConfigurationHelper.GetDbServerParameter("Server"),
                 PortNumber = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port")),
                 UserId = ConfigurationHelper.GetDbServerParameter("UserId"),

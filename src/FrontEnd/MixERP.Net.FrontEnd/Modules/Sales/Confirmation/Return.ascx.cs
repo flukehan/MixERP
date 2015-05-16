@@ -23,8 +23,8 @@ using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.TransactionChecklist;
 
 namespace MixERP.Net.Core.Modules.Sales.Confirmation
 {
@@ -34,12 +34,13 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
         {
             long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
 
-            using (TransactionChecklistForm checklist = new TransactionChecklistForm())
+            using (CheckList checklist = new CheckList())
             {
                 checklist.Text = Titles.SalesReturn;
                 checklist.ViewReportButtonText = Titles.ViewThisReturn;
                 checklist.EmailReportButtonText = Titles.EmailThisReturn;
-                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Sales, SubTranBook.Return, transactionMasterId);
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetDatabase(),
+                    TranBook.Sales, SubTranBook.Return, transactionMasterId);
                 checklist.AttachmentBookName = "transaction";
                 checklist.OverridePath = "~/Modules/Sales/Return.mix";
                 checklist.DisplayWithdrawButton = true;

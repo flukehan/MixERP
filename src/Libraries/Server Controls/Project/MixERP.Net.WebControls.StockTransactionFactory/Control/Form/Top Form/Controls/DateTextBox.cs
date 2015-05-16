@@ -34,6 +34,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
                 this.dateTextBox.OfficeId = this.OfficeId;
                 this.dateTextBox.Mode = FrequencyType.Today;
                 this.dateTextBox.CssClass = "date";
+                this.dateTextBox.Catalog = this.Catalog;
                 this.dateTextBox.OfficeId = this.OfficeId;
 
                 cell.Controls.Add(this.dateTextBox);

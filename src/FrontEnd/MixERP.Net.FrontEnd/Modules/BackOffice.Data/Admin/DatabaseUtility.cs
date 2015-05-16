@@ -31,13 +31,13 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
         ///     Asks the database server to analyze and collect statistics of the current database.
         ///     For further information, http://www.postgresql.org/docs/9.4/static/sql-analyze.html
         /// </summary>
-        public void Analyze()
+        public void Analyze(string catalog)
         {
             const string sql = "ANALYZE;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
-                DbOperation.ExecuteNonQuery(command);
+                DbOperation.ExecuteNonQuery(catalog, command);
             }
         }
 
@@ -46,13 +46,13 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
         ///     against the dead/inactive database tuples.
         ///     For further information, http://www.postgresql.org/docs/9.4/static/sql-vacuum.html
         /// </summary>
-        public void Vacuum()
+        public void Vacuum(string catalog)
         {
             const string sql = "VACUUM;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
-                DbOperation.ExecuteNonQuery(command);
+                DbOperation.ExecuteNonQuery(catalog, command);
             }
         }
 
@@ -61,13 +61,13 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
         ///     dead/inactive database tuples. For further information,
         ///     http://www.postgresql.org/docs/9.4/static/sql-vacuum.html.
         /// </summary>
-        public void VacuumFull()
+        public void VacuumFull(string catalog)
         {
             const string sql = "VACUUM FULL;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.CommandTimeout = 3600;
-                DbOperation.ExecuteNonQuery(command);
+                DbOperation.ExecuteNonQuery(catalog, command);
             }
         }
     }

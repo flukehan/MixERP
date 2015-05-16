@@ -27,21 +27,21 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Reports
 {
     public static class TopSellingProducts
     {
-        public static DataTable GetTopSellingProductsOfAllTime()
+        public static DataTable GetTopSellingProductsOfAllTime(string catalog)
         {
             const string sql = "SELECT * FROM transactions.get_top_selling_products_of_all_time();";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                return DbOperation.GetDataTable(command);
+                return DbOperation.GetDataTable(catalog, command);
             }
         }
 
-        public static DataTable GetTopSellingProductsOfAllTimeByOffice()
+        public static DataTable GetTopSellingProductsOfAllTimeByOffice(string catalog)
         {
             const string sql = "SELECT  id, office_code, item_name, total_sales FROM transactions.get_top_selling_products_by_office();";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                return GetPivotTable(DbOperation.GetDataTable(command));
+                return GetPivotTable(DbOperation.GetDataTable(catalog, command));
             }
         }
 

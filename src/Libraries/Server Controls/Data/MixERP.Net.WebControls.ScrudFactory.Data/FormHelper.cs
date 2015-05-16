@@ -34,7 +34,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 {
     public static class FormHelper
     {
-        public static bool DeleteRecord(string tableSchema, string tableName, string keyColumn, string keyColumnValue)
+        public static bool DeleteRecord(string catalog, string tableSchema, string tableName, string keyColumn, string keyColumnValue)
         {
             string sql = "DELETE FROM @TableSchema.@TableName WHERE @KeyColumn=@KeyValue";
 
@@ -49,7 +49,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 try
                 {
-                    return DbOperation.ExecuteNonQuery(command);
+                    return DbOperation.ExecuteNonQuery(catalog, command);
                 }
                 catch (NpgsqlException ex)
                 {
@@ -59,7 +59,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             }
         }
 
-        public static DataTable GetTable(string tableSchema, string tableName, string orderBy)
+        public static DataTable GetTable(string catalog, string tableSchema, string tableName, string orderBy)
         {
             var sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy ASC;";
             using (var command = new NpgsqlCommand())
@@ -69,11 +69,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 sql = sql.Replace("@OrderBy", DbFactory.Sanitizer.SanitizeIdentifierName(orderBy));
                 command.CommandText = sql;
 
-                return DbOperation.GetDataTable(command);
+                return DbOperation.GetDataTable(catalog, command);
             }
         }
 
-        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValues, string orderBy)
+        public static DataTable GetTable(string catalog, string tableSchema, string tableName, string columnNames, string columnValues, string orderBy)
         {
             if (string.IsNullOrWhiteSpace(columnNames))
             {
@@ -125,11 +125,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                     counter++;
                 }
 
-                return DbOperation.GetDataTable(command);
+                return DbOperation.GetDataTable(catalog, command);
             }
         }
 
-        public static DataTable GetTable(string tableSchema, string tableName, string columnNames, string columnValuesLike, int limit, string orderBy)
+        public static DataTable GetTable(string catalog, string tableSchema, string tableName, string columnNames, string columnValuesLike, int limit, string orderBy)
         {
             if (columnNames == null)
             {
@@ -192,11 +192,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 command.Parameters.AddWithValue("@Limit", limit);
 
-                return DbOperation.GetDataTable(command);
+                return DbOperation.GetDataTable(catalog, command);
             }
         }
 
-        public static int GetTotalRecords(string tableSchema, string tableName)
+        public static int GetTotalRecords(string catalog, string tableSchema, string tableName)
         {
             var sql = "SELECT COUNT(*) FROM @TableSchema.@TableName";
             using (var command = new NpgsqlCommand())
@@ -206,11 +206,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 command.CommandText = sql;
 
-                return Conversion.TryCastInteger(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastInteger(DbOperation.GetScalarValue(catalog, command));
             }
         }
 
-        public static DataTable GetView(string tableSchema, string tableName, string orderBy, int limit, int offset)
+        public static DataTable GetView(string catalog, string tableSchema, string tableName, string orderBy, int limit, int offset)
         {
             string sql = "SELECT * FROM @TableSchema.@TableName ORDER BY @OrderBy ASC LIMIT @Limit OFFSET @Offset;";
 
@@ -235,11 +235,11 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 command.CommandText = sql;
 
-                return DbOperation.GetDataTable(command);
+                return DbOperation.GetDataTable(catalog, command);
             }
         }
 
-        public static long InsertRecord(int userId, string tableSchema, string tableName, string keyColumnName, Collection<KeyValuePair<string, object>> data, string imageColumn)
+        public static long InsertRecord(string catalog, int userId, string tableSchema, string tableName, string keyColumnName, Collection<KeyValuePair<string, object>> data, string imageColumn)
         {
             if (data == null)
             {
@@ -314,7 +314,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 try
                 {
-                    return Conversion.TryCastLong(DbOperation.GetScalarValue(command));
+                    return Conversion.TryCastLong(DbOperation.GetScalarValue(catalog, command));
                 }
                 catch (NpgsqlException ex)
                 {
@@ -324,7 +324,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             }
         }
 
-        public static bool UpdateRecord(int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, object>> data, string keyColumn, string keyColumnValue, string imageColumn, string[] exclusion)
+        public static bool UpdateRecord(string catalog, int userId, string tableSchema, string tableName, Collection<KeyValuePair<string, object>> data, string keyColumn, string keyColumnValue, string imageColumn, string[] exclusion)
         {
             if (data == null)
             {
@@ -405,7 +405,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
 
                 try
                 {
-                    return DbOperation.ExecuteNonQuery(command);
+                    return DbOperation.ExecuteNonQuery(catalog, command);
                 }
                 catch (NpgsqlException ex)
                 {

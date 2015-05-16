@@ -55,7 +55,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
         [WebMethod]
         public decimal GetSalesTax(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, decimal price, int quantity, decimal discount, decimal shippingCharge, int salesTaxId)
         {
-            return SalesTax.GetSalesTax(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId);
+            return SalesTax.GetSalesTax(AppUsers.GetDatabase(), tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId);
         }
 
         /// <summary>Gets a collection sales taxes of the current office.</summary>
@@ -71,7 +71,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
 
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (Net.Entities.Core.SalesTax salesTax in SalesTax.GetSalesTaxes(tranBook, officeId))
+            foreach (Net.Entities.Core.SalesTax salesTax in SalesTax.GetSalesTaxes(AppUsers.GetDatabase(), tranBook, officeId))
             {
                 values.Add(new ListItem(salesTax.SalesTaxCode, salesTax.SalesTaxId.ToString(CultureInfo.InvariantCulture)));
             }
@@ -95,7 +95,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
         [WebMethod]
         public int GetSalesTaxId(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, int unitId, decimal price)
         {
-            return SalesTax.GetSalesTaxId(tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price);
+            return SalesTax.GetSalesTaxId(AppUsers.GetDatabase(), tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price);
         }
     }
 }

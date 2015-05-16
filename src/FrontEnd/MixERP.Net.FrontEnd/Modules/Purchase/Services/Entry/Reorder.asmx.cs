@@ -48,7 +48,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
                 int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
-                return Data.Transactions.Reorder.Save(loginId, userId, officeId, details);
+                return Data.Transactions.Reorder.Save(AppUsers.GetDatabase(), loginId, userId, officeId, details);
             }
             catch (Exception ex)
             {

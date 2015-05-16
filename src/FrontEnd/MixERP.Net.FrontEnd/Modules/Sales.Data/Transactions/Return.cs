@@ -32,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class Return
     {
-        public static long PostTransaction(long transactionMasterId, DateTime valueDate, int officeId, int userId, long loginId, int storeId, string partyCode, int priceTypeId, string referenceNumber, string statementReference, Collection<StockDetail> details, Collection<Attachment> attachments)
+        public static long PostTransaction(string catalog, long transactionMasterId, DateTime valueDate, int officeId, int userId, long loginId, int storeId, string partyCode, int priceTypeId, string referenceNumber, string statementReference, Collection<StockDetail> details, Collection<Attachment> attachments)
         {
             string detail = StockMasterDetailHelper.CreateStockMasterDetailParameter(details);
             string attachment = AttachmentHelper.CreateAttachmentModelParameter(attachments);
@@ -55,7 +55,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
                 command.Parameters.AddRange(StockMasterDetailHelper.AddStockMasterDetailParameter(details).ToArray());
                 command.Parameters.AddRange(AttachmentHelper.AddAttachmentParameter(attachments).ToArray());
 
-                long tranId = Conversion.TryCastLong(DbOperation.GetScalarValue(command));
+                long tranId = Conversion.TryCastLong(DbOperation.GetScalarValue(catalog, command));
                 return tranId;
             }
         }

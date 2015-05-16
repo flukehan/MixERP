@@ -23,9 +23,9 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Helpers
 {
     public static class Flags
     {
-        public static void CreateFlag(int userId, int flagTypeId, string resource, string resourceKey, Collection<string> resourceIds)
+        public static void CreateFlag(string catalog, int userId, int flagTypeId, string resource, string resourceKey, Collection<string> resourceIds)
         {
-            TransactionGovernor.Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, resourceIds);
+            TransactionGovernor.Flags.CreateFlag(catalog, userId, flagTypeId, resource, resourceKey, resourceIds);
         }
     }
 }

@@ -21,6 +21,7 @@ using System;
 using System.Linq;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Data.Office;
 using MixERP.Net.i18n.Resources;
 
@@ -30,7 +31,7 @@ namespace MixERP.Net.FrontEnd
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            if (Offices.GetOffices().Any())
+            if (Offices.GetOffices(AppUsers.GetDatabase()).Any())
             {
                 this.Response.Redirect("~/SignIn.aspx");
             }

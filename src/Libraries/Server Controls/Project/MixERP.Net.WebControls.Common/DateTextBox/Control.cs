@@ -162,7 +162,7 @@ namespace MixERP.Net.WebControls.Common
                 return;
             }
 
-            ApplicationDateModel model = DatePersister.GetApplicationDates(this.officeId);
+            ApplicationDateModel model = DatePersister.GetApplicationDates(this.Catalog, this.officeId);
 
             DateTime date = model.Today;
 

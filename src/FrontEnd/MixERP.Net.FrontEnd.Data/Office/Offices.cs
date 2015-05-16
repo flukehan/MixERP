@@ -26,24 +26,19 @@ namespace MixERP.Net.FrontEnd.Data.Office
 {
     public static class Offices
     {
-        public static IEnumerable<DbGetOfficesResult> GetOffices()
-        {
-            return Factory.Get<DbGetOfficesResult>("SELECT * FROM office.get_offices();");
-        }
-
         public static IEnumerable<DbGetOfficesResult> GetOffices(string catalog)
         {
             return Factory.Get<DbGetOfficesResult>(catalog, "SELECT * FROM office.get_offices();");
         }
 
-        public static void SaveOffice(string officeCode, string officeName, string nickName, DateTime registrationDate,
+        public static void SaveOffice(string catalog, string officeCode, string officeName, string nickName, DateTime registrationDate,
             string currencyCode, string currencySymbol, string currencyName, string hundredthName, string adminName,
             string username, string password)
         {
             const string sql =
                 "SELECT * FROM office.add_office(@0::varchar(12), @1::varchar(150), @2::varchar(50), @3::date, @4::varchar(12), @5::varchar(12), @6::varchar(48), @7::varchar(48), @8::varchar(100), @9::varchar(50), @10::varchar(48));";
 
-            Factory.NonQuery(sql, officeCode, officeName, nickName, registrationDate, currencyCode,
+            Factory.NonQuery(catalog, sql, officeCode, officeName, nickName, registrationDate, currencyCode,
                 currencySymbol, currencyName, hundredthName, adminName, username, password);
         }
     }

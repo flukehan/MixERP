@@ -42,6 +42,7 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
                 product.ShowSalesAgents = true;
                 product.ShowStore = true;
                 product.ShowSalesType = true;
+                product.Catalog = AppUsers.GetDatabase();
                 product.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 this.Placeholder1.Controls.Add(product);

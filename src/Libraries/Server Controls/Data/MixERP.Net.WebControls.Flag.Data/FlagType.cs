@@ -5,9 +5,10 @@ namespace MixERP.Net.WebControls.Flag.Data
 {
     public static class FlagType
     {
-        public static IEnumerable<Entities.Core.FlagType> GetFlagTypes()
+        public static IEnumerable<Entities.Core.FlagType> GetFlagTypes(string catalog)
         {
-            return Factory.Get<Entities.Core.FlagType>("SELECT * FROM core.flag_types ORDER by flag_type_id;");
+            const string sql = "SELECT * FROM core.flag_types ORDER by flag_type_id;";
+            return Factory.Get<Entities.Core.FlagType>(catalog, sql);
         }
     }
 }

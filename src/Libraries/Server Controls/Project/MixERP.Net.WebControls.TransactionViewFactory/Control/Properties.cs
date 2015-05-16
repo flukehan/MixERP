@@ -6,6 +6,7 @@ namespace MixERP.Net.WebControls.TransactionViewFactory
     {
         public string AddNewPath { get; set; }
         public string Book { get; set; }
+        public string Catalog { get; set; }
         public FrequencyType DateFromFromFrequencyType { get; set; } //= Frequency.FiscalYearStartDate;
         public FrequencyType DateToFrequencyType { get; set; } //= Frequency.FiscalYearEndDate;
         public bool DisplayAddButton { get; set; }

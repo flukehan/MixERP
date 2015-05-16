@@ -25,7 +25,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {
     public static class Transaction
     {
-        public static decimal GetExchangeRate(int officeId, string sourceCurrencyCode, string destinationCurrencyCode)
+        public static decimal GetExchangeRate(string catalog, int officeId, string sourceCurrencyCode, string destinationCurrencyCode)
         {
             const string sql = "SELECT transactions.get_exchange_rate(@OfficeId, @SourceCurrencyCode, @DestinationCurrencyCode);";
 
@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                 command.Parameters.AddWithValue("@SourceCurrencyCode", sourceCurrencyCode);
                 command.Parameters.AddWithValue("@DestinationCurrencyCode", destinationCurrencyCode);
 
-                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastDecimal(DbOperation.GetScalarValue(catalog, command));
             }
         }
     }

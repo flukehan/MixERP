@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
     public static class GRN
     {
-        public static long Add(int officeId, int userId, long loginId, DateTime valueDate, int storeId, string partyCode, Collection<StockDetail> details, int costCenterId, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<Attachment> attachments)
+        public static long Add(string catalog, int officeId, int userId, long loginId, DateTime valueDate, int storeId, string partyCode, Collection<StockDetail> details, int costCenterId, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<Attachment> attachments)
         {
             StockMaster stockMaster = new StockMaster();
 
@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
                 statementReference = statementReference.Replace("&nbsp;", " ").Trim();
             }
 
-            long transactionMasterId = GlTransaction.Add(valueDate, "Purchase.Receipt", officeId, userId, loginId, costCenterId, referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
+            long transactionMasterId = GlTransaction.Add(catalog, valueDate, "Purchase.Receipt", officeId, userId, loginId, costCenterId, referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments);
             return transactionMasterId;
         }
     }

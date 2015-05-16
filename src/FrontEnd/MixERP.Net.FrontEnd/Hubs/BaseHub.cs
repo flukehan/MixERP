@@ -29,7 +29,7 @@ namespace MixERP.Net.FrontEnd.Hubs
     {
         public void Terminate(int counter)
         {
-            string catalog = AppUsers.GetCurrentLogin().Catalog;
+            string catalog = AppUsers.GetDatabase();
             this.Clients.All.terminate(counter, catalog);
         }
     }

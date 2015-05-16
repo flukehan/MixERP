@@ -166,7 +166,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Cache\AppUsers.cs" />
+    <Compile Include="Controls\CheckList.cs" />
     <Compile Include="Controls\Scrud.cs" />
+    <Compile Include="Controls\WebReport.cs" />
     <Compile Include="Dashboard\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -986,10 +988,6 @@
     <ProjectReference Include="..\MixERP.Net.FrontEnd.Data\MixERP.Net.FrontEnd.Data.csproj">
       <Project>{a84ed536-8e44-4d32-a22d-26d9924a9481}</Project>
       <Name>MixERP.Net.FrontEnd.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="Modules\API\MixERP.Net.Core.Api\MixERP.Net.Core.Api.csproj">
-      <Project>{d7037326-f14d-4359-bb87-3637bb9d93ee}</Project>
-      <Name>MixERP.Net.Core.Api</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

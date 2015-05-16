@@ -54,7 +54,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                 {
                     if (model.TransferTypeEnum == TransactionTypeEnum.Credit)
                     {
-                        decimal existingQuantity = Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreName);
+                        decimal existingQuantity = Items.CountItemInStock(AppUsers.GetDatabase(), model.ItemCode, model.UnitName, model.StoreName);
 
                         if (existingQuantity < model.Quantity)
                         {
@@ -67,7 +67,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                 int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
 
-                return StockTransfer.Add(officeId, userId, loginId, valueDate, referenceNumber, statementReference, stockTransferModels);
+                return StockTransfer.Add(AppUsers.GetDatabase(), officeId, userId, loginId, valueDate, referenceNumber, statementReference, stockTransferModels);
             }
             catch (Exception ex)
             {

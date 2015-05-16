@@ -127,7 +127,7 @@ namespace MixERP.Net.WebControls.ReportEngine
 
                     string path = reportNode.Attributes["Path"].Value;
 
-                    ReportInstaller.InstallReport(menuCode, parentMenuCode, level, menuText, path);
+                    ReportInstaller.InstallReport(this.Catalog, menuCode, parentMenuCode, level, menuText, path);
                 }
             }
         }

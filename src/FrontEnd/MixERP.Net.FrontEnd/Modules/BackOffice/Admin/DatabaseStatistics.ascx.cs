@@ -22,6 +22,7 @@ using System.Reflection;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Core.Modules.BackOffice.Data.Admin;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -45,13 +46,12 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             this.AnalyzeButton.Text = Titles.AnalyzeDatabse;
 
             this.AddScrud();
-            LocalizeButtons();
         }
 
         protected void AnalyzeButton_Click(object sender, EventArgs e)
         {
             DatabaseUtility utility = new DatabaseUtility();
-            utility.Analyze();
+            utility.Analyze(AppUsers.GetDatabase());
 
             this.DisplaySuccess();
         }
@@ -59,7 +59,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
         protected void FullVacuumButton_Click(object sender, EventArgs e)
         {
             DatabaseUtility utility = new DatabaseUtility();
-            utility.VacuumFull();
+            utility.VacuumFull(AppUsers.GetDatabase());
 
             this.DisplaySuccess();
         }
@@ -67,15 +67,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
         protected void VacuumButton_Click(object sender, EventArgs e)
         {
             DatabaseUtility utility = new DatabaseUtility();
-            utility.Vacuum();
-            this.DisplaySuccess();
-        }
+            utility.Vacuum(AppUsers.GetDatabase());
 
-        private static void LocalizeButtons()
-        {
-            //this.VacuumButton.Text = Titles.VacuumDatabase;
-            //this.FullVacuumButton.Text = Titles.VacuumFullDatabase;
-            //this.AnalyzeButton.Text = Titles.AnalyzeDatabse;
+            this.DisplaySuccess();
         }
 
         private void AddScrud()

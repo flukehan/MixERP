@@ -17,10 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ReportEngine;
 using System;
-using System.Reflection;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.Sales.Reports
 {
@@ -28,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Sales.Reports
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (Report report = new Report())
+            using (WebReport report = new WebReport())
             {
                 report.AutoInitialize = true;
                 report.NoHeader = true;

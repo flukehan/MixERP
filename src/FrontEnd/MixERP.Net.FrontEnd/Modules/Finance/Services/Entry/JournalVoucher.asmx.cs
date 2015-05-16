@@ -51,7 +51,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services.Entry
                 long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
                 const int verificationStatusId = 2;
 
-                Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
+                Transaction.Verify(AppUsers.GetDatabase(), tranId, officeId, userId, loginId, verificationStatusId, reason);
             }
             catch (Exception ex)
             {
@@ -64,7 +64,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services.Entry
         public decimal GetExchangeRate(string currencyCode)
         {
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            decimal exchangeRate = Transaction.GetExchangeRate(officeId, currencyCode);
+            decimal exchangeRate = Transaction.GetExchangeRate(AppUsers.GetDatabase(), officeId, currencyCode);
 
             return exchangeRate;
         }
@@ -79,7 +79,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services.Entry
                 long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
                 const int verificationStatusId = -3;
 
-                Transaction.Verify(tranId, officeId, userId, loginId, verificationStatusId, reason);
+                Transaction.Verify(AppUsers.GetDatabase(), tranId, officeId, userId, loginId, verificationStatusId, reason);
             }
             catch (Exception ex)
             {
@@ -114,21 +114,21 @@ namespace MixERP.Net.Core.Modules.Finance.Services.Entry
                         throw new InvalidOperationException("Invalid data");
                     }
 
-                    if (!AccountHelper.AccountNumberExists(model.AccountNumber))
+                    if (!AccountHelper.AccountNumberExists(AppUsers.GetDatabase(), model.AccountNumber))
                     {
                         throw new InvalidOperationException("Invalid account " + model.AccountNumber);
                     }
 
                     if (model.Credit > 0)
                     {
-                        if (AccountHelper.IsCashAccount(model.AccountNumber))
+                        if (AccountHelper.IsCashAccount(AppUsers.GetDatabase(), model.AccountNumber))
                         {
-                            if (!CashRepositories.CashRepositoryCodeExists(model.CashRepositoryCode))
+                            if (!CashRepositories.CashRepositoryCodeExists(AppUsers.GetDatabase(), model.CashRepositoryCode))
                             {
                                 throw new InvalidOperationException("Invalid cash repository " + model.CashRepositoryCode);
                             }
 
-                            if (CashRepositories.GetBalance(model.CashRepositoryCode, model.CurrencyCode) < model.Credit)
+                            if (CashRepositories.GetBalance(AppUsers.GetDatabase(), model.CashRepositoryCode, model.CurrencyCode) < model.Credit)
                             {
                                 throw new InvalidOperationException("Insufficient balance in cash repository.");
                             }
@@ -148,7 +148,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services.Entry
                 int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
 
-                return Transaction.Add(valueDate, officeId, userId, loginId, costCenterId, referenceNumber, details, attachments);
+                return Transaction.Add(AppUsers.GetDatabase(), valueDate, officeId, userId, loginId, costCenterId, referenceNumber, details, attachments);
             }
             catch (Exception ex)
             {

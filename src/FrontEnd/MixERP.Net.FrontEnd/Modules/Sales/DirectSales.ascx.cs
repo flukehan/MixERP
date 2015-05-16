@@ -48,6 +48,7 @@ namespace MixERP.Net.Core.Modules.Sales
 
                 view.UserId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 view.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                view.Catalog = AppUsers.GetDatabase();
 
                 this.Placeholder1.Controls.Add(view);
             }

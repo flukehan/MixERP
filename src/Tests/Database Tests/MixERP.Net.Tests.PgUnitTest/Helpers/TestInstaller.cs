@@ -77,7 +77,7 @@ namespace MixERP.Net.Tests.PgUnitTest.Helpers
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                DbOperation.ExecuteNonQuery(command);
+                DbOperation.ExecuteNonQuery(string.Empty, command);
             }
         }
 

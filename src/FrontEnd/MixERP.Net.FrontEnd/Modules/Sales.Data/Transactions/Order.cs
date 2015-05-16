@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class Order
     {
-        public static long Add(int officeId, int userId, long loginId, DateTime valueDate, string partyCode, int priceTypeId, Collection<StockDetail> details, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<Attachment> attachments, bool nonTaxable, int salesPersonId, int shipperId, string shippingAddressCode, int storeId)
+        public static long Add(string catalog, int officeId, int userId, long loginId, DateTime valueDate, string partyCode, int priceTypeId, Collection<StockDetail> details, string referenceNumber, string statementReference, Collection<long> transactionIdCollection, Collection<Attachment> attachments, bool nonTaxable, int salesPersonId, int shipperId, string shippingAddressCode, int storeId)
         {
             StockMaster stockMaster = new StockMaster();
 
@@ -38,7 +38,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
             stockMaster.ShippingAddressCode = shippingAddressCode;
             stockMaster.StoreId = storeId;
 
-            long nonGlStockMasterId = NonGlStockTransaction.Add("Sales.Order", valueDate, officeId, userId, loginId, referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments, nonTaxable);
+            long nonGlStockMasterId = NonGlStockTransaction.Add(catalog, "Sales.Order", valueDate, officeId, userId, loginId, referenceNumber, statementReference, stockMaster, details, transactionIdCollection, attachments, nonTaxable);
             return nonGlStockMasterId;
         }
     }

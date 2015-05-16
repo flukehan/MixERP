@@ -21,14 +21,14 @@ namespace MixERP.Net.WebControls.TransactionChecklist
 {
     public static class Verification
     {
-        public static Entities.Models.Transactions.Verification GetVerificationStatus(long transactionMasterId)
+        public static Entities.Models.Transactions.Verification GetVerificationStatus(string catalog, long transactionMasterId)
         {
-            return TransactionGovernor.Verification.VerificationStatus.GetVerificationStatus(transactionMasterId);
+            return TransactionGovernor.Verification.VerificationStatus.GetVerificationStatus(catalog, transactionMasterId);
         }
 
-        public static bool WithdrawTransaction(long transactionMasterId, int userId, string reason)
+        public static bool WithdrawTransaction(string catalog, long transactionMasterId, int userId, string reason)
         {
-            return TransactionGovernor.Verification.Withdrawal.WithdrawTransaction(transactionMasterId, userId, reason);
+            return TransactionGovernor.Verification.Withdrawal.WithdrawTransaction(catalog, transactionMasterId, userId, reason);
         }
     }
 }

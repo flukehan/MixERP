@@ -66,7 +66,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                     throw new MixERPException(Titles.AccessIsDenied);
                 }
 
-                if (FormHelper.DeleteRecord(this.TableSchema, this.Table, this.KeyColumn, id))
+                if (FormHelper.DeleteRecord(this.Catalog, this.TableSchema, this.Table, this.KeyColumn, id))
                 {
                     //Refresh the grid.
                     this.BindGridView();
@@ -88,7 +88,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                 return;
             }
 
-            using (DataTable table = FormHelper.GetTable(this.TableSchema, this.Table, this.KeyColumn, id, this.KeyColumn))
+            using (DataTable table = FormHelper.GetTable(this.Catalog, this.TableSchema, this.Table, this.KeyColumn, id, this.KeyColumn))
             {
                 if (table.Rows.Count.Equals(1))
                 {
@@ -128,7 +128,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         throw new MixERPException(Titles.AccessIsDenied);
                     }
 
-                    long lastValue = FormHelper.InsertRecord(userId, this.TableSchema, this.Table, this.KeyColumn, list, this.imageColumn);
+                    long lastValue = FormHelper.InsertRecord(this.Catalog, userId, this.TableSchema, this.Table, this.KeyColumn, list, this.imageColumn);
 
                     if (lastValue > 0)
                     {
@@ -169,7 +169,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                     }
 
 
-                    if (FormHelper.UpdateRecord(userId, this.TableSchema, this.Table, list, this.KeyColumn, id, this.imageColumn, exclusion))
+                    if (FormHelper.UpdateRecord(this.Catalog, userId, this.TableSchema, this.Table, list, this.KeyColumn, id, this.imageColumn, exclusion))
                     {
                         //Clear the form container.
                         this.formContainer.Controls.Clear();

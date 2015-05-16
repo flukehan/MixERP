@@ -283,8 +283,9 @@ namespace MixERP.Net.Core.Modules.Inventory
 
                 this.valueDateTextBox = new DateTextBox();
                 this.valueDateTextBox.ID = "ValueDateTextBox";
-                this.valueDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
                 this.valueDateTextBox.Mode = FrequencyType.Today;
+                this.valueDateTextBox.Catalog = AppUsers.GetDatabase();
+                this.valueDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.valueDateTextBox);
 
@@ -302,7 +303,7 @@ namespace MixERP.Net.Core.Modules.Inventory
             }
 
 
-            this.grid.DataSource = StockItems.ListClosingStock(storeId);
+            this.grid.DataSource = StockItems.ListClosingStock(AppUsers.GetDatabase(), storeId);
             this.grid.DataBind();
         }
 

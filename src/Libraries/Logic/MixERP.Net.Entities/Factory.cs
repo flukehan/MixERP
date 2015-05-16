@@ -40,11 +40,6 @@ namespace MixERP.Net.Entities
             }
         }
 
-        public static IEnumerable<T> Get<T>(string sql, params object[] args)
-        {
-            return Get<T>(string.Empty, sql, args);
-        }
-
         public static T Scalar<T>(string catalog, string sql, params object[] args)
         {
             try
@@ -66,11 +61,6 @@ namespace MixERP.Net.Entities
             }
         }
 
-        public static T Scalar<T>(string sql, params object[] args)
-        {
-            return Scalar<T>(string.Empty, sql, args);
-        }
-
         public static void NonQuery(string catalog, string sql, params object[] args)
         {
             try
@@ -90,11 +80,6 @@ namespace MixERP.Net.Entities
 
                 throw;
             }
-        }
-
-        public static void NonQuery(string sql, params object[] args)
-        {
-            NonQuery(string.Empty, sql, args);
         }
 
         private static string GetDBErrorResource(NpgsqlException ex)

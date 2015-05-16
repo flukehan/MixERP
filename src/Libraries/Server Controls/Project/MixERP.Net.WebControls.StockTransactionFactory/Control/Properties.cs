@@ -101,6 +101,6 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
         public bool VerifyStock { get; set; }
 
         public int OfficeId { get; set; }
-
+        public string Catalog { get; set; }
     }
 }

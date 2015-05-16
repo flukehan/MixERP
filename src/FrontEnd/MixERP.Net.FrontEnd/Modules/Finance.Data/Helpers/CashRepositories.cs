@@ -20,72 +20,68 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System.Collections.Generic;
 using System.Linq;
 using MixERP.Net.Entities;
-using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Office;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
     public static class CashRepositories
     {
-        public static bool CashRepositoryCodeExists(string cashRepositoryCode)
+        public static bool CashRepositoryCodeExists(string catalog, string cashRepositoryCode)
         {
-            return
-                Factory.Get<CashRepository>("SELECT * FROM office.cash_repositories WHERE cash_repository_code=@0;",
-                    cashRepositoryCode).Count().Equals(1);
+            const string sql = "SELECT * FROM office.cash_repositories WHERE cash_repository_code=@0;";
+            return Factory.Get<CashRepository>(catalog, sql, cashRepositoryCode).Count().Equals(1);
         }
 
-        public static decimal GetBalance(int? cashRepositoryId, string currencyCode)
+        public static decimal GetBalance(string catalog, int? cashRepositoryId, string currencyCode)
         {
-            return Factory.Scalar<decimal>("SELECT transactions.get_cash_repository_balance(@0::integer, @1::national character varying(12));", cashRepositoryId,
-                currencyCode);
+            const string sql =
+                "SELECT transactions.get_cash_repository_balance(@0::integer, @1::national character varying(12));";
+            return Factory.Scalar<decimal>(catalog, sql, cashRepositoryId, currencyCode);
         }
 
-        public static decimal GetBalance(int cashRepositoryId)
+        public static decimal GetBalance(string catalog, int cashRepositoryId)
         {
-            return Factory.Scalar<decimal>("SELECT transactions.get_cash_repository_balance(@0::integer);", cashRepositoryId);
+            const string sql = "SELECT transactions.get_cash_repository_balance(@0::integer);";
+            return Factory.Scalar<decimal>(catalog, sql, cashRepositoryId);
         }
 
-        public static decimal GetBalance(string cashRepositoryCode)
+        private static decimal GetBalance(string catalog, string cashRepositoryCode)
         {
-            return
-                Factory.Scalar<decimal>(
-                    "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@0)::integer);",
-                    cashRepositoryCode);
+            const string sql =
+                "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@0)::integer);";
+
+            return Factory.Scalar<decimal>(catalog, sql, cashRepositoryCode);
         }
 
-        public static decimal GetBalance(string cashRepositoryCode, string currencyCode)
+        public static decimal GetBalance(string catalog, string cashRepositoryCode, string currencyCode)
         {
-            return
-                Factory.Scalar<decimal>(
-                    "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@0)::integer, @1::national character varying(12));",
-                    cashRepositoryCode, currencyCode);
+            const string sql =
+                "SELECT transactions.get_cash_repository_balance(office.get_cash_repository_id_by_cash_repository_code(@0)::integer, @1::national character varying(12));";
+            return Factory.Scalar<decimal>(catalog, sql, cashRepositoryCode, currencyCode);
         }
 
-        public static IEnumerable<CashRepository> GetCashRepositories()
+        public static IEnumerable<CashRepository> GetCashRepositories(string catalog)
         {
-            return Factory.Get<CashRepository>("SELECT * FROM office.cash_repositories ORDER BY cash_repository_id;");
+            const string sql = "SELECT * FROM office.cash_repositories ORDER BY cash_repository_id;";
+            return Factory.Get<CashRepository>(catalog, sql);
         }
 
-        public static IEnumerable<CashRepository> GetCashRepositories(int officeId)
+        public static IEnumerable<CashRepository> GetCashRepositories(string catalog, int officeId)
         {
-            return
-                Factory.Get<CashRepository>(
-                    "SELECT * FROM office.cash_repositories WHERE office_id=@0 ORDER BY cash_repository_id;", officeId);
+            const string sql = "SELECT * FROM office.cash_repositories WHERE office_id=@0 ORDER BY cash_repository_id;";
+            return Factory.Get<CashRepository>(catalog, sql, officeId);
         }
 
-        public static CashRepository GetCashRepository(int? cashRepositoryId)
+        public static CashRepository GetCashRepository(string catalog, int? cashRepositoryId)
         {
-            return
-                Factory.Get<CashRepository>("SELECT * FROM office.cash_repositories WHERE cash_repository_id=@0;",
-                    cashRepositoryId).FirstOrDefault();
+            const string sql = "SELECT * FROM office.cash_repositories WHERE cash_repository_id=@0;";
+            return Factory.Get<CashRepository>(catalog, sql, cashRepositoryId).FirstOrDefault();
         }
 
-        public static int GetCashRepositoryIdByCashRepositoryCode(string cashRepositoryCode)
+        public static int GetCashRepositoryIdByCashRepositoryCode(string catalog, string cashRepositoryCode)
         {
-            return
-                Factory.Scalar<int>(
-                    "SELECT cash_repository_id FROM office.cash_repositories WHERE cash_repository_code=@0;",
-                    cashRepositoryCode);
+            const string sql = "SELECT cash_repository_id FROM office.cash_repositories WHERE cash_repository_code=@0;";
+            return Factory.Scalar<int>(catalog, sql, cashRepositoryCode);
         }
     }
 }

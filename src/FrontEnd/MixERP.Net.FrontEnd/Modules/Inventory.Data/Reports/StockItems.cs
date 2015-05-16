@@ -25,15 +25,18 @@ using MixERP.Net.Entities.Transactions;
 namespace MixERP.Net.Core.Modules.Inventory.Data.Reports
 {
     public static class StockItems
-    { 
-        public static IEnumerable<DbListClosingStockResult> ListClosingStock(int storeId)
+    {
+        public static IEnumerable<DbListClosingStockResult> ListClosingStock(string catalog, int storeId)
         {
-            return Factory.Get<DbListClosingStockResult>("SELECT * FROM transactions.list_closing_stock(@0::integer);", storeId);
+            const string sql = "SELECT * FROM transactions.list_closing_stock(@0::integer);";
+            return Factory.Get<DbListClosingStockResult>(catalog, sql, storeId);
         }
 
-        public static IEnumerable<DbGetStockAccountStatementResult> GetAccountStatement(DateTime @from, DateTime to, int userId, string itemCode, int storeId)
+        public static IEnumerable<DbGetStockAccountStatementResult> GetAccountStatement(string catalog, DateTime @from, DateTime to, int userId, string itemCode, int storeId)
         {
-            return Factory.Get<DbGetStockAccountStatementResult>("SELECT * FROM transactions.get_stock_account_statement(@0::date, @1::date, @2::integer, @3::text, @4::integer);", from, to, userId, itemCode, storeId);
+            const string sql =
+                "SELECT * FROM transactions.get_stock_account_statement(@0::date, @1::date, @2::integer, @3::text, @4::integer);";
+            return Factory.Get<DbGetStockAccountStatementResult>(catalog, sql, from, to, userId, itemCode, storeId);
         }
     }
 }

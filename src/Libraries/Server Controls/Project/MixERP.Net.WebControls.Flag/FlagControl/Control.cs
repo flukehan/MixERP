@@ -34,7 +34,7 @@ namespace MixERP.Net.WebControls.Flag
 
         private void BindFlagTypeDropDownList()
         {
-            this.flagDropDownlist.DataSource = FlagType.GetFlagTypes();
+            this.flagDropDownlist.DataSource = FlagType.GetFlagTypes(this.Catalog);
             this.flagDropDownlist.DataTextField = "FlagTypeName";
             this.flagDropDownlist.DataValueField = "FlagTypeId";
             this.flagDropDownlist.DataBind();

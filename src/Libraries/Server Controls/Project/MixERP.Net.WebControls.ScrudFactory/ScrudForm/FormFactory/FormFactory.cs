@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
-using System.Reflection;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
@@ -53,7 +52,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             Collection<KeyValuePair<string, object>> list = new Collection<KeyValuePair<string, object>>();
 
-            using (DataTable table = TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
+            using (DataTable table = TableHelper.GetTable(this.Catalog, this.TableSchema, this.Table, this.Exclude))
             {
                 if (table.Rows.Count > 0)
                 {
@@ -77,29 +76,38 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         {
                             if (ScrudTypes.TextBoxTypes.Contains(dataType))
                             {
-                                using (TextBox textBox = this.formContainer.FindControl(columnName + "_textbox") as TextBox)
+                                using (
+                                    TextBox textBox = this.formContainer.FindControl(columnName + "_textbox") as TextBox
+                                    )
                                 {
                                     if (textBox != null)
                                     {
-                                        list.Add(new KeyValuePair<string, object>(columnName, ScrudParser.ParseValue(textBox.Text, dataType)));
+                                        list.Add(new KeyValuePair<string, object>(columnName,
+                                            ScrudParser.ParseValue(textBox.Text, dataType)));
                                     }
                                 }
                             }
 
                             if (ScrudTypes.Bools.Contains(dataType))
                             {
-                                using (RadioButtonList radioButtonList = this.formContainer.FindControl(columnName + "_radiobuttonlist") as RadioButtonList)
+                                using (
+                                    RadioButtonList radioButtonList =
+                                        this.formContainer.FindControl(columnName + "_radiobuttonlist") as
+                                            RadioButtonList)
                                 {
                                     if (radioButtonList != null)
                                     {
-                                        list.Add(new KeyValuePair<string, object>(columnName, ScrudParser.ParseValue(radioButtonList.Text, dataType)));
+                                        list.Add(new KeyValuePair<string, object>(columnName,
+                                            ScrudParser.ParseValue(radioButtonList.Text, dataType)));
                                     }
                                 }
                             }
 
                             if (dataType.Equals("bytea"))
                             {
-                                using (FileUpload fileUpload = this.formContainer.FindControl(columnName + "_fileupload") as FileUpload)
+                                using (
+                                    FileUpload fileUpload =
+                                        this.formContainer.FindControl(columnName + "_fileupload") as FileUpload)
                                 {
                                     if (fileUpload != null)
                                     {
@@ -113,7 +121,9 @@ namespace MixERP.Net.WebControls.ScrudFactory
                         else
                         {
                             //DropDownList
-                            using (DropDownList dropDownList = this.formContainer.FindControl(columnName + "_dropdownlist") as DropDownList)
+                            using (
+                                DropDownList dropDownList =
+                                    this.formContainer.FindControl(columnName + "_dropdownlist") as DropDownList)
                             {
                                 object value = null;
 
@@ -138,7 +148,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
             {
                 htmlTable.Attributes.Add("role", "scrud");
 
-                using (DataTable table = TableHelper.GetTable(this.TableSchema, this.Table, this.Exclude))
+                using (DataTable table = TableHelper.GetTable(this.Catalog, this.TableSchema, this.Table, this.Exclude))
                 {
                     if (table.Rows.Count > 0)
                     {
@@ -167,7 +177,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
                             {
                                 if (!string.IsNullOrWhiteSpace(this.ExcludeEdit))
                                 {
-                                    if (this.ExcludeEdit.Split(',').Any(column => column.Trim().ToUpperInvariant().Equals(columnName.ToUpperInvariant())))
+                                    if (
+                                        this.ExcludeEdit.Split(',')
+                                            .Any(
+                                                column =>
+                                                    column.Trim()
+                                                        .ToUpperInvariant()
+                                                        .Equals(columnName.ToUpperInvariant())))
                                     {
                                         disabled = true;
                                     }
@@ -175,7 +191,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                             }
 
 
-                            ScrudFactoryHelper.AddField(htmlTable, this.GetResourceClassName(),
+                            ScrudFactoryHelper.AddField(this.Catalog, htmlTable, this.GetResourceClassName(),
                                 this.GetItemSelectorPath(), columnName, defaultValue, isSerial, isNullable, dataType,
                                 domain, maxLength, parentTableSchema, parentTable, parentTableColumn, this.DisplayFields,
                                 this.DisplayViews, this.UseDisplayViewsAsParents, this.SelectedValues,

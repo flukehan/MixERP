@@ -28,26 +28,21 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
     public class User
     {
         /// <summary>Gets the collection of all users.</summary>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the users in this collection.
+        ///     An enumerator that allows foreach to be used to process the users in this collection.
         /// </returns>
-
-        public static IEnumerable<Entities.Office.UserSelectorView> GetUserSelectorView()
+        public static IEnumerable<Entities.Office.UserSelectorView> GetUserSelectorView(string catalog)
         {
-            return Factory.Get<Entities.Office.UserSelectorView>("SELECT * FROM office.user_selector_view ORDER BY user_name;");
+            const string sql = "SELECT * FROM office.user_selector_view ORDER BY user_name;";
+            return Factory.Get<Entities.Office.UserSelectorView>(catalog, sql);
         }
 
-        /// <summary>Change password of the user to a new one.</summary>
-        /// <exception cref="MixERPException">Thrown when a MixERPException occurs.</exception>
-        /// <param name="adminUserId">The UserId of the administration who is changing password for this user.</param>
-        /// <param name="username">The username.</param>
-        /// <param name="password">The new password.</param>
-        public void SetNewPassword(int adminUserId, string username, string password)
+        public void SetNewPassword(string catalog, int adminUserId, string username, string password)
         {
             try
             {
-                Factory.NonQuery("SELECT * FROM policy.change_password(@0::text, @1::text, @2::text);", adminUserId, username, password);
+                const string sql = "SELECT * FROM policy.change_password(@0::text, @1::text, @2::text);";
+                Factory.NonQuery(catalog, sql, adminUserId, username, password);
             }
             catch (DbException ex)
             {

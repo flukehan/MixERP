@@ -26,13 +26,13 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
 {
     public partial class StockTransactionView
     {
-        private bool AreAlreadyMerged(Collection<long> values)
+        private bool AreAlreadyMerged(string catalog, Collection<long> values)
         {
-            if (this.AreSalesQuotationsAlreadyMerged(values))
+            if (this.AreSalesQuotationsAlreadyMerged(catalog, values))
             {
                 return true;
             }
-            if (this.AreSalesOrdersAlreadyMerged(values))
+            if (this.AreSalesOrdersAlreadyMerged(catalog, values))
             {
                 return true;
             }
@@ -40,11 +40,11 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
             return false;
         }
 
-        private bool AreSalesOrdersAlreadyMerged(Collection<long> values)
+        private bool AreSalesOrdersAlreadyMerged(string catalog, Collection<long> values)
         {
             if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Order)
             {
-                if (NonGlStockTransaction.AreSalesOrdersAlreadyMerged(values))
+                if (NonGlStockTransaction.AreSalesOrdersAlreadyMerged(catalog, values))
                 {
                     this.errorLabel.InnerText = Warnings.CannotMergeAlreadyMerged;
                     return true;
@@ -54,11 +54,11 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
             return false;
         }
 
-        private bool AreSalesQuotationsAlreadyMerged(Collection<long> values)
+        private bool AreSalesQuotationsAlreadyMerged(string catalog, Collection<long> values)
         {
             if (this.Book == TranBook.Sales && this.SubBook == SubTranBook.Quotation)
             {
-                if (NonGlStockTransaction.AreSalesQuotationsAlreadyMerged(values))
+                if (NonGlStockTransaction.AreSalesQuotationsAlreadyMerged(catalog, values))
                 {
                     this.errorLabel.InnerText = Warnings.CannotMergeAlreadyMerged;
                     return true;
@@ -68,7 +68,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
             return false;
         }
 
-        private bool IsValid()
+        private bool IsValid(string catalog)
         {
             Collection<long> values = this.GetSelectedValues();
 
@@ -78,15 +78,15 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
                 return false;
             }
 
-            if (!this.BelongToSameParty(values))
+            if (!this.BelongToSameParty(catalog, values))
             {
                 return false;
             }
-            if (this.AreAlreadyMerged(values))
+            if (this.AreAlreadyMerged(catalog, values))
             {
                 return false;
             }
-            if (this.ContainsIncompatibleTaxes(values))
+            if (this.ContainsIncompatibleTaxes(catalog, values))
             {
                 return false;
             }
@@ -94,9 +94,9 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
             return true;
         }
 
-        private bool BelongToSameParty(Collection<long> values)
+        private bool BelongToSameParty(string catalog, Collection<long> values)
         {
-            bool belongToSameParty = NonGlStockTransaction.TransactionIdsBelongToSameParty(values);
+            bool belongToSameParty = NonGlStockTransaction.TransactionIdsBelongToSameParty(catalog, values);
 
             if (!belongToSameParty)
             {
@@ -107,11 +107,11 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
             return true;
         }
 
-        private bool ContainsIncompatibleTaxes(Collection<long> values)
+        private bool ContainsIncompatibleTaxes(string catalog, Collection<long> values)
         {
             if (this.Book == TranBook.Sales)
             {
-                if (NonGlStockTransaction.ContainsIncompatibleTaxes(values))
+                if (NonGlStockTransaction.ContainsIncompatibleTaxes(catalog, values))
                 {
                     this.errorLabel.InnerText = Warnings.CannotMergeIncompatibleTax;
                     return true;

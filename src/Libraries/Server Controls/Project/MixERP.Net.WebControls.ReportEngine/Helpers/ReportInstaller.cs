@@ -23,9 +23,9 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
     public static class ReportInstaller
     {
-        public static void InstallReport(string menuCode, string parentMenuCode, int level, string menuText, string path)
+        public static void InstallReport(string catalog, string menuCode, string parentMenuCode, int level, string menuText, string path)
         {
-            Installer.InstallReport(menuCode, parentMenuCode, level, menuText, path);
+            Installer.InstallReport(catalog, menuCode, parentMenuCode, level, menuText, path);
         }
     }
 }

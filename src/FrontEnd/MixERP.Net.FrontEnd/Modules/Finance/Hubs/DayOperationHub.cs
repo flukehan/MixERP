@@ -3,7 +3,6 @@ using Microsoft.AspNet.SignalR;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Events;
 using MixERP.Net.Common.Extensions;
-using MixERP.Net.Entities.Office;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 
@@ -31,13 +30,13 @@ namespace MixERP.Net.Core.Modules.Finance.Hubs
             Data.EODOperation operation = new Data.EODOperation();
             operation.NotificationReceived += this.EOD_NotificationReceived;
 
-            string catalog = AppUsers.GetDatabase(globalLoginId);
+            string catalog = AppUsers.GetDatabase();
 
             operation.Perform(catalog, AppUsers.GetCurrentLogin().View.LoginId.ToLong());
         }
 
         private void EOD_NotificationReceived(object sender, MixERPPGEventArgs e)
-        {            
+        {
             this.Clients.Caller.getNotification(e.AdditionalInformation, e.Condition);
         }
     }

@@ -93,9 +93,10 @@ namespace MixERP.Net.FrontEnd.Cache
             return dictionary;
         }
 
-        public static string GetDatabase(long globalLoginId)
+        public static string GetDatabase()
         {
-            return Data.Office.User.GetDatabase(globalLoginId);
+            string catalog = GetCurrentLogin().Catalog;
+            return catalog;
         }
 
         public static GlobalLogin GetCurrentLogin()
@@ -112,6 +113,11 @@ namespace MixERP.Net.FrontEnd.Cache
             if (login == null)
             {
                 login = new GlobalLogin();
+            }
+
+            if (login.View == null)
+            {
+                login.View = new SignInView();
             }
 
             return login;

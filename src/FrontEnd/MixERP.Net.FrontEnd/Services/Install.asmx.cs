@@ -21,6 +21,7 @@ using System;
 using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.FrontEnd.Cache;
 using Serilog;
 
 namespace MixERP.Net.FrontEnd.Services
@@ -53,7 +54,7 @@ namespace MixERP.Net.FrontEnd.Services
 
             try
             {
-                Data.Office.Offices.SaveOffice(officeCode, officeName, nickName,
+                Data.Office.Offices.SaveOffice(AppUsers.GetDatabase(), officeCode, officeName, nickName,
                     Convert.ToDateTime(registrationDate), currencyCode,
                     currencySymbol, currencyName, hundredthName, adminName, username, password);
 

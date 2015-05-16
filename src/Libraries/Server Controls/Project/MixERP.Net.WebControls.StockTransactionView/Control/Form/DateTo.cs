@@ -35,6 +35,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
                 this.dateToDateTextBox.CssClass = "date";
                 this.dateToDateTextBox.Mode = FrequencyType.MonthEndDate;
                 this.dateToDateTextBox.Required = true;
+                this.dateToDateTextBox.Catalog = this.Catalog;
                 this.dateToDateTextBox.OfficeId = this.OfficeId;
 
                 field.Controls.Add(this.dateToDateTextBox);

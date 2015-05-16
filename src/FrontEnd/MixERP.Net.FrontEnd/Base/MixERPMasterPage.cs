@@ -95,7 +95,7 @@ namespace MixERP.Net.FrontEnd.Base
             script += JSUtility.GetVar("duplicateFileLocalized", Warnings.DuplicateFiles);
 
             script += JSUtility.GetVar("taskCompletedSuccessfullyLocalized", Labels.TaskCompletedSuccessfully);
-            script += JSUtility.GetVar("catalog", AppUsers.GetCurrentLogin().Catalog);
+            script += JSUtility.GetVar("catalog", AppUsers.GetDatabase());
 
             PageUtility.RegisterJavascript("MixERPMasterPage", script, this.Page, true);
         }

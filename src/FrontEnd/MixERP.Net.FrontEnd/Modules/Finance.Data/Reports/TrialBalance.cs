@@ -26,7 +26,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
 {
     public static class TrialBalance
     {
-        public static DataTable GetTrialBalance(DateTime from, DateTime to, int userId, int officeId, bool compact, decimal factor, bool changeSideWhenNegative, bool includeZeroBalanceAccounts)
+        public static DataTable GetTrialBalance(string catalog, DateTime from, DateTime to, int userId, int officeId, bool compact, decimal factor, bool changeSideWhenNegative, bool includeZeroBalanceAccounts)
         {
             if (to < from)
             {
@@ -45,7 +45,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
                 command.Parameters.AddWithValue("@ChangeSideWhenNegative", changeSideWhenNegative);
                 command.Parameters.AddWithValue("@IncludeZeroBalanceAccounts", includeZeroBalanceAccounts);
 
-                return DbOperation.GetDataTable(command);
+                return DbOperation.GetDataTable(catalog, command);
             }
         }
     }

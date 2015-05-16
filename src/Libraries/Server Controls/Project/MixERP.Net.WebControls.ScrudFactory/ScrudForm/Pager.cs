@@ -30,7 +30,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         private void CreatePager(Control container)
         {
             int pageSize = this.GetPageSize();
-            int totalRecords = FormHelper.GetTotalRecords(this.ViewSchema, this.View);
+            int totalRecords = FormHelper.GetTotalRecords(this.Catalog, this.ViewSchema, this.View);
 
             int currentPage = Conversion.TryCastInteger(this.Page.Request.QueryString["page"]);
             if (currentPage.Equals(0))

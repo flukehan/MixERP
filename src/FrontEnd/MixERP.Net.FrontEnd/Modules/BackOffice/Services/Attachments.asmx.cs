@@ -51,7 +51,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
 
                 if (AppUsers.GetCurrentLogin().View.UserId.ToInt() > 0)
                 {
-                    return this.DeleteImage(Data.Attachments.DeleteReturningPath(id));
+                    return this.DeleteImage(Data.Attachments.DeleteReturningPath(AppUsers.GetDatabase(), id));
                 }
 
                 return false;
@@ -76,7 +76,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
                 throw new ArgumentNullException("id");
             }
 
-            return Data.Attachments.GetAttachments("/Resource/Static/Attachments/", book, id);
+            return Data.Attachments.GetAttachments(AppUsers.GetDatabase(), "/Resource/Static/Attachments/", book, id);
         }
 
         [WebMethod]
@@ -102,7 +102,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
                 Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
                 int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
 
-                return Data.Attachments.Save(userId, book, id, attachments);
+                return Data.Attachments.Save(AppUsers.GetDatabase(), userId, book, id, attachments);
             }
             catch (Exception ex)
             {

@@ -25,9 +25,10 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Core
 {
     public static class Workflow
     {
-        public static DbGetWorkflowModelResult GetWorkflowModel()
+        public static DbGetWorkflowModelResult GetWorkflowModel(string catalog)
         {
-            return Factory.Get<DbGetWorkflowModelResult>("SELECT * FROM core.get_workflow_model();").FirstOrDefault();
+            const string sql = "SELECT * FROM core.get_workflow_model();";
+            return Factory.Get<DbGetWorkflowModelResult>(catalog, sql).FirstOrDefault();
         }
     }
 }

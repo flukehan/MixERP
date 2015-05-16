@@ -23,8 +23,8 @@ using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.TransactionChecklist;
 
 namespace MixERP.Net.Core.Modules.Sales.Confirmation
 {
@@ -34,7 +34,7 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
         {
             long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
 
-            using (TransactionChecklistForm checklist = new TransactionChecklistForm())
+            using (CheckList checklist = new CheckList())
             {
                 checklist.ViewReportButtonText = Titles.ViewThisDelivery;
                 checklist.EmailReportButtonText = Titles.EmailThisDelivery;
@@ -55,7 +55,8 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
                 checklist.ViewPath = "/Modules/Sales/Delivery.mix";
                 checklist.AddNewPath = "/Modules/Sales/Entry/Delivery.mix";
                 checklist.UserId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(TranBook.Sales, SubTranBook.Delivery, transactionMasterId);
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetDatabase(),
+                    TranBook.Sales, SubTranBook.Delivery, transactionMasterId);
                 checklist.RestrictedTransactionMode = this.IsRestrictedMode;
 
                 this.Placeholder1.Controls.Add(checklist);

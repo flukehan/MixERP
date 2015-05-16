@@ -34,7 +34,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 {
     internal static class ScrudDropDownList
     {
-        internal static void AddDropDownList(HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, bool useDisplayViewsAsParent, string selectedValues, string errorCssClass, bool disabled)
+        internal static void AddDropDownList(string catalog, HtmlTable htmlTable, string resourceClassName, string itemSelectorPath, string columnName, bool isNullable, string tableSchema, string tableName, string tableColumn, string defaultValue, string displayFields, string displayViews, bool useDisplayViewsAsParent, string selectedValues, string errorCssClass, bool disabled)
         {
             string label = ScrudLocalizationHelper.GetResourceString(resourceClassName, columnName);
 
@@ -45,7 +45,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
                     dropDownList.Attributes.Add("disabled", "disabled");
                 }
 
-                using (DataTable table = GetTable(tableSchema, tableName, tableColumn, displayViews, useDisplayViewsAsParent))
+                using (DataTable table = GetTable(catalog, tableSchema, tableName, tableColumn, displayViews, useDisplayViewsAsParent))
                 {
                     SetDisplayFields(dropDownList, table, tableSchema, tableName, tableColumn, displayFields);
 
@@ -171,7 +171,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
             }
         }
 
-        private static DataTable GetTable(string tableSchema, string tableName, string tableColumn, string displayViews, bool useDisplayViewsAsParent)
+        private static DataTable GetTable(string catalog, string tableSchema, string tableName, string tableColumn, string displayViews, bool useDisplayViewsAsParent)
         {
             if (useDisplayViewsAsParent)
             {
@@ -188,13 +188,13 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.ListControls
 
                 if (string.IsNullOrWhiteSpace(schema) || string.IsNullOrWhiteSpace(view))
                 {
-                    return FormHelper.GetTable(tableSchema, tableName, "1");
+                    return FormHelper.GetTable(catalog, tableSchema, tableName, "1");
                 }
 
-                return FormHelper.GetTable(schema, view, "1");
+                return FormHelper.GetTable(catalog, schema, view, "1");
             }
 
-            return FormHelper.GetTable(tableSchema, tableName, "1");
+            return FormHelper.GetTable(catalog, tableSchema, tableName, "1");
         }
 
         private static void SetDisplayFields(DropDownList dropDownList, DataTable table, string tableSchema, string tableName, string tableColumn, string displayFields)

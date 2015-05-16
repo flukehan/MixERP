@@ -40,9 +40,10 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         public Collection<ListItem> GetBankAccounts()
         {
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (BankAccount bankAccount in Data.Helpers.Accounts.GetBankAccounts(officeId))
+            foreach (BankAccount bankAccount in Data.Helpers.Accounts.GetBankAccounts(AppUsers.GetDatabase(), officeId))
             {
                 values.Add(new ListItem(bankAccount.BankName + " (" + bankAccount.BankAccountNumber + ")", bankAccount.AccountId.ToString(CultureInfo.InvariantCulture)));
             }
@@ -55,14 +56,14 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            bool isMerchantAccount = Data.Helpers.Accounts.IsMerchantAccount(merchantAccountId);
+            bool isMerchantAccount = Data.Helpers.Accounts.IsMerchantAccount(AppUsers.GetDatabase(), merchantAccountId);
 
             if (!isMerchantAccount)
             {
                 return values;
             }
 
-            foreach (PaymentCard card in Data.Helpers.Accounts.GetPaymentCards())
+            foreach (PaymentCard card in Data.Helpers.Accounts.GetPaymentCards(AppUsers.GetDatabase()))
             {
                 values.Add(new ListItem(card.PaymentCardName, card.PaymentCardId.ToString(CultureInfo.InvariantCulture)));
             }
@@ -73,7 +74,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         [WebMethod]
         public MerchantFeeSetup GetMerchantFeeSetup(long merchantAccountId, int paymentCardId)
         {
-            return Data.Helpers.Accounts.GetMerchantFeeSetup(merchantAccountId, paymentCardId);
+            return Data.Helpers.Accounts.GetMerchantFeeSetup(AppUsers.GetDatabase(), merchantAccountId, paymentCardId);
         }
 
 
@@ -83,7 +84,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (CashRepository cashRepository in Data.Helpers.Accounts.GetCashRepositories(officeId))
+            foreach (CashRepository cashRepository in Data.Helpers.Accounts.GetCashRepositories(AppUsers.GetDatabase(), officeId))
             {
                 values.Add(new ListItem(cashRepository.CashRepositoryName, cashRepository.CashRepositoryId.ToString(CultureInfo.InvariantCulture)));
             }
@@ -97,7 +98,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
             Collection<ListItem> values = new Collection<ListItem>();
 
 
-            foreach (CostCenter costCenter in Data.Helpers.Accounts.GetCostCenters())
+            foreach (CostCenter costCenter in Data.Helpers.Accounts.GetCostCenters(AppUsers.GetDatabase()))
             {
                 values.Add(new ListItem(costCenter.CostCenterName, costCenter.CostCenterId.ToString(CultureInfo.InvariantCulture)));
             }
@@ -110,7 +111,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (FlagType flagType in Data.Helpers.Accounts.GetFlagTypes())
+            foreach (FlagType flagType in Data.Helpers.Accounts.GetFlagTypes(AppUsers.GetDatabase()))
             {
                 values.Add(new ListItem(flagType.FlagTypeName, flagType.FlagTypeId.ToString(CultureInfo.InvariantCulture)));
             }

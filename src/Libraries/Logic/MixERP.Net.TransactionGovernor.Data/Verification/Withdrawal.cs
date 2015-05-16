@@ -24,7 +24,7 @@ namespace MixERP.Net.TransactionGovernor.Data.Verification
 {
     public static class Withdrawal
     {
-        public static bool WithdrawTransaction(long transactionMasterId, int userId, string reason, short status)
+        public static bool WithdrawTransaction(string catalog, long transactionMasterId, int userId, string reason, short status)
         {
             const string sql = "UPDATE transactions.transaction_master SET verification_status_id=@Status, verified_by_user_id=@UserId, verification_reason=@Reason WHERE transactions.transaction_master.transaction_master_id=@TransactionMasterId;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
@@ -34,7 +34,7 @@ namespace MixERP.Net.TransactionGovernor.Data.Verification
                 command.Parameters.AddWithValue("@Reason", reason);
                 command.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
 
-                return DbOperation.ExecuteNonQuery(command);
+                return DbOperation.ExecuteNonQuery(catalog, command);
             }
         }
     }

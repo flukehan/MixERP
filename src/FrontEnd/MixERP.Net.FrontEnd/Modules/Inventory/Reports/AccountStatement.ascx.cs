@@ -66,7 +66,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
             {
                 if (itemId > 0)
                 {
-                    itemCode = Items.GetItemCodeByItemId(itemId);
+                    itemCode = Items.GetItemCodeByItemId(AppUsers.GetDatabase(), itemId);
 
                     this.itemCodeInputText.Value = itemCode;
                 }
@@ -99,6 +99,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
                 flag.OnClientClick = "return getSelectedItems();";
                 flag.CssClass = "ui form segment initially hidden";
                 flag.Updated += this.Flag_Updated;
+                flag.Catalog = AppUsers.GetDatabase();
 
                 placeHolder.Controls.Add(flag);
             }
@@ -122,7 +123,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
 
             int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
 
-            Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
+            Flags.CreateFlag(AppUsers.GetDatabase(), userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
 
             this.BindGridView();
             this.CreateAccountOverviewPanel(this.accountOverviewTab);
@@ -448,6 +449,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
             this.fromDateTextBox = new DateTextBox();
             this.fromDateTextBox.ID = "FromDateTextBox";
             this.fromDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
+            this.fromDateTextBox.Catalog = AppUsers.GetDatabase();
             this.fromDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
             using (HtmlGenericControl field = this.GetDateField(Titles.From, this.fromDateTextBox))
@@ -480,8 +482,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
         {
             this.toDateTextBox = new DateTextBox();
             this.toDateTextBox.ID = "ToDateTextBox";
-            this.toDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
             this.toDateTextBox.Mode = FrequencyType.FiscalYearEndDate;
+            this.toDateTextBox.Catalog = AppUsers.GetDatabase();
+            this.toDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
             using (HtmlGenericControl field = this.GetDateField(Titles.To, this.toDateTextBox))
             {
@@ -507,7 +510,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
                 return;
             }
 
-            this.statementGridView.DataSource = StockItems.GetAccountStatement(from, to, userId, itemCode, storeId);
+            this.statementGridView.DataSource = StockItems.GetAccountStatement(AppUsers.GetDatabase(), from, to, userId, itemCode, storeId);
             this.statementGridView.DataBound += this.StatementGridViewDataBound;
             this.statementGridView.DataBind();
         }

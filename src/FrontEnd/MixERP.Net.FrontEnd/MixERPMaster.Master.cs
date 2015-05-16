@@ -30,7 +30,7 @@ namespace MixERP.Net.FrontEnd
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.CatalogLiteral.Text = AppUsers.GetCurrentLogin().Catalog;
+            this.CatalogLiteral.Text = AppUsers.GetDatabase();
             this.BranchNameLiteral.Text = AppUsers.GetCurrentLogin().View.OfficeName;
             this.SignOutLiteral.Text = Titles.SignOut;
             this.UserGreetingLiteral.Text = String.Format(CultureInfo.CurrentCulture, Labels.UserGreeting, AppUsers.GetCurrentLogin().View.UserName);

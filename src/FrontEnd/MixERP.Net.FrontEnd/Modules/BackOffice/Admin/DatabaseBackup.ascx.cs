@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
         {
             BinDirectory = ConfigurationHelper.GetDbServerParameter("PostgreSQLBinDirectory"),
             DatabaseBackupDirectory = ConfigurationHelper.GetDbServerParameter("DatabaseBackupDirectory"),
-            DatabaseName = AppUsers.GetCurrentLogin().Catalog,
+            DatabaseName = AppUsers.GetDatabase(),
             HostName = ConfigurationHelper.GetDbServerParameter("Server"),
             PortNumber = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port")),
             UserId = ConfigurationHelper.GetDbServerParameter("UserId"),
@@ -157,7 +157,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             using (HtmlInputButton backupButton = new HtmlInputButton())
             {
                 backupButton.Attributes.Add("class", "ui green button");
-                backupButton.Attributes.Add("onclick", "$('.modal').modal('show');");
+                backupButton.Attributes.Add("onclick", "$(\"#BackupModal\").modal(\"show\");");
                 backupButton.Value = Titles.ViewBackups;
                 container.Controls.Add(backupButton);
             }
@@ -225,7 +225,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             using (HtmlGenericControl largeModal = new HtmlGenericControl("div"))
             {
                 largeModal.Attributes.Add("class", "ui large modal");
-
+                largeModal.ID = "BackupModal";
                 this.CreateCloseIcon(largeModal);
                 this.CreateModalHeader(largeModal);
                 this.CreateModalContent(largeModal);

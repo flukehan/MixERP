@@ -24,9 +24,10 @@ namespace MixERP.Net.FrontEnd.Data.Core
 {
     public static class Widget
     {
-        public static IEnumerable<Entities.Core.Widget> GetWidgets()
+        public static IEnumerable<Entities.Core.Widget> GetWidgets(string catalog)
         {
-            return Factory.Get<Entities.Core.Widget>("SELECT * FROM core.widgets;");
+            const string sql = "SELECT * FROM core.widgets;";
+            return Factory.Get<Entities.Core.Widget>(catalog, sql);
         }
     }
 }

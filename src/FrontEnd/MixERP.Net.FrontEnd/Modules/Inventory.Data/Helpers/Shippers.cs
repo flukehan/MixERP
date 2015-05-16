@@ -25,9 +25,10 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
     public static class Shippers
     {
-        public static IEnumerable<Shipper> GetShippers()
+        public static IEnumerable<Shipper> GetShippers(string catalog)
         {
-            return Factory.Get<Shipper>("SELECT * FROM core.shippers ORDER BY shipper_id");
+            const string sql = "SELECT * FROM core.shippers ORDER BY shipper_id;";
+            return Factory.Get<Shipper>(catalog, sql);
         }
     }
 }

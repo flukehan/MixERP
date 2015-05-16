@@ -24,6 +24,7 @@ using System.Web.UI;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.FrontEnd.Dashboard
 {
@@ -37,7 +38,7 @@ namespace MixERP.Net.FrontEnd.Dashboard
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            IEnumerable<Widget> widgets = Data.Core.Widget.GetWidgets();
+            IEnumerable<Widget> widgets = Data.Core.Widget.GetWidgets(AppUsers.GetDatabase());
             this.LoadWidgets(widgets, this.WidgetPlaceholder, this.Page);
         }
 

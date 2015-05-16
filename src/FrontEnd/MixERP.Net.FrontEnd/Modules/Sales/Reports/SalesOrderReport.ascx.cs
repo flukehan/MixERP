@@ -20,9 +20,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Reflection;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ReportEngine;
+using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.Sales.Reports
 {
@@ -33,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Sales.Reports
             Collection<KeyValuePair<string, object>> list = new Collection<KeyValuePair<string, object>>();
             list.Add(new KeyValuePair<string, object>("@non_gl_stock_master_id", this.Page.Request["TranId"]));
 
-            using (Report report = new Report())
+            using (WebReport report = new WebReport())
             {
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);

@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public decimal CountItemInStock(string itemCode, int unitId, int storeId)
         {
-            return Items.CountItemInStock(itemCode, unitId, storeId);
+            return Items.CountItemInStock(AppUsers.GetDatabase(), itemCode, unitId, storeId);
         }
 
         [WebMethod]
@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             Collection<ListItem> values = new Collection<ListItem>();
 
 
-            foreach (Salesperson salesperson in Salespersons.GetSalespersons())
+            foreach (Salesperson salesperson in Salespersons.GetSalespersons(AppUsers.GetDatabase()))
             {
                 values.Add(new ListItem(salesperson.SalespersonName, salesperson.SalespersonId.ToString(DateTimeFormatInfo.InvariantInfo)));
             }
@@ -60,7 +60,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public string GetItemCodeByItemId(int itemId)
         {
-            return Items.GetItemCodeByItemId(itemId);
+            return Items.GetItemCodeByItemId(AppUsers.GetDatabase(), itemId);
         }
 
         [WebMethod]
@@ -84,7 +84,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (PaymentTerm paymentTerm in PaymentTerms.GetPaymentTerms())
+            foreach (PaymentTerm paymentTerm in PaymentTerms.GetPaymentTerms(AppUsers.GetDatabase()))
             {
                 values.Add(new ListItem(paymentTerm.PaymentTermName, paymentTerm.PaymentTermId.ToString(CultureInfo.InvariantCulture)));
             }
@@ -105,11 +105,11 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             switch (tranBook)
             {
                 case "Sales":
-                    price = Items.GetItemSellingPrice(itemCode, partyCode, priceTypeId, unitId);
+                    price = Items.GetItemSellingPrice(AppUsers.GetDatabase(), itemCode, partyCode, priceTypeId, unitId);
                     break;
 
                 case "Purchase":
-                    price = Items.GetItemCostPrice(itemCode, partyCode, unitId);
+                    price = Items.GetItemCostPrice(AppUsers.GetDatabase(), itemCode, partyCode, unitId);
                     break;
             }
 
@@ -122,7 +122,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             Collection<ListItem> values = new Collection<ListItem>();
 
 
-            foreach (PriceType priceType in PriceTypes.GetPriceTypes())
+            foreach (PriceType priceType in PriceTypes.GetPriceTypes(AppUsers.GetDatabase()))
             {
                 values.Add(new ListItem(priceType.PriceTypeName, priceType.PriceTypeId.ToString(CultureInfo.InvariantCulture)));
             }
@@ -135,7 +135,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (Shipper shipper in Shippers.GetShippers())
+            foreach (Shipper shipper in Shippers.GetShippers(AppUsers.GetDatabase()))
             {
                 values.Add(new ListItem(shipper.CompanyName, shipper.ShipperId.ToString(CultureInfo.InvariantCulture)));
             }
@@ -149,7 +149,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
             Collection<ListItem> values = new Collection<ListItem>();
 
-            IEnumerable<Store> stores = Stores.GetStores(officeId);
+            IEnumerable<Store> stores = Stores.GetStores(AppUsers.GetDatabase(), officeId);
 
             foreach (Store store in stores)
             {
@@ -162,7 +162,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public decimal GetTaxRate(string itemCode)
         {
-            return Items.GetTaxRate(itemCode);
+            return Items.GetTaxRate(AppUsers.GetDatabase(), itemCode);
         }
 
         [WebMethod]
@@ -170,7 +170,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Units.GetUnitViewByItemCode(itemCode))
+            using (DataTable table = Units.GetUnitViewByItemCode(AppUsers.GetDatabase(), itemCode))
             {
                 foreach (DataRow dr in table.Rows)
                 {
@@ -184,26 +184,26 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public bool IsStockItem(string itemCode)
         {
-            return Items.IsStockItem(itemCode);
+            return Items.IsStockItem(AppUsers.GetDatabase(), itemCode);
         }
 
         [WebMethod]
         public bool ItemCodeExists(string itemCode)
         {
-            return Items.ItemExistsByCode(itemCode);
+            return Items.ItemExistsByCode(AppUsers.GetDatabase(), itemCode);
         }
 
         [WebMethod]
         public bool UnitNameExists(string unitName)
         {
-            return Units.UnitExistsByName(unitName);
+            return Units.UnitExistsByName(AppUsers.GetDatabase(), unitName);
         }
 
         private static Collection<ListItem> GetItems()
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (Item item in Items.GetItems())
+            foreach (Item item in Items.GetItems(AppUsers.GetDatabase()))
             {
                 values.Add(new ListItem(item.ItemName, item.ItemCode));
             }
@@ -215,7 +215,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (Item item in Items.GetStockItems())
+            foreach (Item item in Items.GetStockItems(AppUsers.GetDatabase()))
             {
                 values.Add(new ListItem(item.ItemName, item.ItemCode));
             }

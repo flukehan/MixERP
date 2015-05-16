@@ -24,6 +24,7 @@ using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Data.Core;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Finance.Widgets
@@ -92,7 +93,7 @@ namespace MixERP.Net.Core.Modules.Finance.Widgets
 
         private void CreateList(Control container)
         {
-            DbGetWorkflowModelResult model = Workflow.GetWorkflowModel();
+            DbGetWorkflowModelResult model = Workflow.GetWorkflowModel(AppUsers.GetDatabase());
 
             using (HtmlGenericControl ul = new HtmlGenericControl("ul"))
             {

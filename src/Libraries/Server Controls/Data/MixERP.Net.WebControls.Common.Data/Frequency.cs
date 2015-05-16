@@ -10,14 +10,14 @@ namespace MixERP.Net.WebControls.Common.Data
 {
     public static class Frequency
     {
-        public static ApplicationDateModel GetApplicationDates(int officeId)
+        public static ApplicationDateModel GetApplicationDates(string catalog, int officeId)
         {
             const string sql = "SELECT @OfficeId AS office_id, core.get_date(@OfficeId::integer) AS today, core.get_month_start_date(@OfficeId::integer) AS month_start_date,core.get_month_end_date(@OfficeId::integer) AS month_end_date, core.get_quarter_start_date(@OfficeId::integer) AS quarter_start_date, core.get_quarter_end_date(@OfficeId::integer) AS quarter_end_date, core.get_fiscal_half_start_date(@OfficeId::integer) AS fiscal_half_start_date, core.get_fiscal_half_end_date(@OfficeId::integer) AS fiscal_half_end_date, core.get_fiscal_year_start_date(@OfficeId::integer) AS fiscal_year_start_date, core.get_fiscal_year_end_date(@OfficeId::integer) AS fiscal_year_end_date;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
 
-                using (DataTable table = DbOperation.GetDataTable(command))
+                using (DataTable table = DbOperation.GetDataTable(catalog, command))
                 {
                     if (table != null && table.Rows != null && table.Rows.Count.Equals(1))
                     {
@@ -29,14 +29,14 @@ namespace MixERP.Net.WebControls.Common.Data
             return null;
         }
 
-        public static Collection<ApplicationDateModel> GetApplicationDates()
+        public static Collection<ApplicationDateModel> GetApplicationDates(string catalog)
         {
             Collection<ApplicationDateModel> applicationDates = new Collection<ApplicationDateModel>();
 
             const string sql = "SELECT office_id AS office_id, core.get_date(office_id) AS today, core.get_month_start_date(office_id) AS month_start_date,core.get_month_end_date(office_id) AS month_end_date, core.get_quarter_start_date(office_id) AS quarter_start_date, core.get_quarter_end_date(office_id) AS quarter_end_date, core.get_fiscal_half_start_date(office_id) AS fiscal_half_start_date, core.get_fiscal_half_end_date(office_id) AS fiscal_half_end_date, core.get_fiscal_year_start_date(office_id) AS fiscal_year_start_date, core.get_fiscal_year_end_date(office_id) AS fiscal_year_end_date FROM office.offices;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                using (DataTable table = DbOperation.GetDataTable(command))
+                using (DataTable table = DbOperation.GetDataTable(catalog, command))
                 {
                     if (table != null && table.Rows != null && table.Rows.Count > 0)
                     {
@@ -51,93 +51,93 @@ namespace MixERP.Net.WebControls.Common.Data
             return applicationDates;
         }
 
-        public static DateTime GetDate(int officeId)
+        public static DateTime GetDate(string catalog, int officeId)
         {
             const string sql = "SELECT core.get_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
-                return Conversion.TryCastDate(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastDate(DbOperation.GetScalarValue(catalog, command));
             }
         }
 
-        public static DateTime GetFiscalHalfEndDate(int officeId)
+        public static DateTime GetFiscalHalfEndDate(string catalog, int officeId)
         {
             const string sql = "SELECT core.get_fiscal_half_end_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
-                return Conversion.TryCastDate(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastDate(DbOperation.GetScalarValue(catalog, command));
             }
         }
 
-        public static DateTime GetFiscalHalfStartDate(int officeId)
+        public static DateTime GetFiscalHalfStartDate(string catalog, int officeId)
         {
             const string sql = "SELECT core.get_fiscal_half_start_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
-                return Conversion.TryCastDate(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastDate(DbOperation.GetScalarValue(catalog, command));
             }
         }
 
-        public static DateTime GetFiscalYearEndDate(int officeId)
+        public static DateTime GetFiscalYearEndDate(string catalog, int officeId)
         {
             const string sql = "SELECT core.get_fiscal_year_end_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
-                return Conversion.TryCastDate(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastDate(DbOperation.GetScalarValue(catalog, command));
             }
         }
 
-        public static DateTime GetFiscalYearStartDate(int officeId)
+        public static DateTime GetFiscalYearStartDate(string catalog, int officeId)
         {
             const string sql = "SELECT core.get_fiscal_year_start_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
-                return Conversion.TryCastDate(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastDate(DbOperation.GetScalarValue(catalog, command));
             }
         }
 
-        public static DateTime GetMonthEndtDate(int officeId)
+        public static DateTime GetMonthEndtDate(string catalog, int officeId)
         {
             const string sql = "SELECT core.get_month_end_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
-                return Conversion.TryCastDate(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastDate(DbOperation.GetScalarValue(catalog, command));
             }
         }
 
-        public static DateTime GetMonthStartDate(int officeId)
+        public static DateTime GetMonthStartDate(string catalog, int officeId)
         {
             const string sql = "SELECT core.get_month_start_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
-                return Conversion.TryCastDate(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastDate(DbOperation.GetScalarValue(catalog, command));
             }
         }
 
-        public static DateTime GetQuarterEndDate(int officeId)
+        public static DateTime GetQuarterEndDate(string catalog, int officeId)
         {
             const string sql = "SELECT core.get_quarter_end_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
-                return Conversion.TryCastDate(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastDate(DbOperation.GetScalarValue(catalog, command));
             }
         }
 
-        public static DateTime GetQuarterStartDate(int officeId)
+        public static DateTime GetQuarterStartDate(string catalog, int officeId)
         {
             const string sql = "SELECT core.get_quarter_start_date(@OfficeId::integer);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@OfficeId", officeId);
-                return Conversion.TryCastDate(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastDate(DbOperation.GetScalarValue(catalog, command));
             }
         }
 

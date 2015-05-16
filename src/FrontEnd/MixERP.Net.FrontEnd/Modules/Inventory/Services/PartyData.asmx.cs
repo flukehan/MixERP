@@ -57,7 +57,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (Party party in Parties.GetParties())
+            foreach (Party party in Parties.GetParties(AppUsers.GetDatabase()))
             {
                 values.Add(new ListItem(party.PartyName, party.PartyCode));
             }
@@ -67,26 +67,27 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public string GetPartyCodeByPartyId(int partyId)
         {
-            return Parties.GetPartyCodeByPartyId(partyId);
+            return Parties.GetPartyCodeByPartyId(AppUsers.GetDatabase(), partyId);
         }
 
         [WebMethod]
         public DbGetPartyTransactionSummaryResult GetPartyDue(string partyCode)
         {
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            return Parties.GetPartyDue(partyCode, officeId);
+
+            return Parties.GetPartyDue(AppUsers.GetDatabase(), officeId, partyCode);
         }
 
         [WebMethod]
         public PartyView GetPartyView(string partyCode)
         {
-            return Parties.GetPartyView(partyCode);
+            return Parties.GetPartyView(AppUsers.GetDatabase(), partyCode);
         }
 
         [WebMethod]
         public IEnumerable<ShippingAddress> GetShippingAddresses(string partyCode)
         {
-            return Parties.GetShippingAddresses(partyCode);
+            return Parties.GetShippingAddresses(AppUsers.GetDatabase(), partyCode);
         }
     }
 }

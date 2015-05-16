@@ -25,39 +25,17 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
     /// <summary>The sales tax helper class.</summary>
     public class SalesTax
     {
-        /// <summary>Gets sales tax rate depending upon the supplied parameters.</summary>
-        /// <param name="tranBook">           Name of the transaction book.</param>
-        /// <param name="storeId">            The store id.</param>
-        /// <param name="partyCode">          The party code.</param>
-        /// <param name="shippingAddressCode">The shipping address code.</param>
-        /// <param name="priceTypeId">        The price type id.</param>
-        /// <param name="itemCode">           The item code.</param>
-        /// <param name="price">              The price.</param>
-        /// <param name="quantity">           The quantity.</param>
-        /// <param name="discount">           The discount.</param>
-        /// <param name="shippingCharge">     The shipping charge.</param>
-        /// <param name="salesTaxId">         The sales tax id.</param>
-        /// <returns>The sales tax.</returns>
-        public static decimal GetSalesTax(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, decimal price, int quantity, decimal discount, decimal shippingCharge, int salesTaxId)
+        public static decimal GetSalesTax(string catalog, string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, decimal price, int quantity, decimal discount, decimal shippingCharge, int salesTaxId)
         {
             const string sql = "SELECT COALESCE(SUM(tax), 0) FROM transactions.get_sales_tax(@0::national character varying(12),@1::integer,@2::national character varying(12),@3::national character varying(12),@4::integer,@5::national character varying(12),@6::public.money_strict2,@7::public.integer_strict2,@8::public.money_strict2,@9::public.money_strict2,@10::integer);";
-            return Factory.Scalar<decimal>(sql, tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId);
+            return Factory.Scalar<decimal>(catalog, sql, tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId);
         }
 
-        /// <summary>Gets a collection of various sales tax associated with this office.</summary>
-        ///
-        /// <param name="tranBook">Name of the transaction book.</param>
-        /// <param name="officeId">The office on which sales tax are created.</param>
-        ///
-        /// <returns>
-        /// An enumerator that allows foreach to be used to process the sales taxes in this collection.
-        /// </returns>
-
-        public static IEnumerable<Entities.Core.SalesTax> GetSalesTaxes(string tranBook, int officeId)
+        public static IEnumerable<Entities.Core.SalesTax> GetSalesTaxes(string catalog, string tranBook, int officeId)
         {
             if (tranBook.ToUpperInvariant().Equals("SALES"))
             {
-                return Factory.Get<Entities.Core.SalesTax>("SELECT * FROM core.sales_taxes WHERE office_id=@0;", officeId);
+                return Factory.Get<Entities.Core.SalesTax>(catalog, "SELECT * FROM core.sales_taxes WHERE office_id=@0;", officeId);
             }
 
 
@@ -72,26 +50,13 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Tax
                                ") " +
                                "AND office_id=@0;";
 
-            return Factory.Get<Entities.Core.SalesTax>(sql, officeId);
+            return Factory.Get<Entities.Core.SalesTax>(catalog, sql, officeId);
         }
 
-        /// <summary>Gets the preferred SalesTaxId depending upon the supplied parameters.</summary>
-        ///
-        /// <param name="tranBook">           Name of the transaction book.</param>
-        /// <param name="storeId">            The store id.</param>
-        /// <param name="partyCode">          The party code.</param>
-        /// <param name="shippingAddressCode">The shipping address code.</param>
-        /// <param name="priceTypeId">        The price type id.</param>
-        /// <param name="itemCode">           The item code.</param>
-        /// <param name="unitId">             The unit id.</param>
-        /// <param name="price">              The price.</param>
-        ///
-        /// <returns>The sales tax identifier.</returns>
-
-        public static int GetSalesTaxId(string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, int unitId, decimal price)
+        public static int GetSalesTaxId(string catalog, string tranBook, int storeId, string partyCode, string shippingAddressCode, int priceTypeId, string itemCode, int unitId, decimal price)
         {
             const string sql = "SELECT transactions.get_sales_tax_id(@0::national character varying(12), @1::integer, @2::national character varying(12), @3::national character varying(12), @4::integer, @5::national character varying(12), @6::integer, @7::public.money_strict);";
-            return Factory.Scalar<int>(sql, tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price);
+            return Factory.Scalar<int>(catalog, sql, tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price);
         }
     }
 }

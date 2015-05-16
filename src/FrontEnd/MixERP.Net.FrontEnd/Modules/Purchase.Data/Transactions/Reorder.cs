@@ -66,12 +66,13 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
             return string.Join(",", detailCollection);
         }
 
-        public static IEnumerable<DbGetReorderViewFunctionResult> GetReorderView(int officeId)
+        public static IEnumerable<DbGetReorderViewFunctionResult> GetReorderView(string catalog, int officeId)
         {
-            return Factory.Get<DbGetReorderViewFunctionResult>("SELECT * FROM transactions.get_reorder_view_function(@0::integer);", officeId);
+            const string sql = "SELECT * FROM transactions.get_reorder_view_function(@0::integer);";
+            return Factory.Get<DbGetReorderViewFunctionResult>(catalog, sql, officeId);
         }
 
-        public static bool Save(long loginId, int userId, int officeId, Collection<Models.Reorder> details)
+        public static bool Save(string catalog, long loginId, int userId, int officeId, Collection<Models.Reorder> details)
         {
             string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_purhcase_reorder(transactions.get_value_date(@OfficeId::integer)::date, @LoginId::bigint, @UserId::integer, @OfficeId::integer, ARRAY[{0}]);", CreatePurchaseReorderTypeParameter(details));
 
@@ -82,7 +83,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddRange(AddPurchaseReorderTypeParameter(details).ToArray());
 
-                return DbOperation.ExecuteNonQuery(command);
+                return DbOperation.ExecuteNonQuery(catalog, command);
             }
         }
     }

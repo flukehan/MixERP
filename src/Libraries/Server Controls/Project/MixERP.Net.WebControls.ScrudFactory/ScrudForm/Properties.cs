@@ -190,6 +190,12 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
         public string SuccessCssClass { get; set; }
 
+
+        /// <summary>
+        /// The name of the database to perform CRUD operation against.
+        /// </summary>
+        public string Catalog { get; set; }
+
         /// <summary>
         ///     The name of the table to perform CRUD operation against.
         /// </summary>

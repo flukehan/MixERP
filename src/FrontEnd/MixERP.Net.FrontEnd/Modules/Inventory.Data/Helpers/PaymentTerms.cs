@@ -25,9 +25,10 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
     public static class PaymentTerms
     {
-        public static IEnumerable<PaymentTerm> GetPaymentTerms()
+        public static IEnumerable<PaymentTerm> GetPaymentTerms(string catalog)
         {
-            return Factory.Get<PaymentTerm>("SELECT * FROM core.payment_terms ORDER BY payment_term_id");
+            const string sql = "SELECT * FROM core.payment_terms ORDER BY payment_term_id;";
+            return Factory.Get<PaymentTerm>(catalog, sql);
         }
     }
 }

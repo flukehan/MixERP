@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Reflection;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.ReportEngine;
-/********************************************************************************
+﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -23,6 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
+
 namespace MixERP.Net.Core.Modules.Inventory.Reports
 {
     public partial class InventoryTransferReport : MixERPUserControl
@@ -32,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
             Collection<KeyValuePair<string, object>> list = new Collection<KeyValuePair<string, object>>();
             list.Add(new KeyValuePair<string, object>("@transaction_master_id", this.Page.Request["TranId"]));
 
-            using (Report report = new Report())
+            using (WebReport report = new WebReport())
             {
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
@@ -41,8 +41,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
 
                 this.Controls.Add(report);
             }
-
-            
         }
     }
 }

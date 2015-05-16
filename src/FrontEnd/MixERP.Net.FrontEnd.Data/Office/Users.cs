@@ -45,31 +45,25 @@ namespace MixERP.Net.FrontEnd.Data.Office
 
         public static GlobalLogin GetGloblalLogin(long globalLoginId)
         {
-            string catalog = GetDatabase(globalLoginId);
+            const string sql = "SELECT * FROM public.global_logins WHERE global_login_id=@0;";
+            GlobalLogin login = Factory.Get<GlobalLogin>(Factory.MetaDatabase, sql, globalLoginId).FirstOrDefault();
 
-            SignInView view =  Factory.Get<SignInView>(catalog, "SELECT * FROM office.sign_in_view WHERE login_id=@0;", globalLoginId).FirstOrDefault();
-
-            if (view != null)
+            if (login != null)
             {
-                GlobalLogin login = new GlobalLogin
-                {
-                    GlobalLoginId = globalLoginId,
-                    Catalog = catalog,
-                    LoginId = view.LoginId,
-                    View = view
-                };
+                string catalog = login.Catalog;
 
-                return login;
+                SignInView view =  Factory.Get<SignInView>(catalog, "SELECT * FROM office.sign_in_view WHERE login_id=@0;", login.LoginId).FirstOrDefault();
+
+                if (view != null)
+                {
+                    login.View = view;
+                    return login;
+                }
             }
 
             return null;
         }
 
-        public static string GetDatabase(long globalLoginId)
-        {
-            const string sql = "SELECT catalog FROM public.global_logins WHERE global_login_id=@0;";
-            return Factory.Scalar<string>(Factory.MetaDatabase, sql, globalLoginId);
-        }
 
         public static long SignIn(string catalog, int officeId, string userName, string password, string culture, bool remember,
             string challenge, HttpContext context)
@@ -79,7 +73,7 @@ namespace MixERP.Net.FrontEnd.Data.Office
                 string remoteAddress = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
                 string remoteUser = HttpContext.Current.Request.ServerVariables["REMOTE_USER"];
 
-                DbSignInResult result = SignIn(officeId, userName, password, context.Request.UserAgent, remoteAddress,
+                DbSignInResult result = SignIn(catalog, officeId, userName, password, context.Request.UserAgent, remoteAddress,
                     remoteUser, culture, challenge);
 
                 if (result.LoginId == 0)
@@ -104,13 +98,13 @@ namespace MixERP.Net.FrontEnd.Data.Office
             return Factory.Scalar<long>(Factory.MetaDatabase, sql, catalog, loginId);
         }
 
-        private static DbSignInResult SignIn(int officeId, string userName, string password, string browser,
+        private static DbSignInResult SignIn(string catalog, int officeId, string userName, string password, string browser,
             string remoteAddress, string remoteUser, string culture, string challenge)
         {
             const string sql =
                 "SELECT * FROM office.sign_in(@0::public.integer_strict, @1::text, @2::text, @3::text, @4::text, @5::text, @6::text, @7::text);";
 
-            return Factory.Get<DbSignInResult>(sql, officeId, userName, password, browser, remoteAddress, remoteUser,
+            return Factory.Get<DbSignInResult>(catalog, sql, officeId, userName, password, browser, remoteAddress, remoteUser,
                 culture, challenge).FirstOrDefault();
         }
     }

@@ -25,7 +25,7 @@ namespace MixERP.Net.TransactionGovernor
     public static class Flags
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flag")]
-        public static void CreateFlag(int userId, int flagTypeId, string resourceName, string resourceKey, Collection<string> resourceIds)
+        public static void CreateFlag(string catalog, int userId, int flagTypeId, string resourceName, string resourceKey, Collection<string> resourceIds)
         {
             if (userId <= 0)
             {
@@ -52,7 +52,7 @@ namespace MixERP.Net.TransactionGovernor
                 return;
             }
 
-            Data.Flags.CreateFlag(userId, flagTypeId, resourceName, resourceKey, resourceIds);
+            Data.Flags.CreateFlag(catalog, userId, flagTypeId, resourceName, resourceKey, resourceIds);
         }
     }
 }

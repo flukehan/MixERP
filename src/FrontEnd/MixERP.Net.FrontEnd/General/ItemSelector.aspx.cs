@@ -21,6 +21,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.ScrudFactory;
 
 namespace MixERP.Net.FrontEnd.General
@@ -40,6 +41,7 @@ namespace MixERP.Net.FrontEnd.General
                 selector.GridViewRowCssClass = "";
                 selector.GridViewAlternateRowCssClass = "alt";
                 selector.ResourceClassName = this.GetResourceClassName();
+                selector.Catalog = AppUsers.GetDatabase();
 
                 this.SelectorPlaceholder.Controls.Add(selector);
             }

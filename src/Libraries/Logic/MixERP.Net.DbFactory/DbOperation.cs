@@ -42,7 +42,7 @@ namespace MixERP.Net.DbFactory
         public EventHandler<DbNotificationArgs> Listen;
 
         [CLSCompliant(false)]
-        public static bool ExecuteNonQuery(NpgsqlCommand command)
+        public static bool ExecuteNonQuery(string catalog, NpgsqlCommand command)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace MixERP.Net.DbFactory
                 {
                     if (ValidateCommand(command))
                     {
-                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString(catalog)))
                         {
                             command.Connection = connection;
                             connection.Open();
@@ -88,7 +88,7 @@ namespace MixERP.Net.DbFactory
         }
 
         [CLSCompliant(false)]
-        public static NpgsqlDataAdapter GetDataAdapter(NpgsqlCommand command)
+        public static NpgsqlDataAdapter GetDataAdapter(string catalog, NpgsqlCommand command)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace MixERP.Net.DbFactory
                 {
                     if (ValidateCommand(command))
                     {
-                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString(catalog)))
                         {
                             command.Connection = connection;
 
@@ -123,7 +123,7 @@ namespace MixERP.Net.DbFactory
         }
 
         [CLSCompliant(false)]
-        public static NpgsqlDataReader GetDataReader(NpgsqlCommand command)
+        public static NpgsqlDataReader GetDataReader(string catalog, NpgsqlCommand command)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace MixERP.Net.DbFactory
                 {
                     if (ValidateCommand(command))
                     {
-                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString(catalog)))
                         {
                             command.Connection = connection;
                             command.Connection.Open();
@@ -155,13 +155,13 @@ namespace MixERP.Net.DbFactory
         }
 
         [CLSCompliant(false)]
-        public static DataSet GetDataSet(NpgsqlCommand command)
+        public static DataSet GetDataSet(string catalog, NpgsqlCommand command)
         {
             try
             {
                 if (ValidateCommand(command))
                 {
-                    using (NpgsqlDataAdapter adapter = GetDataAdapter(command))
+                    using (NpgsqlDataAdapter adapter = GetDataAdapter(catalog, command))
                     {
                         using (DataSet set = new DataSet())
                         {
@@ -227,17 +227,17 @@ namespace MixERP.Net.DbFactory
         }
 
         [CLSCompliant(false)]
-        public static DataTable GetDataTable(NpgsqlCommand command)
+        public static DataTable GetDataTable(string catalog, NpgsqlCommand command)
         {
-            return GetDataTable(command, DbConnection.GetConnectionString());
+            return GetDataTable(command, DbConnection.GetConnectionString(catalog));
         }
 
         [CLSCompliant(false)]
-        public static DataView GetDataView(NpgsqlCommand command)
+        public static DataView GetDataView(string catalog, NpgsqlCommand command)
         {
             if (ValidateCommand(command))
             {
-                using (DataView view = new DataView(GetDataTable(command)))
+                using (DataView view = new DataView(GetDataTable(catalog, command)))
                 {
                     return view;
                 }
@@ -247,7 +247,7 @@ namespace MixERP.Net.DbFactory
         }
 
         [CLSCompliant(false)]
-        public static object GetScalarValue(NpgsqlCommand command)
+        public static object GetScalarValue(string catalog, NpgsqlCommand command)
         {
             try
             {

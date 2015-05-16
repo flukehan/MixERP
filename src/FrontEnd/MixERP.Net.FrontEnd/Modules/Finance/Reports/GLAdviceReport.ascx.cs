@@ -21,12 +21,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Reflection;
 using MixERP.Net.Common;
 using MixERP.Net.Core.Modules.Finance.Data.Helpers;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.ReportEngine;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
 {
@@ -41,14 +41,16 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             {
                 if (!string.IsNullOrWhiteSpace(tranCode))
                 {
-                    tranId = Transaction.GetTranIdByTranCode(tranCode).ToString(CultureInfo.InvariantCulture);
+                    tranId =
+                        Transaction.GetTranIdByTranCode(AppUsers.GetDatabase(), tranCode)
+                            .ToString(CultureInfo.InvariantCulture);
                 }
             }
 
             Collection<KeyValuePair<string, object>> list = new Collection<KeyValuePair<string, object>>();
             list.Add(new KeyValuePair<string, object>("@transaction_master_id", tranId));
 
-            using (Report report = new Report())
+            using (WebReport report = new WebReport())
             {
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
@@ -58,8 +60,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
                 this.Placeholder1.Controls.Add(report);
             }
-
-            
         }
     }
 }

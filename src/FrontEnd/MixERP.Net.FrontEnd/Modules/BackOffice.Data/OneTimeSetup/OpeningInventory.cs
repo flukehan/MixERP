@@ -32,7 +32,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.OneTimeSetup
 {
     public static class OpeningInventory
     {
-        public static long Save(int officeId, int userId, long loginId, DateTime valueDate, string referenceNumber, string statementReference, Collection<OpeningStockType> details)
+        public static long Save(string catalog, int officeId, int userId, long loginId, DateTime valueDate, string referenceNumber, string statementReference, Collection<OpeningStockType> details)
         {
             if (details == null)
             {
@@ -59,7 +59,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.OneTimeSetup
 
                 command.Parameters.AddRange(AddOpeningStockParamter(details).ToArray());
 
-                long tranId = Conversion.TryCastLong(DbOperation.GetScalarValue(command));
+                long tranId = Conversion.TryCastLong(DbOperation.GetScalarValue(catalog, command));
                 return tranId;
             }
         }

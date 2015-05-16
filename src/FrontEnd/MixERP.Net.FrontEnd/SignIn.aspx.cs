@@ -76,7 +76,7 @@ namespace MixERP.Net.FrontEnd
         private void BindCompanies()
         {
             string catalogs = ConfigurationHelper.GetDbServerParameter("Catalogs");
-            string defaultCatalog = AppUsers.GetCurrentLogin().Catalog;
+            string defaultCatalog = AppUsers.GetDatabase();
 
             if (!string.IsNullOrWhiteSpace(catalogs))
             {
@@ -106,7 +106,7 @@ namespace MixERP.Net.FrontEnd
 
         private void BindBranchDropDownList()
         {
-            IEnumerable<DbGetOfficesResult> offices = Offices.GetOffices();
+            IEnumerable<DbGetOfficesResult> offices = Offices.GetOffices(AppUsers.GetDatabase());
 
             this.branchSelect.DataSource = offices;
             this.branchSelect.DataBind();

@@ -38,8 +38,8 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
                 flag.AssociatedControlId = "FlagButton";
                 flag.OnClientClick = "return getSelectedItems();";
                 flag.CssClass = "ui form segment initially hidden";
-
                 flag.Updated += this.Flag_Updated;
+                flag.Catalog = this.Catalog;
 
                 contianer.Controls.Add(flag);
             }
@@ -63,7 +63,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
             }
 
 
-            Flags.CreateFlag(this.UserId, flagTypeId, resource, resourceKey, this.GetSelectedValues().Select(t => Conversion.TryCastString(t)).ToList().ToCollection());
+            Flags.CreateFlag(this.Catalog, this.UserId, flagTypeId, resource, resourceKey, this.GetSelectedValues().Select(t => Conversion.TryCastString(t)).ToList().ToCollection());
 
             this.LoadGridView();
         }

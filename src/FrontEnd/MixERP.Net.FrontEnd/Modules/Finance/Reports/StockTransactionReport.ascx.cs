@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Reflection;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.ReportEngine;
 
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
@@ -34,7 +33,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             Collection<KeyValuePair<string, object>> list = new Collection<KeyValuePair<string, object>>();
             list.Add(new KeyValuePair<string, object>("@transaction_master_id", this.Page.Request["TranId"]));
 
-            using (Report report = new Report())
+            using (WebReport report = new WebReport())
             {
                 report.AddParameterToCollection(list);
                 report.AddParameterToCollection(list);
@@ -44,8 +43,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
                 this.Controls.Add(report);
             }
-
-            
         }
     }
 }

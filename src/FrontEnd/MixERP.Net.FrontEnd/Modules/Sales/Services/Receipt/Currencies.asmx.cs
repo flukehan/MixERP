@@ -36,7 +36,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         {
             System.Collections.ObjectModel.Collection<System.Web.UI.WebControls.ListItem> values = new System.Collections.ObjectModel.Collection<System.Web.UI.WebControls.ListItem>();
 
-            foreach (Currency currency in Data.Helpers.Currencies.GetCurrencies())
+            foreach (Currency currency in Data.Helpers.Currencies.GetCurrencies(AppUsers.GetDatabase()))
             {
                 values.Add(new System.Web.UI.WebControls.ListItem(currency.CurrencyCode, currency.CurrencyCode));
             }
@@ -64,7 +64,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
-            decimal exchangeRate = Data.Helpers.Transaction.GetExchangeRate(officeId, sourceCurrencyCode, destinationCurrencyCode);
+            decimal exchangeRate = Data.Helpers.Transaction.GetExchangeRate(AppUsers.GetDatabase(), officeId, sourceCurrencyCode, destinationCurrencyCode);
 
             return exchangeRate;
         }
@@ -73,7 +73,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         public string GetHomeCurrency()
         {
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            return Data.Helpers.Currencies.GetHomeCurrency(officeId);
+            return Data.Helpers.Currencies.GetHomeCurrency(AppUsers.GetDatabase(), officeId);
         }
     }
 }

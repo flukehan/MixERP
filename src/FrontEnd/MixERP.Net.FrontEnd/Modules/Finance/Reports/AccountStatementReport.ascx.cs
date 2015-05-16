@@ -21,13 +21,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Reflection;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.ReportEngine;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
 {
@@ -54,7 +53,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             parameter2.Add(new KeyValuePair<string, object>("@AccountNumber", accountNumber));
             parameter2.Add(new KeyValuePair<string, object>("@OfficeId", officeId.ToString(CultureInfo.InvariantCulture)));
 
-            using (Report report = new Report())
+            using (WebReport report = new WebReport())
             {
                 report.AddParameterToCollection(parameter1);
                 report.AddParameterToCollection(parameter2);
@@ -64,8 +63,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
                 this.Placeholder1.Controls.Add(report);
             }
-
-            
         }
     }
 }

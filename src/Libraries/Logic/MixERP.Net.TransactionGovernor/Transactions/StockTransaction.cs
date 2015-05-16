@@ -21,44 +21,44 @@ namespace MixERP.Net.TransactionGovernor.Transactions
 {
     public static class StockTransaction
     {
-        public static bool IsValidPartyByStockMasterId(long stockMasterId, string partyCode)
+        public static bool IsValidPartyByStockMasterId(string catalog, long stockMasterId, string partyCode)
         {
             if (stockMasterId <= 0 || string.IsNullOrWhiteSpace(partyCode))
             {
                 return false;
             }
 
-            return Data.Transactions.StockTransaction.IsValidPartyByStockMasterId(stockMasterId, partyCode);
+            return Data.Transactions.StockTransaction.IsValidPartyByStockMasterId(catalog, stockMasterId, partyCode);
         }
 
-        public static bool IsValidPartyByTransactionMasterId(long transactionMasterId, string partyCode)
+        public static bool IsValidPartyByTransactionMasterId(string catalog, long transactionMasterId, string partyCode)
         {
             if (transactionMasterId <= 0 || string.IsNullOrWhiteSpace(partyCode))
             {
                 return false;
             }
 
-            return Data.Transactions.StockTransaction.IsValidPartyByTransactionMasterId(transactionMasterId, partyCode);
+            return Data.Transactions.StockTransaction.IsValidPartyByTransactionMasterId(catalog, transactionMasterId, partyCode);
         }
 
-        public static bool IsValidStockTransactionByStockMasterId(long stockMasterId)
+        public static bool IsValidStockTransactionByStockMasterId(string catalog, long stockMasterId)
         {
             if (stockMasterId <= 0)
             {
                 return false;
             }
 
-            return Data.Transactions.StockTransaction.IsValidStockTransactionByStockMasterId(stockMasterId);
+            return Data.Transactions.StockTransaction.IsValidStockTransactionByStockMasterId(catalog, stockMasterId);
         }
 
-        public static bool IsValidStockTransactionByTransactionMasterId(long transactionMasterId)
+        public static bool IsValidStockTransactionByTransactionMasterId(string catalog, long transactionMasterId)
         {
             if (transactionMasterId <= 0)
             {
                 return false;
             }
 
-            return Data.Transactions.StockTransaction.IsValidStockTransaction(transactionMasterId);
+            return Data.Transactions.StockTransaction.IsValidStockTransaction(catalog, transactionMasterId);
         }
 
     }

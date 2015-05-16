@@ -33,11 +33,13 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
     public class TransactionPosting : WebService
     {
         [WebMethod]
-        public long Save(string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, long bankAccountId, int paymentCardId, string bankInstrumentCode, string bankTransactionCode)
+        public long Save(string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate,
+            decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId,
+            int cashRepositoryId, DateTime? postedDate, long bankAccountId, int paymentCardId, string bankInstrumentCode,
+            string bankTransactionCode)
         {
             try
             {
-
                 if (string.IsNullOrWhiteSpace(partyCode))
                 {
                     throw new ArgumentNullException("partyCode");
@@ -86,13 +88,19 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
             }
         }
 
-        private static long PostTransaction(string partyCode, string currencyCode, decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, long bankAccountId, int paymentCardId, string bankInstrumentCode, string bankTransactionCode)
+        private static long PostTransaction(string partyCode, string currencyCode, decimal amount,
+            decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber, string statementReference,
+            int costCenterId, int cashRepositoryId, DateTime? postedDate, long bankAccountId, int paymentCardId,
+            string bankInstrumentCode, string bankTransactionCode)
         {
             int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
             long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
 
-            long transactionMasterID = Data.Transactions.Receipt.PostTransaction(userId, officeId, loginId, partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate, referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId, paymentCardId, bankInstrumentCode, bankTransactionCode);
+            long transactionMasterID = Data.Transactions.Receipt.PostTransaction(AppUsers.GetDatabase(), userId,
+                officeId, loginId, partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate,
+                referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId,
+                paymentCardId, bankInstrumentCode, bankTransactionCode);
 
             return transactionMasterID;
         }

@@ -32,9 +32,10 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
         /// An enumerator that allows foreach to be used to process the users in this collection.
         /// </returns>
 
-        public static IEnumerable<Entities.Office.Office> GetOffices()
+        public static IEnumerable<Entities.Office.Office> GetOffices(string catalog)
         {
-            return Factory.Get<Entities.Office.Office>("SELECT * FROM office.offices ORDER BY office_id;");
+            const string sql = "SELECT * FROM office.offices ORDER BY office_id;";
+            return Factory.Get<Entities.Office.Office>(catalog, sql);
         }
     }
 }

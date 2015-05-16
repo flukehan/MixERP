@@ -45,7 +45,7 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
             {
                 grid.ID = "SalesByGeographyGridView";
                 grid.CssClass = "initially hidden";
-                grid.DataSource = SalesByGeography.GetSalesByCountry();
+                grid.DataSource = SalesByGeography.GetSalesByCountry(AppUsers.GetDatabase());
                 grid.DataBind();
 
                 container.Controls.Add(grid);

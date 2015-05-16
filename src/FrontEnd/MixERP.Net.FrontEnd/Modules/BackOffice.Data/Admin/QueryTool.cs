@@ -26,9 +26,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
     [Obsolete]
     public static class QueryTool
     {
-        public static DataTable GetDataTable(NpgsqlCommand command)
+        public static DataTable GetDataTable(string catalog, NpgsqlCommand command)
         {
-            return DbFactory.DbOperation.GetDataTable(command);
+            return DbFactory.DbOperation.GetDataTable(catalog, command);
         }
     }
 }

@@ -12,29 +12,30 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
 {
     public static class Attachments
     {
-        public static string DeleteReturningPath(long id)
+        public static string DeleteReturningPath(string catalog, long id)
         {
             const string sql = "DELETE from core.attachments WHERE attachment_id=@AttachmentId RETURNING file_path;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@AttachmentId", id);
 
-                return Conversion.TryCastString(DbOperation.GetScalarValue(command));
+                return Conversion.TryCastString(DbOperation.GetScalarValue(catalog, command));
             }
         }
 
-        public static IEnumerable<Attachment> GetAttachments(string attachmentDirectory, string book, long id)
+        public static IEnumerable<Attachment> GetAttachments(string catalog, string attachmentDirectory, string book, long id)
         {
-            return Factory.Get<Attachment>("SELECT attachment_id, user_id, resource, resource_key, resource_id, original_file_name, file_extension, @0 || file_path as file_path, comment, added_on FROM core.attachments WHERE resource || resource_key=core.get_attachment_lookup_info(@1) AND resource_id=@2;", attachmentDirectory, book, id);
+            const string sql = "SELECT attachment_id, user_id, resource, resource_key, resource_id, original_file_name, file_extension, @0 || file_path as file_path, comment, added_on FROM core.attachments WHERE resource || resource_key=core.get_attachment_lookup_info(@1) AND resource_id=@2;";
+            return Factory.Get<Attachment>(catalog, sql, attachmentDirectory, book, id);
         }
 
-        public static bool Save(int userId, string book, long id, Collection<Attachment> attachments)
+        public static bool Save(string catalog, int userId, string book, long id, Collection<Attachment> attachments)
         {
             const string sql = "INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) " +
                                "SELECT @UserId, core.attachment_lookup.resource, core.attachment_lookup.resource_key, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment" +
                                " FROM core.attachment_lookup WHERE book=@Book;";
 
-            using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString(catalog)))
             {
                 connection.Open();
 

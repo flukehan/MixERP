@@ -28,14 +28,16 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
     public static class Parties
     {
-        public static IEnumerable<Party> GetParties()
+        public static IEnumerable<Party> GetParties(string catalog)
         {
-            return Factory.Get<Party>("SELECT * FROM core.parties ORDER BY party_id;");
+            const string sql = "SELECT * FROM core.parties ORDER BY party_id;";
+            return Factory.Get<Party>(catalog, sql);
         }
 
-        public static string GetPartyCodeByPartyId(int partyId)
+        public static string GetPartyCodeByPartyId(string catalog, int partyId)
         {
-            Party party = Factory.Get<Party>("SELECT party_code FROM core.parties WHERE party_id=@0;", partyId).FirstOrDefault();
+            const string sql = "SELECT party_code FROM core.parties WHERE party_id=@0;";
+            Party party = Factory.Get<Party>(catalog, sql, partyId).FirstOrDefault();
 
             if (party != null)
             {
@@ -45,24 +47,24 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             return string.Empty;
         }
 
-        public static DbGetPartyTransactionSummaryResult GetPartyDue(string partyCode, int officeId)
+        public static PartyView GetPartyView(string catalog, string partyCode)
         {
-            return GetPartyDue(officeId, partyCode);
+            const string sql = "SELECT * FROM core.party_view WHERE party_code=@0 ORDER BY party_id";
+            return Factory.Get<PartyView>(catalog, sql, partyCode).FirstOrDefault();
         }
 
-        public static PartyView GetPartyView(string partyCode)
+        public static IEnumerable<ShippingAddress> GetShippingAddresses(string catalog, string partyCode)
         {
-            return Factory.Get<PartyView>("SELECT * FROM core.party_view WHERE party_code=@0 ORDER BY party_id", partyCode).FirstOrDefault();
+            const string sql =
+                "SELECT * FROM core.shipping_addresses WHERE party_id=core.get_party_id_by_party_code(@0);";
+            return Factory.Get<ShippingAddress>(catalog, sql, partyCode);
         }
 
-        public static IEnumerable<ShippingAddress> GetShippingAddresses(string partyCode)
+        public static DbGetPartyTransactionSummaryResult GetPartyDue(string catalog, int officeId, string partyCode)
         {
-            return Factory.Get<ShippingAddress>("SELECT * FROM core.shipping_addresses WHERE party_id=core.get_party_id_by_party_code(@0);", partyCode);
-        }
-
-        private static DbGetPartyTransactionSummaryResult GetPartyDue(int officeId, string partyCode)
-        {
-            return Factory.Get<DbGetPartyTransactionSummaryResult>("SELECT * FROM transactions.get_party_transaction_summary(@0::integer, core.get_party_id_by_party_code(@1)::bigint);", officeId, partyCode).FirstOrDefault();
+            const string sql =
+                "SELECT * FROM transactions.get_party_transaction_summary(@0::integer, core.get_party_id_by_party_code(@1)::bigint);";
+            return Factory.Get<DbGetPartyTransactionSummaryResult>(catalog, sql, officeId, partyCode).FirstOrDefault();
         }
     }
 }

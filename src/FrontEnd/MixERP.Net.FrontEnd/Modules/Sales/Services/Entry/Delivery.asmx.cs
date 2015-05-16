@@ -48,16 +48,16 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 
                 Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
-                if (!Data.Helpers.Stores.IsSalesAllowed(storeId))
+                if (!Data.Helpers.Stores.IsSalesAllowed(AppUsers.GetDatabase(), storeId))
                 {
                     throw new InvalidOperationException("Sales is not allowed here.");
                 }
 
                 foreach (StockDetail model in details)
                 {
-                    if (Data.Helpers.Items.IsStockItem(model.ItemCode))
+                    if (Data.Helpers.Items.IsStockItem(AppUsers.GetDatabase(), model.ItemCode))
                     {
-                        decimal available = Data.Helpers.Items.CountItemInStock(model.ItemCode, model.UnitName, model.StoreId);
+                        decimal available = Data.Helpers.Items.CountItemInStock(AppUsers.GetDatabase(), model.ItemCode, model.UnitName, model.StoreId);
 
                         if (available < model.Quantity)
                         {
@@ -78,7 +78,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                 int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
 
-                return Data.Transactions.Delivery.Add(officeId, userId, loginId, valueDate, storeId, partyCode, priceTypeId, paymentTermId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, salespersonId, statementReference, tranIds, attachments, nonTaxable);
+                return Data.Transactions.Delivery.Add(AppUsers.GetDatabase(), officeId, userId, loginId, valueDate, storeId, partyCode, priceTypeId, paymentTermId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, salespersonId, statementReference, tranIds, attachments, nonTaxable);
             }
             catch (Exception ex)
             {

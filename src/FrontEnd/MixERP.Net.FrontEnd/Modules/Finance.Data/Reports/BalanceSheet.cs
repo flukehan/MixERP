@@ -26,7 +26,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
 {
     public static class BalanceSheet
     {
-        public static DataTable GetBalanceSheet(DateTime previousPeriod, DateTime currentPeriod, int userId, int officeId, int factor)
+        public static DataTable GetBalanceSheet(string catalog, DateTime previousPeriod, DateTime currentPeriod, int userId, int officeId, int factor)
         {
             const string sql = "SELECT * FROM transactions.get_balance_sheet(@Previous::date, @Current::date, @UserId::integer, @OfficeId::integer, @Factor::integer)";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddWithValue("@Factor", factor);
 
-                return DbOperation.GetDataTable(command);
+                return DbOperation.GetDataTable(catalog, command);
             }
         }
     }

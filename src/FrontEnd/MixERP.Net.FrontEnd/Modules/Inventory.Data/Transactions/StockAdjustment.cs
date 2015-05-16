@@ -31,7 +31,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Transactions
 {
     public static class StockAdjustment
     {
-        public static long Add(int officeId, int userId, long loginId, DateTime valueDate, string referenceNumber, string statementReference, Collection<StockAdjustmentDetail> details)
+        public static long Add(string catalog, int officeId, int userId, long loginId, DateTime valueDate, string referenceNumber, string statementReference, Collection<StockAdjustmentDetail> details)
         {
             string detailParameter = ParameterHelper.CreateStockTransferModelParameter(details);
             string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_stock_adjustment(@OfficeId::integer, @UserId::integer, @LoginId::bigint, @ValueDate::date, @ReferenceNumber::national character varying(24), @StatementReference::text, ARRAY[{0}]);", detailParameter);
@@ -46,7 +46,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Transactions
                 command.Parameters.AddWithValue("@StatementReference", statementReference);
                 command.Parameters.AddRange(ParameterHelper.AddStockTransferModelParameter(details).ToArray());
 
-                long tranId = Conversion.TryCastLong(DbOperation.GetScalarValue(command));
+                long tranId = Conversion.TryCastLong(DbOperation.GetScalarValue(catalog, command));
                 return tranId;
             }
         }

@@ -79,7 +79,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             DateTime transactionDate = DateTime.Now;
             long transactionMasterId = Conversion.TryCastLong(tranId);
 
-            Entities.Models.Transactions.Verification model = Verification.GetVerificationStatus(transactionMasterId);
+            Entities.Models.Transactions.Verification model = Verification.GetVerificationStatus(this.Catalog, transactionMasterId);
             if (
                 model.VerificationStatusId.Equals(0) //Awaiting verification
                 ||
@@ -89,7 +89,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 //Withdraw this transaction.
                 if (transactionMasterId > 0)
                 {
-                    if (Verification.WithdrawTransaction(transactionMasterId, this.UserId, this.reasonTextBox.Text))
+                    if (Verification.WithdrawTransaction(this.Catalog, transactionMasterId, this.UserId, this.reasonTextBox.Text))
                     {
                         this.messageLabel.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionWithdrawnMessage, transactionDate.ToShortDateString());
                         this.messageLabel.CssClass = "ui block message yellow vpad12";

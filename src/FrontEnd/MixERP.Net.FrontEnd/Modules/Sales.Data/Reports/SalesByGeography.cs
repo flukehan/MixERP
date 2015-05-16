@@ -25,9 +25,10 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Reports
 {
     public class SalesByGeography
     {
-        public static IEnumerable<SalesByCountryView> GetSalesByCountry()
+        public static IEnumerable<SalesByCountryView> GetSalesByCountry(string catalog)
         {
-            return Factory.Get<SalesByCountryView>("SELECT * FROM transactions.sales_by_country_view");
+            const string sql = "SELECT * FROM transactions.sales_by_country_view;";
+            return Factory.Get<SalesByCountryView>(catalog, sql);
         }
     }
 }

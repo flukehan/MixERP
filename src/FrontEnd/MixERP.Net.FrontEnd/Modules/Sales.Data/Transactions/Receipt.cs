@@ -25,7 +25,8 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     public static class Receipt
     {
-        public static long PostTransaction(int userId, int officeId, long loginId, string partyCode, string currencyCode,
+        public static long PostTransaction(string catalog, int userId, int officeId, long loginId, string partyCode,
+            string currencyCode,
             decimal amount, decimal debitExchangeRate, decimal creditExchangeRate, string referenceNumber,
             string statementReference, int costCenterId, int cashRepositoryId, DateTime? postedDate, long bankAccountId,
             int paymentCardId, string bankInstrumentCode, string bankTransactionCode)
@@ -113,7 +114,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
                 command.Parameters.AddWithValue("@BankInstrumentCode", bankInstrumentCode);
                 command.Parameters.AddWithValue("@BankTransactionCode", bankTransactionCode);
 
-                return Conversion.TryCastLong(DbFactory.DbOperation.GetScalarValue(command));
+                return Conversion.TryCastLong(DbFactory.DbOperation.GetScalarValue(catalog, command));
             }
         }
     }

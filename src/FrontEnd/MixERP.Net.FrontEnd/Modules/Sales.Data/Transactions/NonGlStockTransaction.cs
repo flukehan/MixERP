@@ -33,7 +33,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
 {
     internal static class NonGlStockTransaction
     {
-        internal static long Add(string book, DateTime valueDate, int officeId, int userId, long loginId, string referenceNumber, string statementReference, StockMaster stockMaster, Collection<StockDetail> details, Collection<long> transactionIdCollection, Collection<Attachment> attachments, bool nonTaxable)
+        internal static long Add(string catalog, string book, DateTime valueDate, int officeId, int userId, long loginId, string referenceNumber, string statementReference, StockMaster stockMaster, Collection<StockDetail> details, Collection<long> transactionIdCollection, Collection<Attachment> attachments, bool nonTaxable)
         {
             if (stockMaster == null)
             {
@@ -86,7 +86,7 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Transactions
                 command.Parameters.AddRange(StockMasterDetailHelper.AddStockMasterDetailParameter(details).ToArray());
                 command.Parameters.AddRange(AttachmentHelper.AddAttachmentParameter(attachments).ToArray());
 
-                long tranId = Conversion.TryCastLong(DbOperation.GetScalarValue(command));
+                long tranId = Conversion.TryCastLong(DbOperation.GetScalarValue(catalog, command));
                 return tranId;
             }
         }

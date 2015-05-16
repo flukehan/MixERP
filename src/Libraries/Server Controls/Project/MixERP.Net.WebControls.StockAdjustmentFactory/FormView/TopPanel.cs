@@ -23,6 +23,7 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
                 this.dateTextBox = new DateTextBox();
                 this.dateTextBox.ID = "ValueDateTextBox";
                 this.dateTextBox.Mode = FrequencyType.Today;
+                this.dateTextBox.Catalog = this.Catalog;
                 this.dateTextBox.OfficeId = this.OfficeId;
 
                 field.Controls.Add(this.dateTextBox);

@@ -64,7 +64,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             {
                 if (accountId > 0)
                 {
-                    accountNumber = AccountHelper.GetAccountNumberByAccountId(accountId);
+                    accountNumber = AccountHelper.GetAccountNumberByAccountId(AppUsers.GetDatabase(), accountId);
 
                     this.accountNumberInputText.Value = accountNumber;
                 }
@@ -97,6 +97,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 flag.OnClientClick = "return getSelectedItems();";
                 flag.CssClass = "ui form segment initially hidden";
                 flag.Updated += this.Flag_Updated;
+                flag.Catalog = AppUsers.GetDatabase();
 
                 placeHolder.Controls.Add(flag);
             }
@@ -120,7 +121,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
             int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
 
-            Flags.CreateFlag(userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
+            Flags.CreateFlag(AppUsers.GetDatabase(), userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
 
             this.BindGridView();
             this.CreateAccountOverviewPanel(this.accountOverviewTab);
@@ -371,7 +372,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             }
 
             string accountNumber = this.accountNumberInputText.Value;
-            AccountView view = Data.Reports.AccountStatement.GetAccountOverview(accountNumber);
+            AccountView view = Data.Reports.AccountStatement.GetAccountOverview(AppUsers.GetDatabase(), accountNumber);
 
             if (view == null)
             {
@@ -453,6 +454,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.fromDateTextBox = new DateTextBox();
             this.fromDateTextBox.ID = "FromDateTextBox";
             this.fromDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
+            this.fromDateTextBox.Catalog = AppUsers.GetDatabase();
             this.fromDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
             using (HtmlGenericControl field = this.GetDateField(Titles.From, this.fromDateTextBox))
@@ -486,6 +488,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.toDateTextBox = new DateTextBox();
             this.toDateTextBox.ID = "ToDateTextBox";
             this.toDateTextBox.Mode = FrequencyType.FiscalYearEndDate;
+            this.toDateTextBox.Catalog = AppUsers.GetDatabase();
             this.toDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
             using (HtmlGenericControl field = this.GetDateField(Titles.To, this.toDateTextBox))
@@ -502,7 +505,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             string accountNumber = this.accountNumberInputText.Value;
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
-            this.statementGridView.DataSource = Data.Reports.AccountStatement.GetAccountStatement(from, to, userId, accountNumber, officeId);
+            this.statementGridView.DataSource = Data.Reports.AccountStatement.GetAccountStatement(AppUsers.GetDatabase(), from, to, userId, accountNumber, officeId);
             this.statementGridView.DataBound += this.StatementGridViewDataBound;
             this.statementGridView.DataBind();
         }

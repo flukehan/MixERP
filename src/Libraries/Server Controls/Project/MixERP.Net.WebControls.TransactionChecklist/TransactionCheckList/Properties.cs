@@ -21,10 +21,11 @@ using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.TransactionChecklist
 {
-    public sealed partial class TransactionChecklistForm
+    public partial class TransactionChecklistForm
     {
         public string AddNewPath { get; set; }
         public string AttachmentBookName { get; set; }
+        public string Catalog { get; set; }
         public string CustomerReportButtonText { get; set; }
         public string CustomerReportPath { get; set; }
         public bool DisplayAttachmentButton { get; set; }
