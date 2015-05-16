@@ -93,6 +93,76 @@ namespace MixERP.Net.Entities.Transactions
     
 
 
+    [TableName("transactions.transaction_master")]
+    [PrimaryKey("transaction_master_id")]
+    [ExplicitColumns]
+    public class TransactionMaster : PetaPocoDB.Record<TransactionMaster> , IPoco
+    {
+        [Column("transaction_master_id")] 
+        public long TransactionMasterId { get; set; }
+
+        [Column("transaction_counter")] 
+        public int TransactionCounter { get; set; }
+
+        [Column("transaction_code")] 
+        public string TransactionCode { get; set; }
+
+        [Column("book")] 
+        public string Book { get; set; }
+
+        [Column("value_date")] 
+        public DateTime ValueDate { get; set; }
+
+        [Column("transaction_ts")] 
+        public DateTime TransactionTs { get; set; }
+
+        [Column("login_id")] 
+        public long? LoginId { get; set; }
+
+        [Column("user_id")] 
+        public int UserId { get; set; }
+
+        [Column("sys_user_id")] 
+        public int? SysUserId { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+        [Column("cost_center_id")] 
+        public int? CostCenterId { get; set; }
+
+        [Column("reference_number")] 
+        public string ReferenceNumber { get; set; }
+
+        [Column("statement_reference")] 
+        public string StatementReference { get; set; }
+
+        [Column("last_verified_on")] 
+        public DateTime? LastVerifiedOn { get; set; }
+
+        [Column("verified_by_user_id")] 
+        public int? VerifiedByUserId { get; set; }
+
+        [Column("verification_status_id")] 
+        public short VerificationStatusId { get; set; }
+
+        [Column("verification_reason")] 
+        public string VerificationReason { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+        [Column("cascading_tran_id")] 
+        public long? CascadingTranId { get; set; }
+
+        [Column("book_date")] 
+        public DateTime BookDate { get; set; }
+
+    }
+
     [TableName("transactions.customer_receipts")]
     [PrimaryKey("receipt_id")]
     [ExplicitColumns]
@@ -1030,76 +1100,6 @@ namespace MixERP.Net.Entities.Transactions
 
     }
 
-    [TableName("transactions.transaction_master")]
-    [PrimaryKey("transaction_master_id")]
-    [ExplicitColumns]
-    public class TransactionMaster : PetaPocoDB.Record<TransactionMaster> , IPoco
-    {
-        [Column("transaction_master_id")] 
-        public long TransactionMasterId { get; set; }
-
-        [Column("transaction_counter")] 
-        public int TransactionCounter { get; set; }
-
-        [Column("transaction_code")] 
-        public string TransactionCode { get; set; }
-
-        [Column("book")] 
-        public string Book { get; set; }
-
-        [Column("value_date")] 
-        public DateTime ValueDate { get; set; }
-
-        [Column("transaction_ts")] 
-        public DateTime TransactionTs { get; set; }
-
-        [Column("login_id")] 
-        public long? LoginId { get; set; }
-
-        [Column("user_id")] 
-        public int UserId { get; set; }
-
-        [Column("sys_user_id")] 
-        public int? SysUserId { get; set; }
-
-        [Column("office_id")] 
-        public int OfficeId { get; set; }
-
-        [Column("cost_center_id")] 
-        public int? CostCenterId { get; set; }
-
-        [Column("reference_number")] 
-        public string ReferenceNumber { get; set; }
-
-        [Column("statement_reference")] 
-        public string StatementReference { get; set; }
-
-        [Column("last_verified_on")] 
-        public DateTime? LastVerifiedOn { get; set; }
-
-        [Column("verified_by_user_id")] 
-        public int? VerifiedByUserId { get; set; }
-
-        [Column("verification_status_id")] 
-        public short VerificationStatusId { get; set; }
-
-        [Column("verification_reason")] 
-        public string VerificationReason { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-        [Column("cascading_tran_id")] 
-        public long? CascadingTranId { get; set; }
-
-        [Column("book_date")] 
-        public DateTime BookDate { get; set; }
-
-    }
-
     [FunctionName("get_journal_view")]
     [ExplicitColumns]
     public class DbGetJournalViewResult : PetaPocoDB.Record<DbGetJournalViewResult> , IPoco
@@ -1556,6 +1556,9 @@ namespace MixERP.Net.Entities.Transactions
 
         [Column("value_date")] 
         public DateTime ValueDate { get; set; }
+
+        [Column("book_date")] 
+        public DateTime BookDate { get; set; }
 
         [Column("tran_code")] 
         public string TranCode { get; set; }

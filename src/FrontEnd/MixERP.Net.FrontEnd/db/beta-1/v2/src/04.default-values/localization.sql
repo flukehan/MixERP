@@ -15596,3 +15596,31 @@ SELECT * FROM localization.add_localized_resource('Titles', 'es', 'SelectCompany
 SELECT * FROM localization.add_localized_resource('Titles', 'sv', 'SelectCompany', 'Välj företag');
 
 
+SELECT * FROM localization.add_localized_resource('Titles', '', 'BookDate', 'Book Date');
+SELECT * FROM localization.add_localized_resource('Titles', 'es', 'BookDate', 'libro Fecha');
+SELECT * FROM localization.add_localized_resource('Titles', 'sv', 'BookDate', 'bok Datum');
+SELECT * FROM localization.add_localized_resource('Titles', 'ru', 'BookDate', 'Книга Дата');
+SELECT * FROM localization.add_localized_resource('Titles', 'pt', 'BookDate', 'livro Data');
+SELECT * FROM localization.add_localized_resource('Titles', 'ms', 'BookDate', 'buku Tarikh');
+SELECT * FROM localization.add_localized_resource('Titles', 'ja', 'BookDate', '予約日');
+SELECT * FROM localization.add_localized_resource('Titles', 'id', 'BookDate', 'buku Tanggal');
+SELECT * FROM localization.add_localized_resource('Titles', 'de', 'BookDate', 'buchen Datum');
+SELECT * FROM localization.add_localized_resource('Titles', 'fr', 'BookDate', 'date de livre');
+SELECT * FROM localization.add_localized_resource('Titles', 'fil', 'BookDate', 'Petsa Book');
+SELECT * FROM localization.add_localized_resource('Titles', 'nl', 'BookDate', 'Book Date');
+SELECT * FROM localization.add_localized_resource('Titles', 'zh', 'BookDate', '书日期');
+
+SELECT * FROM localization.add_localized_resource('ScrudResource', '', 'book_date', 'Book Date');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'es', 'book_date', 'libro Fecha');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'sv', 'book_date', 'bok Datum');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ru', 'book_date', 'Книга Дата');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'pt', 'book_date', 'livro Data');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ms', 'book_date', 'buku Tarikh');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ja', 'book_date', '予約日');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'id', 'book_date', 'buku Tanggal');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'de', 'book_date', 'buchen Datum');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fr', 'book_date', 'date de livre');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fil', 'book_date', 'Petsa Book');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'nl', 'book_date', 'Book Date');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'zh', 'book_date', '书日期');
+

@@ -2308,6 +2308,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Book Date
+		/// </summary>
+		public static string book_date 
+		{
+			get
+			{
+				return Get("book_date");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Brand
 		/// </summary>
 		public static string brand 
@@ -7591,6 +7602,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("Book");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Book Date
+		/// </summary>
+		public static string BookDate 
+		{
+			get
+			{
+				return Get("BookDate");
 			}
 		}
 		

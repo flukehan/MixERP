@@ -79,6 +79,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
       <Query>
         SELECT
         tran_code,
+        book_date,
         value_date,
         debit,
         credit,

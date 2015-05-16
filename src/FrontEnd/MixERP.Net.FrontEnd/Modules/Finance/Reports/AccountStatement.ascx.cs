@@ -611,6 +611,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.AddTemplateFields();
             GridViewHelper.AddDataBoundControl(this.statementGridView, "TranCode", Titles.TranCode);
             GridViewHelper.AddDataBoundControl(this.statementGridView, "ValueDate", Titles.ValueDate, "{0:d}");
+            GridViewHelper.AddDataBoundControl(this.statementGridView, "BookDate", Titles.BookDate, "{0:d}");
             GridViewHelper.AddDataBoundControl(this.statementGridView, "Debit", Titles.Debit, "{0:N}", true);
             GridViewHelper.AddDataBoundControl(this.statementGridView, "Credit", Titles.Credit, "{0:N}", true);
             GridViewHelper.AddDataBoundControl(this.statementGridView, "Balance", Titles.Balance, "{0:N}", true);
@@ -653,13 +654,26 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         #region Top Panel
 
+        [Obsolete("Localize")]
+        private void AddReconcileButton(HtmlGenericControl container)
+        {
+            using (HtmlButton flagButton = new HtmlButton())
+            {
+                flagButton.ID = "ReconcileButton";
+                flagButton.Attributes.Add("class", "ui button");
+                flagButton.Attributes.Add("onclick", "return reconcile();");
+                flagButton.InnerHtml = "<i class='circle notched icon'></i>" + "Reconcile";
+                container.Controls.Add(flagButton);
+            }
+        }
+
         private void AddFlagButton(HtmlGenericControl container)
         {
             using (HtmlButton flagButton = new HtmlButton())
             {
                 flagButton.ID = "FlagButton";
                 flagButton.Attributes.Add("class", "ui button");
-                flagButton.Attributes.Add("onclick", "return false");
+                flagButton.Attributes.Add("onclick", "return false;");
                 flagButton.InnerHtml = "<i class='icon flag'></i>" + Titles.Flag;
                 container.Controls.Add(flagButton);
             }
@@ -691,7 +705,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             {
                 printButton.ID = "PrintButton";
                 printButton.Attributes.Add("class", "ui button");
-                printButton.Attributes.Add("onclick", "return false");
+                printButton.Attributes.Add("onclick", "return false;");
                 printButton.InnerHtml = "<i class='icon print'></i>" + Titles.Print;
                 container.Controls.Add(printButton);
             }
@@ -705,6 +719,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
                 this.AddNewButton(buttons);
                 this.AddFlagButton(buttons);
+                this.AddReconcileButton(buttons);
                 this.AddPrintButton(buttons);
                 this.AddHiddenFields(buttons);
                 container.Controls.Add(buttons);

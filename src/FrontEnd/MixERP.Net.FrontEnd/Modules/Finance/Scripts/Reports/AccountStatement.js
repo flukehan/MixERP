@@ -77,3 +77,33 @@ printButton.click(function() {
     report = String.format(report, accountNumber, from, to);
     showWindow(report).toISOString();
 });
+
+function reconcile() {
+    var checkBoxColumnPosition = "2";
+    var dateColumnPosition = "5";
+    var tranCodeColumnPosition = "3";
+
+    var selection = getSelectedCheckBoxItemIds(checkBoxColumnPosition, dateColumnPosition, statementGridView, 1)[0];
+    var tranCode = getSelectedCheckBoxItemIds(checkBoxColumnPosition, tranCodeColumnPosition, statementGridView, 1)[0];
+
+    var parsedDate = Date.parseExact(selection, window.shortDateFormat);
+
+
+    if (parsedDate) {
+        var year = parsedDate.getFullYear();
+        var month = parsedDate.getMonth() + 1;
+        var day = parsedDate.getDate();
+
+        $("#CurrentBookDateInputText").val(selection);
+
+        $("#YearInputText").val(year);
+        $("#MonthInputText").val(month);
+        $("#DayInputText").val(day);
+
+        $("#TranCodeInputText").val(tranCode);
+
+        $("#ReconcileModal").modal("show");
+    };
+
+    return false;//Prevent postback
+};
