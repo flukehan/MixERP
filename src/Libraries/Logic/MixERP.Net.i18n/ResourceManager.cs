@@ -23,8 +23,20 @@ namespace MixERP.Net.i18n
             }
 
 
+            IDictionary<string, string> cache;
             var cacheItem = MemoryCache.Default.Get("Resources");
-            IDictionary<string, string> cache = (IDictionary<string, string>)cacheItem;
+
+            if (cacheItem is CacheItem)
+            {
+                CacheItem item = (CacheItem) cacheItem;
+
+                cache = (IDictionary<string, string>)item.Value;
+            }
+            else
+            {
+                cache = (IDictionary<string, string>)cacheItem;                
+            }
+
 
             if (cache == null || cache.Count.Equals(0))
             {

@@ -28,7 +28,7 @@ namespace MixERP.Net.WebControls.Common.Helpers
     {
         public static ApplicationDateModel GetApplicationDates(string catalog, int officeId)
         {
-            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates();
+            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(catalog);
             bool persist = false;
 
             if (applicationDates == null || applicationDates.Count.Equals(0))
@@ -53,7 +53,7 @@ namespace MixERP.Net.WebControls.Common.Helpers
 
             if (persist)
             {
-                CacheFactory.SetApplicationDates(applicationDates);
+                CacheFactory.SetApplicationDates(catalog, applicationDates);
             }
 
             return applicationDates.FirstOrDefault(c => c.OfficeId.Equals(officeId));

@@ -327,7 +327,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
                 return;
             }
 
-            ItemView view = Factory.Get<ItemView>("SELECT * FROM core.item_view WHERE item_code=@0", this.itemCodeInputText.Value).FirstOrDefault();
+            ItemView view = Factory.Get<ItemView>(AppUsers.GetDatabase(), "SELECT * FROM core.item_view WHERE item_code=@0", this.itemCodeInputText.Value).FirstOrDefault();
 
             if (view == null)
             {

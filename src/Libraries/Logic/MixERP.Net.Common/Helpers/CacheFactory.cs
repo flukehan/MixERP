@@ -27,9 +27,9 @@ namespace MixERP.Net.Common.Helpers
     {
         private const string appDatesKey = "ApplicationDates";
 
-        public static Collection<ApplicationDateModel> GetApplicationDates()
+        public static Collection<ApplicationDateModel> GetApplicationDates(string catalog)
         {
-            object dates = GetFromDefaultCacheByKey(appDatesKey);
+            object dates = GetFromDefaultCacheByKey(catalog + appDatesKey);
             
             if (dates == null)
             {
@@ -39,9 +39,9 @@ namespace MixERP.Net.Common.Helpers
             return dates as Collection<ApplicationDateModel>;
         }
 
-        public static void SetApplicationDates(Collection<ApplicationDateModel> applicationDates)
+        public static void SetApplicationDates(string catalog, Collection<ApplicationDateModel> applicationDates)
         {
-            AddToDefaultCache(appDatesKey, applicationDates);
+            AddToDefaultCache(catalog + appDatesKey, applicationDates);
         }
 
         public static void AddToDefaultCache(string key, object value)

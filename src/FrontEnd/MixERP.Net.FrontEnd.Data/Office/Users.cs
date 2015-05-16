@@ -18,10 +18,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Web;
 using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Office;
 using Npgsql;
@@ -30,11 +28,12 @@ namespace MixERP.Net.FrontEnd.Data.Office
 {
     public static class User
     {
-        public static bool ChangePassword(string userName, string currentPassword, string newPassword)
+        public static bool ChangePassword(string catalog, string userName, string currentPassword, string newPassword)
         {
             try
             {
-                return Factory.Scalar<bool>("SELECT * FROM policy.change_password(@0::text, @1::text, @2::text);",
+                return Factory.Scalar<bool>(catalog,
+                    "SELECT * FROM policy.change_password(@0::text, @1::text, @2::text);",
                     userName, currentPassword, newPassword);
             }
             catch (NpgsqlException ex)
@@ -52,7 +51,9 @@ namespace MixERP.Net.FrontEnd.Data.Office
             {
                 string catalog = login.Catalog;
 
-                SignInView view =  Factory.Get<SignInView>(catalog, "SELECT * FROM office.sign_in_view WHERE login_id=@0;", login.LoginId).FirstOrDefault();
+                SignInView view =
+                    Factory.Get<SignInView>(catalog, "SELECT * FROM office.sign_in_view WHERE login_id=@0;",
+                        login.LoginId).FirstOrDefault();
 
                 if (view != null)
                 {
@@ -64,8 +65,8 @@ namespace MixERP.Net.FrontEnd.Data.Office
             return null;
         }
 
-
-        public static long SignIn(string catalog, int officeId, string userName, string password, string culture, bool remember,
+        public static long SignIn(string catalog, int officeId, string userName, string password, string culture,
+            bool remember,
             string challenge, HttpContext context)
         {
             if (context != null)
@@ -73,7 +74,8 @@ namespace MixERP.Net.FrontEnd.Data.Office
                 string remoteAddress = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
                 string remoteUser = HttpContext.Current.Request.ServerVariables["REMOTE_USER"];
 
-                DbSignInResult result = SignIn(catalog, officeId, userName, password, context.Request.UserAgent, remoteAddress,
+                DbSignInResult result = SignIn(catalog, officeId, userName, password, context.Request.UserAgent,
+                    remoteAddress,
                     remoteUser, culture, challenge);
 
                 if (result.LoginId == 0)
@@ -98,14 +100,17 @@ namespace MixERP.Net.FrontEnd.Data.Office
             return Factory.Scalar<long>(Factory.MetaDatabase, sql, catalog, loginId);
         }
 
-        private static DbSignInResult SignIn(string catalog, int officeId, string userName, string password, string browser,
+        private static DbSignInResult SignIn(string catalog, int officeId, string userName, string password,
+            string browser,
             string remoteAddress, string remoteUser, string culture, string challenge)
         {
             const string sql =
                 "SELECT * FROM office.sign_in(@0::public.integer_strict, @1::text, @2::text, @3::text, @4::text, @5::text, @6::text, @7::text);";
 
-            return Factory.Get<DbSignInResult>(catalog, sql, officeId, userName, password, browser, remoteAddress, remoteUser,
-                culture, challenge).FirstOrDefault();
+            return
+                Factory.Get<DbSignInResult>(catalog, sql, officeId, userName, password, browser, remoteAddress,
+                    remoteUser,
+                    culture, challenge).FirstOrDefault();
         }
     }
 }

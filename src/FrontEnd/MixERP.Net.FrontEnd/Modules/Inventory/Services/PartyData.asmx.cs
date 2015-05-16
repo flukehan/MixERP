@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (ShippingAddressView view in ShippingAddresses.GetShippingAddressView(partyCode))
+            foreach (ShippingAddressView view in ShippingAddresses.GetShippingAddressView(AppUsers.GetDatabase(), partyCode))
             {
                 string address = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{1}{3}{4}{5}{1}{6}{4}{7}", view.AddressLine1, Environment.NewLine, view.AddressLine2, view.Street, ", ", view.City, view.State, view.Country);
 

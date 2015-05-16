@@ -78,7 +78,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
         private static void ForceLogOff(int officeId)
         {
-            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates();
+            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(AppUsers.GetDatabase());
             DateTime forcedLogOffOn = DateTime.Now.AddMinutes(2);
 
             if (applicationDates != null)
@@ -98,7 +98,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                     }
 
 
-                    CacheFactory.SetApplicationDates(applicationDates);
+                    CacheFactory.SetApplicationDates(AppUsers.GetDatabase(), applicationDates);
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         private static void SuggestDateReload()
         {
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates();
+            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(AppUsers.GetDatabase());
 
             if (applicationDates != null)
             {
@@ -123,7 +123,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                     }
 
 
-                    CacheFactory.SetApplicationDates(applicationDates);
+                    CacheFactory.SetApplicationDates(AppUsers.GetDatabase(), applicationDates);
                 }
             }
         }

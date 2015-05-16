@@ -333,7 +333,7 @@ namespace MixERP.Net.FrontEnd.Base
         private void CheckForceLogOffFlags()
         {
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates();
+            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(AppUsers.GetDatabase());
 
             if (applicationDates != null)
             {
