@@ -30,7 +30,7 @@ namespace MixERP.Net.Core.Modules.Finance.Hubs
             Data.EODOperation operation = new Data.EODOperation();
             operation.NotificationReceived += this.EOD_NotificationReceived;
 
-            string catalog = AppUsers.GetDatabase();
+            string catalog = AppUsers.GetCurrentUserDB();
 
             operation.Perform(catalog, AppUsers.GetCurrentLogin().View.LoginId.ToLong());
         }

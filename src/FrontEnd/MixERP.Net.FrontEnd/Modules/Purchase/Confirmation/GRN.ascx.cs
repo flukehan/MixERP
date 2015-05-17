@@ -40,7 +40,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Confirmation
                 checklist.Text = Titles.GoodsReceiptNote;
                 checklist.ViewReportButtonText = Titles.ViewThisNote;
                 checklist.EmailReportButtonText = Titles.EmailThisNote;
-                checklist.PartyEmailAddress = Parties.GetEmailAddress(AppUsers.GetDatabase(), TranBook.Purchase,
+                checklist.PartyEmailAddress = Parties.GetEmailAddress(AppUsers.GetCurrentUserDB(), TranBook.Purchase,
                     SubTranBook.Receipt, transactionMasterId);
 
                 checklist.AttachmentBookName = "transaction";

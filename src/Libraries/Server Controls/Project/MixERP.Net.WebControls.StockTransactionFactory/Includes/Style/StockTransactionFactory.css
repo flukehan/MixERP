@@ -7,7 +7,7 @@
 }
 
 #ProductGridView th:nth-child(2) {
-    width: 21%;
+    width: 18%;
 }
 
 #ProductGridView th:nth-child(3) {
@@ -15,15 +15,15 @@
 }
 
 #ProductGridView th:nth-child(4) {
-    width: 10%;
+    width: 9%;
 }
 
 #ProductGridView th:nth-child(5) {
-    width: 10%;
+    width: 9%;
 }
 
 #ProductGridView th:nth-child(6) {
-    width: 10%;
+    width: 9%;
 }
 
 #ProductGridView th:nth-child(7) {
@@ -39,11 +39,11 @@
 }
 
 #ProductGridView th:nth-child(10) {
-    width: 10%;
+    width: 9%;
 }
 
 #ProductGridView th:nth-child(11) {
-    width: 7%;
+    width: 6%;
 }
 
 table.form {

@@ -54,7 +54,7 @@ namespace MixERP.Net.FrontEnd.Services
 
             try
             {
-                Data.Office.Offices.SaveOffice(AppUsers.GetDatabase(), officeCode, officeName, nickName,
+                Data.Office.Offices.SaveOffice(AppUsers.GetCurrentUserDB(), officeCode, officeName, nickName,
                     Convert.ToDateTime(registrationDate), currencyCode,
                     currencySymbol, currencyName, hundredthName, adminName, username, password);
 

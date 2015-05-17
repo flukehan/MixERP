@@ -44,7 +44,7 @@ namespace MixERP.Net.FrontEnd.Reports
         protected void Page_Init(object sender, EventArgs e)
         {
             this.report = new WebReport();
-            this.report.Catalog = AppUsers.GetDatabase();
+            this.report.Catalog = AppUsers.GetCurrentUserDB();
             this.report.AutoInitialize = false;
             this.Placeholder1.Controls.Add(this.report);
             this.AddParameters();

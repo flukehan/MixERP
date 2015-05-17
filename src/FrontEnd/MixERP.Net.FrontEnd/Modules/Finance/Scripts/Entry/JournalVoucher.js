@@ -572,7 +572,7 @@ function isCash(accountNumber) {
 };
 
 function getExchangeRate(currencyCode) {
-    url = "/Modules/Finance/Services/Entry/JournalVoucher.asmx/GetExchangeRate";
+    url = "/Modules/Finance/Services/Transactions.asmx/GetExchangeRate";
     data = appendParameter("", "currencyCode", currencyCode);
     data = getData(data);
 

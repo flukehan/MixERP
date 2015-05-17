@@ -114,6 +114,12 @@ namespace MixERP.Net.Common.Helpers
             return GetConfigurationValues(path, keyName);
         }
 
+        public static string GetStockTransactionFactoryParameter(string keyName)
+        {
+            string path = MapPath(ConfigurationManager.AppSettings["StockTransactionFactoryConfigFileLocation"]);
+            return GetConfigurationValues(path, keyName);
+        }
+
         public static string GetSwitch(string keyName)
         {
             string path = MapPath(ConfigurationManager.AppSettings["SwitchConfigFileLocation"]);

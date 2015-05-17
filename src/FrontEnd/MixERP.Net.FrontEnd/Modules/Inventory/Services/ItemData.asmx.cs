@@ -25,6 +25,7 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Extensions;
+using MixERP.Net.Core.Modules.Inventory.Data.Domains;
 using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Office;
@@ -40,7 +41,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public decimal CountItemInStock(string itemCode, int unitId, int storeId)
         {
-            return Items.CountItemInStock(AppUsers.GetDatabase(), itemCode, unitId, storeId);
+            return Items.CountItemInStock(AppUsers.GetCurrentUserDB(), itemCode, unitId, storeId);
         }
 
         [WebMethod]
@@ -49,9 +50,10 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             Collection<ListItem> values = new Collection<ListItem>();
 
 
-            foreach (Salesperson salesperson in Salespersons.GetSalespersons(AppUsers.GetDatabase()))
+            foreach (Salesperson salesperson in Salespersons.GetSalespersons(AppUsers.GetCurrentUserDB()))
             {
-                values.Add(new ListItem(salesperson.SalespersonName, salesperson.SalespersonId.ToString(DateTimeFormatInfo.InvariantInfo)));
+                values.Add(new ListItem(salesperson.SalespersonName,
+                    salesperson.SalespersonId.ToString(DateTimeFormatInfo.InvariantInfo)));
             }
 
             return values;
@@ -60,15 +62,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public string GetItemCodeByItemId(int itemId)
         {
-            return Items.GetItemCodeByItemId(AppUsers.GetDatabase(), itemId);
+            return Items.GetItemCodeByItemId(AppUsers.GetCurrentUserDB(), itemId);
         }
 
         [WebMethod]
-        public Collection<ListItem> GetItems(string tranBook)
+        public Collection<SalesItem> GetItems(string tranBook)
         {
             if (string.IsNullOrWhiteSpace(tranBook))
             {
-                return new Collection<ListItem>();
+                return new Collection<SalesItem>();
             }
 
             if (tranBook.ToUpperInvariant().Equals("SALES"))
@@ -84,9 +86,10 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (PaymentTerm paymentTerm in PaymentTerms.GetPaymentTerms(AppUsers.GetDatabase()))
+            foreach (PaymentTerm paymentTerm in PaymentTerms.GetPaymentTerms(AppUsers.GetCurrentUserDB()))
             {
-                values.Add(new ListItem(paymentTerm.PaymentTermName, paymentTerm.PaymentTermId.ToString(CultureInfo.InvariantCulture)));
+                values.Add(new ListItem(paymentTerm.PaymentTermName,
+                    paymentTerm.PaymentTermId.ToString(CultureInfo.InvariantCulture)));
             }
 
             return values;
@@ -105,11 +108,12 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             switch (tranBook)
             {
                 case "Sales":
-                    price = Items.GetItemSellingPrice(AppUsers.GetDatabase(), itemCode, partyCode, priceTypeId, unitId);
+                    price = Items.GetItemSellingPrice(AppUsers.GetCurrentUserDB(), itemCode, partyCode, priceTypeId,
+                        unitId);
                     break;
 
                 case "Purchase":
-                    price = Items.GetItemCostPrice(AppUsers.GetDatabase(), itemCode, partyCode, unitId);
+                    price = Items.GetItemCostPrice(AppUsers.GetCurrentUserDB(), itemCode, partyCode, unitId);
                     break;
             }
 
@@ -122,9 +126,10 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             Collection<ListItem> values = new Collection<ListItem>();
 
 
-            foreach (PriceType priceType in PriceTypes.GetPriceTypes(AppUsers.GetDatabase()))
+            foreach (PriceType priceType in PriceTypes.GetPriceTypes(AppUsers.GetCurrentUserDB()))
             {
-                values.Add(new ListItem(priceType.PriceTypeName, priceType.PriceTypeId.ToString(CultureInfo.InvariantCulture)));
+                values.Add(new ListItem(priceType.PriceTypeName,
+                    priceType.PriceTypeId.ToString(CultureInfo.InvariantCulture)));
             }
 
             return values;
@@ -135,7 +140,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (Shipper shipper in Shippers.GetShippers(AppUsers.GetDatabase()))
+            foreach (Shipper shipper in Shippers.GetShippers(AppUsers.GetCurrentUserDB()))
             {
                 values.Add(new ListItem(shipper.CompanyName, shipper.ShipperId.ToString(CultureInfo.InvariantCulture)));
             }
@@ -149,7 +154,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
             Collection<ListItem> values = new Collection<ListItem>();
 
-            IEnumerable<Store> stores = Stores.GetStores(AppUsers.GetDatabase(), officeId);
+            IEnumerable<Store> stores = Stores.GetStores(AppUsers.GetCurrentUserDB(), officeId);
 
             foreach (Store store in stores)
             {
@@ -162,7 +167,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public decimal GetTaxRate(string itemCode)
         {
-            return Items.GetTaxRate(AppUsers.GetDatabase(), itemCode);
+            return Items.GetTaxRate(AppUsers.GetCurrentUserDB(), itemCode);
         }
 
         [WebMethod]
@@ -170,7 +175,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            using (DataTable table = Units.GetUnitViewByItemCode(AppUsers.GetDatabase(), itemCode))
+            using (DataTable table = Units.GetUnitViewByItemCode(AppUsers.GetCurrentUserDB(), itemCode))
             {
                 foreach (DataRow dr in table.Rows)
                 {
@@ -184,40 +189,71 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public bool IsStockItem(string itemCode)
         {
-            return Items.IsStockItem(AppUsers.GetDatabase(), itemCode);
+            return Items.IsStockItem(AppUsers.GetCurrentUserDB(), itemCode);
         }
 
         [WebMethod]
         public bool ItemCodeExists(string itemCode)
         {
-            return Items.ItemExistsByCode(AppUsers.GetDatabase(), itemCode);
+            return Items.ItemExistsByCode(AppUsers.GetCurrentUserDB(), itemCode);
         }
 
         [WebMethod]
         public bool UnitNameExists(string unitName)
         {
-            return Units.UnitExistsByName(AppUsers.GetDatabase(), unitName);
+            return Units.UnitExistsByName(AppUsers.GetCurrentUserDB(), unitName);
         }
 
-        private static Collection<ListItem> GetItems()
+        [WebMethod]
+        public IEnumerable<DbGetCompoundItemDetailsResult> GetCompoundItemDetails(string compoundItemCode,
+            string salesTaxCode, string tranBook, int storeId, string partyCode, int priceTypeId)
         {
-            Collection<ListItem> values = new Collection<ListItem>();
+            return Items.GetCompoundItemDetails(AppUsers.GetCurrentUserDB(), compoundItemCode, salesTaxCode, tranBook,
+                storeId, partyCode, priceTypeId);
+        }
 
-            foreach (Item item in Items.GetItems(AppUsers.GetDatabase()))
+        private static Collection<SalesItem> GetItems()
+        {
+            Collection<SalesItem> values = new Collection<SalesItem>();
+
+            foreach (Item item in Items.GetItems(AppUsers.GetCurrentUserDB()))
             {
-                values.Add(new ListItem(item.ItemName, item.ItemCode));
+                values.Add(new SalesItem
+                {
+                    ItemId = item.ItemId,
+                    ItemCode = item.ItemCode,
+                    ItemName = item.ItemName,
+                    IsCompoundItem = false
+                });
+            }
+
+            foreach (CompoundItem item in Items.GetCompoundItems(AppUsers.GetCurrentUserDB()))
+            {
+                values.Add(new SalesItem
+                {
+                    ItemId = item.CompoundItemId,
+                    ItemCode = item.CompoundItemCode,
+                    ItemName = item.CompoundItemName,
+                    IsCompoundItem = true
+                });
             }
 
             return values;
         }
 
-        private static Collection<ListItem> GetStockItems()
+        private static Collection<SalesItem> GetStockItems()
         {
-            Collection<ListItem> values = new Collection<ListItem>();
+            Collection<SalesItem> values = new Collection<SalesItem>();
 
-            foreach (Item item in Items.GetStockItems(AppUsers.GetDatabase()))
+            foreach (Item item in Items.GetStockItems(AppUsers.GetCurrentUserDB()))
             {
-                values.Add(new ListItem(item.ItemName, item.ItemCode));
+                values.Add(new SalesItem
+                {
+                    ItemId = item.ItemId,
+                    ItemCode = item.ItemCode,
+                    ItemName = item.ItemName,
+                    IsCompoundItem = false
+                });
             }
 
             return values;

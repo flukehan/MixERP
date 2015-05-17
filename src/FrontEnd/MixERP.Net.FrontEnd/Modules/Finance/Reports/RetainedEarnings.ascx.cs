@@ -202,7 +202,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.dateTextBox = new DateTextBox();
                 this.dateTextBox.ID = "DateTextBox";
                 this.dateTextBox.Mode = FrequencyType.FiscalYearEndDate;
-                this.dateTextBox.Catalog = AppUsers.GetDatabase();
+                this.dateTextBox.Catalog = AppUsers.GetCurrentUserDB();
                 this.dateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.dateTextBox);
@@ -256,7 +256,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             int factor = Conversion.TryCastInteger(this.factorInputText.Value);
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
-            using (DataTable table = Data.Reports.RetainedEarnings.GetRetainedEarningStatementDataTable(AppUsers.GetDatabase(), date, officeId, factor))
+            using (DataTable table = Data.Reports.RetainedEarnings.GetRetainedEarningStatementDataTable(AppUsers.GetCurrentUserDB(), date, officeId, factor))
             {
                 this.grid.DataSource = table;
                 this.grid.DataBind();

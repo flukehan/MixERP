@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
                 checklist.ViewReportButtonText = Titles.PrintReceipt;
                 checklist.EmailReportButtonText = Titles.EmailThisReceipt;
                 checklist.Text = Titles.SalesReceipt;
-                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetDatabase(),
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetCurrentUserDB(),
                     TranBook.Sales, SubTranBook.Receipt, transactionMasterId);
                 checklist.AttachmentBookName = "transaction";
                 checklist.OverridePath = "/Modules/Sales/DirectSales.mix";

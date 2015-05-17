@@ -46,7 +46,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             if (!string.IsNullOrWhiteSpace(accountNumber))
             {
-                return AccountHelper.AccountNumberExists(AppUsers.GetDatabase(), accountNumber);
+                return AccountHelper.AccountNumberExists(AppUsers.GetCurrentUserDB(), accountNumber);
             }
 
             return false;
@@ -55,7 +55,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod]
         public bool CashRepositoryCodeExists(string cashRepositoryCode)
         {
-            return CashRepositories.CashRepositoryCodeExists(AppUsers.GetDatabase(), cashRepositoryCode);
+            return CashRepositories.CashRepositoryCodeExists(AppUsers.GetCurrentUserDB(), cashRepositoryCode);
         }
 
         [WebMethod]
@@ -65,19 +65,19 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             {
                 if (AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
                 {
-                    return GetValues(AccountHelper.GetAccounts(AppUsers.GetDatabase()));
+                    return GetValues(AccountHelper.GetAccounts(AppUsers.GetCurrentUserDB()));
                 }
 
 
-                return GetValues(AccountHelper.GetNonConfidentialAccounts(AppUsers.GetDatabase()));
+                return GetValues(AccountHelper.GetNonConfidentialAccounts(AppUsers.GetCurrentUserDB()));
             }
 
             if (AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
             {
-                return GetValues(AccountHelper.GetChildAccounts(AppUsers.GetDatabase()));
+                return GetValues(AccountHelper.GetChildAccounts(AppUsers.GetCurrentUserDB()));
             }
 
-            return GetValues(AccountHelper.GetNonConfidentialChildAccounts(AppUsers.GetDatabase()));
+            return GetValues(AccountHelper.GetNonConfidentialChildAccounts(AppUsers.GetCurrentUserDB()));
         }
 
         [WebMethod]
@@ -87,7 +87,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
-            foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(AppUsers.GetDatabase(), officeId))
+            foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(AppUsers.GetCurrentUserDB(), officeId))
             {
                 values.Add(new ListItem(cashRepository.CashRepositoryName, cashRepository.CashRepositoryId.ToString(CultureInfo.InvariantCulture)));
             }
@@ -99,10 +99,10 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            if (AccountHelper.IsCashAccount(AppUsers.GetDatabase(), accountNumber))
+            if (AccountHelper.IsCashAccount(AppUsers.GetCurrentUserDB(), accountNumber))
             {
                 int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-                foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(AppUsers.GetDatabase(), officeId))
+                foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(AppUsers.GetCurrentUserDB(), officeId))
                 {
                     values.Add(new ListItem(cashRepository.CashRepositoryName, cashRepository.CashRepositoryCode));
                 }
@@ -116,10 +116,10 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             if (string.IsNullOrWhiteSpace(currencyCode))
             {
-                return CashRepositories.GetBalance(AppUsers.GetDatabase(), cashRepositoryId);
+                return CashRepositories.GetBalance(AppUsers.GetCurrentUserDB(), cashRepositoryId);
             }
 
-            return CashRepositories.GetBalance(AppUsers.GetDatabase(), cashRepositoryId, currencyCode);
+            return CashRepositories.GetBalance(AppUsers.GetCurrentUserDB(), cashRepositoryId, currencyCode);
         }
 
         [WebMethod]
@@ -128,7 +128,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             Collection<ListItem> values = new Collection<ListItem>();
 
 
-            foreach (CostCenter costCenter in CostCenters.GetCostCenters(AppUsers.GetDatabase()))
+            foreach (CostCenter costCenter in CostCenters.GetCostCenters(AppUsers.GetCurrentUserDB()))
             {
                 values.Add(new ListItem(costCenter.CostCenterName, costCenter.CostCenterId.ToString(CultureInfo.InvariantCulture)));
             }
@@ -141,7 +141,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (Currency currency in Currencies.GetCurrencies(AppUsers.GetDatabase()))
+            foreach (Currency currency in Currencies.GetCurrencies(AppUsers.GetCurrentUserDB()))
             {
                 values.Add(new ListItem(currency.CurrencyCode, currency.CurrencyCode));
             }
@@ -159,7 +159,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 return values;
             }
 
-            string currencyCode = Currencies.GetCurrencyCode(AppUsers.GetDatabase(), accountNumber);
+            string currencyCode = Currencies.GetCurrencyCode(AppUsers.GetCurrentUserDB(), accountNumber);
 
             values.Add(new ListItem(currencyCode, currencyCode));
 
@@ -179,7 +179,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 throw new MixERPException(Warnings.NegativeValueSupplied);
             }
 
-            decimal balance = CashRepositories.GetBalance(AppUsers.GetDatabase(), cashRepositoryCode, currencyCode);
+            decimal balance = CashRepositories.GetBalance(AppUsers.GetCurrentUserDB(), cashRepositoryCode, currencyCode);
 
             if (balance > credit)
             {
@@ -194,7 +194,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             if (!string.IsNullOrWhiteSpace(accountNumber))
             {
-                return AccountHelper.IsCashAccount(AppUsers.GetDatabase(), accountNumber);
+                return AccountHelper.IsCashAccount(AppUsers.GetCurrentUserDB(), accountNumber);
             }
 
             return false;
@@ -205,10 +205,10 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             if (AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
             {
-                return GetValues(AccountHelper.GetAccounts(AppUsers.GetDatabase()));
+                return GetValues(AccountHelper.GetAccounts(AppUsers.GetCurrentUserDB()));
             }
 
-            return GetValues(AccountHelper.GetNonConfidentialAccounts(AppUsers.GetDatabase()));
+            return GetValues(AccountHelper.GetNonConfidentialAccounts(AppUsers.GetCurrentUserDB()));
         }
 
         private static Collection<ListItem> GetValues(IEnumerable<Account> accounts)

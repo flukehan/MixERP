@@ -49,7 +49,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
-                Data.EODOperation.Initialize(AppUsers.GetDatabase(), userId, officeId);
+                Data.EODOperation.Initialize(AppUsers.GetCurrentUserDB(), userId, officeId);
 
                 ForceLogOff(officeId);
 
@@ -78,7 +78,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
         private static void ForceLogOff(int officeId)
         {
-            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(AppUsers.GetDatabase());
+            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(AppUsers.GetCurrentUserDB());
             DateTime forcedLogOffOn = DateTime.Now.AddMinutes(2);
 
             if (applicationDates != null)
@@ -98,7 +98,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                     }
 
 
-                    CacheFactory.SetApplicationDates(AppUsers.GetDatabase(), applicationDates);
+                    CacheFactory.SetApplicationDates(AppUsers.GetCurrentUserDB(), applicationDates);
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         private static void SuggestDateReload()
         {
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(AppUsers.GetDatabase());
+            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(AppUsers.GetCurrentUserDB());
 
             if (applicationDates != null)
             {
@@ -123,7 +123,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                     }
 
 
-                    CacheFactory.SetApplicationDates(AppUsers.GetDatabase(), applicationDates);
+                    CacheFactory.SetApplicationDates(AppUsers.GetCurrentUserDB(), applicationDates);
                 }
             }
         }

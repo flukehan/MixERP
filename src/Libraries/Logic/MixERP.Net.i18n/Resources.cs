@@ -8222,6 +8222,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Current Book Date
+		/// </summary>
+		public static string CurrentBookDate 
+		{
+			get
+			{
+				return Get("CurrentBookDate");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Current IP
 		/// </summary>
 		public static string CurrentIP 
@@ -8339,6 +8350,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("Date");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Day
+		/// </summary>
+		public static string Day 
+		{
+			get
+			{
+				return Get("Day");
 			}
 		}
 		
@@ -9773,6 +9795,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Month
+		/// </summary>
+		public static string Month 
+		{
+			get
+			{
+				return Get("Month");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Name
 		/// </summary>
 		public static string Name 
@@ -9780,6 +9813,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("Name");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for New Book Date
+		/// </summary>
+		public static string NewBookDate 
+		{
+			get
+			{
+				return Get("NewBookDate");
 			}
 		}
 		
@@ -10605,6 +10649,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("ReceivedCurrency");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Reconcile
+		/// </summary>
+		public static string Reconcile 
+		{
+			get
+			{
+				return Get("Reconcile");
 			}
 		}
 		
@@ -12497,6 +12552,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("WorldSalesStatistics");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Year
+		/// </summary>
+		public static string Year 
+		{
+			get
+			{
+				return Get("Year");
 			}
 		}
 		

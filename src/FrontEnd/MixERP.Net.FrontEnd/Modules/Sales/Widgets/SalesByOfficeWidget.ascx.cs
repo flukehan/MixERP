@@ -31,7 +31,7 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
             this.TitleLiteral.Text = Titles.SalesByOfficeInThousands;
 
             this.SalesByOfficeGridView.Attributes.Add("style", "display:none;");
-            this.SalesByOfficeGridView.DataSource = Data.Reports.SalesByMonth.GetSalesByOffice(AppUsers.GetDatabase());
+            this.SalesByOfficeGridView.DataSource = Data.Reports.SalesByMonth.GetSalesByOffice(AppUsers.GetCurrentUserDB());
             this.SalesByOfficeGridView.DataBind();
         }
     }

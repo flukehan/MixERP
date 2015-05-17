@@ -340,6 +340,7 @@
     <Content Include="Resource\Configuration\ApiConfiguration.xml" />
     <Content Include="Resource\Configuration\AttachmentFactoryParameters.xml" />
     <Content Include="Resource\Configuration\DbParameters.xml" />
+    <Content Include="Resource\Configuration\StockTransactionFactoryParameters.xml" />
     <Content Include="Resource\Configuration\DbServer.xml" />
     <Content Include="Resource\Configuration\index.html" />
     <Content Include="Resource\Configuration\MessagingParameters.xml" />

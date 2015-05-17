@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
 using System.Linq;
+using MixERP.Net.Core.Modules.Inventory.Data.Domains;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
 
@@ -59,10 +60,22 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
             return Factory.Scalar<decimal>(catalog, sql, itemCode, partyCode, unitId);
         }
 
+        public static IEnumerable<DbGetCompoundItemDetailsResult> GetCompoundItemDetails(string catalog, string compoundItemCode, string salesTaxCode, string tranBook, int storeId, string partyCode, int priceTypeId)
+        {
+            const string sql = "SELECT * FROM core.get_compound_item_details(@0::national character varying(12), @1::national character varying(24), @2::national character varying(48), @3::integer, @4::national character varying(12), @5::integer);";
+            return Factory.Get<DbGetCompoundItemDetailsResult>(catalog, sql, compoundItemCode, salesTaxCode, tranBook, storeId, partyCode, priceTypeId);
+        }
+
         public static IEnumerable<Item> GetItems(string catalog)
         {
-            const string sql = "SELECT * FROM core.items ORDER BY item_id";
+            const string sql = "SELECT * FROM core.items ORDER BY item_id;";
             return Factory.Get<Item>(catalog, sql);
+        }
+
+        public static IEnumerable<CompoundItem> GetCompoundItems(string catalog)
+        {
+            const string sql = "SELECT * FROM core.compound_items ORDER BY compound_item_id;";
+            return Factory.Get<CompoundItem>(catalog, sql);
         }
 
         public static decimal GetItemSellingPrice(string catalog, string itemCode, string partyCode, int priceTypeId, int unitId)
@@ -74,7 +87,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 
         public static IEnumerable<Item> GetStockItems(string catalog)
         {
-            const string sql = "SELECT * FROM core.items WHERE maintain_stock ORDER BY item_id";
+            const string sql = "SELECT * FROM core.items WHERE maintain_stock ORDER BY item_id;";
             return Factory.Get<Item>(catalog, sql);
         }
 

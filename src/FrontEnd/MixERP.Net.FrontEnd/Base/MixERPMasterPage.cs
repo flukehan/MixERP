@@ -93,9 +93,13 @@ namespace MixERP.Net.FrontEnd.Base
             script += JSUtility.GetVar("gridViewEmptyWarningLocalized", Warnings.GridViewEmpty);
 
             script += JSUtility.GetVar("duplicateFileLocalized", Warnings.DuplicateFiles);
-
             script += JSUtility.GetVar("taskCompletedSuccessfullyLocalized", Labels.TaskCompletedSuccessfully);
-            script += JSUtility.GetVar("catalog", AppUsers.GetDatabase());
+            script += JSUtility.GetVar("itemsLocalized", Titles.Items);
+            script += JSUtility.GetVar("compoundItemsLocalized", Titles.CompoundItems);
+            script += JSUtility.GetVar("addLocalized", Titles.Add);
+            script += JSUtility.GetVar("updateLocalized", Titles.Update);
+
+            script += JSUtility.GetVar("catalog", AppUsers.GetCurrentUserDB());
 
             PageUtility.RegisterJavascript("MixERPMasterPage", script, this.Page, true);
         }

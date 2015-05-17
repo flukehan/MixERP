@@ -21,6 +21,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using MixERP.Net.Common.Base;
@@ -255,7 +256,7 @@ namespace MixERP.Net.DbFactory
                 {
                     if (ValidateCommand(command))
                     {
-                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                        using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString(catalog)))
                         {
                             command.Connection = connection;
                             connection.Open();
@@ -282,7 +283,7 @@ namespace MixERP.Net.DbFactory
         {
             try
             {
-                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString("")))
                 {
                     connection.Open();
                 }

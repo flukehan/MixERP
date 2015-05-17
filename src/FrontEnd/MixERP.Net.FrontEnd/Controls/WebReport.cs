@@ -25,7 +25,7 @@ namespace MixERP.Net.FrontEnd.Controls
     {
         public WebReport()
         {
-            this.Catalog = AppUsers.GetDatabase();
+            this.Catalog = AppUsers.GetCurrentUserDB();
         }
     }
 }

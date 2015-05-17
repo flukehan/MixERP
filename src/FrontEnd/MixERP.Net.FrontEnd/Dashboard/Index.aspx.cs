@@ -38,7 +38,7 @@ namespace MixERP.Net.FrontEnd.Dashboard
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            IEnumerable<Widget> widgets = Data.Core.Widget.GetWidgets(AppUsers.GetDatabase());
+            IEnumerable<Widget> widgets = Data.Core.Widget.GetWidgets(AppUsers.GetCurrentUserDB());
             this.LoadWidgets(widgets, this.WidgetPlaceholder, this.Page);
         }
 

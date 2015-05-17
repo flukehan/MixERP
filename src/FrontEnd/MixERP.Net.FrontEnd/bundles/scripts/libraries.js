@@ -50110,6 +50110,14 @@ jQuery.fn.getSelectedValue = function () {
 jQuery.fn.getSelectedText = function () {
     return $(this[0]).getSelectedItem().text();
 };
+
+jQuery.fn.setSelectedText = function (text) {
+    var target = $(this).find("option").filter(function () {
+        return this.text === text;
+    });
+
+    target.prop('selected', true);
+};
 ///#source 1 1 /Scripts/mixerp/core/dom/visibility.js
 function setVisible(targetControl, visible, timeout) {
     if (visible) {

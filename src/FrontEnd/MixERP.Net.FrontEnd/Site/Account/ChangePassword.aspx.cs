@@ -115,7 +115,7 @@ namespace MixERP.Net.FrontEnd.Site.Account
 
             try
             {
-                if (Data.Office.User.ChangePassword(AppUsers.GetDatabase(), userName, currentPassword, newPassword))
+                if (Data.Office.User.ChangePassword(AppUsers.GetCurrentUserDB(), userName, currentPassword, newPassword))
                 {
                     this.ShowMessage(Labels.YourPasswordWasChanged, "ui large green header");
                 }

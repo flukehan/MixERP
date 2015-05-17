@@ -28,7 +28,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
 {
     public static class TableHelper
     {
-        public static DataTable GetDataTable(string sql, Collection<KeyValuePair<string, object>> parameters)
+        public static DataTable GetDataTable(string catalog, string sql, Collection<KeyValuePair<string, object>> parameters)
         {
             /**************************************************************************************
             A MixERP report is a developer-only feature.
@@ -70,7 +70,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Data
                 }
 
                 //A separate connection to database using a restricted login is established here.
-                string connectionString = DbConnection.ReportConnectionString();
+                string connectionString = DbConnection.ReportConnectionString(catalog);
 
                 return DbOperation.GetDataTable(command, connectionString);
             }

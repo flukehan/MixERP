@@ -46,12 +46,12 @@ namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
         {
             try
             {
-                if (!StockTransaction.IsValidStockTransactionByTransactionMasterId(AppUsers.GetDatabase(), tranId))
+                if (!StockTransaction.IsValidStockTransactionByTransactionMasterId(AppUsers.GetCurrentUserDB(), tranId))
                 {
                     throw new InvalidOperationException(Warnings.InvalidStockTransaction);
                 }
 
-                if (!StockTransaction.IsValidPartyByTransactionMasterId(AppUsers.GetDatabase(), tranId, partyCode))
+                if (!StockTransaction.IsValidPartyByTransactionMasterId(AppUsers.GetCurrentUserDB(), tranId, partyCode))
                 {
                     throw new InvalidOperationException(Warnings.InvalidParty);
                 }
@@ -65,7 +65,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
                 int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
 
-                return Data.Transactions.Return.PostTransaction(AppUsers.GetDatabase(), tranId, valueDate, officeId, userId, loginId, storeId,
+                return Data.Transactions.Return.PostTransaction(AppUsers.GetCurrentUserDB(), tranId, valueDate, officeId, userId, loginId, storeId,
                     partyCode, priceTypeId, referenceNumber, statementReference, details, attachments);
             }
             catch (Exception ex)

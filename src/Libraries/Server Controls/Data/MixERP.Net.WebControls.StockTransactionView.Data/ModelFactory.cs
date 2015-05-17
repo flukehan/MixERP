@@ -32,7 +32,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data
 {
     public static class ModelFactory
     {
-        public static MergeModel GetMergeModel(Collection<long> ids, TranBook tranBook, SubTranBook subTranBook)
+        public static MergeModel GetMergeModel(string catalog, Collection<long> ids, TranBook tranBook, SubTranBook subTranBook)
         {
             int rowIndex = 0;
 
@@ -56,7 +56,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data
             model.Book = tranBook;
             model.SubBook = subTranBook;
 
-            using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString()))
+            using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString(catalog)))
             {
                 using (NpgsqlCommand command = GetViewCommand(tranBook, subTranBook, ids))
                 {

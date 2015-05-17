@@ -21,8 +21,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models;
 using MixERP.Net.DbFactory;
+using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.i18n.Resources;
@@ -54,6 +57,13 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
                 return Conversion.TryCastLong(DbOperation.GetScalarValue(catalog, command));
             }
+        }
+
+        public static bool Reconcile(string catalog, string tranCode, DateTime bookDate)
+        {
+            const string sql = "UPDATE transactions.transaction_master SET book_date=@0::date WHERE transaction_code=@1::national character varying(50);";
+            Factory.NonQuery(catalog, sql, bookDate, tranCode);
+            return true;
         }
 
         public static void Verify(string catalog, long tranId, int officeId, int userId, long loginId, short verificationStatusId, string reason)

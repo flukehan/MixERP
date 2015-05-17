@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Confirmation
                 checklist.ViewReportButtonText = Titles.ViewThisOrder;
                 checklist.EmailReportButtonText = Titles.EmailThisOrder;
                 checklist.Text = Titles.PurchaseOrder;
-                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetDatabase(),
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetCurrentUserDB(),
                     TranBook.Purchase, SubTranBook.Order, transactionMasterId);
 
                 checklist.AttachmentBookName = "non-gl-transaction";

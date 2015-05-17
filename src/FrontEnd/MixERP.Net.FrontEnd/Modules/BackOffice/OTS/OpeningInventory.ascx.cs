@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
             this.CreateHeader(this.Placeholder1);
             this.CreateTopPanel(this.Placeholder1);
 
-            if (Data.OpeningInventory.Exists(AppUsers.GetDatabase(), AppUsers.GetCurrentLogin().View.OfficeId.ToInt()))
+            if (Data.OpeningInventory.Exists(AppUsers.GetCurrentUserDB(), AppUsers.GetCurrentLogin().View.OfficeId.ToInt()))
             {
                 this.CreateMessage(this.Placeholder1);
                 return;
@@ -126,7 +126,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
                 this.dateTextBox = new DateTextBox();
                 this.dateTextBox.ID = "ValueDateTextBox";
                 this.dateTextBox.Mode = FrequencyType.Today;
-                this.dateTextBox.Catalog = AppUsers.GetDatabase();
+                this.dateTextBox.Catalog = AppUsers.GetCurrentUserDB();
                 this.dateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.dateTextBox);

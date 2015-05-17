@@ -31,7 +31,7 @@ namespace MixERP.Net.FrontEnd
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            if (Offices.GetOffices(AppUsers.GetDatabase()).Any())
+            if (Offices.GetOffices(AppUsers.GetCurrentUserDB()).Any())
             {
                 this.Response.Redirect("~/SignIn.aspx");
             }

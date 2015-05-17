@@ -97,7 +97,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
             long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
 
-            long transactionMasterID = Data.Transactions.Receipt.PostTransaction(AppUsers.GetDatabase(), userId,
+            long transactionMasterID = Data.Transactions.Receipt.PostTransaction(AppUsers.GetCurrentUserDB(), userId,
                 officeId, loginId, partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate,
                 referenceNumber, statementReference, costCenterId, cashRepositoryId, postedDate, bankAccountId,
                 paymentCardId, bankInstrumentCode, bankTransactionCode);

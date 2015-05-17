@@ -62,7 +62,7 @@ namespace MixERP.Net.Core.Modules.Finance
         private void InitializeEODStatus()
         {
             this.officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            status = Data.EODOperation.GetStatus(AppUsers.GetDatabase(), officeId);
+            status = Data.EODOperation.GetStatus(AppUsers.GetCurrentUserDB(), officeId);
         }
 
         private void CreateHeader(Control container)

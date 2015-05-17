@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (ShippingAddressView view in ShippingAddresses.GetShippingAddressView(AppUsers.GetDatabase(), partyCode))
+            foreach (ShippingAddressView view in ShippingAddresses.GetShippingAddressView(AppUsers.GetCurrentUserDB(), partyCode))
             {
                 string address = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{1}{3}{4}{5}{1}{6}{4}{7}", view.AddressLine1, Environment.NewLine, view.AddressLine2, view.Street, ", ", view.City, view.State, view.Country);
 
@@ -57,7 +57,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            foreach (Party party in Parties.GetParties(AppUsers.GetDatabase()))
+            foreach (Party party in Parties.GetParties(AppUsers.GetCurrentUserDB()))
             {
                 values.Add(new ListItem(party.PartyName, party.PartyCode));
             }
@@ -67,7 +67,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public string GetPartyCodeByPartyId(int partyId)
         {
-            return Parties.GetPartyCodeByPartyId(AppUsers.GetDatabase(), partyId);
+            return Parties.GetPartyCodeByPartyId(AppUsers.GetCurrentUserDB(), partyId);
         }
 
         [WebMethod]
@@ -75,19 +75,19 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         {
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
-            return Parties.GetPartyDue(AppUsers.GetDatabase(), officeId, partyCode);
+            return Parties.GetPartyDue(AppUsers.GetCurrentUserDB(), officeId, partyCode);
         }
 
         [WebMethod]
         public PartyView GetPartyView(string partyCode)
         {
-            return Parties.GetPartyView(AppUsers.GetDatabase(), partyCode);
+            return Parties.GetPartyView(AppUsers.GetCurrentUserDB(), partyCode);
         }
 
         [WebMethod]
         public IEnumerable<ShippingAddress> GetShippingAddresses(string partyCode)
         {
-            return Parties.GetShippingAddresses(AppUsers.GetDatabase(), partyCode);
+            return Parties.GetShippingAddresses(AppUsers.GetCurrentUserDB(), partyCode);
         }
     }
 }

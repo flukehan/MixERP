@@ -31,7 +31,7 @@ namespace MixERP.Net.FrontEnd.Controls
             this.UserName = AppUsers.GetCurrentLogin().View.UserName;
             this.OfficeCode = AppUsers.GetCurrentLogin().View.OfficeName;
             this.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            this.Catalog = AppUsers.GetDatabase();
+            this.Catalog = AppUsers.GetCurrentUserDB();
         }
     }
 }

@@ -26,8 +26,18 @@ var printIcon = $(".print.icon");
 var printButton = $("#PrintButton");
 var fromDateTextBox = $("#FromDateTextBox");
 var toDateTextBox = $("#ToDateTextBox");
+var reconcileModal = $("#ReconcileModal");
+var currentBookDateInputText = $("#CurrentBookDateInputText");
+var yearInputText = $("#YearInputText");
+var monthInputText = $("#MonthInputText");
+var dayInputText = $("#DayInputText");
+var tranCodeInputText = $("#TranCodeInputText");
+var checkBoxColumnPosition = "2";
+var bookDateColumnPosition = "5";
+var tranCodeColumnPosition = "3";
 
-printIcon.click(function() {
+
+printIcon.click(function () {
     var selected = $(this).parent().parent().find("td:nth-child(3)").html().trim();
     if (!isNullOrWhiteSpace(selected)) {
         var report = "/Modules/Finance/Reports/GLAdviceReport.mix?TranCode=" + selected;
@@ -50,7 +60,7 @@ function getSelectedItems() {
     }
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
     loadAccounts();
     createCascadingPair(accountNumberSelect, accountNumberInputText);
     createFlaggedRows(statementGridView);
@@ -63,12 +73,12 @@ function loadAccounts() {
     ajaxDataBind(url, accountNumberSelect, null, selected, accountNumberInputText);
 };
 
-statementGridView.find('tr').click(function() {
+statementGridView.find('tr').click(function () {
     var checkBox = $(this).find('td input:checkbox');
     toogleSelection(checkBox);
 });
 
-printButton.click(function() {
+printButton.click(function () {
     var report = "AccountStatementReport.mix?AccountNumber={0}&From={1}&To={2}";
     var accountNumber = accountNumberInputText.val();
     var from = Date.parseExact(fromDateTextBox.val(), window.shortDateFormat).toDateString();
@@ -78,12 +88,8 @@ printButton.click(function() {
     showWindow(report).toISOString();
 });
 
-function reconcile() {
-    var checkBoxColumnPosition = "2";
-    var dateColumnPosition = "5";
-    var tranCodeColumnPosition = "3";
-
-    var selection = getSelectedCheckBoxItemIds(checkBoxColumnPosition, dateColumnPosition, statementGridView, 1)[0];
+function showReconcileWindow() {
+    var selection = getSelectedCheckBoxItemIds(checkBoxColumnPosition, bookDateColumnPosition, statementGridView, 1)[0];
     var tranCode = getSelectedCheckBoxItemIds(checkBoxColumnPosition, tranCodeColumnPosition, statementGridView, 1)[0];
 
     var parsedDate = Date.parseExact(selection, window.shortDateFormat);
@@ -94,16 +100,84 @@ function reconcile() {
         var month = parsedDate.getMonth() + 1;
         var day = parsedDate.getDate();
 
-        $("#CurrentBookDateInputText").val(selection);
+        currentBookDateInputText.val(selection);
 
-        $("#YearInputText").val(year);
-        $("#MonthInputText").val(month);
-        $("#DayInputText").val(day);
+        yearInputText.val(year);
+        monthInputText.val(month);
+        dayInputText.val(day);
 
-        $("#TranCodeInputText").val(tranCode);
+        tranCodeInputText.val(tranCode);
 
-        $("#ReconcileModal").modal("show");
+        reconcileModal.modal("show");
     };
 
     return false;//Prevent postback
+};
+
+function reconcile() {
+    var tranCode = tranCodeInputText.val();
+    var year = parseInt2(yearInputText.val());
+    var month = parseInt2(monthInputText.val());
+    var day = parseInt2(dayInputText.val());
+
+    var currentDate = Date.parseExact(currentBookDateInputText.val(), window.shortDateFormat);
+    var reconciledDate = new Date(year, month - 1, day);
+    //Javascript month begins with 0  ^^^^^^^^^^^
+
+    if (reconciledDate.equals(currentDate)) {
+        return;
+    };
+
+    url = "/Modules/Finance/Services/Transactions.asmx/Reconcile";
+    var data = appendParameter("", "tranCode", tranCode);
+    data = appendParameter(data, "year", year);
+    data = appendParameter(data, "month", month);
+    data = appendParameter(data, "day", day);
+
+    data = getData(data);
+
+    var ajaxReconcile = getAjax(url, data);
+
+    ajaxReconcile.success(function (msg) {
+        if (msg.d) {
+
+            var selectedRowIndex = getSelectedRowIndex();
+
+            var target = statementGridView.find("tbody tr:nth-child(" + selectedRowIndex + ")").find("td:nth-child(" + bookDateColumnPosition + ")");
+
+            target.html(reconciledDate.toString(shortDateFormat));
+            target.parent().addClass("warning");
+            reconcileModal.modal("hide");
+        };
+    });
+
+    ajaxReconcile.fail(function (xhr) {
+        alert(JSON.parse(xhr.responseText).Message);
+    });
+};
+
+
+// ReSharper disable once NotAllPathsReturnValue
+function getSelectedRowIndex() {
+    var index;
+
+    statementGridView.find("tr").each(function (i) {
+        var row = $(this);
+
+        //Get the instance of the cell which contains the checkbox.
+        var checkBoxContainer = row.select("td:nth-child(" + checkBoxColumnPosition + ")");
+
+        //Get the instance of the checkbox from the container.
+        var checkBox = checkBoxContainer.find("input");
+
+        if (checkBox) {
+            //Check if the checkbox was selected or checked.
+            if (checkBox.prop("checked")) {
+                index = i;
+                return false;//break;
+            };
+        };
+    });
+
+    return index;
 };

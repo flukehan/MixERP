@@ -24,6 +24,7 @@ using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Models.Transactions;
 
 namespace MixERP.Net.WebControls.StockTransactionFactory
@@ -41,8 +42,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
                 {
                     productGridView.ID = "ProductGridView";
                     productGridView.CssClass = "ui table";
-                    productGridView.Style.Add("min-width", "1200px");
-                    productGridView.Style.Add("max-width", "2000px");
+                    productGridView.Style.Value = ConfigurationHelper.GetStockTransactionFactoryParameter("GridStyle");
 
                     CreateHeaderRow(productGridView);
                     this.CreateFooterRow(productGridView);

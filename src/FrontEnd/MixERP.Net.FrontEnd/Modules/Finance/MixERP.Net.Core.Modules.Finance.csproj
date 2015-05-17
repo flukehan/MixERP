@@ -105,6 +105,7 @@
     <Content Include="Reports\RetainedEarnings.ascx" />
     <Content Include="Reports\RetainedEarningsPopup.ascx" />
     <Content Include="packages.config" />
+    <Content Include="Services\Transactions.asmx" />
     <Content Include="Setup\MerchantFeeSetup.ascx" />
     <Content Include="Setup\PaymentCards.ascx" />
     <Content Include="Widgets\WorkflowWidget.ascx" />
@@ -280,6 +281,10 @@
     </Compile>
     <Compile Include="Services\Entry\JournalVoucher.asmx.cs">
       <DependentUpon>JournalVoucher.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Transactions.asmx.cs">
+      <DependentUpon>Transactions.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Setup\AgeingSlabs.ascx.cs">

@@ -47,7 +47,7 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
                 product.ShowPriceTypes = true;
                 product.ShowStore = true;
                 product.ShowSalesType = true;
-                product.Catalog = AppUsers.GetDatabase();
+                product.Catalog = AppUsers.GetCurrentUserDB();
                 product.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
 

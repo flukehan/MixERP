@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 if (!string.IsNullOrWhiteSpace(tranCode))
                 {
                     tranId =
-                        Transaction.GetTranIdByTranCode(AppUsers.GetDatabase(), tranCode)
+                        Transaction.GetTranIdByTranCode(AppUsers.GetCurrentUserDB(), tranCode)
                             .ToString(CultureInfo.InvariantCulture);
                 }
             }

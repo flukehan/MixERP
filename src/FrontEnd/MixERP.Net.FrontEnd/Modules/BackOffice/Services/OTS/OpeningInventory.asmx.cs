@@ -54,7 +54,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services.OTS
 
                 Collection<OpeningStockType> details = this.GetStockDetails(jsonDetails);
 
-                return Data.OneTimeSetup.OpeningInventory.Save(AppUsers.GetDatabase(), officeId, userId, loginId, valueDate, referenceNumber, statementReference, details);
+                return Data.OneTimeSetup.OpeningInventory.Save(AppUsers.GetCurrentUserDB(), officeId, userId, loginId, valueDate, referenceNumber, statementReference, details);
             }
             catch (Exception ex)
             {

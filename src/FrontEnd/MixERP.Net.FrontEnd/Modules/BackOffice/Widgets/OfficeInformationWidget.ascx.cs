@@ -108,7 +108,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Widgets
                 return;
             }
 
-            DbGetOfficeInformationModelResult model = Audit.GetOfficeInformationModel(AppUsers.GetDatabase(), userId);
+            DbGetOfficeInformationModelResult model = Audit.GetOfficeInformationModel(AppUsers.GetCurrentUserDB(), userId);
 
             using (HtmlGenericControl ul = new HtmlGenericControl("ul"))
             {

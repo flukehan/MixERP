@@ -678,3 +678,21 @@ DROP INDEX IF EXISTS core.compound_units_base_unit_id_uix;
 
 CREATE UNIQUE INDEX compound_units_base_unit_id_uix
 ON core.compound_units(base_unit_id);
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'core.compound_item_details'::regclass
+        AND    attname = 'discount'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE core.compound_item_details
+        ADD COLUMN discount public.money_strict2 NOT NULL DEFAULT(0);
+    END IF;
+END
+$$
+LANGUAGE plpgsql;

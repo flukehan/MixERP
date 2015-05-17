@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
                 checklist.ViewReportButtonText = Titles.ViewThisQuotation;
                 checklist.EmailReportButtonText = Titles.EmailThisQuotation;
                 checklist.Text = Titles.SalesQuotation;
-                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetDatabase(),
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetCurrentUserDB(),
                     TranBook.Sales, SubTranBook.Quotation, transactionMasterId);
                 checklist.AttachmentBookName = "non-gl-transaction";
                 checklist.OverridePath = "/Modules/Sales/Quotation.mix";

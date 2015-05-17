@@ -41,7 +41,7 @@ namespace MixERP.Net.FrontEnd.General
                 selector.GridViewRowCssClass = "";
                 selector.GridViewAlternateRowCssClass = "alt";
                 selector.ResourceClassName = this.GetResourceClassName();
-                selector.Catalog = AppUsers.GetDatabase();
+                selector.Catalog = AppUsers.GetCurrentUserDB();
 
                 this.SelectorPlaceholder.Controls.Add(selector);
             }

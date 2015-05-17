@@ -59,7 +59,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                 int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
 
-                return Data.Transactions.Order.Add(AppUsers.GetDatabase(), officeId, userId, loginId, valueDate, partyCode, priceTypeId, details, referenceNumber, statementReference, tranIds, attachments, nonTaxable, salespersonId, shipperId, shippingAddressCode, storeId);
+                return Data.Transactions.Order.Add(AppUsers.GetCurrentUserDB(), officeId, userId, loginId, valueDate, partyCode, priceTypeId, details, referenceNumber, statementReference, tranIds, attachments, nonTaxable, salespersonId, shipperId, shippingAddressCode, storeId);
 
             }
             catch (Exception ex)

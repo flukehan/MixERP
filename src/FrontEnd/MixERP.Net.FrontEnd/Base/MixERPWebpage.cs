@@ -178,7 +178,7 @@ namespace MixERP.Net.FrontEnd.Base
                 return;
             }
 
-            this.menus = Data.Core.Menu.GetMenuCollection(AppUsers.GetDatabase(), officeId, userId, culture).ToArray();
+            this.menus = Data.Core.Menu.GetMenuCollection(AppUsers.GetCurrentUserDB(), officeId, userId, culture).ToArray();
 
             if (!this.VerifyAccess())
             {
@@ -333,7 +333,7 @@ namespace MixERP.Net.FrontEnd.Base
         private void CheckForceLogOffFlags()
         {
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(AppUsers.GetDatabase());
+            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(AppUsers.GetCurrentUserDB());
 
             if (applicationDates != null)
             {

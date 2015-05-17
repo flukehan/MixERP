@@ -24,6 +24,7 @@ div,
 span,
 p,
 option,
+optgroup,
 ul,
 li,
 ol,
@@ -540,7 +541,8 @@ table.ui.form .medium {
 table.ui.form .normal {
   width: 250px !important;
 }
-select option {
+select option,
+select optgroup {
   font-size: 11px;
   padding: 2px 12px;
 }

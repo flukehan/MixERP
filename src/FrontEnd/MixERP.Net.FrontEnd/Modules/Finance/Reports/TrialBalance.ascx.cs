@@ -183,7 +183,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.fromDateTextBox = new DateTextBox();
                 this.fromDateTextBox.ID = "FromDateTextBox";
                 this.fromDateTextBox.Mode = FrequencyType.QuarterStartDate;
-                this.fromDateTextBox.Catalog = AppUsers.GetDatabase();
+                this.fromDateTextBox.Catalog = AppUsers.GetCurrentUserDB();
                 this.fromDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
 
@@ -229,7 +229,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.toDateTextBox = new DateTextBox();
                 this.toDateTextBox.ID = "ToDateTextBox";
                 this.toDateTextBox.Mode = FrequencyType.QuarterEndDate;
-                this.toDateTextBox.Catalog = AppUsers.GetDatabase();
+                this.toDateTextBox.Catalog = AppUsers.GetCurrentUserDB();
                 this.toDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.toDateTextBox);
@@ -251,7 +251,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
-            using (DataTable table = Data.Reports.TrialBalance.GetTrialBalance(AppUsers.GetDatabase(), from, to, userId, officeId, compact, factor, changeSide, includeZeroBalanceAccounts))
+            using (DataTable table = Data.Reports.TrialBalance.GetTrialBalance(AppUsers.GetCurrentUserDB(), from, to, userId, officeId, compact, factor, changeSide, includeZeroBalanceAccounts))
             {
                 this.trialBalanceGridView.DataSource = table;
                 this.trialBalanceGridView.DataBind();

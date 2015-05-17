@@ -50,16 +50,16 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 
                 bool isCredit = transactionType != null && !transactionType.ToUpperInvariant().Equals("CASH");
 
-                if (!Data.Helpers.Stores.IsSalesAllowed(AppUsers.GetDatabase(), storeId))
+                if (!Data.Helpers.Stores.IsSalesAllowed(AppUsers.GetCurrentUserDB(), storeId))
                 {
                     throw new InvalidOperationException("Sales is not allowed here.");
                 }
 
                 foreach (StockDetail model in details)
                 {
-                    if (Data.Helpers.Items.IsStockItem(AppUsers.GetDatabase(), model.ItemCode))
+                    if (Data.Helpers.Items.IsStockItem(AppUsers.GetCurrentUserDB(), model.ItemCode))
                     {
-                        decimal available = Data.Helpers.Items.CountItemInStock(AppUsers.GetDatabase(), model.ItemCode, model.UnitName, model.StoreId);
+                        decimal available = Data.Helpers.Items.CountItemInStock(AppUsers.GetCurrentUserDB(), model.ItemCode, model.UnitName, model.StoreId);
 
                         if (available < model.Quantity)
                         {
@@ -72,7 +72,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                 int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
 
-                return Data.Transactions.DirectSales.Add(AppUsers.GetDatabase(), officeId, userId, loginId, valueDate, storeId, isCredit, paymentTermId, partyCode, salespersonId, priceTypeId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, statementReference, attachments, nonTaxable);
+                return Data.Transactions.DirectSales.Add(AppUsers.GetCurrentUserDB(), officeId, userId, loginId, valueDate, storeId, isCredit, paymentTermId, partyCode, salespersonId, priceTypeId, details, shipperId, shippingAddressCode, shippingCharge, costCenterId, referenceNumber, statementReference, attachments, nonTaxable);
             }
             catch (Exception ex)
             {

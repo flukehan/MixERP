@@ -25,7 +25,7 @@ namespace MixERP.Net.FrontEnd.Controls
     {
         public CheckList()
         {
-            this.Catalog = AppUsers.GetDatabase();
+            this.Catalog = AppUsers.GetCurrentUserDB();
         }
     }
 }

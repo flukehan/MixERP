@@ -60,7 +60,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Services.Entry
                 int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
 
-                return Data.Transactions.GRN.Add(AppUsers.GetDatabase(), officeId, userId, loginId, valueDate, storeId, partyCode, details, costCenterId, referenceNumber, statementReference, tranIds, attachments);
+                return Data.Transactions.GRN.Add(AppUsers.GetCurrentUserDB(), officeId, userId, loginId, valueDate, storeId, partyCode, details, costCenterId, referenceNumber, statementReference, tranIds, attachments);
             }
             catch (Exception ex)
             {

@@ -51,7 +51,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
         protected void AnalyzeButton_Click(object sender, EventArgs e)
         {
             DatabaseUtility utility = new DatabaseUtility();
-            utility.Analyze(AppUsers.GetDatabase());
+            utility.Analyze(AppUsers.GetCurrentUserDB());
 
             this.DisplaySuccess();
         }
@@ -59,7 +59,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
         protected void FullVacuumButton_Click(object sender, EventArgs e)
         {
             DatabaseUtility utility = new DatabaseUtility();
-            utility.VacuumFull(AppUsers.GetDatabase());
+            utility.VacuumFull(AppUsers.GetCurrentUserDB());
 
             this.DisplaySuccess();
         }
@@ -67,7 +67,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
         protected void VacuumButton_Click(object sender, EventArgs e)
         {
             DatabaseUtility utility = new DatabaseUtility();
-            utility.Vacuum(AppUsers.GetDatabase());
+            utility.Vacuum(AppUsers.GetCurrentUserDB());
 
             this.DisplaySuccess();
         }

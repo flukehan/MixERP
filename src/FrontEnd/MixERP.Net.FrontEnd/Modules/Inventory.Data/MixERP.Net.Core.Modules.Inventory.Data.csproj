@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domains\SalesItem.cs" />
     <Compile Include="Helpers\Salespersons.cs" />
     <Compile Include="Helpers\Items.cs" />
     <Compile Include="Helpers\ParameterHelper.cs" />

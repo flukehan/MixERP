@@ -93,7 +93,7 @@ namespace MixERP.Net.Core.Modules.Finance.Widgets
 
         private void CreateList(Control container)
         {
-            DbGetWorkflowModelResult model = Workflow.GetWorkflowModel(AppUsers.GetDatabase());
+            DbGetWorkflowModelResult model = Workflow.GetWorkflowModel(AppUsers.GetCurrentUserDB());
 
             using (HtmlGenericControl ul = new HtmlGenericControl("ul"))
             {

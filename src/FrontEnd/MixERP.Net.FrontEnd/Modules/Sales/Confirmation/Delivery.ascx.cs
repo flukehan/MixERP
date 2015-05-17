@@ -55,7 +55,7 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
                 checklist.ViewPath = "/Modules/Sales/Delivery.mix";
                 checklist.AddNewPath = "/Modules/Sales/Entry/Delivery.mix";
                 checklist.UserId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetDatabase(),
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetCurrentUserDB(),
                     TranBook.Sales, SubTranBook.Delivery, transactionMasterId);
                 checklist.RestrictedTransactionMode = this.IsRestrictedMode;
 

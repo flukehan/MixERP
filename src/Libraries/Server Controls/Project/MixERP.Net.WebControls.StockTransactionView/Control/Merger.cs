@@ -28,7 +28,7 @@ namespace MixERP.Net.WebControls.StockTransactionViewFactory
     {
         private void Merge(Collection<long> ids, string link)
         {
-            MergeModel model = ModelFactory.GetMergeModel(ids, this.Book, this.SubBook);
+            MergeModel model = ModelFactory.GetMergeModel(this.Catalog, ids, this.Book, this.SubBook);
 
             if (model.View == null)
             {

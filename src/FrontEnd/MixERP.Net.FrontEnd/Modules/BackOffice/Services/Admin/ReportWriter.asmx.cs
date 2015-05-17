@@ -29,6 +29,7 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using MixERP.Net.Core.Modules.BackOffice.Admin;
 using MixERP.Net.Core.Modules.BackOffice.Models;
+using MixERP.Net.FrontEnd.Cache;
 using Newtonsoft.Json;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Services.Admin
@@ -48,7 +49,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services.Admin
             JsonSerializer serializer = new JsonSerializer();
             TextWriter writer = new StringWriter();
 
-            using (DataTable table = Data.ReportWriter.GetTable(sql, parameterCollection))
+            using (DataTable table = Data.ReportWriter.GetTable(AppUsers.GetCurrentUserDB(), sql, parameterCollection))
             {
                 serializer.Serialize(writer, table);
                 return writer.ToString();

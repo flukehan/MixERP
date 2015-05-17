@@ -25,7 +25,7 @@ namespace MixERP.Net.DbFactory
 {
     public static class DbConnection
     {
-        public static string GetConnectionString(string catalog = "")
+        public static string GetConnectionString(string catalog)
         {
             string host = ConfigurationHelper.GetDbServerParameter("Server");
             string database = ConfigurationHelper.GetDbServerParameter("Database");

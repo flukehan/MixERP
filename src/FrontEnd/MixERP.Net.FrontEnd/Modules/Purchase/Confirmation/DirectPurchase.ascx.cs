@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Confirmation
                 checklist.Text = Titles.DirectPurchase;
                 checklist.ViewReportButtonText = Titles.ViewThisInvoice;
                 checklist.EmailReportButtonText = Titles.EmailThisInvoice;
-                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetDatabase(),
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetCurrentUserDB(),
                     TranBook.Purchase, SubTranBook.Direct, transactionMasterId);
                 checklist.AttachmentBookName = "transaction";
                 checklist.OverridePath = "/Modules/Purchase/DirectPurchase.mix";

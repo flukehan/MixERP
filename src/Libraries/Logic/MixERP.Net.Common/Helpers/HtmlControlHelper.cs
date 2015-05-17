@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Globalization;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Common.Helpers
 {
@@ -32,6 +33,31 @@ namespace MixERP.Net.Common.Helpers
                 divider.Attributes.Add("class", "ui divider");
 
                 return divider;
+            }
+        }
+
+        public static HtmlGenericControl GetModalHeader(string text = "", string icon = "")
+        {
+            using (HtmlGenericControl header = new HtmlGenericControl("div"))
+            {
+                header.Attributes.Add("class", "header");
+
+
+                if (!string.IsNullOrWhiteSpace(icon))
+                {
+                    using (HtmlGenericControl headerIcon = GetIcon(icon))
+                    {
+                        header.Controls.Add(headerIcon);
+                    }
+                }
+
+                using (Literal literal = new Literal())
+                {
+                    literal.Text = text;
+                    header.Controls.Add(literal);
+                }
+
+                return header;
             }
         }
 
@@ -195,6 +221,21 @@ namespace MixERP.Net.Common.Helpers
             }
         }
 
+        public static HtmlGenericControl GetModal(string cssClass, string id = "")
+        {
+            using (HtmlGenericControl field = new HtmlGenericControl("div"))
+            {
+                field.Attributes.Add("class", cssClass);
+
+                if (!string.IsNullOrWhiteSpace(id))
+                {
+                    field.ID = id;
+                }
+
+                return field;
+            }
+        }
+
         public static HtmlGenericControl GetSegment()
         {
             using (HtmlGenericControl field = new HtmlGenericControl("div"))
@@ -222,9 +263,7 @@ namespace MixERP.Net.Common.Helpers
                 li.InnerText = key + " : " + value;
                 container.Controls.Add(li);
             }
-
         }
-
 
         public static HtmlGenericControl GetToggleCheckBox()
         {

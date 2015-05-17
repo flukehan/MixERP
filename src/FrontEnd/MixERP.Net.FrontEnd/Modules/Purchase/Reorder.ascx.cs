@@ -75,7 +75,7 @@ namespace MixERP.Net.Core.Modules.Purchase
             {
                 grid.GridLines = GridLines.None;
                 this.CreateColumns(grid);
-                grid.DataSource = Data.Transactions.Reorder.GetReorderView(AppUsers.GetDatabase(), officeId);
+                grid.DataSource = Data.Transactions.Reorder.GetReorderView(AppUsers.GetCurrentUserDB(), officeId);
                 grid.ID = "ReorderGrid";
                 grid.AutoGenerateColumns = false;
                 grid.DataBind();

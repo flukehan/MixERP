@@ -29,9 +29,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
 {
     public class ReportWriter
     {
-        public static DataTable GetTable(string sql, Collection<ReportParameter> parameters)
+        public static DataTable GetTable(string catalog, string sql, Collection<ReportParameter> parameters)
         {
-            using (NpgsqlConnection connection = new NpgsqlConnection(GetConnectionString()))
+            using (NpgsqlConnection connection = new NpgsqlConnection(GetConnectionString(catalog)))
             {
                 using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
                 {
@@ -57,21 +57,20 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
             }
         }
 
-        public static string GetConnectionString()
+        public static string GetConnectionString(string catalog)
         {
             string host = ConfigurationHelper.GetReportParameter("DbServer");
             int port = Conversion.TryCastInteger(ConfigurationHelper.GetReportParameter("DbServerPort"));
-            string database = ConfigurationHelper.GetReportParameter("DbServerDatabase");
             string userName = ConfigurationHelper.GetReportParameter("DbServerUserId");
             string password = ConfigurationHelper.GetReportParameter("DbServerPassword");
 
 
             if (string.IsNullOrWhiteSpace(host))
             {
-                return DbFactory.DbConnection.GetConnectionString();
+                return DbFactory.DbConnection.GetConnectionString(catalog);
             }
 
-            return DbFactory.DbConnection.GetConnectionString(host, database, userName, password, port);
+            return DbFactory.DbConnection.GetConnectionString(host, catalog, userName, password, port);
         }
 
         public class DataSource

@@ -24,7 +24,7 @@ using MixERP.Net.Common.Models;
 
 namespace MixERP.Net.WebControls.Common.Helpers
 {
-    internal static class DatePersister
+    public static class DatePersister
     {
         public static ApplicationDateModel GetApplicationDates(string catalog, int officeId)
         {

@@ -93,7 +93,7 @@ namespace MixERP.Net.FrontEnd.Cache
             return dictionary;
         }
 
-        public static string GetDatabase()
+        public static string GetCurrentUserDB()
         {
             string catalog = GetCurrentLogin().Catalog;
             return catalog;

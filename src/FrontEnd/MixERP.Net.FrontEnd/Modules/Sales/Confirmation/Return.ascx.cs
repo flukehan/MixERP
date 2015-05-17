@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
                 checklist.Text = Titles.SalesReturn;
                 checklist.ViewReportButtonText = Titles.ViewThisReturn;
                 checklist.EmailReportButtonText = Titles.EmailThisReturn;
-                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetDatabase(),
+                checklist.PartyEmailAddress = Data.Helpers.Parties.GetEmailAddress(AppUsers.GetCurrentUserDB(),
                     TranBook.Sales, SubTranBook.Return, transactionMasterId);
                 checklist.AttachmentBookName = "transaction";
                 checklist.OverridePath = "~/Modules/Sales/Return.mix";

@@ -63,7 +63,7 @@ var costCenterSelect = $("#CostCenterSelect");
 
 var dateTextBox = $("#DateTextBox");
 var discountInputText = $("#DiscountInputText");
-    
+
 var errorLabel = $("#ErrorLabel");
 var errorLabelBottom = $("#ErrorLabelBottom");
 
@@ -170,7 +170,7 @@ $(document).ready(function () {
 });
 
 function initializeAjaxData() {
-   
+
     processCallBackActions();
 
     loadPriceTypes();
@@ -241,9 +241,26 @@ shippingCompanySelect.blur(function () {
 
 function itemSelect_OnBlur() {
     itemCodeInputText.val(itemSelect.getSelectedValue());
+
+    var isCompoundItem = itemSelect.find(":selected").closest("optgroup").data("compound-item");
+
+    if (isCompoundItem) {
+        unitSelect.disable();
+        priceInputText.disable();
+        discountInputText.disable();
+        shippingChargeInputText.disable();
+        return;
+    };
+
+    unitSelect.enable();
+    priceInputText.enable();
+    discountInputText.enable();
+    shippingChargeInputText.enable();
+
     loadUnits();
     getPrice();
 };
+
 
 function processCallBackActions() {
     var itemId = parseInt2(itemIdHidden.val());
@@ -294,6 +311,14 @@ function taxRequired() {
 };
 
 addButton.click(function () {
+    var isCompoundItem = itemSelect.find(":selected").closest("optgroup").data("compound-item");
+
+    if (isCompoundItem) {
+        addCompoundItems();
+        return;
+    };
+
+
     if (updateTax() === -1) {
         if (taxRequired()) {
             logError("Please select a tax form");
@@ -647,7 +672,43 @@ function loadItems() {
     data = appendParameter("", "tranBook", tranBook);
     data = getData(data);
 
-    ajaxDataBind(url, itemSelect, data);
+    var ajax = getAjax(url, data);
+
+    ajax.success(function (msg) {
+        itemSelect.html("");
+        var itemGroup = $("<optgroup/>");
+        var compoundItemGroup = $("<optgroup/>");
+
+        itemGroup.prop("label", itemsLocalized);
+        compoundItemGroup.prop("label", compoundItemsLocalized);
+        compoundItemGroup.attr("data-compound-item", "true");
+
+        var items = msg.d;
+
+        $(items).each(function () {
+            var item = $("<option/>");
+            item.prop("value", this.ItemCode);
+            item.html(this.ItemName);
+
+            if (this.IsCompoundItem) {
+                compoundItemGroup.append(item);
+            }
+            else {
+                itemGroup.append(item);
+            };
+        });
+
+        if (compoundItemGroup.html()) {
+            itemSelect.append(itemGroup);
+            itemSelect.append(compoundItemGroup);
+        } else {
+            itemSelect.append(itemGroup.html());
+        };
+    });
+
+    ajax.fail(function (xhr) {
+        alert(xhr.responseText);
+    });
 };
 
 function loadParties() {
@@ -865,41 +926,78 @@ var addRow = function () {
     });
 };
 
+function addCompoundItems() {
+    var ajaxGetCompoundItemDetails = getCompoundItemDetails();
+
+    ajaxGetCompoundItemDetails.success(function (msg) {
+        var items = msg.d;
+
+        $(items).each(function () {
+            var item = this;
+            addRowToTable(item.ItemCode, item.ItemName, item.Quantity, item.UnitName, item.Price, item.Discount, 0, taxSelect.getSelectedText(), item.ComputedTax);
+        });
+
+        unitSelect.enable();
+        priceInputText.enable();
+        discountInputText.enable();
+        shippingChargeInputText.enable();
+    });
+
+    ajaxGetCompoundItemDetails.fail(function (xhr) {
+        alert(xhr.responseText);
+    });
+};
+
 var addRowToTable = function (itemCode, itemName, quantity, unitName, price, discount, shippingCharge, tax, computedTax) {
-    var grid = productGridView;
-    var rows = grid.find("tbody tr:not(:last-child)");
+    var editMode = (addButton.val() === window.updateLocalized);
+    var updateIndex = parseInt2(addButton.attr("data-update-index"));
+    var rows = $("#ProductGridView").find("tbody tr:not(:last-child)");
     var amount = price * quantity;
     var subTotal = amount - discount + shippingCharge;
     var match = false;
 
-    rows.each(function () {
-        var row = $(this);
+    if (!editMode) {
+        rows.each(function () {
+            var row = $(this);
 
 
-        if (getColumnText(row, 0) === itemCode &&
-            getColumnText(row, 1) === itemName && //Same Item
-            getColumnText(row, 3) === unitName && //Same Unit
-            parseFloat2(getColumnText(row, 4)) === price &&//Same Price
-            getColumnText(row, 9) === tax //Same Tax
-            ) {
-            setColumnText(row, 2, getFormattedNumber(parseInt2(getColumnText(row, 2)) + quantity, true));
-            setColumnText(row, 5, getFormattedNumber(parseFloat2(getColumnText(row, 5)) + amount));
-            setColumnText(row, 6, getFormattedNumber(parseFloat2(getColumnText(row, 6)) + discount));
-            setColumnText(row, 7, getFormattedNumber(parseFloat2(getColumnText(row, 7)) + shippingCharge));
-            setColumnText(row, 8, getFormattedNumber(parseFloat2(getColumnText(row, 8)) + subTotal));
-            setColumnText(row, 10, getFormattedNumber(parseFloat2(getColumnText(row, 10)) + computedTax));
+            if (getColumnText(row, 0) === itemCode &&
+                getColumnText(row, 1) === itemName && //Same Item
+                getColumnText(row, 3) === unitName && //Same Unit
+                parseFloat2(getColumnText(row, 4)) === price &&//Same Price
+                getColumnText(row, 9) === tax //Same Tax
+                ) {
+                setColumnText(row, 2, getFormattedNumber(parseInt2(getColumnText(row, 2)) + quantity, true));
+                setColumnText(row, 5, getFormattedNumber(parseFloat2(getColumnText(row, 5)) + amount));
+                setColumnText(row, 6, getFormattedNumber(parseFloat2(getColumnText(row, 6)) + discount));
+                setColumnText(row, 7, getFormattedNumber(parseFloat2(getColumnText(row, 7)) + shippingCharge));
+                setColumnText(row, 8, getFormattedNumber(parseFloat2(getColumnText(row, 8)) + subTotal));
+                setColumnText(row, 10, getFormattedNumber(parseFloat2(getColumnText(row, 10)) + computedTax));
 
-            addDanger(row);
+                addDanger(row);
 
-            match = true;
-            return;
-        };
-    });
+                match = true;
+                return;
+            };
+        });
+    };
 
     if (!match) {
-        var html = "<tr class='grid2-row'><td>" + itemCode + "</td><td>" + itemName + "</td><td class='text-right'>" + getFormattedNumber(quantity, true) + "</td><td>" + unitName + "</td><td class='text-right'>" + getFormattedNumber(price) + "</td><td class='text-right'>" + getFormattedNumber(amount) + "</td><td class='text-right'>" + getFormattedNumber(discount) + "</td><td class='text-right'>" + getFormattedNumber(shippingCharge) + "</td><td class='text-right'>" + getFormattedNumber(subTotal) + "</td><td>" + tax + "</td><td class='text-right'>" + getFormattedNumber(computedTax)
-            + "</td><td><a class='pointer' onclick='removeRow($(this));summate();'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
-        grid.find("tr:last").before(html);
+        var html = "<td>" + itemCode + "</td><td>" + itemName + "</td><td class='text-right'>" + getFormattedNumber(quantity, true) + "</td><td>" + unitName + "</td><td class='text-right'>" + getFormattedNumber(price) + "</td><td class='text-right'>" + getFormattedNumber(amount) + "</td><td class='text-right'>" + getFormattedNumber(discount) + "</td><td class='text-right'>" + getFormattedNumber(shippingCharge) + "</td><td class='text-right'>" + getFormattedNumber(subTotal) + "</td><td>" + tax + "</td><td class='text-right'>" + getFormattedNumber(computedTax)
+            + "</td><td><a class='pointer' onclick='editRow($(this));'><i class='ui edit icon'></i></a><a class='pointer' onclick='removeRow($(this));summate();'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td>";
+
+        if (editMode) {
+            var target = $("#ProductGridView").find("tbody tr:nth-child(" + updateIndex + ")");
+        
+            target.html(html);
+            addButton.val(window.addLocalized);
+            $("#ProductGridView").find("tr").removeClass("active");
+            addButton.removeAttr("data-update-index");
+            target.addClass("warning");
+            setInterval(function () { target.removeClass('warning') }, 3000);
+        } else {
+            $("#ProductGridView").find("tr:last").before("<tr class='grid2-row'>" + html + "</tr>");
+        };
     };
 
     summate();
@@ -1009,6 +1107,20 @@ var countItemInStockByUnitName = function (itemCode, unitName, storeId) {
     return getAjax(url, data);
 };
 
+
+var getCompoundItemDetails = function () {
+    url = "/Modules/Inventory/Services/ItemData.asmx/GetCompoundItemDetails";
+    data = appendParameter("", "compoundItemCode", itemCodeInputText.val());
+    data = appendParameter(data, "salesTaxCode", taxSelect.getSelectedText());
+    data = appendParameter(data, "tranBook", window.tranBook);
+    data = appendParameter(data, "storeId", storeSelect.getSelectedValue());
+    data = appendParameter(data, "partyCode", partyCodeInputText.val());
+    data = appendParameter(data, "priceTypeId", priceTypeSelect.getSelectedValue());
+    data = getData(data);
+
+    return getAjax(url, data);
+};
+
 var getDefaultSalesTaxId = function (tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, unitId, price) {
     url = "/Modules/BackOffice/Services/TaxData.asmx/GetSalesTaxId";
     data = appendParameter("", "tranBook", tranBook);
@@ -1024,6 +1136,7 @@ var getDefaultSalesTaxId = function (tranBook, storeId, partyCode, shippingAddre
 
     return getAjax(url, data);
 };
+
 
 var getSalesTax = function (tranBook, storeId, partyCode, shippingAddressCode, priceTypeId, itemCode, price, quantity, discount, shippingCharge, salesTaxId) {
     url = "/Modules/BackOffice/Services/TaxData.asmx/GetSalesTax";
@@ -1102,14 +1215,6 @@ function addShortcuts() {
         unitSelect.focus();
     });
 
-    //$(document).keyup(function (e) {
-    //    if (e.keyCode == 13) {
-    //        if (e.ctrlKey) {
-    //            addButton.click();
-    //        };
-    //    };
-    //});
-
     shortcut.add("CTRL+ENTER", function () {
         if (taxSelect.is(":focus")) {
             addButton.focus();
@@ -1118,4 +1223,42 @@ function addShortcuts() {
 
         addButton.click();
     });
+};
+
+function editRow(el) {
+    var rows = productGridView.find("tr");
+    var selectedRow = el.parent().parent();
+    var selectedIndex = rows.index(selectedRow);
+    var footerRow = $(".footer-row");
+
+    var itemCode = selectedRow.find("td:nth-child(1)").html();
+    var quantity = selectedRow.find("td:nth-child(3)").html();
+    var unitName = selectedRow.find("td:nth-child(4)").html();
+    var price = selectedRow.find("td:nth-child(5)").html();
+    var amount = selectedRow.find("td:nth-child(6)").html();
+    var discount = selectedRow.find("td:nth-child(7)").html();
+    var shippingCharge = selectedRow.find("td:nth-child(8)").html();
+    var subTotal = selectedRow.find("td:nth-child(9)").html();
+    var taxForm = selectedRow.find("td:nth-child(10)").html();
+    var tax = selectedRow.find("td:nth-child(11)").html();
+
+    itemCodeInputText.val(itemCode);
+    itemSelect.val(itemCode);
+    quantityInputText.val(quantity);
+    unitSelect.setSelectedText(unitName);
+    priceInputText.val(price);
+    amountInputText.val(amount);
+    discountInputText.val(discount);
+    shippingChargeInputText.val(shippingCharge);
+    subTotalInputText.val(subTotal);
+    taxSelect.setSelectedText(taxForm);
+    taxInputText.val(tax);
+
+    rows.removeClass("active");
+    selectedRow.addClass("active");
+    footerRow.addClass("active");
+
+    addButton.val(updateLocalized);
+
+    addButton.attr("data-update-index", selectedIndex);
 };
