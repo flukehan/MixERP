@@ -29,7 +29,7 @@ var fromDateTextBox = $("#FromDateTextBox");
 var toDateTextBox = $("#ToDateTextBox");
 var storeIdHidden = $("#StoreIdHidden");
 
-printIcon.click(function() {
+printIcon.click(function () {
     var selected = $(this).parent().parent().find("td:nth-child(3)").html().trim();
     if (!isNullOrWhiteSpace(selected)) {
         var report = "/Modules/Inventory/Reports/InventoryAdvice.mix?TranCode=" + selected;
@@ -38,7 +38,7 @@ printIcon.click(function() {
 });
 
 
-storeSelect.blur(function() {
+storeSelect.blur(function () {
     storeIdHidden.val(storeSelect.getSelectedValue());
 });
 
@@ -70,7 +70,7 @@ function loadItems() {
     data = getData(data);
 
     url = "/Modules/Inventory/Services/ItemData.asmx/GetItems";
-    ajaxDataBind(url, itemSelect, data, selected, itemCodeInputText);
+    ajaxDataBind(url, itemSelect, data, selected, itemCodeInputText, null, "ItemCode", "ItemName");
 };
 
 
@@ -82,12 +82,12 @@ function loadStores() {
 };
 
 
-statementGridView.find('tr').click(function() {
+statementGridView.find('tr').click(function () {
     var checkBox = $(this).find('td input:checkbox');
     toogleSelection(checkBox);
 });
 
-printButton.click(function() {
+printButton.click(function () {
     var report = "AccountStatementReport.mix?ItemCode={0}&StoreId={1}&From={2}&To={3}";
     var itemCode = itemCodeInputText.val();
     var storeId = storeIdHidden.val();
