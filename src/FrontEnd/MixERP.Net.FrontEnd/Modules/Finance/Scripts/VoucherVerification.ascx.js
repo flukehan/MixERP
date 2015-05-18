@@ -90,7 +90,7 @@ $(document).ready(function () {
     };
 
     function ajaxReject(tranId, reason) {
-        url = "/Modules/Finance/Services/Transactions.asmx.asmx/Reject";
+        url = "/Modules/Finance/Services/Transactions.asmx/Reject";
         data = appendParameter("", "tranId", tranId);
         data = appendParameter(data, "reason", reason);
         data = getData(data);
