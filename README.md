@@ -1,4 +1,4 @@
-#What is MixERP?
+#What Is MixERP?
 
 MixERP is an ASP.net open source ERP Solution.
 
@@ -34,7 +34,7 @@ If you can afford to, please consider [making a donation](http://www.mixerp.org/
 <a href="http://www.mixerp.org/donate"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"/></a>
 
 
-#Where is documentation?
+#Where Is Documentation?
 The documentation now lives in the "gh-pages" branch and is hosted on GitHub pages here:
 
 [MixERP Documentation](http://docs.mixerp.org)
@@ -68,7 +68,7 @@ The first thing that we ever discussed when starting this project was simplicity
 
 Unlike other ERP solutions, MixERP restricts some side effecting functionality. For example, modification of past dated transactions is not allowed. This ensures that you cannot have two different balance sheets of the same date because of the modifications made. 
 
-##MixERP is a pure
+###MixERP Is a Pure
 * multi-currency,
 * multi-lingual, 
 * and multi-establishment ERP Solution.
