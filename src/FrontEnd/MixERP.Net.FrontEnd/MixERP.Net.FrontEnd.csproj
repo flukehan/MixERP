@@ -56,29 +56,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
-      <HintPath>..\..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -92,59 +73,14 @@
       <HintPath>..\..\packages\Serilog.1.4.155\lib\net45\Serilog.FullNetFx.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
-    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\MixERPMasterPage.cs">
@@ -336,8 +272,8 @@
     <Content Include="License.txt" />
     <Content Include="MixERP.Installation.xml" />
     <Content Include="Modules\Default.aspx" />
-    <Content Include="Resource\Configuration\ApiConfiguration.xml" />
     <Content Include="Resource\Configuration\AttachmentFactoryParameters.xml" />
+    <Content Include="Resource\Configuration\ReportApiConfiguration.xml" />
     <Content Include="Resource\Configuration\DbParameters.xml" />
     <Content Include="Resource\Configuration\StockTransactionFactoryParameters.xml" />
     <Content Include="Resource\Configuration\DbServer.xml" />
@@ -927,21 +863,13 @@
       <Project>{2ecd1c2e-d7d0-4a24-896a-e625b0566db5}</Project>
       <Name>MixERP.Net.i18n</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Logic\MixERP.Net.Messaging\MixERP.Net.Messaging.Email.csproj">
-      <Project>{d29b7b60-76b2-4a00-a8fa-7654519afcd4}</Project>
-      <Name>MixERP.Net.Messaging.Email</Name>
+    <ProjectReference Include="..\..\Libraries\Logic\MixERP.Net.ReportManager\MixERP.Net.ReportManager.csproj">
+      <Project>{52F97ED7-2013-4950-8725-01E5715EB285}</Project>
+      <Name>MixERP.Net.ReportManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\MixERP.Net.WebControls.AttachmentFactory.csproj">
       <Project>{403f308d-10e7-4c70-9360-1027ee541495}</Project>
       <Name>MixERP.Net.WebControls.AttachmentFactory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
-      <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>
-      <Name>MixERP.Net.WebControls.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.Flag\MixERP.Net.WebControls.Flag.csproj">
-      <Project>{F625BEFD-2BBB-48AF-A7E5-54B8E61F3282}</Project>
-      <Name>MixERP.Net.WebControls.Flag</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.ReportEngine\MixERP.Net.WebControls.ReportEngine.csproj">
       <Project>{81f04b78-6194-4f86-a795-5f186c602eee}</Project>
@@ -951,25 +879,9 @@
       <Project>{07ddce95-a18f-4a35-b892-ce09ead2aa65}</Project>
       <Name>MixERP.Net.WebControls.ScrudFactory</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\MixERP.Net.WebControls.StockTransactionFactory.csproj">
-      <Project>{1c84e528-87ed-4b69-bfc3-81d675cb153e}</Project>
-      <Name>MixERP.Net.WebControls.StockTransactionFactory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Server Controls\Data\MixERP.Net.WebControls.StockTransactionView.Data\MixERP.Net.WebControls.StockTransactionViewFactory.Data.csproj">
-      <Project>{f8499d93-ced5-4a3d-a22b-cf21171ede6b}</Project>
-      <Name>MixERP.Net.WebControls.StockTransactionViewFactory.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.PartyControl\MixERP.Net.WebControls.PartyControl.csproj">
-      <Project>{e566553c-218f-460d-b1a9-c441f01f8fde}</Project>
-      <Name>MixERP.Net.WebControls.PartyControl</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\MixERP.Net.WebControls.StockTransactionViewFactory.csproj">
-      <Project>{e82752da-f0d2-4987-b011-6b2623937dea}</Project>
-      <Name>MixERP.Net.WebControls.StockTransactionViewFactory</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.TransactionChecklist\MixERP.Net.WebControls.TransactionChecklist.csproj">
       <Project>{64490b89-b228-4188-8235-71744a94c9ae}</Project>

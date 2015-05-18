@@ -19,17 +19,14 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.IO;
-using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
 using System.Threading;
-using System.Web.Mvc;
 using System.Web;
-using System.Web.Http;
 using System.Web.Routing;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Office;
+using MixERP.Net.ReportManager;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -43,8 +40,6 @@ namespace MixERP.Net.FrontEnd
             if (routes != null)
             {
                 Log.Information("Registering routes.");
-                routes.IgnoreRoute("{*asmx}", new { asmx = @".*\.asmx(/.*)?" });
-                routes.IgnoreRoute("{*ashx}", new { ashx = @".*\.ashx(/.*)?" });
                 routes.Ignore("{resource}.axd");
                 routes.MapPageRoute("DefaultRoute", "", "~/SignIn.aspx");
                 routes.MapPageRoute("Reporting", "Reports/{path}", "~/Reports/ReportMaster.aspx");
@@ -102,21 +97,8 @@ namespace MixERP.Net.FrontEnd
 
             RegisterRoutes(RouteTable.Routes);
 
-            GlobalConfiguration.Configure(config =>
-            {
-                //Configure routing as defined in respective class attributes.
-                config.MapHttpAttributeRoutes();
-               
-
-                config.Formatters.JsonFormatter.MediaTypeMappings.Add(new QueryStringMapping("type", "json",
-                    new MediaTypeHeaderValue("application/json")));
-                config.Formatters.XmlFormatter.MediaTypeMappings.Add(new QueryStringMapping("type", "xml",
-                    new MediaTypeHeaderValue("application/xml")));
-
-                config.EnsureInitialized();
-            });
-
             GlobalLogin.CreateTable();
+            Repository.DownloadAndInstallReports();
         }
 
         private string GetLogDirectory()

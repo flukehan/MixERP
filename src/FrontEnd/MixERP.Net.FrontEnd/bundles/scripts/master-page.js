@@ -50832,11 +50832,12 @@ var getData = function (data) {
     return null;
 };
 
-jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
+jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue, dataValueField, dataTextField) {
     "use strict";
     var selected;
     var targetControl = $(this);
     targetControl.empty();
+
 
     if (ajaxData.length === 0) {
         appendItem(targetControl, "", window.noneLocalized);
@@ -50846,8 +50847,17 @@ jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
     if (!skipSelect) {
         appendItem(targetControl, "", window.selectLocalized);
     }
+   
+    if (!dataValueField) {
+        dataValueField = "Value";
+    };
+
+    if (!dataTextField) {
+        dataTextField = "Text";
+    };
 
     $.each(ajaxData, function () {
+        
         selected = false;
 
         if (selectedValue) {
@@ -50855,8 +50865,7 @@ jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue) {
                 selected = true;
             };
         };
-
-        appendItem(targetControl, this.Value, this.Text, selected);
+        appendItem(targetControl, this[dataValueField], this[dataTextField], selected);
     });
 };
 
@@ -50901,6 +50910,7 @@ var ajaxUpdateVal = function (url, data, targetControls) {
     };
 
     ajax.success(function (msg) {
+
         targetControls.each(function () {
             $(this).val(msg.d).trigger('change');
         });
@@ -50915,7 +50925,8 @@ var ajaxUpdateVal = function (url, data, targetControls) {
     });
 };
 
-var ajaxDataBind = function (url, targetControl, data, selectedValue, associatedControl, callback) {
+var ajaxDataBind = function (url, targetControl, data, selectedValue, associatedControl, callback, dataValueField, dataTextField) {
+   
     if (!targetControl) {
         return;
     };
@@ -50933,17 +50944,18 @@ var ajaxDataBind = function (url, targetControl, data, selectedValue, associated
     };
 
     ajax.success(function (msg) {
+
         if (typeof callback === "function") {
             callback();
         };
 
         if (targetControl.length === 1) {
-            targetControl.bindAjaxData(msg.d, false, selectedValue);
+            targetControl.bindAjaxData(msg.d, false, selectedValue, dataValueField, dataTextField);
         };
 
         if (targetControl.length > 1) {
             targetControl.each(function () {
-                $(this).bindAjaxData(msg.d, false, selectedValue);
+                $(this).bindAjaxData(msg.d, false, selectedValue, dataValueField, dataTextField);
             });
         };
 
