@@ -40,6 +40,15 @@ namespace MixERP.Net.Core.Modules.Finance.Entry {
         protected global::MixERP.Net.WebControls.Common.DateTextBox ValueDateTextBox;
         
         /// <summary>
+        /// BookDateTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::MixERP.Net.WebControls.Common.DateTextBox BookDateTextBox;
+        
+        /// <summary>
         /// ReferenceNumberLiteral control.
         /// </summary>
         /// <remarks>

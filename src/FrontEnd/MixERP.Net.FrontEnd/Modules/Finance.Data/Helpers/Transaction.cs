@@ -82,7 +82,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             }
         }
 
-        public static long Add(string catalog, DateTime valueDate, int officeId, int userId, long loginId, int costCenterId, string referenceNumber, Collection<JournalDetail> details, Collection<Attachment> attachments)
+        public static long Add(string catalog, DateTime valueDate, DateTime bookDate, int officeId, int userId, long loginId, int costCenterId, string referenceNumber, Collection<JournalDetail> details, Collection<Attachment> attachments)
         {
             if (details == null)
             {
@@ -119,11 +119,12 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                 {
                     try
                     {
-                        string sql = "INSERT INTO transactions.transaction_master(transaction_master_id, transaction_counter, transaction_code, book, value_date, user_id, login_id, office_id, cost_center_id, reference_number) SELECT nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), transactions.get_new_transaction_counter(@ValueDate), transactions.get_transaction_code(@ValueDate, @OfficeId, @UserId, @LoginId), @Book, @ValueDate, @UserId, @LoginId, @OfficeId, @CostCenterId, @ReferenceNumber;SELECT currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));";
+                        string sql = "INSERT INTO transactions.transaction_master(transaction_master_id, transaction_counter, transaction_code, book, value_date, book_date, user_id, login_id, office_id, cost_center_id, reference_number) SELECT nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), transactions.get_new_transaction_counter(@ValueDate), transactions.get_transaction_code(@ValueDate, @OfficeId, @UserId, @LoginId), @Book, @ValueDate, @BookDate, @UserId, @LoginId, @OfficeId, @CostCenterId, @ReferenceNumber;SELECT currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));";
                         long transactionMasterId;
                         using (NpgsqlCommand master = new NpgsqlCommand(sql, connection))
                         {
                             master.Parameters.AddWithValue("@ValueDate", valueDate);
+                            master.Parameters.AddWithValue("@BookDate", bookDate);
                             master.Parameters.AddWithValue("@OfficeId", officeId);
                             master.Parameters.AddWithValue("@UserId", userId);
                             master.Parameters.AddWithValue("@LoginId", loginId);

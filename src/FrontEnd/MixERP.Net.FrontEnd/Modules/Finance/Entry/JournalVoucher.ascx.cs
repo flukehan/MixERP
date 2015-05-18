@@ -51,6 +51,7 @@ namespace MixERP.Net.Core.Modules.Finance.Entry
             this.PostTransactionLiteral.Text = Titles.PostTransaction;
             this.AddInputButton.Value = Titles.Add;
             this.ValueDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            this.BookDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
             using (Attachment attachment = new Attachment())
             {

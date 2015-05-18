@@ -42,7 +42,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services.Entry
     public class JournalVoucher : WebService
     {
         [WebMethod]
-        public long Save(DateTime valueDate, string referenceNumber, string data, int costCenterId, string attachmentsJSON)
+        public long Save(DateTime valueDate, DateTime bookDate, string referenceNumber, string data, int costCenterId, string attachmentsJSON)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services.Entry
                 int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
 
-                return Transaction.Add(AppUsers.GetCurrentUserDB(), valueDate, officeId, userId, loginId, costCenterId,
+                return Transaction.Add(AppUsers.GetCurrentUserDB(), valueDate, bookDate, officeId, userId, loginId, costCenterId,
                     referenceNumber, details, attachments);
             }
             catch (Exception ex)

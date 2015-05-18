@@ -57,6 +57,7 @@ var transactionGridView = $("#TransactionGridView");
 var transactionGridViewHidden = $("#TransactionGridViewHidden");
 
 var valueDateTextBox = $("#ValueDateTextBox");
+var bookDateTextBox = $("#BookDateTextBox");
 
 //Variables
 var accountNumber = "";
@@ -74,7 +75,8 @@ var lcCredit = 0;
 var lcDebit = 0;
 var er = 0.00;
 
-var valueDate = "";
+var valueDate;
+var bookDate;
 
 var url = "";
 var data = "";
@@ -436,7 +438,7 @@ postButton.click(function() {
 });
 
 var post = function() {
-    var ajaxPostJournalTransaction = postpostJournalTransaction(valueDate, referenceNumber, data, costCenterId, attachments);
+    var ajaxPostJournalTransaction = postpostJournalTransaction(valueDate, bookDate, referenceNumber, data, costCenterId, attachments);
 
     ajaxPostJournalTransaction.success(function(msg) {
         var id = msg.d;
@@ -451,9 +453,10 @@ var post = function() {
     });
 };
 
-var postpostJournalTransaction = function(valueDate, referenceNumber, data, costCenterId, attachments) {
+var postpostJournalTransaction = function(valueDate, bookDate, referenceNumber, data, costCenterId, attachments) {
     var d = "";
     d = appendParameter(d, "valueDate", valueDate);
+    d = appendParameter(d, "bookDate", bookDate);
     d = appendParameter(d, "referenceNumber", referenceNumber);
     d = appendParameter(d, "data", data);
     d = appendParameter(d, "costCenterId", costCenterId);
@@ -466,6 +469,7 @@ var postpostJournalTransaction = function(valueDate, referenceNumber, data, cost
 
 var validate = function() {
     valueDate = Date.parseExact(valueDateTextBox.val(), window.shortDateFormat);
+    bookDate = Date.parseExact(bookDateTextBox.val(), window.shortDateFormat);
 
     errorLabelBottom.html("");
 

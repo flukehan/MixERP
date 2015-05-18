@@ -29,9 +29,6 @@ $$
     DECLARE _can_verify_self boolean;
     DECLARE _self_verification_limit money_strict2;
     DECLARE _posted_amount money_strict2;
-    DECLARE _office_id integer;
-    DECLARE _eoy_date date;
-    DECLARE _book_date date;
 BEGIN
     IF TG_OP='DELETE' THEN
         RAISE EXCEPTION 'Deleting a transaction is not allowed. Mark the transaction as rejected instead.'
@@ -96,9 +93,6 @@ BEGIN
             USING ERRCODE='P8502';
         END IF;
 
-        _office_id := OLD.office_id;
-        _book_date := NEW.book_date;
-        _eoy_date := core.get_fiscal_year_end_date(_office_id);
         _transaction_master_id := OLD.transaction_master_id;
         _book := OLD.book;
         _old_verifier := OLD.verified_by_user_id;
@@ -110,10 +104,6 @@ BEGIN
         _reason := NEW.verification_reason;
         _is_sys := office.is_sys(_verifier);
 
-        IF(_book_date > _eoy_date) THEN
-            RAISE EXCEPTION 'Access is denied.'
-            USING ERRCODE='P9001';
-        END IF;
         
         SELECT
             SUM(amount_in_local_currency)

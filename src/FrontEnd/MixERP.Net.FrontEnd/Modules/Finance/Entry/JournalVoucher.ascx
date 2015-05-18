@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="JournalVoucher.ascx.cs"
     Inherits="MixERP.Net.Core.Modules.Finance.Entry.JournalVoucher"
     OverridePath="/Modules/Finance/JournalVoucher.mix" %>
+<%@ Import Namespace="MixERP.Net.i18n.Resources" %>
 <%@ Register TagPrefix="mixerp" Namespace="MixERP.Net.WebControls.Common" Assembly="MixERP.Net.WebControls.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a724a47a0879d02f" %>
 
 <h2>
@@ -27,12 +28,19 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 </h2>
 
 <div class="ui tiny form segment">
-    <div class="two fields">
+    <div class="three fields">
         <div class="field">
             <label for="ValueDateTextBox">
                 <asp:Literal ID="ValueDateLiteral" runat="server" />
             </label>
             <mixerp:DateTextBox ID="ValueDateTextBox" runat="server" Mode="Today" CssClass="date" />
+        </div>
+        <div class="field">
+            <label for="BookDateTextBox">
+                <%=Titles.BookDate %>
+            </label>
+            <mixerp:DateTextBox 
+                ID="BookDateTextBox" runat="server" Mode="Today" CssClass="date" />
         </div>
         <div class="field">
             <label for="ReferenceNumberInputText">
