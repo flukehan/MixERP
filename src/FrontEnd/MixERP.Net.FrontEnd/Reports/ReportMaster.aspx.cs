@@ -34,8 +34,6 @@ namespace MixERP.Net.FrontEnd.Reports
                 iFrame.Attributes.Add("style", "width:100%;height:100%;border:1px solid #C0C0C0;");
                 this.IFramePlaceholder.Controls.Add(iFrame);
             }
-
-            this.OverridePath = "~/Finance/Index.aspx";
         }
     }
 }

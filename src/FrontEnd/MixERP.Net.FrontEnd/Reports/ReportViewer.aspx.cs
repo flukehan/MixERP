@@ -20,6 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
@@ -155,13 +156,15 @@ namespace MixERP.Net.FrontEnd.Reports
 
         private string ReportPath()
         {
-            string id = this.Request["Id"];
-            if (string.IsNullOrWhiteSpace(id))
+            string reportId = this.Request["Id"];
+            string container = ConfigurationHelper.GetReportParameter("ReportContainer");
+
+            if (string.IsNullOrWhiteSpace(reportId))
             {
                 return null;
             }
 
-            return "~/Reports/Sources/" + id;
+            return Path.Combine(container, reportId);
         }
 
         #region IDispoable

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Resources;
 using System.Runtime.Caching;
@@ -8,6 +9,8 @@ namespace MixERP.Net.i18n
 {
     public class ResourceManager
     {
+        private static bool supressException = ConfigurationManager.AppSettings["SupressMissingResourceException"].ToUpperInvariant().Equals("TRUE");
+
         public static string GetString(string resourceClass, string resourceKey, string cultureCode = null)
         {
             return GetResourceFromCache(resourceClass, resourceKey, cultureCode);
@@ -78,6 +81,11 @@ namespace MixERP.Net.i18n
 
             if (result == null)
             {
+                if (supressException)
+                {
+                    return resourceKey;
+                }
+
                 throw new MissingManifestResourceException("Resource " + cacheKey + " was not found.");
             }
 
