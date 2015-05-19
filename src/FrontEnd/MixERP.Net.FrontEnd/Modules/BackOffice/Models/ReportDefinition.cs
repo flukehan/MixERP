@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Web.Hosting;
@@ -28,6 +27,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
 {
     public sealed class ReportDefinition
     {
+        private static readonly string reportContainer =
+            HostingEnvironment.MapPath(ConfigurationHelper.GetReportParameter("ReportContainer"));
+
         public string Title { get; set; }
         public string FileName { get; set; }
         public string MenuCode { get; set; }
@@ -37,8 +39,6 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
         public string BottomSection { get; set; }
         public IEnumerable<Data.ReportWriter.DataSource> DataSources { get; set; }
         public IEnumerable<Data.ReportWriter.Grid> GridViews { get; set; }
-
-        readonly static string reportContainer = HostingEnvironment.MapPath(ConfigurationHelper.GetReportParameter("ReportContainer"));
 
         public void Save()
         {
@@ -63,12 +63,11 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
             ReportBuilder builder = new ReportBuilder(this);
 
             string contents = builder.Build();
-            
+
             File.WriteAllText(path, contents);
         }
 
-
-        public  ReportDefinition Get(string fileName)
+        public ReportDefinition Get(string fileName)
         {
             string file = Path.Combine(reportContainer, fileName);
 

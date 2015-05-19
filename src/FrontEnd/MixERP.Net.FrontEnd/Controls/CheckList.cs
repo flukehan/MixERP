@@ -21,9 +21,9 @@ using MixERP.Net.WebControls.TransactionChecklist;
 
 namespace MixERP.Net.FrontEnd.Controls
 {
-    public sealed class CheckList : TransactionChecklistForm
+    public sealed class Checklist : TransactionChecklistForm
     {
-        public CheckList()
+        public Checklist()
         {
             this.Catalog = AppUsers.GetCurrentUserDB();
         }

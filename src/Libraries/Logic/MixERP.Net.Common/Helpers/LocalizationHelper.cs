@@ -115,7 +115,7 @@ namespace MixERP.Net.Common.Helpers
                 }
 
                 Log.Error("Resource could not be found for the key {Key} on {Class} on the default assembly.", key, className);
-                return string.Empty;
+                return key;
             }
             catch (MissingManifestResourceException)
             {

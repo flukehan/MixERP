@@ -34,7 +34,7 @@ namespace MixERP.Net.Core.Modules.Sales.Confirmation
         {
             long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
 
-            using (CheckList checklist = new CheckList())
+            using (Checklist checklist = new Checklist())
             {
                 checklist.ViewReportButtonText = Titles.PrintReceipt;
                 checklist.EmailReportButtonText = Titles.EmailThisReceipt;

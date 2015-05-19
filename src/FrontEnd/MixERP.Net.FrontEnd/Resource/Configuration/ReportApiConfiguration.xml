@@ -21,10 +21,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 <configuration>
   <appSettings>
-    <add key="ApiUrl" value="https://api.github.com/repos/mixerp/mixerp/contents/src/FrontEnd/MixERP.Net.FrontEnd/Modules/Sales/Reports/Source" />
+    <add key="ApiUrl" value="https://api.github.com/repos/mixerp/mixerp/contents/src/CustomReports" />
     <add key="MediaType" value="application/json" />
     <add key="UserAgent" value="Mozilla/5.0" />
     <add key="FileNameKey" value="name" />
     <add key="DownloadUrlKey" value="download_url" />
+    <add key="ReportUrlExpression" value="~/Reports/{ReportName}" />
   </appSettings>
 </configuration>

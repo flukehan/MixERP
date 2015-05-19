@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace MixERP.Net.ReportManager
 {
@@ -10,6 +11,11 @@ namespace MixERP.Net.ReportManager
             Client client = new Client(Config.ApiUrl);
             IEnumerable<Report> reports = await client.FetchReports();
             Collection<ReportMenu> menus = new Collection<ReportMenu>();
+
+            if (reports == null)
+            {
+                return;
+            }
 
             foreach (Report report in reports)
             {

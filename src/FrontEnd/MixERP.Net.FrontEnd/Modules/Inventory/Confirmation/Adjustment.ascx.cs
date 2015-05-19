@@ -31,7 +31,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Confirmation
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (CheckList checklist = new CheckList())
+            using (Checklist checklist = new Checklist())
             {
                 checklist.ViewReportButtonText = Titles.ViewThisAdjustment;
                 checklist.Text = Titles.StockAdjustment;

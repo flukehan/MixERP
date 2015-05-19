@@ -27,13 +27,28 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             width: 800px;
         }
 
-        html, body, .thirteen.wide.column, #MainContent {
-            height: 100%;
+        iframe {
+            min-height: 1000px;
         }
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
+    <asp:PlaceHolder runat="server" ID="ReportPlaceholder"/>
     <asp:PlaceHolder ID="IFramePlaceholder" runat="server"/>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>
+
+<script runat="server">
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        this.IsLandingPage = true;
+        using (HtmlGenericControl iFrame = new HtmlGenericControl())
+        {
+            iFrame.TagName = "iframe";
+            iFrame.Attributes.Add("src", this.ResolveUrl("~/Reports/ReportViewer.aspx?Id=" + this.RouteData.Values["path"]));
+            iFrame.Attributes.Add("style", "width:100%;border:1px solid #C0C0C0;");
+            this.IFramePlaceholder.Controls.Add(iFrame);
+        }
+    }
+</script>

@@ -268,6 +268,11 @@ var printGridView = function (templatePath, headerPath, reportTitle, gridViewId,
     });
 };
 ///#source 1 1 /Scripts/mixerp/core/libraries/chartjs.js
+function shuffle(o) {
+    for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
+
 var chartColors = ["#3366CC", "#DC3912", "#109618", "#FF9900", "#990099", "#0099C6", "#DD4477", "#66AA00", "#B82E2E", "#316395", "#994499", "#AAAA11", "#E67300", "#8B0707", "#3B3EAC", "#B77322", "#16D620"];
 
 function getFillColor(index) {
@@ -292,6 +297,7 @@ function hexToRgb(hex) {
 };
 
 function prepareChart(datasourceId, canvasId, legendId, type, log) {
+    chartColors = shuffle(chartColors);
     var table = $("#" + datasourceId);
     var labels = [];
     var data = [];
@@ -367,6 +373,7 @@ function prepareChart(datasourceId, canvasId, legendId, type, log) {
 }
 
 function preparePieChart(datasourceId, canvasId, legendId, type, hide, titleColumnIndex, valueColumnIndex) {
+    chartColors = shuffle(chartColors);
     var table = $("#" + datasourceId);
     var value;
     var data = [];

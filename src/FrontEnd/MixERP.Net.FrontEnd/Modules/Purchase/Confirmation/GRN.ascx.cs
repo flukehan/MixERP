@@ -35,7 +35,7 @@ namespace MixERP.Net.Core.Modules.Purchase.Confirmation
         {
             long transactionMasterId = Conversion.TryCastLong(this.Request["TranId"]);
 
-            using (CheckList checklist = new CheckList())
+            using (Checklist checklist = new Checklist())
             {
                 checklist.Text = Titles.GoodsReceiptNote;
                 checklist.ViewReportButtonText = Titles.ViewThisNote;

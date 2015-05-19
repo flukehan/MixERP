@@ -43,6 +43,10 @@
       <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Npgsql, Version=2.2.3.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Npgsql.2.2.3\lib\net45\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="Serilog, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\Serilog.1.4.155\lib\net45\Serilog.dll</HintPath>
@@ -79,9 +83,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Server Controls\Project\MixERP.Net.WebControls.ReportEngine\MixERP.Net.WebControls.ReportEngine.csproj">
+      <Project>{81F04B78-6194-4F86-A795-5F186C602EEE}</Project>
+      <Name>MixERP.Net.WebControls.ReportEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
       <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.DbFactory\MixERP.Net.DbFactory.csproj">
+      <Project>{8FD9661C-2473-4581-8722-18B08D4DB252}</Project>
+      <Name>MixERP.Net.DbFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
+      <Project>{bde918b1-dd9b-41c9-a41f-f3ddec18b6d8}</Project>
+      <Name>MixERP.Net.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

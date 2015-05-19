@@ -103,7 +103,7 @@ namespace MixERP.Net.WebControls.ReportEngine
 
             if (string.IsNullOrWhiteSpace(this.RunningTotalText))
             {
-                this.InvalidLocationErrorMessage = "Total";
+                this.RunningTotalText = "Total";
             }
         }
 

@@ -102,7 +102,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Cache\AppUsers.cs" />
-    <Compile Include="Controls\CheckList.cs" />
+    <Compile Include="Controls\Checklist.cs" />
     <Compile Include="Controls\Scrud.cs" />
     <Compile Include="Controls\WebReport.cs" />
     <Compile Include="Dashboard\Index.aspx.cs">

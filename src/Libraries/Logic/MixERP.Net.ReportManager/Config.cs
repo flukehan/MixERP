@@ -17,5 +17,6 @@ namespace MixERP.Net.ReportManager
         internal static readonly string DownloadUrlKey = ReadConfig("DownloadUrlKey");
         internal static readonly string MediaType = ReadConfig("MediaType");
         internal static readonly string UserAgent = ReadConfig("UserAgent");
+        internal static readonly string ReportUrlExpression = ReadConfig("ReportUrlExpression");
     }
 }

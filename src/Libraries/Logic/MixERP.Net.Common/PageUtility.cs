@@ -151,6 +151,11 @@ namespace MixERP.Net.Common
 
         public static string GetCurrentDomainName()
         {
+            if (HttpContext.Current == null)
+            {
+                return string.Empty;
+            }
+
             string url = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Host;
 
             if (HttpContext.Current.Request.Url.Port != 80)

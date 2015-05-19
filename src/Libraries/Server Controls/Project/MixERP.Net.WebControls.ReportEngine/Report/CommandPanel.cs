@@ -100,7 +100,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.filterImageButton = new ImageButton();
             this.filterImageButton.ID = "FilterImageButton";
             this.filterImageButton.CssClass = this.GetImageButtonCssClass();
-            this.filterImageButton.OnClientClick = "$('.report-parameter').toggle(500);";
+            this.filterImageButton.OnClientClick = "$('.report-parameter').toggle(500);return false;";
             this.filterImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("FilterIcon"));
 
             p.Controls.Add(this.filterImageButton);
