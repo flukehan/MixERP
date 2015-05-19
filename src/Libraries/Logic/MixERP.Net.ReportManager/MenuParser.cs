@@ -7,12 +7,14 @@ namespace MixERP.Net.ReportManager
 {
     internal class MenuParser
     {
-        internal MenuParser(string content)
+        internal MenuParser(string content, string fileName)
         {
             this.Content = content;
+            this.FileName = fileName;
         }
 
         internal string Content { get; set; }
+        internal string FileName { get; set; }
 
         internal ReportMenu Parse()
         {
@@ -21,6 +23,7 @@ namespace MixERP.Net.ReportManager
             xml.LoadXml(this.Content);
 
             ReportMenu menu = new ReportMenu();
+            menu.FileName = this.FileName;
             menu.Text = this.ParseTitle(xml);
             menu.MenuCode = this.ParseMenuCode(xml);
             menu.ParentMenuCode = this.ParseParentMenuCode(xml);
@@ -53,9 +56,9 @@ namespace MixERP.Net.ReportManager
 
             if (menu != null)
             {
-                if (menu.Attributes != null && menu.Attributes["MenuCode"] != null)
+                if (menu.Attributes != null && menu.Attributes["Code"] != null)
                 {
-                    return menu.Attributes["MenuCode"].Value;
+                    return menu.Attributes["Code"].Value;
                 }
             }
 

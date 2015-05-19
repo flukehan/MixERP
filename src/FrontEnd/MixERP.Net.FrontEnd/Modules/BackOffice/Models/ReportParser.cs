@@ -82,9 +82,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Models
 
             if (menu != null)
             {
-                if (menu.Attributes != null && menu.Attributes["MenuCode"] != null)
+                if (menu.Attributes != null && menu.Attributes["Code"] != null)
                 {
-                    this.Definition.MenuCode = menu.Attributes["MenuCode"].Value;
+                    this.Definition.MenuCode = menu.Attributes["Code"].Value;
                 }
             }
         }

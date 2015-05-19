@@ -592,9 +592,6 @@ function saveReport(title, fileName, menuCode, parentMenuCode, topSection, body,
 
     data = getData(data);
 
-
-    alert(JSON.stringify(gridViews));
-
     return getAjax(url, data);
 };
 

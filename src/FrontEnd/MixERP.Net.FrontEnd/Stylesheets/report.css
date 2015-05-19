@@ -53,13 +53,25 @@ th {
   border-width: 0 0 0 1em;
   padding: 0 0.3em;
 }
+.report-command,
+.report-parameter,
+#ReportParameterTable,
+#ReportParameterTable td {
+  background-color: #f1e0fb!important;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+}
 .report-command {
   position: fixed;
   right: 24px;
   top: 24px;
   padding: 6px;
-  background-color: #f1e0fb;
-  border: 1px solid #e2c2f5;
+}
+.report-parameter {
+  position: fixed;
+  right: 24px;
+  top: 62px;
+  padding: 6px;
   -ms-border-radius: 5px;
   border-radius: 5px;
 }

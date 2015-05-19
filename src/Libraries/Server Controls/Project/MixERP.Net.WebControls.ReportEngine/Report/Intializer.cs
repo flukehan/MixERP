@@ -23,7 +23,6 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Web.UI.WebControls;
 using System.Xml;
@@ -47,7 +46,8 @@ namespace MixERP.Net.WebControls.ReportEngine
 
                 this.reportTitleLiteral.Text = this.ReportNotFoundErrorMessage;
                 this.reportTitleHidden.Value = this.reportTitleLiteral.Text;
-                this.topSectionLiteral.Text = string.Format(Thread.CurrentThread.CurrentCulture, this.InvalidLocationErrorMessage, this.reportPath);
+                this.topSectionLiteral.Text = string.Format(Thread.CurrentThread.CurrentCulture,
+                    this.InvalidLocationErrorMessage, this.reportPath);
                 return;
             }
 
@@ -59,7 +59,6 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.SetBodySection();
             this.SetGridViews();
             this.SetBottomSection();
-            this.InstallReport();
             this.AddJavascript();
             this.CleanUp();
         }
@@ -107,31 +106,6 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        private void InstallReport()
-        {
-            if (this.IsValid())
-            {
-                XmlNode reportNode = XmlHelper.GetNode(this.reportPath, "/MixERPReport/Install/Report");
-
-                if (reportNode == null)
-                {
-                    return;
-                }
-
-                if (reportNode.Attributes != null)
-                {
-                    string menuCode = reportNode.Attributes["MenuCode"].Value;
-                    string parentMenuCode = reportNode.Attributes["ParentMenuCode"].Value;
-                    int level = Conversion.TryCastInteger(reportNode.Attributes["Level"].Value);
-                    string menuText = ReportParser.ParseExpression(reportNode.Attributes["MenuText"].Value, this.dataTableCollection);
-
-                    string path = reportNode.Attributes["Path"].Value;
-
-                    ReportInstaller.InstallReport(this.Catalog, menuCode, parentMenuCode, level, menuText, path);
-                }
-            }
-        }
-
         private void LoadGrid(string indices, string styles)
         {
             List<string> styleList = styles.Split(',').ToList();
@@ -175,16 +149,21 @@ namespace MixERP.Net.WebControls.ReportEngine
             }
         }
 
-        private string LoadPieCharts(string xml, XmlNode node, string id, int gridViewIndex, bool hideGridView, string type, int width, int height, int titleColumnIndex, int valueColumnIndex, Color backgroundColor, Color borderColor)
+        private string LoadPieCharts(string xml, XmlNode node, string id, int gridViewIndex, bool hideGridView,
+            string type, int width, int height, int titleColumnIndex, int valueColumnIndex, Color backgroundColor,
+            Color borderColor)
         {
-            string pieChart = string.Format(CultureInfo.InvariantCulture, "<div style='background-color:{0};padding:24px;maring:0 auto;border:1px solid {1};'>" +
-                                                                          "<canvas id='{2}' width='{3}px' height='{4}px'></canvas>" +
-                                                                          "<br />" +
-                                                                          "<div id='{2}-legend'></div></div>", ColorTranslator.ToHtml(backgroundColor), ColorTranslator.ToHtml(borderColor), id, width, height);
+            string pieChart = string.Format(CultureInfo.InvariantCulture,
+                "<div style='background-color:{0};padding:24px;maring:0 auto;border:1px solid {1};'>" +
+                "<canvas id='{2}' width='{3}px' height='{4}px'></canvas>" +
+                "<br />" +
+                "<div id='{2}-legend'></div></div>", ColorTranslator.ToHtml(backgroundColor),
+                ColorTranslator.ToHtml(borderColor), id, width, height);
 
             string script = string.Format(CultureInfo.InvariantCulture, "$(document).ready(function () {{" +
                                                                         "preparePieChart('GridView{0}', '{1}', '{1}-legend', '{2}', {3}, {4}, {5});" +
-                                                                        " }});", gridViewIndex, id, type, hideGridView.ToString().ToLower(), titleColumnIndex, valueColumnIndex);
+                                                                        " }});", gridViewIndex, id, type,
+                hideGridView.ToString().ToLower(), titleColumnIndex, valueColumnIndex);
 
             PageUtility.RegisterJavascript(id, script, this.Page, true);
 
@@ -232,7 +211,8 @@ namespace MixERP.Net.WebControls.ReportEngine
                         string sql = c.InnerText;
 
                         //Initializing query parameter collection.
-                        Collection<KeyValuePair<string, object>> parameters = new Collection<KeyValuePair<string, object>>();
+                        Collection<KeyValuePair<string, object>> parameters =
+                            new Collection<KeyValuePair<string, object>>();
 
                         if (this.parameterCollection != null)
                         {
@@ -340,7 +320,8 @@ namespace MixERP.Net.WebControls.ReportEngine
                 Color backgroundColor = ColorTranslator.FromHtml(this.GetAttributeValue(node, "BackgroundColor"));
                 Color borderColor = ColorTranslator.FromHtml(this.GetAttributeValue(node, "BorderColor"));
 
-                xml = this.LoadPieCharts(xml, node, id, gridViewIndex, hideGridView, pieType, width, height, titleColumnIndex, valueColumnIndex, backgroundColor, borderColor);
+                xml = this.LoadPieCharts(xml, node, id, gridViewIndex, hideGridView, pieType, width, height,
+                    titleColumnIndex, valueColumnIndex, backgroundColor, borderColor);
             }
 
             return xml.Replace("<Charts>", "").Replace("</Charts>", "");

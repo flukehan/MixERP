@@ -22,7 +22,7 @@ namespace MixERP.Net.ReportManager
                 client.Url = report.DownloadUrl;
                 string content = client.GetContent();
 
-                MenuParser parser = new MenuParser(content);
+                MenuParser parser = new MenuParser(content, report.FileName);
                 menus.Add(parser.Parse());
 
                 Serializer serializer = new Serializer(report.FileName, content);

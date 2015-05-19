@@ -15,8 +15,7 @@ namespace MixERP.Net.ReportManager
             foreach (ReportMenu menu in menus)
             {
                 string url = Config.ReportUrlExpression.Replace("{ReportName}", menu.FileName);
-                const string sql = @"INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id) 
-                                     SELECT @MenuText, @Url, @MenuCode, @Level, core.get_menu_id_by_menu_code(@ParentMenuCode);";
+                const string sql = @"SELECT * FROM core.create_menu(@MenuText, @Url, @MenuCode, 2, core.get_menu_id_by_menu_code(@ParentMenuCode));";
 
                 using (NpgsqlCommand command = new NpgsqlCommand(sql))
                 {

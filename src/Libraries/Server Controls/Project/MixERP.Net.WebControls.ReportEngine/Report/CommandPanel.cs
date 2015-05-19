@@ -67,7 +67,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.printImageButton = new ImageButton();
             this.printImageButton.ID = "PrintImageButton";
             this.printImageButton.CssClass = this.GetImageButtonCssClass();
-            this.printImageButton.OnClientClick = "javascript:window.print();";
+            this.printImageButton.OnClientClick = "javascript:window.print();return false;";
             this.printImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("PrintIcon"));
 
             p.Controls.Add(this.printImageButton);
