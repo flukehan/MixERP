@@ -1,7 +1,7 @@
 #Inline Attachment Manager
 
 Depending on your configuration, you can upload several attachments.
-A default installation of MixERP allow you to upload :
+A default installation of MixERP allows you to upload :
 
 * Image Files (JPEG, GIF, PNG)
 * Word Documents (DOC, DOCX)
