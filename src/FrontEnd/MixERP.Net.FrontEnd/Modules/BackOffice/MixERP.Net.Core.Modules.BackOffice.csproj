@@ -1,0 +1,582 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{81F9EE96-AD4A-4B6A-A411-DE9B2FC34A3D}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MixERP.Net.Core.Modules.BackOffice</RootNamespace>
+    <AssemblyName>MixERP.Net.Core.Modules.BackOffice</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>..\..\..\..\MixERP.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
+      <HintPath>..\..\..\..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\packages\Serilog.1.4.155\lib\net45\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.FullNetFx, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\packages\Serilog.1.4.155\lib\net45\Serilog.FullNetFx.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\ReportWriter.ascx" />
+    <Content Include="Counters.ascx" />
+    <Content Include="Counties.ascx" />
+    <Content Include="Countries.ascx" />
+    <Content Include="Entities.ascx" />
+    <Content Include="Handlers\ImageHandler.ashx" />
+    <Content Include="..\..\..\..\mixerp.licenseheader">
+      <Link>mixerp.licenseheader</Link>
+    </Content>
+    <Content Include="Industries.ascx" />
+    <Content Include="Mix Open Foundation.snk" />
+    <Content Include="OTS\OpeningInventory.ascx" />
+    <Content Include="Policy\ApiAccess.ascx" />
+    <Content Include="Scripts\Admin\ReportWriter.ascx..js" />
+    <Content Include="Scripts\Admin\DatabaseBackup.ascx.js" />
+    <Content Include="Scripts\AttachmentManager.ascx.js" />
+    <Content Include="packages.config" />
+    <Content Include="Services\Admin\ReportWriter.asmx" />
+    <Content Include="Services\OTS\OpeningInventory.asmx" />
+    <Content Include="Widgets\LinksWidget.ascx" />
+    <Content Include="Widgets\OfficeInformationWidget.ascx" />
+    <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.6.4.js" />
+    <Content Include="Scripts\jquery-1.6.4.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
+    <Content Include="Scripts\Flags.ascx.js" />
+    <Content Include="Scripts\OTS\OpeningInventory.ascx.js" />
+    <Content Include="Scripts\Policy\MenuAccess.ascx.js" />
+    <Content Include="Services\web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\ChangePassword.ascx" />
+    <Content Include="Admin\DatabaseBackup.ascx" />
+    <Content Include="Admin\DatabaseStatistics.ascx" />
+    <Content Include="Admin\NewCompany.ascx" />
+    <Content Include="Admin\Restore.ascx" />
+    <Content Include="AttachmentManager.ascx" />
+    <Content Include="CashRepositories.ascx" />
+    <Content Include="Departments.ascx" />
+    <Content Include="FiscalYear.ascx" />
+    <Content Include="Flags.ascx" />
+    <Content Include="Frequency.ascx" />
+    <Content Include="Index.ascx" />
+    <Content Include="Offices.ascx" />
+    <Content Include="Package.xml" />
+    <Content Include="Policy\AutoVerification.ascx" />
+    <Content Include="Policy\GLAccess.ascx" />
+    <Content Include="Policy\MenuAccess.ascx" />
+    <Content Include="Policy\StoreAccess.ascx" />
+    <Content Include="Policy\VoucherVerification.ascx" />
+    <Content Include="Roles.ascx" />
+    <Content Include="Services\Attachments.asmx" />
+    <Content Include="Services\TaxData.asmx" />
+    <Content Include="SQL\Module.sql" />
+    <Content Include="SQL\Menu.sql" />
+    <Content Include="States.ascx" />
+    <Content Include="Tax\CountySalesTaxes.ascx" />
+    <Content Include="Tax\SalesTaxDetails.ascx" />
+    <Content Include="Tax\SalesTaxes.ascx" />
+    <Content Include="Tax\SalesTaxExemptDetails.ascx" />
+    <Content Include="Tax\SalesTaxExempts.ascx" />
+    <Content Include="Tax\SalesTaxTypes.ascx" />
+    <Content Include="Tax\StateSalesTaxes.ascx" />
+    <Content Include="Tax\TaxAuthorities.ascx" />
+    <Content Include="Tax\TaxExemptTypes.ascx" />
+    <Content Include="Tax\TaxMaster.ascx" />
+    <Content Include="Users.ascx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\ChangePassword.ascx.cs">
+      <DependentUpon>ChangePassword.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ChangePassword.ascx.designer.cs">
+      <DependentUpon>ChangePassword.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\DatabaseBackup.ascx.cs">
+      <DependentUpon>DatabaseBackup.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\DatabaseBackup.ascx.designer.cs">
+      <DependentUpon>DatabaseBackup.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\DatabaseStatistics.ascx.cs">
+      <DependentUpon>DatabaseStatistics.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\DatabaseStatistics.ascx.designer.cs">
+      <DependentUpon>DatabaseStatistics.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\NewCompany.ascx.cs">
+      <DependentUpon>NewCompany.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\NewCompany.ascx.designer.cs">
+      <DependentUpon>NewCompany.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ReportWriter.ascx.cs">
+      <DependentUpon>ReportWriter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ReportWriter.ascx.designer.cs">
+      <DependentUpon>ReportWriter.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Restore.ascx.cs">
+      <DependentUpon>Restore.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Restore.ascx.designer.cs">
+      <DependentUpon>Restore.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AttachmentManager.ascx.cs">
+      <DependentUpon>AttachmentManager.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AttachmentManager.ascx.designer.cs">
+      <DependentUpon>AttachmentManager.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CashRepositories.ascx.cs">
+      <DependentUpon>CashRepositories.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CashRepositories.ascx.designer.cs">
+      <DependentUpon>CashRepositories.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Counters.ascx.cs">
+      <DependentUpon>Counters.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Counters.ascx.designer.cs">
+      <DependentUpon>Counters.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Counties.ascx.cs">
+      <DependentUpon>Counties.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Counties.ascx.designer.cs">
+      <DependentUpon>Counties.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Countries.ascx.cs">
+      <DependentUpon>Countries.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Countries.ascx.designer.cs">
+      <DependentUpon>Countries.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Departments.ascx.cs">
+      <DependentUpon>Departments.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Departments.ascx.designer.cs">
+      <DependentUpon>Departments.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities.ascx.cs">
+      <DependentUpon>Entities.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entities.ascx.designer.cs">
+      <DependentUpon>Entities.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FiscalYear.ascx.cs">
+      <DependentUpon>FiscalYear.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FiscalYear.ascx.designer.cs">
+      <DependentUpon>FiscalYear.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Flags.ascx.cs">
+      <DependentUpon>Flags.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Flags.ascx.designer.cs">
+      <DependentUpon>Flags.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Frequency.ascx.cs">
+      <DependentUpon>Frequency.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Frequency.ascx.designer.cs">
+      <DependentUpon>Frequency.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\ImageHandler.ashx.cs">
+      <DependentUpon>ImageHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Hubs\DbHub.cs" />
+    <Compile Include="Index.ascx.cs">
+      <DependentUpon>Index.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Index.ascx.designer.cs">
+      <DependentUpon>Index.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Industries.ascx.cs">
+      <DependentUpon>Industries.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Industries.ascx.designer.cs">
+      <DependentUpon>Industries.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\ReportBuilder.cs" />
+    <Compile Include="Models\ReportDefinition.cs" />
+    <Compile Include="Models\ReportParser.cs" />
+    <Compile Include="Offices.ascx.cs">
+      <DependentUpon>Offices.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Offices.ascx.designer.cs">
+      <DependentUpon>Offices.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OTS\OpeningInventory.ascx.cs">
+      <DependentUpon>OpeningInventory.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OTS\OpeningInventory.ascx.designer.cs">
+      <DependentUpon>OpeningInventory.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Policy\ApiAccess.ascx.cs">
+      <DependentUpon>ApiAccess.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Policy\ApiAccess.ascx.designer.cs">
+      <DependentUpon>ApiAccess.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Policy\AutoVerification.ascx.cs">
+      <DependentUpon>AutoVerification.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Policy\AutoVerification.ascx.designer.cs">
+      <DependentUpon>AutoVerification.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Policy\GLAccess.ascx.cs">
+      <DependentUpon>GLAccess.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Policy\GLAccess.ascx.designer.cs">
+      <DependentUpon>GLAccess.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Policy\MenuAccess.ascx.cs">
+      <DependentUpon>MenuAccess.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Policy\MenuAccess.ascx.designer.cs">
+      <DependentUpon>MenuAccess.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Policy\StoreAccess.ascx.cs">
+      <DependentUpon>StoreAccess.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Policy\StoreAccess.ascx.designer.cs">
+      <DependentUpon>StoreAccess.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Policy\VoucherVerification.ascx.cs">
+      <DependentUpon>VoucherVerification.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Policy\VoucherVerification.ascx.designer.cs">
+      <DependentUpon>VoucherVerification.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Roles.ascx.cs">
+      <DependentUpon>Roles.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Roles.ascx.designer.cs">
+      <DependentUpon>Roles.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Admin\ReportWriter.asmx.cs">
+      <DependentUpon>ReportWriter.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Attachments.asmx.cs">
+      <DependentUpon>Attachments.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\OTS\OpeningInventory.asmx.cs">
+      <DependentUpon>OpeningInventory.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\TaxData.asmx.cs">
+      <DependentUpon>TaxData.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="States.ascx.cs">
+      <DependentUpon>States.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="States.ascx.designer.cs">
+      <DependentUpon>States.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\CountySalesTaxes.ascx.cs">
+      <DependentUpon>CountySalesTaxes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\CountySalesTaxes.ascx.designer.cs">
+      <DependentUpon>CountySalesTaxes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\SalesTaxDetails.ascx.cs">
+      <DependentUpon>SalesTaxDetails.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\SalesTaxDetails.ascx.designer.cs">
+      <DependentUpon>SalesTaxDetails.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\SalesTaxes.ascx.cs">
+      <DependentUpon>SalesTaxes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\SalesTaxes.ascx.designer.cs">
+      <DependentUpon>SalesTaxes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\SalesTaxExemptDetails.ascx.cs">
+      <DependentUpon>SalesTaxExemptDetails.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\SalesTaxExemptDetails.ascx.designer.cs">
+      <DependentUpon>SalesTaxExemptDetails.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\SalesTaxExempts.ascx.cs">
+      <DependentUpon>SalesTaxExempts.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\SalesTaxExempts.ascx.designer.cs">
+      <DependentUpon>SalesTaxExempts.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\SalesTaxTypes.ascx.cs">
+      <DependentUpon>SalesTaxTypes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\SalesTaxTypes.ascx.designer.cs">
+      <DependentUpon>SalesTaxTypes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\StateSalesTaxes.ascx.cs">
+      <DependentUpon>StateSalesTaxes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\StateSalesTaxes.ascx.designer.cs">
+      <DependentUpon>StateSalesTaxes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\TaxAuthorities.ascx.cs">
+      <DependentUpon>TaxAuthorities.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\TaxAuthorities.ascx.designer.cs">
+      <DependentUpon>TaxAuthorities.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\TaxExemptTypes.ascx.cs">
+      <DependentUpon>TaxExemptTypes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\TaxExemptTypes.ascx.designer.cs">
+      <DependentUpon>TaxExemptTypes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Tax\TaxMaster.ascx.cs">
+      <DependentUpon>TaxMaster.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tax\TaxMaster.ascx.designer.cs">
+      <DependentUpon>TaxMaster.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Users.ascx.cs">
+      <DependentUpon>Users.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Users.ascx.designer.cs">
+      <DependentUpon>Users.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Widgets\LinksWidget.ascx.cs">
+      <DependentUpon>LinksWidget.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Widgets\LinksWidget.ascx.designer.cs">
+      <DependentUpon>LinksWidget.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Widgets\OfficeInformationWidget.ascx.cs">
+      <DependentUpon>OfficeInformationWidget.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Widgets\OfficeInformationWidget.ascx.designer.cs">
+      <DependentUpon>OfficeInformationWidget.ascx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Reports\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
+      <Project>{bde918b1-dd9b-41c9-a41f-f3ddec18b6d8}</Project>
+      <Name>MixERP.Net.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.i18n\MixERP.Net.i18n.csproj">
+      <Project>{2ECD1C2E-D7D0-4A24-896A-E625B0566DB5}</Project>
+      <Name>MixERP.Net.i18n</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\MixERP.Net.WebControls.AttachmentFactory.csproj">
+      <Project>{403f308d-10e7-4c70-9360-1027ee541495}</Project>
+      <Name>MixERP.Net.WebControls.AttachmentFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
+      <Project>{2D961540-6597-4E7B-969C-974D71D820DD}</Project>
+      <Name>MixERP.Net.WebControls.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.ScrudFactory\MixERP.Net.WebControls.ScrudFactory.csproj">
+      <Project>{07DDCE95-A18F-4A35-B892-CE09EAD2AA65}</Project>
+      <Name>MixERP.Net.WebControls.ScrudFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
+      <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
+      <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionFactory\MixERP.Net.WebControls.StockTransactionFactory.csproj">
+      <Project>{1C84E528-87ED-4B69-BFC3-81D675CB153E}</Project>
+      <Name>MixERP.Net.WebControls.StockTransactionFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.StockTransactionView\MixERP.Net.WebControls.StockTransactionViewFactory.csproj">
+      <Project>{E82752DA-F0D2-4987-B011-6B2623937DEA}</Project>
+      <Name>MixERP.Net.WebControls.StockTransactionViewFactory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MixERP.Net.FrontEnd.csproj">
+      <Project>{ACE1017D-71BC-4417-A906-72C4B9C55823}</Project>
+      <Name>MixERP.Net.FrontEnd</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BackOffice.Data\MixERP.Net.Core.Modules.BackOffice.Data.csproj">
+      <Project>{19a6c0bb-7737-486c-b2bf-df1f9290dfe9}</Project>
+      <Name>MixERP.Net.Core.Modules.BackOffice.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Mix Open Foundation.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>20839</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:20839/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:9000/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

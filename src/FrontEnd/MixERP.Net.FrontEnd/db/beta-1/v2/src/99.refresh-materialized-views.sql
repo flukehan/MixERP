@@ -1,0 +1,1 @@
+SELECT * FROM transactions.refresh_materialized_views(2, 2, 5, '1/1/2015');

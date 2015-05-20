@@ -1,0 +1,67 @@
+﻿table input[type=radio] {
+    margin: 4px;
+}
+
+#ProductGridView th:nth-child(1) {
+    width: 7%;
+}
+
+#ProductGridView th:nth-child(2) {
+    width: 18%;
+}
+
+#ProductGridView th:nth-child(3) {
+    width: 5%;
+}
+
+#ProductGridView th:nth-child(4) {
+    width: 9%;
+}
+
+#ProductGridView th:nth-child(5) {
+    width: 9%;
+}
+
+#ProductGridView th:nth-child(6) {
+    width: 9%;
+}
+
+#ProductGridView th:nth-child(7) {
+    width: 6%;
+}
+
+#ProductGridView th:nth-child(8) {
+    width: 7%;
+}
+
+#ProductGridView th:nth-child(9) {
+    width: 7%;
+}
+
+#ProductGridView th:nth-child(10) {
+    width: 9%;
+}
+
+#ProductGridView th:nth-child(11) {
+    width: 6%;
+}
+
+table.form {
+    width: 100%;
+}
+
+    table.form td:nth-child(1), table.form td:nth-child(2), table.form td:nth-child(3), table.form td:nth-child(6) {
+        width: 10%;
+    }
+
+    table.form td:nth-child(5) {
+        max-width: 10%;
+    }
+
+    table.form td:nth-child(4) {
+        width: 24%;
+    }
+
+    table.form .ui.toggle.checkbox {
+        width: 150px;
+    }

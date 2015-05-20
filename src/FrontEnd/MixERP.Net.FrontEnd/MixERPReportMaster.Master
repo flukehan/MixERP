@@ -1,0 +1,26 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MixERPReportMaster.master.cs" Inherits="MixERP.Net.FrontEnd.MixERPReportMaster" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>MixERP Report</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <link href="/Stylesheets/report.min.css" rel="stylesheet" />
+    <script src="/bundles/scripts/libraries.min.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
+        </asp:ContentPlaceHolder>
+
+        <script type="text/javascript">
+            var closeWindow = function () {
+                parent.$.fn.colorbox.close();
+            };
+        </script>
+    </form>
+</body>
+</html>

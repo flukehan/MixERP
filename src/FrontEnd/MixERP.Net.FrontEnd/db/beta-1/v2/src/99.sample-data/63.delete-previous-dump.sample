@@ -1,0 +1,24 @@
+ALTER TABLE transactions.transaction_master DISABLE TRIGGER verification_update_trigger;
+ALTER TABLE transactions.transaction_master DISABLE TRIGGER verification_delete_trigger;
+ALTER TABLE transactions.transaction_details DISABLE TRIGGER restrict_delete_trigger;
+ALTER TABLE transactions.stock_master DISABLE TRIGGER restrict_delete_trigger;
+ALTER TABLE transactions.stock_details DISABLE TRIGGER restrict_delete_trigger;
+
+DELETE FROM transactions.customer_receipts;
+DELETE FROM transactions.transaction_details;
+DELETE FROM transactions.non_gl_stock_tax_details;
+DELETE FROM transactions.non_gl_stock_details;
+DELETE FROM transactions.non_gl_stock_master;
+DELETE FROM transactions.stock_tax_details;
+DELETE FROM transactions.stock_details;
+DELETE FROM transactions.stock_master;
+DELETE FROM transactions.stock_tax_details;
+DELETE FROM transactions.transaction_master;
+DELETE FROM core.flags;
+DELETE FROM audit.logins;
+
+ALTER TABLE transactions.transaction_master ENABLE TRIGGER verification_update_trigger;
+ALTER TABLE transactions.transaction_master ENABLE TRIGGER verification_delete_trigger;
+ALTER TABLE transactions.transaction_details ENABLE TRIGGER restrict_delete_trigger;
+ALTER TABLE transactions.stock_master ENABLE TRIGGER restrict_delete_trigger;
+ALTER TABLE transactions.stock_details ENABLE TRIGGER restrict_delete_trigger;

@@ -1,0 +1,18 @@
+﻿<p>
+    <img src="{LogoPath}" width="250" height="50" alt="Logo" />
+</p>
+<p>
+    {CurrentOffice.Street}, {CurrentOffice.City}, {CurrentOffice.State}, {CurrentOffice.Country}.
+    {Resources.Titles.Phone} : {CurrentOffice.Phone}. {Resources.Titles.Fax} : {CurrentOffice.Fax}.
+    <br />
+    {Resources.Titles.Email} : {CurrentOffice.Email}
+    {Resources.Titles.Url} :
+    <a href="{CurrentOffice.Url}" target="_blank">{CurrentOffice.Url}</a>
+</p>
+
+{Resources.Titles.PreparedOn} : {PrintDate}.
+{Resources.Titles.User} : {CurrentOffice.UserName}
+<br />
+{Resources.Titles.OfficeCode} : {CurrentOffice.OfficeCode}
+<br />
+<br/>

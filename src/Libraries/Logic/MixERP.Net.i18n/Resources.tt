@@ -1,0 +1,6 @@
+﻿<#@ include file="Processor.ttinclude" #><#
+    var resources = GetResources();
+
+    if (resources.Any())
+    {
+#><#@ include file="Generator.ttinclude" #><# } #>

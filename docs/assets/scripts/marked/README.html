@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang=en><head><meta charset=utf-8><title>marked</title><script src=/docs/assets/bundles/scripts.js>
+
+
+    </script><link href=//cdn.rawgit.com/noelboss/featherlight/1.2.3/release/featherlight.min.css type=text/css rel=stylesheet title="Featherlight Styles"><link href=/docs/assets/bundles/styles.min.css rel=stylesheet><link href="http://fonts.googleapis.com/css?family=Raleway:300" rel=stylesheet type=text/css><link href="http://fonts.googleapis.com/css?family=Open+Sans" rel=stylesheet type=text/css></head><body><div class="sticky contain-to-grid"><nav class=top-bar data-topbar><ul class=title-area><li class=name><h1><a href=/index.html><img src=/docs/assets/images/mixerp-logo.png></a></h1></li><li class="toggle-topbar menu-icon"><a href=javascript:void(0);><span></span></a></li></ul><section class=top-bar-section><ul class=right><li><a class=right-off-canvas-toggle href=javascript:void(0);> Sub Topics </a></li></ul></section></nav></div><div class=off-canvas-wrap data-offcanvas><div class=inner-wrap><aside class=right-off-canvas-menu><ul class=topics></ul></aside><div class=row><div class="large-12 large-centered columns"><div id=content><h1>marked</h1><blockquote><p>A full-featured markdown parser and compiler, written in JavaScript. Built for speed.</p></blockquote><p><a href=http://badge.fury.io/js/marked><img src=https://badge.fury.io/js/marked.png alt="NPM version"></a></p><h2>Install</h2><pre><code class=lang-bash>npm install marked --save
+</code></pre><h2>Usage</h2><p>Minimal usage:</p><pre><code class=lang-js>var marked = require(&#39;marked&#39;);
+console.log(marked(&#39;I am using __markdown__.&#39;));
+// Outputs: &lt;p&gt;I am using &lt;strong&gt;markdown&lt;/strong&gt;.&lt;/p&gt;
+</code></pre><p>Example setting options with default values:</p><pre><code class=lang-js>var marked = require(&#39;marked&#39;);
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: false,
+  pedantic: false,
+  sanitize: true,
+  smartLists: true,
+  smartypants: false
+});
+
+console.log(marked(&#39;I am using __markdown__.&#39;));
+</code></pre><h3>Browser</h3><pre><code class=lang-html>&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;/&gt;
+  &lt;title&gt;Marked in the browser&lt;/title&gt;
+  &lt;script src=&quot;lib/marked.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;content&quot;&gt;&lt;/div&gt;
+  &lt;script&gt;
+    document.getElementById(&#39;content&#39;).innerHTML =
+      marked(&#39;# Marked in browser\n\nRendered by **marked**.&#39;);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h2>marked(markdownString [,options] [,callback])</h2><h3>markdownString</h3><p>Type: <code>string</code></p><p>String of markdown source to be compiled.</p><h3>options</h3><p>Type: <code>object</code></p><p>Hash of options. Can also be set using the <code>marked.setOptions</code> method as seen above.</p><h3>callback</h3><p>Type: <code>function</code></p><p>Function called when the <code>markdownString</code> has been fully parsed when using async highlighting. If the <code>options</code> argument is omitted, this can be used as the second argument.</p><h2>Options</h2><h3>highlight</h3><p>Type: <code>function</code></p><p>A function to highlight code blocks. The first example below uses async highlighting with <a href=https://github.com/rvagg/node-pygmentize-bundled>node-pygmentize-bundled</a>, and the second is a synchronous example using <a href=https://github.com/isagalaev/highlight.js>highlight.js</a>:</p><pre><code class=lang-js>var marked = require(&#39;marked&#39;);
+
+var markdownString = &#39;```js\n console.log(&quot;hello&quot;); \n```&#39;;
+
+// Async highlighting with pygmentize-bundled
+marked.setOptions({
+  highlight: function (code, lang, callback) {
+    require(&#39;pygmentize-bundled&#39;)({ lang: lang, format: &#39;html&#39; }, code, function (err, result) {
+      callback(err, result.toString());
+    });
+  }
+});
+
+// Using async version of marked
+marked(markdownString, function (err, content) {
+  if (err) throw err;
+  console.log(content);
+});
+
+// Synchronous highlighting with highlight.js
+marked.setOptions({
+  highlight: function (code) {
+    return require(&#39;highlight.js&#39;).highlightAuto(code).value;
+  }
+});
+
+console.log(marked(markdownString));
+</code></pre><h4>highlight arguments</h4><p><code>code</code></p><p>Type: <code>string</code></p><p>The section of code to pass to the highlighter.</p><p><code>lang</code></p><p>Type: <code>string</code></p><p>The programming language specified in the code block.</p><p><code>callback</code></p><p>Type: <code>function</code></p><p>The callback function to call when using an async highlighter.</p><h3>renderer</h3><p>Type: <code>object</code> Default: <code>new Renderer()</code></p><p>An object containing functions to render tokens to HTML.</p><h4>Overriding renderer methods</h4><p>The renderer option allows you to render tokens in a custom manor. Here is an example of overriding the default heading token rendering by adding an embedded anchor tag like on GitHub:</p><pre><code class=lang-javascript>var marked = require(&#39;marked&#39;);
+var renderer = new marked.Renderer();
+
+renderer.heading = function (text, level) {
+  var escapedText = text.toLowerCase().replace(/[^\w]+/g, &#39;-&#39;);
+
+  return &#39;&lt;h&#39; + level + &#39;&gt;&lt;a name=&quot;&#39; +
+                escapedText +
+                 &#39;&quot; class=&quot;anchor&quot; href=&quot;#&#39; +
+                 escapedText +
+                 &#39;&quot;&gt;&lt;span class=&quot;header-link&quot;&gt;&lt;/span&gt;&lt;/a&gt;&#39; +
+                  text + &#39;&lt;/h&#39; + level + &#39;&gt;&#39;;
+},
+
+console.log(marked(&#39;# heading+&#39;, { renderer: renderer }));
+</code></pre><p>This code will output the following HTML:</p><pre><code class=lang-html>&lt;h1&gt;
+  &lt;a name=&quot;heading-&quot; class=&quot;anchor&quot; href=&quot;#heading-&quot;&gt;
+    &lt;span class=&quot;header-link&quot;&gt;&lt;/span&gt;
+  &lt;/a&gt;
+  heading+
+&lt;/h1&gt;
+</code></pre><h4>Block level renderer methods</h4><ul><li>code(<em>string</em> code, <em>string</em> language)</li><li>blockquote(<em>string</em> quote)</li><li>html(<em>string</em> html)</li><li>heading(<em>string</em> text, <em>number</em> level)</li><li>hr()</li><li>list(<em>string</em> body, <em>boolean</em> ordered)</li><li>listitem(<em>string</em> text)</li><li>paragraph(<em>string</em> text)</li><li>table(<em>string</em> header, <em>string</em> body)</li><li>tablerow(<em>string</em> content)</li><li>tablecell(<em>string</em> content, <em>object</em> flags)</li></ul><p><code>flags</code> has the following properties:</p><pre><code class=lang-js>{
+    header: true || false,
+    align: &#39;center&#39; || &#39;left&#39; || &#39;right&#39;
+}
+</code></pre><h4>Inline level renderer methods</h4><ul><li>strong(<em>string</em> text)</li><li>em(<em>string</em> text)</li><li>codespan(<em>string</em> code)</li><li>br()</li><li>del(<em>string</em> text)</li><li>link(<em>string</em> href, <em>string</em> title, <em>string</em> text)</li><li>image(<em>string</em> href, <em>string</em> title, <em>string</em> text)</li></ul><h3>gfm</h3><p>Type: <code>boolean</code> Default: <code>true</code></p><p>Enable <a href=https://help.github.com/articles/github-flavored-markdown>GitHub flavored markdown</a>.</p><h3>tables</h3><p>Type: <code>boolean</code> Default: <code>true</code></p><p>Enable GFM <a href=https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#wiki-tables>tables</a>. This option requires the <code>gfm</code> option to be true.</p><h3>breaks</h3><p>Type: <code>boolean</code> Default: <code>false</code></p><p>Enable GFM <a href=https://help.github.com/articles/github-flavored-markdown#newlines>line breaks</a>. This option requires the <code>gfm</code> option to be true.</p><h3>pedantic</h3><p>Type: <code>boolean</code> Default: <code>false</code></p><p>Conform to obscure parts of <code>markdown.pl</code> as much as possible. Don't fix any of the original markdown bugs or poor behavior.</p><h3>sanitize</h3><p>Type: <code>boolean</code> Default: <code>false</code></p><p>Sanitize the output. Ignore any HTML that has been input.</p><h3>smartLists</h3><p>Type: <code>boolean</code> Default: <code>true</code></p><p>Use smarter list behavior than the original markdown. May eventually be default with the old behavior moved into <code>pedantic</code>.</p><h3>smartypants</h3><p>Type: <code>boolean</code> Default: <code>false</code></p><p>Use "smart" typograhic punctuation for things like quotes and dashes.</p><h2>Access to lexer and parser</h2><p>You also have direct access to the lexer and parser if you so desire.</p><pre><code class=lang-js>var tokens = marked.lexer(text, options);
+console.log(marked.parser(tokens));
+</code></pre><pre><code class=lang-js>var lexer = new marked.Lexer(options);
+var tokens = lexer.lex(text);
+console.log(tokens);
+console.log(lexer.rules);
+</code></pre><h2>CLI</h2><pre><code class=lang-bash>$ marked -o hello.html
+hello world
+^D
+$ cat hello.html
+&lt;p&gt;hello world&lt;/p&gt;
+</code></pre><h2>Philosophy behind marked</h2><p>The point of marked was to create a markdown compiler where it was possible to frequently parse huge chunks of markdown without having to worry about caching the compiled output somehow...or blocking for an unnecesarily long time.</p><p>marked is very concise and still implements all markdown features. It is also now fully compatible with the client-side.</p><p>marked more or less passes the official markdown test suite in its entirety. This is important because a surprising number of markdown compilers cannot pass more than a few tests. It was very difficult to get marked as compliant as it is. It could have cut corners in several areas for the sake of performance, but did not in order to be exactly what you expect in terms of a markdown rendering. In fact, this is why marked could be considered at a disadvantage in the benchmarks above.</p><p>Along with implementing every markdown feature, marked also implements <a href=http://github.github.com/github-flavored-markdown/>GFM features</a>.</p><h2>Benchmarks</h2><p>node v0.8.x</p><pre><code class=lang-bash>$ node test --bench
+marked completed in 3411ms.
+marked (gfm) completed in 3727ms.
+marked (pedantic) completed in 3201ms.
+robotskirt completed in 808ms.
+showdown (reuse converter) completed in 11954ms.
+showdown (new converter) completed in 17774ms.
+markdown-js completed in 17191ms.
+</code></pre><p><strong>Marked is now faster than Discount, which is written in C.</strong></p><p>For those feeling skeptical: These benchmarks run the entire markdown test suite 1000 times. The test suite tests every feature. It doesn't cater to specific aspects.</p><h3>Pro level</h3><p>You also have direct access to the lexer and parser if you so desire.</p><pre><code class=lang-js>var tokens = marked.lexer(text, options);
+console.log(marked.parser(tokens));
+</code></pre><pre><code class=lang-js>var lexer = new marked.Lexer(options);
+var tokens = lexer.lex(text);
+console.log(tokens);
+console.log(lexer.rules);
+</code></pre><pre><code class=lang-bash>$ node
+&gt; require(&#39;marked&#39;).lexer(&#39;&gt; i am using marked.&#39;)
+[ { type: &#39;blockquote_start&#39; },
+  { type: &#39;paragraph&#39;,
+    text: &#39;i am using marked.&#39; },
+  { type: &#39;blockquote_end&#39; },
+  links: {} ]
+</code></pre><h2>Running Tests &amp; Contributing</h2><p>If you want to submit a pull request, make sure your changes pass the test suite. If you're adding a new feature, be sure to add your own test.</p><p>The marked test suite is set up slightly strangely: <code>test/new</code> is for all tests that are not part of the original markdown.pl test suite (this is where your test should go if you make one). <code>test/original</code> is only for the original markdown.pl tests. <code>test/tests</code> houses both types of tests after they have been combined and moved/generated by running <code>node test --fix</code> or `marked --test --fix`.</p><p>In other words, if you have a test to add, add it to <code>test/new/</code> and then regenerate the tests with <code>node test --fix</code>. Commit the result. If your test uses a certain feature, for example, maybe it assumes GFM is <em>not</em> enabled, you can add <code>.nogfm</code> to the filename. So, <code>my-test.text</code> becomes <code>my-test.nogfm.text</code>. You can do this with any marked option. Say you want line breaks and smartypants enabled, your filename should be: <code>my-test.breaks.smartypants.text</code>.</p><p>To run the tests:</p><pre><code class=lang-bash>cd marked/
+node test
+</code></pre><h3>Contribution and License Agreement</h3><p>If you contribute code to this project, you are implicitly allowing your code to be distributed under the MIT license. You are also implicitly verifying that all code is your original work. <code>&lt;/legalese&gt;</code></p><h2>License</h2><p>Copyright (c) 2011-2014, Christopher Jeffrey. (MIT License)</p><p>See LICENSE for more info.</p></div></div></div><a class=exit-off-canvas></a><footer class=footer><div class="row full-width"><div class="small-12 medium-3 large-3 columns"><i class=fi-download></i><p> MixERP is an open source and free ERP software that provides a suite of useful modules to help you manage your day to day business activities, including but not limited to, sales, purchases, inventory management, finance, customer relationship management, and back-office. Developed with love by your friends at MixERP Inc. </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-lightbulb></i><p> Some sections in this documentation site are missing. This site is a <a href=index.html#community.md> community effort </a> and work in progress. </p><p> This work is licensed under a <a href=http://creativecommons.org/licenses/by-sa/4.0/ rel=license> Creative Commons Attribution-ShareAlike 4.0 International License </a> . </p></div><div class="small-12 medium-3 large-3 columns"><i class=fi-anchor></i><ul class=footer-links><li><a href=http://mixerp.org/forum target=_blank> MixERP Forums </a></li><li><a href=https://github.com/mixerp/mixerp/issues target=_blank> Submit an Issue </a></li><li><a href=https://github.com/mixerp/mixerp/releases target=_blank> Download Latest Release </a></li><li><a href=http://demo.mixerp.org/SignIn.aspx target=_blank> MixERP Demo Website </a></li></ul><br><br><br></div><div class="small-12 medium-3 large-3 columns"><i class=fi-comments></i><ul class=footer-links><li><a href=http://mixerp.org/ target=_blank> Project Website </a></li><li><a href=https://www.facebook.com/mixerp.official/ target=_blank> Follow MixERP on Facebook </a></li><li><a href=http://www.facebook.com/groups/183076085203506/ target=_blank> Facebook Discussion Group </a></li><li><a href=http://twitter.com/mixoferp/ target=_blank> Follow MixERP on Twitter </a></li><li style="list-style: none; display: inline"><ul></ul></li></ul><br><br><br></div></div></footer></div></div><script src=//cdn.rawgit.com/noelboss/featherlight/1.2.3/release/featherlight.min.js type=text/javascript charset=utf-8></script><script>
+        window.onload = function () {
+
+            var createLinkedImages = function () {
+                $("#content").find("img").each(function () {
+                    var el = $(this);
+                    var src = el.attr("src");
+
+                    var anchor = $("<a/>");
+                    anchor.prop("href", "#");
+                    anchor.attr("data-featherlight", src);
+                    el.wrap(anchor);
+                });
+            };
+
+            $(document).foundation();
+            createSubTopics();
+            createLinkedImages();
+        };
+
+        function createSubTopics() {
+            $("#content").find("h1, h2, h3").each(function () {
+                var topics = $(".topics");
+                var $section = $(this);
+                var safeName = $section.attr("id");
+                var id;
+                var text = $section.text();
+
+                if (!safeName) {
+                    safeName = text.trim().replace(/\s+/g, '-').replace(/[^-,'A-Za-z0-9]+/g, '').toLowerCase();
+                    id = window.escape(safeName);
+                    $section.attr("id", id);
+                };
+
+                id = window.escape(safeName);
+                var anchor = "<li><a class='item' href='#" + id + "'>" + text + "</a></li>";
+                topics.append(anchor);
+            });
+        };
+
+    </script></body></html>

@@ -1,0 +1,1 @@
+cscript replace.vbs "%~dp0"\..\src\99.sample-data\65.dump.sql.sample "SELECT pg_catalog.setval" "PERFORM pg_catalog.setval"

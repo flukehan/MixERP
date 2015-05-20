@@ -1,1 +1,0 @@
-SELECT * FROM transactions.refresh_materialized_views();

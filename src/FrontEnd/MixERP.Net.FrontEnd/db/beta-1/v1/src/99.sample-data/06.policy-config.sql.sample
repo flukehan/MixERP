@@ -1,0 +1,10 @@
+DO
+$$
+BEGIN
+    IF(core.get_locale() = 'en-US') THEN
+        INSERT INTO policy.auto_verification_policy
+        SELECT 2, true, 0, true, 0, true, 0, '2010-01-01', '2020-01-01', true;
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
