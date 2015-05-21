@@ -9,10 +9,10 @@ http://mozilla.org/MPL/2.0/.
 DROP FUNCTION IF EXISTS unit_tests.ensure_verification_statuses();
 
 CREATE FUNCTION unit_tests.ensure_verification_statuses()
-RETURNS test_result
+RETURNS public.test_result
 AS
 $$
-DECLARE message test_result = '';
+DECLARE message public.test_result = '';
 BEGIN
 	IF NOT EXISTS(SELECT * FROM core.verification_statuses WHERE verification_status_id = -3) THEN
 		SELECT assert.fail('The rejected flag (-3) does not exist on table core.verification_statuses.') INTO message;			

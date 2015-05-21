@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS unit_tests.test_transactions_post_receipt_function();
+DROP FUNCTION IF EXISTS unit_tests.test_transactions_post_receipt();
 
-CREATE FUNCTION unit_tests.test_transactions_post_receipt_function()
+CREATE FUNCTION unit_tests.test_transactions_post_receipt()
 RETURNS public.test_result
 AS
 $$
@@ -19,6 +19,7 @@ $$
     DECLARE _cash_repository_id     integer;
     DECLARE _posted_date            date;
     DECLARE _bank_account_id        integer;
+    DECLARE _payment_card_id        integer;
     DECLARE _bank_instrument_code   national character varying(128);
     DECLARE _bank_tran_code         national character varying(128);
     DECLARE _result                 bigint;
@@ -40,10 +41,11 @@ BEGIN
     _cash_repository_id             := office.get_cash_repository_id_by_cash_repository_code('dummy-cr01');
     _posted_date                    := NULL;
     _bank_account_id                := NULL;
+    _payment_card_id                := NULL;
     _bank_instrument_code           := NULL;
     _bank_tran_code                 := NULL;
                                                         
-    _result                         := transactions.post_receipt_function
+    _result                         := transactions.post_receipt
                                     (
                                         _user_id, 
                                         _office_id, 
@@ -59,8 +61,10 @@ BEGIN
                                         _cash_repository_id,
                                         _posted_date,
                                         _bank_account_id,
+                                        _payment_card_id,
                                         _bank_instrument_code,
-                                        _bank_tran_code 
+                                        _bank_tran_code,
+                                        NULL::bigint
                                     );
 
     IF(_result <= 0) THEN

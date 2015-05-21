@@ -8,7 +8,7 @@ http://mozilla.org/MPL/2.0/.
 DROP FUNCTION IF EXISTS unit_tests.is_parent_office_test();
 
 CREATE FUNCTION unit_tests.is_parent_office_test()
-RETURNS test_result
+RETURNS public.test_result
 AS
 $$
 	DECLARE have boolean;

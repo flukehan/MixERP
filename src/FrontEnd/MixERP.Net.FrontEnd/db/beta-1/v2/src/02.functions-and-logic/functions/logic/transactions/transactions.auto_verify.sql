@@ -192,7 +192,7 @@ $$
     DECLARE _value_date                             date;
     DECLARE _tran_id                                bigint;
     DECLARE _verification_status_id                 smallint;
-    DECLARE _book_name                              national character varying(12)='Sales.Direct';
+    DECLARE _book_name                              national character varying(48)='Sales.Direct';
     DECLARE _office_id                              integer;
     DECLARE _user_id                                integer;
     DECLARE _login_id                               bigint;
@@ -233,7 +233,7 @@ BEGIN
                              ROW(_store_id, 'dummy-it02', 2, 'Test Mock Unit',1300000, 300, 0, '', 0)::transactions.stock_detail_type];
              
     
-    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), _office_id, true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
 
 
     SELECT * FROM transactions.post_sales
@@ -244,7 +244,8 @@ BEGIN
         _store_id,
         _is_non_taxable_sales,
         _details,
-        _attachments
+        _attachments,
+        NULL
     ) INTO _tran_id;
 
     SELECT verification_status_id
@@ -273,7 +274,7 @@ $$
     DECLARE _value_date                             date;
     DECLARE _tran_id                                bigint;
     DECLARE _verification_status_id                 smallint;
-    DECLARE _book_name                              national character varying(12)='Sales.Direct';
+    DECLARE _book_name                              national character varying(48)='Sales.Direct';
     DECLARE _office_id                              integer;
     DECLARE _user_id                                integer;
     DECLARE _login_id                               bigint;
@@ -313,7 +314,7 @@ BEGIN
                              ROW(_store_id, 'dummy-it01', 1, 'Test Mock Unit',180000, 0, 0, '', 0)::transactions.stock_detail_type,
                              ROW(_store_id, 'dummy-it02', 2, 'Test Mock Unit',130000, 300, 0, '', 0)::transactions.stock_detail_type];
 
-    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 100, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), _office_id, true, 100, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
 
     SELECT * FROM transactions.post_sales
     (
@@ -323,7 +324,8 @@ BEGIN
         _store_id,
         _is_non_taxable_sales,
         _details,
-        _attachments
+        _attachments,
+        NULL
     ) INTO _tran_id;
 
 
@@ -357,7 +359,7 @@ $$
     DECLARE _value_date                             date;
     DECLARE _tran_id                                bigint;
     DECLARE _verification_status_id                 smallint;
-    DECLARE _book_name                              national character varying(12)='Purchase.Direct';
+    DECLARE _book_name                              national character varying(48)='Purchase.Direct';
     DECLARE _office_id                              integer;
     DECLARE _user_id                                integer;
     DECLARE _login_id                               bigint;
@@ -394,7 +396,7 @@ BEGIN
                              ROW(_store_id, 'dummy-it01', 1, 'Test Mock Unit',180000, 0, 0, '', 0)::transactions.stock_detail_type,
                              ROW(_store_id, 'dummy-it02', 2, 'Test Mock Unit',130000, 300, 0, '', 0)::transactions.stock_detail_type];
 
-    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), _office_id, true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
 
     SELECT * FROM transactions.post_purchase
     (
@@ -430,7 +432,7 @@ $$
     DECLARE _value_date                             date;
     DECLARE _tran_id                                bigint;
     DECLARE _verification_status_id                 smallint;
-    DECLARE _book_name                              national character varying(12)='Purchase.Direct';
+    DECLARE _book_name                              national character varying(48)='Purchase.Direct';
     DECLARE _office_id                              integer;
     DECLARE _user_id                                integer;
     DECLARE _login_id                               bigint;
@@ -467,7 +469,7 @@ BEGIN
                              ROW(_store_id, 'dummy-it01', 1, 'Test Mock Unit',180000, 0, 0, '', 0)::transactions.stock_detail_type,
                              ROW(_store_id, 'dummy-it02', 2, 'Test Mock Unit',130000, 300, 0, '', 0)::transactions.stock_detail_type];
 
-    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 100, true, 0, '1-1-2000', '1-1-2000', true);
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), _office_id, true, 0, true, 100, true, 0, '1-1-2000', '1-1-2000', true);
 
 
     SELECT * FROM transactions.post_purchase
@@ -516,7 +518,7 @@ BEGIN
     _user_id            := office.get_user_id_by_user_name('plpgunit-test-user-000001');
     _login_id           := office.get_login_id(_user_id);
 
-    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), _office_id, true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
 
     _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
 
@@ -608,7 +610,7 @@ BEGIN
     _user_id            := office.get_user_id_by_user_name('plpgunit-test-user-000001');
     _login_id           := office.get_login_id(_user_id);
 
-     PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 100, '1-1-2000', '1-1-2020', true);
+     PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), _office_id, true, 0, true, 0, true, 100, '1-1-2000', '1-1-2020', true);
     _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
 
     INSERT INTO transactions.transaction_master

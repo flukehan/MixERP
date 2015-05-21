@@ -9,7 +9,7 @@ http://mozilla.org/MPL/2.0/.
 DROP FUNCTION IF EXISTS unit_tests.check_currency();
 
 CREATE FUNCTION unit_tests.check_currency()
-RETURNS test_result
+RETURNS public.test_result
 AS
 $$
 	DECLARE message text;

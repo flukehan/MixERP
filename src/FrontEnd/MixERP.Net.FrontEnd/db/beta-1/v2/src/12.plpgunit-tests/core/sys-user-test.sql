@@ -9,10 +9,10 @@ http://mozilla.org/MPL/2.0/.
 DROP FUNCTION IF EXISTS unit_tests.check_sys_group_count();
 
 CREATE FUNCTION unit_tests.check_sys_group_count()
-RETURNS test_result
+RETURNS public.test_result
 AS
 $$
-DECLARE message test_result = '';
+DECLARE message public.test_result = '';
 DECLARE sys_group_count integer;
 BEGIN
 	SELECT COUNT(*) INTO sys_group_count
@@ -40,10 +40,10 @@ LANGUAGE plpgsql;
 DROP FUNCTION IF EXISTS unit_tests.check_sys_user_count();
 
 CREATE FUNCTION unit_tests.check_sys_user_count()
-RETURNS test_result
+RETURNS public.test_result
 AS
 $$
-DECLARE message test_result = '';
+DECLARE message public.test_result = '';
 DECLARE sys_user_count integer;
 BEGIN
 	SELECT COUNT(*) INTO sys_user_count

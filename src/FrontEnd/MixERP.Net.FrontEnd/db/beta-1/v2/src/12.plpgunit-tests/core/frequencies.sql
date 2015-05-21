@@ -9,7 +9,7 @@ http://mozilla.org/MPL/2.0/.
 DROP FUNCTION IF EXISTS unit_tests.check_frequency();
 
 CREATE FUNCTION unit_tests.check_frequency()
-RETURNS test_result
+RETURNS public.test_result
 AS
 $$
 	DECLARE message text;
