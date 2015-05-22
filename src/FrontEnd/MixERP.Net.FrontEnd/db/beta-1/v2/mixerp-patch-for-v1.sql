@@ -2814,6 +2814,61 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM core.get_periods('1-1-2000', '1-1-2020');
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/functions/logic/localization/localization.get_localization_table.sql --<--<--
+DROP FUNCTION IF EXISTS localization.get_localization_table(text);
+
+CREATE FUNCTION localization.get_localization_table
+(
+    culture_code        text
+)
+RETURNS TABLE
+(
+    id                  bigint,
+    resource_class      text,
+    key                 text,
+    original            text,
+    translated          text
+)
+AS
+$$
+BEGIN   
+    CREATE TEMPORARY TABLE t
+    (
+        resource_id         integer,
+        resource_class      text,
+        key                 text,
+        original            text,
+        translated          text
+    ) ON COMMIT DROP;
+    
+    INSERT INTO t
+    SELECT
+        localization.resources.resource_id, 
+        localization.resources.resource_class, 
+        localization.resources.key, 
+        localization.resources.value,
+        ''
+    FROM localization.resources;
+
+    UPDATE t
+    SET translated = localization.localized_resources.value
+    FROM localization.localized_resources
+    WHERE t.resource_id = localization.localized_resources.resource_id
+    AND localization.localized_resources.culture_code=$1;
+
+    RETURN QUERY
+    SELECT
+        row_number() OVER(ORDER BY t.resource_class, t.key),
+        t.resource_class, 
+        t.key, 
+        t.original,
+        t.translated
+    FROM t;
+END
+$$
+LANGUAGE plpgsql;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/functions/logic/office/office.add_office.sql --<--<--
 DROP FUNCTION IF EXISTS office.add_office
 (
@@ -3003,6 +3058,60 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/functions/logic/reports/transactions/transactions.get_salesperson_report.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.get_salesperson_report(_office_id integer, _factor integer);
+
+CREATE FUNCTION transactions.get_salesperson_report(_office_id integer, _factor integer)
+RETURNS TABLE
+(
+    id                  integer,
+    salesperson_id      integer,
+    salesperson_name    text,
+    total_sales         decimal(24)
+)
+AS
+$$
+    DECLARE fy_start    date;
+BEGIN
+    DROP TABLE IF EXISTS temp_sales;
+    
+    CREATE TEMPORARY TABLE temp_sales
+    (
+        id                  SERIAL,
+        salesperson_id      integer,
+        salesperson_name    text,
+        total_sales         decimal(24)
+    ) ON COMMIT DROP;
+
+    fy_start := core.get_fiscal_year_start_date(_office_id);
+    
+    INSERT INTO temp_sales(salesperson_id, salesperson_name, total_sales)
+    SELECT
+        transactions.verified_stock_transaction_view.salesperson_id, 
+        '', 
+        SUM(transactions.verified_stock_transaction_view.amount) / _factor
+    FROM transactions.verified_stock_transaction_view
+    WHERE book LIKE 'Sales%'
+    AND value_date >= fy_start
+    AND transactions.verified_stock_transaction_view.office_id IN (SELECT * FROM office.get_office_ids(_office_id)) 
+    GROUP BY transactions.verified_stock_transaction_view.salesperson_id
+    ORDER BY 3 DESC
+    LIMIT 5;
+
+    UPDATE temp_sales
+    SET salesperson_name = core.salespersons.salesperson_name
+    FROM core.salespersons
+    WHERE core.salespersons.salesperson_id = temp_sales.salesperson_id;
+    
+    RETURN QUERY
+    SELECT * FROM temp_sales
+    ORDER BY id;
+END
+$$
+LANGUAGE plpgsql;
+
+--SELECT * FROM transactions.get_salesperson_report(1, 1000);
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/functions/logic/transactions/core.get_frequencies.sql --<--<--
 DROP FUNCTION IF EXISTS core.get_frequencies(_frequency_id integer);
@@ -3236,7 +3345,7 @@ $$
     DECLARE _value_date                             date;
     DECLARE _tran_id                                bigint;
     DECLARE _verification_status_id                 smallint;
-    DECLARE _book_name                              national character varying(12)='Sales.Direct';
+    DECLARE _book_name                              national character varying(48)='Sales.Direct';
     DECLARE _office_id                              integer;
     DECLARE _user_id                                integer;
     DECLARE _login_id                               bigint;
@@ -3277,7 +3386,7 @@ BEGIN
                              ROW(_store_id, 'dummy-it02', 2, 'Test Mock Unit',1300000, 300, 0, '', 0)::transactions.stock_detail_type];
              
     
-    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), _office_id, true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
 
 
     SELECT * FROM transactions.post_sales
@@ -3288,7 +3397,8 @@ BEGIN
         _store_id,
         _is_non_taxable_sales,
         _details,
-        _attachments
+        _attachments,
+        NULL
     ) INTO _tran_id;
 
     SELECT verification_status_id
@@ -3317,7 +3427,7 @@ $$
     DECLARE _value_date                             date;
     DECLARE _tran_id                                bigint;
     DECLARE _verification_status_id                 smallint;
-    DECLARE _book_name                              national character varying(12)='Sales.Direct';
+    DECLARE _book_name                              national character varying(48)='Sales.Direct';
     DECLARE _office_id                              integer;
     DECLARE _user_id                                integer;
     DECLARE _login_id                               bigint;
@@ -3357,7 +3467,7 @@ BEGIN
                              ROW(_store_id, 'dummy-it01', 1, 'Test Mock Unit',180000, 0, 0, '', 0)::transactions.stock_detail_type,
                              ROW(_store_id, 'dummy-it02', 2, 'Test Mock Unit',130000, 300, 0, '', 0)::transactions.stock_detail_type];
 
-    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 100, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), _office_id, true, 100, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
 
     SELECT * FROM transactions.post_sales
     (
@@ -3367,7 +3477,8 @@ BEGIN
         _store_id,
         _is_non_taxable_sales,
         _details,
-        _attachments
+        _attachments,
+        NULL
     ) INTO _tran_id;
 
 
@@ -3401,7 +3512,7 @@ $$
     DECLARE _value_date                             date;
     DECLARE _tran_id                                bigint;
     DECLARE _verification_status_id                 smallint;
-    DECLARE _book_name                              national character varying(12)='Purchase.Direct';
+    DECLARE _book_name                              national character varying(48)='Purchase.Direct';
     DECLARE _office_id                              integer;
     DECLARE _user_id                                integer;
     DECLARE _login_id                               bigint;
@@ -3438,7 +3549,7 @@ BEGIN
                              ROW(_store_id, 'dummy-it01', 1, 'Test Mock Unit',180000, 0, 0, '', 0)::transactions.stock_detail_type,
                              ROW(_store_id, 'dummy-it02', 2, 'Test Mock Unit',130000, 300, 0, '', 0)::transactions.stock_detail_type];
 
-    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), _office_id, true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
 
     SELECT * FROM transactions.post_purchase
     (
@@ -3474,7 +3585,7 @@ $$
     DECLARE _value_date                             date;
     DECLARE _tran_id                                bigint;
     DECLARE _verification_status_id                 smallint;
-    DECLARE _book_name                              national character varying(12)='Purchase.Direct';
+    DECLARE _book_name                              national character varying(48)='Purchase.Direct';
     DECLARE _office_id                              integer;
     DECLARE _user_id                                integer;
     DECLARE _login_id                               bigint;
@@ -3511,7 +3622,7 @@ BEGIN
                              ROW(_store_id, 'dummy-it01', 1, 'Test Mock Unit',180000, 0, 0, '', 0)::transactions.stock_detail_type,
                              ROW(_store_id, 'dummy-it02', 2, 'Test Mock Unit',130000, 300, 0, '', 0)::transactions.stock_detail_type];
 
-    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 100, true, 0, '1-1-2000', '1-1-2000', true);
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), _office_id, true, 0, true, 100, true, 0, '1-1-2000', '1-1-2000', true);
 
 
     SELECT * FROM transactions.post_purchase
@@ -3560,7 +3671,7 @@ BEGIN
     _user_id            := office.get_user_id_by_user_name('plpgunit-test-user-000001');
     _login_id           := office.get_login_id(_user_id);
 
-    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
+    PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), _office_id, true, 0, true, 0, true, 0, '1-1-2000', '1-1-2020', true);
 
     _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
 
@@ -3652,7 +3763,7 @@ BEGIN
     _user_id            := office.get_user_id_by_user_name('plpgunit-test-user-000001');
     _login_id           := office.get_login_id(_user_id);
 
-     PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), true, 0, true, 0, true, 100, '1-1-2000', '1-1-2020', true);
+     PERFORM unit_tests.create_dummy_auto_verification_policy(office.get_user_id_by_user_name('plpgunit-test-user-000001'), _office_id, true, 0, true, 0, true, 100, '1-1-2000', '1-1-2020', true);
     _tran_id := nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));
 
     INSERT INTO transactions.transaction_master
@@ -9141,9 +9252,6 @@ $$
     DECLARE _can_verify_self boolean;
     DECLARE _self_verification_limit money_strict2;
     DECLARE _posted_amount money_strict2;
-    DECLARE _office_id integer;
-    DECLARE _eoy_date date;
-    DECLARE _book_date date;
 BEGIN
     IF TG_OP='DELETE' THEN
         RAISE EXCEPTION 'Deleting a transaction is not allowed. Mark the transaction as rejected instead.'
@@ -9208,9 +9316,6 @@ BEGIN
             USING ERRCODE='P8502';
         END IF;
 
-        _office_id := OLD.office_id;
-        _book_date := NEW.book_date;
-        _eoy_date := core.get_fiscal_year_end_date(_office_id);
         _transaction_master_id := OLD.transaction_master_id;
         _book := OLD.book;
         _old_verifier := OLD.verified_by_user_id;
@@ -9222,10 +9327,6 @@ BEGIN
         _reason := NEW.verification_reason;
         _is_sys := office.is_sys(_verifier);
 
-        IF(_book_date > _eoy_date) THEN
-            RAISE EXCEPTION 'Access is denied.'
-            USING ERRCODE='P9001';
-        END IF;
         
         SELECT
             SUM(amount_in_local_currency)
@@ -9368,6 +9469,38 @@ BEFORE DELETE
 ON transactions.transaction_master
 FOR EACH ROW 
 EXECUTE PROCEDURE transactions.verification_trigger();
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/02.functions-and-logic/triggers/transactions.verify_book_date_trigger.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.verify_book_date_trigger() CASCADE;
+
+CREATE FUNCTION transactions.verify_book_date_trigger()
+RETURNS TRIGGER
+AS
+$$
+    DECLARE _office_id integer;
+    DECLARE _eoy_date date;
+    DECLARE _book_date date;
+BEGIN
+    _office_id := NEW.office_id;
+    _book_date := NEW.book_date;
+    _eoy_date := core.get_fiscal_year_end_date(_office_id);
+
+    IF(_book_date > _eoy_date) THEN
+        RAISE EXCEPTION '%', 'Invalid date.'
+        USING ERRCODE='P3008';
+    END IF;
+
+    RETURN NEW;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER verify_book_date_trigger
+AFTER UPDATE OR INSERT
+ON transactions.transaction_master
+FOR EACH ROW 
+EXECUTE PROCEDURE transactions.verify_book_date_trigger();
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/01.frequencies-payment-terms-late-fee.sql.sql --<--<--
@@ -25567,6 +25700,200 @@ SELECT
     || '.' || key as key, value 
 FROM localization.resource_view;
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.views/transactions/1. transactions.transaction_view.sql --<--<--
+DROP VIEW IF EXISTS transactions.transaction_view CASCADE;
+CREATE VIEW transactions.transaction_view
+AS
+SELECT
+    transactions.transaction_master.transaction_master_id,
+    transactions.transaction_master.transaction_counter,
+    transactions.transaction_master.transaction_code,
+    transactions.transaction_master.book,
+    transactions.transaction_master.value_date,
+    transactions.transaction_master.transaction_ts,
+    transactions.transaction_master.login_id,
+    transactions.transaction_master.user_id,
+    transactions.transaction_master.sys_user_id,
+    transactions.transaction_master.office_id,
+    transactions.transaction_master.cost_center_id,
+    transactions.transaction_master.reference_number,
+    transactions.transaction_master.statement_reference AS master_statement_reference,
+    transactions.transaction_master.last_verified_on,
+    transactions.transaction_master.verified_by_user_id,
+    transactions.transaction_master.verification_status_id,
+    transactions.transaction_master.verification_reason,
+    transactions.transaction_details.transaction_detail_id,
+    transactions.transaction_details.tran_type,
+    transactions.transaction_details.account_id,
+    core.accounts.account_number,
+    core.accounts.account_name,
+    core.account_masters.normally_debit,
+    core.account_masters.account_master_code,
+    core.account_masters.account_master_name,
+    core.accounts.account_master_id,
+    core.accounts.confidential,
+    transactions.transaction_details.statement_reference,
+    transactions.transaction_details.cash_repository_id,
+    transactions.transaction_details.currency_code,
+    transactions.transaction_details.amount_in_currency,
+    transactions.transaction_details.local_currency_code,
+    transactions.transaction_details.amount_in_local_currency
+FROM
+transactions.transaction_master
+INNER JOIN transactions.transaction_details
+ON transactions.transaction_master.transaction_master_id = transactions.transaction_details.transaction_master_id
+INNER JOIN core.accounts
+ON transactions.transaction_details.account_id = core.accounts.account_id
+INNER JOIN core.account_masters
+ON core.accounts.account_master_id = core.account_masters.account_master_id;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.views/transactions/2. transactions.verified_transaction_view.sql --<--<--
+DROP VIEW IF EXISTS transactions.verified_transaction_view CASCADE;
+
+CREATE VIEW transactions.verified_transaction_view
+AS
+SELECT * FROM transactions.transaction_view
+WHERE verification_status_id > 0;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.views/transactions/3. transactions.trial_balance_view.sql --<--<--
+DROP MATERIALIZED VIEW IF EXISTS transactions.trial_balance_view;
+CREATE MATERIALIZED VIEW transactions.trial_balance_view
+AS
+SELECT core.get_account_name(account_id), 
+    SUM(CASE transactions.verified_transaction_view.tran_type WHEN 'Dr' THEN amount_in_local_currency ELSE NULL END) AS debit,
+    SUM(CASE transactions.verified_transaction_view.tran_type WHEN 'Cr' THEN amount_in_local_currency ELSE NULL END) AS Credit
+FROM transactions.verified_transaction_view
+GROUP BY account_id;
+
+ALTER MATERIALIZED VIEW transactions.trial_balance_view
+OWNER TO mix_erp;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.views/transactions/3. transactions.verified_transaction_mat_view.sql --<--<--
+DROP MATERIALIZED VIEW IF EXISTS transactions.verified_transaction_mat_view CASCADE;
+
+CREATE MATERIALIZED VIEW transactions.verified_transaction_mat_view
+AS
+SELECT * FROM transactions.verified_transaction_view;
+
+ALTER MATERIALIZED VIEW transactions.verified_transaction_mat_view
+OWNER TO mix_erp;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.views/transactions/4. transactions.stock_transaction_view.sql --<--<--
+DROP VIEW IF EXISTS transactions.stock_transaction_view CASCADE;
+
+CREATE VIEW transactions.stock_transaction_view
+AS
+SELECT
+        transactions.transaction_master.transaction_master_id,
+        transactions.stock_master.stock_master_id,
+        transactions.stock_details.stock_detail_id,
+        transactions.transaction_master.book,
+        transactions.transaction_master.transaction_counter,
+        transactions.transaction_master.transaction_code,
+        transactions.transaction_master.value_date,
+        transactions.transaction_master.transaction_ts,
+        transactions.transaction_master.login_id,
+        transactions.transaction_master.user_id,
+        transactions.transaction_master.sys_user_id,
+        transactions.transaction_master.office_id,
+        transactions.transaction_master.cost_center_id,
+        transactions.transaction_master.reference_number,
+        transactions.transaction_master.statement_reference,
+        transactions.transaction_master.last_verified_on,
+        transactions.transaction_master.verified_by_user_id,
+        transactions.transaction_master.verification_status_id,
+        transactions.transaction_master.verification_reason,
+        transactions.stock_master.party_id,
+        core.parties.country_id,
+        core.parties.state_id,
+        transactions.stock_master.salesperson_id,
+        transactions.stock_master.price_type_id,
+        transactions.stock_master.is_credit,
+        transactions.stock_master.shipper_id,
+        transactions.stock_master.shipping_address_id,
+        transactions.stock_master.shipping_charge,
+        transactions.stock_master.store_id AS stock_master_store_id,
+        transactions.stock_master.cash_repository_id,
+        transactions.stock_details.tran_type,
+        transactions.stock_details.store_id,
+        transactions.stock_details.item_id,
+        transactions.stock_details.quantity,
+        transactions.stock_details.unit_id,
+        transactions.stock_details.base_quantity,
+        transactions.stock_details.base_unit_id,
+        transactions.stock_details.price,
+        transactions.stock_details.discount,
+        transactions.stock_details.sales_tax_id,
+        transactions.stock_details.tax,
+        transactions.stock_details.price * transactions.stock_details.quantity + transactions.stock_details.tax - transactions.stock_details.discount AS amount
+FROM transactions.stock_details
+INNER JOIN transactions.stock_master
+ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+INNER JOIN transactions.transaction_master
+ON transactions.transaction_master.transaction_master_id = transactions.stock_master.transaction_master_id
+INNER JOIN core.parties
+ON transactions.stock_master.party_id = core.parties.party_id;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.views/transactions/5. transactions.verified_stock_transaction_view.sql --<--<--
+DROP MATERIALIZED VIEW IF EXISTS transactions.verified_stock_transaction_view;
+
+CREATE MATERIALIZED VIEW transactions.verified_stock_transaction_view
+AS
+SELECT * FROM transactions.stock_transaction_view
+WHERE verification_status_id > 0;
+
+ALTER MATERIALIZED VIEW transactions.verified_stock_transaction_view
+OWNER TO mix_erp;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.views/transactions/6. transactions.verified_cash_transaction_mat_view.sql --<--<--
+CREATE MATERIALIZED VIEW transactions.verified_cash_transaction_mat_view
+AS
+SELECT * FROM transactions.verified_transaction_mat_view
+WHERE transactions.verified_transaction_mat_view.transaction_master_id
+IN
+(
+    SELECT transactions.verified_transaction_mat_view.transaction_master_id 
+    FROM transactions.verified_transaction_mat_view
+    WHERE account_master_id IN(10101, 10102) --Cash and Bank A/C
+);
+
+ALTER MATERIALIZED VIEW transactions.verified_cash_transaction_mat_view
+OWNER TO mix_erp;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.views/transactions/transactions.sales_by_country_view.sql --<--<--
+CREATE VIEW transactions.sales_by_country_view
+AS
+WITH country_data
+AS
+(
+SELECT country_id, SUM((price * quantity) - discount + tax + shipping_charge) AS sales
+FROM transactions.verified_stock_transaction_view
+WHERE book = ANY(ARRAY['Sales.Delivery', 'Sales.Direct'])
+GROUP BY country_id
+)
+
+SELECT country_code, sales 
+FROM country_data
+INNER JOIN core.countries
+ON country_data.country_id = core.countries.country_id;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.views/transactions/transactions.verified_stock_details_view.sql --<--<--
+DROP VIEW IF EXISTS transactions.verified_stock_details_view;
+
+CREATE VIEW transactions.verified_stock_details_view
+AS
+SELECT transactions.stock_details.* 
+FROM transactions.stock_details
+INNER JOIN transactions.stock_master
+ON transactions.stock_master.stock_master_id = transactions.stock_details.stock_master_id
+INNER JOIN transactions.transaction_master
+ON transactions.transaction_master.transaction_master_id = transactions.stock_master.transaction_master_id
+AND transactions.transaction_master.verification_status_id > 0;
+
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/06.sample-data/0.menus.sql --<--<--
 SELECT * FROM core.create_menu('API Access Policy', '~/Modules/BackOffice/Policy/ApiAccess.mix', 'SAA', 2, core.get_menu_id('SPM'));
 
@@ -25736,6 +26063,156 @@ DELETE FROM core.menus
 WHERE menu_code = 'TRA';
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/core/currencies.sql --<--<--
+/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+***********************************************************************************/
+
+DROP FUNCTION IF EXISTS unit_tests.check_currency();
+
+CREATE FUNCTION unit_tests.check_currency()
+RETURNS public.test_result
+AS
+$$
+	DECLARE message text;
+BEGIN
+	IF NOT EXISTS(SELECT 1 FROM core.currencies LIMIT 1) THEN
+		SELECT assert.fail('No currency found in the catalog.') INTO message;
+		RETURN message;		
+	END IF;
+
+	SELECT assert.ok('End of test.') INTO message;
+	RETURN message;	
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/core/fiscal_year.sql --<--<--
+/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+***********************************************************************************/
+
+DROP FUNCTION IF EXISTS unit_tests.check_fiscal_year();
+
+CREATE FUNCTION unit_tests.check_fiscal_year()
+RETURNS public.test_result
+AS
+$$
+	DECLARE message text;
+BEGIN
+	IF NOT EXISTS(SELECT 1 FROM core.fiscal_year WHERE ends_on >= NOW() LIMIT 1) THEN
+		SELECT assert.fail('Fiscal year not present in the catalog.') INTO message;
+		RETURN message;		
+	END IF;
+	
+	SELECT assert.ok('End of test.') INTO message;
+	RETURN message;	
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/core/frequencies.sql --<--<--
+/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+***********************************************************************************/
+
+DROP FUNCTION IF EXISTS unit_tests.check_frequency();
+
+CREATE FUNCTION unit_tests.check_frequency()
+RETURNS public.test_result
+AS
+$$
+	DECLARE message text;
+BEGIN
+	IF NOT EXISTS(SELECT 1 FROM core.frequencies WHERE frequency_id=2) THEN
+		SELECT assert.fail('EOM frequency not present in the catalog.') INTO message;
+		RETURN message;		
+	END IF;
+
+	IF NOT EXISTS(SELECT 1 FROM core.frequencies WHERE frequency_id=3) THEN
+		SELECT assert.fail('EOQ frequency not present in the catalog.') INTO message;
+		RETURN message;		
+	END IF;
+
+	IF NOT EXISTS(SELECT 1 FROM core.frequencies WHERE frequency_id=4) THEN
+		SELECT assert.fail('EOH frequency not present in the catalog.') INTO message;
+		RETURN message;		
+	END IF;
+
+	IF NOT EXISTS(SELECT 1 FROM core.frequencies WHERE frequency_id=5) THEN
+		SELECT assert.fail('EOY frequency not present in the catalog.') INTO message;
+		RETURN message;		
+	END IF;
+	
+	SELECT assert.ok('End of test.') INTO message;
+	RETURN message;	
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/core/frequency_setups.sql --<--<--
+/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+***********************************************************************************/
+
+DROP FUNCTION IF EXISTS unit_tests.check_frequency_setups();
+
+CREATE FUNCTION unit_tests.check_frequency_setups()
+RETURNS public.test_result
+AS
+$$
+	DECLARE message text;
+	DECLARE fy_code text;
+	DECLARE frequency_count integer;
+BEGIN
+	SELECT fiscal_year_code INTO fy_code
+	FROM core.fiscal_year
+	WHERE ends_on >= NOW()
+	ORDER BY ends_on DESC
+	LIMIT 1;
+
+	IF(TRIM(COALESCE(fy_code, '')) = '') THEN
+		SELECT assert.fail('Fiscal year not present in the catalog.') INTO message;
+		RETURN message;
+	END IF;
+
+	SELECT COUNT(*) INTO frequency_count
+	FROM core.frequency_setups
+	WHERE fiscal_year_code = fy_code;
+	
+	IF frequency_count <> 12 THEN
+		SELECT assert.fail('Invalid frequency setup encountered.') INTO message;
+		RETURN message;		
+	END IF;
+	
+	SELECT assert.ok('End of test.') INTO message;
+	RETURN message;	
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/core/parties/unit_tests.check_party_currency_code_mismatch.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.check_party_currency_code_mismatch();
 
@@ -25792,84 +26269,258 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/core/parties/unit_tests.test_transactions_post_receipt_function.sql --<--<--
-DROP FUNCTION IF EXISTS unit_tests.test_transactions_post_receipt_function();
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/core/sys-user-test.sql --<--<--
+/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
-CREATE FUNCTION unit_tests.test_transactions_post_receipt_function()
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+***********************************************************************************/
+
+DROP FUNCTION IF EXISTS unit_tests.check_sys_group_count();
+
+CREATE FUNCTION unit_tests.check_sys_group_count()
 RETURNS public.test_result
 AS
 $$
-    DECLARE message                 public.test_result;
-    DECLARE _user_id                integer;
-    DECLARE _office_id              integer; 
-    DECLARE _login_id               bigint;
-    DECLARE _party_code             national character varying(12); 
-    DECLARE _currency_code          national character varying(12); 
-    DECLARE _amount                 public.money_strict; 
-    DECLARE _exchange_rate_debit    public.decimal_strict; 
-    DECLARE _exchange_rate_credit   public.decimal_strict;
-    DECLARE _reference_number       national character varying(24); 
-    DECLARE _statement_reference    national character varying(128); 
-    DECLARE _cost_center_id         integer;
-    DECLARE _cash_repository_id     integer;
-    DECLARE _posted_date            date;
-    DECLARE _bank_account_id        integer;
-    DECLARE _bank_instrument_code   national character varying(128);
-    DECLARE _bank_tran_code         national character varying(128);
-    DECLARE _result                 bigint;
+DECLARE message public.test_result = '';
+DECLARE sys_group_count integer;
 BEGIN
-    PERFORM unit_tests.create_mock();
-    PERFORM unit_tests.sign_in_test();
+	SELECT COUNT(*) INTO sys_group_count
+	FROM office.roles
+	WHERE office.roles.is_system = true;
 
-    _office_id                      := office.get_office_id_by_office_code('dummy-off01');
-    _user_id                        := office.get_user_id_by_user_name('plpgunit-test-user-000001');
-    _login_id                       := office.get_login_id(_user_id);
-    _party_code                     := 'dummy-pr01';
-    _currency_code                  := 'USD';
-    _amount                         := 1000.00;
-    _exchange_rate_debit            := 100.00;
-    _exchange_rate_credit           := 100.00;
-    _reference_number               := 'PL-PG-UNIT-TEST';
-    _statement_reference            := 'This transaction should have been rollbacked already.';
-    _cost_center_id                 := office.get_cost_center_id_by_cost_center_code('dummy-cs01');
-    _cash_repository_id             := office.get_cash_repository_id_by_cash_repository_code('dummy-cr01');
-    _posted_date                    := NULL;
-    _bank_account_id                := NULL;
-    _bank_instrument_code           := NULL;
-    _bank_tran_code                 := NULL;
-                                                        
-    _result                         := transactions.post_receipt_function
-                                    (
-                                        _user_id, 
-                                        _office_id, 
-                                        _login_id,
-                                        _party_code, 
-                                        _currency_code, 
-                                        _amount, 
-                                        _exchange_rate_debit, 
-                                        _exchange_rate_credit,
-                                        _reference_number, 
-                                        _statement_reference, 
-                                        _cost_center_id,
-                                        _cash_repository_id,
-                                        _posted_date,
-                                        _bank_account_id,
-                                        _bank_instrument_code,
-                                        _bank_tran_code 
-                                    );
+	IF sys_group_count = 0 THEN
+		SELECT assert.fail('No sys account group found in the database.') INTO message;
+		RETURN message;
+	END IF;
 
-    IF(_result <= 0) THEN
-        SELECT assert.fail('Cannot compile transactions.post_receipt_function.') INTO message;
-        RETURN message;
-    END IF;
+	IF sys_group_count > 1 THEN
+		SELECT assert.fail('You can only have one sys account group.') INTO message;	
+		RETURN message;
+	END IF;
 
-    SELECT assert.ok('End of test.') INTO message;  
-    RETURN message;
+	SELECT assert.ok('End of test.') INTO message;
+	RETURN message;
 END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/office/unit_tests.sign_in_test.sql --<--<--
+
+
+DROP FUNCTION IF EXISTS unit_tests.check_sys_user_count();
+
+CREATE FUNCTION unit_tests.check_sys_user_count()
+RETURNS public.test_result
+AS
+$$
+DECLARE message public.test_result = '';
+DECLARE sys_user_count integer;
+BEGIN
+	SELECT COUNT(*) INTO sys_user_count
+	FROM office.users
+	INNER JOIN office.roles
+	ON office.users.role_id = office.roles.role_id
+	WHERE office.roles.is_system = true;
+
+	IF sys_user_count = 0 THEN
+		SELECT assert.fail('No sys user account found in the database.') INTO message;
+		RETURN message;
+	END IF;
+
+	IF sys_user_count > 1 THEN
+		SELECT assert.fail('You can only have one sys user account.') INTO message;	
+		RETURN message;
+	END IF;
+
+	SELECT assert.ok('End of test.') INTO message;
+	RETURN message;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/core/verification_statuses.sql --<--<--
+/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+***********************************************************************************/
+
+DROP FUNCTION IF EXISTS unit_tests.ensure_verification_statuses();
+
+CREATE FUNCTION unit_tests.ensure_verification_statuses()
+RETURNS public.test_result
+AS
+$$
+DECLARE message public.test_result = '';
+BEGIN
+	IF NOT EXISTS(SELECT * FROM core.verification_statuses WHERE verification_status_id = -3) THEN
+		SELECT assert.fail('The rejected flag (-3) does not exist on table core.verification_statuses.') INTO message;			
+		RETURN message;
+	END IF;
+
+	IF NOT EXISTS(SELECT * FROM core.verification_statuses WHERE verification_status_id = -2) THEN
+		SELECT assert.fail('The closed flag (-2) does not exist on table core.verification_statuses.') INTO message;			
+		RETURN message;
+	END IF;
+
+	IF NOT EXISTS(SELECT * FROM core.verification_statuses WHERE verification_status_id = -1) THEN
+		SELECT assert.fail('The withdrawn flag (-1) does not exist on table core.verification_statuses.') INTO message;			
+		RETURN message;
+	END IF;
+
+	IF NOT EXISTS(SELECT * FROM core.verification_statuses WHERE verification_status_id = 0) THEN
+		SELECT assert.fail('The unverified flag (0) does not exist on table core.verification_statuses.') INTO message;			
+		RETURN message;
+	END IF;
+
+	IF NOT EXISTS(SELECT * FROM core.verification_statuses WHERE verification_status_id = 1) THEN
+		SELECT assert.fail('The auto-workflow-approved flag (1) does not exist on table core.verification_statuses.') INTO message;			
+		RETURN message;
+	END IF;
+
+	IF NOT EXISTS(SELECT * FROM core.verification_statuses WHERE verification_status_id = 2) THEN
+		SELECT assert.fail('The approved flag (2) does not exist on table core.verification_statuses.') INTO message;			
+		RETURN message;
+	END IF;
+
+	SELECT assert.ok('End of test.') INTO message;	
+	RETURN message;
+END
+$$
+LANGUAGE plpgsql;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/office/is_parent_office_test.sql --<--<--
+/********************************************************************************
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+***********************************************************************************/
+DROP FUNCTION IF EXISTS unit_tests.is_parent_office_test();
+
+CREATE FUNCTION unit_tests.is_parent_office_test()
+RETURNS public.test_result
+AS
+$$
+	DECLARE have boolean;
+	DECLARE want boolean;
+	DECLARE message text;
+	DECLARE result boolean;
+	DECLARE grand_parent_id integer;
+	DECLARE parent_id integer;
+	DECLARE id integer;
+	DECLARE sibling_id integer;
+	DECLARE child_id integer;
+BEGIN
+	grand_parent_id := nextval('office.offices_office_id_seq');
+	INSERT INTO office.offices(office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number, currency_code)
+	SELECT grand_parent_id, 'Grand Parent','Grand Parent', 'Grand Parent', '1-1-2000', '','','','','','','','','','0','0', 'NPR';
+	
+	parent_id := nextval('office.offices_office_id_seq');
+	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number, currency_code)
+	SELECT parent_id, grand_parent_id, 'Parent','Parent', 'Parent', '1-1-2000', '','','','','','','','','','0','0', 'NPR';
+	
+	id := nextval('office.offices_office_id_seq');
+	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number, currency_code)
+	SELECT id, parent_id, 'Office','Office', 'Office', '1-1-2000', '','','','','','','','','','0','0', 'NPR';
+
+	sibling_id := nextval('office.offices_office_id_seq');
+	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number, currency_code)
+	SELECT sibling_id, parent_id, 'Sibling','Sibling', 'Sibling', '1-1-2000', '','','','','','','','','','0','0', 'NPR';
+	
+	child_id := nextval('office.offices_office_id_seq');
+	INSERT INTO office.offices(office_id, parent_office_id, office_code,office_name,nick_name,registration_date, street,city,state,country,zip_code,phone,fax,email,url,registration_number,pan_number, currency_code)
+	SELECT child_id, id, 'Child','Child', 'Child', '1-1-2000', '','','','','','','','','','0','0', 'NPR';
+	
+	have := office.is_parent_office(id, sibling_id);
+	want := false;
+	SELECT * FROM assert.is_equal(have, want) INTO message, result;
+	IF NOT result THEN
+		RETURN message;
+	END IF;
+
+	have := office.is_parent_office(sibling_id, id);
+	want := false;
+	SELECT * FROM assert.is_equal(have, want) INTO message, result;
+	IF NOT result THEN
+		RETURN message;
+	END IF;
+
+	have := office.is_parent_office(id, child_id);
+	want := true;
+	SELECT * FROM assert.is_equal(have, want) INTO message, result;
+	IF NOT result THEN
+		RETURN message;
+	END IF;
+
+	have := office.is_parent_office(parent_id, id);
+	want := true;
+	SELECT * FROM assert.is_equal(have, want) INTO message, result;
+	IF NOT result THEN
+		RETURN message;
+	END IF;
+	
+	have := office.is_parent_office(parent_id, sibling_id);
+	want := true;
+	SELECT * FROM assert.is_equal(have, want) INTO message, result;
+	IF NOT result THEN
+		RETURN message;
+	END IF;
+	
+	have := office.is_parent_office(parent_id, child_id);
+	want := true;
+	SELECT * FROM assert.is_equal(have, want) INTO message, result;
+	IF NOT result THEN
+		RETURN message;
+	END IF;
+	
+	have := office.is_parent_office(grand_parent_id, parent_id);
+	want := true;
+	SELECT * FROM assert.is_equal(have, want) INTO message, result;
+	IF NOT result THEN
+		RETURN message;
+	END IF;
+	
+	have := office.is_parent_office(grand_parent_id, id);
+	want := true;
+	SELECT * FROM assert.is_equal(have, want) INTO message, result;
+	IF NOT result THEN
+		RETURN message;
+	END IF;
+	
+	have := office.is_parent_office(grand_parent_id, sibling_id);
+	want := true;
+	SELECT * FROM assert.is_equal(have, want) INTO message, result;
+	IF NOT result THEN
+		RETURN message;
+	END IF;
+		
+	have := office.is_parent_office(grand_parent_id, child_id);
+	want := true;
+	SELECT * FROM assert.is_equal(have, want) INTO message, result;
+	IF NOT result THEN
+		RETURN message;
+	END IF;
+
+	SELECT assert.ok('End of test.') INTO message;
+	RETURN message;
+END
+$$
+LANGUAGE plpgsql;
+
+-- BEGIN;
+-- SELECT unit_tests.begin();
+-- ROLLBACK;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/office/sign_in_test.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.sign_in_test();
 
 CREATE FUNCTION unit_tests.sign_in_test()
@@ -25974,7 +26625,7 @@ LANGUAGE plpgsql;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/transactions/unit_tests.balance_sheet_test.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/transactions/balance_sheet_test.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.balance_sheet_test();
 
 --Todo--check balance sheet by office
@@ -26060,6 +26711,87 @@ $$
 LANGUAGE plpgsql;
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/transactions/test_transactions_post_receipt_function.sql --<--<--
+DROP FUNCTION IF EXISTS unit_tests.test_transactions_post_receipt();
+
+CREATE FUNCTION unit_tests.test_transactions_post_receipt()
+RETURNS public.test_result
+AS
+$$
+    DECLARE message                 public.test_result;
+    DECLARE _user_id                integer;
+    DECLARE _office_id              integer; 
+    DECLARE _login_id               bigint;
+    DECLARE _party_code             national character varying(12); 
+    DECLARE _currency_code          national character varying(12); 
+    DECLARE _amount                 public.money_strict; 
+    DECLARE _exchange_rate_debit    public.decimal_strict; 
+    DECLARE _exchange_rate_credit   public.decimal_strict;
+    DECLARE _reference_number       national character varying(24); 
+    DECLARE _statement_reference    national character varying(128); 
+    DECLARE _cost_center_id         integer;
+    DECLARE _cash_repository_id     integer;
+    DECLARE _posted_date            date;
+    DECLARE _bank_account_id        integer;
+    DECLARE _payment_card_id        integer;
+    DECLARE _bank_instrument_code   national character varying(128);
+    DECLARE _bank_tran_code         national character varying(128);
+    DECLARE _result                 bigint;
+BEGIN
+    PERFORM unit_tests.create_mock();
+    PERFORM unit_tests.sign_in_test();
+
+    _office_id                      := office.get_office_id_by_office_code('dummy-off01');
+    _user_id                        := office.get_user_id_by_user_name('plpgunit-test-user-000001');
+    _login_id                       := office.get_login_id(_user_id);
+    _party_code                     := 'dummy-pr01';
+    _currency_code                  := 'USD';
+    _amount                         := 1000.00;
+    _exchange_rate_debit            := 100.00;
+    _exchange_rate_credit           := 100.00;
+    _reference_number               := 'PL-PG-UNIT-TEST';
+    _statement_reference            := 'This transaction should have been rollbacked already.';
+    _cost_center_id                 := office.get_cost_center_id_by_cost_center_code('dummy-cs01');
+    _cash_repository_id             := office.get_cash_repository_id_by_cash_repository_code('dummy-cr01');
+    _posted_date                    := NULL;
+    _bank_account_id                := NULL;
+    _payment_card_id                := NULL;
+    _bank_instrument_code           := NULL;
+    _bank_tran_code                 := NULL;
+                                                        
+    _result                         := transactions.post_receipt
+                                    (
+                                        _user_id, 
+                                        _office_id, 
+                                        _login_id,
+                                        _party_code, 
+                                        _currency_code, 
+                                        _amount, 
+                                        _exchange_rate_debit, 
+                                        _exchange_rate_credit,
+                                        _reference_number, 
+                                        _statement_reference, 
+                                        _cost_center_id,
+                                        _cash_repository_id,
+                                        _posted_date,
+                                        _bank_account_id,
+                                        _payment_card_id,
+                                        _bank_instrument_code,
+                                        _bank_tran_code,
+                                        NULL::bigint
+                                    );
+
+    IF(_result <= 0) THEN
+        SELECT assert.fail('Cannot compile transactions.post_receipt_function.') INTO message;
+        RETURN message;
+    END IF;
+
+    SELECT assert.ok('End of test.') INTO message;  
+    RETURN message;
+END
+$$
+LANGUAGE plpgsql;
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests/unit_tests.create_mock.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_mock();
 
@@ -26140,7 +26872,22 @@ LANGUAGE plpgsql;
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/12.plpgunit-tests-mock/unit_tests.create_dummy_auto_verification_policy.sql --<--<--
 DROP FUNCTION IF EXISTS unit_tests.create_dummy_auto_verification_policy
 (
-        _user_id integer, 
+        _user_id                        integer, 
+        _verify_sales_transactions      boolean, 
+        _sales_verification_limit       public.money_strict2, 
+        _verify_purchase_transactions   boolean, 
+        _purchase_verification_limit    public.money_strict2, 
+        _verify_gl_transactions         boolean,
+        _gl_verification_limit          public.money_strict2,
+        _effective_from                 date,
+        _ends_on                        date,
+        _is_active                      boolean
+);
+
+DROP FUNCTION IF EXISTS unit_tests.create_dummy_auto_verification_policy
+(
+        _user_id                        integer, 
+        _office_id                      integer,
         _verify_sales_transactions      boolean, 
         _sales_verification_limit       public.money_strict2, 
         _verify_purchase_transactions   boolean, 
@@ -26155,6 +26902,7 @@ DROP FUNCTION IF EXISTS unit_tests.create_dummy_auto_verification_policy
 CREATE FUNCTION unit_tests.create_dummy_auto_verification_policy
 (
         _user_id                        integer, 
+        _office_id                      integer,
         _verify_sales_transactions      boolean, 
         _sales_verification_limit       public.money_strict2, 
         _verify_purchase_transactions   boolean, 
@@ -26170,8 +26918,8 @@ AS
 $$
 BEGIN
         IF NOT EXISTS(SELECT 1 FROM policy.auto_verification_policy WHERE user_id=_user_id) THEN
-                INSERT INTO policy.auto_verification_policy(user_id, verify_sales_transactions, sales_verification_limit, verify_purchase_transactions, purchase_verification_limit, verify_gl_transactions, gl_verification_limit, effective_from, ends_on, is_active)
-                SELECT _user_id, _verify_sales_transactions, _sales_verification_limit, _verify_purchase_transactions, _purchase_verification_limit, _verify_gl_transactions, _gl_verification_limit, _effective_from, _ends_on, _is_active;
+                INSERT INTO policy.auto_verification_policy(user_id, office_id, verify_sales_transactions, sales_verification_limit, verify_purchase_transactions, purchase_verification_limit, verify_gl_transactions, gl_verification_limit, effective_from, ends_on, is_active)
+                SELECT _user_id, _office_id, _verify_sales_transactions, _sales_verification_limit, _verify_purchase_transactions, _purchase_verification_limit, _verify_gl_transactions, _gl_verification_limit, _effective_from, _ends_on, _is_active;
                 RETURN;
         END IF;
 
@@ -26186,7 +26934,8 @@ BEGIN
                 effective_from = _effective_from, 
                 ends_on = _ends_on, 
                 is_active = _is_active                
-        WHERE user_id=_user_id;
+        WHERE user_id = _user_id
+        AND office_id = _office_id;
         
 END
 $$
@@ -26459,11 +27208,12 @@ BEGIN
     IF NOT EXISTS(SELECT 1 FROM core.parties WHERE party_code='dummy-pr01') THEN        
         _dummy_account_id := core.get_account_id_by_account_number('dummy-acc01');
 
-        INSERT INTO core.parties(party_type_id, first_name, last_name, country_id, state_id, currency_code, account_id)
+        INSERT INTO core.parties(party_type_id, first_name, last_name, party_name, country_id, state_id, currency_code, account_id)
         SELECT            
             core.get_party_type_id_by_party_type_code('dummy-pt01'), 
             'Test Mock party', 
-            'Test', 
+            'Test',
+            'Test',
             core.get_country_id_by_country_code('dummy-co01'),
             core.get_state_id_by_state_code('dummy-st01'),
             'NPR',
