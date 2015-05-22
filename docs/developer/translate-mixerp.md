@@ -63,7 +63,7 @@ if you want to translate MixERP in French or improve the current translation. Th
 
 * [Click here on how to save the resultset to a file](https://duckduckgo.com/?q=pgadmin+query+yo+csv)
 * Translate the column **translated** to your language.
-* Discuss and send your translation to [community forums](http://mixerp.org/forums).
+* Discuss and send your translation to [community forums](http://mixerp.org/forum).
 
 
 ##Related Topics
