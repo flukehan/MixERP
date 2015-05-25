@@ -16,11 +16,11 @@ Tell us what you like to see in the CRM Module! Not sure? Then what about review
 * [chamlang.mixerp.org](http://chamlang.mixerp.org)
 * [nemjung.mixerp.org](http://nemjung.mixerp.org) 
 
-##Beta 1 Version 2 is Coming Soon
+##Beta 1 Version 2 (RC) is Coming Soon
 
 Please stay tuned to updates and releases because we are planning to release the second version of the first Beta release with added features and improved functions within May end 2015. Case you find any issues with the project , please feel free to post on [MixERP forums](http://mixerp.org/forum). Let us know how we can help you.
 
-[Beta 1 Version 2 Milestone](https://github.com/mixerp/mixerp/milestones/Beta%201%20Version%202%20%28QA%29)
+[Beta 1 Version 2 (RC) Milestone](https://github.com/mixerp/mixerp/milestones/Beta%201%20Version%202%20%28RC%29)
 
 ##Upgrades and Compatibility
 
