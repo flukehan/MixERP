@@ -68,7 +68,7 @@ function loadItems() {
     data = appendParameter("", "tranBook", tranBook);
     data = getData(data);
 
-    ajaxDataBind(url, itemSelect, data);
+    ajaxDataBind(url, itemSelect, data, null, itemCodeInputText, null, "ItemCode", "ItemName");
 };
 
 function loadStores() {
