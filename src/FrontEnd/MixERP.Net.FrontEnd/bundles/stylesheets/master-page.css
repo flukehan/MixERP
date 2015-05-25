@@ -34803,4 +34803,8 @@ select optgroup {
 .ui-widget-content {
   z-index: 2 !important;
 }
+.no-pointer-events {
+  cursor: default;
+  pointer-events: none;
+}
 /*# sourceMappingURL=mixerp.css.map */
