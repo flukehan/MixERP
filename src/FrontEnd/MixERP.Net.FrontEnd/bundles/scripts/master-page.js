@@ -51220,7 +51220,7 @@ if (typeof Sys !== "undefined") {
 
 var initializeItemSelector = function () {
     var itemSelector = $("[role=item-selector]");
-    var modalTemplatePath = "/Resource/Static/Templates/ModalTemplate.html"; //Todo:parameterize this path
+    var modalTemplatePath = "/Static/Templates/ModalTemplate.html"; //Todo:parameterize this path
 
     itemSelector.each(function () {
         var selector = $(this);

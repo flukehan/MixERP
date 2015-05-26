@@ -48,7 +48,7 @@
             <div class="row" id="ContentRow">
                 <div class="three wide column sidebar" id="MenuContainer">
                     <a href="/Dashboard/Index.aspx">
-                        <img src="/Resource/Static/images/mixerp-logo.png" />
+                        <img src="/Static/images/mixerp-logo.png" />
                     </a>
                     <div id="Search">
                         <div class="ui icon  input" style="width: 100%;">

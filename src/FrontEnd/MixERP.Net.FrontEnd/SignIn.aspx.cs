@@ -262,7 +262,7 @@ namespace MixERP.Net.FrontEnd
 
                 using (HtmlImage image = new HtmlImage())
                 {
-                    image.Src = this.ResolveClientUrl("~/Resource/Static/images/mixerp-logo.png");
+                    image.Src = this.ResolveClientUrl("~/Static/images/mixerp-logo.png");
                     anchor.Controls.Add(image);
                 }
                 container.Controls.Add(anchor);

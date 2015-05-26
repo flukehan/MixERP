@@ -85,7 +85,7 @@ namespace MixERP.Net.Common
                 if (triedAttempts >= allowedAttemps)
                 {
                     Log.Error("Disallowed access to {Host}/{IP} using {Browser}.", GetUserHostAddress(), GetUserIpAddress(), GetBrowser().Browsers);
-                    page.Response.Redirect("~/Resource/Static/AccessIsDenied.html");
+                    page.Response.Redirect("~/Static/AccessIsDenied.html");
                 }
             }
         }

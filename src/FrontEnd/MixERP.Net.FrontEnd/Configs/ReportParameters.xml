@@ -38,7 +38,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
     <add key="QRCodeWidth" value ="100" />
     <add key="QRCodeHeight" value ="100" />
     <add key="QRCodeTypeNumber" value ="-1" />
-    <add key="LogoPath" value="~/Resource/Static/images/mixerp-logo-light.png" />
+    <add key="LogoPath" value="~/Static/images/mixerp-logo-light.png" />
     <add key="HeaderPath" value="~/Reports/Assets/Header.html" />
     <add key="ReportContainer" value="~/Resource/CustomReports/" />
     
@@ -49,13 +49,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
     <add key="DbServerPassword" value="change-on-deployment" />
 
     <add key="ImageButtonCssClass" value="report-image-button" />
-    <add key="EmailIcon" value="~/Resource/Icons/email-16.png" />
-    <add key="PrintIcon" value="~/Resource/Icons/print-16.png" />
-    <add key="ExcelIcon" value="~/Resource/Icons/excel-16.png" />
-    <add key="WordIcon" value="~/Resource/Icons/word-16.png" />
-    <add key="GoTopIcon" value="~/Resource/Icons/top-16.png" />
-    <add key="GoBottomIcon" value="~/Resource/Icons/bottom-16.png" />
-    <add key="FilterIcon" value="~/Resource/Icons/filter-16.png" />
-    <add key="CloseIcon" value="~/Resource/Icons/close-16.png" />
+    <add key="EmailIcon" value="~/Static/Icons/email-16.png" />
+    <add key="PrintIcon" value="~/Static/Icons/print-16.png" />
+    <add key="ExcelIcon" value="~/Static/Icons/excel-16.png" />
+    <add key="WordIcon" value="~/Static/Icons/word-16.png" />
+    <add key="GoTopIcon" value="~/Static/Icons/top-16.png" />
+    <add key="GoBottomIcon" value="~/Static/Icons/bottom-16.png" />
+    <add key="FilterIcon" value="~/Static/Icons/filter-16.png" />
+    <add key="CloseIcon" value="~/Static/Icons/close-16.png" />
   </appSettings>
 </configuration>

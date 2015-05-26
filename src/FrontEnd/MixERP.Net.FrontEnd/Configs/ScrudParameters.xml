@@ -68,7 +68,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
     <add key="TempMediaPath" value="~/Media/Temp" />
     <add key="TitleLabelCssClass" value="title" />
     <add key="UpdateProgressSpinnerImageCssClass" value="ajax-loader" />
-    <add key="UpdateProgressSpinnerImagePath" value="~/Resource/Static/images/spinner.gif" />
+    <add key="UpdateProgressSpinnerImagePath" value="~/Static/images/spinner.gif" />
     <add key="UpdateProgressTemplateCssClass" value="ajax-container" />
   </appSettings>
 </configuration>

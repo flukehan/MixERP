@@ -22,11 +22,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
   <appSettings>
     <add key="DatabaseInstallScript" value="db/beta-1/v2/mixerp-incremental-blank-db.sql"/>
     <add key="SampleDatabaseInstallScript" value="db/beta-1/v2/mixerp-incremental-sample.sql"/>
-    <add key="WritableDirectories" value="Resource/Backups, Resource/Temp, Resource/Static/Attachments, Resource/Static/Emails" />
+    <add key="WritableDirectories" value="Resource" />
     <add key="ApplicationLogDirectory" value="C:\mixerp-logs" />
     <add key="MinimumLogLevel" value="Information" />
-    <add key="MixERPConfigFileLocation" value="Resource/Configuration/MixERP.xml" />
-    <add key="DbServerConfigFileLocation" value="Resource/Configuration/DbServer.xml" />
-    <add key="ReportConfigFileLocation" value="Resource/Configuration/ReportParameters.xml" />
+    <add key="MixERPConfigFileLocation" value="Configs/MixERP.xml" />
+    <add key="DbServerConfigFileLocation" value="Configs/DbServer.xml" />
+    <add key="ReportConfigFileLocation" value="Configs/ReportParameters.xml" />
   </appSettings>
 </configuration>

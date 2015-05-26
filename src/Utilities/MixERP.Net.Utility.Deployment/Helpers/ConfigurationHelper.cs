@@ -10,14 +10,14 @@ namespace MixERP.Net.Utility.Installer.Helpers
             return ReadConfiguration("SiteName");
         }
 
-        public static string GetAssetsDirectory()
+        public static string GetPostgreSQL32()
         {
-            return ReadConfiguration("AssetsDirectory");
+            return ReadConfiguration("PostgreSQL32");
         }
 
-        public static string GetPostgreSQLInstallerDirectory()
+        public static string GetPostgreSQL64()
         {
-            return ReadConfiguration("PostgreSQLInstallerDirectory");
+            return ReadConfiguration("PostgreSQL64");
         }
 
         public static string GetPostgreSQLInstallationDirectory()

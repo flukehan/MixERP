@@ -25,7 +25,8 @@ namespace MixERP.Net.Utility.Installer.Installer
         public string MixERPPassword { get; set; }
         public string ReportUserPassword { get; set; }
         public string InstallationDirectory { get; set; }
-        public string InstallerDirectory { get; set; }
+        public string PostgreSQL32Installer { get; set; }
+        public string PostgreSQL64Installer { get; set; }
 
         public void Install()
         {
@@ -34,17 +35,13 @@ namespace MixERP.Net.Utility.Installer.Installer
                 return;
             }
 
-            string path = FileHelper.CombineWithBaseDirectory(this.InstallerDirectory);
-            this._installer = "PostgreSQL.Server-" + this.GetOsPlatform() + ".exe";
+            this._installer = this.GetPostgreSQLInstaller();
 
-            if (!File.Exists(Path.Combine(path, this._installer)))
+            if (!File.Exists(this._installer))
             {
-                Program.warn(
-                    "Cannot install PostgreSQL Server because an installer was not found in the assets directory.");
+                Program.warn("Cannot install PostgreSQL Server because an installer was not found in the assets directory.");
                 return;
             }
-
-            this._installer = Path.Combine(path, this._installer);
 
             this.InstallPostgreSQLServer();
         }
@@ -54,6 +51,14 @@ namespace MixERP.Net.Utility.Installer.Installer
         public string Name
         {
             get { return "PostgreSQL Server"; }
+        }
+
+        private string GetPostgreSQLInstaller()
+        {
+            string platform = this.GetOsPlatform();
+            string path = platform.Equals("x64") ? this.PostgreSQL64Installer : this.PostgreSQL32Installer;
+
+            return FileHelper.CombineWithBaseDirectory(path);
         }
 
         private string GetOsPlatform()

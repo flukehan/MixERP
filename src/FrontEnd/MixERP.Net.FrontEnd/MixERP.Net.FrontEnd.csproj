@@ -270,42 +270,56 @@
     <Content Include="db\index.html" />
     <Content Include="Install.aspx" />
     <Content Include="License.txt" />
-    <Content Include="MixERP.Installation.xml" />
+    <Content Include="MixERP.Installation.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Modules\Default.aspx" />
-    <Content Include="Resource\Configuration\AttachmentFactoryParameters.xml" />
-    <Content Include="Resource\Configuration\ReportApiConfiguration.xml" />
-    <Content Include="Resource\Configuration\DbParameters.xml" />
-    <Content Include="Resource\Configuration\StockTransactionFactoryParameters.xml" />
-    <Content Include="Resource\Configuration\DbServer.xml" />
-    <Content Include="Resource\Configuration\MessagingParameters.xml" />
-    <Content Include="Resource\Configuration\MixERP.xml" />
-    <Content Include="Resource\Configuration\Parameters.xml" />
-    <Content Include="Resource\Configuration\ReportParameters.xml" />
-    <Content Include="Resource\Configuration\ScrudParameters.xml" />
-    <Content Include="Resource\Configuration\Switches.xml" />
-    <Content Include="Resource\Configuration\TransactionChecklistParameters.xml" />
-    <Content Include="Resource\Icons\bottom-16.png" />
-    <Content Include="Resource\Icons\calendar-16.png" />
-    <Content Include="Resource\Icons\checklist-16.png" />
-    <Content Include="Resource\Icons\close-16.png" />
-    <Content Include="Resource\Icons\delete-16.png" />
-    <Content Include="Resource\Icons\email-16.png" />
-    <Content Include="Resource\Icons\filter-16.png" />
-    <Content Include="Resource\Icons\find-16.png" />
-    <Content Include="Resource\Icons\insert-16.png" />
-    <Content Include="Resource\Icons\password-16.png" />
-    <Content Include="Resource\Icons\pdf-16.png" />
-    <Content Include="Resource\Icons\print-16.png" />
-    <Content Include="Resource\Icons\search-16.png" />
-    <Content Include="Resource\Icons\signout-16.png" />
-    <Content Include="Resource\Icons\top-16.png" />
-    <Content Include="Resource\Static\AccessIsDenied.html" />
-    <Content Include="Resource\Static\images\mixerp-logo-light.png" />
-    <Content Include="Resource\Static\images\mixerp-logo.png" />
-    <Content Include="Resource\Static\images\not-image-file.png" />
-    <Content Include="Resource\Static\images\spinner.gif" />
-    <Content Include="Resource\Static\Templates\EmailTemplate.html" />
-    <Content Include="Resource\Static\Templates\ModalTemplate.html" />
+    <Content Include="Configs\AttachmentFactoryParameters.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configs\ReportApiConfiguration.xml" />
+    <Content Include="Configs\DbParameters.xml" />
+    <Content Include="Configs\StockTransactionFactoryParameters.xml" />
+    <Content Include="Configs\DbServer.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configs\MessagingParameters.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configs\MixERP.xml" />
+    <Content Include="Configs\Parameters.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configs\ReportParameters.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configs\ScrudParameters.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configs\Switches.xml" />
+    <Content Include="Configs\TransactionChecklistParameters.xml" />
+    <Content Include="Static\Icons\bottom-16.png" />
+    <Content Include="Static\Icons\calendar-16.png" />
+    <Content Include="Static\Icons\checklist-16.png" />
+    <Content Include="Static\Icons\close-16.png" />
+    <Content Include="Static\Icons\delete-16.png" />
+    <Content Include="Static\Icons\email-16.png" />
+    <Content Include="Static\Icons\filter-16.png" />
+    <Content Include="Static\Icons\find-16.png" />
+    <Content Include="Static\Icons\insert-16.png" />
+    <Content Include="Static\Icons\password-16.png" />
+    <Content Include="Static\Icons\pdf-16.png" />
+    <Content Include="Static\Icons\print-16.png" />
+    <Content Include="Static\Icons\search-16.png" />
+    <Content Include="Static\Icons\signout-16.png" />
+    <Content Include="Static\Icons\top-16.png" />
+    <Content Include="Static\AccessIsDenied.html" />
+    <Content Include="Static\images\mixerp-logo-light.png" />
+    <Content Include="Static\images\mixerp-logo.png" />
+    <Content Include="Static\images\not-image-file.png" />
+    <Content Include="Static\images\spinner.gif" />
+    <Content Include="Static\Templates\EmailTemplate.html" />
+    <Content Include="Static\Templates\ModalTemplate.html" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\ajax-file-upload.js" />
     <Content Include="packages.config" />
@@ -909,7 +923,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2904</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
