@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Xml;
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.WebControls.ReportEngine.Helpers;
 
 namespace MixERP.Net.ReportManager
@@ -41,7 +40,7 @@ namespace MixERP.Net.ReportManager
 
                 if (value.StartsWith("{Resources", StringComparison.OrdinalIgnoreCase))
                 {
-                    value = ReportParser.ParseExpression(value, null);
+                    value = ResourceHelper.TryParse(value);
                 }
 
                 return value;
@@ -79,6 +78,5 @@ namespace MixERP.Net.ReportManager
 
             return string.Empty;
         }
-
     }
 }
