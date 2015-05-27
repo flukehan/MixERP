@@ -120,10 +120,10 @@ namespace MixERP.Net.Common.Helpers
             return GetConfigurationValue(path, keyName);
         }
 
-        public static string GetSwitch(string keyName)
+        public static bool GetSwitch(string keyName)
         {
             string path = MapPath(ConfigurationManager.AppSettings["SwitchConfigFileLocation"]);
-            return GetConfigurationValue(path, keyName);
+            return GetConfigurationValue(path, keyName).ToUpperInvariant().Equals("TRUE");
         }
 
         public static string GetTransactionChecklistParameter(string keyName)

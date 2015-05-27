@@ -267,6 +267,7 @@
     <Content Include="db\beta-1\v1\mixerp.sql" />
     <Content Include="db\beta-1\v2\mixerp-incremental-blank-db.sql" />
     <Content Include="db\beta-1\v2\mixerp-incremental-sample.sql" />
+    <Content Include="db\beta-1\v2\mixerp-patch-for-v1.sql" />
     <Content Include="db\index.html" />
     <Content Include="Install.aspx" />
     <Content Include="License.txt" />
@@ -298,6 +299,15 @@
     </Content>
     <Content Include="Configs\Switches.xml" />
     <Content Include="Configs\TransactionChecklistParameters.xml" />
+    <Content Include="Resource\Backups\index.html" />
+    <Content Include="Resource\CustomReports\index.html" />
+    <Content Include="Resource\Static\Attachments\index.html" />
+    <Content Include="Resource\Static\Emails\index.html" />
+    <Content Include="Resource\Static\index.html" />
+    <Content Include="Resource\Temp\Images\index.html" />
+    <Content Include="Resource\Temp\index.html" />
+    <Content Include="Scripts\d3.min.js" />
+    <Content Include="Scripts\Datamaps\topojson.js" />
     <Content Include="Static\Icons\bottom-16.png" />
     <Content Include="Static\Icons\calendar-16.png" />
     <Content Include="Static\Icons\checklist-16.png" />
@@ -314,6 +324,7 @@
     <Content Include="Static\Icons\signout-16.png" />
     <Content Include="Static\Icons\top-16.png" />
     <Content Include="Static\AccessIsDenied.html" />
+    <Content Include="Static\images\document.png" />
     <Content Include="Static\images\mixerp-logo-light.png" />
     <Content Include="Static\images\mixerp-logo.png" />
     <Content Include="Static\images\not-image-file.png" />
@@ -863,10 +874,6 @@
   <ItemGroup>
     <Folder Include="Handlers\" />
     <Folder Include="Reports\Sources\" />
-    <Folder Include="Resource\Backups\" />
-    <Folder Include="Resource\Static\Attachments\" />
-    <Folder Include="Resource\Static\Emails\" />
-    <Folder Include="Resource\Temp\Images\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">

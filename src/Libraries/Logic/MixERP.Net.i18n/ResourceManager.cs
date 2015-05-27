@@ -22,7 +22,7 @@ namespace MixERP.Net.i18n
                     return resourceKey;
                 }
 
-                throw new MissingManifestResourceException("Resource " + resourceKey + " was not found.");
+                throw new MissingManifestResourceException("Resource " + resourceClass + "." + resourceKey + " was not found.");
             }
 
             return result;

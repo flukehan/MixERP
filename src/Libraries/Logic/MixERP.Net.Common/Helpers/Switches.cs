@@ -23,18 +23,7 @@ namespace MixERP.Net.Common.Helpers
     {
         public static bool AllowParentAccountInGlTransaction()
         {
-            return GetSwitch("AllowParentAccountInGLTransaction");
-        }
-
-        private static bool GetSwitch(string key)
-        {
-            string sw = ConfigurationHelper.GetSwitch(key);
-            if (string.IsNullOrWhiteSpace(sw))
-            {
-                return false;
-            }
-
-            return sw.Equals("true");
+            return ConfigurationHelper.GetSwitch("AllowParentAccountInGLTransaction");
         }
     }
 }

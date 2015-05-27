@@ -2363,6 +2363,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Browser
+		/// </summary>
+		public static string browser 
+		{
+			get
+			{
+				return Get("browser");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Can Change Password
 		/// </summary>
 		public static string can_change_password 
@@ -2414,6 +2425,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("can_verify_sales_transactions");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Card Type
+		/// </summary>
+		public static string card_type 
+		{
+			get
+			{
+				return Get("card_type");
 			}
 		}
 		
@@ -3287,6 +3309,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Culture
+		/// </summary>
+		public static string culture 
+		{
+			get
+			{
+				return Get("culture");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Currency
 		/// </summary>
 		public static string currency 
@@ -3969,6 +4002,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for IP Address
+		/// </summary>
+		public static string ip_address 
+		{
+			get
+			{
+				return Get("ip_address");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Is Active
 		/// </summary>
 		public static string is_active 
@@ -4618,6 +4662,28 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Login Date Time
+		/// </summary>
+		public static string login_date_time 
+		{
+			get
+			{
+				return Get("login_date_time");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Login Id
+		/// </summary>
+		public static string login_id 
+		{
+			get
+			{
+				return Get("login_id");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Machinable
 		/// </summary>
 		public static string machinable 
@@ -5065,17 +5131,6 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("party_type_id");
-			}
-		}
-		
-		/// <summary>
-		///   Localized string for Party Type Id
-		/// </summary>
-		public static string party_type_id1 
-		{
-			get
-			{
-				return Get("party_type_id1");
 			}
 		}
 		
@@ -5586,6 +5641,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Remote User
+		/// </summary>
+		public static string remote_user 
+		{
+			get
+			{
+				return Get("remote_user");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Reorder Level
 		/// </summary>
 		public static string reorder_level 
@@ -5692,6 +5758,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("resource_key");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Role
+		/// </summary>
+		public static string role 
+		{
+			get
+			{
+				return Get("role");
 			}
 		}
 		
@@ -7947,17 +8024,6 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
-		///   Localized string for Confirm Password
-		/// </summary>
-		public static string ConfirmPassword1 
-		{
-			get
-			{
-				return Get("ConfirmPassword1");
-			}
-		}
-		
-		/// <summary>
 		///   Localized string for Converted to Base Currency
 		/// </summary>
 		public static string ConvertedtoBaseCurrency 
@@ -9630,6 +9696,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Login View
+		/// </summary>
+		public static string LoginView 
+		{
+			get
+			{
+				return Get("LoginView");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Manage Profile
 		/// </summary>
 		public static string ManageProfile 
@@ -9960,17 +10037,6 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
-		///   Localized string for Office Code
-		/// </summary>
-		public static string OfficeCode1 
-		{
-			get
-			{
-				return Get("OfficeCode1");
-			}
-		}
-		
-		/// <summary>
 		///   Localized string for Office Information
 		/// </summary>
 		public static string OfficeInformation 
@@ -10176,17 +10242,6 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("Password");
-			}
-		}
-		
-		/// <summary>
-		///   Localized string for Password
-		/// </summary>
-		public static string Password1 
-		{
-			get
-			{
-				return Get("Password1");
 			}
 		}
 		
@@ -12200,17 +12255,6 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("Username");
-			}
-		}
-		
-		/// <summary>
-		///   Localized string for Username
-		/// </summary>
-		public static string Username1 
-		{
-			get
-			{
-				return Get("Username1");
 			}
 		}
 		

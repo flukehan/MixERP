@@ -104,5 +104,5 @@ printButton.click(function () {
     };
 
     report = String.format(report, itemCode, storeId, from, to);
-    showWindow(report).toISOString();
+    showWindow(report);
 });

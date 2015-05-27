@@ -70,7 +70,15 @@ namespace MixERP.Net.Core.Modules.BackOffice.Handlers
             if (System.IO.File.Exists(HttpContext.Current.Server.MapPath(path)))
             {
                 System.IO.FileInfo file = new System.IO.FileInfo(HttpContext.Current.Server.MapPath(path));
-                using (Bitmap originalImage = new Bitmap(context.Server.MapPath(path)))
+
+                path = context.Server.MapPath(path);
+
+                if(!IsValidBitmap(path))
+                {
+                    path = context.Server.MapPath("~/Static/images/document.png");
+                }
+
+                using (Bitmap originalImage = new Bitmap(path))
                 {
                     byte[] buffer = ImageHelper.GetResizedImage(originalImage, width, height);
 
@@ -83,6 +91,21 @@ namespace MixERP.Net.Core.Modules.BackOffice.Handlers
                     context.Response.OutputStream.Write(buffer, 0, buffer.Length);
                     context.Response.End();
                 }
+            }
+        }
+
+        private static bool IsValidBitmap(string path)
+        {
+            try
+            {
+                using (new Bitmap(path))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
     }

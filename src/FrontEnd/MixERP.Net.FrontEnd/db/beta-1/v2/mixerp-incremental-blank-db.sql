@@ -21231,6 +21231,25 @@ END
 $$
 LANGUAGE plpgsql;        
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/04.default-values/party-types-sales-teams.sql --<--<--
+DO
+$$
+BEGIN
+    IF(core.get_locale() = 'en-US') THEN
+        INSERT INTO core.sales_teams(sales_team_code, sales_team_name)
+        SELECT 'DEF', 'Default'                 UNION ALL
+        SELECT 'CST', 'Corporate Sales Team'    UNION ALL
+        SELECT 'RST', 'Retail Sales Team';
+
+        INSERT INTO core.party_types(party_type_code, party_type_name, account_id) SELECT 'A', 'Agent', core.get_account_id_by_account_number('20100');
+        INSERT INTO core.party_types(party_type_code, party_type_name, account_id) SELECT 'C', 'Customer', core.get_account_id_by_account_number('10400');
+        INSERT INTO core.party_types(party_type_code, party_type_name, account_id) SELECT 'D', 'Dealer', core.get_account_id_by_account_number('10400');
+        INSERT INTO core.party_types(party_type_code, party_type_name, is_supplier, account_id) SELECT 'S', 'Supplier', true, core.get_account_id_by_account_number('20100');
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/04.default-values/policy-config.sql --<--<--
 --This table should not be localized
 INSERT INTO core.config
@@ -21252,41 +21271,6 @@ WHERE parent_office_id IS NOT NULL;
 
 
 
-
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/04.default-values/salespersons-ageing-slabs-party-types.sql --<--<--
-DO
-$$
-BEGIN
-    IF(core.get_locale() = 'en-US') THEN
-        INSERT INTO core.sales_teams(sales_team_code, sales_team_name)
-        SELECT 'DEF', 'Default'                 UNION ALL
-        SELECT 'CST', 'Corporate Sales Team'    UNION ALL
-        SELECT 'RST', 'Retail Sales Team';
-
-        INSERT INTO core.salespersons(sales_team_id, salesperson_code, salesperson_name, address, contact_number, commission_rate, account_id)
-        SELECT 1, 'OFF', 'Office',                  'Office',   '', 0,  (SELECT account_id FROM core.accounts WHERE account_number='20100') UNION ALL
-        SELECT 2, 'ROS', 'Robert Schintowski',      'Russia',   '', 0,  (SELECT account_id FROM core.accounts WHERE account_number='20100') UNION ALL
-        SELECT 2, 'PHJ', 'Phillipe Jones',          'France',   '', 0,  (SELECT account_id FROM core.accounts WHERE account_number='20100') UNION ALL
-        SELECT 3, 'AWB', 'Alexander Walter Bishop', 'Texas',    '', 0,  (SELECT account_id FROM core.accounts WHERE account_number='20100') UNION ALL
-        SELECT 3, 'LMA', 'Lisa Mary Ann',           'Austin',   '', 0,  (SELECT account_id FROM core.accounts WHERE account_number='20100');
-
-
-        INSERT INTO core.ageing_slabs(ageing_slab_name,from_days,to_days)
-        SELECT 'SLAB 1',0, 30   UNION ALL
-        SELECT 'SLAB 2',31, 60  UNION ALL
-        SELECT 'SLAB 3',61, 90  UNION ALL
-        SELECT 'SLAB 4',91, 365 UNION ALL
-        SELECT 'SLAB 5',366, 999999;
-
-
-        INSERT INTO core.party_types(party_type_code, party_type_name, account_id) SELECT 'A', 'Agent', core.get_account_id_by_account_number('20100');
-        INSERT INTO core.party_types(party_type_code, party_type_name, account_id) SELECT 'C', 'Customer', core.get_account_id_by_account_number('10400');
-        INSERT INTO core.party_types(party_type_code, party_type_name, account_id) SELECT 'D', 'Dealer', core.get_account_id_by_account_number('10400');
-        INSERT INTO core.party_types(party_type_code, party_type_name, is_supplier, account_id) SELECT 'S', 'Supplier', true, core.get_account_id_by_account_number('20100');
-    END IF;
-END
-$$
-LANGUAGE plpgsql;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/04.default-values/stores-types-cost-centers.sql --<--<--
 DO
@@ -38080,7 +38064,6 @@ BEGIN
     PERFORM localization.add_resource('ScrudResource', 'party_type', 'Party Type');
     PERFORM localization.add_resource('ScrudResource', 'party_type_code', 'Party Tpye Code');
     PERFORM localization.add_resource('ScrudResource', 'party_type_id', 'Party Type Id');
-    PERFORM localization.add_resource('ScrudResource', 'party_type_id1', 'Party Type Id');
     PERFORM localization.add_resource('ScrudResource', 'party_type_name', 'Party Type Name');
     PERFORM localization.add_resource('ScrudResource', 'password', 'Password');
     PERFORM localization.add_resource('ScrudResource', 'payment_card_code', 'Payment Card Code');
@@ -38340,7 +38323,6 @@ BEGIN
     PERFORM localization.add_resource('Titles', 'CompoundUnitsOfMeasure', 'Compound Units of Measure');
     PERFORM localization.add_resource('Titles', 'Confidential', 'Confidential');
     PERFORM localization.add_resource('Titles', 'ConfirmPassword', 'Confirm Password');
-    PERFORM localization.add_resource('Titles', 'ConfirmPassword1', 'Confirm Password');
     PERFORM localization.add_resource('Titles', 'ConvertedtoBaseCurrency', 'Converted to Base Currency');
     PERFORM localization.add_resource('Titles', 'ConvertedtoHomeCurrency', 'Converted to Home Currency');
     PERFORM localization.add_resource('Titles', 'CostCenter', 'Cost Center');
@@ -38518,7 +38500,6 @@ BEGIN
     PERFORM localization.add_resource('Titles', 'OK', 'OK');
     PERFORM localization.add_resource('Titles', 'Office', 'Office');
     PERFORM localization.add_resource('Titles', 'OfficeCode', 'Office Code');
-    PERFORM localization.add_resource('Titles', 'OfficeCode1', 'Office Code');
     PERFORM localization.add_resource('Titles', 'OfficeInformation', 'Office Information');
     PERFORM localization.add_resource('Titles', 'OfficeName', 'Office Name');
     PERFORM localization.add_resource('Titles', 'OfficeNickName', 'Office Nick Name');
@@ -38538,7 +38519,6 @@ BEGIN
     PERFORM localization.add_resource('Titles', 'PartyType', 'Party Type');
     PERFORM localization.add_resource('Titles', 'PartyTypes', 'Party Types');
     PERFORM localization.add_resource('Titles', 'Password', 'Password');
-    PERFORM localization.add_resource('Titles', 'Password1', 'Password');
     PERFORM localization.add_resource('Titles', 'PasswordUpdated', 'Password was updated.');
     PERFORM localization.add_resource('Titles', 'PaymentCards', 'Payment Cards');
     PERFORM localization.add_resource('Titles', 'PaymentTerms', 'Payment Terms');
@@ -38720,7 +38700,6 @@ BEGIN
     PERFORM localization.add_resource('Titles', 'User', 'User');
     PERFORM localization.add_resource('Titles', 'UserId', 'User Id');
     PERFORM localization.add_resource('Titles', 'Username', 'Username');
-    PERFORM localization.add_resource('Titles', 'Username1', 'Username');
     PERFORM localization.add_resource('Titles', 'Users', 'Users');
     PERFORM localization.add_resource('Titles', 'VacuumDatabase', 'Vacuum Database');
     PERFORM localization.add_resource('Titles', 'VacuumFullDatabase', 'Vacuum Database (Full)');
@@ -40959,7 +40938,6 @@ BEGIN
     PERFORM localization.add_localized_resource('ScrudResource', 'de', 'party_type', 'Party-Typ');
     PERFORM localization.add_localized_resource('ScrudResource', 'de', 'party_type_code', 'Partei Typ Code');
     PERFORM localization.add_localized_resource('ScrudResource', 'de', 'party_type_id', 'Party-Typen Identifizierung');
-    PERFORM localization.add_localized_resource('ScrudResource', 'de', 'party_type_id1', 'Party-Typen Identifizierung');
     PERFORM localization.add_localized_resource('ScrudResource', 'de', 'party_type_name', 'Partei Typ Name');
     PERFORM localization.add_localized_resource('ScrudResource', 'de', 'password', 'Passwort');
     PERFORM localization.add_localized_resource('ScrudResource', 'de', 'payment_card_code', 'Payment Card-Code');
@@ -41441,7 +41419,6 @@ BEGIN
     PERFORM localization.add_localized_resource('ScrudResource', 'es', 'party_type', 'Tipo Partido');
     PERFORM localization.add_localized_resource('ScrudResource', 'es', 'party_type_code', 'Partido Código Tipo');
     PERFORM localization.add_localized_resource('ScrudResource', 'es', 'party_type_id', 'Tipo Partido Identificador');
-    PERFORM localization.add_localized_resource('ScrudResource', 'es', 'party_type_id1', 'Tipo Partido Identificador');
     PERFORM localization.add_localized_resource('ScrudResource', 'es', 'party_type_name', 'Tipo del partido Nombre');
     PERFORM localization.add_localized_resource('ScrudResource', 'es', 'password', 'contraseña');
     PERFORM localization.add_localized_resource('ScrudResource', 'es', 'payment_card_code', 'Código de Tarjetas de Pago');
@@ -41923,7 +41900,6 @@ BEGIN
     PERFORM localization.add_localized_resource('ScrudResource', 'fil', 'party_type', 'Uri ng Party');
     PERFORM localization.add_localized_resource('ScrudResource', 'fil', 'party_type_code', 'Code Uri ng Party');
     PERFORM localization.add_localized_resource('ScrudResource', 'fil', 'party_type_id', 'Uri ng Pantukoy Party');
-    PERFORM localization.add_localized_resource('ScrudResource', 'fil', 'party_type_id1', 'Uri ng Pantukoy Party');
     PERFORM localization.add_localized_resource('ScrudResource', 'fil', 'party_type_name', 'Uri ng Pangalan sa Party');
     PERFORM localization.add_localized_resource('ScrudResource', 'fil', 'password', 'password');
     PERFORM localization.add_localized_resource('ScrudResource', 'fil', 'payment_card_code', 'Code ng Pagbabayad Card');
@@ -42405,7 +42381,6 @@ BEGIN
     PERFORM localization.add_localized_resource('ScrudResource', 'fr', 'party_type', 'type de partie');
     PERFORM localization.add_localized_resource('ScrudResource', 'fr', 'party_type_code', 'Parti code Tpye');
     PERFORM localization.add_localized_resource('ScrudResource', 'fr', 'party_type_id', 'Type de Party Identifier');
-    PERFORM localization.add_localized_resource('ScrudResource', 'fr', 'party_type_id1', 'Type de Party Identifier');
     PERFORM localization.add_localized_resource('ScrudResource', 'fr', 'party_type_name', 'Type de Nom de la partie');
     PERFORM localization.add_localized_resource('ScrudResource', 'fr', 'password', 'mot de passe');
     PERFORM localization.add_localized_resource('ScrudResource', 'fr', 'payment_card_code', 'Code des cartes de paiement');
@@ -42887,7 +42862,6 @@ BEGIN
     PERFORM localization.add_localized_resource('ScrudResource', 'id', 'party_type', 'Partai Type');
     PERFORM localization.add_localized_resource('ScrudResource', 'id', 'party_type_code', 'Partai Type Kode');
     PERFORM localization.add_localized_resource('ScrudResource', 'id', 'party_type_id', 'Partai Type identifier');
-    PERFORM localization.add_localized_resource('ScrudResource', 'id', 'party_type_id1', 'Partai Type identifier');
     PERFORM localization.add_localized_resource('ScrudResource', 'id', 'party_type_name', 'Jenis Partai Nama');
     PERFORM localization.add_localized_resource('ScrudResource', 'id', 'password', 'Kata Sandi');
     PERFORM localization.add_localized_resource('ScrudResource', 'id', 'payment_card_code', 'Kartu Pembayaran Kode');
@@ -43369,7 +43343,6 @@ BEGIN
     PERFORM localization.add_localized_resource('ScrudResource', 'ja', 'party_type', 'パーティーの種類');
     PERFORM localization.add_localized_resource('ScrudResource', 'ja', 'party_type_code', 'パーティータイプコード');
     PERFORM localization.add_localized_resource('ScrudResource', 'ja', 'party_type_id', 'パーティータイプ識別子');
-    PERFORM localization.add_localized_resource('ScrudResource', 'ja', 'party_type_id1', 'パーティータイプ識別子');
     PERFORM localization.add_localized_resource('ScrudResource', 'ja', 'party_type_name', 'パーティータイプ名');
     PERFORM localization.add_localized_resource('ScrudResource', 'ja', 'password', 'パスワード');
     PERFORM localization.add_localized_resource('ScrudResource', 'ja', 'payment_card_code', '支払カードのコード');
@@ -43851,7 +43824,6 @@ BEGIN
     PERFORM localization.add_localized_resource('ScrudResource', 'ms', 'party_type', 'Jenis parti');
     PERFORM localization.add_localized_resource('ScrudResource', 'ms', 'party_type_code', 'Parti Taip Kod');
     PERFORM localization.add_localized_resource('ScrudResource', 'ms', 'party_type_id', 'Parti Taip identifier');
-    PERFORM localization.add_localized_resource('ScrudResource', 'ms', 'party_type_id1', 'Parti Taip identifier');
     PERFORM localization.add_localized_resource('ScrudResource', 'ms', 'party_type_name', 'Jenis Nama Parti');
     PERFORM localization.add_localized_resource('ScrudResource', 'ms', 'password', 'kata laluan');
     PERFORM localization.add_localized_resource('ScrudResource', 'ms', 'payment_card_code', 'Kod Kad Pembayaran');
@@ -44333,7 +44305,6 @@ BEGIN
     PERFORM localization.add_localized_resource('ScrudResource', 'nl', 'party_type', 'partij Type');
     PERFORM localization.add_localized_resource('ScrudResource', 'nl', 'party_type_code', 'Partij Type Code');
     PERFORM localization.add_localized_resource('ScrudResource', 'nl', 'party_type_id', 'Partij Type kenmerk');
-    PERFORM localization.add_localized_resource('ScrudResource', 'nl', 'party_type_id1', 'Partij Type kenmerk');
     PERFORM localization.add_localized_resource('ScrudResource', 'nl', 'party_type_name', 'Partij Type Naam');
     PERFORM localization.add_localized_resource('ScrudResource', 'nl', 'password', 'wachtwoord');
     PERFORM localization.add_localized_resource('ScrudResource', 'nl', 'payment_card_code', 'Payment Card Code');
@@ -44815,7 +44786,6 @@ BEGIN
     PERFORM localization.add_localized_resource('ScrudResource', 'pt', 'party_type', 'Tipo de Festa');
     PERFORM localization.add_localized_resource('ScrudResource', 'pt', 'party_type_code', 'Tipo Partido Código');
     PERFORM localization.add_localized_resource('ScrudResource', 'pt', 'party_type_id', 'Tipo Partido Identificador');
-    PERFORM localization.add_localized_resource('ScrudResource', 'pt', 'party_type_id1', 'Tipo Partido Identificador');
     PERFORM localization.add_localized_resource('ScrudResource', 'pt', 'party_type_name', 'Tipo Partido Nome');
     PERFORM localization.add_localized_resource('ScrudResource', 'pt', 'password', 'senha');
     PERFORM localization.add_localized_resource('ScrudResource', 'pt', 'payment_card_code', 'Código de Cartões de Pagamento');
@@ -45297,7 +45267,6 @@ BEGIN
     PERFORM localization.add_localized_resource('ScrudResource', 'ru', 'party_type', 'Тип партия');
     PERFORM localization.add_localized_resource('ScrudResource', 'ru', 'party_type_code', 'Партия введите код');
     PERFORM localization.add_localized_resource('ScrudResource', 'ru', 'party_type_id', 'Партия Идентификатор');
-    PERFORM localization.add_localized_resource('ScrudResource', 'ru', 'party_type_id1', 'Партия Идентификатор');
     PERFORM localization.add_localized_resource('ScrudResource', 'ru', 'party_type_name', 'Тип партия Имя');
     PERFORM localization.add_localized_resource('ScrudResource', 'ru', 'password', 'пароль');
     PERFORM localization.add_localized_resource('ScrudResource', 'ru', 'payment_card_code', 'Код платежных карт');
@@ -45779,7 +45748,6 @@ BEGIN
     PERFORM localization.add_localized_resource('ScrudResource', 'sv', 'party_type', 'fest Typ');
     PERFORM localization.add_localized_resource('ScrudResource', 'sv', 'party_type_code', 'fest Typ kod');
     PERFORM localization.add_localized_resource('ScrudResource', 'sv', 'party_type_id', 'fest Typ identifer');
-    PERFORM localization.add_localized_resource('ScrudResource', 'sv', 'party_type_id1', 'fest Typ identifer');
     PERFORM localization.add_localized_resource('ScrudResource', 'sv', 'party_type_name', 'fest Typ Namn');
     PERFORM localization.add_localized_resource('ScrudResource', 'sv', 'password', 'lösenord');
     PERFORM localization.add_localized_resource('ScrudResource', 'sv', 'payment_card_code', 'Payment Card kod');
@@ -46261,7 +46229,6 @@ BEGIN
     PERFORM localization.add_localized_resource('ScrudResource', 'zh', 'party_type', '党的类型');
     PERFORM localization.add_localized_resource('ScrudResource', 'zh', 'party_type_code', '党类型代码');
     PERFORM localization.add_localized_resource('ScrudResource', 'zh', 'party_type_id', '党的类型标识符');
-    PERFORM localization.add_localized_resource('ScrudResource', 'zh', 'party_type_id1', '党的类型标识符');
     PERFORM localization.add_localized_resource('ScrudResource', 'zh', 'party_type_name', '党的类型名称');
     PERFORM localization.add_localized_resource('ScrudResource', 'zh', 'password', '密码');
     PERFORM localization.add_localized_resource('ScrudResource', 'zh', 'payment_card_code', '支付卡代码');
@@ -53311,6 +53278,125 @@ SELECT * FROM localization.add_localized_resource('Titles', 'sv', 'Month', 'mån
 SELECT * FROM localization.add_localized_resource('Titles', 'sv', 'Day', 'dag');
 
 
+SELECT * FROM localization.add_localized_resource('Titles', '', 'LoginView', 'Login View');
+SELECT * FROM localization.add_localized_resource('ScrudResource', '', 'login_id', 'Login Id');
+SELECT * FROM localization.add_localized_resource('ScrudResource', '', 'ip_address', 'IP Address');
+SELECT * FROM localization.add_localized_resource('ScrudResource', '', 'browser', 'Browser');
+SELECT * FROM localization.add_localized_resource('ScrudResource', '', 'login_date_time', 'Login Date Time');
+SELECT * FROM localization.add_localized_resource('ScrudResource', '', 'remote_user', 'Remote User');
+SELECT * FROM localization.add_localized_resource('ScrudResource', '', 'culture', 'Culture');
+SELECT * FROM localization.add_localized_resource('ScrudResource', '', 'role', 'Role');
+SELECT * FROM localization.add_localized_resource('ScrudResource', '', 'card_type', 'Card Type');
+SELECT * FROM localization.add_localized_resource('Titles', 'zh', 'LoginView', '登录查看');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'zh', 'login_id', '登录ID');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'zh', 'ip_address', 'IP地址');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'zh', 'browser', '浏览器');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'zh', 'login_date_time', '登录日期时间');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'zh', 'remote_user', '远程用户');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'zh', 'culture', '文化');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'zh', 'role', '角色');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'zh', 'card_type', '卡类型');
+SELECT * FROM localization.add_localized_resource('Titles', 'fil', 'LoginView', 'Login View');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fil', 'login_id', 'Login Id');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fil', 'ip_address', 'IP Address');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fil', 'browser', 'Browser');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fil', 'login_date_time', 'Login Time Date');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fil', 'remote_user', 'Remote User');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fil', 'culture', 'kultura');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fil', 'role', 'papel');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fil', 'card_type', 'Uri ng Card');
+SELECT * FROM localization.add_localized_resource('Titles', 'fr', 'LoginView', 'Connexion Voir');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fr', 'login_id', 'Identifiant De Connexion');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fr', 'ip_address', 'adresse IP');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fr', 'browser', 'navigateur');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fr', 'login_date_time', 'Connexion Date Heure');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fr', 'remote_user', 'utilisateur distant');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fr', 'culture', 'culture');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fr', 'role', 'rôle');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'fr', 'card_type', 'Type de carte');
+SELECT * FROM localization.add_localized_resource('Titles', 'de', 'LoginView', 'Login Zeige');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'de', 'login_id', 'Login Id');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'de', 'ip_address', 'IP Adresse');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'de', 'browser', 'Browser');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'de', 'login_date_time', 'Login Datum Zeit');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'de', 'remote_user', 'Remote User');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'de', 'culture', 'Kultur');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'de', 'role', 'Rolle');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'de', 'card_type', 'card Type');
+SELECT * FROM localization.add_localized_resource('Titles', 'id', 'LoginView', 'Login View');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'id', 'login_id', 'Login Id');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'id', 'ip_address', 'IP Address');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'id', 'browser', 'Browser');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'id', 'login_date_time', 'Login Tanggal Waktu');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'id', 'remote_user', 'terpencil pengguna');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'id', 'culture', 'budaya');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'id', 'role', 'peran');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'id', 'card_type', 'Jenis Kartu');
+SELECT * FROM localization.add_localized_resource('Titles', 'ja', 'LoginView', 'ログインを見ます');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ja', 'login_id', 'ログインID');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ja', 'ip_address', 'IPアドレス');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ja', 'browser', 'ブラウザ');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ja', 'login_date_time', 'ログイン日時');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ja', 'remote_user', 'リモートユーザー');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ja', 'culture', '文化');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ja', 'role', '役割');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ja', 'card_type', 'カードの種類');
+SELECT * FROM localization.add_localized_resource('Titles', 'ms', 'LoginView', 'Log masuk View');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ms', 'login_id', 'Id Log masuk');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ms', 'ip_address', 'Alamat IP');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ms', 'browser', 'pelayar');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ms', 'login_date_time', 'Log masuk Tarikh Masa');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ms', 'remote_user', 'pengguna Remote');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ms', 'culture', 'Kebudayaan');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ms', 'role', 'peranan');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ms', 'card_type', 'Jenis kad');
+SELECT * FROM localization.add_localized_resource('Titles', 'pt', 'LoginView', 'Entrada Vista');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'pt', 'login_id', 'Entrar Id');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'pt', 'ip_address', 'endereço de IP');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'pt', 'browser', 'navegador');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'pt', 'login_date_time', 'Entrada Data Tempo');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'pt', 'remote_user', 'Utilizador Remota');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'pt', 'culture', 'cultura');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'pt', 'role', 'papel');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'pt', 'card_type', 'Tipo De Carta');
+SELECT * FROM localization.add_localized_resource('Titles', 'ru', 'LoginView', 'Войти Посмотреть');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ru', 'login_id', 'Войти Id');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ru', 'ip_address', 'IP-адрес');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ru', 'browser', 'браузер');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ru', 'login_date_time', 'Войти Дата Время');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ru', 'remote_user', 'Удаленная пользователя');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ru', 'culture', 'культура');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ru', 'role', 'роль');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'ru', 'card_type', 'Тип Карты');
+SELECT * FROM localization.add_localized_resource('Titles', 'es', 'LoginView', 'Entrar Ver');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'es', 'login_id', 'Id De Entrada');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'es', 'ip_address', 'dirección IP');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'es', 'browser', 'navegador');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'es', 'login_date_time', 'Login Fecha Hora');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'es', 'remote_user', 'usuario remoto');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'es', 'culture', 'cultura');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'es', 'role', 'papel');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'es', 'card_type', 'Tipo De Tarjeta');
+SELECT * FROM localization.add_localized_resource('Titles', 'sv', 'LoginView', 'inloggning Visa');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'sv', 'login_id', 'login Id');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'sv', 'ip_address', 'IP-adress');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'sv', 'browser', 'webbläsare');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'sv', 'login_date_time', 'Logga Datum Tid');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'sv', 'remote_user', 'Remote User');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'sv', 'culture', 'kultur');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'sv', 'role', 'roll');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'sv', 'card_type', 'Korttyp');
+SELECT * FROM localization.add_localized_resource('Titles', 'nl', 'LoginView', 'Inloggen View');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'nl', 'login_id', 'login Id');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'nl', 'ip_address', 'IP adres');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'nl', 'browser', 'browser');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'nl', 'login_date_time', 'Inloggen Datum Tijd');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'nl', 'remote_user', 'Remote User');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'nl', 'culture', 'cultuur');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'nl', 'role', 'rol');
+SELECT * FROM localization.add_localized_resource('ScrudResource', 'nl', 'card_type', 'kaarttype');
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/04.default-values/recurrence-types.sql --<--<--
 WITH recurrence_types
 AS
@@ -53446,6 +53532,44 @@ LEFT JOIN core.shipping_mail_types
 ON core.items.preferred_shipping_mail_type_id = core.shipping_mail_types.shipping_mail_type_id
 LEFT JOIN core.shipping_package_shapes
 ON core.items.shipping_package_shape_id = core.shipping_package_shapes.shipping_package_shape_id;
+
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.payment_card_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.payment_card_scrud_view;
+
+CREATE VIEW core.payment_card_scrud_view
+AS
+SELECT 
+    core.payment_cards.payment_card_id,
+    core.payment_cards.payment_card_code,
+    core.payment_cards.payment_card_name,
+    core.card_types.card_type_code || ' (' || core.card_types.card_type_name || ')' AS card_type
+FROM core.payment_cards
+INNER JOIN core.card_types
+ON core.payment_cards.card_type_id = core.card_types.card_type_id;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.payment_term_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.payment_term_scrud_view;
+
+CREATE VIEW core.payment_term_scrud_view
+AS
+SELECT
+    core.payment_terms.payment_term_id,
+    core.payment_terms.payment_term_code,
+    core.payment_terms.payment_term_name,
+    core.payment_terms.due_on_date,
+    core.payment_terms.due_days,
+    due_frequency.frequency_code || ' (' || due_frequency.frequency_name || ')' AS due_frequency,
+    core.payment_terms.grace_period,
+    core.late_fee.late_fee_code || '(' || core.late_fee.late_fee_name || ')' AS late_fee,
+    late_fee_posting_frequency.frequency_code || ' (' || late_fee_posting_frequency.frequency_name || ')' AS late_fee_posting_frequency
+FROM core.payment_terms
+LEFT JOIN core.frequencies AS due_frequency
+ON core.payment_terms.due_frequency_id=due_frequency.frequency_id
+LEFT JOIN core.frequencies AS late_fee_posting_frequency 
+ON core.payment_terms.late_fee_posting_frequency_id=late_fee_posting_frequency.frequency_id
+LEFT JOIN core.late_fee
+ON core.payment_terms.late_fee_id=core.late_fee.late_fee_id;
 
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v2/src/05.scrud-views/core/core.recurring_invoice_scrud_view.sql --<--<--
