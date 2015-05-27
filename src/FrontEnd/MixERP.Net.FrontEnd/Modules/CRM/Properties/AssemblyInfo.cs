@@ -17,7 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
 using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following set of attributes.
@@ -26,12 +28,13 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MixERP.Net.Core.Modules.CRM")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("MixERP Inc.")]
 [assembly: AssemblyProduct("MixERP.Net.Core.Modules.CRM")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("Copyright ©  2014-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: System.CLSCompliant(true)]
+[assembly: NeutralResourcesLanguage("en")]
+[assembly: CLSCompliant(true)]
 
 // Setting ComVisible to false makes the types in this assembly not visible to COM components. If
 // you need to access a type in this assembly from COM, set the ComVisible attribute to true on that type.
@@ -49,6 +52,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers by using the '*'
 // as shown below:
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: System.Resources.NeutralResourcesLanguage("en")]
+[assembly: AssemblyVersion("1.2.0.0")]
+[assembly: AssemblyFileVersion("1.2.0.0")]
+[assembly: AssemblyInformationalVersion("1.2.0.0 RC")]

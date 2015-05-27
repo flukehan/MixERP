@@ -115,7 +115,7 @@ namespace MixERP.Net.FrontEnd
         private void CheckDbConnectivity()
         {
             Log.Verbose("Checking if database server is available.");
-            if (!ServerConnectivity.IsDbServerAvailable())
+            if (!ServerConnectivity.IsDbServerAvailable(AppUsers.GetCurrentUserDB()))
             {
                 Log.Warning("Could not connect to database server.");
                 this.RedirectToOfflinePage();

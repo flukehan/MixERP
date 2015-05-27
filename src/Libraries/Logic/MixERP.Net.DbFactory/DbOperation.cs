@@ -279,11 +279,11 @@ namespace MixERP.Net.DbFactory
             }
         }
 
-        public static bool IsServerAvailable()
+        public static bool IsServerAvailable(string catalog)
         {
             try
             {
-                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString("")))
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.GetConnectionString(catalog)))
                 {
                     connection.Open();
                 }

@@ -26,7 +26,10 @@ namespace MixERP.Net.ReportManager
 
                     foreach (string catalog in GetCatalogs())
                     {
-                        DbOperation.ExecuteNonQuery(catalog, command);                        
+                        if (DbOperation.IsServerAvailable(catalog))
+                        {
+                            DbOperation.ExecuteNonQuery(catalog, command);
+                        }
                     }
                 }
             }

@@ -245,6 +245,7 @@ namespace MixERP.Net.Utility.Installer.Installer
 
 
             this.UpdateConfig(dbConfig, "Database", this.DatabaseName);
+            this.UpdateConfig(dbConfig, "Catalogs", this.DatabaseName);
             this.UpdateConfig(dbConfig, "UserId", "mix_erp");
             this.UpdateConfig(dbConfig, "Password", this.MixERPPassword);
             this.UpdateConfig(dbConfig, "PostgreSQLBinDirectory", this.PostgreSQLBinDirectory);
