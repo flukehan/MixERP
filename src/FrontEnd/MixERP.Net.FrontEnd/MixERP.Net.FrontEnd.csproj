@@ -296,31 +296,36 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Modules\Default.aspx" />
-    <Content Include="Resource\Configs\AttachmentFactoryParameters.xml">
+    <Content Include="Backups\web.config" />
+    <Content Include="db\web.config" />
+    <Content Include="Modules\web.config" />
+    <None Include="Resource\Configs\AttachmentFactoryParameters.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Configs\ReportApiConfiguration.xml" />
-    <Content Include="Resource\Configs\DbParameters.xml" />
-    <Content Include="Resource\Configs\StockTransactionFactoryParameters.xml" />
-    <Content Include="Resource\Configs\DbServer.xml">
+    </None>
+    <None Include="Resource\Configs\ReportApiConfiguration.config" />
+    <None Include="Resource\Configs\DbParameters.config" />
+    <None Include="Resource\Configs\StockTransactionFactoryParameters.config" />
+    <None Include="Resource\Configs\DbServer.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Configs\MessagingParameters.xml">
+    </None>
+    <None Include="Resource\Configs\MessagingParameters.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Configs\MixERP.xml" />
-    <Content Include="Resource\Configs\Parameters.xml">
+    </None>
+    <None Include="Resource\Configs\MixERP.config" />
+    <None Include="Resource\Configs\Parameters.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Configs\ReportParameters.xml">
+    </None>
+    <None Include="Resource\Configs\ReportParameters.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Configs\ScrudParameters.xml">
+    </None>
+    <None Include="Resource\Configs\ScrudParameters.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Resource\Configs\Switches.xml" />
-    <Content Include="Resource\Configs\TransactionChecklistParameters.xml" />
+    </None>
+    <None Include="Resource\Configs\Switches.config" />
+    <None Include="Resource\Configs\TransactionChecklistParameters.config" />
+    <Content Include="Resource\Configs\index.html" />
     <Content Include="Resource\CustomReports\index.html" />
+    <Content Include="Resource\index.html" />
     <Content Include="Resource\Static\Attachments\index.html" />
     <Content Include="Resource\Static\Emails\index.html" />
     <Content Include="Resource\Static\index.html" />
@@ -411,6 +416,8 @@
       <DependentUpon>parties-popup.min.js</DependentUpon>
     </Content>
     <Content Include="BackendMaster.Master" />
+    <Content Include="Resource\web.config" />
+    <Content Include="Resource\Static\Attachments\web.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\colorpicker\.gitignore" />
