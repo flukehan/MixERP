@@ -177,7 +177,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                     DirectoryInfo directory = new DirectoryInfo(backupDirectory);
                     Collection<BackupFile> files = new Collection<BackupFile>();
 
-                    foreach (FileInfo fileInfo in directory.GetFiles("*.backup"))
+                    foreach (FileInfo fileInfo in directory.GetFiles("*.zip"))
                     {
                         if (fileInfo != null)
                         {

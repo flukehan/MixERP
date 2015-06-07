@@ -1,6 +1,4 @@
-﻿<?xml version="1.0"?>
-
-<!--
+﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -17,19 +15,18 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
--->
+***********************************************************************************/
 
-<configuration>
-  <appSettings>
-    <add key="Server" value="localhost" />
-    <add key="Port" value="5432" />
-    <add key="Database" value="mixerp" />
-    <add key="UserId" value="mix_erp" />
-    <add key="Password" value="change-on-deployment" />
-    <add key="Catalogs" value="mixerp, mixerp2, mixerp4" />
-    <add key="MetaDatabase" value="postgres" />
-    
-    <add key="PostgreSQLBinDirectory" value="C:\Program Files\PostgreSQL\9.4\bin\" />
-    <add key="DatabaseBackupDirectory" value="/Resource/Backups/" />
-  </appSettings>
-</configuration>
+using System;
+using System.Collections.Generic;
+using MixERP.Net.Entities.Core;
+
+namespace MixERP.Net.FrontEnd.Models
+{
+    [Serializable]
+    public class NavigationMenu
+    {
+        public Menu Menu { get; set; }
+        public List<NavigationMenu> Children { get; set; }
+    }
+}

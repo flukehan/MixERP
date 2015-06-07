@@ -34307,11 +34307,6 @@ footer {
   height: 36px;
   padding: 12px;
 }
-#SearchInput {
-  background-color: #5f1488;
-  border-color: #5f1488;
-  color: #dbb7ed;
-}
 #SearchInput:hover,
 #SearchInput:active,
 #SearchInput:focus {
@@ -34446,7 +34441,7 @@ table .form-control label {
   font-weight: bold;
   font-size: 18px;
   padding-bottom: 8px;
-  color: #98129c;
+  color: #67238b;
   border-bottom: 1px dotted;
   margin-bottom: 16px;
 }
@@ -34456,7 +34451,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #98129c;
+  color: #67238b;
   cursor: pointer;
   font-weight: lighter;
 }
@@ -34574,13 +34569,13 @@ select[disabled] {
   margin: 0 !important;
 }
 .dirty {
-  border-color: red;
-  -webkit-box-shadow: 0 1px 1px #000000 inset;
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-  -ms-box-shadow: 0 1px 1px #000000 inset;
-  -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-  box-shadow: 0 1px 1px #000000 inset;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  border: 1px solid #e8003d !important;
+  -webkit-border-radius: 4px !important;
+  -moz-border-radius: 4px !important;
+  border-radius: 4px !important;
+  -webkit-box-shadow: 0 0 2px #e8003d !important;
+  -moz-box-shadow: 0 0 2px #e8003d !important;
+  box-shadow: 0 0 2px #e8003d !important;
 }
 .span-icon {
   padding: 4px;
@@ -34630,7 +34625,7 @@ textarea {
   color: #FFFFFF !important;
 }
 .jstree-search {
-  color: #ffffff !important;
+  color: #67238b !important;
   font-style: normal !important;
 }
 /*jstree Override End*/
@@ -34686,15 +34681,6 @@ table.borderless td {
   -webkit-box-shadow: 0 0 8px #d4610e !important;
   -moz-box-shadow: 0 0 8px #d4610e !important;
   box-shadow: 0 0 8px #d4610e !important;
-}
-.dirty {
-  border: 1px solid #e8003d !important;
-  -webkit-border-radius: 4px !important;
-  -moz-border-radius: 4px !important;
-  border-radius: 4px !important;
-  -webkit-box-shadow: 0 0 2px #e8003d !important;
-  -moz-box-shadow: 0 0 2px #e8003d !important;
-  box-shadow: 0 0 2px #e8003d !important;
 }
 /*Semantic UI Override End */
 #MainContent {
@@ -34806,5 +34792,135 @@ select optgroup {
 .no-pointer-events {
   cursor: default;
   pointer-events: none;
+}
+/*!
+ * Start Bootstrap - SB Admin 2 Bootstrap Admin Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+html,
+body {
+  font-size: 12px;
+}
+html,
+body,
+div,
+ul,
+table,
+td,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+select,
+input,
+option {
+  font-family: "Titillium Web", "Open Sans", "Segoe UI", Helvetica, Arial, sans-serif !important;
+}
+body,
+.sidebar {
+  background-color: #fff;
+}
+#wrapper {
+  width: 100%;
+}
+#page-wrapper {
+  padding: 24px;
+  min-height: 600px;
+  background-color: #fff;
+}
+#search {
+  padding-left: 8px;
+  width: 240px;
+}
+.sidebar {
+  border-width: 1px 1px 0 0;
+  border-style: solid;
+  border-color: #e7e7e7;
+  min-height: 1000px;
+}
+@media (min-width: 768px) {
+  #page-wrapper {
+    position: inherit;
+    margin: 0 0 0 250px;
+    padding: 12px;
+    border-top: 1px solid #e7e7e7;
+    border-left: 1px solid #e7e7e7;
+  }
+  .sidebar {
+    z-index: 1;
+    position: absolute;
+    width: 250px;
+    margin-top: 0;
+    padding: 12px 0;
+    overflow: hidden;
+  }
+  .logo img {
+    position: absolute;
+    top: 0;
+  }
+  .right-menu {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+  }
+  .brand {
+    min-height: 70px;
+  }
+  #tree {
+    padding-top: 12px;
+    width: 240px;
+  }
+}
+@media (max-width: 768px) {
+  #top-menu {
+    margin-top: 32px;
+  }
+  .brand {
+    min-height: 30px;
+  }
+}
+.logo {
+  height: 54px;
+}
+.theme,
+#SignInBody {
+  background-color: #67238B !important;
+}
+.contrast.theme {
+  background-color: #763997 !important;
+}
+/*jstree Override Start*/
+.jstree-selected div,
+.jstree-clicked,
+.jstree-wholerow-hovered,
+.jstree-hovered,
+.jstree-default .jstree-wholerow-clicked {
+  background: #f2e7fa !important;
+  background: -moz-linear-gradient(top, #f2e7fa 0%, #ebd9f7 100%) !important;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f2e7fa), color-stop(100%, #ebd9f7));
+  background: -webkit-linear-gradient(top, #f2e7fa 0%, #ebd9f7 100%);
+  background: -o-linear-gradient(top, #f2e7fa 0%, #ebd9f7 100%);
+  background: -ms-linear-gradient(top, #f2e7fa 0%, #ebd9f7 100%);
+  background: linear-gradient(to bottom, #f2e7fa 0%, #ebd9f7 100%);
+  /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@color1', endColorstr='@color2',GradientType=0 );*/
+  color: #67238b !important;
+}
+#tree li,
+.jstree-search {
+  font-style: normal !important;
+  font-weight: 100 !important;
+}
+#tree li {
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+/*jstree Override End*/
+.initially.hidden {
+  display: none !important;
+}
+.text.right {
+  text-align: right !important;
 }
 /*# sourceMappingURL=mixerp.css.map */

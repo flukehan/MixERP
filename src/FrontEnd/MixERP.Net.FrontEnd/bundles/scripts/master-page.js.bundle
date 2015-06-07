@@ -25,6 +25,7 @@
     <file>/Scripts/semantic-ui/semantic.js</file>
     <file>/Scripts/jquery.signalR.js</file>
     <file>/Scripts/vakata-jstree/dist/jstree.min.js</file>
+    <file>/Scripts/sprintf/sprintf.min.js</file>
     <file>/Scripts/mixerp/mixerp-core.js</file>
 
     <!--Libraries End -->
@@ -37,5 +38,6 @@
     <file>/Scripts/mixerp/master-page/scrud.js</file>
     <file>/Scripts/mixerp/master-page/sortable.js</file>
     <file>/Scripts/mixerp/master-page/semantic.js</file>
+    <file>/Scripts/mixerp/master-page/menu.js</file>
   </files>
 </bundle>

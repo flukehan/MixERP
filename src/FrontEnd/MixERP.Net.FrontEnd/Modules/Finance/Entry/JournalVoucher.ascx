@@ -21,7 +21,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     Inherits="MixERP.Net.Core.Modules.Finance.Entry.JournalVoucher"
     OverridePath="/Modules/Finance/JournalVoucher.mix" %>
 <%@ Import Namespace="MixERP.Net.i18n.Resources" %>
-<%@ Register TagPrefix="mixerp" Namespace="MixERP.Net.WebControls.Common" Assembly="MixERP.Net.WebControls.Common, Version=1.2.0.0, Culture=neutral, PublicKeyToken=a724a47a0879d02f" %>
+<%@ Register TagPrefix="mixerp" Namespace="MixERP.Net.WebControls.Common" Assembly="MixERP.Net.WebControls.Common, Version=1.2.0.1, Culture=neutral, PublicKeyToken=a724a47a0879d02f" %>
 
 <h2>
     <asp:Label ID="TitleLabel" runat="server" />

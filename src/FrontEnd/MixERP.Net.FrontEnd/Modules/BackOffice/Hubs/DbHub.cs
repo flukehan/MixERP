@@ -22,6 +22,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.IO.Compression;
 using System.Text;
 using System.Web.Hosting;
 using Microsoft.AspNet.SignalR;
@@ -37,6 +38,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
     [CLSCompliant(false)]
     public class DbHub : Hub
     {
+        private string backupDirectory;
+        private string batchFile;
+
         public void BackupDatabase(string fileName)
         {
             if (string.IsNullOrWhiteSpace(fileName))
@@ -71,12 +75,17 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
         private void Backup(PostgreSQLServer server, string fileName)
         {
             string pgdumpPath = Path.Combine(server.BinDirectory, "pg_dump.exe");
-            string backupDirectory = HostingEnvironment.MapPath(server.DatabaseBackupDirectory);
+            backupDirectory = HostingEnvironment.MapPath(server.DatabaseBackupDirectory);
 
             if (backupDirectory != null)
             {
-                string path = Path.Combine(backupDirectory, fileName + ".backup");
-                var result = this.BackupDatabase(pgdumpPath, server, path);
+                backupDirectory = Path.Combine(backupDirectory, fileName);
+                Directory.CreateDirectory(backupDirectory);
+
+                string path = Path.Combine(backupDirectory, "db.backup");
+
+                bool result = this.BackupDatabase(pgdumpPath, server, path);
+
 
                 if (result)
                 {
@@ -85,7 +94,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
                     message.Append("&nbsp;");
                     message.Append("<a href='");
                     message.Append(
-                        PageUtility.ResolveUrl(Path.Combine(server.DatabaseBackupDirectory, fileName + ".backup")));
+                        PageUtility.ResolveUrl(Path.Combine(server.DatabaseBackupDirectory, fileName + ".zip")));
                     message.Append("'");
                     message.Append(" target='_blank'>");
                     message.Append(Labels.ClickHereToDownload);
@@ -99,48 +108,64 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
             }
         }
 
+        private void CompressBackupDirectory(bool removeSource)
+        {
+            ZipFile.CreateFromDirectory(backupDirectory, backupDirectory + ".zip");
+
+            if (removeSource)
+            {
+                Directory.Delete(backupDirectory, true);
+            }
+        }
+
         private bool BackupDatabase(string pgDumpPath, PostgreSQLServer server, string fileName)
         {
-            var batchFile = this.CreateBatchFile(server, pgDumpPath, fileName);
+            this.CreateBatchFile(server, pgDumpPath, fileName);
 
-            try
+            using (Process process = new Process())
             {
-                using (Process process = new Process())
-                {
-                    process.StartInfo.FileName = batchFile;
+                process.StartInfo.FileName = batchFile;
 
-                    process.StartInfo.CreateNoWindow = true;
-                    process.StartInfo.ErrorDialog = false;
-                    process.StartInfo.RedirectStandardInput = true;
-                    process.StartInfo.UseShellExecute = false;
-                    process.StartInfo.RedirectStandardOutput = true;
-                    process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.ErrorDialog = false;
+                process.StartInfo.RedirectStandardInput = true;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
 
-                    process.ErrorDataReceived += this.Data_Received;
-                    process.OutputDataReceived += this.Data_Received;
-                    process.Disposed += this.Completed;
+                process.ErrorDataReceived += this.Data_Received;
+                process.OutputDataReceived += this.Data_Received;
+                process.Disposed += this.Completed;
 
-                    process.Start();
+                process.Start();
 
-                    process.BeginErrorReadLine();
-                    process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+                process.BeginOutputReadLine();
 
-                    process.WaitForExit();
-                    return true;
-                }
-            }
-            finally
-            {
-                this.RemoveFile(batchFile);
+                process.WaitForExit();
+
+
+                return true;
             }
         }
 
         private void Completed(object sender, EventArgs e)
         {
+            this.RemoveFile(batchFile);
+            this.CopyResource();
+            this.CompressBackupDirectory(true);
             this.Clients.Caller.backupCompleted(string.Empty);
         }
 
-        private string CreateBatchFile(PostgreSQLServer server, string pgDumpPath, string fileName)
+        private void CopyResource()
+        {
+            string source = ConfigurationHelper.GetResourceDirectory();
+            string destination = Path.Combine(backupDirectory, new DirectoryInfo(source).Name);
+
+            Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(source, destination);
+        }
+
+        private void CreateBatchFile(PostgreSQLServer server, string pgDumpPath, string fileName)
         {
             Collection<string> commands = new Collection<string>();
             commands.Add("@echo off");
@@ -152,10 +177,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
             commands.Add(command);
             commands.Add("exit");
 
-            string batchFilePath = fileName + ".bat";
+            batchFile = fileName + ".bat";
 
-            File.WriteAllText(batchFilePath, string.Join(Environment.NewLine, commands));
-            return batchFilePath;
+            File.WriteAllText(batchFile, string.Join(Environment.NewLine, commands));
         }
 
         private void Data_Received(object sender, DataReceivedEventArgs e)

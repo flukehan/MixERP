@@ -61,6 +61,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -73,6 +77,7 @@
       <HintPath>..\..\packages\Serilog.1.4.155\lib\net45\Serilog.FullNetFx.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System" />
@@ -80,9 +85,18 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackendMaster.Master.cs">
+      <DependentUpon>BackendMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackendMaster.Master.designer.cs">
+      <DependentUpon>BackendMaster.Master</DependentUpon>
+    </Compile>
     <Compile Include="Base\MixERPMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -145,6 +159,8 @@
     <Compile Include="MixERPReportMaster.Master.designer.cs">
       <DependentUpon>MixERPReportMaster.Master</DependentUpon>
     </Compile>
+    <Compile Include="Models\Navigation.cs" />
+    <Compile Include="Models\NavigationMenu.cs" />
     <Compile Include="Modules\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -183,6 +199,10 @@
     </Compile>
     <Compile Include="Services\Install.asmx.cs">
       <DependentUpon>Install.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Menu.asmx.cs">
+      <DependentUpon>Menu.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\Office.asmx.cs">
@@ -250,6 +270,7 @@
     <Content Include="App_Themes\MixERP\mixerp.min.css">
       <DependentUpon>mixerp.css</DependentUpon>
     </Content>
+    <Content Include="Backups\index.html" />
     <Content Include="bundles\scripts\libraries.js">
       <DependentUpon>libraries.js.bundle</DependentUpon>
     </Content>
@@ -275,31 +296,30 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Modules\Default.aspx" />
-    <Content Include="Configs\AttachmentFactoryParameters.xml">
+    <Content Include="Resource\Configs\AttachmentFactoryParameters.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configs\ReportApiConfiguration.xml" />
-    <Content Include="Configs\DbParameters.xml" />
-    <Content Include="Configs\StockTransactionFactoryParameters.xml" />
-    <Content Include="Configs\DbServer.xml">
+    <Content Include="Resource\Configs\ReportApiConfiguration.xml" />
+    <Content Include="Resource\Configs\DbParameters.xml" />
+    <Content Include="Resource\Configs\StockTransactionFactoryParameters.xml" />
+    <Content Include="Resource\Configs\DbServer.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configs\MessagingParameters.xml">
+    <Content Include="Resource\Configs\MessagingParameters.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configs\MixERP.xml" />
-    <Content Include="Configs\Parameters.xml">
+    <Content Include="Resource\Configs\MixERP.xml" />
+    <Content Include="Resource\Configs\Parameters.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configs\ReportParameters.xml">
+    <Content Include="Resource\Configs\ReportParameters.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configs\ScrudParameters.xml">
+    <Content Include="Resource\Configs\ScrudParameters.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configs\Switches.xml" />
-    <Content Include="Configs\TransactionChecklistParameters.xml" />
-    <Content Include="Resource\Backups\index.html" />
+    <Content Include="Resource\Configs\Switches.xml" />
+    <Content Include="Resource\Configs\TransactionChecklistParameters.xml" />
     <Content Include="Resource\CustomReports\index.html" />
     <Content Include="Resource\Static\Attachments\index.html" />
     <Content Include="Resource\Static\Emails\index.html" />
@@ -308,6 +328,9 @@
     <Content Include="Resource\Temp\index.html" />
     <Content Include="Scripts\d3.min.js" />
     <Content Include="Scripts\Datamaps\topojson.js" />
+    <Content Include="Scripts\mixerp\master-page\menu.js" />
+    <Content Include="Scripts\sprintf\sprintf.min.js" />
+    <Content Include="Services\Menu.asmx" />
     <Content Include="Static\Icons\bottom-16.png" />
     <Content Include="Static\Icons\calendar-16.png" />
     <Content Include="Static\Icons\checklist-16.png" />
@@ -387,6 +410,7 @@
     <Content Include="bundles\scripts\parties-popup.min.js.gzip">
       <DependentUpon>parties-popup.min.js</DependentUpon>
     </Content>
+    <Content Include="BackendMaster.Master" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\colorpicker\.gitignore" />
@@ -864,6 +888,8 @@
     <Content Include="Tests\all-tests.min.js.gzip">
       <DependentUpon>all-tests.min.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\sprintf\LICENSE" />
+    <Content Include="Scripts\sprintf\sprintf.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
