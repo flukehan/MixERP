@@ -1,7 +1,7 @@
 #MixERP Deployment Utility (Installer)
 
-MixERP Deployment Utility can be downloaded from [GitHub](https://github.com/mixerp/mixerp/releases/tag/1.1)
-or [Codeplex](https://mixerp.codeplex.com/releases/view/611704). The installer includes:
+MixERP Deployment Utility can be downloaded from [GitHub](https://github.com/mixerp/mixerp/releases/)
+or [Codeplex](https://mixerp.codeplex.com/releases/). The installer includes:
 
 * PostgreSQL Server 9.4.1 32-bit
 * PostgreSQL Server 9.4.1 64-bit
