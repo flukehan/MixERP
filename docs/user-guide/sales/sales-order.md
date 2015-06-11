@@ -39,6 +39,15 @@ Select the customer who sent the PO.
     will be automatically chosen in the drop down control.
 </div>
 
+**Price Type**
+
+Select the price type associated with this transaction. On a default installation of MixERP, price types are :
+
+* Retail
+* Wholesale
+
+Depending on the price type, effective items selling prices will be displayed.
+
 **Ref #**
 
 Enter a reference number for this transaction, which will be helpful for filtering transactions later.
@@ -171,7 +180,7 @@ like automating, merging, and/or flagging transactions, both individually or in 
 
 ##Merge Batch to Sales Delivery
 
-Click this button to create a sales delivery entry against the selected purchase order(s).
+Click this button to create a sales delivery entry against the selected sales order(s).
 
 
 ##Flag

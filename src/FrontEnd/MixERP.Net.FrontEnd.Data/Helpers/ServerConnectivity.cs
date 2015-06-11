@@ -23,9 +23,9 @@ namespace MixERP.Net.FrontEnd.Data.Helpers
 {
     public static class ServerConnectivity
     {
-        public static bool IsDbServerAvailable()
+        public static bool IsDbServerAvailable(string catalog)
         {
-            return DbOperation.IsServerAvailable();
+            return DbOperation.IsServerAvailable(catalog);
         }
     }
 }

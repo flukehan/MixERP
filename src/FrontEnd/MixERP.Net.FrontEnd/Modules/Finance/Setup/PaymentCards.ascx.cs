@@ -37,7 +37,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
                 scrud.TableSchema = "core";
                 scrud.Table = "payment_cards";
                 scrud.ViewSchema = "core";
-                scrud.View = "payment_cards";
+                scrud.View = "payment_card_scrud_view";
                 scrud.Text = Titles.PaymentCards;
 
                 scrud.DisplayFields = GetDisplayFields();

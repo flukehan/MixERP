@@ -34,7 +34,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
         [AspNetHostingPermission(SecurityAction.Demand, Level = AspNetHostingPermissionLevel.Minimal)]
         private void AddStylesheet()
         {
-            string href = this.Page.Request.Url.GetLeftPart(UriPartial.Authority) + this.Page.ClientScript.GetWebResourceUrl(this.GetType(), resource);
+            string href = this.Page.Request.Url.GetLeftPart(UriPartial.Authority) + this.Page.ClientScript.GetWebResourceUrl(typeof(StockTransactionForm), resource);
 
             using (HtmlLink link = new HtmlLink())
             {

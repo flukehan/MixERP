@@ -34,6 +34,15 @@ Select a customer for whom you are creating the quote.
     will be automatically chosen in the drop down control.
 </div>
 
+**Price Type**
+
+Select the price type associated with this transaction. On a default installation of MixERP, price types are :
+
+* Retail
+* Wholesale
+
+Depending on the price type, effective items selling prices will be displayed.
+
 **Ref #**
 
 Enter a reference number for this transaction, which will be helpful for filtering transactions later.

@@ -16,8 +16,8 @@ namespace MixERP.Net.WebControls.AttachmentFactory
         [AspNetHostingPermission(SecurityAction.Demand, Level = AspNetHostingPermissionLevel.Minimal)]
         private void AddJavascript()
         {
-            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.AttachmentFactory.ajax-file-upload.js", "AttachmentAjaxFileUpload", this.GetType());
-            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.AttachmentFactory.AttachmentFactory.js", "Attachment", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.AttachmentFactory.ajax-file-upload.js", "AttachmentAjaxFileUpload", typeof(Attachment));
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.AttachmentFactory.AttachmentFactory.js", "Attachment", typeof(Attachment));
         }
 
         private void RegisterJavascript()

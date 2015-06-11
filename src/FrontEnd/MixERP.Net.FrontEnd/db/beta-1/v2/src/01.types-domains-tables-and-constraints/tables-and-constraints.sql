@@ -696,3 +696,19 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+
+DROP INDEX IF EXISTS core.item_cost_price_id_uix;
+
+CREATE UNIQUE INDEX item_cost_price_id_uix
+ON core.item_cost_prices(item_id,unit_id);
+
+
+DROP INDEX IF EXISTS core.item_selling_price_id_uix;
+
+CREATE UNIQUE INDEX item_selling_price_id_uix
+ON core.item_selling_prices(item_id,unit_id,price_type_id);
+
+ALTER TABLE transactions.non_gl_stock_master
+ALTER COLUMN party_id SET NOT NULL;
+

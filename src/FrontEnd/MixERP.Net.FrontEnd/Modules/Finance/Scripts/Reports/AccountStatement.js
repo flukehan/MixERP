@@ -85,7 +85,7 @@ printButton.click(function () {
     var to = Date.parseExact(toDateTextBox.val(), window.shortDateFormat).toDateString();
 
     report = String.format(report, accountNumber, from, to);
-    showWindow(report).toISOString();
+    showWindow(report);
 });
 
 function showReconcileWindow() {

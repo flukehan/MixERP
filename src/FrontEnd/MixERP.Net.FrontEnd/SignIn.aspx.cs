@@ -115,7 +115,7 @@ namespace MixERP.Net.FrontEnd
         private void CheckDbConnectivity()
         {
             Log.Verbose("Checking if database server is available.");
-            if (!ServerConnectivity.IsDbServerAvailable())
+            if (!ServerConnectivity.IsDbServerAvailable(AppUsers.GetCurrentUserDB()))
             {
                 Log.Warning("Could not connect to database server.");
                 this.RedirectToOfflinePage();
@@ -262,7 +262,7 @@ namespace MixERP.Net.FrontEnd
 
                 using (HtmlImage image = new HtmlImage())
                 {
-                    image.Src = this.ResolveClientUrl("~/Resource/Static/images/mixerp-logo.png");
+                    image.Src = this.ResolveClientUrl("~/Static/images/mixerp-logo.png");
                     anchor.Controls.Add(image);
                 }
                 container.Controls.Add(anchor);

@@ -105,7 +105,10 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         private void TrialBalanceGridView_DataBound(object sender, EventArgs eventArgs)
         {
-            this.trialBalanceGridView.HeaderRow.TableSection = TableRowSection.TableHeader;
+            if (this.trialBalanceGridView.HeaderRow != null)
+            {
+                this.trialBalanceGridView.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
         }
 
         #endregion

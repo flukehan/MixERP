@@ -61,6 +61,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -73,6 +77,7 @@
       <HintPath>..\..\packages\Serilog.1.4.155\lib\net45\Serilog.FullNetFx.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System" />
@@ -80,9 +85,18 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackendMaster.Master.cs">
+      <DependentUpon>BackendMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BackendMaster.Master.designer.cs">
+      <DependentUpon>BackendMaster.Master</DependentUpon>
+    </Compile>
     <Compile Include="Base\MixERPMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -145,6 +159,8 @@
     <Compile Include="MixERPReportMaster.Master.designer.cs">
       <DependentUpon>MixERPReportMaster.Master</DependentUpon>
     </Compile>
+    <Compile Include="Models\Navigation.cs" />
+    <Compile Include="Models\NavigationMenu.cs" />
     <Compile Include="Modules\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -183,6 +199,10 @@
     </Compile>
     <Compile Include="Services\Install.asmx.cs">
       <DependentUpon>Install.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Menu.asmx.cs">
+      <DependentUpon>Menu.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\Office.asmx.cs">
@@ -250,6 +270,7 @@
     <Content Include="App_Themes\MixERP\mixerp.min.css">
       <DependentUpon>mixerp.css</DependentUpon>
     </Content>
+    <Content Include="Backups\index.html" />
     <Content Include="bundles\scripts\libraries.js">
       <DependentUpon>libraries.js.bundle</DependentUpon>
     </Content>
@@ -267,45 +288,77 @@
     <Content Include="db\beta-1\v1\mixerp.sql" />
     <Content Include="db\beta-1\v2\mixerp-incremental-blank-db.sql" />
     <Content Include="db\beta-1\v2\mixerp-incremental-sample.sql" />
+    <Content Include="db\beta-1\v2\mixerp-patch-for-v1.sql" />
     <Content Include="db\index.html" />
     <Content Include="Install.aspx" />
     <Content Include="License.txt" />
-    <Content Include="MixERP.Installation.xml" />
+    <Content Include="MixERP.Installation.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Modules\Default.aspx" />
-    <Content Include="Resource\Configuration\AttachmentFactoryParameters.xml" />
-    <Content Include="Resource\Configuration\ReportApiConfiguration.xml" />
-    <Content Include="Resource\Configuration\DbParameters.xml" />
-    <Content Include="Resource\Configuration\StockTransactionFactoryParameters.xml" />
-    <Content Include="Resource\Configuration\DbServer.xml" />
-    <Content Include="Resource\Configuration\MessagingParameters.xml" />
-    <Content Include="Resource\Configuration\MixERP.xml" />
-    <Content Include="Resource\Configuration\Parameters.xml" />
-    <Content Include="Resource\Configuration\ReportParameters.xml" />
-    <Content Include="Resource\Configuration\ScrudParameters.xml" />
-    <Content Include="Resource\Configuration\Switches.xml" />
-    <Content Include="Resource\Configuration\TransactionChecklistParameters.xml" />
-    <Content Include="Resource\Icons\bottom-16.png" />
-    <Content Include="Resource\Icons\calendar-16.png" />
-    <Content Include="Resource\Icons\checklist-16.png" />
-    <Content Include="Resource\Icons\close-16.png" />
-    <Content Include="Resource\Icons\delete-16.png" />
-    <Content Include="Resource\Icons\email-16.png" />
-    <Content Include="Resource\Icons\filter-16.png" />
-    <Content Include="Resource\Icons\find-16.png" />
-    <Content Include="Resource\Icons\insert-16.png" />
-    <Content Include="Resource\Icons\password-16.png" />
-    <Content Include="Resource\Icons\pdf-16.png" />
-    <Content Include="Resource\Icons\print-16.png" />
-    <Content Include="Resource\Icons\search-16.png" />
-    <Content Include="Resource\Icons\signout-16.png" />
-    <Content Include="Resource\Icons\top-16.png" />
-    <Content Include="Resource\Static\AccessIsDenied.html" />
-    <Content Include="Resource\Static\images\mixerp-logo-light.png" />
-    <Content Include="Resource\Static\images\mixerp-logo.png" />
-    <Content Include="Resource\Static\images\not-image-file.png" />
-    <Content Include="Resource\Static\images\spinner.gif" />
-    <Content Include="Resource\Static\Templates\EmailTemplate.html" />
-    <Content Include="Resource\Static\Templates\ModalTemplate.html" />
+    <Content Include="Backups\web.config" />
+    <Content Include="db\web.config" />
+    <Content Include="Modules\web.config" />
+    <None Include="Resource\Configs\AttachmentFactoryParameters.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resource\Configs\ReportApiConfiguration.config" />
+    <None Include="Resource\Configs\DbParameters.config" />
+    <None Include="Resource\Configs\StockTransactionFactoryParameters.config" />
+    <None Include="Resource\Configs\DbServer.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resource\Configs\MessagingParameters.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resource\Configs\MixERP.config" />
+    <None Include="Resource\Configs\Parameters.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resource\Configs\ReportParameters.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resource\Configs\ScrudParameters.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resource\Configs\Switches.config" />
+    <None Include="Resource\Configs\TransactionChecklistParameters.config" />
+    <Content Include="Resource\Configs\index.html" />
+    <Content Include="Resource\CustomReports\index.html" />
+    <Content Include="Resource\index.html" />
+    <Content Include="Resource\Static\Attachments\index.html" />
+    <Content Include="Resource\Static\Emails\index.html" />
+    <Content Include="Resource\Static\index.html" />
+    <Content Include="Resource\Temp\Images\index.html" />
+    <Content Include="Resource\Temp\index.html" />
+    <Content Include="Scripts\d3.min.js" />
+    <Content Include="Scripts\Datamaps\topojson.js" />
+    <Content Include="Scripts\mixerp\master-page\menu.js" />
+    <Content Include="Scripts\sprintf\sprintf.min.js" />
+    <Content Include="Services\Menu.asmx" />
+    <Content Include="Static\Icons\bottom-16.png" />
+    <Content Include="Static\Icons\calendar-16.png" />
+    <Content Include="Static\Icons\checklist-16.png" />
+    <Content Include="Static\Icons\close-16.png" />
+    <Content Include="Static\Icons\delete-16.png" />
+    <Content Include="Static\Icons\email-16.png" />
+    <Content Include="Static\Icons\filter-16.png" />
+    <Content Include="Static\Icons\find-16.png" />
+    <Content Include="Static\Icons\insert-16.png" />
+    <Content Include="Static\Icons\password-16.png" />
+    <Content Include="Static\Icons\pdf-16.png" />
+    <Content Include="Static\Icons\print-16.png" />
+    <Content Include="Static\Icons\search-16.png" />
+    <Content Include="Static\Icons\signout-16.png" />
+    <Content Include="Static\Icons\top-16.png" />
+    <Content Include="Static\AccessIsDenied.html" />
+    <Content Include="Static\images\document.png" />
+    <Content Include="Static\images\mixerp-logo-light.png" />
+    <Content Include="Static\images\mixerp-logo.png" />
+    <Content Include="Static\images\not-image-file.png" />
+    <Content Include="Static\images\spinner.gif" />
+    <Content Include="Static\Templates\EmailTemplate.html" />
+    <Content Include="Static\Templates\ModalTemplate.html" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\ajax-file-upload.js" />
     <Content Include="packages.config" />
@@ -362,6 +415,9 @@
     <Content Include="bundles\scripts\parties-popup.min.js.gzip">
       <DependentUpon>parties-popup.min.js</DependentUpon>
     </Content>
+    <Content Include="BackendMaster.Master" />
+    <Content Include="Resource\web.config" />
+    <Content Include="Resource\Static\Attachments\web.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\colorpicker\.gitignore" />
@@ -839,6 +895,8 @@
     <Content Include="Tests\all-tests.min.js.gzip">
       <DependentUpon>all-tests.min.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\sprintf\LICENSE" />
+    <Content Include="Scripts\sprintf\sprintf.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -849,10 +907,6 @@
   <ItemGroup>
     <Folder Include="Handlers\" />
     <Folder Include="Reports\Sources\" />
-    <Folder Include="Resource\Backups\" />
-    <Folder Include="Resource\Static\Attachments\" />
-    <Folder Include="Resource\Static\Emails\" />
-    <Folder Include="Resource\Temp\Images\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">

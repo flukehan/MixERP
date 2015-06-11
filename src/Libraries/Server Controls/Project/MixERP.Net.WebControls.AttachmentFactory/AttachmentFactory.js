@@ -154,7 +154,8 @@ uploadButton.on("click", function () {
                     var browseButtonSelector = "#BrowseButton" + counter;
                     var commentTextBoxSelector = "#CommentTextBox" + counter;
                     var progressBarSelector = "#Progress" + counter;
-                    var originalFileName = $(this).val();
+                    var originalFileName = $(this).val().replace(/^.*[\\\/]/, "");
+
 
                     var comment = $(commentTextBoxSelector).val();
 

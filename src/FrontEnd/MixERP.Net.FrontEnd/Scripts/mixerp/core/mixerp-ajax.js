@@ -49,7 +49,7 @@ jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue, dataValu
         selected = false;
 
         if (selectedValue) {
-            if (this.Value === selectedValue) {
+            if (this[dataValueField] === selectedValue) {
                 selected = true;
             };
         };

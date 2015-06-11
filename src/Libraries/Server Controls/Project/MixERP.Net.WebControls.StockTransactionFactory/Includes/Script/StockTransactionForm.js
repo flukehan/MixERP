@@ -989,6 +989,9 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
         if (editMode) {
             var target = $("#ProductGridView").find("tbody tr:nth-child(" + updateIndex + ")");
         
+            var deleteAnchor = target.find("a:has(> .delete.icon)");
+            deleteAnchor.removeClass("no-pointer-events");
+
             target.html(html);
             addButton.val(window.addLocalized);
             $("#ProductGridView").find("tr").removeClass("active");
@@ -1230,6 +1233,9 @@ function editRow(el) {
     var selectedRow = el.parent().parent();
     var selectedIndex = rows.index(selectedRow);
     var footerRow = $(".footer-row");
+    var deleteAnchor = el.parent().find("a:has(> .delete.icon)");
+
+    deleteAnchor.addClass("no-pointer-events");
 
     var itemCode = selectedRow.find("td:nth-child(1)").html();
     var quantity = selectedRow.find("td:nth-child(3)").html();

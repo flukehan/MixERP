@@ -5,6 +5,7 @@
 * [Clone MixERP](clone-mixerp.md)
 * [Setting up Your Development Environment](setting-up-your-development-environment.md)
 * [Contribution Guidelines](../contribution-guidelines.md)
+* [Translate MixERP in Your Language](translate-mixerp.md)
 * [ScrudFactory](scrud-factory.md)
 * [MixERP Reporting Engine](reporting-engine.md)
 

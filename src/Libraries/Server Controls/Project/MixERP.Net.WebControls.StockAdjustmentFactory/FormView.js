@@ -224,11 +224,12 @@ function loadStores() {
 };
 
 function loadItems() {
+   
     url = itemServiceUrl;
     data = appendParameter("", "tranBook", "StockAdjustment");
     data = getData(data);
 
-    ajaxDataBind(url, itemSelect, data);
+    ajaxDataBind(url, itemSelect, data, null, itemCodeInputText, null, "ItemCode", "ItemName");
 };
 
 function loadUnits() {

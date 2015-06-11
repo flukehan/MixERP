@@ -145,13 +145,13 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
         targetControl.each(function () {
             var element = $(this);
-
+            
             if (element.attr("data-role") === "party") {
                 element.each(function () {
                     selectedText = $(this).parent().parent().find("td:nth-child(14)").html();
 
                     $(this).find("option").filter(function () {
-                        return this.text === selectedText;
+                        return this.value === selectedText;
                     }).attr("selected", true);
                 });
             };

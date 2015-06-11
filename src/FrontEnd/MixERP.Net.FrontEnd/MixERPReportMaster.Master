@@ -13,6 +13,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager runat="server" ID="ScriptManager1" />
         <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
         </asp:ContentPlaceHolder>
 

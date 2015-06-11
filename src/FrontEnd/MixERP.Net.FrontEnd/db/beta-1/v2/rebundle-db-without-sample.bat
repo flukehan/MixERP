@@ -1,5 +1,5 @@
 @echo off
-..\..\..\..\..\Utilities\MixERP.Net.Utility.SqlBundler\bin\Debug\MixERP.Net.Utility.SqlBundler.exe ..\..\..\ "db/beta-1/v2" false false
+bundler\MixERP.Net.Utility.SqlBundler.exe ..\..\..\ "db/beta-1/v2" false false
 
 copy mixerp.sql mixerp-patch-for-v1.sql
 

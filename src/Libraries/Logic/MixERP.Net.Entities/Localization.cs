@@ -93,6 +93,21 @@ namespace MixERP.Net.Entities.Localization
     
 
 
+    [TableName("localization.localized_resources")]
+    [ExplicitColumns]
+    public class LocalizedResource : PetaPocoDB.Record<LocalizedResource> , IPoco
+    {
+        [Column("resource_id")] 
+        public int ResourceId { get; set; }
+
+        [Column("culture_code")] 
+        public string CultureCode { get; set; }
+
+        [Column("value")] 
+        public string Value { get; set; }
+
+    }
+
     [TableName("localization.resources")]
     [PrimaryKey("resource_id")]
     [ExplicitColumns]
@@ -122,21 +137,6 @@ namespace MixERP.Net.Entities.Localization
 
         [Column("culture_name")] 
         public string CultureName { get; set; }
-
-    }
-
-    [TableName("localization.localized_resources")]
-    [ExplicitColumns]
-    public class LocalizedResource : PetaPocoDB.Record<LocalizedResource> , IPoco
-    {
-        [Column("resource_id")] 
-        public int ResourceId { get; set; }
-
-        [Column("culture_code")] 
-        public string CultureCode { get; set; }
-
-        [Column("value")] 
-        public string Value { get; set; }
 
     }
 
@@ -174,17 +174,20 @@ namespace MixERP.Net.Entities.Localization
     [ExplicitColumns]
     public class DbGetLocalizationTableResult : PetaPocoDB.Record<DbGetLocalizationTableResult> , IPoco
     {
-        [Column("row_number")] 
-        public long RowNumber { get; set; }
+        [Column("id")] 
+        public long Id { get; set; }
+
+        [Column("resource_class")] 
+        public string ResourceClass { get; set; }
 
         [Column("key")] 
         public string Key { get; set; }
 
-        [Column("invariant_resource")] 
-        public string InvariantResource { get; set; }
+        [Column("original")] 
+        public string Original { get; set; }
 
-        [Column("value")] 
-        public string Value { get; set; }
+        [Column("translated")] 
+        public string Translated { get; set; }
 
     }
 }

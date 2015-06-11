@@ -17,22 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 --%>
 
-<%@ Page Title="" Language="C#" MasterPageFile="~/MixERPMaster.Master" AutoEventWireup="true" CodeBehind="RuntimeError.aspx.cs" Inherits="MixERP.Net.FrontEnd.Site.RuntimeError" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/BackendMaster.Master" AutoEventWireup="true" CodeBehind="RuntimeError.aspx.cs" Inherits="MixERP.Net.FrontEnd.Site.RuntimeError" %>
+<%@ Import Namespace="MixERP.Net.i18n.Resources" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
-    <h3>Damn<em>!</em> This Went Completely Wrong. O.O</h3>
-    <hr />
-    <h4 class="exception">Man, this <em>literally</em> sucks! Listen, I really tried my best to <em>get the job done</em>, but it <em>failed miserably</em>. :O</h4>
+    <h1 class="ui red header">An Exception Occurred</h1>   
+    <div class="ui divider"></div>
     <asp:Literal ID="ExceptionLiteral" runat="server" />
-    <hr />
-
-    <h4>So, what went wrong was logged into the repository. You should notify the admin, case you feel this, an urgent issue.</h4>
-    <br />
-    <a class="ui red button" href="javascript:history.go(-1);">Go Back to the Previous Page</a>
+    <a class="ui red button" href="javascript:history.go(-1);"><i class="long arrow left icon"></i><%= Titles.Back %></a>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceholder" runat="server">
 </asp:Content>

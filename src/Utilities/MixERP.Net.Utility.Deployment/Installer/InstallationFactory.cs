@@ -57,7 +57,8 @@ namespace MixERP.Net.Utility.Installer.Installer
                 MixERPPassword = this.MixERPPassword,
                 ReportUserPassword = this.ReportUserPassword,
                 IsInstalled = postgresDomain.IsInstalled,
-                InstallerDirectory = ConfigurationHelper.GetPostgreSQLInstallerDirectory(),
+                PostgreSQL32Installer = ConfigurationHelper.GetPostgreSQL32(),
+                PostgreSQL64Installer = ConfigurationHelper.GetPostgreSQL64(),
                 InstallationDirectory = ConfigurationHelper.GetPostgreSQLInstallationDirectory()
             });
 

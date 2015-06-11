@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Purchase
 
         private void AddBoundField(GridView grid, string text, string dataField)
         {
-            BoundField field = new BoundField {HeaderText = text, DataField = dataField};
+            BoundField field = new BoundField { HeaderText = text, DataField = dataField };
 
             grid.Columns.Add(field);
         }
@@ -128,7 +128,6 @@ namespace MixERP.Net.Core.Modules.Purchase
             this.AddBoundField(grid, Titles.DefaultReorderQuantityAbbreviated, "ReorderQuantity");
             this.AddBoundField(grid, Titles.PreferredSupplier, "PreferredSupplier");
             this.AddBoundField(grid, Titles.Price, "Price");
-            this.AddBoundField(grid, Titles.Tax, "Tax");
         }
     }
 }

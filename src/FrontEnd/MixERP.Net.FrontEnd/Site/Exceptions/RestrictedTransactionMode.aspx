@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 --%>
-<%@ Page Title="" Language="C#" MasterPageFile="~/MixERPMaster.Master" AutoEventWireup="true" CodeBehind="RestrictedTransactionMode.aspx.cs" Inherits="MixERP.Net.FrontEnd.Site.Exceptions.RestrictedTransactionMode" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/BackendMaster.Master" AutoEventWireup="true" CodeBehind="RestrictedTransactionMode.aspx.cs" Inherits="MixERP.Net.FrontEnd.Site.Exceptions.RestrictedTransactionMode" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceholder" runat="server">

@@ -9,14 +9,26 @@ namespace MixERP.Net.i18n
 {
     public class ResourceManager
     {
-        private static bool supressException = ConfigurationManager.AppSettings["SupressMissingResourceException"].ToUpperInvariant().Equals("TRUE");
+        private static readonly bool supressException = ConfigurationManager.AppSettings["SupressMissingResourceException"].ToUpperInvariant().Equals("TRUE");
 
         public static string GetString(string resourceClass, string resourceKey, string cultureCode = null)
         {
-            return GetResourceFromCache(resourceClass, resourceKey, cultureCode);
+            string result = TryGetResourceFromCache(resourceClass, resourceKey, cultureCode);
+
+            if (result == null)
+            {
+                if (supressException)
+                {
+                    return resourceKey;
+                }
+
+                throw new MissingManifestResourceException("Resource " + resourceClass + "." + resourceKey + " was not found.");
+            }
+
+            return result;
         }
 
-        private static string GetResourceFromCache(string resourceClass, string resourceKey, string cultureCode = null)
+        public static string TryGetResourceFromCache(string resourceClass, string resourceKey, string cultureCode = null)
         {
             CultureInfo culture = Thread.CurrentThread.CurrentCulture;
 
@@ -44,7 +56,7 @@ namespace MixERP.Net.i18n
             if (cache == null || cache.Count.Equals(0))
             {
                 InitializeResources();
-                return GetResourceFromCache(resourceClass, resourceKey, cultureCode);
+                return TryGetResourceFromCache(resourceClass, resourceKey, cultureCode);
             }
 
             string cacheKey = resourceClass + "." + culture.Name + "." + resourceKey;
@@ -78,16 +90,6 @@ namespace MixERP.Net.i18n
             //Fall back to invariant culture
             cacheKey = resourceClass + "." + resourceKey;
             cache.TryGetValue(cacheKey, out result);
-
-            if (result == null)
-            {
-                if (supressException)
-                {
-                    return resourceKey;
-                }
-
-                throw new MissingManifestResourceException("Resource " + cacheKey + " was not found.");
-            }
 
             return result;
         }

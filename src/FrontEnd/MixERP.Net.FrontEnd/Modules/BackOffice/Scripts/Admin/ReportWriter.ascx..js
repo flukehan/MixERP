@@ -295,8 +295,10 @@ function loadDataSource(index) {
 
         $("#Parameters").html("");
 
-        for (j = 0; j < dataSource.Parameters.length; j++) {
-            addParameter(dataSource.Parameters[j].Name, dataSource.Parameters[j].Type, dataSource.Parameters[j].TestValue);
+        if (dataSource.Parameters) {
+            for (j = 0; j < dataSource.Parameters.length; j++) {
+                addParameter(dataSource.Parameters[j].Name, dataSource.Parameters[j].Type, dataSource.Parameters[j].TestValue);
+            };
         };
     } else {
         addParameter();
@@ -524,7 +526,6 @@ function openReport(el) {
     ajaxGetDefinition.fail(function(xhr) {
         alert(xhr.responseText);
     });
-
 };
 
 function loadDefinition(definition) {

@@ -30,7 +30,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
         [AspNetHostingPermission(SecurityAction.Demand, Level = AspNetHostingPermissionLevel.Minimal)]
         private void AddScript()
         {
-            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.TransactionChecklist.Scripts.TransactionChecklist.js", "TransactionChecklistForm", this.GetType());
+            JSUtility.AddJSReference(this.Page, "MixERP.Net.WebControls.TransactionChecklist.Scripts.TransactionChecklist.js", "TransactionChecklistForm", typeof(TransactionChecklistForm));
         }
     }
 }
