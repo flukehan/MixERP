@@ -100,11 +100,13 @@ $(document).ready(function () {
 
     verifyButton.click(function () {
         var reason = reasonTextArea.val();
-        var ajaxAction = ajaxReject(tranId, reason);
+        var ajaxAction;
 
         if (approve) {
             ajaxAction = ajaxApprove(tranId, reason);
-        };
+        } else {
+            ajaxAction = ajaxReject(tranId, reason);
+        }
 
         ajaxAction.success(function () {
             transactionGridView.find("tr").eq(selectedIndex + 1).addClass("negative").fadeOut(500, function () {
