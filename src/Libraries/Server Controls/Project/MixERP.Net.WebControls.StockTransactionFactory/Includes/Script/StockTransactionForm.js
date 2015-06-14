@@ -336,7 +336,8 @@ amountInputText.blur(function () {
 });
 
 attachmentToggler.click(function () {
-    $('#attachment').show(500).after(function () {
+    $('#attachment').toggle(500).after(function () {
+        $('#attachment').removeClass("initially hidden");
         repaint();
     });
 });
