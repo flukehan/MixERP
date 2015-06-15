@@ -9,7 +9,7 @@ var removeDirty = function (obj) {
 
 var isNullOrWhiteSpace = function (obj) {
     if ($.isArray(obj)) {
-        return isArrayNullOrWhiteSpace(obj);
+        return isArrayNullOrWhiteSpace(obj) || obj.length === 0;
     } else {
         return (!obj || $.trim(obj) === "");
     }
@@ -22,10 +22,10 @@ var isArrayNullOrWhiteSpace = function (obj) {
             var val = obj[index];
             if (!val) {
                 checkArray.push(val);
-            } 
+            }
         });
     }
-    return checkArray.length >= 0;
+    return checkArray.length > 0;
 };
 
 function isDate(val) {
