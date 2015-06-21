@@ -292,13 +292,11 @@
     <Content Include="db\index.html" />
     <Content Include="Install.aspx" />
     <Content Include="License.txt" />
-    <Content Include="MixERP.Installation.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Modules\Default.aspx" />
     <Content Include="Backups\web.config" />
     <Content Include="db\web.config" />
     <Content Include="Modules\web.config" />
+    <Content Include="MixERP.Installation.config" />
     <None Include="Resource\Configs\AttachmentFactoryParameters.config">
       <SubType>Designer</SubType>
     </None>

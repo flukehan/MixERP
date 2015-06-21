@@ -1,0 +1,95 @@
+DO
+$$
+BEGIN
+    IF(core.get_locale() = 'en-US') THEN
+        INSERT INTO core.tax_master(tax_master_code, tax_master_name)
+        SELECT 'UST', 'United States Taxation' UNION ALL
+        SELECT 'NPT', 'Nepal Taxation';
+
+        INSERT INTO core.tax_authorities(tax_master_id, tax_authority_code, tax_authority_name, country_id, state_id, zip_code, address_line_1, address_line_2, street, city, phone, fax, email, url)
+        SELECT 1, 'IRS', 'Internal Revenue Service', core.get_country_id_by_country_code('US'), core.get_state_id_by_state_code('NY'), '11201', '2 Metro Tech', '1st floor', '', 'Brooklyn', '(718) 834-6559', '', '', 'http://www.irs.gov' UNION ALL
+        SELECT 1, 'IRD', 'Inland Revenue Department', core.get_country_id_by_country_code('NP'), NULL, '', 'INLAND REVENUE DEPARTMENT', 'Large Taxpayers Office', 'Hariharbhawan', 'Kathmandu', '5010049, 5010050, 5010051, 5010052, 5010053', '4411788', 'iro52@ird.gov.np', 'www.ird.gov.np/';
+
+        INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption, tax_base_amount_type_code)
+        SELECT 1, office_code || '-STX', office_name || ' Sales Tax', 8.875, office_id, false, 'P' FROM office.offices WHERE office_code='MoF-NY-BK' UNION ALL
+        SELECT 1, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true, 'P' FROM office.offices WHERE office_code='MoF-NY-BK';
+
+        INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption, tax_base_amount_type_code)
+        SELECT 1, office_code || '-STX', office_name || ' Sales Tax', 8.375, office_id, false, 'P' FROM office.offices WHERE office_code='MoF-NY-RV' UNION ALL
+        SELECT 1, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true, 'P' FROM office.offices WHERE office_code='MoF-NY-RV';
+
+        INSERT INTO core.sales_taxes(tax_master_id, sales_tax_code, sales_tax_name, rate, office_id, is_exemption, tax_base_amount_type_code)
+        SELECT 2, office_code || '-VAT', office_name || ' Value Added Tax', 13, office_id, false, 'P' FROM office.offices WHERE office_code='MoF-NP-KTM' UNION ALL
+        SELECT 2, office_code || '-EXT', office_name || ' Exempt', 0, office_id, true, 'P' FROM office.offices WHERE office_code='MoF-NP-KTM';
+
+
+        INSERT INTO core.sales_tax_details
+        (
+            sales_tax_id, sales_tax_detail_code, sales_tax_detail_name, sales_tax_type_id, priority, 
+            based_on_shipping_address, state_sales_tax_id, county_sales_tax_id, tax_rate_type_code, 
+            rate, reporting_tax_authority_id, collecting_tax_authority_id, collecting_account_id, use_tax_collecting_account_id, 
+            rounding_method_code, rounding_decimal_places
+        )
+
+        SELECT 
+            1, 'BK-NYC-STX', 'New York State Sales Tax (Brooklyn)', 1, 0,
+            true, (SELECT state_sales_tax_id FROM core.state_sales_taxes WHERE state_id = core.get_state_id_by_state_code('NY')), NULL, 'P',
+            0, 1, 1, core.get_account_id_by_account_number('20710'), core.get_account_id_by_account_number('20710'),
+            'R', 2 
+        UNION ALL
+        SELECT 
+            1, 'BK-36047-STX', 'Kings County Sales Tax (Brooklyn)', 1, 1,
+            false, NULL, (SELECT county_sales_tax_id FROM core.county_sales_taxes WHERE county_id = core.get_county_id_by_county_code('36047')), 'P',
+            0, 1, 1, core.get_account_id_by_account_number('20710'), NULL,
+            'R', 2 
+        UNION ALL
+        SELECT 
+            3, 'RV-CA-STX', 'California State Sales Tax (Rio Vista)', 1, 0,
+            true, (SELECT state_sales_tax_id FROM core.state_sales_taxes WHERE state_id = core.get_state_id_by_state_code('CA')), NULL, 'P',
+            0, 1, 1, core.get_account_id_by_account_number('20710'), core.get_account_id_by_account_number('20710'),
+            'R', 2 
+        UNION ALL
+        SELECT 
+            3, 'RV-6095-STX', 'Solano County Sales Tax (Rio Vista)', 1, 1,
+            false, NULL, (SELECT county_sales_tax_id FROM core.county_sales_taxes WHERE county_id = core.get_county_id_by_county_code('6095')), 'P',
+            0, 1, 1, core.get_account_id_by_account_number('20710'), NULL,
+            'R', 2 
+        UNION ALL   
+        SELECT 
+            3, 'RV-STX', 'Rio Vista Sales Tax', 1, 2,
+            false, NULL, NULL, 'P',
+            0.75, 1, 1, core.get_account_id_by_account_number('20710'), NULL,
+            'R', 2
+        UNION ALL   
+        SELECT 
+            5, 'KTM-VAT', 'Kathmandu Value Added Tax', 2, 0,
+            false, NULL, NULL, 'P',
+            13, 1, 1, core.get_account_id_by_account_number('20710'), NULL,
+            'R', 2;
+
+        INSERT INTO core.item_groups(item_group_code, item_group_name, sales_tax_id, sales_account_id, sales_discount_account_id, sales_return_account_id, purchase_account_id, purchase_discount_account_id, inventory_account_id, cost_of_goods_sold_account_id)
+        SELECT 'DEF', 'Default', 1, core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200');
+
+        INSERT INTO core.item_groups(item_group_code, item_group_name, sales_tax_id, parent_item_group_id, sales_account_id, sales_discount_account_id, sales_return_account_id, purchase_account_id, purchase_discount_account_id, inventory_account_id, cost_of_goods_sold_account_id)
+        SELECT 'ELE', 'Electronics & Computers',                1, NULL,												core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'TVV', 'TV & Video',                             1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'HAT', 'Home Audio & Theater',                   1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'CPV', 'Camera, Photo & Video',                  1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'CPA', 'Cell Phones & Accessories',              1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'VGM', 'Video Games',                            1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'PAA', 'Portable Audio & Accessories',           1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'CEG', 'Car Electronics & GPS',                  1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'MUI', 'Musical Instruments',                    1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'ELA', 'Electronics Accessories',                1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'WRT', 'Wearable Technology',                    1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'LPT', 'Laptops & Tablets',                      1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'DEM', 'Desktops & Monitors',                    1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'CAP', 'Computer Accessories & Peripherals',     1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'CPC', 'Computer Parts & Components',            1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'SFT', 'Software',                               1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'PRI', 'Printers & Ink',                         1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200')	UNION ALL
+        SELECT 'OSS', 'Office & School Supplies',               1, core.get_item_group_id_by_item_group_code('ELE'),	core.get_account_id_by_account_number('30100'), core.get_account_id_by_account_number('40270'), core.get_account_id_by_account_number('20701'), core.get_account_id_by_account_number('40100'), core.get_account_id_by_account_number('30700'), core.get_account_id_by_account_number('10700'), core.get_account_id_by_account_number('40200');    
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
