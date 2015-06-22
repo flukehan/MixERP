@@ -8,7 +8,24 @@ var removeDirty = function (obj) {
 };
 
 var isNullOrWhiteSpace = function (obj) {
-    return (!obj || $.trim(obj) === "");
+    if ($.isArray(obj)) {
+        return isArrayNullOrWhiteSpace(obj) || obj.length === 0;
+    } else {
+        return (!obj || $.trim(obj) === "");
+    }
+};
+
+var isArrayNullOrWhiteSpace = function (obj) {
+    var checkArray = [];
+    if (obj.length > 0) {
+        $.each(obj, function (index) {
+            var val = obj[index];
+            if (!val) {
+                checkArray.push(val);
+            }
+        });
+    }
+    return checkArray.length > 0;
 };
 
 function isDate(val) {
