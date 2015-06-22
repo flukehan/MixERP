@@ -50132,6 +50132,23 @@ function setVisible(targetControl, visible, timeout) {
 
     targetControl.hide(timeout);
 };
+
+function addNotification(message, onclick) {
+    var count = parseInt2($("#NotificationMenu span").addClass("ui red label").html());
+    count++;
+    $("#NotificationMenu span").addClass("ui red label").html(count);
+
+    var item = $("<div />");
+    item.attr("class", "item");
+
+    if (onclick) {
+        item.attr("onclick", onclick);
+    };
+
+    item.html(message);
+
+    $("#Notification").append(item);
+};
 ///#source 1 1 /Scripts/mixerp/core/grid/cell.js
 var sumOfColumn = function (tableSelector, columnIndex) {
     var total = 0;
@@ -51474,3 +51491,9 @@ window.onresize = function (event) {
     adjustSidebar();
 };
 
+///#source 1 1 /Scripts/mixerp/master-page/updater.js
+$(document).ready(function() {
+    if (update === "1") {
+        addNotification(updateLocalized, "document.location = \"/Modules/Update.aspx\";");
+    };
+});

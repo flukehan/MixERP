@@ -22,6 +22,7 @@ using System.Globalization;
 using System.Threading;
 using System.Web.UI;
 using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
@@ -100,6 +101,11 @@ namespace MixERP.Net.FrontEnd.Base
             script += JSUtility.GetVar("updateLocalized", Titles.Update);
 
             script += JSUtility.GetVar("catalog", AppUsers.GetCurrentUserDB());
+
+            if (Conversion.TryCastBoolean(Application["UpdateAvailable"]) && AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
+            {
+                script += JSUtility.GetVar("update", "1");
+            }
 
             PageUtility.RegisterJavascript("MixERPMasterPage", script, this.Page, true);
         }

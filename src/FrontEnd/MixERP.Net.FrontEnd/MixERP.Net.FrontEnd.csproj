@@ -168,6 +168,13 @@
     <Compile Include="Modules\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Update.aspx.cs">
+      <DependentUpon>Update.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\Update.aspx.designer.cs">
+      <DependentUpon>Update.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MixERPMaster.Master.cs">
       <DependentUpon>MixERPMaster.Master</DependentUpon>
@@ -295,8 +302,10 @@
     <Content Include="Modules\Default.aspx" />
     <Content Include="Backups\web.config" />
     <Content Include="db\web.config" />
+    <Content Include="Modules\Update.aspx" />
     <Content Include="Modules\web.config" />
     <Content Include="MixERP.Installation.config" />
+    <Content Include="Resource\Configs\Updater.config" />
     <None Include="Resource\Configs\AttachmentFactoryParameters.config">
       <SubType>Designer</SubType>
     </None>
@@ -331,6 +340,7 @@
     <Content Include="Resource\Temp\index.html" />
     <Content Include="Scripts\d3.min.js" />
     <Content Include="Scripts\Datamaps\topojson.js" />
+    <Content Include="Scripts\mixerp\master-page\updater.js" />
     <Content Include="Scripts\mixerp\master-page\menu.js" />
     <Content Include="Scripts\sprintf\sprintf.min.js" />
     <Content Include="Services\Menu.asmx" />
@@ -918,6 +928,10 @@
     <ProjectReference Include="..\..\Libraries\Logic\MixERP.Net.ReportManager\MixERP.Net.ReportManager.csproj">
       <Project>{52F97ED7-2013-4950-8725-01E5715EB285}</Project>
       <Name>MixERP.Net.ReportManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Logic\MixERP.Net.Updater\MixERP.Net.Updater.csproj">
+      <Project>{f5c04e5a-a4b3-40ac-8f45-318419648977}</Project>
+      <Name>MixERP.Net.Updater</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\MixERP.Net.WebControls.AttachmentFactory.csproj">
       <Project>{403f308d-10e7-4c70-9360-1027ee541495}</Project>
