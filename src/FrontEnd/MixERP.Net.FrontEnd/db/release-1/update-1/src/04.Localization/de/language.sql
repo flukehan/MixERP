@@ -727,7 +727,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'ConvertedtoBaseCurre
 SELECT localization.add_localized_resource('Titles', 'de', 'ConvertedtoHomeCurrency', 'Umgerechnet auf Landeswährung');--Converted to Home Currency
 SELECT localization.add_localized_resource('Titles', 'de', 'CostCenter', 'Kostenstelle');--Cost Center
 SELECT localization.add_localized_resource('Titles', 'de', 'CostCenters', 'Kostenstellen');--Cost Centers
-SELECT localization.add_localized_resource('Titles', 'de', 'Counters', 'Zähler');--Counters
+SELECT localization.add_localized_resource('Titles', 'de', 'Counters', 'Kassen');--Counters
 SELECT localization.add_localized_resource('Titles', 'de', 'Counties', 'Bezirk');--Counties
 SELECT localization.add_localized_resource('Titles', 'de', 'Countries', 'Länder');--Countries
 SELECT localization.add_localized_resource('Titles', 'de', 'CountySalesTaxes', 'Bezirks Verkaufssteuern');--County Sales Taxes
