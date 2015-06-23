@@ -8,7 +8,7 @@ SELECT core.create_menu_locale('PAC', 'de', 'Kreditkarten');--Payment Cards
 SELECT core.create_menu_locale('SAT', 'de', 'Administrations Werkzeuge');--Admin Tools
 SELECT core.create_menu_locale('AGS', 'de', 'Alterungstafel');--Ageing Slabs
 SELECT core.create_menu_locale('SEAR', 'de', 'Prüfungsberichte');--Audit Reports
-SELECT core.create_menu_locale('SAV', 'de', 'Automatische Verifizierungs  Richtlinie');--Automatic Verification Policy
+SELECT core.create_menu_locale('SAV', 'de', 'Automatische Verifizierungs Richtlinie');--Automatic Verification Policy
 SELECT core.create_menu_locale('BAK', 'de', 'Datenbank sichern');--Backup Database
 SELECT core.create_menu_locale('BS', 'de', 'Bilanz');--Balance Sheet
 SELECT core.create_menu_locale('CBA', 'de', 'Bankkonten');--Bank Accounts
@@ -17,7 +17,7 @@ SELECT core.create_menu_locale('BSD', 'de', 'Bonus Tafel-Details');--Bonus Slab 
 SELECT core.create_menu_locale('ABS', 'de', 'Bonus Tafel für Verkäufer');--Bonus Slab for Salespersons
 SELECT core.create_menu_locale('SSB', 'de', 'Marken');--Brands
 SELECT core.create_menu_locale('CF', 'de', 'Cashflow');--Cash Flow
-SELECT core.create_menu_locale('SCS', 'de', 'Zähler-Setup');--Counter Setup
+SELECT core.create_menu_locale('SCS', 'de', 'Kassen-Setup');--Counter Setup
 SELECT core.create_menu_locale('CTST', 'de', 'Bezirks Umsatzsteuer');--Counties Sales Taxes
 SELECT core.create_menu_locale('SCRS', 'de', 'Staats-Setup');--Country Setup
 SELECT core.create_menu_locale('SCTS', 'de', 'Bezirks-Setup');--County Setup
@@ -30,7 +30,7 @@ SELECT core.create_menu_locale('EOD', 'de', 'Tagesabschluss ');--End of Day Oper
 SELECT core.create_menu_locale('SES', 'de', 'Körperschaftes Setup');--Entity Setup
 SELECT core.create_menu_locale('FI', 'de', 'Finanzen');--Finance
 SELECT core.create_menu_locale('SFY', 'de', 'Geschäftsjahr Informationen');--Fiscal Year Information
-SELECT core.create_menu_locale('TRF', 'de', 'Marken');--Flags
+SELECT core.create_menu_locale('TRF', 'de', 'Markierungen');--Flags
 SELECT core.create_menu_locale('SFR', 'de', 'Perioden und Geschftsjahr Management');--Frequency & Fiscal Year Management
 SELECT core.create_menu_locale('SAP', 'de', 'Sachkonten Zugriffs Richtlinie');--GL Access Policy
 SELECT core.create_menu_locale('GRN', 'de', 'Wareneingang Eintrag');--GRN Entry
@@ -67,8 +67,8 @@ SELECT core.create_menu_locale('PU', 'de', 'Einkauf');--Purchase
 SELECT core.create_menu_locale('PUQ', 'de', 'Einkauf & eingehende Angebote');--Purchase & Quotation
 SELECT core.create_menu_locale('PO', 'de', 'Auftragserteilung');--Purchase Order
 SELECT core.create_menu_locale('PRO', 'de', 'Waren Nachbestellung');--Purchase Reorder
-SELECT core.create_menu_locale('PUR', 'de', 'Einkaufs  Reports');--Purchase Reports
-SELECT core.create_menu_locale('PR', 'de', 'Eibkaufs Rücksendungen');--Purchase Return
+SELECT core.create_menu_locale('PUR', 'de', 'Einkaufs Reports');--Purchase Reports
+SELECT core.create_menu_locale('PR', 'de', 'Einkaufs Rücksendungen');--Purchase Return
 SELECT core.create_menu_locale('RFC', 'de', 'Empfangsbestätigung Kunde');--Receipt from Customer
 SELECT core.create_menu_locale('RIS', 'de', 'Wiederkehrende Rechnung einrichten');--Recurring Invoice Setup
 SELECT core.create_menu_locale('RI', 'de', 'Wiederkehrende Rechnungen');--Recurring Invoices
@@ -89,12 +89,12 @@ SELECT core.create_menu_locale('STXEX', 'de', 'Umsatzsteuer Ausnahmen');--Sales 
 SELECT core.create_menu_locale('STXT', 'de', 'Umsatzsteuerarten');--Sales Tax Types
 SELECT core.create_menu_locale('STX', 'de', 'Umsatzsteuer');--Sales Taxes
 SELECT core.create_menu_locale('SST', 'de', 'Vertriebsteams');--Sales Teams
-SELECT core.create_menu_locale('SSA', 'de', 'Verküfer');--Salespersons
+SELECT core.create_menu_locale('SSA', 'de', 'Verkäufer');--Salespersons
 SELECT core.create_menu_locale('ISP', 'de', 'Verkaufspreise');--Selling Prices
 SELECT core.create_menu_locale('SSM', 'de', 'Einrichtung und Wartung');--Setup & Maintenance
 SELECT core.create_menu_locale('ISM', 'de', 'Einrichtung und Wartung');--Setup & Maintenance
 SELECT core.create_menu_locale('FSM', 'de', 'Einrichtung und Wartung');--Setup & Maintenance
-SELECT core.create_menu_locale('SHI', 'de', 'Versand  Informationen');--Shipper Information
+SELECT core.create_menu_locale('SHI', 'de', 'Versand Informationen');--Shipper Information
 SELECT core.create_menu_locale('PSA', 'de', 'Lieferadressen');--Shipping Addresses
 SELECT core.create_menu_locale('STST', 'de', 'Landes Umsatzsteuern');--State Sales Taxes
 SELECT core.create_menu_locale('SSS', 'de', 'Landes Setup');--State Setup
@@ -113,5 +113,5 @@ SELECT core.create_menu_locale('TB', 'de', 'Rohbilanz');--Trial Balance
 SELECT core.create_menu_locale('UOM', 'de', 'Maßeinheiten');--Units of Measure
 SELECT core.create_menu_locale('UER', 'de', 'Wechselkurse Updaten');--Update Exchange Rates
 SELECT core.create_menu_locale('SUM', 'de', 'Benutzerverwaltung');--User Management
-SELECT core.create_menu_locale('FVV', 'de', 'Voucher Verification');--Voucher Verification
-SELECT core.create_menu_locale('SVV', 'de', 'Voucher  VerificationsRichtlinie');--Voucher Verification Policy
+SELECT core.create_menu_locale('FVV', 'de', 'Voucher Verifizierung');--Voucher Verification
+SELECT core.create_menu_locale('SVV', 'de', 'Voucher Verifizierung Richtlinie');--Voucher Verification Policy

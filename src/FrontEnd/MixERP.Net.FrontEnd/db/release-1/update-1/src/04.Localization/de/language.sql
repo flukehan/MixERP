@@ -572,7 +572,7 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'shipping_pack
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'slab_name', 'Tafel Name');--Slab Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'sst_number', 'SST Nummer');--SST Number
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'starts_from', 'Beginnt mit');--Starts From
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'state', 'Zustand');--State
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'state', 'Bundesland');--State
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'state_code', 'Bundesland-Code');--State Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'state_id', 'Bundesland Id');--State Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'state_name', 'Bundesland Name');--State Name
