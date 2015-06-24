@@ -18,7 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 /*jshint -W032, -W098, -W020 */
-/*global addDanger, ajaxDataBind, ajaxUpdateVal, appendParameter, fadeThis, getAjax, getColumnText, getData, getFormattedNumber, gridViewEmptyWarningLocalized, insufficientStockWarningLocalized, invalidCostCenterWarningLocalized, invalidDateWarningLocalized, invalidPartyWarningLocalized,invalidPriceTypeWarningLocalized, invalidSalesPersonWarningLocalized, invalidShippingCompanyWarningLocalized, invalidStoreWarningLocalized, isDate, isNullOrWhiteSpace, isSales, logError, makeDirty, parseFloat2, parseFormattedNumber, removeDirty, repaint, rowData, selectDropDownListByValue, setColumnText, shortcut, showWindow, sumOfColumn, tableToJSON, tranBook, unitId, uploadedFilesHidden, verifyStock, parseInt2 */
+/*global addDanger, ajaxDataBind, ajaxUpdateVal, appendParameter, fadeThis, getAjax, getColumnText, getData, getFormattedNumber, gridViewEmptyWarningLocalized, insufficientStockWarningLocalized, invalidCostCenterWarningLocalized, invalidDateWarningLocalized, invalidPartyWarningLocalized,invalidPriceTypeWarningLocalized, invalidSalesPersonWarningLocalized, invalidShippingCompanyWarningLocalized, invalidStoreWarningLocalized, isDate, isNullOrWhiteSpace, isSales, logError, makeDirty, parseFloat, parseFormattedNumber, removeDirty, repaint, rowData, selectDropDownListByValue, setColumnText, shortcut, showWindow, sumOfColumn, tableToJSON, tranBook, unitId, uploadedFilesHidden, verifyStock, parseInt */
 
 
 
@@ -218,14 +218,14 @@ itemSelect.keydown(function (event) {
 });
 
 shippingCompanySelect.blur(function () {
-    var shippingCharge = parseFloat2(shippingChargeInputText.val());
-    var shippingCompanyId = parseInt2(shippingCompanySelect.getSelectedValue());
+    var shippingCharge = parseFloat(shippingChargeInputText.val() || 0);
+    var shippingCompanyId = parseInt(shippingCompanySelect.getSelectedValue() || 0);
 
     if (shippingCompanyId) {
         shippingChargeInputText.removeAttr("readonly");
 
         if (!shippingCharge) {
-            shippingCharge = parseFloat2(shippingChargeInputText.data("val"));
+            shippingCharge = parseFloat(shippingChargeInputText.data("val") || 0);
             shippingChargeInputText.removeData("val");
 
             if (shippingCharge) {
@@ -263,7 +263,7 @@ function itemSelect_OnBlur() {
 
 
 function processCallBackActions() {
-    var itemId = parseInt2(itemIdHidden.val());
+    var itemId = parseInt(itemIdHidden.val() || 0);
 
     itemIdHidden.val("");
 
@@ -275,7 +275,7 @@ function processCallBackActions() {
         ajaxUpdateVal(url, data, itemCodeInputText);
     };
 
-    var partyId = parseInt2(partyIdHidden.val());
+    var partyId = parseInt(partyIdHidden.val() || 0);
 
     partyIdHidden.val("");
 
@@ -379,16 +379,16 @@ function updateTax() {
         return 0;
     };
 
-    var storeId = parseInt2(storeSelect.getSelectedValue());
+    var storeId = parseInt(storeSelect.getSelectedValue() || 0);
     var partyCode = partySelect.getSelectedValue();
     var shippingAddressCode = shippingAddressSelect.getSelectedText();
-    var priceTypeId = parseInt2(priceTypeSelect.getSelectedValue());
+    var priceTypeId = parseInt(priceTypeSelect.getSelectedValue() || 0);
     var itemCode = itemCodeInputText.val();
-    var price = parseFloat2(priceInputText.val());
-    var quantity = parseInt2(quantityInputText.val());
-    var discount = parseFloat2(discountInputText.val());
-    var shippingCharge = parseFloat2(shippingChargeInputText.val());
-    var salesTaxId = parseInt2(taxSelect.getSelectedValue());
+    var price = parseFloat(priceInputText.val() || 0);
+    var quantity = parseInt(quantityInputText.val() || 0);
+    var discount = parseFloat(discountInputText.val() || 0);
+    var shippingCharge = parseFloat(shippingChargeInputText.val() || 0);
+    var salesTaxId = parseInt(taxSelect.getSelectedValue() || 0);
 
     if (storeId === 0) {
         return 0;
@@ -421,7 +421,7 @@ function updateTax() {
     ajaxGetSalesTax.success(function (msg) {
         removeLoader(productGridView.parent());
 
-        var tax = parseFloat2(msg.d);
+        var tax = parseFloat(msg.d || 0);
         taxInputText.data("val", tax);
 
         taxInputText.val(tax);
@@ -447,13 +447,13 @@ function getDefaultSalesTax() {
         return;
     };
 
-    var storeId = parseInt2(storeSelect.getSelectedValue());
+    var storeId = parseInt(storeSelect.getSelectedValue() || 0);
     var partyCode = partySelect.getSelectedValue();
     var shippingAddressCode = shippingAddressSelect.getSelectedText();
-    var priceTypeId = parseInt2(priceTypeSelect.getSelectedValue());
+    var priceTypeId = parseInt(priceTypeSelect.getSelectedValue() || 0);
     var itemCode = itemCodeInputText.val();
-    var unitId = parseInt2(unitSelect.getSelectedValue());
-    var price = parseFloat2(priceInputText.val()) - parseFloat2(discountInputText.val());
+    var unitId = parseInt(unitSelect.getSelectedValue() || 0);
+    var price = parseFloat(priceInputText.val() || 0) - parseFloat(discountInputText.val() || 0);
 
     if (!storeId) {
         return;
@@ -481,7 +481,7 @@ function getDefaultSalesTax() {
     ajaxGetDefaultSalesTaxId.success(function (msg) {
         removeLoader(productGridView.parent());
 
-        var result = parseInt2(msg.d);
+        var result = parseInt(msg.d || 0);
 
         if (result) {
             taxSelect.val(result);
@@ -525,7 +525,7 @@ var validateProductControl = function () {
     };
 
     if (storeSelect.length) {
-        if (parseInt2(storeSelect.getSelectedValue()) <= 0) {
+        if (parseInt(storeSelect.getSelectedValue() || 0) <= 0) {
             makeDirty(storeSelect);
             errorLabelBottom.html(invalidStoreWarningLocalized);
             return false;
@@ -533,7 +533,7 @@ var validateProductControl = function () {
     };
 
     if (paymentTermSelect.length && paymentTermSelect.is(":visible")) {
-        if (parseInt2(paymentTermSelect.getSelectedValue()) <= 0) {
+        if (parseInt(paymentTermSelect.getSelectedValue() || 0) <= 0) {
             makeDirty(paymentTermSelect);
             errorLabelBottom.html(invalidPaymentTermLocalized);
             return false;
@@ -550,7 +550,7 @@ var validateProductControl = function () {
     };
 
     if (priceTypeSelect.length) {
-        if (parseInt2(priceTypeSelect.getSelectedValue()) <= 0) {
+        if (parseInt(priceTypeSelect.getSelectedValue() || 0) <= 0) {
             makeDirty(priceTypeSelect);
             errorLabelBottom.html(invalidPriceTypeWarningLocalized);
             return false;
@@ -563,7 +563,7 @@ var validateProductControl = function () {
     };
 
     if (shippingCompanySelect.length) {
-        if (parseInt2(shippingCompanySelect.getSelectedValue()) <= 0) {
+        if (parseInt(shippingCompanySelect.getSelectedValue() || 0) <= 0) {
             makeDirty(shippingCompanySelect);
             errorLabelBottom.html(invalidShippingCompanyWarningLocalized);
             return false;
@@ -571,7 +571,7 @@ var validateProductControl = function () {
     };
 
     if (costCenterSelect.length) {
-        if (parseInt2(costCenterSelect.getSelectedValue()) <= 0) {
+        if (parseInt(costCenterSelect.getSelectedValue() || 0) <= 0) {
             makeDirty(costCenterSelect);
             errorLabelBottom.html(invalidCostCenterWarningLocalized);
             return false;
@@ -579,7 +579,7 @@ var validateProductControl = function () {
     };
 
     if (salesPersonSelect.length) {
-        if (parseInt2(salesPersonSelect.getSelectedValue()) <= 0) {
+        if (parseInt(salesPersonSelect.getSelectedValue() || 0) <= 0) {
             makeDirty(salesPersonSelect);
             errorLabelBottom.html(invalidSalesPersonWarningLocalized);
             return false;
@@ -587,24 +587,24 @@ var validateProductControl = function () {
     };
 
     productGridViewDataHidden.val(tableToJSON(productGridView));
-    salespersonId = parseInt2(salesPersonSelect.getSelectedValue());
+    salespersonId = parseInt(salesPersonSelect.getSelectedValue() || 0);
     attachments = uploadedFilesHidden.val();
 
-    costCenterId = parseInt2(costCenterSelect.getSelectedValue());
+    costCenterId = parseInt(costCenterSelect.getSelectedValue() || 0);
 
     data = productGridViewDataHidden.val();
 
     partyCode = partySelect.getSelectedValue();
-    paymentTermId = parseInt2(paymentTermSelect.getSelectedValue());
-    priceTypeId = parseInt2(priceTypeSelect.getSelectedValue());
+    paymentTermId = parseInt(paymentTermSelect.getSelectedValue() || 0);
+    priceTypeId = parseInt(priceTypeSelect.getSelectedValue() || 0);
 
     referenceNumber = referenceNumberInputText.val();
 
     shippingAddressCode = shippingAddressSelect.getSelectedText();
-    shipperId = parseInt2(shippingCompanySelect.getSelectedValue());
-    shippingCharge = parseFloat2(shippingChargeInputText.val());
+    shipperId = parseInt(shippingCompanySelect.getSelectedValue() || 0);
+    shippingCharge = parseFloat(shippingChargeInputText.val() || 0);
     statementReference = statementReferenceTextArea.val();
-    storeId = parseInt2(storeSelect.getSelectedValue());
+    storeId = parseInt(storeSelect.getSelectedValue() || 0);
 
     transactionIds = tranIdCollectionHiddenField.val();
 
@@ -676,7 +676,7 @@ function loadItems() {
     var ajax = getAjax(url, data);
 
     ajax.success(function (msg) {
-        itemSelect.html("");
+        itemSelect.html("<option>" + selectLocalized + "</option>");
         var itemGroup = $("<optgroup/>");
         var compoundItemGroup = $("<optgroup/>");
 
@@ -781,14 +781,14 @@ var restoreData = function () {
     for (var i = 0; i < rowData.length; i++) {
         var itemCode = rowData[i][0];
         var itemName = rowData[i][1];
-        var quantity = parseFloat2(rowData[i][2]);
+        var quantity = parseFloat(rowData[i][2] || 0);
         var unitName = rowData[i][3];
-        var price = parseFloat2(rowData[i][4]);
-        var discount = parseFloat2(rowData[i][6]);
-        var shippingCharge = parseFloat2(rowData[i][7]);
+        var price = parseFloat(rowData[i][4] || 0);
+        var discount = parseFloat(rowData[i][6] || 0);
+        var shippingCharge = parseFloat(rowData[i][7] || 0);
 
         var tax = rowData[i][9];
-        var computedTax = parseFloat2(rowData[i][10]);
+        var computedTax = parseFloat(rowData[i][10] || 0);
 
         addRowToTable(itemCode, itemName, quantity, unitName, price, discount, shippingCharge, tax, computedTax);
     };
@@ -796,8 +796,8 @@ var restoreData = function () {
 
 //New Row Helper Function
 var calculateAmount = function () {
-    var amount = parseFloat2(quantityInputText.val()) * parseFloat2(priceInputText.val());
-    var subTotal = amount - parseFloat2(discountInputText.val()) + parseFloat2(shippingChargeInputText.val());
+    var amount = parseFloat(quantityInputText.val() || 0) * parseFloat(priceInputText.val() || 0);
+    var subTotal = amount - parseFloat(discountInputText.val() || 0) + parseFloat(shippingChargeInputText.val() || 0);
 
     amountInputText.val(amount);
     subTotalInputText.val(subTotal);
@@ -805,7 +805,7 @@ var calculateAmount = function () {
 
 //GridView Manipulation
 var addRow = function () {
-    if (parseInt2(taxSelect.getSelectedValue()) > 0 && typeof taxInputText.data("val") === "undefined") {
+    if (parseInt(taxSelect.getSelectedValue() || 0) > 0 && typeof taxInputText.data("val") === "undefined") {
         updateTax();
         return;
     };
@@ -813,16 +813,16 @@ var addRow = function () {
     itemCodeInputText.val(itemSelect.getSelectedValue());
     var itemCode = itemCodeInputText.val();
     var itemName = itemSelect.getSelectedText();
-    var quantity = parseInt2(quantityInputText.val());
-    var unitId = parseInt2(unitIdHidden.val());
+    var quantity = parseInt(quantityInputText.val() || 0);
+    var unitId = parseInt(unitIdHidden.val() || 0);
     var unitName = unitNameHidden.val();
-    var price = parseFloat2(priceInputText.val());
-    var discount = parseFloat2(discountInputText.val());
-    var shippingCharge = parseFloat2(shippingChargeInputText.val());
+    var price = parseFloat(priceInputText.val() || 0);
+    var discount = parseFloat(discountInputText.val() || 0);
+    var shippingCharge = parseFloat(shippingChargeInputText.val() || 0);
     var tax = taxSelect.getSelectedText();
-    var computedTax = parseFloat2(taxInputText.val());
+    var computedTax = parseFloat(taxInputText.val() || 0);
 
-    var storeId = parseInt2(storeSelect.val());
+    var storeId = parseInt(storeSelect.val() || 0);
 
     if (isNullOrWhiteSpace(itemCode)) {
         makeDirty(itemCodeInputText);
@@ -912,7 +912,7 @@ var addRow = function () {
                 };
 
                 ajaxCountItemInStock.done(function (ajaxCountItemInStockResult) {
-                    var itemInStock = parseFloat2(ajaxCountItemInStockResult.d);
+                    var itemInStock = parseFloat(ajaxCountItemInStockResult.d || 0);
 
                     if (quantity > itemInStock) {
                         makeDirty(quantityInputText);
@@ -951,7 +951,7 @@ function addCompoundItems() {
 
 var addRowToTable = function (itemCode, itemName, quantity, unitName, price, discount, shippingCharge, tax, computedTax) {
     var editMode = (addButton.val() === window.updateLocalized);
-    var updateIndex = parseInt2(addButton.attr("data-update-index"));
+    var updateIndex = parseInt(addButton.attr("data-update-index") || 0);
     var rows = $("#ProductGridView").find("tbody tr:not(:last-child)");
     var amount = price * quantity;
     var subTotal = amount - discount + shippingCharge;
@@ -965,7 +965,7 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
             if (getColumnText(row, 0) === itemCode &&
                 getColumnText(row, 1) === itemName && //Same Item
                 getColumnText(row, 3) === unitName && //Same Unit
-                parseFloat2(getColumnText(row, 4)) === price &&//Same Price
+                parseFloat(getColumnText(row, 4) || 0) === price &&//Same Price
                 getColumnText(row, 9) === tax //Same Tax
                 ) {
                 setColumnText(row, 2, getFormattedNumber(parseInt2(getColumnText(row, 2)) + quantity, true));
@@ -1025,7 +1025,7 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
 var getPrice = function () {
     var itemCode = itemCodeInputText.val();
     var partyCode = partyCodeInputText.val();
-    var priceTypeId = parseInt2(priceTypeSelect.val());
+    var priceTypeId = parseInt(priceTypeSelect.val() || 0);
     var unitId = unitIdHidden.val();
 
     if (!unitId) return;
@@ -1162,10 +1162,10 @@ var getSalesTax = function (tranBook, storeId, partyCode, shippingAddressCode, p
 
 //Logic & Validation
 var summate = function () {
-    var runningTotal = parseFloat2(sumOfColumn("#ProductGridView", 8));
+    var runningTotal = sumOfColumn("#ProductGridView", 8);
     runningTotalInputText.val(runningTotal);
 
-    var taxTotal = parseFloat2(sumOfColumn("#ProductGridView", 10));
+    var taxTotal = sumOfColumn("#ProductGridView", 10);
     taxTotalInputText.val(taxTotal);
 
     grandTotalInputText.val(runningTotal + taxTotal);
