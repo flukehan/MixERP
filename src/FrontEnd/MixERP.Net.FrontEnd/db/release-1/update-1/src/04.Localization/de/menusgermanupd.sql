@@ -15,8 +15,8 @@ UPDATE core.menu_locale SET menu_text = 'Bonus Tafel-Details' WHERE culture = 'd
 UPDATE core.menu_locale SET menu_text = 'Bonus Tafel für Verkäufer' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='ABS');
 UPDATE core.menu_locale SET menu_text = 'Marken' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSB');
 UPDATE core.menu_locale SET menu_text = 'Cashflow' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='CF');
-UPDATE core.menu_locale SET menu_text = 'Cash Flow Überschriften' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='CFH');
-UPDATE core.menu_locale SET menu_text = 'Kassenstellen Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SCR');
+UPDATE core.menu_locale SET menu_text = 'Cashflow Überschriften' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='CFH');
+UPDATE core.menu_locale SET menu_text = 'Barwerte Depot Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SCR');
 UPDATE core.menu_locale SET menu_text = 'Benutzerpasswort ändern' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PWD');
 UPDATE core.menu_locale SET menu_text = 'Kontenplan' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='COA');
 UPDATE core.menu_locale SET menu_text = 'Kombinierte Artikel Details' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSCD');
