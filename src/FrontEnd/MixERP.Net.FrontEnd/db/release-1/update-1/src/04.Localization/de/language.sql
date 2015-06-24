@@ -17,7 +17,7 @@ SELECT localization.add_localized_resource('DbErrors', 'de', 'P3009', 'Falscher 
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3010', 'Ungültige Office-ID.');--Invalid office id.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3011', 'Ungültige Office.');--Invalid office.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3012', 'Ungültige Laden.');--Invalid store.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P3013', 'Ungültiges Kassastelle.');--Invalid cash repository.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P3013', 'Ungültiges Barwerte-Depot.');--Invalid cash repository.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3050', 'Ungültige Partei.');--Invalid party.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3051', 'Üngültiger Artikel.');--Invalid item.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3052', 'Ungültige Einheit.');--Invalid unit.
@@ -229,12 +229,12 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_flow_mas
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_flow_master_id', 'Cash Flow Master Id');--Cash Flow Master Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_flow_master_name', 'Cash Flow Master Name');--Cash Flow Master Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_flow_setup_id', 'Cashflow Setup Id');--Cashflow Setup Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repositories_cash_repository_code_uix', 'Doppelter Kassastellen Code');--Duplicate Cash Repository Code
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repositories_cash_repository_name_uix', 'Doppelter Kassastellen Name');--Duplicate Cash Repository Name
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repository', 'Kassastelle');--Cash Repository
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repository_code', 'Kassastelle Code');--Cash Repository Code
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repository_id', 'Kassastelle Id');--Cash Repository Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repository_name', 'Kassastellenname');--Cash Repository Name
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repositories_cash_repository_code_uix', 'Doppelter Barwerte-Depot Code');--Duplicate Cash Repository Code
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repositories_cash_repository_name_uix', 'Doppelter Barwerte-Depot Name');--Duplicate Cash Repository Name
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repository', 'Barwerte-Depot');--Cash Repository
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repository_code', 'Barwerte-Depot Code');--Cash Repository Code
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repository_id', 'Barerte-Depot Id');--Cash Repository Id
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repository_name', 'Barwerte-Depot Name');--Cash Repository Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'cell', 'Handy');--Cell
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'charge_interest', 'Zinsberechnung');--Charge Interest
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'check_nexus', 'Nexus prüfen');--Check Nexus
@@ -304,7 +304,7 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'customer_pays
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'date_of_birth', 'Geburtsdatum');--Date Of Birth
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'debit', 'Soll');--Debit
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'default_cash_account_id', 'Standard Kassa Konto Id');--Default Cash Account Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'default_cash_repository_id', 'Standard Kassastellen Id');--Default Cash Repository Id
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'default_cash_repository_id', 'Standard Barwerte-Depot Id');--Default Cash Repository Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'department_code', 'Abteilungscode');--Department Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'department_id', 'Abteilung Id');--Department Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'department_name', 'Abteilung Name');--Department Name
@@ -445,10 +445,10 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_accoun
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_account_name', 'Mutter Konto Name');--Parent Account Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_account_number', 'Mutter Konto Number');--Parent Account Number
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_cash_flow_heading_id', 'Mutter Cash Flow Überschrift Id');--Parent Cash Flow Heading Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_cash_repository', 'Mutter Kassastelle');--Parent Cash Repository
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_cash_repository_id', 'Mutter Kassastelle Id');--Parent Cash Repository Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_cr_code', 'Mutter CR Code');--Parent CR Code
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_cr_name', 'Mutter CR Name');--Parent CR Name
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_cash_repository', 'Mutter Barwerte-Depot');--Parent Cash Repository
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_cash_repository_id', 'Mutter Barwerte-Depot Id');--Parent Cash Repository Id
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_cr_code', 'Mutter BarDepot Code');--Parent CR Code
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_cr_name', 'Mutter BarDepot Name');--Parent CR Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_industry_id', 'Mutter Industrie Id');--Parent Industry Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_industry_name', 'Mutter Industrie Name');--Parent Industry Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_item_group_id', 'Mutter Artikel Gruppe Id');--Parent Item Group Id
@@ -514,10 +514,10 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'reorder_unit'
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'reorder_unit_id', 'Wiederbestell Einheit Id');--Reorder Unit Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'reporting_tax_authority', 'Steuermeldungs Finanzamt');--Reporting Tax Authority
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'reporting_tax_authority_id', 'Steuermeldungs Finanzamt Id');--Reporting Tax Authority Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'repository', 'Repository');--Repository
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'resource', 'Ressource');--Resource
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'repository', 'Depot');--Repository
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'resource', 'Resource');--Resource
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'resource_id', 'Resource Id');--Resource Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'resource_key', 'Ressource-Key');--Resource Key
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'resource_key', 'Resource-Key');--Resource Key
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'role', 'Rolle');--Role
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'role_code', 'Rollen-Code');--Role Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'role_id', 'Rollen Id');--Role Id
@@ -701,9 +701,9 @@ SELECT localization.add_localized_resource('Titles', 'de', 'Cancel', 'Abbrechen'
 SELECT localization.add_localized_resource('Titles', 'de', 'CashFlowHeading', 'Cash Flow Richtung');--Cash Flow Heading
 SELECT localization.add_localized_resource('Titles', 'de', 'CashFlowHeadings', 'Cash Flow Richtungen');--Cash Flow Headings
 SELECT localization.add_localized_resource('Titles', 'de', 'CashFlowSetup', 'Cash Flow-Setup');--Cash Flow Setup
-SELECT localization.add_localized_resource('Titles', 'de', 'CashRepositories', 'Kassastellen');--Cash Repositories
-SELECT localization.add_localized_resource('Titles', 'de', 'CashRepository', 'Kassastelle');--Cash Repository
-SELECT localization.add_localized_resource('Titles', 'de', 'CashRepositoryBalance', 'Kassastellen  Kontostand');--Cash Repository Balance
+SELECT localization.add_localized_resource('Titles', 'de', 'CashRepositories', 'Barwerte-Depots');--Cash Repositories
+SELECT localization.add_localized_resource('Titles', 'de', 'CashRepository', 'Barwerte-Depot');--Cash Repository
+SELECT localization.add_localized_resource('Titles', 'de', 'CashRepositoryBalance', 'Barwerte-Depot Kontostand');--Cash Repository Balance
 SELECT localization.add_localized_resource('Titles', 'de', 'CashTransaction', 'Geldtransaktionen');--Cash Transaction
 SELECT localization.add_localized_resource('Titles', 'de', 'ChangePassword', 'Passwort ändern');--Change Password
 SELECT localization.add_localized_resource('Titles', 'de', 'ChangeSideWhenNegative', 'Seite wechseln falls negative (Soll-Haben)');--Change Side When Negative
@@ -1164,10 +1164,10 @@ SELECT localization.add_localized_resource('Warnings', 'de', 'DueFrequencyErrorM
 SELECT localization.add_localized_resource('Warnings', 'de', 'DuplicateEntry', 'Doppelter Eintrag');--Duplicate entry.
 SELECT localization.add_localized_resource('Warnings', 'de', 'DuplicateFiles', 'Doppelte Datei');--Duplicate files.
 SELECT localization.add_localized_resource('Warnings', 'de', 'GridViewEmpty', 'Anzeigetabelle war leer.');--Gridview is empty.
-SELECT localization.add_localized_resource('Warnings', 'de', 'InsufficientBalanceInCashRepository', 'Es gibt keine ausreichenden n Kontostand in  der Kassastelle, um diese Transaktion zu verarbeiten.');--There is no sufficient balance in the cash repository to process this transaction.
+SELECT localization.add_localized_resource('Warnings', 'de', 'InsufficientBalanceInCashRepository', 'Es gibt keine ausreichenden n Kontostand im Barwerte-Depot, um diese Transaktion zu verarbeiten.');--There is no sufficient balance in the cash repository to process this transaction.
 SELECT localization.add_localized_resource('Warnings', 'de', 'InsufficientStockWarning', 'Nur {0} {1} von {2} auf Lager.');--Only {0} {1} of {2} left in stock.
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidAccount', 'Ungültigse Konto.');--Invalid account.
-SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidCashRepository', 'Ungültige Kassastelle.');--Invalid cash repository.
+SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidCashRepository', 'Ungültiges Barwerte-Depot.');--Invalid cash repository.
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidCostCenter', 'Ungültige Kostenstelle');--Invalid cost center.
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidData', 'Ungültige Daten.');--Invalid data.
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidDate', 'Ungültige Daten.');--Invalid date.
