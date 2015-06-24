@@ -44,7 +44,7 @@ SELECT core.create_menu_locale('LF', 'de', 'Säumniszuschläge');--Late Fees
 SELECT core.create_menu_locale('SEAR-LV', 'de', 'Login Form');--Login View
 SELECT core.create_menu_locale('SMA', 'de', 'Menü-Zugriffs Richtlinien');--Menu Access Policy
 SELECT core.create_menu_locale('CFH', 'de', 'Cashflow Überschriften');--Cash Flow Headings
-SELECT core.create_menu_locale('SCR', 'de', 'Barwerte Depot Setup');--Cash Repository Setup
+SELECT core.create_menu_locale('SCR', 'de', 'Barwerte-Depot Setup');--Cash Repository Setup
 SELECT core.create_menu_locale('PWD', 'de', 'Benutzerpasswort ändern');--Change User Password
 SELECT core.create_menu_locale('COA', 'de', 'Kontenplan');--Chart of Accounts
 SELECT core.create_menu_locale('SSCD', 'de', 'Kombinierte Artikel Details');--Compound Item Details

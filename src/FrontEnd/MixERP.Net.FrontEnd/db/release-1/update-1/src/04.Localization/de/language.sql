@@ -233,7 +233,7 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_reposito
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repositories_cash_repository_name_uix', 'Doppelter Barwerte-Depot Name');--Duplicate Cash Repository Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repository', 'Barwerte-Depot');--Cash Repository
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repository_code', 'Barwerte-Depot Code');--Cash Repository Code
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repository_id', 'Barerte-Depot Id');--Cash Repository Id
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repository_id', 'Barwerte-Depot Id');--Cash Repository Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'cash_repository_name', 'Barwerte-Depot Name');--Cash Repository Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'cell', 'Handy');--Cell
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'charge_interest', 'Zinsberechnung');--Charge Interest
@@ -698,8 +698,8 @@ SELECT localization.add_localized_resource('Titles', 'de', 'Brands', 'Marken');-
 SELECT localization.add_localized_resource('Titles', 'de', 'Browse', 'Blättern');--Browse
 SELECT localization.add_localized_resource('Titles', 'de', 'CSTNumber', 'CST Nummer');--CST Number
 SELECT localization.add_localized_resource('Titles', 'de', 'Cancel', 'Abbrechen');--Cancel
-SELECT localization.add_localized_resource('Titles', 'de', 'CashFlowHeading', 'Cash Flow Richtung');--Cash Flow Heading
-SELECT localization.add_localized_resource('Titles', 'de', 'CashFlowHeadings', 'Cash Flow Richtungen');--Cash Flow Headings
+SELECT localization.add_localized_resource('Titles', 'de', 'CashFlowHeading', 'Cash Flow Überschrift');--Cash Flow Heading
+SELECT localization.add_localized_resource('Titles', 'de', 'CashFlowHeadings', 'Cash Flow Überschriften');--Cash Flow Headings
 SELECT localization.add_localized_resource('Titles', 'de', 'CashFlowSetup', 'Cash Flow-Setup');--Cash Flow Setup
 SELECT localization.add_localized_resource('Titles', 'de', 'CashRepositories', 'Barwerte-Depots');--Cash Repositories
 SELECT localization.add_localized_resource('Titles', 'de', 'CashRepository', 'Barwerte-Depot');--Cash Repository
