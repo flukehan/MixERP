@@ -1,4 +1,4 @@
-﻿var data;
+﻿var menus;
 var depth = 2;
 var sidebar = $('.sidebar');
 var wrapper = $('#page-wrapper');
@@ -11,7 +11,7 @@ $(document).ready(function () {
     var ajaxMenu = getAjaxMenu();
 
     ajaxMenu.success(function (msg) {
-        data = JSON.parse(msg.d);
+        menus = JSON.parse(msg.d);
         loadMenu(topMenu);
         loadTree(0, createTree);
     });
@@ -27,7 +27,7 @@ $(document).ready(function () {
 function loadMenu(appendTo) {
     var anchors = "";
 
-    $.each(data, function (i, v) {
+    $.each(menus, function (i, v) {
         var anchor = "<a class='item' href='javascript:void(0);' onclick='javascript:loadTree(%s, createTree);'>%s</a>";
         anchor = sprintf(anchor, v.Menu.MenuId, v.Menu.MenuText);
 
@@ -135,7 +135,7 @@ function loadTree(menuId, callback) {
     var treeData = tree.find("ul");
 
 
-    $.each(data, function (i, v) {
+    $.each(menus, function (i, v) {
         var items;
         var li;
 

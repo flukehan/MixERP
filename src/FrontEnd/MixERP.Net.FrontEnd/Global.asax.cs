@@ -18,15 +18,19 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Configuration;
 using System.IO;
 using System.Threading;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Routing;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Office;
 using MixERP.Net.ReportManager;
+using MixERP.Net.Updater;
+using MixERP.Net.Updater.Api;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -94,11 +98,27 @@ namespace MixERP.Net.FrontEnd
         private void Application_Start(object sender, EventArgs e)
         {
             this.IntializeLogger();
-
+            this.CheckForUpdates();
             RegisterRoutes(RouteTable.Routes);
 
             GlobalLogin.CreateTable();
             Repository.DownloadAndInstallReports();
+        }
+
+        private async void CheckForUpdates()
+        {
+            bool autoSuggestUpdate = Conversion.TryCastBoolean(ConfigurationHelper.GetUpdaterParameter("AutoSuggestUpdate"));
+
+            if (autoSuggestUpdate)
+            {
+                UpdateManager updater = new UpdateManager();
+                Release release = await updater.GetLatestRelease();
+
+                if (release != null)
+                {
+                    Application["UpdateAvailable"] = true;
+                }
+            }
         }
 
         private string GetLogDirectory()

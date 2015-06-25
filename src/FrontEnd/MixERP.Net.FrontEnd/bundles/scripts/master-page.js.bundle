@@ -39,5 +39,6 @@
     <file>/Scripts/mixerp/master-page/sortable.js</file>
     <file>/Scripts/mixerp/master-page/semantic.js</file>
     <file>/Scripts/mixerp/master-page/menu.js</file>
+    <file>/Scripts/mixerp/master-page/updater.js</file>
   </files>
 </bundle>

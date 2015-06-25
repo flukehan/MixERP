@@ -7,14 +7,14 @@ ADD PRIMARY KEY(user_id, office_id);
 DO
 $$
 BEGIN
-    IF EXISTS
+    IF
     (
-        SELECT 1
+        SELECT count(*)
         FROM   pg_attribute 
         WHERE  attrelid = 'core.parties'::regclass
-        AND    attname = 'party_name'
+        AND    attname IN ('party_name', 'company_name')
         AND    NOT attisdropped
-    ) THEN
+    ) = 1 THEN
         ALTER TABLE core.parties
         RENAME COLUMN party_name to company_name;
         

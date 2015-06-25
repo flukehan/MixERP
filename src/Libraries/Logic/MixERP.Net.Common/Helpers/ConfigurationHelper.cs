@@ -137,6 +137,12 @@ namespace MixERP.Net.Common.Helpers
             return GetConfigurationValue(path, keyName);
         }
 
+        public static string GetUpdaterParameter(string keyName)
+        {
+            string path = MapPath(ConfigurationManager.AppSettings["UpdaterConfigFileLocation"]);
+            return GetConfigurationValue(path, keyName);
+        }
+
         public static string SetConfigurationValues(string configFileName, string sectionName, string value)
         {
             ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configFileName };
