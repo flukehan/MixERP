@@ -160,7 +160,7 @@ addRowButton.click(function () {
         makeDirty(amountInputText);
         return;
     }
-    removeDirty(amountInputText)
+    removeDirty(amountInputText);
 
     total = amount * quantity;
 
