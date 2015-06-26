@@ -667,7 +667,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'AgeingSlabs', 'Alter
 SELECT localization.add_localized_resource('Titles', 'de', 'AgentBonusSlabAssignment', 'Bonustafel  Zuordnung');--Bonus Slab Assignment
 SELECT localization.add_localized_resource('Titles', 'de', 'AgentBonusSlabs', 'Bonustafel für verkäufer');--Bonus Slab for Salespersons
 SELECT localization.add_localized_resource('Titles', 'de', 'Alerts', 'Benachrichtigungen');--Alerts
-SELECT localization.add_localized_resource('Titles', 'de', 'Amount', 'Menge');--Amount
+SELECT localization.add_localized_resource('Titles', 'de', 'Amount', 'Betrag');--Amount
 SELECT localization.add_localized_resource('Titles', 'de', 'AmountInBaseCurrency', 'Betrag (in Basiswährung)');--Amount (In Base Currency)
 SELECT localization.add_localized_resource('Titles', 'de', 'AmountInHomeCurrency', 'Betrag (in Landeswährung)');--Amount (In Home Currency)
 SELECT localization.add_localized_resource('Titles', 'de', 'AnalyzeDatabse', 'Datenbakanalyse');--Analyze Databse
