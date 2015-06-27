@@ -61,6 +61,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             {
                 values.Add(new ListItem(party.PartyName, party.PartyCode));
             }
+
             return values;
         }
 

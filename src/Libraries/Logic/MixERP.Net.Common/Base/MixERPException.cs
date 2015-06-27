@@ -48,7 +48,7 @@ namespace MixERP.Net.Common.Base
             this.dbConstraintName = dbConstraintName;
         }
 
-        protected MixERPException(SerializationInfo info, StreamingContext context)
+        public MixERPException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

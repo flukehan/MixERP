@@ -47,6 +47,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
 
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
+                scrud.ExcludeEdit = "currency_code";
 
                 scrud.Text = Titles.OfficeSetup;
 

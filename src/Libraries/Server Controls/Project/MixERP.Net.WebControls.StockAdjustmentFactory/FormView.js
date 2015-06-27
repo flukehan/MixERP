@@ -33,7 +33,7 @@ var addRow = function () {
     var itemCode = itemCodeInputText.val();
     var itemName = itemSelect.getSelectedText();
     var unitName = unitSelect.getSelectedText();
-    var quantity = parseInt2(quantityInputText.val());
+    var quantity = parseInt(quantityInputText.val() || 0);
 
     if (isNullOrWhiteSpace(tranType) || tranType === selectLocalized) {
         makeDirty(transactionTypeSelect);
@@ -250,7 +250,7 @@ function removeLoaderInstance() {
 //Check if ItemPopup window has updated the hidden field.
 function ajaxDataBindCallBack(targetControl) {
     if (targetControl.is(itemSelect)) {
-        var itemId = parseFloat2(itemIdHidden.val());
+        var itemId = parseInt(itemIdHidden.val() || 0);
 
         itemIdHidden.val("");
 

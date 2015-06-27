@@ -167,13 +167,13 @@ addInputButton.click(function() {
 
     currencyCode = currencySelect.getSelectedValue();
 
-    debit = parseFloat2(debitInputText.val());
-    credit = parseFloat2(creditInputText.val());
+    debit = parseFloat(debitInputText.val() || 0);
+    credit = parseFloat(creditInputText.val() || 0);
 
-    er = parseFloat2(erInputText.val());
+    er = parseFloat(erInputText.val() || 0);
 
-    lcDebit = parseFloat2(lcDebitInputText.val());
-    lcCredit = parseFloat2(lcCreditInputText.val());
+    lcDebit = parseFloat(lcDebitInputText.val() || 0);
+    lcCredit = parseFloat(lcCreditInputText.val() || 0);
 
     if (isNullOrWhiteSpace(statementReference)) {
         makeDirty(statementReferenceInputText);
@@ -399,7 +399,7 @@ currencySelect.blur(function() {
 });
 
 debitInputText.blur(function() {
-    debit = parseFloat2(debitInputText.val());
+    debit = parseFloat(debitInputText.val() || 0);
 
     if (debit > 0) {
         creditInputText.prop("disabled", true);
@@ -423,11 +423,11 @@ erInputText.keyup(function() {
 });
 
 function UpdateLocalCurrencies() {
-    er = parseFloat2(erInputText.val());
+    er = parseFloat(erInputText.val() || 0);
 
     if (er > 0) {
-        lcDebitInputText.val(parseFloat2(debitInputText.val() * er));
-        lcCreditInputText.val(parseFloat2(creditInputText.val() * er));
+        lcDebitInputText.val(parseFloat(debitInputText.val() || 0) * er);
+        lcCreditInputText.val(parseFloat(creditInputText.val() || 0) * er);
     };
 };
 
@@ -489,7 +489,7 @@ var validate = function() {
         return false;
     };
 
-    if (parseFloat2(costCenterDropDownList.getSelectedValue()) <= 0) {
+    if (parseInt(costCenterDropDownList.getSelectedValue() || 0) <= 0) {
         makeDirty(costCenterDropDownList);
         errorLabelBottom.html(invalidCostCenterWarningLocalized);
         return false;
@@ -531,14 +531,14 @@ var validate = function() {
 
     summate();
 
-    if (parseFloat2(debitTotalTextBox.val()) !== parseFloat2(creditTotalTextBox.val())) {
+    if (parseFloat(debitTotalTextBox.val() || 0) !== parseFloat(creditTotalTextBox.val() || 0)) {
         $.notify("Referencing sides are not equal.", "error");
         return false;
     };
 
     referenceNumber = referenceNumberInputText.getSelectedValue();
     transactionGridViewHidden.val(tableToJSON(transactionGridView));
-    costCenterId = parseFloat2(costCenterDropDownList.getSelectedValue());
+    costCenterId = parseInt(costCenterDropDownList.getSelectedValue() || 0);
 
     data = transactionGridViewHidden.val();
     attachments = uploadedFilesHidden.val();
@@ -599,8 +599,8 @@ function hasBalance(cashRepositoryCode, currencyCode, credit) {
 
 //Logic & Validation
 var summate = function() {
-    var debitTotal = parseFloat2(sumOfColumn("#" + transactionGridView.attr("id"), 8));
-    var creditTotal = parseFloat2(sumOfColumn("#" + transactionGridView.attr("id"), 9));
+    var debitTotal = parseFloat(sumOfColumn("#" + transactionGridView.attr("id"), 8) || 0);
+    var creditTotal = parseFloat(sumOfColumn("#" + transactionGridView.attr("id"), 9) || 0);
 
     debitTotalTextBox.val(debitTotal);
     creditTotalTextBox.val(creditTotal);

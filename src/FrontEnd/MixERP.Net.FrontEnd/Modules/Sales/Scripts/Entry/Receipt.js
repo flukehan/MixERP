@@ -101,16 +101,16 @@ $(document).ready(function () {
 saveButton.click(function () {
     var partyCode = partyDropDownList.getSelectedValue();
     var currencyCode = currencySelect.getSelectedValue();
-    var amount = parseFloat2(amountInputText.val());
-    var debitExchangeRate = parseFloat2(debitExchangeRateInputText.val());
-    var creditExchangeRate = parseFloat2(creditExchangeRateInputText.val());
+    var amount = amountInputText.val();
+    var debitExchangeRate = debitExchangeRateInputText.val();
+    var creditExchangeRate = creditExchangeRateInputText.val();
     var referenceNumber = referenceNumberInputText.val();
     var statementReference = statementReferenceTextArea.val();
-    var costCenterId = parseInt2(costCenterSelect.getSelectedValue());
-    var cashRepositoryId = parseInt2(cashRepositorySelect.getSelectedValue());
+    var costCenterId = parseInt(costCenterSelect.getSelectedValue() || 0);
+    var cashRepositoryId = parseInt(cashRepositorySelect.getSelectedValue() || 0);
     var postedDate = Date.parseExact(postedDateTextBox.val(), window.shortDateFormat);
-    var bankAccountId = parseInt2(bankSelect.getSelectedValue());
-    var paymentCardId = parseInt2(paymentCardSelect.getSelectedValue());
+    var bankAccountId = parseInt(bankSelect.getSelectedValue() || 0);
+    var paymentCardId = parseInt(paymentCardSelect.getSelectedValue() || 0);
     var bankInstrumentCode = instrumentCodeInputText.val();
     var bankTransactionCode = transactionCodeInputText.val();
 
@@ -184,13 +184,13 @@ creditExchangeRateInputText.keyup(function () {
 
 
 bankSelect.change(function () {
-    var accountId = parseInt2(bankSelect.getSelectedValue());
+    var accountId = parseInt(bankSelect.getSelectedValue() || 0);
     loadPaymentCards(accountId);
 });
 
 paymentCardSelect.change(function () {
-    var merchantAccountId = parseInt2(bankSelect.getSelectedValue());
-    var paymentCardId = parseInt2(paymentCardSelect.getSelectedValue());
+    var merchantAccountId = parseInt(bankSelect.getSelectedValue() || 0);
+    var paymentCardId = parseInt(paymentCardSelect.getSelectedValue() || 0);
 
     customerPaysFeeRadio.removeProp("checked");
     merchantFeeInputText.val("");
@@ -228,10 +228,11 @@ function updateTotal() {
         creditExchangeRateInputText.val("1");
     };
 
-    var due = parseFloat2(dueAmountInputText.val());
-    var amount = parseFloat2(amountInputText.val());
-    var er = parseFloat2(debitExchangeRateInputText.val());
-    var er2 = parseFloat2(creditExchangeRateInputText.val());
+    var due = parseFloat(dueAmountInputText.val() || 0);
+    var amount = parseFloat(amountInputText.val() || 0);
+    var er = parseFloat(debitExchangeRateInputText.val() || 0);
+    var er2 = parseFloat(creditExchangeRateInputText.val()) || 0;
+
     var toHomeCurrency = amount * er;
 
     amountInHomeCurrencyInputText.val(toHomeCurrency);

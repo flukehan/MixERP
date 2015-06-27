@@ -6,26 +6,26 @@ namespace MixERP.Net.WebControls.AttachmentFactory.Helpers
 {
     public static class ConfigurationHelper
     {
-        private static readonly string configPath = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["AttachmentFactoryConfigFileLocation"]);
+        private const string configFile = "AttachmentFactoryConfigFileLocation";
 
         public static string GetAllowedExtensions()
         {
-            return Common.Helpers.ConfigurationHelper.GetConfigurationValue(configPath, "AllowedExtensions");
+            return Common.Helpers.ConfigurationHelper.GetConfigurationValue(configFile, "AllowedExtensions");
         }
 
         public static string GetUploadHandlerUrl()
         {
-            return PageUtility.ResolveUrl(Common.Helpers.ConfigurationHelper.GetConfigurationValue(configPath, "UploadHandlerUrl"));
+            return PageUtility.ResolveUrl(Common.Helpers.ConfigurationHelper.GetConfigurationValue(configFile, "UploadHandlerUrl"));
         }
 
         public static string GetAttachmentsDirectory()
         {
-            return PageUtility.ResolveUrl(Common.Helpers.ConfigurationHelper.GetConfigurationValue(configPath, "AttachmentsDirectory"));
+            return PageUtility.ResolveUrl(Common.Helpers.ConfigurationHelper.GetConfigurationValue(configFile, "AttachmentsDirectory"));
         }
 
         public static string GetUndoUploadServiceUrl()
         {
-            return PageUtility.ResolveUrl(Common.Helpers.ConfigurationHelper.GetConfigurationValue(configPath, "UndoUploadServiceUrl"));
+            return PageUtility.ResolveUrl(Common.Helpers.ConfigurationHelper.GetConfigurationValue(configFile, "UndoUploadServiceUrl"));
         }
     }
 }

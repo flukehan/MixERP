@@ -18,45 +18,22 @@ namespace MixERP.Net.i18n
             return GetConnectionString(host, database, userId, password, port);
         }
 
-        private static string MapPath(string virtualPath)
-        {
-            if (string.IsNullOrWhiteSpace(virtualPath))
-            {
-                return string.Empty;
-            }
-
-            string path = HostingEnvironment.MapPath(virtualPath);
-
-            if (string.IsNullOrWhiteSpace(path) && HttpContext.Current != null)
-            {
-                path = HttpContext.Current.Server.MapPath(virtualPath);
-            }
-
-            if (string.IsNullOrWhiteSpace(path))
-            {
-                return virtualPath;
-            }
-
-            return path;
-        }
-
         public static string GetDbServerParameter(string keyName)
         {
-            string path = MapPath(ConfigurationManager.AppSettings["DbServerConfigFileLocation"]);
-            return GetConfigurationValues(path, keyName);
+            return GetConfigurationValue("DbServerConfigFileLocation", keyName);
         }
 
-        public static string GetConfigurationValues(string configFileName, string sectionName)
+        public static string GetConfigurationValue(string configFileName, string sectionName)
         {
             if (configFileName == null)
             {
                 return string.Empty;
             }
 
+            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings[configFileName]);
 
-            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap {ExeConfigFilename = configFileName};
-            Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap,
-                ConfigurationUserLevel.None);
+            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = path };
+            Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
             AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
 
             if (section != null)

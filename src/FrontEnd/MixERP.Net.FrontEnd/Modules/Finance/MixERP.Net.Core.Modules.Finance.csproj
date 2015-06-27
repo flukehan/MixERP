@@ -105,6 +105,7 @@
     <Content Include="Reports\RetainedEarnings.ascx" />
     <Content Include="Reports\RetainedEarningsPopup.ascx" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\UpdateExchangeRates.js" />
     <Content Include="Services\Transactions.asmx" />
     <Content Include="Setup\MerchantFeeSetup.ascx" />
     <Content Include="Setup\PaymentCards.ascx" />

@@ -8,8 +8,7 @@ namespace MixERP.Net.ReportManager
     {
         private static string ReadConfig(string keyName)
         {
-            string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ReportAPIConfigFileLocation"]);
-            return ConfigurationHelper.GetConfigurationValue(path, keyName);
+            return ConfigurationHelper.GetConfigurationValue("ReportAPIConfigFileLocation", keyName);
         }
 
         internal static readonly string ApiUrl = ReadConfig("ApiUrl");

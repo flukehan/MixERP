@@ -97,6 +97,7 @@
     <Compile Include="BackendMaster.Master.designer.cs">
       <DependentUpon>BackendMaster.Master</DependentUpon>
     </Compile>
+    <Compile Include="Base\ICurrencyConverter.cs" />
     <Compile Include="Base\MixERPMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -309,6 +310,7 @@
     <None Include="Resource\Configs\AttachmentFactoryParameters.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Resource\Configs\OpenExchangeRates.config" />
     <None Include="Resource\Configs\ReportApiConfiguration.config" />
     <None Include="Resource\Configs\DbParameters.config" />
     <None Include="Resource\Configs\StockTransactionFactoryParameters.config" />
@@ -328,6 +330,7 @@
     <None Include="Resource\Configs\ScrudParameters.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Resource\Configs\Currencylayer.config" />
     <None Include="Resource\Configs\Switches.config" />
     <None Include="Resource\Configs\TransactionChecklistParameters.config" />
     <Content Include="Resource\Configs\index.html" />

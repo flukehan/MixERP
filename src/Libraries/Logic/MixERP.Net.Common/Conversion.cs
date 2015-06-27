@@ -203,13 +203,36 @@ namespace MixERP.Net.Common
             {
                 if (value is decimal)
                 {
-                    return (decimal) value;
+                    return (decimal)value;
                 }
 
                 string numberToParse = value.ToString();
 
 
                 if (decimal.TryParse(numberToParse, NumberStyles.Any, CultureInfo.DefaultThreadCurrentCulture, out retVal))
+                {
+                    return retVal;
+                }
+            }
+
+            return retVal;
+        }
+
+        public static decimal TryCastDecimal(object value, CultureInfo culture)
+        {
+            decimal retVal = 0;
+
+            if (value != null)
+            {
+                if (value is decimal)
+                {
+                    return (decimal)value;
+                }
+
+                string numberToParse = value.ToString();
+
+
+                if (decimal.TryParse(numberToParse, NumberStyles.Any, culture, out retVal))
                 {
                     return retVal;
                 }

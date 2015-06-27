@@ -38,8 +38,10 @@ var itemCode;
 var itemId;
 var quantity;
 var storeId;
+var store;
 var total;
 var unitId;
+var unit;
 var url;
 
 $(document).ready(function () {
@@ -116,6 +118,7 @@ function addShortcuts() {
 
 addRowButton.click(function () {
     itemCode = itemCodeInputText.val();
+
     if (isNullOrWhiteSpace(itemCode)) {
         makeDirty(itemCodeInputText);
         return;
@@ -125,46 +128,45 @@ addRowButton.click(function () {
 
     itemId = itemSelect.getSelectedText();
     storeId = parseInt(storeSelect.getSelectedValue());
+
     if (storeId <=0) {
         makeDirty(storeSelect);
         return;
     }
 
-    storeId = parseInt2(storeSelect.getSelectedValue());
-    if (storeId <= 0) {
-        makeDirty(storeSelect);
-        return;
-    }
-
-    storeId = storeSelect.getSelectedText();
+    store = storeSelect.getSelectedText();
     removeDirty(storeSelect);
 
-    quantity = parseInt2(quantityInputText.val());
+    quantity = quantityInputText.val();
+
     if (quantity <= 0) {
         makeDirty(quantityInputText);
         return;
     }
 
-    unitId = parseInt2(unitSelect.getSelectedValue());
-    if (unitId <=0) {
+    unitId = parseInt(unitSelect.getSelectedValue());
+
+    if (unitId <= 0) {
         makeDirty(unitSelect);
         return;
     }
 
-    unitId = unitSelect.getSelectedText();
+    unit = unitSelect.getSelectedText();
     removeDirty(unitSelect);
 
 
-    amount = parseInt2(amountInputText.val());
+    amount = amountInputText.val();
+
     if (amount <= 0) {
         makeDirty(amountInputText);
         return;
     }
+
     removeDirty(amountInputText);
 
     total = amount * quantity;
 
-    addRowToTable(itemCode, itemId, storeId, quantity, unitId, amount, total);
+    addRowToTable(itemCode, itemId, store, quantity, unit, amount, total);
 
     itemCodeInputText.val("");
     quantityInputText.val("");
