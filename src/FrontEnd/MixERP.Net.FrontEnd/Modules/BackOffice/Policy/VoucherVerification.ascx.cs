@@ -63,8 +63,18 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
 
                 scrud.Text = Titles.VoucherVerificationPolicy;
 
+                this.AddScrudCustomValidatorErrorMessages();
+
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
+        }
+
+        private void AddScrudCustomValidatorErrorMessages()
+        {
+            string javascript = JSUtility.GetVar("dateErrorMessageLocalized", Warnings.DateErrorMessage);
+
+            Common.PageUtility.RegisterJavascript("VoucherVerification_ScrudCustomValidatorMessages", javascript, this.Page,
+                true);
         }
 
         private static string GetDisplayFields()
