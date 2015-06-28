@@ -123,7 +123,7 @@ SELECT localization.add_localized_resource('Labels', 'de', 'OpeningInventoryAlre
 SELECT localization.add_localized_resource('Labels', 'de', 'PartyDescription', 'Parteien beziehen sich allgemein auf Lieferanten, Kunden, Agenten und Händler.');--Parties collectively refer to suppliers, customers, agents, and dealers.
 SELECT localization.add_localized_resource('Labels', 'de', 'SelectAFlag', 'Wählen Sie eine Markierung');--Select a flag.
 SELECT localization.add_localized_resource('Labels', 'de', 'TaskCompletedSuccessfully', 'Die Aufgabe wurde erfolgreich abgeschlossen.');--Task completed successfully.
-SELECT localization.add_localized_resource('Labels', 'de', 'ThankYouForYourBusiness', 'Vielen Dank für Ihre Arbeit.');--Thank you for your business.
+SELECT localization.add_localized_resource('Labels', 'de', 'ThankYouForYourBusiness', 'Vielen Dank für Ihren Auftrag.');--Thank you for your business.
 SELECT localization.add_localized_resource('Labels', 'de', 'ThisFieldIsRequired', 'Dieses Feld ist erforderlich.');--This field is required.
 SELECT localization.add_localized_resource('Labels', 'de', 'TransactionApprovedDetails', 'Diese Transaktion wurde von {0} um {1} zugelassen.');--This transaction was approved by {0} on {1}.
 SELECT localization.add_localized_resource('Labels', 'de', 'TransactionAutoApprovedDetails', 'Diese Transaktion wurde automatisch von {0} um {1} zugelassen.');--This transaction was automatically approved by {0} on {1}.
