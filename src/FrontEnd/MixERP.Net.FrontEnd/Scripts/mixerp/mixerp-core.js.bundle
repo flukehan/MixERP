@@ -29,6 +29,7 @@
     <file>/Scripts/mixerp/core/aspnet-validation.js</file>
     <file>/Scripts/mixerp/core/conversion.js</file>
     <file>/Scripts/mixerp/core/date-expressions.js</file>
+    <file>/Scripts/mixerp/core/browser.js</file>
     <file>/Scripts/mixerp/core/flag.js</file>
     <file>/Scripts/mixerp/core/json.js</file>
     <file>/Scripts/mixerp/core/localization.js</file>

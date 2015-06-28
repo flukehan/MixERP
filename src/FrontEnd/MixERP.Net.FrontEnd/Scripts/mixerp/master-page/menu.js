@@ -7,13 +7,18 @@ $(document).ready(function () {
     adjustSidebar();
     var topMenu = $("#top-menu");
     var resetMenu = $("#reset-menu");
+    var menuId = 0;
+
+    if (window.supportsBrowserStorage()) {
+        menuId = parseInt(localStorage["menuId"] || 0);
+    };
 
     var ajaxMenu = getAjaxMenu();
 
     ajaxMenu.success(function (msg) {
         menus = JSON.parse(msg.d);
         loadMenu(topMenu);
-        loadTree(0, createTree);
+        loadTree(menuId, createTree);
     });
 
     resetMenu.click(function () {
@@ -134,6 +139,9 @@ function loadTree(menuId, callback) {
     var tree = $("#tree");
     var treeData = tree.find("ul");
 
+    if (window.supportsBrowserStorage()) {
+        localStorage["menuId"] = menuId;
+    };
 
     $.each(menus, function (i, v) {
         var items;
