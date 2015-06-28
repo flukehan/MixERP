@@ -1,7 +1,7 @@
 ﻿DO
 $$
 BEGIN
-    IF(core.get_locale() = 'en-US') THEN
+    IF(core.get_locale() = 'de-AT') THEN
         ALTER TABLE core.accounts
         ALTER column currency_code DROP NOT NULL;
 
@@ -104,7 +104,11 @@ BEGIN
         UPDATE core.frequencies SET frequency_code = 'EOQ', frequency_name = 'End of Quarter' WHERE frequency_id = 3;
         UPDATE core.frequencies SET frequency_code = 'EOH', frequency_name = 'End of Half' WHERE frequency_id = 4;
         UPDATE core.frequencies SET frequency_code = 'EOY', frequency_name = 'End of Year' WHERE frequency_id = 5;
-        
+
+        /*
+        IMPORTANT:
+        The table account_masters must only be translated, but not changed.        
+        */
         INSERT INTO core.account_masters(account_master_id, account_master_code, account_master_name)
         SELECT 1, 'BSA', 'Balance Sheet A/C' UNION ALL
         SELECT 2, 'PLA', 'Profit & Loss A/C' UNION ALL
@@ -139,6 +143,10 @@ BEGIN
         SELECT 20701, 'INT', 'Interest Expenses',                 20700,    true    UNION ALL
         SELECT 20800, 'ITX', 'Income Tax Expenses',               2,        true;
 
+        /*
+        IMPORTANT:
+        The table cash_flow_headings must only be translated, but not changed.        
+        */
         INSERT INTO core.cash_flow_headings(cash_flow_heading_id, cash_flow_heading_code, cash_flow_heading_name, cash_flow_heading_type, is_debit)
         SELECT 20001, 'CRC',    'Cash Receipts from Customers',                 'O',   true    UNION ALL
         SELECT 20002, 'CPS',    'Cash Paid to Suppliers',                       'O',   false   UNION ALL
@@ -153,6 +161,10 @@ BEGIN
         UPDATE core.cash_flow_headings SET is_sales=true WHERE cash_flow_heading_code='CRC';
         UPDATE core.cash_flow_headings SET is_purchase=true WHERE cash_flow_heading_code='CPS';
 
+        /*
+        IMPORTANT:
+        The table cash_flow_setup must only be translated, but not changed.
+        */
         INSERT INTO core.cash_flow_setup(cash_flow_heading_id, account_master_id)
         SELECT core.get_cash_flow_heading_id_by_cash_flow_heading_code('CRC'), core.get_account_master_id_by_account_master_code('ACR') UNION ALL --Cash Receipts from Customers/Accounts Receivable
         SELECT core.get_cash_flow_heading_id_by_cash_flow_heading_code('CPS'), core.get_account_master_id_by_account_master_code('ACP') UNION ALL --Cash Paid to Suppliers/Accounts Payable
