@@ -26,7 +26,7 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.Finance.Data.Core;
 using MixERP.Net.Core.Modules.Finance.Data.Helpers;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.FrontEnd.Base;
@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         public IEnumerable<Currency> GetExchangeCurrencies()
         {
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            return Data.Helpers.Currencies.GetExchangeCurrencies(AppUsers.GetCurrentUserDB(), officeId);
+            return Currencies.GetExchangeCurrencies(AppUsers.GetCurrentUserDB(), officeId);
         }
 
         [WebMethod]
@@ -62,8 +62,8 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 return null;
             }
 
-            object instance = Activator.CreateInstance(type);            
-            ICurrencyConverter converter = (ICurrencyConverter)instance;
+            object instance = Activator.CreateInstance(type);
+            ICurrencyConverter converter = (ICurrencyConverter) instance;
 
             if (converter == null)
             {
@@ -85,11 +85,27 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             foreach (CurrencyConverter module in CurrencyConverter.GetEnabled())
             {
-                items.Add(new ListItem(module.Name, module.AssemblyQualifiedName));                
+                items.Add(new ListItem(module.Name, module.AssemblyQualifiedName));
             }
 
             return items;
         }
 
+        [WebMethod]
+        public bool SaveExchangeRates(List<Data.Models.ExchangeRate> exchangeRates)
+        {
+            if (exchangeRates == null || exchangeRates.Count().Equals(0))
+            {
+                return false;
+            }
+
+            string catalog = AppUsers.GetCurrentUserDB();
+            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            string baseCurrency = AppUsers.GetCurrentLogin().View.CurrencyCode;
+
+
+            ExchangeRates.SaveExchangeRates(catalog, officeId, baseCurrency, exchangeRates);
+            return true;
+        }
     }
 }

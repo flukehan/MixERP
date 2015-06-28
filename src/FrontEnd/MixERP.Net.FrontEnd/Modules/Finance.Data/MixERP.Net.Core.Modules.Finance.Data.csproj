@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ExchangeRates.cs" />
     <Compile Include="Core\Workflow.cs" />
     <Compile Include="EODOperation.cs" />
     <Compile Include="Helpers\AccountHelper.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Helpers\CostCenters.cs" />
     <Compile Include="Helpers\Currencies.cs" />
     <Compile Include="Helpers\Transaction.cs" />
+    <Compile Include="Models\ExchangeRate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\AccountStatement.cs" />
     <Compile Include="Reports\BalanceSheet.cs" />

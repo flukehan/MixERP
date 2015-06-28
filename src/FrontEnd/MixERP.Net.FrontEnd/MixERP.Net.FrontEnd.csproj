@@ -343,6 +343,7 @@
     <Content Include="Resource\Temp\index.html" />
     <Content Include="Scripts\d3.min.js" />
     <Content Include="Scripts\Datamaps\topojson.js" />
+    <Content Include="Scripts\mixerp\core\browser.js" />
     <Content Include="Scripts\mixerp\master-page\updater.js" />
     <Content Include="Scripts\mixerp\master-page\menu.js" />
     <Content Include="Scripts\sprintf\sprintf.min.js" />

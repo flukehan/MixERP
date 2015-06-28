@@ -50641,6 +50641,14 @@ $(document).ready(function () {
         }
     });
 });
+///#source 1 1 /Scripts/mixerp/core/browser.js
+function supportsBrowserStorage() {
+    try {
+        return 'localStorage' in window && window['localStorage'] !== null;
+    } catch (e) {
+        return false;
+    }
+};
 ///#source 1 1 /Scripts/mixerp/core/flag.js
 jQuery.fn.getTotalColumns = function () {
     var grid = $($(this).selector);

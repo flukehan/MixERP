@@ -4,7 +4,7 @@ var url;
 var data;
 var moduleSelect = $("#ModuleSelect");
 var requestButton = $("#RequestButton");
-
+var saveButton = $("#SaveButton");
 
 $(document).ready(function() {
     GetCurrencies();
@@ -82,6 +82,47 @@ function updateExchangeRates(result) {
         });
     };
 };
+
+saveButton.click(function () {
+    var exchangeRates = [];
+
+    exchangeRatesGridView.find("tbody tr").each(function() {
+        var currencyCode = $(this).find("td:first-child").html();
+        var rate = parseFloat($(this).find("input").val());
+
+        if (rate) {
+            var exchangeRate = new Object();
+            exchangeRate.CurrencyCode = currencyCode;
+            exchangeRate.Rate = rate;
+
+            exchangeRates.push(exchangeRate);
+        };
+    });
+
+    var ajaxSaveExchangeRates = saveExchangeRates(exchangeRates);
+
+    ajaxSaveExchangeRates.success(function (msg) {
+        if (msg.d) {
+            window.location = "/";
+        };
+    });
+
+    ajaxSaveExchangeRates.fail(function (xhr) {
+        logAjaxErrorMessage(xhr);
+    });
+
+
+});
+
+function saveExchangeRates(exchangeRates) {
+    url = "/Modules/Finance/Services/CurrencyData.asmx/SaveExchangeRates";
+    data = appendParameter("", "exchangeRates", exchangeRates);
+
+    data = getData(data);
+
+    return getAjax(url, data);
+};
+
 
 function loadModules() {
     url = "/Modules/Finance/Services/CurrencyData.asmx/GetModules";
