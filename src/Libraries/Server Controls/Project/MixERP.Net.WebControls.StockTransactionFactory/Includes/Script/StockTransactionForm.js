@@ -965,7 +965,7 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
             if (getColumnText(row, 0) === itemCode &&
                 getColumnText(row, 1) === itemName && //Same Item
                 getColumnText(row, 3) === unitName && //Same Unit
-                parseFloat(getColumnText(row, 4) || 0) === price &&//Same Price
+                parseFloat2(getColumnText(row, 4)) === price &&//Same Price
                 getColumnText(row, 9) === tax //Same Tax
                 ) {
                 setColumnText(row, 2, getFormattedNumber(parseInt2(getColumnText(row, 2)) + quantity, true));
