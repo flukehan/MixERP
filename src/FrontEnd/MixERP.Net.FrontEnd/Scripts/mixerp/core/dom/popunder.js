@@ -1,12 +1,10 @@
 function popUnder(div, button) {
-    div.css("position", "fixed");
+    div.removeClass("initially hidden");
+    div.show(500);
 
     div.position({
         my: "left top",
         at: "left bottom",
-        of: button,
-        collision: "fit"
+        of: button
     });
-
-    div.show(500);
 };
