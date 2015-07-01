@@ -147,7 +147,7 @@ SELECT localization.add_localized_resource('Messages', 'de', 'EODRoutineTasks', 
 SELECT localization.add_localized_resource('Messages', 'de', 'EODTransactionPosting', 'Wenn Sie einen Tagesabschluß für ein bestimmtes Datum durchführen können keine Transaktionen für diesen oder einen früheren Tag geändert, getauscht oder gelöscht werden.');--When you perform EOD operation for a particular date, no transaction on that date or before can be altered, changed, or deleted.
 SELECT localization.add_localized_resource('Messages', 'de', 'InvalidFile', 'Ungültige Datei!');--Invalid file!
 SELECT localization.add_localized_resource('Messages', 'de', 'TempDirectoryNullError', 'Bilder können nicht erstellen, wenn kein "Temp"-Verzeichnis existiert..');--Cannot create an image when the temp directory is null.
-SELECT localization.add_localized_resource('Messages', 'de', 'UploadFilesDeleted', 'Die hochgeladenen Dateien erfolgreich gelöscht.');--The uploaded files were successfully deleted.
+SELECT localization.add_localized_resource('Messages', 'de', 'UploadFilesDeleted', 'Die hochgeladenen Dateien wurden erfolgreich gelöscht.');--The uploaded files were successfully deleted.
 SELECT localization.add_localized_resource('Questions', 'de', 'AreYouSure', 'Sind Sie sicher?');--Are you sure?
 SELECT localization.add_localized_resource('Questions', 'de', 'CannotAccessAccount', 'Kein Zugriff auf Ihr Konto?');--Cannot access your account?
 SELECT localization.add_localized_resource('Questions', 'de', 'ConfirmAnalyze', 'Dies wird den Zugriff auf die Klienten Datenbank während der Durchführung sperren. Sind Sie sicher, dass sie das Jetzt durchführen möchten?');--This will lock client database access during execution. Are you sure you want to execute this action right now?
@@ -648,7 +648,7 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'zip_code', 'P
 SELECT localization.add_localized_resource('Titles', 'de', 'AboutInitializingDayEnd', 'Über: Tagesabrechnung  starten');--About Initializing Day End
 SELECT localization.add_localized_resource('Titles', 'de', 'AboutYourOffice', 'Über Ihr Office');--About Your Office
 SELECT localization.add_localized_resource('Titles', 'de', 'Access', 'Zugriff');--Access
-SELECT localization.add_localized_resource('Titles', 'de', 'AccessIsDenied', 'Zugriff  verweigert.');--Access is denied.
+SELECT localization.add_localized_resource('Titles', 'de', 'AccessIsDenied', 'Zugriff verweigert.');--Access is denied.
 SELECT localization.add_localized_resource('Titles', 'de', 'Account', 'Konto');--Account
 SELECT localization.add_localized_resource('Titles', 'de', 'AccountId', 'Konto-ID');--Account Id
 SELECT localization.add_localized_resource('Titles', 'de', 'AccountMaster', 'Kontenstamm');--Account Master
@@ -868,14 +868,14 @@ SELECT localization.add_localized_resource('Titles', 'de', 'LastLoginOn', 'Letzt
 SELECT localization.add_localized_resource('Titles', 'de', 'LastPage', 'Letzte Seite');--Last Page
 SELECT localization.add_localized_resource('Titles', 'de', 'LastPaymentDate', 'Letztes Auszahlungsdatum');--Last Payment Date
 SELECT localization.add_localized_resource('Titles', 'de', 'LastWrittenOn', 'Zuletzt geschrieben auf');--Last Written On
-SELECT localization.add_localized_resource('Titles', 'de', 'LateFees', 'Säumniszuschlag');--Late Fees
+SELECT localization.add_localized_resource('Titles', 'de', 'LateFees', 'Säumniszuschläge');--Late Fees
 SELECT localization.add_localized_resource('Titles', 'de', 'LeadSources', 'Werbe-Quellen');--Lead Sources
 SELECT localization.add_localized_resource('Titles', 'de', 'LeadStatuses', 'Werber Status');--Lead Statuses
 SELECT localization.add_localized_resource('Titles', 'de', 'LeadTime', 'Vorlaufzeit');--Lead Time
 SELECT localization.add_localized_resource('Titles', 'de', 'ListItems', 'Listenelemente');--List Items
-SELECT localization.add_localized_resource('Titles', 'de', 'Load', 'Last');--Load
+SELECT localization.add_localized_resource('Titles', 'de', 'Load', 'Laden');--Load
 SELECT localization.add_localized_resource('Titles', 'de', 'LoggedInTo', 'Angemeldet Um');--Logged in to
-SELECT localization.add_localized_resource('Titles', 'de', 'LoginView', 'Login Ansucht');--Login View
+SELECT localization.add_localized_resource('Titles', 'de', 'LoginView', 'Login Ansicht');--Login View
 SELECT localization.add_localized_resource('Titles', 'de', 'ManageProfile', 'Profil verwalten');--Manage Profile
 SELECT localization.add_localized_resource('Titles', 'de', 'MaximumCreditAmount', 'Maximaler Kreditbetrag');--Maximum Credit Amount
 SELECT localization.add_localized_resource('Titles', 'de', 'MaximumCreditPeriod', 'Maximale Kreditlaufzeit');--Maximum Credit Period
@@ -885,9 +885,9 @@ SELECT localization.add_localized_resource('Titles', 'de', 'MenuId', 'Meuü Id')
 SELECT localization.add_localized_resource('Titles', 'de', 'MenuText', 'Menütext');--Menu Text
 SELECT localization.add_localized_resource('Titles', 'de', 'MerchantFeeInPercent', 'Händlergebühr (in Prozent)');--Merchant Fee (In percent)
 SELECT localization.add_localized_resource('Titles', 'de', 'MerchantFeeSetup', 'Händler Gebühr-Setup');--Merchant Fee Setup
-SELECT localization.add_localized_resource('Titles', 'de', 'MergeBatchToGRN', 'Stapel  mit  Lieferschein zusammenführen');--Merge Batch to GRN
+SELECT localization.add_localized_resource('Titles', 'de', 'MergeBatchToGRN', 'Stapel mit Lieferschein zusammenführen');--Merge Batch to GRN
 SELECT localization.add_localized_resource('Titles', 'de', 'MergeBatchToSalesDelivery', 'Stapel mit Ausslieferung zusammenführen');--Merge Batch to Sales Delivery
-SELECT localization.add_localized_resource('Titles', 'de', 'MergeBatchToSalesOrder', 'Stapel mit Kundenbestellunng  zusammenführen');--Merge Batch to Sales Order
+SELECT localization.add_localized_resource('Titles', 'de', 'MergeBatchToSalesOrder', 'Stapel mit Kundenbestellunng zusammenführen');--Merge Batch to Sales Order
 SELECT localization.add_localized_resource('Titles', 'de', 'MixERPDocumentation', 'MixERP Dokumentation');--MixERP Documentation
 SELECT localization.add_localized_resource('Titles', 'de', 'MixERPLinks', 'MixERP-Links');--MixERP Links
 SELECT localization.add_localized_resource('Titles', 'de', 'MixERPOnFacebook', 'MixERP auf Facebook');--MixERP on Facebook
@@ -1143,7 +1143,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'Year', 'Jahr');--Yea
 SELECT localization.add_localized_resource('Titles', 'de', 'Yes', 'ja');--Yes
 SELECT localization.add_localized_resource('Titles', 'de', 'YourName', 'Ihr Name');--Your Name
 SELECT localization.add_localized_resource('Titles', 'de', 'YourOffice', 'Ihr Office');--Your Office
-SELECT localization.add_localized_resource('Warnings', 'de', 'AccessIsDenied', 'Zugriff wird verweigert.');--Access is denied.
+SELECT localization.add_localized_resource('Warnings', 'de', 'AccessIsDenied', 'Zugriff verweigert.');--Access is denied.
 SELECT localization.add_localized_resource('Warnings', 'de', 'CannotCreateABackup', 'Sorry, Datenbank Backup kann nicht erstellt werden.');--Sorry, cannot create a database backup at this time.
 SELECT localization.add_localized_resource('Warnings', 'de', 'CannotCreateFlagTransactionTableNull', 'Kann die Markierung weder setzen noch updaten.Die Transaktionstabelle  stand nicht zur Verfügung.');--Cannot create or update flag. Transaction table was not provided.
 SELECT localization.add_localized_resource('Warnings', 'de', 'CannotCreateFlagTransactionTablePrimaryKeyNull', 'Kann die Markierung weder setzen noch uupdaten. Der Promary Key der Transaktionstabelle war nicht verfügbar,');--Cannot create or update flag. Transaction table primary key was not provided.

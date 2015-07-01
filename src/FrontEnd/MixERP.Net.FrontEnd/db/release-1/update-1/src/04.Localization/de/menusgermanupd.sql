@@ -19,8 +19,8 @@ UPDATE core.menu_locale SET menu_text = 'Cashflow Überschriften' WHERE culture =
 UPDATE core.menu_locale SET menu_text = 'Barwerte Depot Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SCR');
 UPDATE core.menu_locale SET menu_text = 'Benutzerpasswort ändern' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PWD');
 UPDATE core.menu_locale SET menu_text = 'Kontenplan' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='COA');
-UPDATE core.menu_locale SET menu_text = 'Kombinierte Artikel Details' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSCD');
-UPDATE core.menu_locale SET menu_text = 'Kombinierte Artikel' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSC');
+UPDATE core.menu_locale SET menu_text = 'Kombiartikel Details' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSCD');
+UPDATE core.menu_locale SET menu_text = 'Kombiartikel' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSC');
 UPDATE core.menu_locale SET menu_text = 'Erweiterte Masseinheiten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='CUOM');
 UPDATE core.menu_locale SET menu_text = 'Kostenstellen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='CC');
 UPDATE core.menu_locale SET menu_text = 'Kosten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='ICP');
@@ -41,7 +41,7 @@ UPDATE core.menu_locale SET menu_text = 'Markierungen' WHERE culture = 'de' AND 
 UPDATE core.menu_locale SET menu_text = 'Perioden und Geschftsjahr Management' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SFR');
 UPDATE core.menu_locale SET menu_text = 'Sachkonten Zugriffs Richtlinie' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SAP');
 UPDATE core.menu_locale SET menu_text = 'Wareneingang Eintrag' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='GRN');
-UPDATE core.menu_locale SET menu_text = 'Industrie-Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SIS');
+UPDATE core.menu_locale SET menu_text = 'Branchen-Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SIS');
 UPDATE core.menu_locale SET menu_text = 'Lager Kontoauszug' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='IAS');
 UPDATE core.menu_locale SET menu_text = 'Lagerbewegungen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='IIM');
 UPDATE core.menu_locale SET menu_text = 'Artikelgruppen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SIG');
@@ -66,9 +66,9 @@ UPDATE core.menu_locale SET menu_text = 'Gewinn- und Verlustrechnung' WHERE cult
 UPDATE core.menu_locale SET menu_text = 'Einkauf' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PU');
 UPDATE core.menu_locale SET menu_text = 'Einkauf & eingehende Angebote' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PUQ');
 UPDATE core.menu_locale SET menu_text = 'Auftragserteilung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PO');
-UPDATE core.menu_locale SET menu_text = 'Waren Nachbestellung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PRO');
+UPDATE core.menu_locale SET menu_text = 'Waren-Nachbestellung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PRO');
 UPDATE core.menu_locale SET menu_text = 'Einkauf Reports' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PUR');
-UPDATE core.menu_locale SET menu_text = 'Einkaufs Rücksendungen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PR');
+UPDATE core.menu_locale SET menu_text = 'Waren-Rücksendungen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PR');
 UPDATE core.menu_locale SET menu_text = 'Empfangsbestätigung Kunde' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='RFC');
 UPDATE core.menu_locale SET menu_text = 'Wiederkehrende Rechnung einrichten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='RIS');
 UPDATE core.menu_locale SET menu_text = 'Wiederkehrende Rechnungen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='RI');
