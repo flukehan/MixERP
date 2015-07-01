@@ -50086,16 +50086,14 @@ function removeLoader(el) {
 };
 ///#source 1 1 /Scripts/mixerp/core/dom/popunder.js
 function popUnder(div, button) {
-    div.css("position", "fixed");
+    div.removeClass("initially hidden");
+    div.show(500);
 
     div.position({
         my: "left top",
         at: "left bottom",
-        of: button,
-        collision: "fit"
+        of: button
     });
-
-    div.show(500);
 };
 ///#source 1 1 /Scripts/mixerp/core/dom/select.js
 jQuery.fn.getSelectedItem = function () {

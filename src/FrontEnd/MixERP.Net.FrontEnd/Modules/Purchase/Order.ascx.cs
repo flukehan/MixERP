@@ -41,6 +41,7 @@ namespace MixERP.Net.Core.Modules.Purchase
                 view.ChecklistUrl = "~/Modules/Purchase/Confirmation/Order.mix";
 
                 view.IsNonGlTransaction = true;
+                view.ShowMergeToGRNButton = true;
 
                 view.DbTableName = "transactions.non_gl_stock_master";
                 view.PrimaryKey = "non_gl_stock_master_id";
