@@ -803,7 +803,8 @@ SELECT localization.add_localized_resource('Titles', '', 'Execute', 'Execute');
 SELECT localization.add_localized_resource('Titles', '', 'ExternalCode', 'External Code');
 SELECT localization.add_localized_resource('Titles', '', 'Factor', 'Factor');
 SELECT localization.add_localized_resource('Titles', '', 'Fax', 'Fax');
-SELECT localization.add_localized_resource('Titles', '', 'FilePath', 'File Path');
+SELECT localization.add_localized_resource('Titles', '', 'FilePath', 'File Path');
+SELECT localization.add_localized_resource('Titles', '', 'Filter', 'Filter');
 SELECT localization.add_localized_resource('Titles', '', 'FinalDueAmountinBaseCurrency', 'Final Due Amount in Base Currency');
 SELECT localization.add_localized_resource('Titles', '', 'FirstPage', 'First Page');
 SELECT localization.add_localized_resource('Titles', '', 'FiscalYear', 'Fiscal Year');
@@ -820,6 +821,7 @@ SELECT localization.add_localized_resource('Titles', '', 'GLAdvice', 'GL Advice'
 SELECT localization.add_localized_resource('Titles', '', 'GLDetails', 'GL Details');
 SELECT localization.add_localized_resource('Titles', '', 'GLHead', 'GL Head');
 SELECT localization.add_localized_resource('Titles', '', 'Go', 'Go');
+SELECT localization.add_localized_resource('Titles', '', 'GoToBottom', 'GoToBottom');
 SELECT localization.add_localized_resource('Titles', '', 'GoToTop', 'GoToTop');
 SELECT localization.add_localized_resource('Titles', '', 'GoodsReceiptNote', 'Goods Receipt Note');
 SELECT localization.add_localized_resource('Titles', '', 'GrandTotal', 'Grand Total');
