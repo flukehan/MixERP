@@ -68,7 +68,7 @@ SELECT core.create_menu_locale('PUQ', 'de', 'Einkauf & eingehende Angebote');--P
 SELECT core.create_menu_locale('PO', 'de', 'Auftragserteilung');--Purchase Order
 SELECT core.create_menu_locale('PRO', 'de', 'Waren Nachbestellung');--Purchase Reorder
 SELECT core.create_menu_locale('PUR', 'de', 'Einkauf Reports');--Purchase Reports
-SELECT core.create_menu_locale('PR', 'de', 'Einkaufs-Rücksendungen');--Purchase Return
+SELECT core.create_menu_locale('PR', 'de', 'Waren-Rücksendungen');--Purchase Return
 SELECT core.create_menu_locale('RFC', 'de', 'Empfangsbestätigung Kunde');--Receipt from Customer
 SELECT core.create_menu_locale('RIS', 'de', 'Wiederkehrende Rechnung einrichten');--Recurring Invoice Setup
 SELECT core.create_menu_locale('RI', 'de', 'Wiederkehrende Rechnungen');--Recurring Invoices
