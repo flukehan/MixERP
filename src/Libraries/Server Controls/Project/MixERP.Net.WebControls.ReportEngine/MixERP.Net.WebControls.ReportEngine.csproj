@@ -91,6 +91,10 @@
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Logic\MixERP.Net.i18n\MixERP.Net.i18n.csproj">
+      <Project>{2ecd1c2e-d7d0-4a24-896a-e625b0566db5}</Project>
+      <Name>MixERP.Net.i18n</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Data\MixERP.Net.WebControls.ReportEngine.Data\MixERP.Net.WebControls.ReportEngine.Data.csproj">
       <Project>{daaad018-fcd1-4231-bb11-ef765f41463d}</Project>
       <Name>MixERP.Net.WebControls.ReportEngine.Data</Name>

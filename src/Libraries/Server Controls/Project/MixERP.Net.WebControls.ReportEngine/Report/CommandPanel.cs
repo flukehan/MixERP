@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {
@@ -58,6 +59,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.emailImageButton.ID = "SendEmailImageButton";
             this.emailImageButton.CssClass = this.GetImageButtonCssClass();
             this.emailImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("EmailIcon"));
+            this.emailImageButton.ToolTip = Titles.Email;
 
             p.Controls.Add(this.emailImageButton);
         }
@@ -69,6 +71,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.printImageButton.CssClass = this.GetImageButtonCssClass();
             this.printImageButton.OnClientClick = "javascript:window.print();return false;";
             this.printImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("PrintIcon"));
+            this.printImageButton.ToolTip = Titles.Print;
 
             p.Controls.Add(this.printImageButton);
         }
@@ -80,6 +83,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.goTopImageButton.CssClass = this.GetImageButtonCssClass();
             this.goTopImageButton.OnClientClick = "window.scrollTo(0, 0);";
             this.goTopImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("GoTopIcon"));
+            this.goTopImageButton.ToolTip = Titles.GoToTop;
 
             p.Controls.Add(this.goTopImageButton);
         }
@@ -91,6 +95,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.goBottomImageButton.ID = "GoBottom";
             this.goBottomImageButton.OnClientClick = "window.scrollTo(0,document.body.scrollHeight);";
             this.goBottomImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("GoBottomIcon"));
+            this.goBottomImageButton.ToolTip = Titles.GoToBottom;
 
             p.Controls.Add(this.goBottomImageButton);
         }
@@ -102,6 +107,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.filterImageButton.CssClass = this.GetImageButtonCssClass();
             this.filterImageButton.OnClientClick = "$('.report-parameter').toggle(500);return false;";
             this.filterImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("FilterIcon"));
+            this.filterImageButton.ToolTip = Titles.Filter;
 
             p.Controls.Add(this.filterImageButton);
         }
@@ -113,6 +119,7 @@ namespace MixERP.Net.WebControls.ReportEngine
             this.closeImageButton.ID = "CloseImageButton";
             this.closeImageButton.OnClientClick = "closeWindow();";
             this.closeImageButton.ImageUrl = this.Page.ResolveUrl(ConfigurationHelper.GetReportParameter("CloseIcon"));
+            this.closeImageButton.ToolTip = Titles.Close;
 
             p.Controls.Add(this.closeImageButton);
         }

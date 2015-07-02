@@ -8937,6 +8937,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Filter
+		/// </summary>
+		public static string Filter 
+		{
+			get
+			{
+				return Get("Filter");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Final Due Amount in Base Currency
 		/// </summary>
 		public static string FinalDueAmountinBaseCurrency 
@@ -9109,6 +9120,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("Go");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for GoToBottom
+		/// </summary>
+		public static string GoToBottom 
+		{
+			get
+			{
+				return Get("GoToBottom");
 			}
 		}
 		
