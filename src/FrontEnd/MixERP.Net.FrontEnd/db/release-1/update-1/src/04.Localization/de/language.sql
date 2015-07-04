@@ -16,12 +16,12 @@ SELECT localization.add_localized_resource('DbErrors', 'de', 'P3008', 'Ungültig
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3009', 'Falscher Zeitraum angegeben');--Invalid period specified.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3010', 'Ungültige Office-ID.');--Invalid office id.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3011', 'Ungültiges Office.');--Invalid office.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P3012', 'Ungültige Geschäft.');--Invalid store.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P3012', 'Ungültiges Geschäft.');--Invalid store.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3013', 'Ungültiges Barwerte-Depot.');--Invalid cash repository.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3050', 'Ungültige Partei.');--Invalid party.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3051', 'Üngültiger Artikel.');--Invalid item.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3052', 'Ungültige Einheit.');--Invalid unit.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P3053', 'Ungültige oder inkompatibel Einheit.');--Invalid or incompatible unit.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P3053', 'Ungültige oder inkompatible Einheit.');--Invalid or incompatible unit.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3054', 'Die angegebene Einheit ist mit der Basiseinheit nicht kompatibel.');--The reorder unit is incompatible with the base unit.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3055', 'Ungültiger Wechselkurs.');--Invalid exchange rate.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3101', 'Ungültige Login-Id.');--Invalid LoginId.
@@ -56,10 +56,10 @@ SELECT localization.add_localized_resource('DbErrors', 'de', 'P5301', 'Ungültig
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P5500', 'Unzureichende Artikelmenge.');--Insufficient item quantity.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P5800', 'Löschen einer Transaktion ist nicht erlaubt. Markieren Sie die Transaktion als verworfen');--Deleting a transaction is not allowed. Mark the transaction as rejected instead.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P5901', 'Bitte bitten Sie jemand anderen, die gebuchte Transaktion zu verifizieren.');--Please ask someone else to verify the transaction you posted.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P5910', 'Die Möglichkeiten zur automatischen Überprüfungs sind erschöpft. Die Transaktion wurde nicht verifiziert.');--Self verification limit exceeded. The transaction was not verified.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P5910', 'Die Möglichkeiten zur automatischen Verifizierung sind erschöpft. Die Transaktion wurde nicht verifiziert.');--Self verification limit exceeded. The transaction was not verified.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P5911', 'Die Möglichkeiten zur Prüfung der Umsätze wurden überschritten. Die Transaktion wurde nicht verifiziert.');--Sales verification limit exceeded. The transaction was not verified.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P5912', 'Die Möglichkeiten zur Prüfung der Einkäufe wurde überschritten. Die Transaktion wurde nicht verifiziert.');--Purchase verification limit exceeded. The transaction was not verified.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P5913', 'Hauptbuch Überprüfungsgrenze  überschritten. Die Transaktion wurde nicht verifiziert.');--GL verification limit exceeded. The transaction was not verified.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P5913', 'Hauptbuch Verifizierungsgrenze überschritten. Die Transaktion wurde nicht verifiziert.');--GL verification limit exceeded. The transaction was not verified.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P6010', 'Ungültige Konfiguration bei der Berechnung der  Kosten der verkauften Güter');--Invalid configuration: COGS method.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P8001', 'Gewinn und Verlustrechnungen von  Geschäftsstelle (n) mit unterschiedlichen Basiswährungen können nicht erstellt werden.');--Cannot produce P/L statement of office(s) having different base currencies.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P8002', 'Rohbilanzen von Geschäftsstellen mit unterschiedlichen Basiswährungen können nicht produziert werden.');--Cannot produce trial balance of office(s) having different base currencies.
@@ -75,9 +75,9 @@ SELECT localization.add_localized_resource('DbErrors', 'de', 'P9010', 'Zugriff v
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P9011', 'Zugriff verweigert. Sie haben ungültige Werte eingegeben.');--Access is denied. Invalid values supplied.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P9012', 'Zugriff verweigert! Eine Lager Korrektur Transaktion kann nicht Verweise auf mehrere Niederlassungen haben.');--Access is denied! A stock adjustment transaction cannot references multiple branches.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P9013', 'Zugriff verweigert! Eine Lager Journal Transaktion kann nicht Verweise auf mehrere Niederlassungen haben.');--Access is denied! A stock journal transaction cannot references multiple branches.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P9014', 'Zugriff verweigert. Sie können  eine Transaktion eines anderen Offices nicht überprüfen.');--Access is denied. You cannot verify a transaction of another office.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P9014', 'Zugriff verweigert. Sie können  eine Transaktion eines anderen Offices nicht verifizieren.');--Access is denied. You cannot verify a transaction of another office.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P9015', 'Zugriff verweigert. Sie können Rück oder Vordatierte Transaktionen nicht verifizieren.');--Access is denied. You cannot verify past or futuer dated transaction.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P9016', 'Zugriff verweigert. Sie haben kein Recht, die Transaktion zu überprüfen.');--Access is denied. You don''t have the right to verify the transaction.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P9016', 'Zugriff verweigert. Sie haben kein Recht, die Transaktion zu üverifizieren.');--Access is denied. You don''t have the right to verify the transaction.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P9017', 'Zugriff verweigert. Sie haben kein Recht, die Transaktion zu widerrufen.');--Access is denied. You don''t have the right to withdraw the transaction.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P9201', 'Zugriff verweigert. Sie können die "Transaktions Details" Tabelle nicht aktualisieren.');--Acess is denied. You cannot update the "transaction_details" table.
 SELECT localization.add_localized_resource('DbResource', 'de', 'actions', 'Aktionen');--Actions
@@ -211,7 +211,7 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'brand_id', 'M
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'brand_name', 'Markenname');--Brand Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'browser', 'Browser');--Browser
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_change_password', 'Darf Paswort ändern');--Can Change Password
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_self_verify', 'Darf Selbst Überprüfen');--Can Self Verify
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_self_verify', 'Darf Selbst Verifizieren');--Can Self Verify
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_verify_gl_transactions', 'Darf Sachkonten Transaktionen Verifizieren');--Can Verify Gl Transactions
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_verify_purchase_transactions', 'Darf Einkaufs Transaktionen Verifizieren');--Can Verify Purchase Transactions
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_verify_sales_transactions', 'Kann Verkaufs Transaktionen Verifizieren');--Can Verify Sales Transactions
@@ -677,7 +677,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'ApprovedTransactions
 SELECT localization.add_localized_resource('Titles', 'de', 'AreYouSure', 'Sind Sie sicher?');--Are you sure?
 SELECT localization.add_localized_resource('Titles', 'de', 'AssignCashier', 'Kassierer zuweisen');--Assign Cashier
 SELECT localization.add_localized_resource('Titles', 'de', 'AttachmentsPlus', 'Anhänge (+)');--Attachments (+)
-SELECT localization.add_localized_resource('Titles', 'de', 'AutoVerificationPolicy', 'Automatische Überprüfung Richtlinie');--Autoverification Policy
+SELECT localization.add_localized_resource('Titles', 'de', 'AutoVerificationPolicy', 'Automatische Verifizierungs-Richtlinie');--Autoverification Policy
 SELECT localization.add_localized_resource('Titles', 'de', 'AutomaticallyApprovedByWorkflow', 'Automatisch vom Workflow-zugelassen');--Automatically Approved by Workflow
 SELECT localization.add_localized_resource('Titles', 'de', 'Back', 'Zurück');--Back
 SELECT localization.add_localized_resource('Titles', 'de', 'BackToPreviousPage', 'Vorhergehende Seite');--Back to Previous Page
