@@ -73,6 +73,7 @@
       <Link>mixerp.licenseheader</Link>
     </Content>
     <Content Include="Confirmation\Adjustment.ascx" />
+    <Content Include="Entry\TransferRequest.ascx" />
     <Content Include="Mix Open Foundation.snk" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
@@ -109,6 +110,7 @@
     <Content Include="Scripts\Setup\Parties.js" />
     <Content Include="Services\Entry\Adjustment.asmx" />
     <Content Include="Services\Entry\Transfer.asmx" />
+    <Content Include="Services\Entry\TransferRequest.asmx" />
     <Content Include="Setup\CompoundItemDetails.ascx" />
     <Content Include="Setup\CompoundItems.ascx" />
     <Content Include="Setup\ItemTypes.ascx" />
@@ -166,6 +168,13 @@
     <Compile Include="Entry\Transfer.ascx.designer.cs">
       <DependentUpon>Transfer.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Entry\TransferRequest.ascx.cs">
+      <DependentUpon>TransferRequest.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entry\TransferRequest.ascx.designer.cs">
+      <DependentUpon>TransferRequest.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Index.ascx.cs">
       <DependentUpon>Index.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -215,6 +224,10 @@
     </Compile>
     <Compile Include="Services\Entry\Transfer.asmx.cs">
       <DependentUpon>Transfer.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Entry\TransferRequest.asmx.cs">
+      <DependentUpon>TransferRequest.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\ItemData.asmx.cs">
@@ -346,6 +359,7 @@
     </Compile>
     <Compile Include="TransferRequest.ascx.cs">
       <DependentUpon>TransferRequest.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TransferRequest.ascx.designer.cs">
       <DependentUpon>TransferRequest.ascx</DependentUpon>

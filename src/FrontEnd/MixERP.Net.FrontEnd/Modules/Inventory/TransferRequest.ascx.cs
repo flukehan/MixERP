@@ -18,12 +18,15 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.Collections.Generic;
+using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
+using MixERP.Net.Entities;
 using MixERP.Net.Entities.Contracts;
+using MixERP.Net.Entities.Transactions;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.StockAdjustmentFactory;
+using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Inventory
 {
@@ -31,22 +34,85 @@ namespace MixERP.Net.Core.Modules.Inventory
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            using (FormView form = new FormView())
-            {
-                form.Text = "Stock Transfer Request";//Titles.StockTransferRequest;
-                form.StoreServiceUrl = "/Modules/Inventory/Services/ItemData.asmx/GetStores";
-                form.ItemServiceUrl = "/Modules/Inventory/Services/ItemData.asmx/GetItems";
-                form.UnitServiceUrl = "/Modules/Inventory/Services/ItemData.asmx/GetUnits";
-                form.ItemPopupUrl =
-                    "/Modules/Inventory/Setup/ItemsPopup.mix?modal=1&CallBackFunctionName=loadItems&AssociatedControlId=ItemIdHidden";
-                form.ItemIdQuerySericeUrl = "/Modules/Inventory/Services/ItemData.asmx/GetItemCodeByItemId";
-                form.ValidateSides = false;
-                form.HideSides = true;
-                form.Catalog = AppUsers.GetCurrentUserDB();
-                form.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            this.DateFromDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            this.DateToDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            this.AddGridView();
+            this.BindGridView();
+        }
 
-                this.Placeholder1.Controls.Add(form);
+        private void AddGridView()
+        {
+            this.grid = new MixERPGridView();
+            this.GridViewPlaceholder.Controls.Add(this.grid);
+        }
+
+        protected void ShowButton_Click(object sender, EventArgs e)
+        {
+            this.BindGridView();
+            ;
+        }
+
+        private void BindGridView()
+        {
+            this.grid.DataSource = this.GetDataSource();
+            this.grid.DataBind();
+        }
+
+        private IEnumerable<DbGetInventoryTransferRequestViewResult> GetDataSource()
+        {
+            string catalog = AppUsers.GetCurrentUserDB();
+
+            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+            long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
+            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+
+            DateTime from = Conversion.TryCastDate(this.DateFromDateTextBox.Text);
+            DateTime to = Conversion.TryCastDate(this.DateToDateTextBox.Text);
+
+            string office = this.OfficeTextBox.Value;
+            string store = this.StoreTextBox.Value;
+            string authorized = this.AuthorizedTextBox.Value;
+            string acknowledged = this.AcknowledgedTextBox.Value;
+            string user = this.UserTextBox.Value;
+            string referenceNumber = this.ReferenceNumberTextBox.Value;
+            string statementReference = this.StatementReferenceTextBox.Value;
+
+            const string sql =
+                @"SELECT * FROM transactions.get_inventory_transfer_request_view(@0::integer, @1::bigint, @2::integer,@3::date,@4::date,@5::text,@6::text,@7::text,@8::text,@9::text,@10::text,@11::text);";
+            return Factory.Get<DbGetInventoryTransferRequestViewResult>(catalog, sql, userId, loginId, officeId, from,
+                to, office, store, authorized, acknowledged, user, referenceNumber, statementReference);
+        }
+
+        #region IDisposable
+
+        private bool disposed;
+        private MixERPGridView grid;
+
+        public override void Dispose()
+        {
+            if (!this.disposed)
+            {
+                this.Dispose(true);
+                base.Dispose();
             }
         }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
+            if (this.grid != null)
+            {
+                this.grid.Dispose();
+                this.grid = null;
+            }
+
+            this.disposed = true;
+        }
+
+        #endregion
     }
 }

@@ -74,6 +74,7 @@
     <Compile Include="Helpers\Units.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\ShippingAddresses.cs" />
+    <Compile Include="Transactions\StockTransferRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\mixerp.licenseheader">

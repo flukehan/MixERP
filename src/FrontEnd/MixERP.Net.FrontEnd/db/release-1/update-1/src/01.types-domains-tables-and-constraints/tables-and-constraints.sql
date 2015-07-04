@@ -74,3 +74,60 @@ BEGIN
 END
 $$
 LANGUAGE plpgsql;
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'transactions'
+        AND    c.relname = 'inventory_transfer_requests'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE transactions.inventory_transfer_requests
+        (
+            inventory_transfer_request_id               BIGSERIAL NOT NULL PRIMARY KEY,
+            office_id                                   integer NOT NULL REFERENCES office.offices(office_id),
+            user_id                                     integer NOT NULL REFERENCES office.users(user_id),
+            login_id                                    bigint NOT NULL REFERENCES audit.logins(login_id),
+            store_id                                    integer NOT NULL REFERENCES office.stores(store_id),
+            value_date                                  date NOT NULL,
+            reference_number                            national character varying(24) NOT NULL,
+            statement_reference                         text,
+            authorized                                  boolean NOT NULL DEFAULT(false),
+            acknowledged                                boolean NOT NULL DEFAULT(FALSE),
+            audit_ts                                    TIMESTAMP WITH TIME ZONE DEFAULT(now())
+        );
+    END IF;    
+END
+$$
+LANGUAGE plpgsql;
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'transactions'
+        AND    c.relname = 'inventory_transfer_request_details'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE transactions.inventory_transfer_request_details
+        (
+            inventory_transfer_request_detail_id        BIGSERIAL NOT NULL PRIMARY KEY,
+            inventory_transfer_request_id               bigint NOT NULL REFERENCES transactions.inventory_transfer_requests(inventory_transfer_request_id),
+            value_date                                  date NOT NULL,
+            item_id                                     integer NOT NULL REFERENCES core.items(item_id),
+            quantity                                    integer NOT NULL,
+            unit_id                                     integer NOT NULL REFERENCES core.units(unit_id),
+            base_quantity                               numeric NOT NULL,
+            base_unit_id                                integer NOT NULL REFERENCES core.units(unit_id)
+        );
+    END IF;    
+END
+$$
+LANGUAGE plpgsql;

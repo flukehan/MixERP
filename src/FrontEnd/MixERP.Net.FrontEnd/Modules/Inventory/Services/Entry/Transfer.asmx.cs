@@ -54,11 +54,14 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                 {
                     if (model.TransferTypeEnum == TransactionTypeEnum.Credit)
                     {
-                        decimal existingQuantity = Items.CountItemInStock(AppUsers.GetCurrentUserDB(), model.ItemCode, model.UnitName, model.StoreName);
+                        decimal existingQuantity = Items.CountItemInStock(AppUsers.GetCurrentUserDB(), model.ItemCode,
+                            model.UnitName, model.StoreName);
 
                         if (existingQuantity < model.Quantity)
                         {
-                            throw new MixERPException(string.Format(CultureInfo.CurrentCulture, Errors.InsufficientStockWarning, Conversion.TryCastInteger(existingQuantity), model.UnitName, model.ItemName));
+                            throw new MixERPException(string.Format(CultureInfo.CurrentCulture,
+                                Errors.InsufficientStockWarning, Conversion.TryCastInteger(existingQuantity),
+                                model.UnitName, model.ItemName));
                         }
                     }
                 }
@@ -67,7 +70,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
                 int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
                 long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
 
-                return StockTransfer.Add(AppUsers.GetCurrentUserDB(), officeId, userId, loginId, valueDate, referenceNumber, statementReference, stockTransferModels);
+                return StockTransfer.Add(AppUsers.GetCurrentUserDB(), officeId, userId, loginId, valueDate,
+                    referenceNumber, statementReference, stockTransferModels);
             }
             catch (Exception ex)
             {
@@ -76,7 +80,6 @@ namespace MixERP.Net.Core.Modules.Inventory.Services.Entry
             }
         }
 
-        // ReSharper disable once ReturnTypeCanBeEnumerable.Local
         private static Collection<StockAdjustmentDetail> GetModels(string json)
         {
             Collection<StockAdjustmentDetail> models = new Collection<StockAdjustmentDetail>();

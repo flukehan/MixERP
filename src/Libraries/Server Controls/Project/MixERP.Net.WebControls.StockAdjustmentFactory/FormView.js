@@ -35,9 +35,11 @@ var addRow = function () {
     var unitName = unitSelect.getSelectedText();
     var quantity = parseInt(quantityInputText.val() || 0);
 
-    if (isNullOrWhiteSpace(tranType) || tranType === selectLocalized) {
-        makeDirty(transactionTypeSelect);
-        return;
+    if (transactionTypeSelect.length) {
+        if (isNullOrWhiteSpace(tranType) || tranType === selectLocalized) {
+            makeDirty(transactionTypeSelect);
+            return;
+        };
     };
 
     if (isNullOrWhiteSpace(storeName) || storeName === selectLocalized) {
@@ -75,29 +77,68 @@ var addRow = function () {
     appendToTable(tranType, storeName, itemCode, itemName, unitName, quantity);
     itemCodeInputText.val("");
     quantityInputText.val("");
-    transactionTypeSelect.focus();
+
+    if (transactionTypeSelect.length) {
+        transactionTypeSelect.focus();
+        return;
+    };
+
+    storeSelect.attr("disabled", "disabled");
+    itemCodeInputText.focus();
 };
 
 function appendToTable(tranType, storeName, itemCode, itemName, unitName, quantity) {
     var rows = transferGridView.find("tbody tr:not(:last-child)");
     var match = false;
+    var html;
+
+    if (transactionTypeSelect.length) {
+        rows.each(function () {
+            var row = $(this);
+            if (getColumnText(row, 0) !== tranType &&
+                getColumnText(row, 1) === storeName &&
+                getColumnText(row, 2) === itemCode) {
+                $.notify(duplicateEntryLocalized);
+
+                makeDirty(itemSelect);
+                match = true;
+            };
+
+            if (getColumnText(row, 0) === tranType &&
+                getColumnText(row, 1) === storeName &&
+                getColumnText(row, 2) === itemCode &&
+                getColumnText(row, 4) === unitName) {
+                setColumnText(row, 5, getFormattedNumber(parseFloat2(getColumnText(row, 5)) + quantity));
+
+                addDanger(row);
+                match = true;
+                return;
+            }
+        });
+
+        if (!match) {
+            html = "<tr class='grid2-row'><td>" + tranType + "</td><td>" + storeName + "</td><td>" + itemCode + "</td><td>" + itemName + "</td><td>" + unitName + "</td><td class='text-right'>" + getFormattedNumber(quantity) + "</td>"
+                + "</td><td><a class='pointer' onclick='removeRow($(this));'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
+            transferGridView.find("tr:last").before(html);
+        };
+
+        return;
+    };
 
     rows.each(function () {
         var row = $(this);
-        if (getColumnText(row, 0) !== tranType &&
-            getColumnText(row, 1) === storeName &&
-            getColumnText(row, 2) === itemCode) {
+        if (getColumnText(row, 0) === storeName &&
+            getColumnText(row, 1) === itemCode) {
             $.notify(duplicateEntryLocalized);
 
             makeDirty(itemSelect);
             match = true;
         };
 
-        if (getColumnText(row, 0) === tranType &&
-            getColumnText(row, 1) === storeName &&
-            getColumnText(row, 2) === itemCode &&
-            getColumnText(row, 4) === unitName) {
-            setColumnText(row, 5, getFormattedNumber(parseFloat2(getColumnText(row, 5)) + quantity));
+        if (getColumnText(row, 0) === storeName &&
+            getColumnText(row, 1) === itemCode &&
+            getColumnText(row, 3) === unitName) {
+            setColumnText(row, 4, getFormattedNumber(parseFloat2(getColumnText(row, 4)) + quantity));
 
             addDanger(row);
             match = true;
@@ -106,10 +147,10 @@ function appendToTable(tranType, storeName, itemCode, itemName, unitName, quanti
     });
 
     if (!match) {
-        var html = "<tr class='grid2-row'><td>" + tranType + "</td><td>" + storeName + "</td><td>" + itemCode + "</td><td>" + itemName + "</td><td>" + unitName + "</td><td class='text-right'>" + getFormattedNumber(quantity) + "</td>"
+        html = "<tr class='grid2-row'><td>" + storeName + "</td><td>" + itemCode + "</td><td>" + itemName + "</td><td>" + unitName + "</td><td class='text-right'>" + getFormattedNumber(quantity) + "</td>"
             + "</td><td><a class='pointer' onclick='removeRow($(this));'><i class='ui delete icon'></i></a><a class='pointer' onclick='toggleDanger($(this));'><i class='ui pointer check mark icon'></a></i><a class='pointer' onclick='toggleSuccess($(this));'><i class='ui pointer thumbs up icon'></i></a></td></tr>";
         transferGridView.find("tr:last").before(html);
-    }
+    };
 };
 
 saveButton.click(function () {

@@ -41,6 +41,8 @@ UNION ALL SELECT 'Purchase Return', '~/Modules/Purchase/Return.mix', 'PR', 2, co
 UNION ALL SELECT 'Purchase Reports', NULL, 'PUR', 1, core.get_menu_id('PU')
 UNION ALL SELECT 'Inventory Movements', NULL, 'IIM', 1, core.get_menu_id('ITM')
 UNION ALL SELECT 'Stock Transfer Request', '~/Modules/Inventory/TransferRequest.mix', 'STR', 2, core.get_menu_id('IIM')
+UNION ALL SELECT 'Stock Transfer Authorization', '~/Modules/Inventory/TransferAuthorization.mix', 'STP', 2, core.get_menu_id('IIM')
+UNION ALL SELECT 'Stock Transfer Acknowledgement', '~/Modules/Inventory/TransferAcknowledgement.mix', 'STK', 2, core.get_menu_id('IIM')
 UNION ALL SELECT 'Stock Transfer Journal', '~/Modules/Inventory/Transfer.mix', 'STJ', 2, core.get_menu_id('IIM')
 UNION ALL SELECT 'Stock Adjustments', '~/Modules/Inventory/Adjustment.mix', 'STA', 2, core.get_menu_id('IIM')
 UNION ALL SELECT 'Setup & Maintenance', NULL, 'ISM', 1, core.get_menu_id('ITM')

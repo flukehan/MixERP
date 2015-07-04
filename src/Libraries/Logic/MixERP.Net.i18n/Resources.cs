@@ -440,6 +440,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Stock transfer request can only contain debit entries.
+		/// </summary>
+		public static string P5003 
+		{
+			get
+			{
+				return Get("P5003");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Past dated transactions are not allowed.
 		/// </summary>
 		public static string P5010 
@@ -11621,6 +11632,28 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Stock Transfer Acknowledgement
+		/// </summary>
+		public static string StockTransferAcknowledgement 
+		{
+			get
+			{
+				return Get("StockTransferAcknowledgement");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Stock Transfer Authorization
+		/// </summary>
+		public static string StockTransferAuthorization 
+		{
+			get
+			{
+				return Get("StockTransferAuthorization");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Stock Transfer Journal
 		/// </summary>
 		public static string StockTransferJournal 
@@ -11628,6 +11661,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("StockTransferJournal");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Stock Transfer Request
+		/// </summary>
+		public static string StockTransferRequest 
+		{
+			get
+			{
+				return Get("StockTransferRequest");
 			}
 		}
 		
