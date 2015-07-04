@@ -23800,118 +23800,117 @@ SELECT core.get_menu_id('OTSI'), 'fr', 'Stock d''ouverture';
 
 --GERMAN
 INSERT INTO core.menu_locale(menu_id, culture, menu_text)
-SELECT core.get_menu_id('STA'), 'de', 'Lager Anpassung' UNION ALL
+SELECT core.get_menu_id('STA'), 'de', 'Auf Anpassungen' UNION ALL
 SELECT core.get_menu_id('PWD'), 'de', 'Benutzerpasswort ändern' UNION ALL
-SELECT core.get_menu_id('UER'), 'de', 'Wechselkurse Updaten' UNION ALL
+SELECT core.get_menu_id('UER'), 'de', 'Update Wechselkurse' UNION ALL
 SELECT core.get_menu_id('BO'), 'de', 'Back Office' UNION ALL
 SELECT core.get_menu_id('BAK'), 'de', 'Datenbank sichern' UNION ALL
 SELECT core.get_menu_id('TB'), 'de', 'Rohbilanz' UNION ALL
 SELECT core.get_menu_id('BS'), 'de', 'Bilanz' UNION ALL
-SELECT core.get_menu_id('TRF'), 'de', 'Markierungen' UNION ALL
-SELECT core.get_menu_id('BSA'), 'de', 'Bonus Tafel Zuteilung' UNION ALL
-SELECT core.get_menu_id('BSD'), 'de', 'Bonus Tafel-Details' UNION ALL
+SELECT core.get_menu_id('TRF'), 'de', 'Flaggen' UNION ALL
+SELECT core.get_menu_id('BSA'), 'de', 'Bonus Slab Zuordnung' UNION ALL
+SELECT core.get_menu_id('BSD'), 'de', 'Bonus Slab-Details' UNION ALL
 SELECT core.get_menu_id('CC'), 'de', 'Kostenstellen' UNION ALL
-SELECT core.get_menu_id('PU'), 'de', 'Einkauf' UNION ALL
-SELECT core.get_menu_id('PUQ'), 'de', 'Einkauf & eingehende Angebote' UNION ALL
-SELECT core.get_menu_id('DRP'), 'de', 'Direkt Einkauf' UNION ALL
-SELECT core.get_menu_id('PRO'), 'de', 'Waren Nachbestellung' UNION ALL
-SELECT core.get_menu_id('PR'), 'de', 'Waren-Rücksendungen' UNION ALL
-SELECT core.get_menu_id('SVV'), 'de', 'Voucher  Verifizierungs Richtlinie' UNION ALL
+SELECT core.get_menu_id('PU'), 'de', 'Kauf' UNION ALL
+SELECT core.get_menu_id('PUQ'), 'de', 'Einkauf & Quotation' UNION ALL
+SELECT core.get_menu_id('DRP'), 'de', 'Direktkauf' UNION ALL
+SELECT core.get_menu_id('PRO'), 'de', 'Kauf Reorder' UNION ALL
+SELECT core.get_menu_id('PR'), 'de', 'Kauf Return' UNION ALL
+SELECT core.get_menu_id('SVV'), 'de', 'Gutschein Verification Politik' UNION ALL
 SELECT core.get_menu_id('PAT'), 'de', 'Zahlungsbedingungen' UNION ALL
 SELECT core.get_menu_id('BOTC'), 'de', 'Steuerkonfiguration' UNION ALL
 SELECT core.get_menu_id('SSM'), 'de', 'Einrichtung und Wartung' UNION ALL
 SELECT core.get_menu_id('ISM'), 'de', 'Einrichtung und Wartung' UNION ALL
 SELECT core.get_menu_id('FSM'), 'de', 'Einrichtung und Wartung' UNION ALL
 SELECT core.get_menu_id('CBA'), 'de', 'Bankkonten' UNION ALL
-SELECT core.get_menu_id('PA'), 'de', 'Parteien-Konten' UNION ALL
-SELECT core.get_menu_id('SQ'), 'de', 'Kostenvoranschläge' UNION ALL
+SELECT core.get_menu_id('PA'), 'de', 'Party-Accounts' UNION ALL
+SELECT core.get_menu_id('SQ'), 'de', 'Vertrieb Quotation' UNION ALL
 SELECT core.get_menu_id('SA'), 'de', 'Vertrieb' UNION ALL
 SELECT core.get_menu_id('PLA'), 'de', 'Gewinn- und Verlustrechnung' UNION ALL
-SELECT core.get_menu_id('SSCD'), 'de', 'Kombiartikel Details' UNION ALL
+SELECT core.get_menu_id('SSCD'), 'de', 'Verbindung Einzelteil-Details' UNION ALL
 SELECT core.get_menu_id('STXD'), 'de', 'Umsatzsteuer-Details' UNION ALL
 SELECT core.get_menu_id('PSA'), 'de', 'Lieferadressen' UNION ALL
-SELECT core.get_menu_id('SEAR-LV'), 'de', 'Login Form' UNION ALL
+SELECT core.get_menu_id('SEAR-LV'), 'de', 'Login Zeige' UNION ALL
 SELECT core.get_menu_id('SD'), 'de', 'Vertrieb Lieferung' UNION ALL
 SELECT core.get_menu_id('SST'), 'de', 'Vertriebsteams' UNION ALL
-SELECT core.get_menu_id('SOB'), 'de', 'Office & Filiale einrichten' UNION ALL
+SELECT core.get_menu_id('SOB'), 'de', 'Büro & Filiale einrichten' UNION ALL
 SELECT core.get_menu_id('DBSTAT'), 'de', 'Datenbankstatistik' UNION ALL
-SELECT core.get_menu_id('IAS'), 'de', 'Lager Kontoauszug' UNION ALL
+SELECT core.get_menu_id('IAS'), 'de', 'Bestandskontoauszug' UNION ALL
 SELECT core.get_menu_id('AS'), 'de', 'Kontoauszug' UNION ALL
 SELECT core.get_menu_id('RI'), 'de', 'Wiederkehrende Rechnungen' UNION ALL
-SELECT core.get_menu_id('SAT'), 'de', 'Administrations Werkzeuge' UNION ALL
-SELECT core.get_menu_id('EOD'), 'de', 'Tagesabschluss ' UNION ALL
+SELECT core.get_menu_id('SAT'), 'de', 'Admin Tools' UNION ALL
+SELECT core.get_menu_id('EOD'), 'de', 'End of Day Betrieb' UNION ALL
 SELECT core.get_menu_id('FI'), 'de', 'Finanzen' UNION ALL
-SELECT core.get_menu_id('TXEXT'), 'de', 'Steuer Ausnahmearten' UNION ALL
-SELECT core.get_menu_id('SFY'), 'de', 'Geschäftsjahr Informationen' UNION ALL
+SELECT core.get_menu_id('TXEXT'), 'de', 'Steuerbefreiung Typen' UNION ALL
+SELECT core.get_menu_id('SFY'), 'de', 'Geschäftsjahresinformationen' UNION ALL
 SELECT core.get_menu_id('TXA'), 'de', 'Steuerbehörden' UNION ALL
 SELECT core.get_menu_id('CF'), 'de', 'Cashflow' UNION ALL
-SELECT core.get_menu_id('CFH'), 'de', 'Cashflow Überschriften' UNION ALL
+SELECT core.get_menu_id('CFH'), 'de', 'Kapitalflussüberschriften' UNION ALL
 SELECT core.get_menu_id('SRM'), 'de', 'Rollenverwaltung' UNION ALL
 SELECT core.get_menu_id('SUM'), 'de', 'Benutzerverwaltung' UNION ALL
-SELECT core.get_menu_id('SFR'), 'de', 'Perioden und Geschftsjahr Management' UNION ALL
+SELECT core.get_menu_id('SFR'), 'de', 'Frequenz & Geschäftsjahr Verwaltung' UNION ALL
 SELECT core.get_menu_id('CUR'), 'de', 'Währungsmanagement' UNION ALL
-SELECT core.get_menu_id('SPM'), 'de', 'Richtlinien Management' UNION ALL
-SELECT core.get_menu_id('SAP'), 'de', 'Sachkonten Zugriffs Richtlinie' UNION ALL
+SELECT core.get_menu_id('SPM'), 'de', 'Policy Management' UNION ALL
+SELECT core.get_menu_id('SAP'), 'de', 'Hauptbuch-Richtlinien' UNION ALL
 SELECT core.get_menu_id('SIG'), 'de', 'Artikelgruppen' UNION ALL
-SELECT core.get_menu_id('STXEXD'), 'de', 'Umsatzsteuer Ausnahmen Details' UNION ALL
-SELECT core.get_menu_id('CTST'), 'de', 'Bezirks Umsatzsteuer' UNION ALL
-SELECT core.get_menu_id('STST'), 'de', 'Landes Umsatzsteuern' UNION ALL
+SELECT core.get_menu_id('STXEXD'), 'de', 'Sales Tax Exempt Einzelheiten' UNION ALL
+SELECT core.get_menu_id('CTST'), 'de', 'Grafschaft Umsatzsteuer' UNION ALL
+SELECT core.get_menu_id('STST'), 'de', 'State Sales Taxes' UNION ALL
 SELECT core.get_menu_id('STX'), 'de', 'Umsatzsteuer' UNION ALL
-SELECT core.get_menu_id('SHI'), 'de', 'Versand  Informationen' UNION ALL
+SELECT core.get_menu_id('SHI'), 'de', 'Shipper Informationen' UNION ALL
 SELECT core.get_menu_id('SOS'), 'de', 'Office Setup' UNION ALL
-SELECT core.get_menu_id('OTSI'), 'de', 'Warenanfangsbestand' UNION ALL
-SELECT core.get_menu_id('STXEX'), 'de', 'Umsatzsteuer Ausnahmen' UNION ALL
+SELECT core.get_menu_id('OTSI'), 'de', 'Öffnungs Inventar' UNION ALL
+SELECT core.get_menu_id('STXEX'), 'de', 'Umsatzsteuer befreit' UNION ALL
 SELECT core.get_menu_id('SSI'), 'de', 'Artikelpflege' UNION ALL
-SELECT core.get_menu_id('SSC'), 'de', 'Kombiartikel' UNION ALL
+SELECT core.get_menu_id('SSC'), 'de', 'Compound Artikel' UNION ALL
 SELECT core.get_menu_id('SAR-TSI'), 'de', 'Meistverkaufte Artikel' UNION ALL
-SELECT core.get_menu_id('STJ'), 'de', 'Umlagerungs Journal' UNION ALL
-SELECT core.get_menu_id('JVN'), 'de', 'Journal Voucher  Eintrag' UNION ALL
-SELECT core.get_menu_id('AGS'), 'de', 'Alterungstafel' UNION ALL
-SELECT core.get_menu_id('SSB'), 'de', 'Marken' UNION ALL
-SELECT core.get_menu_id('GRN'), 'de', 'Wareneingang Eintrag' UNION ALL
-SELECT core.get_menu_id('TXM'), 'de', 'Steuerbasis' UNION ALL
+SELECT core.get_menu_id('STJ'), 'de', 'Umlagerung Blatt' UNION ALL
+SELECT core.get_menu_id('JVN'), 'de', 'Journal Gutschein Eintrag' UNION ALL
+SELECT core.get_menu_id('AGS'), 'de', 'Ageing Brammen' UNION ALL
+SELECT core.get_menu_id('SSB'), 'de', 'Brands' UNION ALL
+SELECT core.get_menu_id('GRN'), 'de', 'Wareneingang Hinweis Eintrag' UNION ALL
+SELECT core.get_menu_id('TXM'), 'de', 'Steuern Meister' UNION ALL
 SELECT core.get_menu_id('IIM'), 'de', 'Lagerbewegungen' UNION ALL
-SELECT core.get_menu_id('OTS'), 'de', 'Einrichtungs  Setup ' UNION ALL
-SELECT core.get_menu_id('PO'), 'de', 'Auftragserteilung' UNION ALL
-SELECT core.get_menu_id('ISP'), 'de', 'Verkaufspreise' UNION ALL
+SELECT core.get_menu_id('OTS'), 'de', 'Eine Zeiteinstellung' UNION ALL
+SELECT core.get_menu_id('PO'), 'de', 'Auftragsbestätigung' UNION ALL
+SELECT core.get_menu_id('ISP'), 'de', 'Verkaufs Preise' UNION ALL
 SELECT core.get_menu_id('SMP'), 'de', 'Verschiedene Parameter' UNION ALL
-SELECT core.get_menu_id('SO'), 'de', 'Eingehende Bestellungen' UNION ALL
+SELECT core.get_menu_id('SO'), 'de', 'Sales Order' UNION ALL
 SELECT core.get_menu_id('COA'), 'de', 'Kontenplan' UNION ALL
-SELECT core.get_menu_id('SSP'), 'de', 'Lager Richtlinien' UNION ALL
-SELECT core.get_menu_id('SMA'), 'de', 'Menü-Zugriffs Richtlinien' UNION ALL
-SELECT core.get_menu_id('SAV'), 'de', 'Automatische Verifizierungs  Richtlinie' UNION ALL
-SELECT core.get_menu_id('ICP'), 'de', 'Kosten' UNION ALL
+SELECT core.get_menu_id('SSP'), 'de', 'Speicher-Politik' UNION ALL
+SELECT core.get_menu_id('SMA'), 'de', 'Menü-Richtlinien' UNION ALL
+SELECT core.get_menu_id('SAV'), 'de', 'Automatische Verifikation Politik' UNION ALL
+SELECT core.get_menu_id('ICP'), 'de', 'Kosten Preise' UNION ALL
 SELECT core.get_menu_id('ITM'), 'de', 'Produkte & Angebote' UNION ALL
-SELECT core.get_menu_id('RFC'), 'de', 'Empfangsbestätigung Kunde' UNION ALL
-SELECT core.get_menu_id('IR'), 'de', 'Reports' UNION ALL
-SELECT core.get_menu_id('FIR'), 'de', 'Reports ' UNION ALL
+SELECT core.get_menu_id('RFC'), 'de', 'Empfang vom Kunden' UNION ALL
+SELECT core.get_menu_id('IR'), 'de', 'Berichte' UNION ALL
+SELECT core.get_menu_id('FIR'), 'de', 'Berichte' UNION ALL
 SELECT core.get_menu_id('SEAR'), 'de', 'Prüfungsberichte' UNION ALL
-SELECT core.get_menu_id('PUR'), 'de', 'Einkaufs  Reports' UNION ALL
+SELECT core.get_menu_id('PUR'), 'de', 'Kauf Berichte' UNION ALL
 SELECT core.get_menu_id('SAR'), 'de', 'Verkaufsberichte' UNION ALL
-SELECT core.get_menu_id('SR'), 'de', 'Rücknahmen' UNION ALL
-SELECT core.get_menu_id('SCS'), 'de', 'Kassen-Setup' UNION ALL
-SELECT core.get_menu_id('SCTS'), 'de', 'Bezirks-Setup' UNION ALL
-SELECT core.get_menu_id('SDS'), 'de', 'Abteilungs  Setup' UNION ALL
-SELECT core.get_menu_id('SCR'), 'de', 'Barwerte Depot Setup' UNION ALL
-SELECT core.get_menu_id('SES'), 'de', 'Körperschaftes Setup' UNION ALL
-SELECT core.get_menu_id('SSS'), 'de', 'Landes Setup' UNION ALL
-SELECT core.get_menu_id('SIS'), 'de', 'Branchen-Setup' UNION ALL
+SELECT core.get_menu_id('SR'), 'de', 'Absatzertrag' UNION ALL
+SELECT core.get_menu_id('SCS'), 'de', 'Zähler-Setup' UNION ALL
+SELECT core.get_menu_id('SCTS'), 'de', 'Grafschaft-Setup' UNION ALL
+SELECT core.get_menu_id('SDS'), 'de', 'Abteilung einrichten' UNION ALL
+SELECT core.get_menu_id('SCR'), 'de', 'Barzahlung Repository einrichten' UNION ALL
+SELECT core.get_menu_id('SES'), 'de', 'Entity-Setup' UNION ALL
+SELECT core.get_menu_id('SSS'), 'de', 'staatliche Einrichtung' UNION ALL
+SELECT core.get_menu_id('SIS'), 'de', 'Industrie-Setup' UNION ALL
 SELECT core.get_menu_id('RIS'), 'de', 'Wiederkehrende Rechnung einrichten' UNION ALL
-SELECT core.get_menu_id('SCRS'), 'de', 'Staats-Setup' UNION ALL
-SELECT core.get_menu_id('ABS'), 'de', 'Bonus Tafel für Verkäufer' UNION ALL
-SELECT core.get_menu_id('STO'), 'de', 'Geschäfte' UNION ALL
-SELECT core.get_menu_id('LF'), 'de', 'Säumniszuschläge' UNION ALL
-SELECT core.get_menu_id('STT'), 'de', 'Geschäfts Typen' UNION ALL
+SELECT core.get_menu_id('SCRS'), 'de', 'Land-Setup' UNION ALL
+SELECT core.get_menu_id('ABS'), 'de', 'Bonus Bramme für Aussendienst' UNION ALL
+SELECT core.get_menu_id('STO'), 'de', 'Shops' UNION ALL
+SELECT core.get_menu_id('LF'), 'de', 'Späte Gebühren' UNION ALL
+SELECT core.get_menu_id('STT'), 'de', 'Shop Typen' UNION ALL
 SELECT core.get_menu_id('STXT'), 'de', 'Umsatzsteuerarten' UNION ALL
-SELECT core.get_menu_id('PT'), 'de', 'Partei Arten' UNION ALL
+SELECT core.get_menu_id('PT'), 'de', 'Party-Typen' UNION ALL
 SELECT core.get_menu_id('FTT'), 'de', 'Transaktionen und Vorlagen' UNION ALL
 SELECT core.get_menu_id('UOM'), 'de', 'Maßeinheiten' UNION ALL
-SELECT core.get_menu_id('CUOM'), 'de', 'Erweiterte Masseinheiten' UNION ALL
-SELECT core.get_menu_id('DRS'), 'de', 'Direktverkauf' UNION ALL
-SELECT core.get_menu_id('SAQ'), 'de', 'Vertrieb & Voranschläge' UNION ALL
-SELECT core.get_menu_id('SSA'), 'de', 'Verküfer' UNION ALL
-SELECT core.get_menu_id('FVV'), 'de', 'Voucher Verifizierung' UNION ALL
-
+SELECT core.get_menu_id('CUOM'), 'de', 'Verbindung Maßeinheiten' UNION ALL
+SELECT core.get_menu_id('DRS'), 'de', 'Direct Sales' UNION ALL
+SELECT core.get_menu_id('SAQ'), 'de', 'Vertrieb Quotation' UNION ALL
+SELECT core.get_menu_id('SSA'), 'de', 'Aussendienst' UNION ALL
+SELECT core.get_menu_id('FVV'), 'de', 'Gutschein Verification';
 
 --RUSSIAN
 INSERT INTO core.menu_locale(menu_id, culture, menu_text)
