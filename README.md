@@ -26,11 +26,6 @@ All transactions posted to the **rc version** is supported and will be automatic
 #Where Can I Get Support?
 Please create an account in [MixERP Forums](http://mixerp.org/forum) and post your questions there. We will be happy to help.
 
-If you can afford to, please consider [making a donation](http://www.mixerp.org/donate) for continued development of MixERP project.
-
-<a href="http://www.mixerp.org/donate"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"/></a>
-
-
 #Where Is Documentation?
 The documentation now lives in the "gh-pages" branch and is hosted on GitHub pages here:
 
@@ -106,9 +101,7 @@ MixERP has a very wide range of features which are tightly integrated with each 
 
 ##How Can I Support MixERP?
 
-* Make a donation.
 * Translate MixERP in your language.
-* Support MixERP by providing ASP.net 4.5 and PostgreSQL hosting.
 * Build and host MixERP on your development server.
 * Join us by following this project.
 * Report bugs and/or issues on github.
