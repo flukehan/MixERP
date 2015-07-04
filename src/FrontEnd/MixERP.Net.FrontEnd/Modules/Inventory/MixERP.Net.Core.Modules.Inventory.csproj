@@ -132,6 +132,7 @@
     <Content Include="Setup\ShippingAddresses.ascx" />
     <Content Include="Setup\UOM.ascx" />
     <Content Include="Transfer.ascx" />
+    <Content Include="TransferRequest.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -342,6 +343,12 @@
     </Compile>
     <Compile Include="Transfer.ascx.designer.cs">
       <DependentUpon>Transfer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TransferRequest.ascx.cs">
+      <DependentUpon>TransferRequest.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TransferRequest.ascx.designer.cs">
+      <DependentUpon>TransferRequest.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

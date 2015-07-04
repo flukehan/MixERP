@@ -102,12 +102,19 @@ namespace MixERP.Net.FrontEnd.Base
 
             script += JSUtility.GetVar("catalog", AppUsers.GetCurrentUserDB());
 
-            if (Conversion.TryCastBoolean(Application["UpdateAvailable"]) && AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
-            {
-                script += JSUtility.GetVar("update", "1");
-            }
+            script += JSUtility.GetVar("update", this.Update());
 
             PageUtility.RegisterJavascript("MixERPMasterPage", script, this.Page, true);
+        }
+
+        private int Update()
+        {
+            if (Conversion.TryCastBoolean(Application["UpdateAvailable"]) && AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
+            {
+                return 1;
+            }
+
+            return 0;
         }
     }
 }

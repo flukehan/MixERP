@@ -151,10 +151,11 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public Collection<ListItem> GetStores()
         {
+            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
             Collection<ListItem> values = new Collection<ListItem>();
 
-            IEnumerable<Store> stores = Stores.GetStores(AppUsers.GetCurrentUserDB(), officeId);
+            IEnumerable<Store> stores = Stores.GetStores(AppUsers.GetCurrentUserDB(), officeId, userId);
 
             foreach (Store store in stores)
             {

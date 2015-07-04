@@ -70,6 +70,8 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 ConfigurationHelper.GetDbParameter("RoleDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "office.departments.department_id",
                 ConfigurationHelper.GetDbParameter("DepartmentDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "office.stores.store_id",
+                ConfigurationHelper.GetDbParameter("StoreDisplayField"));
             return string.Join(",", displayFields);
         }
 
@@ -79,6 +81,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
             ScrudHelper.AddDisplayView(displayViews, "office.offices.office_id", "office.office_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "office.roles.role_id", "office.role_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "office.departments.deparment_id", "office.department_scrud_view");
+            ScrudHelper.AddDisplayView(displayViews, "office.stores.store_id", "office.store_scrud_view");
             return string.Join(",", displayViews);
         }
     }

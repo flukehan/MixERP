@@ -69,7 +69,11 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             {
                 row.TableSection = TableRowSection.TableHeader;
 
-                row.Cells.Add(this.GetHeaderCell(Titles.Type, "TransactionTypeSelect", false, 80));
+                if (!this.HideSides)
+                {
+                    row.Cells.Add(this.GetHeaderCell(Titles.Type, "TransactionTypeSelect", false, 80));
+                }
+
                 row.Cells.Add(this.GetHeaderCell(Titles.Store, "StoreSelect", false, 140));
                 row.Cells.Add(this.GetHeaderCell(Titles.ItemCode, "ItemCodeInputText", false, 90));
                 row.Cells.Add(this.GetHeaderCell(Titles.ItemName, "ItemSelect", false, 0));

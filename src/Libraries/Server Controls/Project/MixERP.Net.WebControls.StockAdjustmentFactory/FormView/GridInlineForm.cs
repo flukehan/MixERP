@@ -129,7 +129,11 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             {
                 row.Attributes.Add("class", "footer-row ui form");
 
-                this.AddTransactionTypeSelect(row);
+                if (!this.HideSides)
+                {
+                    this.AddTransactionTypeSelect(row);
+                }
+
                 this.AddStoreSelect(row);
                 this.AddItemCodeInputText(row);
                 this.AddItemSelect(row);

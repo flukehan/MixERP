@@ -49,3 +49,28 @@ ALTER COLUMN last_name DROP NOT NULL;
 
 ALTER TABLE core.parties
 ALTER COLUMN company_name DROP NOT NULL;
+
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM   pg_attribute 
+        WHERE  attrelid = 'office.users'::regclass
+        AND    attname = 'store_id'
+        AND    NOT attisdropped
+    ) THEN
+        ALTER TABLE office.users
+        ADD COLUMN store_id integer REFERENCES office.stores(store_id)
+        CONSTRAINT users_store_id_chk 
+        CHECK
+        (
+            office.get_office_id_by_store_id(store_id) IS NULL OR
+            office.get_office_id_by_store_id(store_id) = office_id
+        );
+    END IF;    
+END
+$$
+LANGUAGE plpgsql;
