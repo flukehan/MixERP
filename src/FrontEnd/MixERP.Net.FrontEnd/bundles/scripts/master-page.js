@@ -51244,8 +51244,6 @@ $.extend(true, $.fn.form.settings.rules, {
 ///#source 1 1 /Scripts/mixerp/master-page/menu.js
 var menus;
 var depth = 2;
-var sidebar = $('.sidebar');
-var wrapper = $('#page-wrapper');
 
 $(document).ready(function () {
     adjustSidebar();
@@ -51479,24 +51477,24 @@ function getAjaxMenu() {
 };
 
 function toggleSidebar(el) {
-    if (sidebar.is(":visible")) {
-        wrapper.css('margin-left', '0');
+    if ($('.sidebar').is(":visible")) {
+        $('#page-wrapper').css('margin-left', '0');
     } else {
-        wrapper.css('margin-left', '250px');
+        $('#page-wrapper').css('margin-left', '250px');
     };
 
-    sidebar.toggle(100);
+    $('.sidebar').toggle(100);
 };
 
 function adjustSidebar(){
     if ($(document).width() < 800) {
-        wrapper.css('margin-left', '0');
-        sidebar.hide(100);
+        $('#page-wrapper').css('margin-left', '0');
+        $('.sidebar').hide(100);
         return;
     };
 
-    wrapper.css('margin-left', '250px');
-    sidebar.show(100);
+    $('#page-wrapper').css('margin-left', '250px');
+    $('.sidebar').show(100);
     return;
 };
 

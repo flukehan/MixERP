@@ -1,3 +1,7 @@
+#Important
+
+Do not edit any files inside this directory or sub-directories.
+
 #rebundle-db-with-sample.bat
 
 This batch file will rebundle database scripts with sample data. 
