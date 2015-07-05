@@ -23,7 +23,7 @@ SELECT localization.add_localized_resource('DbErrors', 'de', 'P3051', 'Üngülti
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3052', 'Ungültige Einheit.');--Invalid unit.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3053', 'Ungültige oder inkompatible Einheit.');--Invalid or incompatible unit.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3054', 'Die angegebene Einheit ist mit der Basiseinheit nicht kompatibel.');--The reorder unit is incompatible with the base unit.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P3055', 'Ungültiger Wechselkurs.');--Invalid exchange rate.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P3055', 'Ungültiger Wechselkurs.');--Invalid exchange  rate.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3101', 'Ungültige Login-Id.');--Invalid LoginId.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3105', 'Ihr aktuelles Passwort ist nicht korrekt.');--Your current password is incorrect.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3201', 'Die Maßeinheit passt nicht zum Artikel');--Item/unit mismatch.

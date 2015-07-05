@@ -19,7 +19,7 @@ SELECT core.create_menu_locale('SSB', 'de', 'Marken');--Brands
 SELECT core.create_menu_locale('CF', 'de', 'Cashflow');--Cash Flow
 SELECT core.create_menu_locale('SCS', 'de', 'Kassen-Setup');--Counter Setup
 SELECT core.create_menu_locale('CTST', 'de', 'Bezirks Umsatzsteuer');--Counties Sales Taxes
-SELECT core.create_menu_locale('SCRS', 'de', 'Staats-Setup');--Country Setup
+SELECT core.create_menu_locale('SCRS', 'de', 'Staats-Setup');--Country  Setup
 SELECT core.create_menu_locale('SCTS', 'de', 'Bezirks-Setup');--County Setup
 SELECT core.create_menu_locale('CUR', 'de', 'Währungsmanagement');--Currency Management
 SELECT core.create_menu_locale('DBSTAT', 'de', 'Datenbankstatistik');--Database Statistics
