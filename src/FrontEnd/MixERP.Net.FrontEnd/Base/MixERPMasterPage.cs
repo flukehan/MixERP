@@ -61,6 +61,7 @@ namespace MixERP.Net.FrontEnd.Base
             script += JSUtility.GetVar("selectLocalized", Titles.Select);
             script += JSUtility.GetVar("noneLocalized", Titles.None);
             script += JSUtility.GetVar("invalidDateWarningLocalized", Warnings.InvalidDate);
+            script += JSUtility.GetVar("actionsLocalized", Titles.Actions);
             script += JSUtility.GetVar("areYouSureLocalized", Questions.AreYouSure);
             script += JSUtility.GetVar("nothingSelectedLocalized", Warnings.NothingSelected);
             script += JSUtility.GetVar("yesLocalized", Titles.Yes);

@@ -1,5 +1,4 @@
 ﻿using System.Configuration;
-using System.Web;
 using System.Web.Hosting;
 using Npgsql;
 
@@ -32,8 +31,9 @@ namespace MixERP.Net.i18n
 
             string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings[configFileName]);
 
-            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = path };
-            Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
+            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap {ExeConfigFilename = path};
+            Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap,
+                ConfigurationUserLevel.None);
             AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
 
             if (section != null)

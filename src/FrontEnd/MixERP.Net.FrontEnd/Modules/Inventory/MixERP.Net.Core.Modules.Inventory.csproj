@@ -73,6 +73,7 @@
       <Link>mixerp.licenseheader</Link>
     </Content>
     <Content Include="Confirmation\Adjustment.ascx" />
+    <Content Include="Confirmation\TransferRequest.ascx" />
     <Content Include="Entry\TransferRequest.ascx" />
     <Content Include="Mix Open Foundation.snk" />
     <Content Include="packages.config" />
@@ -160,6 +161,13 @@
     </Compile>
     <Compile Include="Confirmation\Transfer.ascx.designer.cs">
       <DependentUpon>Transfer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Confirmation\TransferRequest.ascx.cs">
+      <DependentUpon>TransferRequest.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Confirmation\TransferRequest.ascx.designer.cs">
+      <DependentUpon>TransferRequest.ascx</DependentUpon>
     </Compile>
     <Compile Include="Entry\Transfer.ascx.cs">
       <DependentUpon>Transfer.ascx</DependentUpon>

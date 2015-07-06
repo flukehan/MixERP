@@ -76,6 +76,63 @@ END
 $$
 LANGUAGE plpgsql;
 
+DO
+$$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'transactions'
+        AND    c.relname = 'inventory_transfer_requests'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE transactions.inventory_transfer_requests
+        (
+            inventory_transfer_request_id               BIGSERIAL NOT NULL PRIMARY KEY,
+            office_id                                   integer NOT NULL REFERENCES office.offices(office_id),
+            user_id                                     integer NOT NULL REFERENCES office.users(user_id),
+            login_id                                    bigint NOT NULL REFERENCES audit.logins(login_id),
+            store_id                                    integer NOT NULL REFERENCES office.stores(store_id),
+            value_date                                  date NOT NULL,
+            reference_number                            national character varying(24) NOT NULL,
+            statement_reference                         text,
+            authorized                                  boolean NOT NULL DEFAULT(false),
+            acknowledged                                boolean NOT NULL DEFAULT(FALSE),
+            audit_ts                                    TIMESTAMP WITH TIME ZONE DEFAULT(now())
+        );
+    END IF;    
+END
+$$
+LANGUAGE plpgsql;
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'transactions'
+        AND    c.relname = 'inventory_transfer_request_details'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE transactions.inventory_transfer_request_details
+        (
+            inventory_transfer_request_detail_id        BIGSERIAL NOT NULL PRIMARY KEY,
+            inventory_transfer_request_id               bigint NOT NULL REFERENCES transactions.inventory_transfer_requests(inventory_transfer_request_id),
+            value_date                                  date NOT NULL,
+            item_id                                     integer NOT NULL REFERENCES core.items(item_id),
+            quantity                                    integer NOT NULL,
+            unit_id                                     integer NOT NULL REFERENCES core.units(unit_id),
+            base_quantity                               numeric NOT NULL,
+            base_unit_id                                integer NOT NULL REFERENCES core.units(unit_id)
+        );
+    END IF;    
+END
+$$
+LANGUAGE plpgsql;
+
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/02.functions-and-logic/functions/core/core.create_menu_locale.sql --<--<--
 DROP FUNCTION IF EXISTS core.create_menu_locale
@@ -509,6 +566,126 @@ $$
 LANGUAGE plpgsql;
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/02.functions-and-logic/functions/logic/transactions/transactions.get_inventory_transfer_request_view.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.get_inventory_transfer_request_view
+(
+    _user_id                integer,
+    _login_id               bigint,
+    _office_id              integer,
+    _from                   date,
+    _to                     date,
+    _office                 text,
+    _store                  text,
+    _authorized             text,
+    _acknowledged           text,
+    _user                   text,
+    _reference_number       text,
+    _statement_reference    text
+);
+
+CREATE FUNCTION transactions.get_inventory_transfer_request_view
+(
+    _user_id                integer,
+    _login_id               bigint,
+    _office_id              integer,
+    _from                   date,
+    _to                     date,
+    _office                 text,
+    _store                  text,
+    _authorized             text,
+    _acknowledged           text,
+    _user                   text,
+    _reference_number       text,
+    _statement_reference    text
+)
+RETURNS TABLE
+(
+    id                      bigint,
+    value_date              date,
+    office                  text,
+    user_name               text,
+    store                   text,
+    reference_number        text,
+    statement_reference     text,
+    authorized              text,
+    acknowledged            text
+)
+AS
+$$
+    DECLARE _store_id       integer;
+BEGIN
+    SELECT 
+        store_id 
+    INTO 
+        _store_id
+    FROM office.users
+    WHERE user_id = _user_id
+    AND office_id = _office_id;
+
+    IF(_store_id IS NULL) THEN
+        RETURN QUERY
+        SELECT
+            transactions.inventory_transfer_requests.inventory_transfer_request_id,
+            transactions.inventory_transfer_requests.value_date,
+            office.offices.office_code || ' (' || office.offices.office_name || ')'::text AS office,
+            office.users.user_name::text,
+            office.stores.store_code || ' (' || office.stores.store_name || ')'::text AS store,
+            transactions.inventory_transfer_requests.reference_number::text,
+            transactions.inventory_transfer_requests.statement_reference::text,
+            transactions.inventory_transfer_requests.authorized::text,
+            transactions.inventory_transfer_requests.acknowledged::text
+        FROM transactions.inventory_transfer_requests
+        INNER JOIN office.offices
+        ON transactions.inventory_transfer_requests.office_id = office.offices.office_id
+        INNER JOIN office.users
+        ON transactions.inventory_transfer_requests.user_id = office.users.user_id
+        INNER JOIN office.stores
+        ON transactions.inventory_transfer_requests.store_id = office.stores.store_id
+        WHERE transactions.inventory_transfer_requests.value_date >= _from
+        AND transactions.inventory_transfer_requests.value_date <= _to
+        AND lower(office_code || ' (' || office_name || ')') LIKE '%' || lower(_office) || '%'
+        AND lower(office.users.user_name) LIKE '%' || lower(_user) || '%'
+        AND lower(office.stores.store_code || ' (' || office.stores.store_name || ')') LIKE '%' || lower(_store) || '%'
+        AND lower(transactions.inventory_transfer_requests.reference_number) LIKE '%' || lower(_reference_number) || '%'
+        AND lower(transactions.inventory_transfer_requests.statement_reference) LIKE '%' || lower(_statement_reference) || '%'
+        AND lower(transactions.inventory_transfer_requests.authorized::text) LIKE '%' || lower(_authorized) || '%'
+        AND lower(transactions.inventory_transfer_requests.acknowledged::text) LIKE '%' || lower(_acknowledged) || '%';
+
+        RETURN;
+    END IF;
+
+    RETURN QUERY
+    SELECT
+        transactions.inventory_transfer_requests.inventory_transfer_request_id,
+        transactions.inventory_transfer_requests.value_date,
+        office.offices.office_code || ' (' || office.offices.office_name || ')'::text AS office,
+        office.users.user_name::text,
+        office.stores.store_code || ' (' || office.stores.store_name || ')'::text AS store,
+        transactions.inventory_transfer_requests.reference_number::text,
+        transactions.inventory_transfer_requests.statement_reference::text,
+        transactions.inventory_transfer_requests.authorized::text,
+        transactions.inventory_transfer_requests.acknowledged::text
+    FROM transactions.inventory_transfer_requests
+    INNER JOIN office.offices
+    ON transactions.inventory_transfer_requests.office_id = office.offices.office_id
+    INNER JOIN office.users
+    ON transactions.inventory_transfer_requests.user_id = office.users.user_id
+    INNER JOIN office.stores
+    ON transactions.inventory_transfer_requests.store_id = office.stores.store_id
+    WHERE transactions.inventory_transfer_requests.value_date >= _from
+    AND transactions.inventory_transfer_requests.value_date <= _to
+    AND transactions.inventory_transfer_requests.store_id = _store_id
+    AND lower(office_code || ' (' || office_name || ')') LIKE '%' || lower(_office) || '%'
+    AND lower(office.users.user_name) LIKE '%' || lower(_user) || '%'
+    AND lower(transactions.inventory_transfer_requests.reference_number) LIKE '%' || lower(_reference_number) || '%'
+    AND lower(transactions.inventory_transfer_requests.statement_reference) LIKE '%' || lower(_statement_reference) || '%'
+    AND lower(transactions.inventory_transfer_requests.authorized::text) LIKE '%' || lower(_authorized) || '%'
+    AND lower(transactions.inventory_transfer_requests.acknowledged::text) LIKE '%' || lower(_acknowledged) || '%';    
+END
+$$
+LANGUAGE plpgsql;
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/02.functions-and-logic/functions/logic/transactions/transactions.get_trial_balance.sql --<--<--
 DROP FUNCTION IF EXISTS transactions.get_trial_balance
 (
@@ -741,6 +918,172 @@ LANGUAGE plpgsql;
 --SELECT * FROM transactions.get_trial_balance('12-1-2014','12-31-2014',1,1, false, 1000, false, false);
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/02.functions-and-logic/functions/logic/transactions/transactions.post_inventory_transfer_request.sql --<--<--
+DROP FUNCTION IF EXISTS transactions.post_inventory_transfer_request
+(
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _value_date                             date,
+    _reference_number                       national character varying(24),
+    _statement_reference                    text,
+    _details                                transactions.stock_adjustment_type[]
+);
+
+
+CREATE FUNCTION transactions.post_inventory_transfer_request
+(
+    _office_id                              integer,
+    _user_id                                integer,
+    _login_id                               bigint,
+    _value_date                             date,
+    _reference_number                       national character varying(24),
+    _statement_reference                    text,
+    _details                                transactions.stock_adjustment_type[]
+)
+RETURNS bigint
+AS
+$$
+    DECLARE _inventory_transfer_request_id          bigint;
+    DECLARE _stock_master_id                        bigint;
+    DECLARE _store_id                               integer;
+BEGIN
+    IF(policy.can_post_transaction(_login_id, _user_id, _office_id, 'Inventory.Transfer.Request', _value_date) = false) THEN
+        RETURN 0;
+    END IF;
+
+
+    CREATE TEMPORARY TABLE IF NOT EXISTS temp_stock_details
+    (
+        tran_type       transaction_type,
+        store_id        integer,
+        store_name      national character varying(50),
+        item_id         integer,
+        item_code       national character varying(12),
+        unit_id         integer,
+        base_unit_id    integer,
+        unit_name       national character varying(50),
+        quantity        integer_strict,
+        base_quantity   integer,                
+        price           money_strict                             
+    ) 
+    ON COMMIT DROP; 
+
+    INSERT INTO temp_stock_details(tran_type, store_name, item_code, unit_name, quantity)
+    SELECT tran_type, store_name, item_code, unit_name, quantity FROM explode_array(_details);
+
+    IF EXISTS
+    (
+        SELECT 1 FROM temp_stock_details
+        WHERE tran_type = 'Cr'
+    ) THEN
+        RAISE EXCEPTION 'Stock transfer request can only contain debit entries.'
+        USING ERRCODE='P5003';
+    END IF;
+
+    IF EXISTS
+    (
+        SELECT 1 FROM temp_stock_details
+        GROUP BY item_code
+        HAVING COUNT(item_code) <> 1
+    ) THEN
+        RAISE EXCEPTION 'An item can appear only once in a store.'
+        USING ERRCODE='P5202';
+    END IF;
+
+    IF EXISTS
+    (
+        SELECT 1 FROM temp_stock_details
+        HAVING COUNT(DISTINCT store_name) <> 1
+    ) THEN
+        RAISE EXCEPTION 'You cannot provide more than one store for this transaction.'
+        USING ERRCODE='P5205';
+    END IF;
+
+    UPDATE temp_stock_details SET 
+    item_id         = core.get_item_id_by_item_code(item_code),
+    unit_id         = core.get_unit_id_by_unit_name(unit_name),
+    store_id        = office.get_store_id_by_store_name(store_name);
+
+    SELECT store_id INTO _store_id
+    FROM temp_stock_details
+    LIMIT 1;
+
+    IF EXISTS
+    (
+        SELECT * FROM temp_stock_details
+        WHERE item_id IS NULL OR unit_id IS NULL OR store_id IS NULL
+    ) THEN
+        RAISE EXCEPTION 'Invalid data supplied.'
+        USING ERRCODE='P3000';
+    END IF;
+
+    UPDATE temp_stock_details SET
+    base_unit_id    = core.get_root_unit_id(unit_id),
+    base_quantity   = core.get_base_quantity_by_unit_id(unit_id, quantity),
+    price           = core.get_item_cost_price(item_id, unit_id, NULL);
+
+    INSERT INTO transactions.inventory_transfer_requests
+    (
+            inventory_transfer_request_id,
+            value_date,
+            store_id,
+            login_id,
+            user_id,
+            office_id,
+            reference_number,
+            statement_reference
+    )
+    SELECT
+            nextval(pg_get_serial_sequence('transactions.inventory_transfer_requests', 'inventory_transfer_request_id')), 
+            _value_date,
+            _store_id,
+            _login_id,
+            _user_id,
+            _office_id,
+            _reference_number,
+            _statement_reference;
+
+
+    _inventory_transfer_request_id                          := currval(pg_get_serial_sequence('transactions.inventory_transfer_requests', 'inventory_transfer_request_id'));
+
+    INSERT INTO transactions.inventory_transfer_request_details
+    (
+        inventory_transfer_request_id,
+        value_date,
+        item_id,
+        quantity,
+        unit_id,
+        base_quantity,
+        base_unit_id
+    )
+    SELECT 
+        _inventory_transfer_request_id, 
+        _value_date, 
+        item_id, 
+        quantity, 
+        unit_id, 
+        base_quantity, 
+        base_unit_id
+    FROM temp_stock_details;
+    
+    
+    RETURN _inventory_transfer_request_id;
+END
+$$
+LANGUAGE plpgsql;
+
+-- 
+-- SELECT * FROM transactions.post_inventory_transfer_request(2, 2, 5, '1-1-2020', '22', 'Test', 
+-- ARRAY[
+-- ROW('Dr', 'Store 1', 'RMBP', 'Dozen', 2)::transactions.stock_adjustment_type,
+-- ROW('Dr', 'Store 1', 'SFIX', 'Piece', 24)::transactions.stock_adjustment_type
+-- ]
+-- );
+
+
+
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/02.functions-and-logic/functions/office/office.get_stores.sql --<--<--
 DROP FUNCTION IF EXISTS office.get_stores
 (
@@ -779,6 +1122,141 @@ LANGUAGE plpgsql;
 
 --SELECT * FROM office.get_stores(2, 1);
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/03.menus/0.menus.sql --<--<--
+DELETE FROM policy.menu_access;
+DELETE FROM core.menu_locale;
+DELETE FROM core.menus;
+ALTER SEQUENCE policy.menu_access_access_id_seq RESTART WITH 1;
+
+--This table should not be localized.
+INSERT INTO core.menus(menu_text, url, menu_code, level)
+SELECT 'Sales', '~/Modules/Sales/Index.mix', 'SA', 0 UNION ALL
+SELECT 'Purchase', '~/Modules/Purchase/Index.mix', 'PU', 0 UNION ALL
+SELECT 'Products & Items', '~/Modules/Inventory/Index.mix', 'ITM', 0 UNION ALL
+SELECT 'Finance', '~/Modules/Finance/Index.mix', 'FI', 0 UNION ALL
+SELECT 'Back Office', '~/Modules/BackOffice/Index.mix', 'BO', 0;
+
+
+INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
+          SELECT 'Sales & Quotation', NULL, 'SAQ', 1, core.get_menu_id('SA')
+UNION ALL SELECT 'Direct Sales', '~/Modules/Sales/DirectSales.mix', 'DRS', 2, core.get_menu_id('SAQ')
+UNION ALL SELECT 'Sales Quotation', '~/Modules/Sales/Quotation.mix', 'SQ', 2, core.get_menu_id('SAQ')
+UNION ALL SELECT 'Sales Order', '~/Modules/Sales/Order.mix', 'SO', 2, core.get_menu_id('SAQ')
+UNION ALL SELECT 'Sales Delivery', '~/Modules/Sales/Delivery.mix', 'SD', 2, core.get_menu_id('SAQ')
+UNION ALL SELECT 'Receipt from Customer', '~/Modules/Sales/Receipt.mix', 'RFC', 2, core.get_menu_id('SAQ')
+UNION ALL SELECT 'Sales Return', '~/Modules/Sales/Return.mix', 'SR', 2, core.get_menu_id('SAQ')
+UNION ALL SELECT 'Setup & Maintenance', NULL, 'SSM', 1, core.get_menu_id('SA')
+UNION ALL SELECT 'Bonus Slab for Salespersons', '~/Modules/Sales/Setup/BonusSlabs.mix', 'ABS', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Bonus Slab Details', '~/Modules/Sales/Setup/BonusSlabDetails.mix', 'BSD', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Sales Teams', '~/Modules/Sales/Setup/Teams.mix', 'SST', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Salespersons', '~/Modules/Sales/Setup/Salespersons.mix', 'SSA', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Bonus Slab Assignment', '~/Modules/Sales/Setup/BonusSlabAssignment.mix', 'BSA', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Late Fees', '~/Modules/Sales/Setup/LateFees.mix', 'LF', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Payment Terms', '~/Modules/Sales/Setup/PaymentTerms.mix', 'PAT', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Recurring Invoices', '~/Modules/Sales/Setup/RecurringInvoices.mix', 'RI', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Recurring Invoice Setup', '~/Modules/Sales/Setup/RecurringInvoiceSetup.mix', 'RIS', 2, core.get_menu_id('SSM')
+UNION ALL SELECT 'Sales Reports', NULL, 'SAR', 1, core.get_menu_id('SA')
+UNION ALL SELECT 'Top Selling Items', '~/Modules/Sales/Reports/TopSellingItems.mix', 'SAR-TSI', 2, core.get_menu_id('SAR')
+UNION ALL SELECT 'Purchase & Quotation', NULL, 'PUQ', 1, core.get_menu_id('PU')
+UNION ALL SELECT 'Direct Purchase', '~/Modules/Purchase/DirectPurchase.mix', 'DRP', 2, core.get_menu_id('PUQ')
+UNION ALL SELECT 'Purchase Order', '~/Modules/Purchase/Order.mix', 'PO', 2, core.get_menu_id('PUQ')
+UNION ALL SELECT 'Purchase Reorder', '~/Modules/Purchase/Reorder.mix', 'PRO', 2, core.get_menu_id('PUQ')
+UNION ALL SELECT 'GRN Entry', '~/Modules/Purchase/GRN.mix', 'GRN', 2, core.get_menu_id('PUQ')
+UNION ALL SELECT 'Purchase Return', '~/Modules/Purchase/Return.mix', 'PR', 2, core.get_menu_id('PUQ')
+UNION ALL SELECT 'Purchase Reports', NULL, 'PUR', 1, core.get_menu_id('PU')
+UNION ALL SELECT 'Inventory Movements', NULL, 'IIM', 1, core.get_menu_id('ITM')
+UNION ALL SELECT 'Stock Transfer Request', '~/Modules/Inventory/TransferRequest.mix', 'STR', 2, core.get_menu_id('IIM')
+UNION ALL SELECT 'Stock Transfer Authorization', '~/Modules/Inventory/TransferAuthorization.mix', 'STP', 2, core.get_menu_id('IIM')
+UNION ALL SELECT 'Stock Transfer Delivery', '~/Modules/Inventory/TransferDelivery.mix', 'STD', 2, core.get_menu_id('IIM')
+UNION ALL SELECT 'Stock Transfer Acknowledgement', '~/Modules/Inventory/TransferAcknowledgement.mix', 'STK', 2, core.get_menu_id('IIM')
+UNION ALL SELECT 'Stock Transfer Journal', '~/Modules/Inventory/Transfer.mix', 'STJ', 2, core.get_menu_id('IIM')
+UNION ALL SELECT 'Stock Adjustments', '~/Modules/Inventory/Adjustment.mix', 'STA', 2, core.get_menu_id('IIM')
+UNION ALL SELECT 'Setup & Maintenance', NULL, 'ISM', 1, core.get_menu_id('ITM')
+UNION ALL SELECT 'Store Types', '~/Modules/Inventory/Setup/StoreTypes.mix', 'STT', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Stores', '~/Modules/Inventory/Setup/Stores.mix', 'STO', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Counter Setup', '~/Modules/BackOffice/Counters.mix', 'SCS', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Party Types', '~/Modules/Inventory/Setup/PartyTypes.mix', 'PT', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Party Accounts', '~/Modules/Inventory/Setup/Parties.mix', 'PA', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Shipping Addresses', '~/Modules/Inventory/Setup/ShippingAddresses.mix', 'PSA', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Item Maintenance', '~/Modules/Inventory/Setup/Items.mix', 'SSI', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Compound Items', '~/Modules/Inventory/Setup/CompoundItems.mix', 'SSC', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Compound Item Details', '~/Modules/Inventory/Setup/CompoundItemDetails.mix', 'SSCD', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Cost Prices', '~/Modules/Inventory/Setup/CostPrices.mix', 'ICP', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Selling Prices', '~/Modules/Inventory/Setup/SellingPrices.mix', 'ISP', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Item Groups', '~/Modules/Inventory/Setup/ItemGroups.mix', 'SIG', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Item Types', '~/Modules/Inventory/Setup/ItemTypes.mix', 'SIT', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Brands', '~/Modules/Inventory/Setup/Brands.mix', 'SSB', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Units of Measure', '~/Modules/Inventory/Setup/UOM.mix', 'UOM', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Compound Units of Measure', '~/Modules/Inventory/Setup/CUOM.mix', 'CUOM', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Shipper Information', '~/Modules/Inventory/Setup/Shippers.mix', 'SHI', 2, core.get_menu_id('ISM')
+UNION ALL SELECT 'Reports', NULL, 'IR', 1, core.get_menu_id('ITM')
+UNION ALL SELECT 'Inventory Account Statement', '~/Modules/Inventory/Reports/AccountStatement.mix', 'IAS', 2, core.get_menu_id('IR')
+UNION ALL SELECT 'Transactions & Templates', NULL, 'FTT', 1, core.get_menu_id('FI')
+UNION ALL SELECT 'Journal Voucher Entry', '~/Modules/Finance/JournalVoucher.mix', 'JVN', 2, core.get_menu_id('FTT')
+UNION ALL SELECT 'Update Exchange Rates', '~/Modules/Finance/UpdateExchangeRates.mix', 'UER', 2, core.get_menu_id('FTT')
+UNION ALL SELECT 'Voucher Verification', '~/Modules/Finance/VoucherVerification.mix', 'FVV', 2, core.get_menu_id('FTT')
+UNION ALL SELECT 'End of Day Operation', '~/Modules/Finance/EODOperation.mix', 'EOD', 2, core.get_menu_id('FTT')
+UNION ALL SELECT 'Setup & Maintenance', NULL, 'FSM', 1, core.get_menu_id('FI')
+UNION ALL SELECT 'Chart of Accounts', '~/Modules/Finance/Setup/COA.mix', 'COA', 2, core.get_menu_id('FSM')
+UNION ALL SELECT 'Currency Management', '~/Modules/Finance/Setup/Currencies.mix', 'CUR', 2, core.get_menu_id('FSM')
+UNION ALL SELECT 'Bank Accounts', '~/Modules/Finance/Setup/BankAccounts.mix', 'CBA', 2, core.get_menu_id('FSM')
+UNION ALL SELECT 'Payment Cards', '~/Modules/Finance/Setup/PaymentCards.mix', 'PAC', 2, core.get_menu_id('FSM')
+UNION ALL SELECT 'Merchant Fee Setup', '~/Modules/Finance/Setup/MerchantFeeSetup.mix', 'MFS', 2, core.get_menu_id('FSM')
+UNION ALL SELECT 'Ageing Slabs', '~/Modules/Finance/Setup/AgeingSlabs.mix', 'AGS', 2, core.get_menu_id('FSM')
+UNION ALL SELECT 'Cash Flow Headings', '~/Modules/Finance/Setup/CashFlowHeadings.mix', 'CFH', 2, core.get_menu_id('FSM')
+UNION ALL SELECT 'Cash Flow Setup', '~/Modules/Finance/Setup/CashFlowSetup.mix', 'CFS', 2, core.get_menu_id('FSM')
+UNION ALL SELECT 'Cost Centers', '~/Modules/Finance/Setup/CostCenters.mix', 'CC', 2, core.get_menu_id('FSM')
+UNION ALL SELECT 'Reports', NULL, 'FIR', 1, core.get_menu_id('FI')
+UNION ALL SELECT 'Account Statement', '~/Modules/Finance/Reports/AccountStatement.mix', 'AS', 2, core.get_menu_id('FIR')
+UNION ALL SELECT 'Trial Balance', '~/Modules/Finance/Reports/TrialBalance.mix', 'TB', 2, core.get_menu_id('FIR')
+UNION ALL SELECT 'Profit & Loss Account', '~/Modules/Finance/Reports/ProfitAndLossAccount.mix', 'PLA', 2, core.get_menu_id('FIR')
+UNION ALL SELECT 'Retained Earnings Statement', '~/Modules/Finance/Reports/RetainedEarnings.mix', 'RET', 2, core.get_menu_id('FIR')
+UNION ALL SELECT 'Balance Sheet', '~/Modules/Finance/Reports/BalanceSheet.mix', 'BS', 2, core.get_menu_id('FIR')
+UNION ALL SELECT 'Cash Flow', '~/Modules/Finance/Reports/CashFlow.mix', 'CF', 2, core.get_menu_id('FIR')
+UNION ALL SELECT 'Tax Configuration', NULL, 'BOTC', 1, core.get_menu_id('BO')
+UNION ALL SELECT 'Tax Master', '~/Modules/BackOffice/Tax/TaxMaster.mix', 'TXM', 2, core.get_menu_id('BOTC')
+UNION ALL SELECT 'Tax Authorities', '~/Modules/BackOffice/Tax/TaxAuthorities.mix', 'TXA', 2, core.get_menu_id('BOTC')
+UNION ALL SELECT 'Sales Tax Types', '~/Modules/BackOffice/Tax/SalesTaxTypes.mix', 'STXT', 2, core.get_menu_id('BOTC')
+UNION ALL SELECT 'State Sales Taxes', '~/Modules/BackOffice/Tax/StateSalesTaxes.mix', 'STST', 2, core.get_menu_id('BOTC')
+UNION ALL SELECT 'Counties Sales Taxes', '~/Modules/BackOffice/Tax/CountySalesTaxes.mix', 'CTST', 2, core.get_menu_id('BOTC')
+UNION ALL SELECT 'Sales Taxes', '~/Modules/BackOffice/Tax/SalesTaxes.mix', 'STX', 2, core.get_menu_id('BOTC')
+UNION ALL SELECT 'Sales Tax Details', '~/Modules/BackOffice/Tax/SalesTaxDetails.mix', 'STXD', 2, core.get_menu_id('BOTC')
+UNION ALL SELECT 'Tax Exempt Types', '~/Modules/BackOffice/Tax/TaxExemptTypes.mix', 'TXEXT', 2, core.get_menu_id('BOTC')
+UNION ALL SELECT 'Sales Tax Exempts', '~/Modules/BackOffice/Tax/SalesTaxExempts.mix', 'STXEX', 2, core.get_menu_id('BOTC')
+UNION ALL SELECT 'Sales Tax Exempt Details', '~/Modules/BackOffice/Tax/SalesTaxExemptDetails.mix', 'STXEXD', 2, core.get_menu_id('BOTC')
+UNION ALL SELECT 'Miscellaneous Parameters', NULL, 'SMP', 1, core.get_menu_id('BO')
+UNION ALL SELECT 'Flags', '~/Modules/BackOffice/Flags.mix', 'TRF', 2, core.get_menu_id('SMP')
+UNION ALL SELECT 'Audit Reports', NULL, 'SEAR', 1, core.get_menu_id('BO')
+UNION ALL SELECT 'Login View', '~/Reports/Office.Login.xml', 'SEAR-LV', 2, core.get_menu_id('SEAR')
+UNION ALL SELECT 'Office Setup', NULL, 'SOS', 1, core.get_menu_id('BO')
+UNION ALL SELECT 'Office & Branch Setup', '~/Modules/BackOffice/Offices.mix', 'SOB', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'Cash Repository Setup', '~/Modules/BackOffice/CashRepositories.mix', 'SCR', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'Department Setup', '~/Modules/BackOffice/Departments.mix', 'SDS', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'Role Management', '~/Modules/BackOffice/Roles.mix', 'SRM', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'User Management', '~/Modules/BackOffice/Users.mix', 'SUM', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'Entity Setup', '~/Modules/BackOffice/Entities.mix', 'SES', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'Industry Setup', '~/Modules/BackOffice/Industries.mix', 'SIS', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'Country Setup', '~/Modules/BackOffice/Countries.mix', 'SCRS', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'State Setup', '~/Modules/BackOffice/States.mix', 'SSS', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'County Setup', '~/Modules/BackOffice/Counties.mix', 'SCTS', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'Fiscal Year Information', '~/Modules/BackOffice/FiscalYear.mix', 'SFY', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'Frequency & Fiscal Year Management', '~/Modules/BackOffice/Frequency.mix', 'SFR', 2, core.get_menu_id('SOS')
+UNION ALL SELECT 'Policy Management', NULL, 'SPM', 1, core.get_menu_id('BO')
+UNION ALL SELECT 'Voucher Verification Policy', '~/Modules/BackOffice/Policy/VoucherVerification.mix', 'SVV', 2, core.get_menu_id('SPM')
+UNION ALL SELECT 'Automatic Verification Policy', '~/Modules/BackOffice/Policy/AutoVerification.mix', 'SAV', 2, core.get_menu_id('SPM')
+UNION ALL SELECT 'Menu Access Policy', '~/Modules/BackOffice/Policy/MenuAccess.mix', 'SMA', 2, core.get_menu_id('SPM')
+UNION ALL SELECT 'GL Access Policy', '~/Modules/BackOffice/Policy/GLAccess.mix', 'SAP', 2, core.get_menu_id('SPM')
+UNION ALL SELECT 'Store Policy', '~/Modules/BackOffice/Policy/Store.mix', 'SSP', 2, core.get_menu_id('SPM')
+UNION ALL SELECT 'Api Access Policy', '~/Modules/BackOffice/Policy/ApiAccess.mix', 'SAA', 2, core.get_menu_id('SPM')
+UNION ALL SELECT 'Admin Tools', NULL, 'SAT', 1, core.get_menu_id('BO')
+UNION ALL SELECT 'Database Statistics', '~/Modules/BackOffice/Admin/DatabaseStatistics.mix', 'DBSTAT', 2, core.get_menu_id('SAT')
+UNION ALL SELECT 'Backup Database', '~/Modules/BackOffice/Admin/DatabaseBackup.mix', 'BAK', 2, core.get_menu_id('SAT')
+UNION ALL SELECT 'Report Writer', '~/Modules/BackOffice/Admin/ReportWriter.mix', 'RW', 2, core.get_menu_id('SAT')
+UNION ALL SELECT 'Change User Password', '~/Modules/BackOffice/Admin/ChangePassword.mix', 'PWD', 2, core.get_menu_id('SAT')
+UNION ALL SELECT 'Check Updates', '~/Modules/BackOffice/Admin/CheckUpdates.mix', 'UPD', 2, core.get_menu_id('SAT')
+UNION ALL SELECT 'One Time Setup', NULL, 'OTS', 1, core.get_menu_id('BO')
+UNION ALL SELECT 'Opening Inventory', '~/Modules/BackOffice/OTS/OpeningInventory.mix', 'OTSI', 2, core.get_menu_id('OTS');
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/04.Localization/de/language.sql --<--<--
 --This translation is originally a courtesy of Johann Schwarz
 --https://github.com/Johann-Schwarz
@@ -797,26 +1275,26 @@ SELECT localization.add_localized_resource('DbErrors', 'de', 'P3007', 'Verbuchun
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3008', 'Ungültiges Datum.');--Invalid date.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3009', 'Falscher Zeitraum angegeben');--Invalid period specified.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3010', 'Ungültige Office-ID.');--Invalid office id.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P3011', 'Ungültige Office.');--Invalid office.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P3012', 'Ungültige Laden.');--Invalid store.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P3011', 'Ungültiges Office.');--Invalid office.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P3012', 'Ungültiges Geschäft.');--Invalid store.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3013', 'Ungültiges Barwerte-Depot.');--Invalid cash repository.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3050', 'Ungültige Partei.');--Invalid party.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3051', 'Üngültiger Artikel.');--Invalid item.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3052', 'Ungültige Einheit.');--Invalid unit.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P3053', 'Ungültige oder inkompatibel Einheit.');--Invalid or incompatible unit.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P3053', 'Ungültige oder inkompatible Einheit.');--Invalid or incompatible unit.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3054', 'Die angegebene Einheit ist mit der Basiseinheit nicht kompatibel.');--The reorder unit is incompatible with the base unit.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P3055', 'Ungültiger Wechselkurs.');--Invalid exchange rate.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P3055', 'Ungültiger Wechselkurs.');--Invalid exchange  rate.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3101', 'Ungültige Login-Id.');--Invalid LoginId.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3105', 'Ihr aktuelles Passwort ist nicht korrekt.');--Your current password is incorrect.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P3201', 'Masseinheit passt nicht zum Artikel');--Item/unit mismatch.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P3201', 'Die Maßeinheit passt nicht zum Artikel');--Item/unit mismatch.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3202', 'Falsches Steuerformular');--Tax form mismatch.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3301', 'Ungültige Menge.');--Invalid quantity.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3302', 'Ungültige Transaktions-ID.');--Invalid transaction id.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P3501', 'Die Spalte Konto Id kann nicht null sein.');--The column account_id cannot be null.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P4010', 'Wechselkurs zwischen den Währungen, wurde nicht gefunden.');--Exchange rate between the currencies was not found.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P4010', 'Der Wechselkurs zwischen den Währungen, wurde nicht gefunden.');--Exchange rate between the currencies was not found.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P4020', 'Dieser Artikel ist dieser Transaktion nicht zugeordnet.');--This item is not associated with this transaction.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P4030', 'Keine Verifizierungs Richtlinie für diesen User vorhanden, ');--No verification policy found for this user.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P4031', 'Bitte fragen Sie eine andere Person, um die Buchung zu überprüfen.');--Please ask someone else to verify your transaction.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P4031', 'Bitte fragen Sie eine andere Person, um die Buchung zu verifizieren.');--Please ask someone else to verify your transaction.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P5000', 'Die aufeinander verweisenden Seiten sind nicht gleich.');--Referencing sides are not equal.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P5001', 'Negative Lagerstände sind nicht erlaubt.');--Negative stock is not allowed.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P5002', 'Die Buchung hätte einen negativen Kassastand zur Folge');--Posting this transaction would produce a negative cash balance.
@@ -837,11 +1315,11 @@ SELECT localization.add_localized_resource('DbErrors', 'de', 'P5204', 'Der zurü
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P5301', 'Ungültige oder zurückgewiesene Transaktion.');--Invalid or rejected transaction.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P5500', 'Unzureichende Artikelmenge.');--Insufficient item quantity.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P5800', 'Löschen einer Transaktion ist nicht erlaubt. Markieren Sie die Transaktion als verworfen');--Deleting a transaction is not allowed. Mark the transaction as rejected instead.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P5901', 'Bitte fragen Sie jemanden, ob die gebuchte Transaktion korrekt ist.');--Please ask someone else to verify the transaction you posted.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P5910', 'Die Möglichkeiten zur automatischen Überprüfungs sind erschöpft. Die Transaktion wurde nicht überprüft.');--Self verification limit exceeded. The transaction was not verified.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P5911', 'Die Möglichkeiten zur Prüfung der Umsätze wurden überschritten. Die Transaktion wurde nicht überprüft.');--Sales verification limit exceeded. The transaction was not verified.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P5912', 'Die Möglichkeiten zur Prüfung der Einkäufe wurde überschritten. Die Transaktion wurde nicht überprüft.');--Purchase verification limit exceeded. The transaction was not verified.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P5913', 'Hauptbuch Überprüfungsgrenze  überschritten. Die Transaktion wurde nicht überprüft.');--GL verification limit exceeded. The transaction was not verified.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P5901', 'Bitte bitten Sie jemand anderen, die gebuchte Transaktion zu verifizieren.');--Please ask someone else to verify the transaction you posted.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P5910', 'Die Möglichkeiten zur automatischen Verifizierung sind erschöpft. Die Transaktion wurde nicht verifiziert.');--Self verification limit exceeded. The transaction was not verified.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P5911', 'Die Möglichkeiten zur Prüfung der Umsätze wurden überschritten. Die Transaktion wurde nicht verifiziert.');--Sales verification limit exceeded. The transaction was not verified.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P5912', 'Die Möglichkeiten zur Prüfung der Einkäufe wurde überschritten. Die Transaktion wurde nicht verifiziert.');--Purchase verification limit exceeded. The transaction was not verified.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P5913', 'Hauptbuch Verifizierungsgrenze überschritten. Die Transaktion wurde nicht verifiziert.');--GL verification limit exceeded. The transaction was not verified.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P6010', 'Ungültige Konfiguration bei der Berechnung der  Kosten der verkauften Güter');--Invalid configuration: COGS method.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P8001', 'Gewinn und Verlustrechnungen von  Geschäftsstelle (n) mit unterschiedlichen Basiswährungen können nicht erstellt werden.');--Cannot produce P/L statement of office(s) having different base currencies.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P8002', 'Rohbilanzen von Geschäftsstellen mit unterschiedlichen Basiswährungen können nicht produziert werden.');--Cannot produce trial balance of office(s) having different base currencies.
@@ -853,20 +1331,20 @@ SELECT localization.add_localized_resource('DbErrors', 'de', 'P8990', 'Sie sind 
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P8991', 'Sie sind nicht berechtigt, Systemkonten hinzuzufügen.');--You are not allowed to add system accounts.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P8992', 'Ein sys User hat  kein Passwort.');--A sys user cannot have a password.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P9001', 'Zugriff  verweigert.');--Access is denied.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P9010', 'Zugriff wird verweigert. Sie sind nicht berechtigt, diese Transaktion durchzuführen.');--Access is denied. You are not authorized to post this transaction.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P9011', 'Zugriff wird verweigert. Sie haben ungültige Werte eingegeben.');--Access is denied. Invalid values supplied.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P9010', 'Zugriff verweigert. Sie sind nicht berechtigt, diese Transaktion durchzuführen.');--Access is denied. You are not authorized to post this transaction.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P9011', 'Zugriff verweigert. Sie haben ungültige Werte eingegeben.');--Access is denied. Invalid values supplied.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P9012', 'Zugriff verweigert! Eine Lager Korrektur Transaktion kann nicht Verweise auf mehrere Niederlassungen haben.');--Access is denied! A stock adjustment transaction cannot references multiple branches.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P9013', 'Zugriff verweigert! Eine Lager Journal Transaktion kann nicht Verweise auf mehrere Niederlassungen haben.');--Access is denied! A stock journal transaction cannot references multiple branches.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P9014', 'Zugriff wird verweigert. Sie können  eine Transaktion eines anderen Offices nicht überprüfen.');--Access is denied. You cannot verify a transaction of another office.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P9015', 'Zugriff wird verweigert. Sie können Rück oder Vordatierte Transaktionen nicht verifizieren.');--Access is denied. You cannot verify past or futuer dated transaction.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P9016', 'Zugriff wird verweigert. Sie haben kein Recht, die Transaktion zu überprüfen.');--Access is denied. You don''t have the right to verify the transaction.
-SELECT localization.add_localized_resource('DbErrors', 'de', 'P9017', 'Zugriff wird verweigert. Sie  haben kein Recht, die Transaktion zu widerrufen.');--Access is denied. You don''t have the right to withdraw the transaction.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P9014', 'Zugriff verweigert. Sie können  eine Transaktion eines anderen Offices nicht verifizieren.');--Access is denied. You cannot verify a transaction of another office.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P9015', 'Zugriff verweigert. Sie können Rück oder Vordatierte Transaktionen nicht verifizieren.');--Access is denied. You cannot verify past or futuer dated transaction.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P9016', 'Zugriff verweigert. Sie haben kein Recht, die Transaktion zu üverifizieren.');--Access is denied. You don''t have the right to verify the transaction.
+SELECT localization.add_localized_resource('DbErrors', 'de', 'P9017', 'Zugriff verweigert. Sie haben kein Recht, die Transaktion zu widerrufen.');--Access is denied. You don''t have the right to withdraw the transaction.
 SELECT localization.add_localized_resource('DbErrors', 'de', 'P9201', 'Zugriff verweigert. Sie können die "Transaktions Details" Tabelle nicht aktualisieren.');--Acess is denied. You cannot update the "transaction_details" table.
 SELECT localization.add_localized_resource('DbResource', 'de', 'actions', 'Aktionen');--Actions
 SELECT localization.add_localized_resource('DbResource', 'de', 'amount', 'Betrag');--Amount
 SELECT localization.add_localized_resource('DbResource', 'de', 'currency', 'Währung');--Currency
-SELECT localization.add_localized_resource('DbResource', 'de', 'flag_background_color', 'Marke Hintergrundfarbe');--Flag Background Color
-SELECT localization.add_localized_resource('DbResource', 'de', 'flag_foreground_color', 'Marke Vordergrundfarbe');--Flag Foreground Color
+SELECT localization.add_localized_resource('DbResource', 'de', 'flag_background_color', 'Markierung Hintergrundfarbe');--Flag Background Color
+SELECT localization.add_localized_resource('DbResource', 'de', 'flag_foreground_color', 'Markierung Vordergrundfarbe');--Flag Foreground Color
 SELECT localization.add_localized_resource('DbResource', 'de', 'id', 'ID');--ID
 SELECT localization.add_localized_resource('DbResource', 'de', 'office', 'Office');--Office
 SELECT localization.add_localized_resource('DbResource', 'de', 'party', 'Partei');--Party
@@ -893,11 +1371,11 @@ SELECT localization.add_localized_resource('Labels', 'de', 'ClickHereToDownload'
 SELECT localization.add_localized_resource('Labels', 'de', 'ConfirmedPasswordDoesNotMatch', 'Das bestätigte Kennwort stimmt nicht überein.');--The confirmed password does not match.
 SELECT localization.add_localized_resource('Labels', 'de', 'DatabaseBackupSuccessful', 'Das Datenbank-Backup war erfolgreich.');--The database backup was successful.
 SELECT localization.add_localized_resource('Labels', 'de', 'DaysLowerCase', 'Tage');--days
-SELECT localization.add_localized_resource('Labels', 'de', 'EODBegunSaveYourWork', 'Schließen Sie dieses Fenster und speichern Sie Ihre Arbeit, bevor Sie sich automatisch ausgeloggt werden.');--Please close this window and save your existing work before you will be signed off automatically.
+SELECT localization.add_localized_resource('Labels', 'de', 'EODBegunSaveYourWork', 'Schließen Sie dieses Fenster und speichern Sie Ihre Arbeit, bevor Sie automatisch ausgeloggt werden.');--Please close this window and save your existing work before you will be signed off automatically.
 SELECT localization.add_localized_resource('Labels', 'de', 'EmailBody', '<h2> Hallo, </ h2> <p> Anbei finden Sie das beigefügte Dokument. </ p> <p> Danke. <br /> MixERP </ p>');--<h2>Hi,</h2><p>Please find the attached document.</p><p>Thank you.<br />MixERP</p>
 SELECT localization.add_localized_resource('Labels', 'de', 'EmailSentConfirmation', 'Eine E-Mail an {0} gesendet.');--An email was sent to {0}.
 SELECT localization.add_localized_resource('Labels', 'de', 'FlagLabel', 'Sie können diese Transaktion markieren, aber Sie werden nicht in der Lage sein, die Markierungen anderer Benutzern zu sehen.');--You can mark this transaction with a flag, however you will not be able to see the flags created by other users.
-SELECT localization.add_localized_resource('Labels', 'de', 'GoToChecklistWindow', 'Zum Fenster Checkliste.');--Go to checklist window.
+SELECT localization.add_localized_resource('Labels', 'de', 'GoToChecklistWindow', 'Zum Checklistenfenster.');--Go to checklist window.
 SELECT localization.add_localized_resource('Labels', 'de', 'GoToTop', 'Nach oben');--Go to top.
 SELECT localization.add_localized_resource('Labels', 'de', 'JustAMomentPlease', 'Einen Augenblick bitte!');--Just a moment, please!
 SELECT localization.add_localized_resource('Labels', 'de', 'NumRowsAffected', '{0} Zeilen betroffen.');--{0} rows affected.
@@ -913,7 +1391,7 @@ SELECT localization.add_localized_resource('Labels', 'de', 'TransactionAwaitingV
 SELECT localization.add_localized_resource('Labels', 'de', 'TransactionClosedDetails', 'Diese Transaktion wurde von {0} um {1} geschlossen. Grund: "{2}".');--This transaction was closed by {0} on {1}. Reason: "{2}".
 SELECT localization.add_localized_resource('Labels', 'de', 'TransactionPostedSuccessfully', 'Die Transaktion wurde erfolgreich gebucht.');--The transaction was posted successfully.
 SELECT localization.add_localized_resource('Labels', 'de', 'TransactionRejectedDetails', 'Diese Transaktion wurde von {0} um {1} abgelehnt. Grund: "{2}".');--This transaction was rejected by {0} on {1}. Reason: "{2}".
-SELECT localization.add_localized_resource('Labels', 'de', 'TransactionWithdrawalInformation', 'Wenn Sie eine Transaktion zurückziehen, wird dies nicht an das Arbeitsablauf Modul weitergeleitet. Das bedeutet, dass Ihre zurückgezogenen Transaktionen verworfen sind und keiner weiteren Überprüfung bedürfen. Es ist jedoch nicht mehr möglich, das Zurückziehen dieser Transaktion zu einem späteren Zeitpunkt aufzuheben');--When you withdraw a transaction, it won't be forwarded to the workflow module. This means that your withdrawn transactions are rejected and require no further verification. However, you won't be able to unwithdraw this transaction later.
+SELECT localization.add_localized_resource('Labels', 'de', 'TransactionWithdrawalInformation', 'Wenn Sie eine Transaktion zurückziehen, wird dies nicht an das Arbeitsablauf Modul weitergeleitet. Das bedeutet, dass Ihre zurückgezogenen Transaktionen verworfen sind und keiner weiteren Verifizierung bedürfen. Es ist jedoch nicht mehr möglich, das Zurückziehen dieser Transaktion zu einem späteren Zeitpunkt aufzuheben');--When you withdraw a transaction, it won't be forwarded to the workflow module. This means that your withdrawn transactions are rejected and require no further verification. However, you won't be able to unwithdraw this transaction later.
 SELECT localization.add_localized_resource('Labels', 'de', 'TransactionWithdrawnDetails', 'Diese Transaktion wurde von {0} um {1} zurückgezogen. Grund: "{2}".');--This transaction was withdrawn by {0} on {1}. Reason: "{2}".
 SELECT localization.add_localized_resource('Labels', 'de', 'TransactionWithdrawnMessage', 'Die Transaktion wurde erfolgreich zurückgezogen. Darüber hinaus wird diese Aktion alle nach dem "{0}" erstellten diesbezüglichen Berichte beeinflussen.');--The transaction was withdrawn successfully. Moreover, this action will affect the all the reports produced on and after "{0}".
 SELECT localization.add_localized_resource('Labels', 'de', 'UserGreeting', 'Hallo {0}!');--Hi {0}!
@@ -964,11 +1442,11 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'applied_on_sh
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'audit_ts', 'Buchhaltungs Zeitstempel');--Audit Timestamp
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'audit_user_id', 'Buchhaltungs Benutzer ID');--Audit User Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'auto_trigger_on_sales', 'Bei Verkäufen automatisch triggern');--Automatically Trigger on Sales
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'autoanalyze_count', 'Automatische Darnbankanalyxe Anzahl');--Autoanalyze Count
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'autoanalyze_count', 'Automatische Darnbankanalyse Anzahl');--Autoanalyze Count
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'autovacuum_count', 'AutoVacuum Anzahl');--Autovacuum Count
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'background_color', 'Hintergrundfarbe');--Background Color
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'balance', 'Bilanz');--Balance
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'bank_account_number', 'Bank Kontonummer IBAN');--Bank Account Number
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'bank_account_number', 'Bank Kontonummer (IBAN)');--Bank Account Number
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'bank_account_type', 'Bank Kontotyp ');--Bank Account Type
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'bank_accounts_account_id_chk', 'Die Auswahl ist kein gültiges Bankkonto.');--The selected item is not a valid bank account.
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'bank_accounts_pkey', 'Bankkontenduplicat');--Duplicate bank account.
@@ -993,10 +1471,10 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'brand_id', 'M
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'brand_name', 'Markenname');--Brand Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'browser', 'Browser');--Browser
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_change_password', 'Darf Paswort ändern');--Can Change Password
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_self_verify', 'Darf Selbst Überprüfen');--Can Self Verify
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_verify_gl_transactions', 'Darf Sachkonten Transaktionen Überprüfen');--Can Verify Gl Transactions
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_verify_purchase_transactions', 'Darf Einkaufs Transaktionen Überprüfen');--Can Verify Purchase Transactions
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_verify_sales_transactions', 'Kann Verkaufs Transaktionen Überprüfen');--Can Verify Sales Transactions
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_self_verify', 'Darf Selbst Verifizieren');--Can Self Verify
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_verify_gl_transactions', 'Darf Sachkonten Transaktionen Verifizieren');--Can Verify Gl Transactions
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_verify_purchase_transactions', 'Darf Einkaufs Transaktionen Verifizieren');--Can Verify Purchase Transactions
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'can_verify_sales_transactions', 'Kann Verkaufs Transaktionen Verifizieren');--Can Verify Sales Transactions
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'card_type', 'Karten Art');--Card Type
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'card_type_code', 'Karten Art-Code');--Card Type Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'card_type_id', 'Karten Art -ID');--Card Type Id
@@ -1024,7 +1502,7 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'checking_freq
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'checking_frequency_id', 'Prüfungshäüfigkeits Id');--Checking Frequency Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'city', 'Stadt');--City
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'collecting_account', 'SammelKonto');--Collecting Account
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'collecting_account_id', 'Sammelknto Identifier');--Collecting Account Id
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'collecting_account_id', 'Sammelkonto Id');--Collecting Account Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'collecting_tax_authority', 'Sammelkontp Steuerbehörde');--Collecting Tax Authority
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'collecting_tax_authority_id', 'Sammelkonto Steuerbehörde Id');--Collecting Tax Authority Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'commision_rate', 'Kommissionsquote');--Commission Rate
@@ -1034,7 +1512,7 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'compare_unit_
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'compare_unit_name', 'Vergleichseinheit Name');--Compare Unit Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'compound_item', 'Kombi Artikel');--Compound Item
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'compound_item_code', 'Kombi  Artikel  Code');--Compound Item Code
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'compound_item_detail_id', 'Kombi Artikel Detail Identifier');--Compound Item Detail Id
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'compound_item_detail_id', 'Kombi Artikel Detail Id');--Compound Item Detail Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'compound_item_details_unit_chk', 'Ungültige Einheit angegeben');--Invalid unit provided.
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'compound_item_id', 'Kombi Aretikel Id');--Compound Item Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'compound_item_name', 'Kombi Artikel Name');--Compound Item Name
@@ -1112,9 +1590,9 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'fax', 'Fax');
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'first_name', 'Vorname');--First Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'fiscal_year_code', 'Geschäftsjahr Code');--Fiscal Year Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'fiscal_year_name', 'Geschäftsjahr Bezeichnung');--Fiscal Year Name
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'flag_id', 'Marke Id');--Flag Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'flag_type_id', 'Marke Typ Id');--Flag Type Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'flag_type_name', 'Marke Typ Name');--Flag Type Name
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'flag_id', 'Markierugs Id');--Flag Id
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'flag_type_id', 'Markierungs Typ Id');--Flag Type Id
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'flag_type_name', 'Markierungs Typ Name');--Flag Type Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'flagged_on', 'Markiert');--Flagged On
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'foreground_color', 'Vordergrundfarbe');--Foreground Color
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'frequency_code', 'Häufigkeit Code');--Frequency Code
@@ -1216,7 +1694,7 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'normally_debi
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'office', 'Office');--Office
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'office_code', 'Office Code');--Office Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'office_id', 'Office Id');--Office Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'office_name', 'Officename');--Office Name
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'office_name', 'Office Name');--Office Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'opportunity_stage_code', 'Chancen Stufen Code');--Opportunity Stage Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'opportunity_stage_id', 'Chancen Stufen Id');--Opportunity Stage Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'opportunity_stage_name', 'Chancen Stufe Name');--Opportunity Stage Name
@@ -1231,8 +1709,8 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_cash_r
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_cash_repository_id', 'Mutter Barwerte-Depot Id');--Parent Cash Repository Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_cr_code', 'Mutter BarDepot Code');--Parent CR Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_cr_name', 'Mutter BarDepot Name');--Parent CR Name
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_industry_id', 'Mutter Industrie Id');--Parent Industry Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_industry_name', 'Mutter Industrie Name');--Parent Industry Name
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_industry_id', 'Mutter Branchen Id');--Parent Industry Id
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_industry_name', 'Mutter Branchen Name');--Parent Industry Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_item_group_id', 'Mutter Artikel Gruppe Id');--Parent Item Group Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_office', 'Übergeordnetes Office');--Parent Office
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'parent_office_id', 'Übergeordnetes Office Id');--Parent Office Id
@@ -1265,30 +1743,30 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'price', 'Prei
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'price_from', 'Preis ab');--Price From
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'price_to', 'Preis bis');--Price To
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'price_type_code', 'Preis Art Code');--Price Type Code
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'price_type_id', 'Preis Art Identifier');--Price Type Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'price_type_name', 'Preis Art-Name');--Price Type Name
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'price_type_id', 'Preis Art Id');--Price Type Id
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'price_type_name', 'Preis Art Name');--Price Type Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'priority', 'Priorität');--Priority
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'purchase_account_id', 'Einkaufskonto Id');--Purchase Account Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'purchase_discount_account_id', 'Einkauf Discount Konto Id');--Purchase Discount Account Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'purchase_verification_limit', 'einkauf Prüfungslimit');--Purchase Verification Limit
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'purchase_verification_limit', 'Einkauf Verifizierungslimit');--Purchase Verification Limit
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'quantity', 'Menge');--Quantity
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'rate', 'Quote');--Rate
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurrence_type_id', 'Wiederholungs Typ Id');--Recurrence Type Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_amount', 'Wiederholung- Betrag');--Recurring Amount
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_amount', 'Wiederholungs Betrag');--Recurring Amount
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_duration', 'Wiederholungsdauer');--Recurring Duration
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_frequency', 'wiederholungsperiode');--Recurring Frequency
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_frequency', 'Wiederholungsperiode');--Recurring Frequency
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_frequency_id', 'wiederholungsperiode Id');--Recurring Frequency Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_invoice', 'Wiederholungsrechnung');--Recurring Invoice
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_invoice_code', 'Wiederholungsrechnung Id');--Recurring Invoice Code
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_invoice_code', 'Wiederholungsrechnung Code');--Recurring Invoice Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_invoice_id', 'Wiederholungsrechnung Id');--Recurring Invoice Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_invoice_name', 'Wiederkehrende Rechnung Name');--Recurring Invoice Name
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_invoice_setup_id', 'Wiederkehrende Rechnung Setup-Identifier');--Recurring Invoice Setup Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_invoices_item_id_auto_trigger_on_sales_uix', 'Sie können nicht mehr als eine Auto-Trigger auf den Umsatz für diesen Artikel haben');--You cannot have more than one auto trigger on sales for this item.
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_invoice_setup_id', 'Wiederkehrende Rechnung Setup-Id');--Recurring Invoice Setup Id
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurring_invoices_item_id_auto_trigger_on_sales_uix', 'Sie können nicht mehr als einen Auto-Trigger auf den Umsatz für diesen Artikel haben');--You cannot have more than one auto trigger on sales for this item.
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'recurs_on_same_calendar_date', 'Wiederholung am selben Kalendertag');--Recurs on Same Calendar Date
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'registration_date', 'Datum der Registrierung');--Registration Date
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'registration_number', 'Registrierungsnummer');--Registration Number
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'relationship_officer_name', 'Bezugsperson Name');--Relationship Officer Name
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'relname', 'Beziehungsverhätnis');--Relation Name
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'relname', 'Bezeichnung des Beziehungsverhältnisses');--Relation Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'remote_user', 'Remote User');--Remote User
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'reorder_level', 'Mindestbestand');--Reorder Level
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'reorder_quantity', 'Wiederbestell Menge');--Reorder Quantity
@@ -1314,10 +1792,10 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_return_
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_tax', 'Umsatzsteuer');--Sales Tax
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_tax_code', 'Umsatzsteuer-Code');--Sales Tax Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_tax_detail_code', 'Umsatzsteuer-Detail-Code');--Sales Tax Detail Code
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_tax_detail_id', 'Umsatzsteuer-Detail Identifier');--Sales Tax Detail Id
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_tax_detail_id', 'Umsatzsteuer-Detail Id');--Sales Tax Detail Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_tax_detail_name', 'Umsatzsteuer Detail Name');--Sales Tax Detail Name
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_tax_details_rate_chk', 'Der Prozentsatz kann nicht leer bleiben, außer sie haben Landes oder Bezirksabgaben  ausgewählt. Umgekehrt können sie keinen Prozentsatz angeben, wenn es sich um Landes oder Bezirksabgaben handelt.');--Rate should not be empty unless you have selected state or county tax. Similarly, you cannot provide both rate and choose to have state or county tax.
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_tax_exempt', 'Umsatzsteuer ausnahme');--Sales Tax Exempt
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_tax_details_rate_chk', 'Der Prozentsatz kann nicht leer bleiben, außer sie haben Landes oder Bezirksabgaben ausgewählt. Umgekehrt können sie keinen Prozentsatz angeben, wenn es sich um Landes oder Bezirksabgaben handelt.');--Rate should not be empty unless you have selected state or county tax. Similarly, you cannot provide both rate and choose to have state or county tax.
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_tax_exempt', 'Umsatzsteuer Ausnahme');--Sales Tax Exempt
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_tax_exempt_code', 'Umsatzsteuer Ausnahmen Code');--Sales Tax Exempt Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_tax_exempt_detail_id', 'Umsatzsteuer Ausnahmen Details Id');--Sales Tax Exempt Detail Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'sales_tax_exempt_id', 'Umsatzsteuer Ausnahme Id');--Sales Tax Exempt Id
@@ -1350,7 +1828,7 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'shipping_mail
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'shipping_mail_type_name', 'Postversandart Name');--Shipping Mail Type Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'shipping_package_shape_code', 'Versandpaketart Code');--Shipping Package Shape Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'shipping_package_shape_id', 'Versandpaketart Code');--Shipping Package Shape Id
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'shipping_package_shape_name', 'Versandpaketart  Name');--Shipping Package Shape Name
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'shipping_package_shape_name', 'Versandpaketart Name');--Shipping Package Shape Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'slab_name', 'Tafel Name');--Slab Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'sst_number', 'SST Nummer');--SST Number
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'starts_from', 'Beginnt mit');--Starts From
@@ -1405,15 +1883,15 @@ SELECT localization.add_localized_resource('ScrudResource', 'de', 'to_days', 'Um
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'total', 'Gesamt');--Total
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'total_duration', 'Gesamtdauer');--Total Duration
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'total_sales', 'Gesamtumsatz');--Total Sales
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'tran_code', 'Transaktion-Code');--Tran Code
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'tran_code', 'Transaktions-Code');--Tran Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'tran_type', 'Transaktionsart');--Tran Type
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'unit', 'Einheit');--Unit
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'unit_code', 'Einheit Code');--Unit Code
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'unit_id', 'Einheit Id');--Unit Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'unit_name', 'Einheit Name');--Unit Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'url', 'Url');--Url
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'use_tax_collecting_account', 'Nutzer- Steuer Sammelkonto');--Use Tax Collecting Account
-SELECT localization.add_localized_resource('ScrudResource', 'de', 'use_tax_collecting_account_id', 'Nutzer-  Steuer Sammelkonto Id');--Use Tax Collecting Account Id
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'use_tax_collecting_account', 'Benutzer Steuer Sammelkonto');--Use Tax Collecting Account
+SELECT localization.add_localized_resource('ScrudResource', 'de', 'use_tax_collecting_account_id', 'Beutzer- Steuer Sammelkonto Id');--Use Tax Collecting Account Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'user_id', 'User Id');--User Id
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'user_name', 'Benutzername');--User Name
 SELECT localization.add_localized_resource('ScrudResource', 'de', 'vacuum_count', 'Vakuum-Count');--Vacuum Count
@@ -1446,8 +1924,8 @@ SELECT localization.add_localized_resource('Titles', 'de', 'AddNew', 'Neu hinzuf
 SELECT localization.add_localized_resource('Titles', 'de', 'Address', 'Anschrift');--Address
 SELECT localization.add_localized_resource('Titles', 'de', 'AddressAndContactInfo', 'Adresse und Kontaktinformationen');--Address & Contact Information
 SELECT localization.add_localized_resource('Titles', 'de', 'AgeingSlabs', 'Alterungstafel');--Ageing Slabs
-SELECT localization.add_localized_resource('Titles', 'de', 'AgentBonusSlabAssignment', 'Bonustafel  Zuordnung');--Bonus Slab Assignment
-SELECT localization.add_localized_resource('Titles', 'de', 'AgentBonusSlabs', 'Bonustafel für verkäufer');--Bonus Slab for Salespersons
+SELECT localization.add_localized_resource('Titles', 'de', 'AgentBonusSlabAssignment', 'Bonustafel Zuordnung');--Bonus Slab Assignment
+SELECT localization.add_localized_resource('Titles', 'de', 'AgentBonusSlabs', 'Bonustafel für Verkäufer');--Bonus Slab for Salespersons
 SELECT localization.add_localized_resource('Titles', 'de', 'Alerts', 'Benachrichtigungen');--Alerts
 SELECT localization.add_localized_resource('Titles', 'de', 'Amount', 'Betrag');--Amount
 SELECT localization.add_localized_resource('Titles', 'de', 'AmountInBaseCurrency', 'Betrag (in Basiswährung)');--Amount (In Base Currency)
@@ -1459,7 +1937,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'ApprovedTransactions
 SELECT localization.add_localized_resource('Titles', 'de', 'AreYouSure', 'Sind Sie sicher?');--Are you sure?
 SELECT localization.add_localized_resource('Titles', 'de', 'AssignCashier', 'Kassierer zuweisen');--Assign Cashier
 SELECT localization.add_localized_resource('Titles', 'de', 'AttachmentsPlus', 'Anhänge (+)');--Attachments (+)
-SELECT localization.add_localized_resource('Titles', 'de', 'AutoVerificationPolicy', 'Automatische Überprüfung Richtlinie');--Autoverification Policy
+SELECT localization.add_localized_resource('Titles', 'de', 'AutoVerificationPolicy', 'Automatische Verifizierungs-Richtlinie');--Autoverification Policy
 SELECT localization.add_localized_resource('Titles', 'de', 'AutomaticallyApprovedByWorkflow', 'Automatisch vom Workflow-zugelassen');--Automatically Approved by Workflow
 SELECT localization.add_localized_resource('Titles', 'de', 'Back', 'Zurück');--Back
 SELECT localization.add_localized_resource('Titles', 'de', 'BackToPreviousPage', 'Vorhergehende Seite');--Back to Previous Page
@@ -1547,9 +2025,9 @@ SELECT localization.add_localized_resource('Titles', 'de', 'Debit', 'Soll');--De
 SELECT localization.add_localized_resource('Titles', 'de', 'DebitTotal', 'Soll Gesamt');--Debit Total
 SELECT localization.add_localized_resource('Titles', 'de', 'DefaultAddress', 'Standardadresse');--Default Address
 SELECT localization.add_localized_resource('Titles', 'de', 'DefaultCurrency', 'Standardwährung');--Default Currency
-SELECT localization.add_localized_resource('Titles', 'de', 'DefaultReorderQuantityAbbreviated', 'Standard Bestellmenge');--Default Reorder Qty
+SELECT localization.add_localized_resource('Titles', 'de', 'DefaultReorderQuantityAbbreviated', 'Standard Nachbestellmenge');--Default Reorder Qty
 SELECT localization.add_localized_resource('Titles', 'de', 'Definition', 'Definition');--Definition
-SELECT localization.add_localized_resource('Titles', 'de', 'Delete', 'löschen');--Delete
+SELECT localization.add_localized_resource('Titles', 'de', 'Delete', 'Löschen');--Delete
 SELECT localization.add_localized_resource('Titles', 'de', 'DeleteSelected', 'Auswahl löschen');--Delete Selected
 SELECT localization.add_localized_resource('Titles', 'de', 'DeliverTo', 'Liefern an');--Deliver To
 SELECT localization.add_localized_resource('Titles', 'de', 'Department', 'Abteilung');--Department
@@ -1563,10 +2041,10 @@ SELECT localization.add_localized_resource('Titles', 'de', 'Download', 'Download
 SELECT localization.add_localized_resource('Titles', 'de', 'DownloadSourceCode', 'Quellcode-Code Download');--Download Source Code
 SELECT localization.add_localized_resource('Titles', 'de', 'DueDate', 'Fälligkeitsdatum');--Due Date
 SELECT localization.add_localized_resource('Titles', 'de', 'EODBegun', 'Tagesabschluß hat begonnen');--End of Day Processing Has Begun
-SELECT localization.add_localized_resource('Titles', 'de', 'EODConsole', 'Tagesabschluß  Console');--EOD Console
+SELECT localization.add_localized_resource('Titles', 'de', 'EODConsole', 'Tagesabschluß Konsole');--EOD Console
 SELECT localization.add_localized_resource('Titles', 'de', 'ER', 'Wechselkurs');--ER
 SELECT localization.add_localized_resource('Titles', 'de', 'ERToBaseCurrency', 'Wechselkurs (zu Basiswährung)');--Exchange Rate (To Base Currency)
-SELECT localization.add_localized_resource('Titles', 'de', 'ERToHomeCurrency', 'Wechselkurs (To Home Währung)');--Exchange Rate (To Home Currency)
+SELECT localization.add_localized_resource('Titles', 'de', 'ERToHomeCurrency', 'Wechselkurs (zu Landes Währung)');--Exchange Rate (To Home Currency)
 SELECT localization.add_localized_resource('Titles', 'de', 'EditSelected', 'Auswahl bearbeiten');--Edit Selected
 SELECT localization.add_localized_resource('Titles', 'de', 'Email', 'E-Mail');--Email
 SELECT localization.add_localized_resource('Titles', 'de', 'EmailAddress', 'E-Mail-Addresse');--Email Address
@@ -1580,10 +2058,10 @@ SELECT localization.add_localized_resource('Titles', 'de', 'EmailThisReturn', 'E
 SELECT localization.add_localized_resource('Titles', 'de', 'EndOfDayOperation', 'Tagesabschluß Aktion');--End of Day Operation
 SELECT localization.add_localized_resource('Titles', 'de', 'EnterBackupName', 'Sicherungsdateinamen eingeben');--Enter Backup Name
 SELECT localization.add_localized_resource('Titles', 'de', 'EnterNewPassword', 'Neues Passwort eingeben');--Enter a New Password
-SELECT localization.add_localized_resource('Titles', 'de', 'EnteredBy', 'eingetragen von');--Entered By
+SELECT localization.add_localized_resource('Titles', 'de', 'EnteredBy', 'Eingetragen von');--Entered By
 SELECT localization.add_localized_resource('Titles', 'de', 'Entities', 'Körperschaften');--Entities
 SELECT localization.add_localized_resource('Titles', 'de', 'ExchangeRate', 'Wechselkurs');--Exchange Rate
-SELECT localization.add_localized_resource('Titles', 'de', 'Execute', 'ausführen');--Execute
+SELECT localization.add_localized_resource('Titles', 'de', 'Execute', 'Ausführen');--Execute
 SELECT localization.add_localized_resource('Titles', 'de', 'ExternalCode', 'Externer-Code');--External Code
 SELECT localization.add_localized_resource('Titles', 'de', 'Factor', 'Faktor');--Factor
 SELECT localization.add_localized_resource('Titles', 'de', 'Fax', 'Fax');--Fax
@@ -1593,9 +2071,9 @@ SELECT localization.add_localized_resource('Titles', 'de', 'FirstPage', 'Erste S
 SELECT localization.add_localized_resource('Titles', 'de', 'FiscalYear', 'Geschäftsjahr');--Fiscal Year
 SELECT localization.add_localized_resource('Titles', 'de', 'Flag', 'Markierung');--Flag
 SELECT localization.add_localized_resource('Titles', 'de', 'FlagBackgroundColor', 'Markierung Hintergrundfarbe');--Flag Background Color
-SELECT localization.add_localized_resource('Titles', 'de', 'FlagDescription', 'Sie können diese Transaktion markieren, aber Sie werden nicht in der Lage sein, die Markierungen von anderen Benutzern zu sehen.');--You can mark this transaction with a flag, however you will not be able to see the flags created by other users.
+SELECT localization.add_localized_resource('Titles', 'de', 'FlagDescription', 'Sie können diese Transaktion markieren, aber Sie werden nicht in der Lage sein, die Markierungen anderer Benutzer zu sehen.');--You can mark this transaction with a flag, however you will not be able to see the flags created by other users.
 SELECT localization.add_localized_resource('Titles', 'de', 'FlagForegroundColor', 'Markierung Vordergrundfarbe');--Flag Foreground Color
-SELECT localization.add_localized_resource('Titles', 'de', 'FlagThisTransaction', 'Markiere diese Transaktions');--Flag This Transaction
+SELECT localization.add_localized_resource('Titles', 'de', 'FlagThisTransaction', 'Markiere diese Transaktion');--Flag This Transaction
 SELECT localization.add_localized_resource('Titles', 'de', 'FlaggedTransactions', 'Markierte Transaktionen');--Flagged Transactions
 SELECT localization.add_localized_resource('Titles', 'de', 'Flags', 'Markierungen');--Flags
 SELECT localization.add_localized_resource('Titles', 'de', 'Frequencies', 'Perioden');--Frequencies
@@ -1603,7 +2081,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'From', 'Von');--From
 SELECT localization.add_localized_resource('Titles', 'de', 'GLAdvice', 'Hinweise zum Hauptbuch');--GL Advice
 SELECT localization.add_localized_resource('Titles', 'de', 'GLDetails', 'Hauptbuch Details');--GL Details
 SELECT localization.add_localized_resource('Titles', 'de', 'GLHead', 'Hauptbuch');--GL Head
-SELECT localization.add_localized_resource('Titles', 'de', 'Go', 'Gehen');--Go
+SELECT localization.add_localized_resource('Titles', 'de', 'Go', 'Gehe');--Go
 SELECT localization.add_localized_resource('Titles', 'de', 'GoToTop', 'Nach Oben');--GoToTop
 SELECT localization.add_localized_resource('Titles', 'de', 'GoodsReceiptNote', 'Wareneingang Notiz');--Goods Receipt Note
 SELECT localization.add_localized_resource('Titles', 'de', 'GrandTotal', 'Gesamtsumme');--Grand Total
@@ -1618,7 +2096,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'InitializeDayEnd', '
 SELECT localization.add_localized_resource('Titles', 'de', 'InstallMixERP', 'MixERP  Installieren');--Install MixERP
 SELECT localization.add_localized_resource('Titles', 'de', 'InstrumentCode', 'Instrument-Code');--Instrument Code
 SELECT localization.add_localized_resource('Titles', 'de', 'InterestApplicable', 'Verzinsung anwendbar');--Interest Applicable
-SELECT localization.add_localized_resource('Titles', 'de', 'InvalidDate', 'Dies ist kein gültiges Datum aus.');--This is not a valid date.
+SELECT localization.add_localized_resource('Titles', 'de', 'InvalidDate', 'Dies ist kein gültiges Datum.');--This is not a valid date.
 SELECT localization.add_localized_resource('Titles', 'de', 'InvalidImage', 'Dies ist kein gültiges Bild.');--This is not a valid image.
 SELECT localization.add_localized_resource('Titles', 'de', 'InventoryAdvice', 'Inventar Hinweise');--Inventory Advice
 SELECT localization.add_localized_resource('Titles', 'de', 'InvoiceAmount', 'Rechnungsbetrag');--Invoice Amount
@@ -1649,7 +2127,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'LastLoginIP', 'Letzt
 SELECT localization.add_localized_resource('Titles', 'de', 'LastLoginOn', 'Letzte Anmeldung am');--Last Login On
 SELECT localization.add_localized_resource('Titles', 'de', 'LastPage', 'Letzte Seite');--Last Page
 SELECT localization.add_localized_resource('Titles', 'de', 'LastPaymentDate', 'Letztes Auszahlungsdatum');--Last Payment Date
-SELECT localization.add_localized_resource('Titles', 'de', 'LastWrittenOn', 'Zuletzt geschrieben auf');--Last Written On
+SELECT localization.add_localized_resource('Titles', 'de', 'LastWrittenOn', 'Zuletzt geschrieben am');--Last Written On
 SELECT localization.add_localized_resource('Titles', 'de', 'LateFees', 'Säumniszuschläge');--Late Fees
 SELECT localization.add_localized_resource('Titles', 'de', 'LeadSources', 'Werbe-Quellen');--Lead Sources
 SELECT localization.add_localized_resource('Titles', 'de', 'LeadStatuses', 'Werber Status');--Lead Statuses
@@ -1668,7 +2146,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'MenuText', 'Menütex
 SELECT localization.add_localized_resource('Titles', 'de', 'MerchantFeeInPercent', 'Händlergebühr (in Prozent)');--Merchant Fee (In percent)
 SELECT localization.add_localized_resource('Titles', 'de', 'MerchantFeeSetup', 'Händler Gebühr-Setup');--Merchant Fee Setup
 SELECT localization.add_localized_resource('Titles', 'de', 'MergeBatchToGRN', 'Stapel mit Lieferschein zusammenführen');--Merge Batch to GRN
-SELECT localization.add_localized_resource('Titles', 'de', 'MergeBatchToSalesDelivery', 'Stapel mit Ausslieferung zusammenführen');--Merge Batch to Sales Delivery
+SELECT localization.add_localized_resource('Titles', 'de', 'MergeBatchToSalesDelivery', 'Stapel mit Auslieferung zusammenführen');--Merge Batch to Sales Delivery
 SELECT localization.add_localized_resource('Titles', 'de', 'MergeBatchToSalesOrder', 'Stapel mit Kundenbestellunng zusammenführen');--Merge Batch to Sales Order
 SELECT localization.add_localized_resource('Titles', 'de', 'MixERPDocumentation', 'MixERP Dokumentation');--MixERP Documentation
 SELECT localization.add_localized_resource('Titles', 'de', 'MixERPLinks', 'MixERP-Links');--MixERP Links
@@ -1691,7 +2169,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'OfficeCode', 'Office
 SELECT localization.add_localized_resource('Titles', 'de', 'OfficeInformation', 'Office Information');--Office Information
 SELECT localization.add_localized_resource('Titles', 'de', 'OfficeName', 'Officename');--Office Name
 SELECT localization.add_localized_resource('Titles', 'de', 'OfficeNickName', 'Office - Nickname');--Office Nick Name
-SELECT localization.add_localized_resource('Titles', 'de', 'OfficeSetup', 'Office Einrichtung');--Office Setup
+SELECT localization.add_localized_resource('Titles', 'de', 'OfficeSetup', 'Office Setup');--Office Setup
 SELECT localization.add_localized_resource('Titles', 'de', 'OnlyNumbersAllowed', 'Bitte geben Sie eine gültige Zahl ein.');--Please type a valid number.
 SELECT localization.add_localized_resource('Titles', 'de', 'OpeningInventory', 'Eröffnungsinvetar');--Opening Inventory
 SELECT localization.add_localized_resource('Titles', 'de', 'OpportunityStages', 'Chancen Stufen');--Opportunity Stages
@@ -1718,7 +2196,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'PostTransaction', 'T
 SELECT localization.add_localized_resource('Titles', 'de', 'PostedBy', 'Erstellt von');--Posted By
 SELECT localization.add_localized_resource('Titles', 'de', 'PostedDate', 'Durchgeführt am');--Posted Date
 SELECT localization.add_localized_resource('Titles', 'de', 'PreferredSupplier', 'Bevorzugter Lieferant');--Preferred Supplier
-SELECT localization.add_localized_resource('Titles', 'de', 'PreferredSupplierIdAbbreviated', 'Bevorzugter Lieferant Kennung');--Pref SupId
+SELECT localization.add_localized_resource('Titles', 'de', 'PreferredSupplierIdAbbreviated', 'Bevorzugter Lieferant Id');--Pref SupId
 SELECT localization.add_localized_resource('Titles', 'de', 'Prepare', 'Vorbereiten');--Prepare
 SELECT localization.add_localized_resource('Titles', 'de', 'PreparedOn', 'Vorbereitet am');--Prepared On
 SELECT localization.add_localized_resource('Titles', 'de', 'Preview', 'Vorschau');--Preview
@@ -1753,8 +2231,8 @@ SELECT localization.add_localized_resource('Titles', 'de', 'Reconcile', 'Kontena
 SELECT localization.add_localized_resource('Titles', 'de', 'RecurringInvoiceSetup', 'Wiederkehrende Rechnung einrichten');--Recurring Invoice Setup
 SELECT localization.add_localized_resource('Titles', 'de', 'RecurringInvoices', 'Wiederkehrende Rechnungen');--Recurring Invoices
 SELECT localization.add_localized_resource('Titles', 'de', 'ReferenceNumber', 'Referenz-Nr #');--Reference Number
-SELECT localization.add_localized_resource('Titles', 'de', 'ReferenceNumberAbbreviated', 'Referenz-Nr #');--Ref#
-SELECT localization.add_localized_resource('Titles', 'de', 'RefererenceNumberAbbreviated', 'Referenz-Nr #');--Ref #
+SELECT localization.add_localized_resource('Titles', 'de', 'ReferenceNumberAbbreviated', 'Ref-Nr #');--Ref#
+SELECT localization.add_localized_resource('Titles', 'de', 'RefererenceNumberAbbreviated', 'Ref-Nr #');--Ref #
 SELECT localization.add_localized_resource('Titles', 'de', 'RegistrationDate', 'Registrierungsdatum');--Registration Date
 SELECT localization.add_localized_resource('Titles', 'de', 'Reject', 'Zurückweisen');--Reject
 SELECT localization.add_localized_resource('Titles', 'de', 'RejectThisTransaction', 'Diese Transaktion zurückweisen');--Reject This Transaction
@@ -1766,7 +2244,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'ReorderUnitName', 'N
 SELECT localization.add_localized_resource('Titles', 'de', 'RequiredField', 'Dies ist ein Pflichtfeld.');--This is a required field.
 SELECT localization.add_localized_resource('Titles', 'de', 'RequiredFieldDetails', 'Die mit Stern (*) gekennzeichneten Felder sind Pflichtfelder.');--The fields marked with asterisk (*) are required.
 SELECT localization.add_localized_resource('Titles', 'de', 'RequiredFieldIndicator', '*');-- *
-SELECT localization.add_localized_resource('Titles', 'de', 'Reset', 'Rücksetzen');--Reset
+SELECT localization.add_localized_resource('Titles', 'de', 'Reset', 'Zurücksetzen');--Reset
 SELECT localization.add_localized_resource('Titles', 'de', 'RestrictedTransactionMode', 'Eingeschränkter Transaktions Modus');--Restricted Transaction Mode
 SELECT localization.add_localized_resource('Titles', 'de', 'RetainedEarnings', 'Gewinnrücklagen');--Retained Earnings
 SELECT localization.add_localized_resource('Titles', 'de', 'Return', 'Zurück');--Return
@@ -1777,13 +2255,13 @@ SELECT localization.add_localized_resource('Titles', 'de', 'RowNumber', 'Zeilenn
 SELECT localization.add_localized_resource('Titles', 'de', 'RunningTotal', 'Laufende Summe');--Running Total
 SELECT localization.add_localized_resource('Titles', 'de', 'SSTNumber', 'SST Nummer');--SST Number
 SELECT localization.add_localized_resource('Titles', 'de', 'SalesByMonthInThousands', 'Umsätze nach Monat (in Tausend)');--Sales By Month (In Thousands)
-SELECT localization.add_localized_resource('Titles', 'de', 'SalesByOfficeInThousands', 'Umsatz nach Geschäftsstelle (in Tausend)');--Sales By Office (In Thousands)
+SELECT localization.add_localized_resource('Titles', 'de', 'SalesByOfficeInThousands', 'Umsatz nach Geschäftsstellen (in Tausend)');--Sales By Office (In Thousands)
 SELECT localization.add_localized_resource('Titles', 'de', 'SalesDelivery', 'Vertrieb Lieferung');--Sales Delivery
 SELECT localization.add_localized_resource('Titles', 'de', 'SalesDeliveryNote', 'Lieferschein');--Delivery Note
 SELECT localization.add_localized_resource('Titles', 'de', 'SalesInvoice', 'Verkaufs Rechnung');--Sales Invoice
 SELECT localization.add_localized_resource('Titles', 'de', 'SalesOrder', 'Kundenauftrag');--Sales Order
 SELECT localization.add_localized_resource('Titles', 'de', 'SalesPersons', 'Verkäufer');--Salespersons
-SELECT localization.add_localized_resource('Titles', 'de', 'SalesQuotation', 'Verkaufsangebot');--Sales Quotation
+SELECT localization.add_localized_resource('Titles', 'de', 'SalesQuotation', 'Kostenvoranschlag');--Sales Quotation
 SELECT localization.add_localized_resource('Titles', 'de', 'SalesReceipt', 'Kassenbeleg');--Sales Receipt
 SELECT localization.add_localized_resource('Titles', 'de', 'SalesReturn', 'Retouren');--Sales Return
 SELECT localization.add_localized_resource('Titles', 'de', 'SalesTaxDetails', 'Umsatzsteuer-Details');--Sales Tax Details
@@ -1808,7 +2286,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'SelectStore', 'Wähl
 SELECT localization.add_localized_resource('Titles', 'de', 'SelectSupplier', 'Wähle Lieferant');--Select Supplier
 SELECT localization.add_localized_resource('Titles', 'de', 'SelectUnit', 'Wähle Einheit');--Select Unit
 SELECT localization.add_localized_resource('Titles', 'de', 'SelectUser', 'Wähle Benutzer');--Select User
-SELECT localization.add_localized_resource('Titles', 'de', 'SelectYourBranch', 'Wählen Sie Ihre Branche');--Select Your Branch
+SELECT localization.add_localized_resource('Titles', 'de', 'SelectYourBranch', 'Wählen Sie Ihre Niederlassung');--Select Your Branch
 SELECT localization.add_localized_resource('Titles', 'de', 'Shipper', 'Spediteur');--Shipper
 SELECT localization.add_localized_resource('Titles', 'de', 'Shippers', 'Speditionen');--Shippers
 SELECT localization.add_localized_resource('Titles', 'de', 'ShippingAddress', 'Versandadresse');--Shipping Address
@@ -1818,7 +2296,7 @@ SELECT localization.add_localized_resource('Titles', 'de', 'ShippingCharge', 'Ve
 SELECT localization.add_localized_resource('Titles', 'de', 'ShippingCompany', 'Speditionsfirma');--Shipping Company
 SELECT localization.add_localized_resource('Titles', 'de', 'Show', 'Anzeigen');--Show
 SELECT localization.add_localized_resource('Titles', 'de', 'ShowAll', 'Alle anzeigen');--Show All
-SELECT localization.add_localized_resource('Titles', 'de', 'ShowCompact', 'Kompact anzeigen');--Show Compact
+SELECT localization.add_localized_resource('Titles', 'de', 'ShowCompact', 'Kompakt anzeigen');--Show Compact
 SELECT localization.add_localized_resource('Titles', 'de', 'SignIn', 'Anmelden');--Sign In
 SELECT localization.add_localized_resource('Titles', 'de', 'SignOut', 'Abmelden');--Sign Out
 SELECT localization.add_localized_resource('Titles', 'de', 'SigningIn', 'Anmeldung');--Signing In
@@ -1848,12 +2326,12 @@ SELECT localization.add_localized_resource('Titles', 'de', 'TaxExemptTypes', 'St
 SELECT localization.add_localized_resource('Titles', 'de', 'TaxForm', 'Steuererklärung');--Tax Form
 SELECT localization.add_localized_resource('Titles', 'de', 'TaxMaster', 'Steuer Basis');--Tax Master
 SELECT localization.add_localized_resource('Titles', 'de', 'TaxRate', 'Steuersatz');--Tax Rate
-SELECT localization.add_localized_resource('Titles', 'de', 'TaxSetup', 'Tax-Setup');--Tax Setup
+SELECT localization.add_localized_resource('Titles', 'de', 'TaxSetup', 'steuer Setup');--Tax Setup
 SELECT localization.add_localized_resource('Titles', 'de', 'TaxTotal', 'Steuer Total');--Tax Total
 SELECT localization.add_localized_resource('Titles', 'de', 'TaxTypes', 'Steuerarten');--Tax Types
 SELECT localization.add_localized_resource('Titles', 'de', 'TaxableSales', 'Steuerpflichtiger Umsatz');--Taxable Sales
 SELECT localization.add_localized_resource('Titles', 'de', 'Tel', 'Telefon');--Tel
-SELECT localization.add_localized_resource('Titles', 'de', 'To', 'bis Zu');--To
+SELECT localization.add_localized_resource('Titles', 'de', 'To', 'Bis Zu');--To
 SELECT localization.add_localized_resource('Titles', 'de', 'TopSellingProductsOfAllTime', 'Meistverkaufte Produkte aller Zeiten');--Top Selling Products of All Time
 SELECT localization.add_localized_resource('Titles', 'de', 'Total', 'Gesamt');--Total
 SELECT localization.add_localized_resource('Titles', 'de', 'TotalDueAmount', 'Gesamt Fälliger Betrag');--Total Due Amount
@@ -1861,8 +2339,8 @@ SELECT localization.add_localized_resource('Titles', 'de', 'TotalDueAmountCurren
 SELECT localization.add_localized_resource('Titles', 'de', 'TotalDueAmountInBaseCurrency', 'Gesamt Fälliger Betrag (in Grundwährung)');--Total Due Amount (In Base Currency)
 SELECT localization.add_localized_resource('Titles', 'de', 'TotalSales', 'Gesamtverkäufe:');--Total Sales :
 SELECT localization.add_localized_resource('Titles', 'de', 'TranCode', 'Transaktionscode');--Tran Code
-SELECT localization.add_localized_resource('Titles', 'de', 'TranId', 'Transaction-Id');--Tran Id
-SELECT localization.add_localized_resource('Titles', 'de', 'TranIdParameter', 'Transaction-Identifier: #{0}');--TranId: #{0}
+SELECT localization.add_localized_resource('Titles', 'de', 'TranId', 'Transaktion-Id');--Tran Id
+SELECT localization.add_localized_resource('Titles', 'de', 'TranIdParameter', 'Transaktion-Id: #{0}');--TranId: #{0}
 SELECT localization.add_localized_resource('Titles', 'de', 'TransactionDate', 'Transaktionsdatum');--Transaction Date
 SELECT localization.add_localized_resource('Titles', 'de', 'TransactionDetails', 'Details der Transaktion');--Transaction Details
 SELECT localization.add_localized_resource('Titles', 'de', 'TransactionStatement', 'Transaktions Statement');--TransactionStatement
@@ -1915,14 +2393,14 @@ SELECT localization.add_localized_resource('Titles', 'de', 'ViewThisReturn', 'R�
 SELECT localization.add_localized_resource('Titles', 'de', 'ViewThisTransfer', 'Transfer anzeigen');--View This Transfer
 SELECT localization.add_localized_resource('Titles', 'de', 'VoucherVerification', 'Bescheinigungsverifizierung');--Voucher Verification
 SELECT localization.add_localized_resource('Titles', 'de', 'VoucherVerificationPolicy', 'Bescheinigungs Verifizierungs Richtlinie');--Voucher Verification Policy
-SELECT localization.add_localized_resource('Titles', 'de', 'Warning', 'Warnungen');--Warning
+SELECT localization.add_localized_resource('Titles', 'de', 'Warning', 'Warnung');--Warning
 SELECT localization.add_localized_resource('Titles', 'de', 'WhichBank', 'Welche Bank');--Which Bank?
 SELECT localization.add_localized_resource('Titles', 'de', 'WithdrawTransaction', 'Transaktion zurückziehen');--Withdraw Transaction
 SELECT localization.add_localized_resource('Titles', 'de', 'WithdrawnTransactions', 'Zurückgezogene Transaktionen');--Withdrawn Transactions
 SELECT localization.add_localized_resource('Titles', 'de', 'Workflow', 'Workflow-');--Workflow
-SELECT localization.add_localized_resource('Titles', 'de', 'WorldSalesStatistics', 'Weltweite  Verkaufs Statistiken');--World Sales Statistics
+SELECT localization.add_localized_resource('Titles', 'de', 'WorldSalesStatistics', 'Weltweite Verkaufs Statistiken');--World Sales Statistics
 SELECT localization.add_localized_resource('Titles', 'de', 'Year', 'Jahr');--Year
-SELECT localization.add_localized_resource('Titles', 'de', 'Yes', 'ja');--Yes
+SELECT localization.add_localized_resource('Titles', 'de', 'Yes', 'Ja');--Yes
 SELECT localization.add_localized_resource('Titles', 'de', 'YourName', 'Ihr Name');--Your Name
 SELECT localization.add_localized_resource('Titles', 'de', 'YourOffice', 'Ihr Office');--Your Office
 SELECT localization.add_localized_resource('Warnings', 'de', 'AccessIsDenied', 'Zugriff verweigert.');--Access is denied.
@@ -1963,7 +2441,7 @@ SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidShippingCom
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidStockTransaction', 'Ungültige Lager Transaktion.');--Invalid stock transaction.
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidStore', 'UngültigesGeschäft');--Invalid store.
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookInventoryDelivery', 'Tochtergesellschaftsbuchung ungültig : "Inventar Lieferung"');--Invalid SubTranBook "Inventory Delivery"
-SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookInventoryDirect', 'Tochtergesellschaftsbuchung ungültig: " Inventar Direct"');--Invalid SubTranBook "Inventory Direct"
+SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookInventoryDirect', 'Tochtergesellschaftsbuchung ungültig: " Inventar Direkt"');--Invalid SubTranBook "Inventory Direct"
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookInventoryInvoice', 'Tochtergesellschaftsbuchung ungültig:  "Inventar Rechnung"');--Invalid SubTranBook "Inventory Invoice"
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookInventoryOrder', 'Tochtergesellschaftsbuchung ungültig:  "Inventar Order"');--Invalid SubTranBook "Inventory Order"
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookInventoryPayment', 'Tochtergesellschaftsbuchung ungültig:  "Inventar Vergütung"');--Invalid SubTranBook "Inventory Payment"
@@ -1972,10 +2450,10 @@ SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBook
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookInventoryReturn', 'Tochtergesellschaftsbuchung ungültig:  "Inventar Retouren"');--Invalid SubTranBook "Inventory Return"
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookPurchaseDelivery', 'Tochtergesellschaftsbuchung ungültig:  "Einkaufs- Lieferung"');--Invalid SubTranBook "Purchase Delivery"
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookPurchaseQuotation', 'Tochtergesellschaftsbuchung ungültig:  "Einkauf Anbot"');--Invalid SubTranBook "Purchase Quotation"
-SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookPurchaseSuspense', 'Tochtergesellschaftsbuchung ungültig:  "Einkauf Zwischenkonto"');--Invalid SubTranBook "Purchase Suspense"
+SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookPurchaseSuspense', 'Tochtergesellschaftsbuchung ungültig:  "Einkauf Suspendierung"');--Invalid SubTranBook "Purchase Suspense"
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookPurchaseTransfer', 'Tochtergesellschaftsbuchung ungültig:  "Einkauf  Transfer"');--Invalid SubTranBook "Purchase Transfer"
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookSalesPayment', 'Tochtergesellschaftsbuchung ungültig:  "Verkaufs Vergütung"');--Invalid SubTranBook "Sales Payment"
-SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookSalesSuspense', 'Tochtergesellschaftsbuchung ungültig: "Verkaufs Zwischenkonto"');--Invalid SubTranBook "Sales Suspense"
+SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookSalesSuspense', 'Tochtergesellschaftsbuchung ungültig: "Verkaufs Suspendierung"');--Invalid SubTranBook "Sales Suspense"
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidSubTranBookSalesTransfer', 'Tochtergesellschaftsbuchung ungültig:  "Verkaufs Transfer"');--Invalid SubTranBook "Sales Transfer"
 SELECT localization.add_localized_resource('Warnings', 'de', 'InvalidUser', 'Ungültige Benutzer.');--Invalid user.
 SELECT localization.add_localized_resource('Warnings', 'de', 'ItemErrorMessage', 'Sie müssen entweder Artikel-ID oder eine Kombi Artikel ID auswählen.');--You have to select either item id or  compound item id.
@@ -1984,7 +2462,7 @@ SELECT localization.add_localized_resource('Warnings', 'de', 'NegativeValueSuppl
 SELECT localization.add_localized_resource('Warnings', 'de', 'NewPasswordCannotBeOldPassword', 'Neues Passwort kann nicht das alte Kennwort sein.');--New password can not be old password.
 SELECT localization.add_localized_resource('Warnings', 'de', 'NoFileSpecified', 'Keine Datei angegeben.');--No file specified.
 SELECT localization.add_localized_resource('Warnings', 'de', 'NoTransactionToPost', 'Keine Transaktion durchzuführen.');--No transaction to post.
-SELECT localization.add_localized_resource('Warnings', 'de', 'NotAuthorized', 'Sie sind nicht berechtigt, auf diese Ressourcen zu diesem Zeitpunkt zugreifen.');--You are not authorized to access this resource at this time.
+SELECT localization.add_localized_resource('Warnings', 'de', 'NotAuthorized', 'Sie sind nicht berechtigt, auf diese Ressourcen zu diesem Zeitpunkt zuzugreifen.');--You are not authorized to access this resource at this time.
 SELECT localization.add_localized_resource('Warnings', 'de', 'NothingSelected', 'Nichts ausgewählt.');--Nothing selected.
 SELECT localization.add_localized_resource('Warnings', 'de', 'PasswordCannotBeEmpty', 'Das Passwort darf nicht leer sein.');--Password cannot be empty.
 SELECT localization.add_localized_resource('Warnings', 'de', 'PleaseEnterCurrentPassword', 'Bitte geben Sie Ihr aktuelles Kennwort ein.');--Please enter your current password.
@@ -2018,7 +2496,7 @@ SELECT core.create_menu_locale('SSB', 'de', 'Marken');--Brands
 SELECT core.create_menu_locale('CF', 'de', 'Cashflow');--Cash Flow
 SELECT core.create_menu_locale('SCS', 'de', 'Kassen-Setup');--Counter Setup
 SELECT core.create_menu_locale('CTST', 'de', 'Bezirks Umsatzsteuer');--Counties Sales Taxes
-SELECT core.create_menu_locale('SCRS', 'de', 'Staats-Setup');--Country Setup
+SELECT core.create_menu_locale('SCRS', 'de', 'Staats-Setup');--Country  Setup
 SELECT core.create_menu_locale('SCTS', 'de', 'Bezirks-Setup');--County Setup
 SELECT core.create_menu_locale('CUR', 'de', 'Währungsmanagement');--Currency Management
 SELECT core.create_menu_locale('DBSTAT', 'de', 'Datenbankstatistik');--Database Statistics
@@ -2115,126 +2593,6 @@ SELECT core.create_menu_locale('SUM', 'de', 'Benutzerverwaltung');--User Managem
 SELECT core.create_menu_locale('FVV', 'de', 'Voucher Verifizierung');--Voucher Verification
 SELECT core.create_menu_locale('SVV', 'de', 'Voucher Verifizierung Richtlinie');--Voucher Verification Policy
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/04.Localization/de/menusgermanupd.sql --<--<--
---This translation is originally a courtesy of Johann Schwarz
---https://github.com/Johann-Schwarz
-UPDATE core.menu_locale SET menu_text = 'API-Richtlinien' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SAA');
-UPDATE core.menu_locale SET menu_text = 'Kontoauszug' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='AS');
-UPDATE core.menu_locale SET menu_text = 'Administrations Werkzeuge' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SAT');
-UPDATE core.menu_locale SET menu_text = 'Alterungstafel' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='AGS');
-UPDATE core.menu_locale SET menu_text = 'Pr�fungsberichte' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SEAR');
-UPDATE core.menu_locale SET menu_text = 'Automatische Verifizierungs  Richtlinie' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SAV');
-UPDATE core.menu_locale SET menu_text = 'Back Office' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='BO');
-UPDATE core.menu_locale SET menu_text = 'Datenbank sichern' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='BAK');
-UPDATE core.menu_locale SET menu_text = 'Bilanz' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='BS');
-UPDATE core.menu_locale SET menu_text = 'Bankkonten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='CBA');
-UPDATE core.menu_locale SET menu_text = 'Bonus Tafel Zuteilung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='BSA');
-UPDATE core.menu_locale SET menu_text = 'Bonus Tafel Details' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='BSD');
-UPDATE core.menu_locale SET menu_text = 'Bonus Tafel f�r Verk�ufer' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='ABS');
-UPDATE core.menu_locale SET menu_text = 'Marken' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSB');
-UPDATE core.menu_locale SET menu_text = 'Cashflow' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='CF');
-UPDATE core.menu_locale SET menu_text = 'Cashflow �berschriften' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='CFH');
-UPDATE core.menu_locale SET menu_text = 'Barwerte Depot Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SCR');
-UPDATE core.menu_locale SET menu_text = 'Benutzerpasswort �ndern' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PWD');
-UPDATE core.menu_locale SET menu_text = 'Kontenplan' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='COA');
-UPDATE core.menu_locale SET menu_text = 'Kombiartikel Details' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSCD');
-UPDATE core.menu_locale SET menu_text = 'Kombiartikel' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSC');
-UPDATE core.menu_locale SET menu_text = 'Erweiterte Masseinheiten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='CUOM');
-UPDATE core.menu_locale SET menu_text = 'Kostenstellen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='CC');
-UPDATE core.menu_locale SET menu_text = 'Kosten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='ICP');
-UPDATE core.menu_locale SET menu_text = 'Kassen-Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SCS');
-UPDATE core.menu_locale SET menu_text = 'Bezirks Umsatzsteuer' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='CTST');
-UPDATE core.menu_locale SET menu_text = 'Staats-Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SCRS');
-UPDATE core.menu_locale SET menu_text = 'Bezirks-Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SCTS');
-UPDATE core.menu_locale SET menu_text = 'W�hrungsmanagement' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='CUR');
-UPDATE core.menu_locale SET menu_text = 'Datenbankstatistik' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='DBSTAT');
-UPDATE core.menu_locale SET menu_text = 'Abteilungs Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SDS');
-UPDATE core.menu_locale SET menu_text = 'Direkt Einkauf' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='DRP');
-UPDATE core.menu_locale SET menu_text = 'Direktverkauf' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='DRS');
-UPDATE core.menu_locale SET menu_text = 'Tagesabschluss ' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='EOD');
-UPDATE core.menu_locale SET menu_text = 'K�rperschafts Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SES');
-UPDATE core.menu_locale SET menu_text = 'Finanzen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='FI');
-UPDATE core.menu_locale SET menu_text = 'Gesch�ftsjahr Informationen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SFY');
-UPDATE core.menu_locale SET menu_text = 'Markierungen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='TRF');
-UPDATE core.menu_locale SET menu_text = 'Perioden und Geschftsjahr Management' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SFR');
-UPDATE core.menu_locale SET menu_text = 'Sachkonten Zugriffs Richtlinie' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SAP');
-UPDATE core.menu_locale SET menu_text = 'Wareneingang Eintrag' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='GRN');
-UPDATE core.menu_locale SET menu_text = 'Branchen-Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SIS');
-UPDATE core.menu_locale SET menu_text = 'Lager Kontoauszug' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='IAS');
-UPDATE core.menu_locale SET menu_text = 'Lagerbewegungen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='IIM');
-UPDATE core.menu_locale SET menu_text = 'Artikelgruppen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SIG');
-UPDATE core.menu_locale SET menu_text = 'Artikelpflege' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSI');
-UPDATE core.menu_locale SET menu_text = 'Journal Voucher  Eintrag' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='JVN');
-UPDATE core.menu_locale SET menu_text = 'S�umniszuschl�ge' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='LF');
-UPDATE core.menu_locale SET menu_text = 'Login Form' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SEAR-LV');
-UPDATE core.menu_locale SET menu_text = 'Men�-Zugriffs Richtlinien' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SMA');
-UPDATE core.menu_locale SET menu_text = 'H�ndler Geb�hren-Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='MFS');
-UPDATE core.menu_locale SET menu_text = 'Verschiedene Parameter' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SMP');
-UPDATE core.menu_locale SET menu_text = 'Office & Filiale einrichten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SOB');
-UPDATE core.menu_locale SET menu_text = 'Office Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SOS');
-UPDATE core.menu_locale SET menu_text = 'Einmalig durchf�hrbares Setup ' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='OTS');
-UPDATE core.menu_locale SET menu_text = 'Warenanfangsbestand' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='OTSI');
-UPDATE core.menu_locale SET menu_text = 'Parteien-Konten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PA');
-UPDATE core.menu_locale SET menu_text = 'Partei Arten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PT');
-UPDATE core.menu_locale SET menu_text = 'Kreditkarten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PAC');
-UPDATE core.menu_locale SET menu_text = 'Zahlungsbedingungen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PAT');
-UPDATE core.menu_locale SET menu_text = 'Richtlinien Management' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SPM');
-UPDATE core.menu_locale SET menu_text = 'Produkte & Angebote' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='ITM');
-UPDATE core.menu_locale SET menu_text = 'Gewinn- und Verlustrechnung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PLA');
-UPDATE core.menu_locale SET menu_text = 'Einkauf' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PU');
-UPDATE core.menu_locale SET menu_text = 'Einkauf & eingehende Angebote' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PUQ');
-UPDATE core.menu_locale SET menu_text = 'Auftragserteilung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PO');
-UPDATE core.menu_locale SET menu_text = 'Waren-Nachbestellung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PRO');
-UPDATE core.menu_locale SET menu_text = 'Einkauf Reports' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PUR');
-UPDATE core.menu_locale SET menu_text = 'Waren-R�cksendungen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PR');
-UPDATE core.menu_locale SET menu_text = 'Empfangsbest�tigung Kunde' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='RFC');
-UPDATE core.menu_locale SET menu_text = 'Wiederkehrende Rechnung einrichten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='RIS');
-UPDATE core.menu_locale SET menu_text = 'Wiederkehrende Rechnungen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='RI');
-UPDATE core.menu_locale SET menu_text = 'Report Schreiber' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='RW');
-UPDATE core.menu_locale SET menu_text = 'Reports' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='IR');
-UPDATE core.menu_locale SET menu_text = 'Reports ' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='FIR');
-UPDATE core.menu_locale SET menu_text = 'Rollenverwaltung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SRM');
-UPDATE core.menu_locale SET menu_text = 'Vertrieb' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SA');
-UPDATE core.menu_locale SET menu_text = 'Vertrieb & Voranschl�ge' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SAQ');
-UPDATE core.menu_locale SET menu_text = 'Vertrieb Lieferung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SD');
-UPDATE core.menu_locale SET menu_text = 'Eingehende Bestellungen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SO');
-UPDATE core.menu_locale SET menu_text = 'Kostenvoranschl�ge' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SQ');
-UPDATE core.menu_locale SET menu_text = 'Verkaufsberichte' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SAR');
-UPDATE core.menu_locale SET menu_text = 'R�cknahmen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SR');
-UPDATE core.menu_locale SET menu_text = 'Umsatzsteuer Details' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='STXD');
-UPDATE core.menu_locale SET menu_text = 'Umsatzsteuer Ausnahmen Details' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='STXEXD');
-UPDATE core.menu_locale SET menu_text = 'Umsatzsteuer Ausnahmen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='STXEX');
-UPDATE core.menu_locale SET menu_text = 'Umsatzsteuerarten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='STXT');
-UPDATE core.menu_locale SET menu_text = 'Umsatzsteuer' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='STX');
-UPDATE core.menu_locale SET menu_text = 'Vertriebsteams' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SST');
-UPDATE core.menu_locale SET menu_text = 'Verk�ufer' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSA');
-UPDATE core.menu_locale SET menu_text = 'Verkaufspreise' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='ISP');
-UPDATE core.menu_locale SET menu_text = 'Einrichtung und Wartung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSM');
-UPDATE core.menu_locale SET menu_text = 'Einrichtung und Wartung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='ISM');
-UPDATE core.menu_locale SET menu_text = 'Einrichtung und Wartung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='FSM');
-UPDATE core.menu_locale SET menu_text = 'Versand Informationen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SHI');
-UPDATE core.menu_locale SET menu_text = 'Lieferadressen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='PSA');
-UPDATE core.menu_locale SET menu_text = 'Landes Umsatzsteuern' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='STST');
-UPDATE core.menu_locale SET menu_text = 'Landes Setup' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSS');
-UPDATE core.menu_locale SET menu_text = 'Lager Anpassung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='STA');
-UPDATE core.menu_locale SET menu_text = 'Umlagerungs Journal' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='STJ');
-UPDATE core.menu_locale SET menu_text = 'Lager Richtlinien' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SSP');
-UPDATE core.menu_locale SET menu_text = 'Gesch�fts Typen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='STT');
-UPDATE core.menu_locale SET menu_text = 'Gesch�fte' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='STO');
-UPDATE core.menu_locale SET menu_text = 'Steuerbeh�rden' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='TXA');
-UPDATE core.menu_locale SET menu_text = 'Steuerkonfiguration' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='BOTC');
-UPDATE core.menu_locale SET menu_text = 'Steuer Ausnahmearten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='TXEXT');
-UPDATE core.menu_locale SET menu_text = 'Steuerbasis' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='TXM');
-UPDATE core.menu_locale SET menu_text = 'Meistverkaufte Artikel' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SAR-TSI');
-UPDATE core.menu_locale SET menu_text = 'Transaktionen und Vorlagen' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='FTT');
-UPDATE core.menu_locale SET menu_text = 'Rohbilanz' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='TB');
-UPDATE core.menu_locale SET menu_text = 'Ma�einheiten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='UOM');
-UPDATE core.menu_locale SET menu_text = 'Wechselkurse Updaten' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='UER');
-UPDATE core.menu_locale SET menu_text = 'Benutzerverwaltung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SUM');
-UPDATE core.menu_locale SET menu_text = 'Voucher Verifizierung' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='FVV');
-UPDATE core.menu_locale SET menu_text = 'Voucher  Verifizierungs Richtlinie' WHERE culture = 'de' AND menu_id = (SELECT menu_id FROM core.menus WHERE menu_code='SVV');
-
-
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/04.Localization/en/language.sql --<--<--
 SELECT localization.add_localized_resource('CommonResource', '', 'DateMustBeGreaterThan', 'Invalid date. Must be greater than "{0}".');
 SELECT localization.add_localized_resource('CommonResource', '', 'DateMustBeLessThan', 'Invalid date. Must be less than "{0}".');
@@ -2274,6 +2632,7 @@ SELECT localization.add_localized_resource('DbErrors', '', 'P4031', 'Please ask 
 SELECT localization.add_localized_resource('DbErrors', '', 'P5000', 'Referencing sides are not equal.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5001', 'Negative stock is not allowed.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5002', 'Posting this transaction would produce a negative cash balance.');
+SELECT localization.add_localized_resource('DbErrors', '', 'P5003', 'Stock transfer request can only contain debit entries.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5010', 'Past dated transactions are not allowed.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5100', 'This establishment does not allow transaction posting.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5101', 'Cannot post transaction during restricted transaction mode.');
@@ -2288,6 +2647,7 @@ SELECT localization.add_localized_resource('DbErrors', '', 'P5201', 'A stock adj
 SELECT localization.add_localized_resource('DbErrors', '', 'P5202', 'An item can appear only once in a store.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5203', 'The returned quantity cannot be greater than actual quantity.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5204', 'The returned amount cannot be greater than actual amount.');
+SELECT localization.add_localized_resource('DbErrors', '', 'P5205', 'You cannot provide more than one store for this transaction.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5301', 'Invalid or rejected transaction.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5500', 'Insufficient item quantity.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5800', 'Deleting a transaction is not allowed. Mark the transaction as rejected instead.');
@@ -2892,6 +3252,7 @@ SELECT localization.add_localized_resource('Titles', '', 'AccountName', 'Account
 SELECT localization.add_localized_resource('Titles', '', 'AccountNumber', 'Account Number');
 SELECT localization.add_localized_resource('Titles', '', 'AccountOverview', 'Account Overview');
 SELECT localization.add_localized_resource('Titles', '', 'AccountStatement', 'Account Statement');
+SELECT localization.add_localized_resource('Titles', '', 'Acknowledged', 'Acknowledged');
 SELECT localization.add_localized_resource('Titles', '', 'Action', 'Action');
 SELECT localization.add_localized_resource('Titles', '', 'Actions', 'Actions');
 SELECT localization.add_localized_resource('Titles', '', 'Actual', 'Actual');
@@ -2913,6 +3274,8 @@ SELECT localization.add_localized_resource('Titles', '', 'ApprovedTransactions',
 SELECT localization.add_localized_resource('Titles', '', 'AreYouSure', 'Are you sure?');
 SELECT localization.add_localized_resource('Titles', '', 'AssignCashier', 'Assign Cashier');
 SELECT localization.add_localized_resource('Titles', '', 'AttachmentsPlus', 'Attachments (+)');
+SELECT localization.add_localized_resource('Titles', '', 'Authorize', 'Authorize');
+SELECT localization.add_localized_resource('Titles', '', 'Authorized', 'Authorized');
 SELECT localization.add_localized_resource('Titles', '', 'AutoVerificationPolicy', 'Autoverification Policy');
 SELECT localization.add_localized_resource('Titles', '', 'AutomaticallyApprovedByWorkflow', 'Automatically Approved by Workflow');
 SELECT localization.add_localized_resource('Titles', '', 'Back', 'Back');
@@ -3021,6 +3384,8 @@ SELECT localization.add_localized_resource('Titles', '', 'EODConsole', 'EOD Cons
 SELECT localization.add_localized_resource('Titles', '', 'ER', 'ER');
 SELECT localization.add_localized_resource('Titles', '', 'ERToBaseCurrency', 'Exchange Rate (To Base Currency)');
 SELECT localization.add_localized_resource('Titles', '', 'ERToHomeCurrency', 'Exchange Rate (To Home Currency)');
+SELECT localization.add_localized_resource('Titles', '', 'EditAndSend', 'Edit & Send');
+SELECT localization.add_localized_resource('Titles', '', 'EditAndReceive', 'Edit & Receive');
 SELECT localization.add_localized_resource('Titles', '', 'EditSelected', 'Edit Selected');
 SELECT localization.add_localized_resource('Titles', '', 'Email', 'Email');
 SELECT localization.add_localized_resource('Titles', '', 'EmailAddress', 'Email Address');
@@ -3203,6 +3568,8 @@ SELECT localization.add_localized_resource('Titles', '', 'Receipt', 'Receipt');
 SELECT localization.add_localized_resource('Titles', '', 'ReceiptAmount', 'Receipt Amount');
 SELECT localization.add_localized_resource('Titles', '', 'ReceiptCurrency', 'Receipt Currency');
 SELECT localization.add_localized_resource('Titles', '', 'ReceiptType', 'Receipt Type');
+SELECT localization.add_localized_resource('Titles', '', 'Receive', 'Receive');
+SELECT localization.add_localized_resource('Titles', '', 'Received', 'Received');
 SELECT localization.add_localized_resource('Titles', '', 'ReceivedAmountInaboveCurrency', 'Received Amount (In above Currency)');
 SELECT localization.add_localized_resource('Titles', '', 'ReceivedCurrency', 'Received Currency');
 SELECT localization.add_localized_resource('Titles', '', 'Reconcile', 'Reconcile');
@@ -3265,6 +3632,8 @@ SELECT localization.add_localized_resource('Titles', '', 'SelectSupplier', 'Sele
 SELECT localization.add_localized_resource('Titles', '', 'SelectUnit', 'Select Unit');
 SELECT localization.add_localized_resource('Titles', '', 'SelectUser', 'Select User');
 SELECT localization.add_localized_resource('Titles', '', 'SelectYourBranch', 'Select Your Branch');
+SELECT localization.add_localized_resource('Titles', '', 'Send', 'Send');
+SELECT localization.add_localized_resource('Titles', '', 'Sent', 'Sent');
 SELECT localization.add_localized_resource('Titles', '', 'Shipper', 'Shipper');
 SELECT localization.add_localized_resource('Titles', '', 'Shippers', 'Shippers');
 SELECT localization.add_localized_resource('Titles', '', 'ShippingAddress', 'Shipping Address');
@@ -3286,7 +3655,12 @@ SELECT localization.add_localized_resource('Titles', '', 'States', 'States');
 SELECT localization.add_localized_resource('Titles', '', 'Status', 'Status');
 SELECT localization.add_localized_resource('Titles', '', 'StockAdjustment', 'Stock Adjustment');
 SELECT localization.add_localized_resource('Titles', '', 'StockTransaction', 'Stock Transaction');
+SELECT localization.add_localized_resource('Titles', '', 'StockTransferAuthorization', 'Stock Transfer Authorization');
+SELECT localization.add_localized_resource('Titles', '', 'StockTransferDelivery', 'Stock Transfer Delivery');
 SELECT localization.add_localized_resource('Titles', '', 'StockTransferJournal', 'Stock Transfer Journal');
+SELECT localization.add_localized_resource('Titles', '', 'StockTransferRequest', 'Stock Transfer Request');
+SELECT localization.add_localized_resource('Titles', '', 'StockTransferAuthorization', 'Stock Transfer Authorization');
+SELECT localization.add_localized_resource('Titles', '', 'StockTransferAcknowledgement', 'Stock Transfer Acknowledgement');
 SELECT localization.add_localized_resource('Titles', '', 'Store', 'Store');
 SELECT localization.add_localized_resource('Titles', '', 'StoreName', 'Store Name');
 SELECT localization.add_localized_resource('Titles', '', 'StoreTypes', 'Store Types');
@@ -3361,6 +3735,8 @@ SELECT localization.add_localized_resource('Titles', '', 'ViewCustomerCopy', 'Vi
 SELECT localization.add_localized_resource('Titles', '', 'ViewEmptyExceptionMessage', 'The property ''View'' cannot be left empty.');
 SELECT localization.add_localized_resource('Titles', '', 'ViewSalesInovice', 'View Sales Invoice');
 SELECT localization.add_localized_resource('Titles', '', 'ViewSchemaEmptyExceptionMessage', 'The property ''ViewSchema'' cannot be left empty.');
+SELECT localization.add_localized_resource('Titles', '', 'ViewThisAuthorization', 'View This Authorization');
+SELECT localization.add_localized_resource('Titles', '', 'ViewThisAcknowledgement', 'View This Acknowledgement');
 SELECT localization.add_localized_resource('Titles', '', 'ViewThisAdjustment', 'View This Adjustment');
 SELECT localization.add_localized_resource('Titles', '', 'ViewThisDelivery', 'View This Delivery');
 SELECT localization.add_localized_resource('Titles', '', 'ViewThisInvoice', 'View This Invoice');
@@ -3368,6 +3744,7 @@ SELECT localization.add_localized_resource('Titles', '', 'ViewThisNote', 'View T
 SELECT localization.add_localized_resource('Titles', '', 'ViewThisOrder', 'View This Order');
 SELECT localization.add_localized_resource('Titles', '', 'ViewThisQuotation', 'View This Quotation');
 SELECT localization.add_localized_resource('Titles', '', 'ViewThisReturn', 'View This Return');
+SELECT localization.add_localized_resource('Titles', '', 'ViewThisRequest', 'View This Request');
 SELECT localization.add_localized_resource('Titles', '', 'ViewThisTransfer', 'View This Transfer');
 SELECT localization.add_localized_resource('Titles', '', 'VoucherVerification', 'Voucher Verification');
 SELECT localization.add_localized_resource('Titles', '', 'VoucherVerificationPolicy', 'Voucher Verification Policy');

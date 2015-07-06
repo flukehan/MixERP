@@ -37,7 +37,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
         ajaxSaveTransfer.success(function (msg) {
             var id = msg.d;
-            window.location = "/Modules/Inventory/TransferRequest.mix?TranId=" + id;
+            window.location = "/Modules/Inventory/Confirmation/TransferRequest.mix?TranId=" + id;
         });
 
         ajaxSaveTransfer.fail(function (xhr) {

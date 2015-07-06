@@ -98,6 +98,7 @@ BEGIN
             statement_reference                         text,
             authorized                                  boolean NOT NULL DEFAULT(false),
             acknowledged                                boolean NOT NULL DEFAULT(FALSE),
+            withdrawn                                   boolean NOT NULL DEFAULT(FALSE),
             audit_ts                                    TIMESTAMP WITH TIME ZONE DEFAULT(now())
         );
     END IF;    

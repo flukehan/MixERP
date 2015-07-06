@@ -43,6 +43,7 @@ namespace MixERP.Net.Core.Modules.Inventory
         private void AddGridView()
         {
             this.grid = new MixERPGridView();
+            this.grid.ID = "TransferRequestGridView";
             this.GridViewPlaceholder.Controls.Add(this.grid);
         }
 
@@ -73,14 +74,15 @@ namespace MixERP.Net.Core.Modules.Inventory
             string store = this.StoreTextBox.Value;
             string authorized = this.AuthorizedTextBox.Value;
             string acknowledged = this.AcknowledgedTextBox.Value;
+            string withdrawn = this.WithdrawnTextBox.Value;
             string user = this.UserTextBox.Value;
             string referenceNumber = this.ReferenceNumberTextBox.Value;
             string statementReference = this.StatementReferenceTextBox.Value;
 
             const string sql =
-                @"SELECT * FROM transactions.get_inventory_transfer_request_view(@0::integer, @1::bigint, @2::integer,@3::date,@4::date,@5::text,@6::text,@7::text,@8::text,@9::text,@10::text,@11::text);";
+                @"SELECT * FROM transactions.get_inventory_transfer_request_view(@0::integer, @1::bigint, @2::integer,@3::date,@4::date,@5::text,@6::text,@7::text,@8::text,@9::text,@10::text,@11::text,@12::text);";
             return Factory.Get<DbGetInventoryTransferRequestViewResult>(catalog, sql, userId, loginId, officeId, from,
-                to, office, store, authorized, acknowledged, user, referenceNumber, statementReference);
+                to, office, store, authorized, acknowledged, withdrawn, user, referenceNumber, statementReference);
         }
 
         #region IDisposable

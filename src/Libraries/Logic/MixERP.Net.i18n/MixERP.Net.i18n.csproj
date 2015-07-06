@@ -58,6 +58,10 @@
   <ItemGroup>
     <Compile Include="CacheProvider.cs" />
     <Compile Include="ConfigurationHelper.cs" />
+    <Compile Include="LocalizedResource.cs" />
+    <Compile Include="Factory.cs" />
+    <Compile Include="PetaPoco.cs" />
+    <Compile Include="PetaPocoDB.cs" />
     <Compile Include="Resources.cs">
       <DependentUpon>Resources.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -66,6 +70,7 @@
     <Compile Include="DbResources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManager.cs" />
+    <Compile Include="ResourcesHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Processor.ttinclude" />

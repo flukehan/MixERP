@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading;
 using Npgsql;
 
@@ -32,6 +33,13 @@ namespace MixERP.Net.i18n
 
             return resources;
         }
+
+
+        internal static IEnumerable<LocalizedResource> GetLocalizationTable(string language)
+        {
+            const string sql = "SELECT * FROM localization.get_localization_table(@0);";
+            return Factory.Get<LocalizedResource>(string.Empty, sql, language);
+        }        
 
         private static DataTable GetDataTable(NpgsqlCommand command)
         {

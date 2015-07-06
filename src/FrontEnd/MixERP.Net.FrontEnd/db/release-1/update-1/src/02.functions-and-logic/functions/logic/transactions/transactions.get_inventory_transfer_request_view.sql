@@ -9,6 +9,7 @@ DROP FUNCTION IF EXISTS transactions.get_inventory_transfer_request_view
     _store                  text,
     _authorized             text,
     _acknowledged           text,
+    _withdrawn              text,
     _user                   text,
     _reference_number       text,
     _statement_reference    text
@@ -25,6 +26,7 @@ CREATE FUNCTION transactions.get_inventory_transfer_request_view
     _store                  text,
     _authorized             text,
     _acknowledged           text,
+    _withdrawn              text,
     _user                   text,
     _reference_number       text,
     _statement_reference    text
@@ -39,7 +41,8 @@ RETURNS TABLE
     reference_number        text,
     statement_reference     text,
     authorized              text,
-    acknowledged            text
+    acknowledged            text,
+    withdrawn               text
 )
 AS
 $$
@@ -64,7 +67,8 @@ BEGIN
             transactions.inventory_transfer_requests.reference_number::text,
             transactions.inventory_transfer_requests.statement_reference::text,
             transactions.inventory_transfer_requests.authorized::text,
-            transactions.inventory_transfer_requests.acknowledged::text
+            transactions.inventory_transfer_requests.acknowledged::text,
+            transactions.inventory_transfer_requests.withdrawn::text
         FROM transactions.inventory_transfer_requests
         INNER JOIN office.offices
         ON transactions.inventory_transfer_requests.office_id = office.offices.office_id
@@ -80,7 +84,8 @@ BEGIN
         AND lower(transactions.inventory_transfer_requests.reference_number) LIKE '%' || lower(_reference_number) || '%'
         AND lower(transactions.inventory_transfer_requests.statement_reference) LIKE '%' || lower(_statement_reference) || '%'
         AND lower(transactions.inventory_transfer_requests.authorized::text) LIKE '%' || lower(_authorized) || '%'
-        AND lower(transactions.inventory_transfer_requests.acknowledged::text) LIKE '%' || lower(_acknowledged) || '%';
+        AND lower(transactions.inventory_transfer_requests.acknowledged::text) LIKE '%' || lower(_acknowledged) || '%'
+        AND lower(transactions.inventory_transfer_requests.withdrawn::text) LIKE '%' || lower(_withdrawn) || '%';
 
         RETURN;
     END IF;
@@ -111,7 +116,8 @@ BEGIN
     AND lower(transactions.inventory_transfer_requests.reference_number) LIKE '%' || lower(_reference_number) || '%'
     AND lower(transactions.inventory_transfer_requests.statement_reference) LIKE '%' || lower(_statement_reference) || '%'
     AND lower(transactions.inventory_transfer_requests.authorized::text) LIKE '%' || lower(_authorized) || '%'
-    AND lower(transactions.inventory_transfer_requests.acknowledged::text) LIKE '%' || lower(_acknowledged) || '%';    
+    AND lower(transactions.inventory_transfer_requests.acknowledged::text) LIKE '%' || lower(_acknowledged) || '%'
+    AND lower(transactions.inventory_transfer_requests.withdrawn::text) LIKE '%' || lower(_withdrawn) || '%';
 END
 $$
 LANGUAGE plpgsql;

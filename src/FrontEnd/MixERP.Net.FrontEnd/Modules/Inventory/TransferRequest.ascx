@@ -24,47 +24,56 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 <div class="basic ui buttons">
     <input id="AddNewButton" value="<%= Titles.AddNew %>" class="ui button" onclick=" window.location = 'Entry/TransferRequest.mix' " type="button">
     <input id="FlagButton" value="<%= Titles.Flag %>" class="ui button" type="button">
+    <input id="AuthorizeButton" value="<%=Titles.Authorize %>" class="ui button" type="button">
+    <input id="SendButton" value="<%=Titles.Send %>" class="ui button" type="button">
+    <input id="EditButton" value="<%=Titles.EditAndSend %>" class="ui button" type="button">
+    <input id="ReceiveButton" value="<%=Titles.Receive %>" class="ui button" type="button">
+    <input id="EditReceiveButton" value="<%=Titles.EditAndReceive %>" class="ui button" type="button">
     <input id="PrintButton" value="<%= Titles.Print %>" class="ui button" type="button">
 </div>
 
 <div id="FilterDiv" class="ui segment">
     <div class="ui form" style="margin-left: 8px;">
-        <div class="ten fields">
+        <div class="eight fields">
             <div class="field">
-                <label>From</label>
+                <label><%=Titles.From %></label>
                 <mixerp:DateTextBox ID="DateFromDateTextBox" runat="server" Mode="MonthStartDate"/>
             </div>
             <div class="field">
-                <label>To</label>
+                <label><%=Titles.To %></label>
                 <mixerp:DateTextBox ID="DateToDateTextBox" runat="server" Mode="MonthEndDate"></mixerp:DateTextBox>
             </div>
             <div class="field">
-                <label>Office</label>
-                <input id="OfficeTextBox" placeholder="Office" type="text" runat="server"/>
+                <label><%=Titles.Office %></label>
+                <input id="OfficeTextBox" type="text" runat="server"/>
             </div>
             <div class="field">
-                <label>Store</label>
-                <input id="StoreTextBox" placeholder="Store" type="text" runat="server"/>
+                <label><%=Titles.Store %></label>
+                <input id="StoreTextBox" type="text" runat="server"/>
             </div>
             <div class="field">
-                <label>Authorized</label>
-                <input id="AuthorizedTextBox" placeholder="Price Type" type="text" value="false" runat="server"/>
+                <label><%=Titles.Authorized %></label>
+                <input id="AuthorizedTextBox" type="text" value="false" runat="server"/>
             </div>
             <div class="field">
-                <label>Acknowledged</label>
-                <input id="AcknowledgedTextBox" placeholder="Price Type" type="text" value="false" runat="server"/>
+                <label><%=Titles.Acknowledged %></label>
+                <input id="AcknowledgedTextBox" type="text" value="false" runat="server"/>
             </div>
             <div class="field">
-                <label>User</label>
-                <input id="UserTextBox" placeholder="User" type="text" runat="server"/>
+                <label><%=Titles.Withdrawn %></label>
+                <input id="WithdrawnTextBox" type="text" value="false" runat="server"/>
             </div>
             <div class="field">
-                <label>Ref #</label>
-                <input id="ReferenceNumberTextBox" placeholder="Reference Number" type="text" runat="server"/>
+                <label><%=Titles.User %></label>
+                <input id="UserTextBox" type="text" runat="server"/>
             </div>
             <div class="field">
-                <label>Statement Reference</label>
-                <input id="StatementReferenceTextBox" placeholder="Statement Reference" type="text" runat="server"/>
+                <label><%=Titles.ReferenceNumberAbbreviated %></label>
+                <input id="ReferenceNumberTextBox" type="text" runat="server"/>
+            </div>
+            <div class="field">
+                <label><%=Titles.StatementReference %></label>
+                <input id="StatementReferenceTextBox" type="text" runat="server"/>
             </div>
             <div class="field">
                 <label>&nbsp;</label>
@@ -75,3 +84,45 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 </div>
 
 <asp:PlaceHolder ID="GridViewPlaceholder" runat="server"/>
+<script type="text/javascript">
+
+    $(window).load(function () {
+        var grid = $("#TransferRequestGridView");
+        var header = grid.find("thead tr");
+        var rows = grid.find("tbody tr");
+
+
+
+        var iconTemplate = "<a href=\"Confirmation/TransferRequest.mix?TranId=%s\" title=\"%s\">" +
+                                "<i class=\"list icon\"></i>" +
+                            "</a>" +
+                            "<a title=\"%s\" onclick=\"showWindow('Reports/TransferRequestReport.mix?TranId=%1$s');\">" +
+                                "<i class=\"print icon\"></i>" +
+                            "</a>" +
+                            "<a title=\"%s\" onclick=\"window.scroll(0);\">" +
+                                "<i class=\"arrow up icon\"></i>" +
+                            "</a>";
+
+        if (header.length) {
+            header.prepend("<th>" + actionsLocalized + "</th><th>" + selectLocalized + "</th>");
+            rows.prepend("<td></td><td><div class='ui toggle checkbox'><input type='checkbox' /><label></label></div></td>");
+
+            rows.click(function () {
+                var el = $(this);
+                toogleSelection(el.find("input"));
+            });
+
+
+            rows.each(function () {
+                var iconCell = $(this).find("td:first-child");
+                var tranId = $(this).find("td:nth-child(3)").html();
+
+                var template = sprintf(iconTemplate, tranId, Resources.Labels.GoToChecklistWindow(), Resources.Titles.Print(), Resources.Labels.GoToTop());
+
+                iconCell.html(template);
+
+            });
+
+        };
+    });
+</script>

@@ -605,6 +605,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for You cannot provide more than one store for this transaction.
+		/// </summary>
+		public static string P5205 
+		{
+			get
+			{
+				return Get("P5205");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Invalid or rejected transaction.
 		/// </summary>
 		public static string P5301 
@@ -7298,6 +7309,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Acknowledged
+		/// </summary>
+		public static string Acknowledged 
+		{
+			get
+			{
+				return Get("Acknowledged");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Action
 		/// </summary>
 		public static string Action 
@@ -7525,6 +7547,28 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("AttachmentsPlus");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Authorize
+		/// </summary>
+		public static string Authorize 
+		{
+			get
+			{
+				return Get("Authorize");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Authorized
+		/// </summary>
+		public static string Authorized 
+		{
+			get
+			{
+				return Get("Authorized");
 			}
 		}
 		
@@ -8713,6 +8757,28 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("ERToHomeCurrency");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Edit & Receive
+		/// </summary>
+		public static string EditAndReceive 
+		{
+			get
+			{
+				return Get("EditAndReceive");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Edit & Send
+		/// </summary>
+		public static string EditAndSend 
+		{
+			get
+			{
+				return Get("EditAndSend");
 			}
 		}
 		
@@ -10719,6 +10785,28 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Receive
+		/// </summary>
+		public static string Receive 
+		{
+			get
+			{
+				return Get("Receive");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Received
+		/// </summary>
+		public static string Received 
+		{
+			get
+			{
+				return Get("Received");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Received Amount (In above Currency)
 		/// </summary>
 		public static string ReceivedAmountInaboveCurrency 
@@ -11401,6 +11489,28 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Send
+		/// </summary>
+		public static string Send 
+		{
+			get
+			{
+				return Get("Send");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Sent
+		/// </summary>
+		public static string Sent 
+		{
+			get
+			{
+				return Get("Sent");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Shipper
 		/// </summary>
 		public static string Shipper 
@@ -11650,6 +11760,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("StockTransferAuthorization");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Stock Transfer Delivery
+		/// </summary>
+		public static string StockTransferDelivery 
+		{
+			get
+			{
+				return Get("StockTransferDelivery");
 			}
 		}
 		
@@ -12490,6 +12611,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for View This Acknowledgement
+		/// </summary>
+		public static string ViewThisAcknowledgement 
+		{
+			get
+			{
+				return Get("ViewThisAcknowledgement");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for View This Adjustment
 		/// </summary>
 		public static string ViewThisAdjustment 
@@ -12497,6 +12629,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("ViewThisAdjustment");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for View This Authorization
+		/// </summary>
+		public static string ViewThisAuthorization 
+		{
+			get
+			{
+				return Get("ViewThisAuthorization");
 			}
 		}
 		
@@ -12552,6 +12695,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("ViewThisQuotation");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for View This Request
+		/// </summary>
+		public static string ViewThisRequest 
+		{
+			get
+			{
+				return Get("ViewThisRequest");
 			}
 		}
 		
@@ -12622,6 +12776,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Withdraw
+		/// </summary>
+		public static string Withdraw 
+		{
+			get
+			{
+				return Get("Withdraw");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Withdraw Transaction
 		/// </summary>
 		public static string WithdrawTransaction 
@@ -12629,6 +12794,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("WithdrawTransaction");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Withdrawn
+		/// </summary>
+		public static string Withdrawn 
+		{
+			get
+			{
+				return Get("Withdrawn");
 			}
 		}
 		
