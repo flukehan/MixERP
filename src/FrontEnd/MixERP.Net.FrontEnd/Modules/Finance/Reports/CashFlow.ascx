@@ -54,4 +54,19 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         });
 
     });
+
+    var printButton = $("#PrintButton");
+
+    printButton.click(function () {
+        var templatePath = "/Reports/Print.html";
+        var headerPath = "/Reports/Assets/Header.aspx";
+        var title = $("h2").html();
+        var targetControlId = "CashFlowStatementGridView";
+        var date = now;
+        var windowName = "CashFlowStatementGridView";
+        var offsetFirst = 0;
+        var offsetLast = 0;
+
+        printGridView(templatePath, headerPath, title, targetControlId, date, user, office, windowName, offsetFirst, offsetLast);
+    });
 </script>
