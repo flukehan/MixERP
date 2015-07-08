@@ -20,7 +20,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -50,13 +52,13 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.counties.county_id",
-                ConfigurationHelper.GetDbParameter("CountyDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "CountyDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.entities.entity_id",
-                ConfigurationHelper.GetDbParameter("EntityDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "EntityDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.industries.industry_id",
-                ConfigurationHelper.GetDbParameter("IndustryDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "IndustryDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id",
-                ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "ItemGroupDisplayField"));
             return string.Join(",", displayFields);
         }
 

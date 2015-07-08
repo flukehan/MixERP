@@ -20,7 +20,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -52,21 +54,21 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.item_types.item_type_id",
-                ConfigurationHelper.GetDbParameter("ItemTypeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "ItemTypeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.item_groups.item_group_id",
-                ConfigurationHelper.GetDbParameter("ItemGroupDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "ItemGroupDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.brands.brand_id",
-                ConfigurationHelper.GetDbParameter("BrandDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "BrandDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.parties.party_id",
-                ConfigurationHelper.GetDbParameter("PartyDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "PartyDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.units.unit_id",
-                ConfigurationHelper.GetDbParameter("UnitDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "UnitDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.sales_taxes.sales_tax_id",
-                ConfigurationHelper.GetDbParameter("SalesTaxDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "SalesTaxDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.shipping_mail_types.shipping_mail_type_id",
-                ConfigurationHelper.GetDbParameter("ShippingMailTypeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "ShippingMailTypeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.shipping_package_shapes.shipping_package_shape_id",
-                ConfigurationHelper.GetDbParameter("ShippingPackageShapeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "ShippingPackageShapeDisplayField"));
 
             return string.Join(",", displayFields);
         }

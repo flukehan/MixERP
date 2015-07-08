@@ -20,7 +20,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -61,9 +63,9 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id",
-                ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "FrequencyDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.late_fee.late_fee_id",
-                ConfigurationHelper.GetDbParameter("LateFeeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "LateFeeDisplayField"));
             return string.Join(",", displayFields);
         }
 

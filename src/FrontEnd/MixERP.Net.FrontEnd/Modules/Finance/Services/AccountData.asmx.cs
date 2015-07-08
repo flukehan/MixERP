@@ -26,8 +26,8 @@ using System.Web.Services;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Data.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Office;
 using MixERP.Net.FrontEnd.Cache;
@@ -61,7 +61,10 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod]
         public Collection<ListItem> GetAccounts()
         {
-            if (Switches.AllowParentAccountInGlTransaction())
+            bool allowParentAccountInGlTransaction = DbConfig.GetSwitch(AppUsers.GetCurrentUserDB(),
+                "AllowParentAccountInGlTransaction");
+
+            if (allowParentAccountInGlTransaction)
             {
                 if (AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
                 {
@@ -87,9 +90,12 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
 
-            foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(AppUsers.GetCurrentUserDB(), officeId))
+            foreach (
+                CashRepository cashRepository in
+                    CashRepositories.GetCashRepositories(AppUsers.GetCurrentUserDB(), officeId))
             {
-                values.Add(new ListItem(cashRepository.CashRepositoryName, cashRepository.CashRepositoryId.ToString(CultureInfo.InvariantCulture)));
+                values.Add(new ListItem(cashRepository.CashRepositoryName,
+                    cashRepository.CashRepositoryId.ToString(CultureInfo.InvariantCulture)));
             }
             return values;
         }
@@ -102,7 +108,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             if (AccountHelper.IsCashAccount(AppUsers.GetCurrentUserDB(), accountNumber))
             {
                 int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-                foreach (CashRepository cashRepository in CashRepositories.GetCashRepositories(AppUsers.GetCurrentUserDB(), officeId))
+                foreach (
+                    CashRepository cashRepository in
+                        CashRepositories.GetCashRepositories(AppUsers.GetCurrentUserDB(), officeId))
                 {
                     values.Add(new ListItem(cashRepository.CashRepositoryName, cashRepository.CashRepositoryCode));
                 }
@@ -130,7 +138,8 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             foreach (CostCenter costCenter in CostCenters.GetCostCenters(AppUsers.GetCurrentUserDB()))
             {
-                values.Add(new ListItem(costCenter.CostCenterName, costCenter.CostCenterId.ToString(CultureInfo.InvariantCulture)));
+                values.Add(new ListItem(costCenter.CostCenterName,
+                    costCenter.CostCenterId.ToString(CultureInfo.InvariantCulture)));
             }
 
             return values;

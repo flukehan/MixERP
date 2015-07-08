@@ -1,5 +1,6 @@
 DROP FUNCTION IF EXISTS core.get_second_root_account_id(integer, integer);
 DROP FUNCTION IF EXISTS core.get_root_account_id(integer, integer);
+DROP FUNCTION IF EXISTS core.get_root_account_id(bigint, bigint);
 
 CREATE FUNCTION core.get_root_account_id(_account_id bigint, _parent bigint default 0)
 RETURNS integer

@@ -24,6 +24,7 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
@@ -90,9 +91,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "office.users.user_id",
-                ConfigurationHelper.GetDbParameter("UserDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "UserDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id",
-                ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "OfficeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "policy.http_actions.http_action_code", "http_action_code");
             return string.Join(",", displayFields);
         }

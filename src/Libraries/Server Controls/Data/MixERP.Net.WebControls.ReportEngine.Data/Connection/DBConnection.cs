@@ -28,8 +28,8 @@ namespace MixERP.Net.WebControls.ReportEngine.Data.Connection
         {
             string host = ConfigurationHelper.GetDbServerParameter("Server");
             int port = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port"));
-            string userName = ConfigurationHelper.GetReportParameter("DbServerUserId");
-            string password = ConfigurationHelper.GetReportParameter("DbServerPassword");
+            string userName = ConfigurationHelper.GetDbServerParameter("ReportUserId");
+            string password = ConfigurationHelper.GetDbServerParameter("ReportUserPassword");
 
             if (string.IsNullOrWhiteSpace(host))
             {

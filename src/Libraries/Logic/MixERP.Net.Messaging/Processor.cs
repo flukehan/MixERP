@@ -31,9 +31,16 @@ namespace MixERP.Net.Messaging.Email
 {
     public sealed class Processor
     {
+        public string Catalog { get; set; }
+
+        public Processor(string catalog)
+        {
+            this.Catalog = catalog;
+        }
+
         public void Send(string sendTo, string subject, string body, IEnumerable<Attachment> attachments)
         {
-            Config config = new Config();
+            Config config = new Config(this.Catalog);
 
             EmailMessage email = new EmailMessage
             {

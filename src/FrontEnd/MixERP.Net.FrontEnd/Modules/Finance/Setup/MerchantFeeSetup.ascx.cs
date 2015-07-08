@@ -21,7 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -51,9 +53,9 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.bank_accounts.account_id", ConfigurationHelper.GetDbParameter("BankAccountDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.payment_cards.payment_card_id", ConfigurationHelper.GetDbParameter("PaymentCardDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.bank_accounts.account_id", DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "BankAccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.payment_cards.payment_card_id", DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "PaymentCardDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "AccountDisplayField"));
             return string.Join(",", displayFields);
         }
 

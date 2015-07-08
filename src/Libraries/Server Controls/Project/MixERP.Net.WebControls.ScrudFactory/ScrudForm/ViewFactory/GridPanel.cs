@@ -21,6 +21,7 @@ using System;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.WebControls.ScrudFactory
@@ -78,7 +79,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             if (this.GridPanelWidth.Value.Equals(0))
             {
-                string style = Conversion.TryCastString(ConfigurationHelper.GetScrudParameter("GridPanelStyle"));
+                string style = Conversion.TryCastString(DbConfig.GetScrudParameter(this.Catalog, "GridPanelStyle"));
 
                 return style;
             }
@@ -90,7 +91,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             if (this.GridPanelWidth.Value.Equals(0))
             {
-                Unit width = Conversion.TryCastUnit(ConfigurationHelper.GetScrudParameter("GridPanelDefaultWidth"));
+                Unit width = Conversion.TryCastUnit(DbConfig.GetScrudParameter(this.Catalog, "GridPanelDefaultWidth"));
 
                 return width;
             }

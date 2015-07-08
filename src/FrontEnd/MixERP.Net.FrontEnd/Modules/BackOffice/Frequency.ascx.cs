@@ -22,7 +22,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -59,9 +61,9 @@ namespace MixERP.Net.Core.Modules.BackOffice
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id",
-                ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "FrequencyDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.fiscal_year.fiscal_year_code",
-                ConfigurationHelper.GetDbParameter("FiscalYearDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "FiscalYearDisplayField"));
             return string.Join(",", displayFields);
         }
 

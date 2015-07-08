@@ -63,8 +63,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbConfig.cs" />
     <Compile Include="Contracts\IPoco.cs" />
     <Compile Include="Contracts\ITransaction.cs" />
+    <Compile Include="Config.cs">
+      <DependentUpon>Config.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Office\GlobalLogin.cs" />
     <Compile Include="ORM\Attributes.cs" />
     <Compile Include="Public.cs">
@@ -136,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Processors\Config.processor.template" />
     <None Include="Processors\Office.processor.template" />
     <None Include="Public.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -184,6 +191,12 @@
     <None Include="Processors\Audit.processor.template" />
     <None Include="Processors\Core.processor.template" />
     <None Include="Templates\Generator.template" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Config.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Config.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

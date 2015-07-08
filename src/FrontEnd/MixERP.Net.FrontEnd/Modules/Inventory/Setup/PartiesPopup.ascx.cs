@@ -21,7 +21,9 @@ using System;
 using System.Collections.Generic;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -55,7 +57,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
 
         private void RegisterJavascript()
         {
-            string script = JSUtility.GetVar("partyNameParameter", Parameters.GetParameter("PartyName"));
+            string partyNameParameter = ConfigurationHelper.GetParameter("PartyName");
+            string script = JSUtility.GetVar("partyNameParameter", partyNameParameter);
             PageUtility.RegisterJavascript("PartiesPopup_Vars", script, this.Page, true);
         }
 
@@ -63,19 +66,19 @@ namespace MixERP.Net.Core.Modules.Inventory.Setup
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.party_types.party_type_id",
-                ConfigurationHelper.GetDbParameter("PartyTypeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "PartyTypeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.frequencies.frequency_id",
-                ConfigurationHelper.GetDbParameter("FrequencyDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "FrequencyDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code",
-                ConfigurationHelper.GetDbParameter("CurrencyDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "CurrencyDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.countries.country_id",
-                ConfigurationHelper.GetDbParameter("CountryDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "CountryDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.states.state_id",
-                ConfigurationHelper.GetDbParameter("StateDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "StateDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.entities.entity_id",
-                ConfigurationHelper.GetDbParameter("EntityDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "EntityDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.industries.industry_id",
-                ConfigurationHelper.GetDbParameter("IndustryDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "IndustryDisplayField"));
             return string.Join(",", displayFields);
         }
 

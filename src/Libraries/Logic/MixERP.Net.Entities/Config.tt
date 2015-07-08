@@ -1,0 +1,12 @@
+﻿<#@ include file="Processors/Config.processor.template" #>
+<#
+
+    // Read schema
+    var tables = LoadTables();
+
+    // Generate output
+    if (tables.Count>0)
+    {
+#>
+<#@ include file="Templates/Generator.Template" #>
+<# } #>

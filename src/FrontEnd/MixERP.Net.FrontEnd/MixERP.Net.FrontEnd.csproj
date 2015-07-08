@@ -307,31 +307,17 @@
     <Content Include="Modules\web.config" />
     <Content Include="MixERP.Installation.config" />
     <Content Include="Resource\Configs\Updater.config" />
-    <None Include="Resource\Configs\AttachmentFactoryParameters.config">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Resource\Configs\OpenExchangeRates.config" />
     <None Include="Resource\Configs\ReportApiConfiguration.config" />
-    <None Include="Resource\Configs\DbParameters.config" />
     <None Include="Resource\Configs\StockTransactionFactoryParameters.config" />
     <None Include="Resource\Configs\DbServer.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Resource\Configs\MessagingParameters.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Resource\Configs\MixERP.config" />
     <None Include="Resource\Configs\Parameters.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="Resource\Configs\ReportParameters.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Resource\Configs\ScrudParameters.config">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Resource\Configs\Currencylayer.config" />
-    <None Include="Resource\Configs\Switches.config" />
     <None Include="Resource\Configs\TransactionChecklistParameters.config" />
     <Content Include="Resource\Configs\index.html" />
     <Content Include="Resource\CustomReports\index.html" />

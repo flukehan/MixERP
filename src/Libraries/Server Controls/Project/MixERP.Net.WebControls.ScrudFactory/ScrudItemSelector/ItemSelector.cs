@@ -27,12 +27,12 @@ namespace MixERP.Net.WebControls.ScrudFactory
 {
     public partial class ScrudItemSelector
     {
-        private static TemplateField GetSelectColumnTemplateField()
+        private TemplateField GetSelectColumnTemplateField()
         {
             var selectTemplate = new TemplateField();
             selectTemplate.HeaderText = Titles.Select;
 
-            using (var itemTemplate = new ScrudItemSelectorSelectTemplate())
+            using (var itemTemplate = new ScrudItemSelectorSelectTemplate(this.Catalog))
             {
                 selectTemplate.ItemTemplate = itemTemplate;
             }

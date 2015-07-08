@@ -21,6 +21,7 @@ using System;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.WebControls.ScrudFactory.Data;
 using MixERP.Net.WebControls.ScrudFactory.Helpers;
 
@@ -48,7 +49,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
         {
             if (string.IsNullOrWhiteSpace(this.ResourceClassName))
             {
-                return ConfigurationHelper.GetScrudParameter("ResourceClassName");
+                return DbConfig.GetScrudParameter(this.Catalog, "ResourceClassName");
             }
 
             return this.ResourceClassName;

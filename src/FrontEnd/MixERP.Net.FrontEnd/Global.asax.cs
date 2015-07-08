@@ -27,7 +27,9 @@ using System.Web.Routing;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.Entities.Office;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.ReportManager;
 using MixERP.Net.Updater;
 using MixERP.Net.Updater.Api;
@@ -123,7 +125,7 @@ namespace MixERP.Net.FrontEnd
 
         private string GetLogDirectory()
         {
-            string path = ConfigurationHelper.GetMixERPParameter("ApplicationLogDirectory");
+            string path = DbConfig.GetMixERPParameter(AppUsers.GetCurrentUserDB(), "ApplicationLogDirectory");
 
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -148,7 +150,7 @@ namespace MixERP.Net.FrontEnd
 
         private LoggerConfiguration GetConfiguration()
         {
-            string minimumLogLevel = ConfigurationHelper.GetMixERPParameter("MinimumLogLevel");
+            string minimumLogLevel = DbConfig.GetMixERPParameter(AppUsers.GetCurrentUserDB(), "MinimumLogLevel");
 
             LoggingLevelSwitch levelSwitch = new LoggingLevelSwitch();
 

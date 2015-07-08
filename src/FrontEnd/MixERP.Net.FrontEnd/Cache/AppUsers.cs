@@ -103,7 +103,12 @@ namespace MixERP.Net.FrontEnd.Cache
         {
             GlobalLogin login = new GlobalLogin();
 
-            string globalLoginId = HttpContext.Current.User.Identity.Name;
+            string globalLoginId = string.Empty;
+
+            if (HttpContext.Current.User != null)
+            {
+                globalLoginId = HttpContext.Current.User.Identity.Name;
+            }
 
             if (!string.IsNullOrWhiteSpace(globalLoginId))
             {

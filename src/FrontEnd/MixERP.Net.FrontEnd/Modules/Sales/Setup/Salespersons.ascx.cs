@@ -20,7 +20,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -59,9 +61,9 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id",
-                ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "AccountDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.sales_teams.sales_team_id",
-                ConfigurationHelper.GetDbParameter("SalesTeamDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "SalesTeamDisplayField"));
             return string.Join(",", displayFields);
         }
 

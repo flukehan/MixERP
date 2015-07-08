@@ -21,7 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -50,8 +52,8 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.cash_flow_headings.cash_flow_heading_id", ConfigurationHelper.GetDbParameter("CashFlowHeadingDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.account_masters.account_master_id", ConfigurationHelper.GetDbParameter("AccountMasterDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.cash_flow_headings.cash_flow_heading_id", DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "CashFlowHeadingDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.account_masters.account_master_id", DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "AccountMasterDisplayField"));
             return string.Join(",", displayFields);
         }
 

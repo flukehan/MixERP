@@ -27,7 +27,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
             this.CreateHeader(this.Placeholder1);
             this.CreateTopPanel(this.Placeholder1);
 
-            bool allowMultipleOpeningInventory = ConfigurationHelper.GetSwitch("AllowMultipleOpeningInventory");
+            bool allowMultipleOpeningInventory = DbConfig.GetSwitch(AppUsers.GetCurrentUserDB(), "AllowMultipleOpeningInventory");
             bool entryExists = Data.OpeningInventory.Exists(AppUsers.GetCurrentUserDB(),
                 AppUsers.GetCurrentLogin().View.OfficeId.ToInt()); 
 

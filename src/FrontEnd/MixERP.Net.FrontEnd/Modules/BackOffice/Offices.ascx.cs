@@ -21,7 +21,9 @@ using System;
 using System.Collections.Generic;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -59,9 +61,9 @@ namespace MixERP.Net.Core.Modules.BackOffice
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id",
-                ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "OfficeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code",
-                ConfigurationHelper.GetDbParameter("CurrencyDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "CurrencyDisplayField"));
             return string.Join(",", displayFields);
         }
 

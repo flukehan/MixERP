@@ -21,7 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -50,7 +52,7 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.card_types.card_type_id", ConfigurationHelper.GetDbParameter("CardTypeDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.card_types.card_type_id", DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "CardTypeDisplayField"));
             return string.Join(",", displayFields);
         }
 

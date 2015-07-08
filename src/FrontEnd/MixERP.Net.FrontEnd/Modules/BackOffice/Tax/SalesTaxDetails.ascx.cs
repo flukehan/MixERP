@@ -20,7 +20,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -50,21 +52,21 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.sales_tax_types.sales_tax_type_id",
-                ConfigurationHelper.GetDbParameter("SalesTaxTypeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "SalesTaxTypeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.sales_taxes.sales_tax_id",
-                ConfigurationHelper.GetDbParameter("SalesTaxDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "SalesTaxDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.state_sales_taxes.state_sales_tax_id",
-                ConfigurationHelper.GetDbParameter("StateSalesTaxDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "StateSalesTaxDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.county_sales_taxes.county_sales_tax_id",
-                ConfigurationHelper.GetDbParameter("CountySalesTaxDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "CountySalesTaxDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.tax_rate_types.tax_rate_type_code",
-                ConfigurationHelper.GetDbParameter("TaxRateTypeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "TaxRateTypeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.tax_authorities.tax_authority_id",
-                ConfigurationHelper.GetDbParameter("TaxAuthorityDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "TaxAuthorityDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id",
-                ConfigurationHelper.GetDbParameter("AccountDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "AccountDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.rounding_methods.rounding_method_code",
-                ConfigurationHelper.GetDbParameter("RoundingMethodCodeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "RoundingMethodCodeDisplayField"));
             return string.Join(",", displayFields);
         }
 

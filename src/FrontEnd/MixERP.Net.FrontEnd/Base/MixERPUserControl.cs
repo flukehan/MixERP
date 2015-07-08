@@ -22,7 +22,7 @@ using MixERP.Net.Common;
 using MixERP.Net.Common.Base;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Cache;
 using Serilog;
@@ -40,10 +40,7 @@ namespace MixERP.Net.FrontEnd.Base
 
         public bool IsRestrictedMode
         {
-            get
-            {
-                return !AppUsers.GetCurrentLogin().View.AllowTransactionPosting.ToBool();
-            }
+            get { return !AppUsers.GetCurrentLogin().View.AllowTransactionPosting.ToBool(); }
         }
 
         public void Initialize()
@@ -82,11 +79,13 @@ namespace MixERP.Net.FrontEnd.Base
                 userName = AppUsers.GetCurrentLogin().View.UserName;
                 ipAddress = AppUsers.GetCurrentLogin().View.IpAddress;
 
-                bool isDevelopmentMode = ConfigurationHelper.GetMixERPParameter("Mode").ToUpperInvariant().Equals("DEVELOPMENT");
+                bool isDevelopmentMode =
+                    DbConfig.GetMixERPParameter(AppUsers.GetCurrentUserDB(), "Mode")
+                        .ToUpperInvariant()
+                        .Equals("DEVELOPMENT");
                 bool isLocalHost = PageUtility.IsLocalhost(this.Page);
                 bool adminOnly = (this.AccessLevel.Equals(AccessLevel.AdminOnly) ||
                                   this.AccessLevel.Equals(AccessLevel.LocalhostAdmin));
-
 
 
                 if (adminOnly)
@@ -101,7 +100,6 @@ namespace MixERP.Net.FrontEnd.Base
                         hasAccess = false;
                     }
                 }
-
             }
 
             if (!hasAccess)

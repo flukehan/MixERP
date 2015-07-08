@@ -21,7 +21,9 @@ using System;
 using System.Collections.Generic;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -62,13 +64,13 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.tax_master.tax_master_id",
-                ConfigurationHelper.GetDbParameter("TaxMasterDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "TaxMasterDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.tax_exempt_types.tax_exempt_type_id",
-                ConfigurationHelper.GetDbParameter("TaxExemptTypeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "TaxExemptTypeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.sales_taxes.sales_tax_id",
-                ConfigurationHelper.GetDbParameter("SalesTaxDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "SalesTaxDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "office.stores.store_id",
-                ConfigurationHelper.GetDbParameter("StoreDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "StoreDisplayField"));
             return string.Join(",", displayFields);
         }
 

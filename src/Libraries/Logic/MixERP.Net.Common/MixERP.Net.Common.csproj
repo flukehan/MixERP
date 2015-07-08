@@ -110,10 +110,8 @@
     <Compile Include="Helpers\JSUtility.cs" />
     <Compile Include="Helpers\JSONHelper.cs" />
     <Compile Include="Helpers\LocalizationHelper.cs" />
-    <Compile Include="Helpers\Parameters.cs" />
     <Compile Include="Helpers\ScrudHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
-    <Compile Include="Helpers\Switches.cs" />
     <Compile Include="jQueryHelper\jQueryUI.cs" />
     <Compile Include="Models\ApplicationDateModel.cs" />
     <Compile Include="Models\PostgreSQLServer.cs" />

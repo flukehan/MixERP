@@ -1,6 +1,4 @@
-﻿using System.Configuration;
-using System.Web.Hosting;
-using MixERP.Net.Common.Helpers;
+﻿using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.ReportManager
 {

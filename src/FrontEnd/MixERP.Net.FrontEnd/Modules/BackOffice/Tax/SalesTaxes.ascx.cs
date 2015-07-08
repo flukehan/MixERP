@@ -20,7 +20,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -50,11 +52,11 @@ namespace MixERP.Net.Core.Modules.BackOffice.Tax
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "core.tax_master.tax_master_id",
-                ConfigurationHelper.GetDbParameter("TaxMasterDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "TaxMasterDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id",
-                ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "OfficeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "core.tax_base_amount_types.tax_base_amount_type_code",
-                ConfigurationHelper.GetDbParameter("TaxBaseAmountTypeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "TaxBaseAmountTypeDisplayField"));
             return string.Join(",", displayFields);
         }
 

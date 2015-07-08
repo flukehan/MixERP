@@ -111,7 +111,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
                                 {
                                     if (fileUpload != null)
                                     {
-                                        var file = ScrudFileUpload.UploadFile(fileUpload);
+                                        var file = ScrudFileUpload.UploadFile(this.Catalog, fileUpload);
                                         list.Add(new KeyValuePair<string, object>(columnName, file));
                                         this.imageColumn = columnName;
                                     }

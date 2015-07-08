@@ -20,7 +20,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
-using System.Web;
 using System.Web.Hosting;
 
 namespace MixERP.Net.Common.Helpers
@@ -36,8 +35,9 @@ namespace MixERP.Net.Common.Helpers
 
             string path = HostingEnvironment.MapPath(ConfigurationManager.AppSettings[configFileName]);
 
-            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = path };
-            Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
+            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap {ExeConfigFilename = path};
+            Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap,
+                ConfigurationUserLevel.None);
             AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
 
             if (section != null)
@@ -51,24 +51,9 @@ namespace MixERP.Net.Common.Helpers
             return string.Empty;
         }
 
-        public static string GetMixERPParameter(string key)
-        {
-            return GetConfigurationValue("MixERPConfigFileLocation", key);
-        }
-
         public static string GetDbServerParameter(string key)
         {
             return GetConfigurationValue("DbServerConfigFileLocation", key);
-        }
-
-        public static string GetDbParameter(string key)
-        {
-            return GetConfigurationValue("DBParameterConfigFileLocation", key);
-        }
-
-        public static string GetMessagingParameter(string key)
-        {
-            return GetConfigurationValue("MessagingParameterConfigFileLocation", key);
         }
 
         public static string GetParameter(string key)
@@ -82,11 +67,6 @@ namespace MixERP.Net.Common.Helpers
             return GetConfigurationValue("ReportConfigFileLocation", key);
         }
 
-        public static string GetScrudParameter(string key)
-        {
-            return GetConfigurationValue("ScrudConfigFileLocation", key);
-        }
-
         public static string GetResourceDirectory()
         {
             return HostingEnvironment.MapPath(ConfigurationManager.AppSettings["ResourceDirectory"]);
@@ -95,11 +75,6 @@ namespace MixERP.Net.Common.Helpers
         public static string GetStockTransactionFactoryParameter(string key)
         {
             return GetConfigurationValue("StockTransactionFactoryConfigFileLocation", key);
-        }
-
-        public static bool GetSwitch(string key)
-        {
-            return GetConfigurationValue("SwitchConfigFileLocation", key).ToUpperInvariant().Equals("TRUE");
         }
 
         public static string GetTransactionChecklistParameter(string key)
@@ -112,9 +87,10 @@ namespace MixERP.Net.Common.Helpers
             return GetConfigurationValue("UpdaterConfigFileLocation", key);
         }
 
+
         public static string SetConfigurationValues(string configFileName, string sectionName, string value)
         {
-            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configFileName };
+            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap {ExeConfigFilename = configFileName};
             var config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
             AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
 
@@ -130,9 +106,10 @@ namespace MixERP.Net.Common.Helpers
             return string.Empty;
         }
 
-        public static void SetConfigurationValues(string configFileName, Collection<KeyValuePair<string, string>> sections)
+        public static void SetConfigurationValues(string configFileName,
+            Collection<KeyValuePair<string, string>> sections)
         {
-            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap { ExeConfigFilename = configFileName };
+            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap {ExeConfigFilename = configFileName};
             var config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
             AppSettingsSection appsetting = config.GetSection("appSettings") as AppSettingsSection;
 

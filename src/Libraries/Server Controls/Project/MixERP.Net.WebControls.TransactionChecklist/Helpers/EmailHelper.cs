@@ -26,14 +26,16 @@ namespace MixERP.Net.WebControls.TransactionChecklist.Helpers
 {
     internal sealed class EmailHelper
     {
-        public EmailHelper(string html, string subject, string recipient)
+        public EmailHelper(string catalog, string html, string subject, string recipient)
         {
+            this.Catalog = catalog;
             this.EmailBody = Labels.EmailBody;
             this.Html = html;
             this.Subject = subject;
             this.Recipient = recipient;
         }
 
+        public string Catalog { get; set; }
         internal string EmailBody { get; set; }
 
         internal string Html { get; set; }
@@ -57,7 +59,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist.Helpers
 
         private void Serializer_ImageSaved(object sender, ImageSavedEventArgs e)
         {
-            Processor processor = new Processor();
+            Processor processor = new Processor(this.Catalog);
             processor.Send(this.Recipient, this.Subject, this.EmailBody, AttachmentFactory.GetAttachments(e.ImagePath));
         }
     }

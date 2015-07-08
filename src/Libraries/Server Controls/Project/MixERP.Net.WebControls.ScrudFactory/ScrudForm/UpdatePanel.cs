@@ -22,6 +22,7 @@ using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.WebControls.ScrudFactory.Controls;
 
 namespace MixERP.Net.WebControls.ScrudFactory
@@ -121,7 +122,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(itemSelectorPath))
             {
-                itemSelectorPath = ConfigurationHelper.GetScrudParameter("ItemSelectorPath");
+                itemSelectorPath = DbConfig.GetScrudParameter(this.Catalog, "ItemSelectorPath");
             }
 
             return itemSelectorPath;
@@ -133,7 +134,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(resourceClassName))
             {
-                resourceClassName = ConfigurationHelper.GetScrudParameter("ResourceClassName");
+                resourceClassName = DbConfig.GetScrudParameter(this.Catalog, "ResourceClassName");
             }
 
             return resourceClassName;

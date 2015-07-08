@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
@@ -65,13 +66,13 @@ namespace MixERP.Net.Core.Modules.BackOffice
         {
             List<string> displayFields = new List<string>();
             ScrudHelper.AddDisplayField(displayFields, "office.offices.office_id",
-                ConfigurationHelper.GetDbParameter("OfficeDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "OfficeDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "office.roles.role_id",
-                ConfigurationHelper.GetDbParameter("RoleDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "RoleDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "office.departments.department_id",
-                ConfigurationHelper.GetDbParameter("DepartmentDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "DepartmentDisplayField"));
             ScrudHelper.AddDisplayField(displayFields, "office.stores.store_id",
-                ConfigurationHelper.GetDbParameter("StoreDisplayField"));
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "StoreDisplayField"));
             return string.Join(",", displayFields);
         }
 

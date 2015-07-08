@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {
@@ -30,7 +31,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("AddButtonIconCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "AddButtonIconCssClass");
             }
 
             return cssClass;
@@ -42,7 +43,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("AllButtonIconCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "AllButtonIconCssClass");
             }
 
             return cssClass;
@@ -54,7 +55,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("ButtonCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "ButtonCssClass");
             }
 
             return cssClass;
@@ -66,7 +67,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("CommandPanelButtonCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "CommandPanelButtonCssClass");
             }
 
             return cssClass;
@@ -78,7 +79,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("CommandPanelCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "CommandPanelCssClass");
             }
 
             return cssClass;
@@ -90,7 +91,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("CompactButtonIconCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "CompactButtonIconCssClass");
             }
 
             return cssClass;
@@ -102,7 +103,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("DeleteButtonIconCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "DeleteButtonIconCssClass");
             }
 
             return cssClass;
@@ -114,7 +115,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("DescriptionCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "DescriptionCssClass");
             }
 
             return cssClass;
@@ -126,7 +127,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("EditButtonIconCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "EditButtonIconCssClass");
             }
 
             return cssClass;
@@ -138,7 +139,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("ErrorCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "ErrorCssClass");
             }
 
             return cssClass;
@@ -150,7 +151,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("FailiureCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "FailiureCssClass");
             }
 
             return cssClass;
@@ -162,7 +163,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("FormCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "FormCssClass");
             }
 
             return cssClass;
@@ -174,7 +175,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("FormPanelCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "FormPanelCssClass");
             }
 
             return cssClass;
@@ -186,7 +187,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("GridPanelCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "GridPanelCssClass");
             }
 
             return cssClass;
@@ -198,7 +199,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("GridViewAlternateRowCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "GridViewAlternateRowCssClass");
             }
 
             return cssClass;
@@ -210,7 +211,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("GridViewCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "GridViewCssClass");
             }
 
             return cssClass;
@@ -222,7 +223,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("GridViewRowCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "GridViewRowCssClass");
             }
 
             return cssClass;
@@ -234,7 +235,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("PagerCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "PagerCssClass");
             }
 
             return cssClass;
@@ -246,7 +247,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (maxRowLimit == 0)
             {
-                maxRowLimit = Conversion.TryCastInteger(ConfigurationHelper.GetScrudParameter("MaxRowLimit"));
+                maxRowLimit = Conversion.TryCastInteger(DbConfig.GetScrudParameter(this.Catalog, "MaxRowLimit"));
             }
 
             if (maxRowLimit == 0)
@@ -265,7 +266,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (pageSize == 0)
             {
-                pageSize = Conversion.TryCastInteger(ConfigurationHelper.GetScrudParameter("PageSize"));
+                pageSize = Conversion.TryCastInteger(DbConfig.GetScrudParameter(this.Catalog, "PageSize"));
             }
 
             bool showAll = (Conversion.TryCastString(this.Page.Request.QueryString["show"]).Equals("all"));
@@ -291,7 +292,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("PagerCurrentPageCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "PagerCurrentPageCssClass");
             }
 
             return cssClass;
@@ -303,7 +304,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("PagerPageButtonCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "PagerPageButtonCssClass");
             }
 
             return cssClass;
@@ -315,7 +316,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("PrintButtonIconCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "PrintButtonIconCssClass");
             }
 
             return cssClass;
@@ -327,7 +328,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("SaveButtonCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "SaveButtonCssClass");
             }
 
             return cssClass;
@@ -339,7 +340,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("SelectButtonIconCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "SelectButtonIconCssClass");
             }
 
             return cssClass;
@@ -351,7 +352,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("SuccessCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "SuccessCssClass");
             }
 
             return cssClass;
@@ -363,7 +364,7 @@ namespace MixERP.Net.WebControls.ScrudFactory
 
             if (string.IsNullOrWhiteSpace(cssClass))
             {
-                cssClass = ConfigurationHelper.GetScrudParameter("TitleLabelCssClass");
+                cssClass = DbConfig.GetScrudParameter(this.Catalog, "TitleLabelCssClass");
             }
 
             return cssClass;

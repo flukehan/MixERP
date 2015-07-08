@@ -515,7 +515,7 @@ namespace MixERP.Net.FrontEnd
 
         private static Collection<ListItem> GetLanguages()
         {
-            string[] cultures = ConfigurationHelper.GetMixERPParameter("cultures").Split(',');
+            string[] cultures = ConfigurationHelper.GetParameter("Cultures").Split(',');
             Collection<ListItem> items = new Collection<ListItem>();
 
 

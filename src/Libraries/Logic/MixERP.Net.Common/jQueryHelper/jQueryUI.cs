@@ -166,7 +166,7 @@ namespace MixERP.Net.Common.jQueryHelper
 
         public static int GetWeekStartDay()
         {
-            return (int) LocalizationHelper.GetCurrentUICulture().DateTimeFormat.FirstDayOfWeek;
+            return (int)LocalizationHelper.GetCurrentUICulture().DateTimeFormat.FirstDayOfWeek;
         }
 
         public static bool ShowWeekNumber()

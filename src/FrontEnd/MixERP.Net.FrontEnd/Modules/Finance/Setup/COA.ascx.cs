@@ -21,7 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
 
@@ -52,9 +54,9 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.account_masters.account_master_id", ConfigurationHelper.GetDbParameter("AccountMasterDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", ConfigurationHelper.GetDbParameter("AccountDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code", ConfigurationHelper.GetDbParameter("CurrencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.account_masters.account_master_id", DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "AccountMasterDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "AccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code", DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "CurrencyDisplayField"));
             return string.Join(",", displayFields);
         }
 
