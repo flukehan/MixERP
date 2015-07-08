@@ -1,5 +1,7 @@
 #What Is MixERP?
 
+[![Join the chat at https://gitter.im/mixerp/mixerp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mixerp/mixerp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 MixERP is an ASP.net open source ERP Solution built for small and medium enterprise.
 
 
