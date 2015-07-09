@@ -22,10 +22,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
 
 <script type="text/javascript">
-    if (typeof accessIsDeniedLocalized === "undefined") {
-        accessIsDeniedLocalized = "Access is denied.";
-    };
-
     var counter = 120;
     var interval;
     var url;

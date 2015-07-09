@@ -17,19 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Data;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.Common;
+using System;
+using System.Data;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
 {
@@ -191,7 +191,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.currentPeriodDateTextBox.ID = "CurrentPeriodDateTextBox";
                 this.currentPeriodDateTextBox.Mode = FrequencyType.FiscalYearEndDate;
                 this.currentPeriodDateTextBox.Catalog = AppUsers.GetCurrentUserDB();
-                this.currentPeriodDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                this.currentPeriodDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.currentPeriodDateTextBox);
 
@@ -231,7 +231,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.previousPeriodDateTextBox.ID = "PreviousPeriodDateTextBox";
                 this.previousPeriodDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
                 this.previousPeriodDateTextBox.Catalog = AppUsers.GetCurrentUserDB();
-                this.previousPeriodDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                this.previousPeriodDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.previousPeriodDateTextBox);
 
@@ -264,8 +264,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             DateTime previousTerm = Conversion.TryCastDate(this.previousPeriodDateTextBox.Text);
             DateTime currentTerm = Conversion.TryCastDate(this.currentPeriodDateTextBox.Text);
             int factor = Conversion.TryCastInteger(this.factorInputText.Value);
-            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
             using (DataTable table = Data.Reports.BalanceSheet.GetBalanceSheet(AppUsers.GetCurrentUserDB(), previousTerm, currentTerm, userId, officeId, factor))
             {

@@ -17,11 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.ObjectModel;
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
+using System;
+using System.Collections.ObjectModel;
 
 namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {

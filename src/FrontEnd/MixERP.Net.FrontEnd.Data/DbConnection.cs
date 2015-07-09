@@ -39,6 +39,8 @@ namespace MixERP.Net.FrontEnd.Data
         public static string GetConnectionString(string host, string database, string username, string password,
             int port)
         {
+            CatalogHelper.ValidateCatalog(database);
+
             NpgsqlConnectionStringBuilder connectionStringBuilder = new NpgsqlConnectionStringBuilder
             {
                 Host = host,

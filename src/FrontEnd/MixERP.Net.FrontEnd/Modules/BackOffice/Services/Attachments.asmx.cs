@@ -17,6 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,12 +29,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities.Core;
-using MixERP.Net.FrontEnd.Cache;
-using Serilog;
-using CollectionHelper = MixERP.Net.WebControls.StockTransactionFactory.Helpers.CollectionHelper;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Services
 {
@@ -49,7 +48,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
                     throw new ArgumentNullException("id");
                 }
 
-                if (AppUsers.GetCurrentLogin().View.UserId.ToInt() > 0)
+                if (AppUsers.GetCurrent().View.UserId.ToInt() > 0)
                 {
                     return this.DeleteImage(Data.Attachments.DeleteReturningPath(AppUsers.GetCurrentUserDB(), id));
                 }
@@ -100,7 +99,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services
                 }
 
                 Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
-                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+                int userId = AppUsers.GetCurrent().View.UserId.ToInt();
 
                 return Data.Attachments.Save(AppUsers.GetCurrentUserDB(), userId, book, id, attachments);
             }

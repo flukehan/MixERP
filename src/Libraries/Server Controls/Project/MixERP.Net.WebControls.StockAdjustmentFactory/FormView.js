@@ -36,13 +36,13 @@ var addRow = function () {
     var quantity = parseInt(quantityInputText.val() || 0);
 
     if (transactionTypeSelect.length) {
-        if (isNullOrWhiteSpace(tranType) || tranType === selectLocalized) {
+        if (isNullOrWhiteSpace(tranType) || tranType === Resources.Titles.Select()) {
             makeDirty(transactionTypeSelect);
             return;
         };
     };
 
-    if (isNullOrWhiteSpace(storeName) || storeName === selectLocalized) {
+    if (isNullOrWhiteSpace(storeName) || storeName === Resources.Titles.Select()) {
         makeDirty(storeSelect);
         return;
     };
@@ -52,12 +52,12 @@ var addRow = function () {
         return;
     };
 
-    if (isNullOrWhiteSpace(itemName) || itemName === selectLocalized) {
+    if (isNullOrWhiteSpace(itemName) || itemName === Resources.Titles.Select()) {
         makeDirty(itemSelect);
         return;
     };
 
-    if (isNullOrWhiteSpace(unitName) || unitName === selectLocalized) {
+    if (isNullOrWhiteSpace(unitName) || unitName === Resources.Titles.Select()) {
         makeDirty(unitSelect);
         return;
     };
@@ -98,7 +98,7 @@ function appendToTable(tranType, storeName, itemCode, itemName, unitName, quanti
             if (getColumnText(row, 0) !== tranType &&
                 getColumnText(row, 1) === storeName &&
                 getColumnText(row, 2) === itemCode) {
-                $.notify(duplicateEntryLocalized);
+                $.notify(Resources.Warnings.DuplicateEntry());
 
                 makeDirty(itemSelect);
                 match = true;
@@ -129,7 +129,7 @@ function appendToTable(tranType, storeName, itemCode, itemName, unitName, quanti
         var row = $(this);
         if (getColumnText(row, 0) === storeName &&
             getColumnText(row, 1) === itemCode) {
-            $.notify(duplicateEntryLocalized);
+            $.notify(Resources.Warnings.DuplicateEntry());
 
             makeDirty(itemSelect);
             match = true;
@@ -157,7 +157,7 @@ saveButton.click(function () {
     errorLabel.html("");
 
     if (transferGridView.find("tr").length === 2) {
-        errorLabel.html(gridViewEmptyWarningLocalized);
+        errorLabel.html(Resources.Warnings.GridViewEmpty());
         return false;
     };
 
@@ -215,7 +215,7 @@ function Validate(tableData) {
 
     for (i = 0; i < models.length; i++) {
         if (models[i]["debit"] !== models[i]["credit"]) {
-            $.notify(referencingSidesNotEqualErrorLocalized);
+            $.notify(Resources.Errors.ReferencingSidesNotEqual());
             return false;
         };
     };

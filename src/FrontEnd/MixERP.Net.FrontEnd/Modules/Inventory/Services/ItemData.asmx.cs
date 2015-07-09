@@ -17,6 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Core.Modules.Inventory.Data.Domains;
+using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Office;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -24,12 +30,7 @@ using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Core.Modules.Inventory.Data.Domains;
-using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
-using MixERP.Net.Entities.Core;
-using MixERP.Net.Entities.Office;
-using MixERP.Net.FrontEnd.Cache;
+
 
 namespace MixERP.Net.Core.Modules.Inventory.Services
 {
@@ -151,8 +152,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
         [WebMethod]
         public Collection<ListItem> GetStores()
         {
-            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
             Collection<ListItem> values = new Collection<ListItem>();
 
             IEnumerable<Store> stores = Stores.GetStores(AppUsers.GetCurrentUserDB(), officeId, userId);

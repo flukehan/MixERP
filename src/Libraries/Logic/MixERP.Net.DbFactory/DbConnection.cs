@@ -27,6 +27,8 @@ namespace MixERP.Net.DbFactory
     {
         public static string GetConnectionString(string catalog)
         {
+            CatalogHelper.ValidateCatalog(catalog);
+
             string host = ConfigurationHelper.GetDbServerParameter("Server");
             string database = ConfigurationHelper.GetDbServerParameter("Database");
 
@@ -44,6 +46,8 @@ namespace MixERP.Net.DbFactory
 
         public static string GetConnectionString(string host, string database, string username, string password, int port)
         {
+            CatalogHelper.ValidateCatalog(database);
+
             NpgsqlConnectionStringBuilder connectionStringBuilder = new NpgsqlConnectionStringBuilder
             {
                 Host = host,

@@ -46,13 +46,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Serilog, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+    <Reference Include="Serilog, Version=1.5.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\packages\Serilog.1.4.155\lib\net45\Serilog.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Serilog.1.5.7\lib\net45\Serilog.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Serilog.FullNetFx, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+    <Reference Include="Serilog.FullNetFx, Version=1.5.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\packages\Serilog.1.4.155\lib\net45\Serilog.FullNetFx.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Serilog.1.5.7\lib\net45\Serilog.FullNetFx.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
@@ -284,9 +286,17 @@
     <Folder Include="Widgets\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixER.Net.StateServer\MixER.Net.ApplicationState.csproj">
+      <Project>{61AB8B69-2097-4595-97B7-4A930A70163D}</Project>
+      <Name>MixER.Net.ApplicationState</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
       <Project>{BDE918B1-DD9B-41C9-A41F-F3DDEC18B6D8}</Project>
       <Name>MixERP.Net.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.Framework\MixERP.Net.Framework.csproj">
+      <Project>{1509332f-ae98-44d9-9072-5bbc59a65fc4}</Project>
+      <Name>MixERP.Net.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.i18n\MixERP.Net.i18n.csproj">
       <Project>{2ECD1C2E-D7D0-4A24-896A-E625B0566DB5}</Project>
@@ -295,6 +305,10 @@
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.TransactionGovernor\MixERP.Net.TransactionGovernor.csproj">
       <Project>{0AACF4DB-8332-4C4B-96DF-2BF6AEA68473}</Project>
       <Name>MixERP.Net.TransactionGovernor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\PetaPoco\PetaPoco.csproj">
+      <Project>{969d7960-52e2-40fc-91e5-1393b71e23b0}</Project>
+      <Name>PetaPoco</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.Common\MixERP.Net.WebControls.Common.csproj">
       <Project>{2d961540-6597-4e7b-969c-974d71d820dd}</Project>

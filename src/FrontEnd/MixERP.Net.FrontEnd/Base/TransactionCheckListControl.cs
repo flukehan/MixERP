@@ -18,8 +18,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System.Web.UI;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.FrontEnd.Base
 {

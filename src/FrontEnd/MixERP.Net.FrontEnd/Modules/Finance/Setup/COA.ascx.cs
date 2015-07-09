@@ -17,15 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Reflection;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
+using System;
+using System.Collections.Generic;
 
 namespace MixERP.Net.Core.Modules.Finance.Setup
 {
@@ -54,16 +52,20 @@ namespace MixERP.Net.Core.Modules.Finance.Setup
         private static string GetDisplayFields()
         {
             List<string> displayFields = new List<string>();
-            ScrudHelper.AddDisplayField(displayFields, "core.account_masters.account_master_id", DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "AccountMasterDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id", DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "AccountDisplayField"));
-            ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code", DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "CurrencyDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.account_masters.account_master_id",
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "AccountMasterDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.accounts.account_id",
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "AccountDisplayField"));
+            ScrudHelper.AddDisplayField(displayFields, "core.currencies.currency_code",
+                DbConfig.GetDbParameter(AppUsers.GetCurrentUserDB(), "CurrencyDisplayField"));
             return string.Join(",", displayFields);
         }
 
         private static string GetDisplayViews()
         {
             List<string> displayViews = new List<string>();
-            ScrudHelper.AddDisplayView(displayViews, "core.account_masters.account_master_id", "core.account_master_selector_view");
+            ScrudHelper.AddDisplayView(displayViews, "core.account_masters.account_master_id",
+                "core.account_master_selector_view");
             ScrudHelper.AddDisplayView(displayViews, "core.accounts.account_id", "core.account_scrud_view");
             ScrudHelper.AddDisplayView(displayViews, "core.currencies.currency_code", "core.currency_scrud_view");
             return string.Join(",", displayViews);

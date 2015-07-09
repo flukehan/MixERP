@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Controls;
 
 namespace MixERP.Net.Core.Modules.Purchase.Reports
 {

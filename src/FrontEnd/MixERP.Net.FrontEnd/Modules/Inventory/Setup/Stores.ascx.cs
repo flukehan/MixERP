@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
+using System;
+using System.Collections.Generic;
 
 namespace MixERP.Net.Core.Modules.Inventory.Setup
 {

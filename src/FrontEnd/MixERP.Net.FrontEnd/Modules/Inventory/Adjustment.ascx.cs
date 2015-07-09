@@ -17,11 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Reflection;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
@@ -29,9 +25,12 @@ using MixERP.Net.Core.Modules.Inventory.Data.Reports;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.Common;
+using System;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Inventory
 {
@@ -42,17 +41,7 @@ namespace MixERP.Net.Core.Modules.Inventory
             this.CreateHeader(this.Placeholder1);
             this.CreateTopFormSegment(this.Placeholder1);
             this.CreateGridView(this.Placeholder1);
-            this.CreateBottomPanel(this.Placeholder1);
-            this.RegisterJavascript();
-            
-        }
-
-        private void RegisterJavascript()
-        {
-            string javascript = JSUtility.GetVar("actualLocalized", Titles.Actual);
-            javascript += JSUtility.GetVar("differenceLocalized", Titles.Difference);
-
-            PageUtility.RegisterJavascript("Adjustment_Localized", javascript, this.Page, true);
+            this.CreateBottomPanel(this.Placeholder1);            
         }
 
         #region Header
@@ -285,7 +274,7 @@ namespace MixERP.Net.Core.Modules.Inventory
                 this.valueDateTextBox.ID = "ValueDateTextBox";
                 this.valueDateTextBox.Mode = FrequencyType.Today;
                 this.valueDateTextBox.Catalog = AppUsers.GetCurrentUserDB();
-                this.valueDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                this.valueDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.valueDateTextBox);
 

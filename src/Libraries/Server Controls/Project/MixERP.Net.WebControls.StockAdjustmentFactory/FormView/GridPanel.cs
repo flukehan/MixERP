@@ -1,7 +1,7 @@
-﻿using System.Globalization;
+﻿using MixERP.Net.i18n.Resources;
+using System.Globalization;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.StockAdjustmentFactory
 {

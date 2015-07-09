@@ -17,16 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.Sales.Data.Reports;
+using MixERP.Net.Framework.Controls;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.WebControls.Common;
 using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.Sales.Data.Reports;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Sales.Widgets
 {
@@ -36,7 +35,6 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
         {
             this.CreateGridView(this.Placeholder1);
             this.CreateWidget(this.Placeholder1);
-            this.RegisterJavascriptVariables();
         }
 
         private void CreateGridView(Control container)
@@ -118,14 +116,6 @@ namespace MixERP.Net.Core.Modules.Sales.Widgets
 
                 container.Controls.Add(widget);
             }
-        }
-
-        private void RegisterJavascriptVariables()
-        {
-            string javascript = JSUtility.GetVar("totalSalesLocalized", Titles.TotalSales);
-            javascript += JSUtility.GetVar("baseCurrencyCode", AppUsers.GetCurrentLogin().View.CurrencyCode);
-
-            PageUtility.RegisterJavascript("SalesByGeographyWidget_Localized", javascript, this.Page, true);
         }
     }
 }

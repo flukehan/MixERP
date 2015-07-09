@@ -17,18 +17,17 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Entities.Transactions;
+using Serilog;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities.Transactions;
-using MixERP.Net.FrontEnd.Cache;
-using Serilog;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Services.OTS
 {
@@ -48,9 +47,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Services.OTS
                     return 0;
                 }
 
-                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-                long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
+                int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+                int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
+                long loginId = AppUsers.GetCurrent().View.LoginId.ToLong();
 
                 Collection<OpeningStockType> details = this.GetStockDetails(jsonDetails);
 

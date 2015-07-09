@@ -90,7 +90,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     });
 
     function createControls() {
-        var header = String.format("<th>{0}</th><th>{1}</th>", top.actualLocalized, top.differenceLocalized);
+        var header = String.format("<th>{0}</th><th>{1}</th>", Resources.Titles.Actual(), Resources.Titles.Difference());
         grid.find("thead tr").append(header);
 
         var rows = grid.find("tbody tr");

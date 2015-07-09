@@ -17,6 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Core.Modules.Finance.Data.Helpers;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
+using Serilog;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -24,14 +32,6 @@ using System.Linq;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Core.Modules.Finance.Data.Helpers;
-using MixERP.Net.Entities.Core;
-using MixERP.Net.Entities.Models.Transactions;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
-using Serilog;
 
 namespace MixERP.Net.Core.Modules.Finance.Services.Entry
 {
@@ -102,9 +102,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services.Entry
                     throw new InvalidOperationException("Referencing sides are not equal.");
                 }
 
-                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-                long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
+                int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
+                int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+                long loginId = AppUsers.GetCurrent().View.LoginId.ToLong();
 
                 return Transaction.Add(AppUsers.GetCurrentUserDB(), valueDate, bookDate, officeId, userId, loginId, costCenterId,
                     referenceNumber, details, attachments);

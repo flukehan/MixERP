@@ -1,6 +1,5 @@
-﻿using System.Configuration;
-using System.Web.Hosting;
-using MixERP.Net.Common;
+﻿using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.WebControls.AttachmentFactory.Helpers
 {
@@ -8,24 +7,27 @@ namespace MixERP.Net.WebControls.AttachmentFactory.Helpers
     {
         private const string configFile = "AttachmentFactoryConfigFileLocation";
 
-        public static string GetAllowedExtensions()
+        public static string GetAllowedExtensions(string catalog)
         {
-            return Common.Helpers.ConfigurationHelper.GetConfigurationValue(configFile, "AllowedExtensions");
+            return DbConfig.GetAttachmentParameter(catalog, "AllowedExtensions");
         }
 
-        public static string GetUploadHandlerUrl()
+        public static string GetUploadHandlerUrl(string catalog)
         {
-            return PageUtility.ResolveUrl(Common.Helpers.ConfigurationHelper.GetConfigurationValue(configFile, "UploadHandlerUrl"));
+            string url = DbConfig.GetAttachmentParameter(catalog, "UploadHandlerUrl");
+            return PageUtility.ResolveUrl(url);
         }
 
-        public static string GetAttachmentsDirectory()
+        public static string GetAttachmentsDirectory(string catalog)
         {
-            return PageUtility.ResolveUrl(Common.Helpers.ConfigurationHelper.GetConfigurationValue(configFile, "AttachmentsDirectory"));
+            string url = DbConfig.GetAttachmentParameter(catalog, "AttachmentsDirectory");
+            return PageUtility.ResolveUrl(url);
         }
 
-        public static string GetUndoUploadServiceUrl()
+        public static string GetUndoUploadServiceUrl(string catalog)
         {
-            return PageUtility.ResolveUrl(Common.Helpers.ConfigurationHelper.GetConfigurationValue(configFile, "UndoUploadServiceUrl"));
+            string url = DbConfig.GetAttachmentParameter(catalog, "UndoUploadServiceUrl");
+            return PageUtility.ResolveUrl(url);
         }
     }
 }

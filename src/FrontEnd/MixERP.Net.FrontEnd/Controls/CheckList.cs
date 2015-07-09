@@ -16,7 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
-using MixERP.Net.FrontEnd.Cache;
+
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.WebControls.TransactionChecklist;
 
 namespace MixERP.Net.FrontEnd.Controls

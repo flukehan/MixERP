@@ -1,17 +1,16 @@
-﻿using System;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Domains;
+﻿using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Contracts;
+using MixERP.Net.Framework.Controls;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.Common;
+using System;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.BackOffice.OTS
 {
@@ -29,7 +28,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
 
             bool allowMultipleOpeningInventory = DbConfig.GetSwitch(AppUsers.GetCurrentUserDB(), "AllowMultipleOpeningInventory");
             bool entryExists = Data.OpeningInventory.Exists(AppUsers.GetCurrentUserDB(),
-                AppUsers.GetCurrentLogin().View.OfficeId.ToInt()); 
+                AppUsers.GetCurrent().View.OfficeId.ToInt()); 
 
             if (entryExists && !allowMultipleOpeningInventory)
             {
@@ -39,14 +38,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
 
             this.CreateGridView(this.Placeholder1);
             this.CreateBottomPanel(this.Placeholder1);
-            this.RegisterJavascript();
         }
 
-        private void RegisterJavascript()
-        {
-            string script = JSUtility.GetVar("accessIsDeniedLocalized", Warnings.AccessIsDenied);
-            PageUtility.RegisterJavascript("OpeningInventory_Vars", script, this.Page, true);
-        }
 
         private void CreateMessage(Control container)
         {
@@ -131,7 +124,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.OTS
                 this.dateTextBox.ID = "ValueDateTextBox";
                 this.dateTextBox.Mode = FrequencyType.Today;
                 this.dateTextBox.Catalog = AppUsers.GetCurrentUserDB();
-                this.dateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                this.dateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.dateTextBox);
 

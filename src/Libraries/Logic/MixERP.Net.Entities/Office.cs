@@ -2,96 +2,9 @@
 using MixERP.Net.Entities.Contracts;
 using PetaPoco;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MixERP.Net.Entities.Office
 {
-    public partial class PetaPocoDB : Database
-    {
-        public PetaPocoDB(): base("")
-        {
-            CommonConstruct();
-        }
-
-        public PetaPocoDB(string connectionStringName): base(connectionStringName)
-        {
-            CommonConstruct();
-        }
-        
-        partial void CommonConstruct();
-        
-        public interface IFactory
-        {
-            PetaPocoDB GetInstance();
-        }
-        
-        public static IFactory Factory { get; set; }
-        public static PetaPocoDB GetInstance()
-        {
-            if (_instance!=null)
-                return _instance;
-                
-            if (Factory!=null)
-                return Factory.GetInstance();
-            else
-                return new PetaPocoDB();
-        }
-
-        [ThreadStatic] static PetaPocoDB _instance;
-        
-        public override void OnBeginTransaction()
-        {
-            if (_instance==null)
-                _instance=this;
-        }
-        
-        public override void OnEndTransaction()
-        {
-            if (_instance==this)
-                _instance=null;
-        }
-        
-        public class Record<T> where T:new()
-        {
-            public static PetaPocoDB repo { get { return PetaPocoDB.GetInstance(); } }
-            public bool IsNew() { return repo.IsNew(this); }
-            public object Insert() { return repo.Insert(this); }
-            public void Save() { repo.Save(this); }
-            public int Update() { return repo.Update(this); }
-            public int Update(IEnumerable<string> columns) { return repo.Update(this, columns); }
-            public static int Update(string sql, params object[] args) { return repo.Update<T>(sql, args); }
-            public static int Update(Sql sql) { return repo.Update<T>(sql); }
-            public int Delete() { return repo.Delete(this); }
-            public static int Delete(string sql, params object[] args) { return repo.Delete<T>(sql, args); }
-            public static int Delete(Sql sql) { return repo.Delete<T>(sql); }
-            public static int Delete(object primaryKey) { return repo.Delete<T>(primaryKey); }
-            public static bool Exists(object primaryKey) { return repo.Exists<T>(primaryKey); }
-            public static T SingleOrDefault(object primaryKey) { return repo.SingleOrDefault<T>(primaryKey); }
-            public static T SingleOrDefault(string sql, params object[] args) { return repo.SingleOrDefault<T>(sql, args); }
-            public static T SingleOrDefault(Sql sql) { return repo.SingleOrDefault<T>(sql); }
-            public static T FirstOrDefault(string sql, params object[] args) { return repo.FirstOrDefault<T>(sql, args); }
-            public static T FirstOrDefault(Sql sql) { return repo.FirstOrDefault<T>(sql); }
-            public static T Single(object primaryKey) { return repo.Single<T>(primaryKey); }
-            public static T Single(string sql, params object[] args) { return repo.Single<T>(sql, args); }
-            public static T Single(Sql sql) { return repo.Single<T>(sql); }
-            public static T First(string sql, params object[] args) { return repo.First<T>(sql, args); }
-            public static T First(Sql sql) { return repo.First<T>(sql); }
-            public static List<T> Fetch(string sql, params object[] args) { return repo.Fetch<T>(sql, args); }
-            public static List<T> Fetch(Sql sql) { return repo.Fetch<T>(sql); }
-            public static List<T> Fetch(long page, long itemsPerPage, string sql, params object[] args) { return repo.Fetch<T>(page, itemsPerPage, sql, args); }
-            public static List<T> Fetch(long page, long itemsPerPage, Sql sql) { return repo.Fetch<T>(page, itemsPerPage, sql); }
-            public static List<T> SkipTake(long skip, long take, string sql, params object[] args) { return repo.SkipTake<T>(skip, take, sql, args); }
-            public static List<T> SkipTake(long skip, long take, Sql sql) { return repo.SkipTake<T>(skip, take, sql); }
-            public static Page<T> Page(long page, long itemsPerPage, string sql, params object[] args) { return repo.Page<T>(page, itemsPerPage, sql, args); }
-            public static Page<T> Page(long page, long itemsPerPage, Sql sql) { return repo.Page<T>(page, itemsPerPage, sql); }
-            public static IEnumerable<T> Query(string sql, params object[] args) { return repo.Query<T>(sql, args); }
-            public static IEnumerable<T> Query(Sql sql) { return repo.Query<T>(sql); }
-        }
-    }
-    
-
 
     [TableName("office.departments")]
     [PrimaryKey("department_id")]
@@ -106,46 +19,6 @@ namespace MixERP.Net.Entities.Office
 
         [Column("department_name")] 
         public string DepartmentName { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("office.users")]
-    [PrimaryKey("user_id")]
-    [ExplicitColumns]
-    public class User : PetaPocoDB.Record<User> , IPoco
-    {
-        [Column("user_id")] 
-        public int UserId { get; set; }
-
-        [Column("role_id")] 
-        public int RoleId { get; set; }
-
-        [Column("department_id")] 
-        public int DepartmentId { get; set; }
-
-        [Column("office_id")] 
-        public int OfficeId { get; set; }
-
-        [Column("user_name")] 
-        public string UserName { get; set; }
-
-        [Column("full_name")] 
-        public string FullName { get; set; }
-
-        [Column("can_change_password")] 
-        public bool CanChangePassword { get; set; }
-
-        [Column("password")] 
-        public string Password { get; set; }
-
-        [Column("elevated")] 
-        public bool Elevated { get; set; }
 
         [Column("audit_user_id")] 
         public int? AuditUserId { get; set; }
@@ -180,27 +53,6 @@ namespace MixERP.Net.Entities.Office
 
         [Column("audit_ts")] 
         public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("office.user_selector_view")]
-    [ExplicitColumns]
-    public class UserSelectorView : PetaPocoDB.Record<UserSelectorView> , IPoco
-    {
-        [Column("user_id")] 
-        public int? UserId { get; set; }
-
-        [Column("user_name")] 
-        public string UserName { get; set; }
-
-        [Column("full_name")] 
-        public string FullName { get; set; }
-
-        [Column("role_name")] 
-        public string RoleName { get; set; }
-
-        [Column("office_name")] 
-        public string OfficeName { get; set; }
 
     }
 
@@ -382,131 +234,6 @@ namespace MixERP.Net.Entities.Office
 
         [Column("audit_ts")] 
         public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("office.stores")]
-    [PrimaryKey("store_id")]
-    [ExplicitColumns]
-    public class Store : PetaPocoDB.Record<Store> , IPoco
-    {
-        [Column("store_id")] 
-        public int StoreId { get; set; }
-
-        [Column("office_id")] 
-        public int OfficeId { get; set; }
-
-        [Column("store_code")] 
-        public string StoreCode { get; set; }
-
-        [Column("store_name")] 
-        public string StoreName { get; set; }
-
-        [Column("address")] 
-        public string Address { get; set; }
-
-        [Column("store_type_id")] 
-        public int StoreTypeId { get; set; }
-
-        [Column("allow_sales")] 
-        public bool AllowSales { get; set; }
-
-        [Column("sales_tax_id")] 
-        public int SalesTaxId { get; set; }
-
-        [Column("default_cash_account_id")] 
-        public long DefaultCashAccountId { get; set; }
-
-        [Column("default_cash_repository_id")] 
-        public int DefaultCashRepositoryId { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
-
-    [TableName("office.offices")]
-    [PrimaryKey("office_id")]
-    [ExplicitColumns]
-    public class Office : PetaPocoDB.Record<Office> , IPoco
-    {
-        [Column("office_id")] 
-        public int OfficeId { get; set; }
-
-        [Column("office_code")] 
-        public string OfficeCode { get; set; }
-
-        [Column("office_name")] 
-        public string OfficeName { get; set; }
-
-        [Column("nick_name")] 
-        public string NickName { get; set; }
-
-        [Column("registration_date")] 
-        public DateTime RegistrationDate { get; set; }
-
-        [Column("currency_code")] 
-        public string CurrencyCode { get; set; }
-
-        [Column("po_box")] 
-        public string PoBox { get; set; }
-
-        [Column("address_line_1")] 
-        public string AddressLine1 { get; set; }
-
-        [Column("address_line_2")] 
-        public string AddressLine2 { get; set; }
-
-        [Column("street")] 
-        public string Street { get; set; }
-
-        [Column("city")] 
-        public string City { get; set; }
-
-        [Column("state")] 
-        public string State { get; set; }
-
-        [Column("zip_code")] 
-        public string ZipCode { get; set; }
-
-        [Column("country")] 
-        public string Country { get; set; }
-
-        [Column("phone")] 
-        public string Phone { get; set; }
-
-        [Column("fax")] 
-        public string Fax { get; set; }
-
-        [Column("email")] 
-        public string Email { get; set; }
-
-        [Column("url")] 
-        public string Url { get; set; }
-
-        [Column("registration_number")] 
-        public string RegistrationNumber { get; set; }
-
-        [Column("pan_number")] 
-        public string PanNumber { get; set; }
-
-        [Column("allow_transaction_posting")] 
-        public bool AllowTransactionPosting { get; set; }
-
-        [Column("parent_office_id")] 
-        public int? ParentOfficeId { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-        [Column("income_tax_rate")] 
-        public decimal IncomeTaxRate { get; set; }
 
     }
 
@@ -1182,6 +909,195 @@ namespace MixERP.Net.Entities.Office
 
     }
 
+    [TableName("office.user_selector_view")]
+    [ExplicitColumns]
+    public class UserSelectorView : PetaPocoDB.Record<UserSelectorView> , IPoco
+    {
+        [Column("user_id")] 
+        public int? UserId { get; set; }
+
+        [Column("user_name")] 
+        public string UserName { get; set; }
+
+        [Column("full_name")] 
+        public string FullName { get; set; }
+
+        [Column("role_name")] 
+        public string RoleName { get; set; }
+
+        [Column("office_name")] 
+        public string OfficeName { get; set; }
+
+    }
+
+    [TableName("office.offices")]
+    [PrimaryKey("office_id")]
+    [ExplicitColumns]
+    public class Office : PetaPocoDB.Record<Office> , IPoco
+    {
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+        [Column("office_code")] 
+        public string OfficeCode { get; set; }
+
+        [Column("office_name")] 
+        public string OfficeName { get; set; }
+
+        [Column("nick_name")] 
+        public string NickName { get; set; }
+
+        [Column("registration_date")] 
+        public DateTime RegistrationDate { get; set; }
+
+        [Column("currency_code")] 
+        public string CurrencyCode { get; set; }
+
+        [Column("po_box")] 
+        public string PoBox { get; set; }
+
+        [Column("address_line_1")] 
+        public string AddressLine1 { get; set; }
+
+        [Column("address_line_2")] 
+        public string AddressLine2 { get; set; }
+
+        [Column("street")] 
+        public string Street { get; set; }
+
+        [Column("city")] 
+        public string City { get; set; }
+
+        [Column("state")] 
+        public string State { get; set; }
+
+        [Column("zip_code")] 
+        public string ZipCode { get; set; }
+
+        [Column("country")] 
+        public string Country { get; set; }
+
+        [Column("phone")] 
+        public string Phone { get; set; }
+
+        [Column("fax")] 
+        public string Fax { get; set; }
+
+        [Column("email")] 
+        public string Email { get; set; }
+
+        [Column("url")] 
+        public string Url { get; set; }
+
+        [Column("registration_number")] 
+        public string RegistrationNumber { get; set; }
+
+        [Column("pan_number")] 
+        public string PanNumber { get; set; }
+
+        [Column("allow_transaction_posting")] 
+        public bool AllowTransactionPosting { get; set; }
+
+        [Column("parent_office_id")] 
+        public int? ParentOfficeId { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+        [Column("income_tax_rate")] 
+        public decimal IncomeTaxRate { get; set; }
+
+    }
+
+    [TableName("office.users")]
+    [PrimaryKey("user_id")]
+    [ExplicitColumns]
+    public class User : PetaPocoDB.Record<User> , IPoco
+    {
+        [Column("user_id")] 
+        public int UserId { get; set; }
+
+        [Column("role_id")] 
+        public int RoleId { get; set; }
+
+        [Column("department_id")] 
+        public int DepartmentId { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+        [Column("user_name")] 
+        public string UserName { get; set; }
+
+        [Column("full_name")] 
+        public string FullName { get; set; }
+
+        [Column("can_change_password")] 
+        public bool CanChangePassword { get; set; }
+
+        [Column("password")] 
+        public string Password { get; set; }
+
+        [Column("elevated")] 
+        public bool Elevated { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+        [Column("store_id")] 
+        public int? StoreId { get; set; }
+
+    }
+
+    [TableName("office.stores")]
+    [PrimaryKey("store_id")]
+    [ExplicitColumns]
+    public class Store : PetaPocoDB.Record<Store> , IPoco
+    {
+        [Column("store_id")] 
+        public int StoreId { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+        [Column("store_code")] 
+        public string StoreCode { get; set; }
+
+        [Column("store_name")] 
+        public string StoreName { get; set; }
+
+        [Column("address")] 
+        public string Address { get; set; }
+
+        [Column("store_type_id")] 
+        public int StoreTypeId { get; set; }
+
+        [Column("allow_sales")] 
+        public bool AllowSales { get; set; }
+
+        [Column("sales_tax_id")] 
+        public int SalesTaxId { get; set; }
+
+        [Column("default_cash_account_id")] 
+        public long DefaultCashAccountId { get; set; }
+
+        [Column("default_cash_repository_id")] 
+        public int DefaultCashRepositoryId { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
     [FunctionName("get_offices")]
     [ExplicitColumns]
     public class DbGetOfficesResult : PetaPocoDB.Record<DbGetOfficesResult> , IPoco
@@ -1209,6 +1125,48 @@ namespace MixERP.Net.Entities.Office
 
         [Column("message")] 
         public string Message { get; set; }
+
+    }
+
+    [FunctionName("get_stores")]
+    [ExplicitColumns]
+    public class DbGetStoresResult : PetaPocoDB.Record<DbGetStoresResult> , IPoco
+    {
+        [Column("store_id")] 
+        public int StoreId { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+        [Column("store_code")] 
+        public string StoreCode { get; set; }
+
+        [Column("store_name")] 
+        public string StoreName { get; set; }
+
+        [Column("address")] 
+        public string Address { get; set; }
+
+        [Column("store_type_id")] 
+        public int StoreTypeId { get; set; }
+
+        [Column("allow_sales")] 
+        public bool AllowSales { get; set; }
+
+        [Column("sales_tax_id")] 
+        public int SalesTaxId { get; set; }
+
+        [Column("default_cash_account_id")] 
+        public long DefaultCashAccountId { get; set; }
+
+        [Column("default_cash_repository_id")] 
+        public int DefaultCashRepositoryId { get; set; }
+
+        [Column("audit_user_id")] 
+        public int AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime AuditTs { get; set; }
 
     }
 

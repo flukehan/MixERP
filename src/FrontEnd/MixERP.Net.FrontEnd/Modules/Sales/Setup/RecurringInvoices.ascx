@@ -29,11 +29,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var recurringAmount = parseFloat2(recurringAmountTextbox.val());
 
         if (!itemId  && ! compoundItemId || itemId && compoundItemId) {
-            displayMessage(window.itemErrorMessageLocalized);
+            displayMessage(Resources.Warnings.ItemErrorMessage());
             return false;
         };
         if (recurringAmount <= 0) {
-            displayMessage(window.recurringAmountErrorMessageLocalized);
+            displayMessage(Resources.Warnings.RecurringAmountErrorMessage());
             return false;
         };
         return true;

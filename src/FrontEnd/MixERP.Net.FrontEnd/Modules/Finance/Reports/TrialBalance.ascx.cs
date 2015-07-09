@@ -17,19 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Data;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.Common;
+using System;
+using System.Data;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
 {
@@ -40,20 +40,11 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.CreateHeader(this.Placeholder1);
             this.CreateForm(this.Placeholder1);
             this.CreateGrid(this.Placeholder1);
-            this.RegisterJavascript();
+
             if (!this.Page.IsPostBack)
             {
                 this.BindGrid();
             }
-        }
-
-        private void RegisterJavascript()
-        {
-            string script = JSUtility.GetVar("perviousPeriodLocalized", Titles.PreviousPeriod);
-            script += JSUtility.GetVar("currentPeriodLocalized", Titles.CurrentPeriod);
-            script += JSUtility.GetVar("closingLocalized", Titles.ClosingBalance);
-
-            PageUtility.RegisterJavascript("TrialBalance_Vars", script, this.Page, true);
         }
 
         private void CreateHeader(Control container)
@@ -187,7 +178,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.fromDateTextBox.ID = "FromDateTextBox";
                 this.fromDateTextBox.Mode = FrequencyType.QuarterStartDate;
                 this.fromDateTextBox.Catalog = AppUsers.GetCurrentUserDB();
-                this.fromDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                this.fromDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
 
                 field.Controls.Add(this.fromDateTextBox);
@@ -233,7 +224,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.toDateTextBox.ID = "ToDateTextBox";
                 this.toDateTextBox.Mode = FrequencyType.QuarterEndDate;
                 this.toDateTextBox.Catalog = AppUsers.GetCurrentUserDB();
-                this.toDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                this.toDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.toDateTextBox);
 
@@ -251,8 +242,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             bool changeSide = this.ChangeSideWhenNegative();
             bool includeZeroBalanceAccounts = this.IncludeZeroBalanceAccounts();
 
-            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
             using (DataTable table = Data.Reports.TrialBalance.GetTrialBalance(AppUsers.GetCurrentUserDB(), from, to, userId, officeId, compact, factor, changeSide, includeZeroBalanceAccounts))
             {

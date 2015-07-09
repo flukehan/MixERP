@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.Framework.Contracts.Currency;
 
 namespace MixERP.Net.CurrencyConversion.OpenExchangeRates
 {

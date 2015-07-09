@@ -17,10 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.AttachmentFactory;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
 
 namespace MixERP.Net.WebControls.StockTransactionFactory
 {
@@ -41,7 +42,7 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
                 attachmentContainer.Attributes.Add("class", "ui segment initially hidden");
 
 
-                using (Attachment attachment = new Attachment())
+                using (Attachment attachment = new Attachment(AppUsers.GetCurrentUserDB()))
                 {
                     attachment.ShowSaveButton = false;
                     attachmentContainer.Controls.Add(attachment);

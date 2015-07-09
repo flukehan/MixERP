@@ -17,20 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using MixERP.Net.Common;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models;
 using MixERP.Net.DbFactory;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.i18n;
 using MixERP.Net.i18n.Resources;
 using Npgsql;
 using Serilog;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
@@ -102,7 +100,7 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                 throw new InvalidOperationException(Errors.ReferencingSidesNotEqual);
             }
 
-            var decimalPlaces = LocalizationHelper.GetCurrencyDecimalPlaces();
+            var decimalPlaces = CurrentCulture.GetCurrencyDecimalPlaces();
 
             if ((from detail in details
                 where Decimal.Round(detail.Credit*detail.ExchangeRate, decimalPlaces) != Decimal.Round(detail.LocalCurrencyCredit, decimalPlaces) || Decimal.Round(detail.Debit*detail.ExchangeRate, decimalPlaces) != Decimal.Round(detail.LocalCurrencyDebit, decimalPlaces)

@@ -17,16 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
 using MixERP.Net.Common;
 using MixERP.Net.DbFactory;
 using MixERP.Net.Entities.Transactions;
 using MixERP.Net.i18n.Resources;
 using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Data.OneTimeSetup
 {

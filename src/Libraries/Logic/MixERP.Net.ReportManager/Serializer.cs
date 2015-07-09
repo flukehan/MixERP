@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using MixERP.Net.Common.Helpers;
+using System.IO;
 using System.Web.Hosting;
-using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.ReportManager
 {

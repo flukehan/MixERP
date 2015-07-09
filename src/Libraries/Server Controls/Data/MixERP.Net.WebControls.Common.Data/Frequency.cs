@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Data;
+﻿using MixERP.Net.ApplicationState;
 using MixERP.Net.Common;
-using MixERP.Net.Common.Models;
 using MixERP.Net.DbFactory;
 using Npgsql;
+using System;
+using System.Collections.ObjectModel;
+using System.Data;
 
 namespace MixERP.Net.WebControls.Common.Data
 {
     public static class Frequency
     {
-        public static ApplicationDateModel GetApplicationDates(string catalog, int officeId)
+        public static FrequencyDates GetFrequencyDates(string catalog, int officeId)
         {
             const string sql = "SELECT @OfficeId AS office_id, core.get_date(@OfficeId::integer) AS today, core.get_month_start_date(@OfficeId::integer) AS month_start_date,core.get_month_end_date(@OfficeId::integer) AS month_end_date, core.get_quarter_start_date(@OfficeId::integer) AS quarter_start_date, core.get_quarter_end_date(@OfficeId::integer) AS quarter_end_date, core.get_fiscal_half_start_date(@OfficeId::integer) AS fiscal_half_start_date, core.get_fiscal_half_end_date(@OfficeId::integer) AS fiscal_half_end_date, core.get_fiscal_year_start_date(@OfficeId::integer) AS fiscal_year_start_date, core.get_fiscal_year_end_date(@OfficeId::integer) AS fiscal_year_end_date;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
@@ -29,9 +29,9 @@ namespace MixERP.Net.WebControls.Common.Data
             return null;
         }
 
-        public static Collection<ApplicationDateModel> GetApplicationDates(string catalog)
+        public static Collection<FrequencyDates> GetFrequencyDates(string catalog)
         {
-            Collection<ApplicationDateModel> applicationDates = new Collection<ApplicationDateModel>();
+            Collection<FrequencyDates> applicationDates = new Collection<FrequencyDates>();
 
             const string sql = "SELECT office_id AS office_id, core.get_date(office_id) AS today, core.get_month_start_date(office_id) AS month_start_date,core.get_month_end_date(office_id) AS month_end_date, core.get_quarter_start_date(office_id) AS quarter_start_date, core.get_quarter_end_date(office_id) AS quarter_end_date, core.get_fiscal_half_start_date(office_id) AS fiscal_half_start_date, core.get_fiscal_half_end_date(office_id) AS fiscal_half_end_date, core.get_fiscal_year_start_date(office_id) AS fiscal_year_start_date, core.get_fiscal_year_end_date(office_id) AS fiscal_year_end_date FROM office.offices;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
@@ -141,14 +141,14 @@ namespace MixERP.Net.WebControls.Common.Data
             }
         }
 
-        private static ApplicationDateModel GetApplicationDateModel(DataRow row)
+        private static FrequencyDates GetApplicationDateModel(DataRow row)
         {
             if (row == null)
             {
                 return null;
             }
 
-            ApplicationDateModel applicationDate = new ApplicationDateModel();
+            FrequencyDates applicationDate = new FrequencyDates();
             applicationDate.OfficeId = Conversion.TryCastInteger(row["office_id"]);
             applicationDate.Today = Conversion.TryCastDate(row["today"]);
             applicationDate.MonthStartDate = Conversion.TryCastDate(row["month_start_date"]);

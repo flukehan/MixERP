@@ -1,8 +1,4 @@
-﻿if (typeof accessIsDeniedLocalized === "undefined") {
-    accessIsDeniedLocalized = "Access is denied";
-};
-
-var addRowButton = $("#AddRowButton");
+﻿var addRowButton = $("#AddRowButton");
 var amountInputText = $("#AmountInputText");
 
 var buttons = $("#Buttons");
@@ -257,7 +253,7 @@ saveButton.click(function() {
             $(this).dequeue();
         });
 
-        displayMessage(accessIsDeniedLocalized);
+        displayMessage(Resources.Warnings.AccessIsDenied());
         return;
     };
 

@@ -17,19 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Web.Script.Services;
-using System.Web.Services;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Office;
+using MixERP.Net.Framework;
 using MixERP.Net.i18n.Resources;
 using Serilog;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Web.Script.Services;
+using System.Web.Services;
 
 namespace MixERP.Net.FrontEnd.Services
 {
@@ -43,8 +39,6 @@ namespace MixERP.Net.FrontEnd.Services
         public IEnumerable<DbGetOfficesResult> GetOffices(string catalog)
         {
             IEnumerable<DbGetOfficesResult> offices;
-
-            CatalogHelper.ValidateCatalog(catalog);
 
             try
             {

@@ -104,7 +104,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                             "</a>";
 
         if (header.length) {
-            header.prepend("<th>" + actionsLocalized + "</th><th>" + selectLocalized + "</th>");
+            header.prepend("<th>" + Resources.Titles.Actions() + "</th><th>" + Resources.Titles.Select() + "</th>");
             rows.prepend("<td></td><td><div class='ui toggle checkbox'><input type='checkbox' /><label></label></div></td>");
 
             rows.click(function () {

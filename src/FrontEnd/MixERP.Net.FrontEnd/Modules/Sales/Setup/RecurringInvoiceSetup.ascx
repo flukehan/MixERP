@@ -27,7 +27,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var endsOn = parseDate(endsOnTextbox.val());
 
         if (endsOn < startForm) {
-            displayMessage(window.dateErrorMessageLocalized);
+            displayMessage(Resources.Warnings.DateErrorMessage());
             return false;
         };
         return true;

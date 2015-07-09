@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Framework.Controls;
+using MixERP.Net.i18n.Resources;
 using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Widgets
 {

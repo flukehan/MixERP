@@ -2,137 +2,9 @@
 using MixERP.Net.Entities.Contracts;
 using PetaPoco;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MixERP.Net.Entities.Policy
 {
-    public partial class PetaPocoDB : Database
-    {
-        public PetaPocoDB(): base("")
-        {
-            CommonConstruct();
-        }
-
-        public PetaPocoDB(string connectionStringName): base(connectionStringName)
-        {
-            CommonConstruct();
-        }
-        
-        partial void CommonConstruct();
-        
-        public interface IFactory
-        {
-            PetaPocoDB GetInstance();
-        }
-        
-        public static IFactory Factory { get; set; }
-        public static PetaPocoDB GetInstance()
-        {
-            if (_instance!=null)
-                return _instance;
-                
-            if (Factory!=null)
-                return Factory.GetInstance();
-            else
-                return new PetaPocoDB();
-        }
-
-        [ThreadStatic] static PetaPocoDB _instance;
-        
-        public override void OnBeginTransaction()
-        {
-            if (_instance==null)
-                _instance=this;
-        }
-        
-        public override void OnEndTransaction()
-        {
-            if (_instance==this)
-                _instance=null;
-        }
-        
-        public class Record<T> where T:new()
-        {
-            public static PetaPocoDB repo { get { return PetaPocoDB.GetInstance(); } }
-            public bool IsNew() { return repo.IsNew(this); }
-            public object Insert() { return repo.Insert(this); }
-            public void Save() { repo.Save(this); }
-            public int Update() { return repo.Update(this); }
-            public int Update(IEnumerable<string> columns) { return repo.Update(this, columns); }
-            public static int Update(string sql, params object[] args) { return repo.Update<T>(sql, args); }
-            public static int Update(Sql sql) { return repo.Update<T>(sql); }
-            public int Delete() { return repo.Delete(this); }
-            public static int Delete(string sql, params object[] args) { return repo.Delete<T>(sql, args); }
-            public static int Delete(Sql sql) { return repo.Delete<T>(sql); }
-            public static int Delete(object primaryKey) { return repo.Delete<T>(primaryKey); }
-            public static bool Exists(object primaryKey) { return repo.Exists<T>(primaryKey); }
-            public static T SingleOrDefault(object primaryKey) { return repo.SingleOrDefault<T>(primaryKey); }
-            public static T SingleOrDefault(string sql, params object[] args) { return repo.SingleOrDefault<T>(sql, args); }
-            public static T SingleOrDefault(Sql sql) { return repo.SingleOrDefault<T>(sql); }
-            public static T FirstOrDefault(string sql, params object[] args) { return repo.FirstOrDefault<T>(sql, args); }
-            public static T FirstOrDefault(Sql sql) { return repo.FirstOrDefault<T>(sql); }
-            public static T Single(object primaryKey) { return repo.Single<T>(primaryKey); }
-            public static T Single(string sql, params object[] args) { return repo.Single<T>(sql, args); }
-            public static T Single(Sql sql) { return repo.Single<T>(sql); }
-            public static T First(string sql, params object[] args) { return repo.First<T>(sql, args); }
-            public static T First(Sql sql) { return repo.First<T>(sql); }
-            public static List<T> Fetch(string sql, params object[] args) { return repo.Fetch<T>(sql, args); }
-            public static List<T> Fetch(Sql sql) { return repo.Fetch<T>(sql); }
-            public static List<T> Fetch(long page, long itemsPerPage, string sql, params object[] args) { return repo.Fetch<T>(page, itemsPerPage, sql, args); }
-            public static List<T> Fetch(long page, long itemsPerPage, Sql sql) { return repo.Fetch<T>(page, itemsPerPage, sql); }
-            public static List<T> SkipTake(long skip, long take, string sql, params object[] args) { return repo.SkipTake<T>(skip, take, sql, args); }
-            public static List<T> SkipTake(long skip, long take, Sql sql) { return repo.SkipTake<T>(skip, take, sql); }
-            public static Page<T> Page(long page, long itemsPerPage, string sql, params object[] args) { return repo.Page<T>(page, itemsPerPage, sql, args); }
-            public static Page<T> Page(long page, long itemsPerPage, Sql sql) { return repo.Page<T>(page, itemsPerPage, sql); }
-            public static IEnumerable<T> Query(string sql, params object[] args) { return repo.Query<T>(sql, args); }
-            public static IEnumerable<T> Query(Sql sql) { return repo.Query<T>(sql); }
-        }
-    }
-    
-
-
-    [TableName("policy.http_actions")]
-    [PrimaryKey("http_action_code", autoIncrement=false)]
-    [ExplicitColumns]
-    public class HttpAction : PetaPocoDB.Record<HttpAction> , IPoco
-    {
-        [Column("http_action_code")] 
-        public string HttpActionCode { get; set; }
-
-    }
-
-    [TableName("policy.api_access_policy")]
-    [PrimaryKey("api_access_policy_id")]
-    [ExplicitColumns]
-    public class ApiAccessPolicy : PetaPocoDB.Record<ApiAccessPolicy> , IPoco
-    {
-        [Column("api_access_policy_id")] 
-        public long ApiAccessPolicyId { get; set; }
-
-        [Column("user_id")] 
-        public int UserId { get; set; }
-
-        [Column("office_id")] 
-        public int OfficeId { get; set; }
-
-        [Column("poco_type_name")] 
-        public string PocoTypeName { get; set; }
-
-        [Column("http_action_code")] 
-        public string HttpActionCode { get; set; }
-
-        [Column("valid_till")] 
-        public DateTime ValidTill { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-    }
 
     [TableName("policy.lock_outs")]
     [PrimaryKey("lock_out_id")]
@@ -219,107 +91,6 @@ namespace MixERP.Net.Entities.Policy
 
     }
 
-    [TableName("policy.voucher_verification_policy")]
-    [PrimaryKey("policy_id")]
-    [ExplicitColumns]
-    public class VoucherVerificationPolicy : PetaPocoDB.Record<VoucherVerificationPolicy> , IPoco
-    {
-        [Column("policy_id")] 
-        public int PolicyId { get; set; }
-
-        [Column("user_id")] 
-        public int? UserId { get; set; }
-
-        [Column("can_verify_sales_transactions")] 
-        public bool CanVerifySalesTransactions { get; set; }
-
-        [Column("sales_verification_limit")] 
-        public decimal SalesVerificationLimit { get; set; }
-
-        [Column("can_verify_purchase_transactions")] 
-        public bool CanVerifyPurchaseTransactions { get; set; }
-
-        [Column("purchase_verification_limit")] 
-        public decimal PurchaseVerificationLimit { get; set; }
-
-        [Column("can_verify_gl_transactions")] 
-        public bool CanVerifyGlTransactions { get; set; }
-
-        [Column("gl_verification_limit")] 
-        public decimal GlVerificationLimit { get; set; }
-
-        [Column("can_self_verify")] 
-        public bool CanSelfVerify { get; set; }
-
-        [Column("self_verification_limit")] 
-        public decimal SelfVerificationLimit { get; set; }
-
-        [Column("effective_from")] 
-        public DateTime EffectiveFrom { get; set; }
-
-        [Column("ends_on")] 
-        public DateTime EndsOn { get; set; }
-
-        [Column("is_active")] 
-        public bool IsActive { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-        [Column("office_id")] 
-        public int OfficeId { get; set; }
-
-    }
-
-    [TableName("policy.auto_verification_policy")]
-    [PrimaryKey("user_id", autoIncrement=false)]
-    [ExplicitColumns]
-    public class AutoVerificationPolicy : PetaPocoDB.Record<AutoVerificationPolicy> , IPoco
-    {
-        [Column("user_id")] 
-        public int UserId { get; set; }
-
-        [Column("verify_sales_transactions")] 
-        public bool VerifySalesTransactions { get; set; }
-
-        [Column("sales_verification_limit")] 
-        public decimal SalesVerificationLimit { get; set; }
-
-        [Column("verify_purchase_transactions")] 
-        public bool VerifyPurchaseTransactions { get; set; }
-
-        [Column("purchase_verification_limit")] 
-        public decimal PurchaseVerificationLimit { get; set; }
-
-        [Column("verify_gl_transactions")] 
-        public bool VerifyGlTransactions { get; set; }
-
-        [Column("gl_verification_limit")] 
-        public decimal GlVerificationLimit { get; set; }
-
-        [Column("effective_from")] 
-        public DateTime EffectiveFrom { get; set; }
-
-        [Column("ends_on")] 
-        public DateTime EndsOn { get; set; }
-
-        [Column("is_active")] 
-        public bool IsActive { get; set; }
-
-        [Column("audit_user_id")] 
-        public int? AuditUserId { get; set; }
-
-        [Column("audit_ts")] 
-        public DateTime? AuditTs { get; set; }
-
-        [Column("office_id")] 
-        public int OfficeId { get; set; }
-
-    }
-
     [TableName("policy.menu_policy")]
     [PrimaryKey("policy_id")]
     [ExplicitColumns]
@@ -387,10 +158,155 @@ namespace MixERP.Net.Entities.Policy
 
     }
 
+    [TableName("policy.http_actions")]
+    [PrimaryKey("http_action_code", autoIncrement=false)]
+    [ExplicitColumns]
+    public class HttpAction : PetaPocoDB.Record<HttpAction> , IPoco
+    {
+        [Column("http_action_code")] 
+        public string HttpActionCode { get; set; }
+
+    }
+
+    [TableName("policy.api_access_policy")]
+    [PrimaryKey("api_access_policy_id")]
+    [ExplicitColumns]
+    public class ApiAccessPolicy : PetaPocoDB.Record<ApiAccessPolicy> , IPoco
+    {
+        [Column("api_access_policy_id")] 
+        public long ApiAccessPolicyId { get; set; }
+
+        [Column("user_id")] 
+        public int UserId { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+        [Column("poco_type_name")] 
+        public string PocoTypeName { get; set; }
+
+        [Column("http_action_code")] 
+        public string HttpActionCode { get; set; }
+
+        [Column("valid_till")] 
+        public DateTime ValidTill { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+    }
+
+    [TableName("policy.voucher_verification_policy")]
+    [PrimaryKey("policy_id")]
+    [ExplicitColumns]
+    public class VoucherVerificationPolicy : PetaPocoDB.Record<VoucherVerificationPolicy> , IPoco
+    {
+        [Column("policy_id")] 
+        public int PolicyId { get; set; }
+
+        [Column("user_id")] 
+        public int? UserId { get; set; }
+
+        [Column("can_verify_sales_transactions")] 
+        public bool CanVerifySalesTransactions { get; set; }
+
+        [Column("sales_verification_limit")] 
+        public decimal SalesVerificationLimit { get; set; }
+
+        [Column("can_verify_purchase_transactions")] 
+        public bool CanVerifyPurchaseTransactions { get; set; }
+
+        [Column("purchase_verification_limit")] 
+        public decimal PurchaseVerificationLimit { get; set; }
+
+        [Column("can_verify_gl_transactions")] 
+        public bool CanVerifyGlTransactions { get; set; }
+
+        [Column("gl_verification_limit")] 
+        public decimal GlVerificationLimit { get; set; }
+
+        [Column("can_self_verify")] 
+        public bool CanSelfVerify { get; set; }
+
+        [Column("self_verification_limit")] 
+        public decimal SelfVerificationLimit { get; set; }
+
+        [Column("effective_from")] 
+        public DateTime EffectiveFrom { get; set; }
+
+        [Column("ends_on")] 
+        public DateTime EndsOn { get; set; }
+
+        [Column("is_active")] 
+        public bool IsActive { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+    }
+
+    [TableName("policy.auto_verification_policy")]
+    [PrimaryKey("office_id", autoIncrement=false)]
+    [ExplicitColumns]
+    public class AutoVerificationPolicy : PetaPocoDB.Record<AutoVerificationPolicy> , IPoco
+    {
+        [Column("user_id")] 
+        public int UserId { get; set; }
+
+        [Column("verify_sales_transactions")] 
+        public bool VerifySalesTransactions { get; set; }
+
+        [Column("sales_verification_limit")] 
+        public decimal SalesVerificationLimit { get; set; }
+
+        [Column("verify_purchase_transactions")] 
+        public bool VerifyPurchaseTransactions { get; set; }
+
+        [Column("purchase_verification_limit")] 
+        public decimal PurchaseVerificationLimit { get; set; }
+
+        [Column("verify_gl_transactions")] 
+        public bool VerifyGlTransactions { get; set; }
+
+        [Column("gl_verification_limit")] 
+        public decimal GlVerificationLimit { get; set; }
+
+        [Column("effective_from")] 
+        public DateTime EffectiveFrom { get; set; }
+
+        [Column("ends_on")] 
+        public DateTime EndsOn { get; set; }
+
+        [Column("is_active")] 
+        public bool IsActive { get; set; }
+
+        [Column("audit_user_id")] 
+        public int? AuditUserId { get; set; }
+
+        [Column("audit_ts")] 
+        public DateTime? AuditTs { get; set; }
+
+        [Column("office_id")] 
+        public int OfficeId { get; set; }
+
+    }
+
     [TableName("policy.voucher_verification_policy_scrud_view")]
     [ExplicitColumns]
     public class VoucherVerificationPolicyScrudView : PetaPocoDB.Record<VoucherVerificationPolicyScrudView> , IPoco
     {
+        [Column("policy_id")] 
+        public int? PolicyId { get; set; }
+
         [Column("user_id")] 
         public int? UserId { get; set; }
 

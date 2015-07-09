@@ -50183,7 +50183,7 @@ var toggleSuccess = function (cell) {
 };
 
 var removeRow = function (cell) {
-    var result = confirm(areYouSureLocalized);
+    var result = confirm(Resources.Questions.AreYouSure());
 
     if (result) {
         cell.closest("tr").remove();
@@ -50443,7 +50443,7 @@ function displayMessage(a, b) {
 };
 
 function displaySucess() {
-    $.notify(taskCompletedSuccessfullyLocalized, "success");
+    $.notify(Resources.Labels.TaskCompletedSuccessfully(), "success");
 };
 
 var logError = function (a, b) {
@@ -50875,12 +50875,12 @@ jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue, dataValu
 
 
     if (ajaxData.length === 0) {
-        appendItem(targetControl, "", window.noneLocalized);
+        appendItem(targetControl, "", Resources.Titles.None());
         return;
     };
 
     if (!skipSelect) {
-        appendItem(targetControl, "", window.selectLocalized);
+        appendItem(targetControl, "", Resources.Titles.Select());
     }
    
     if (!dataValueField) {
@@ -51066,7 +51066,7 @@ function isDate(val) {
 };
 ///#source 1 1 /Scripts/mixerp/core/window.js
 var confirmAction = function () {
-    return confirm(areYouSureLocalized);
+    return confirm(Resources.Questions.AreYouSure());
 };
 
 ///#source 1 1 /Scripts/mixerp/master-page/declaration.js
@@ -51140,7 +51140,6 @@ function urlExists(url) {
 
 $(document).ready(function () {
     loadDatePickerLocale();
-    loadResources();
 });
 
 function loadDatePickerLocale() {
@@ -51156,13 +51155,6 @@ function loadDatePickerLocale() {
 
     if (window.datepickerLanguagePath) {
         addScriptReference(window.datepickerLanguagePath);
-    };
-};
-
-function loadResources() {
-    if (window.language) {
-        var url = sprintf("/Resources.js?culture=%s", window.language);
-        addScriptReference(url);
     };
 };
 
@@ -51522,6 +51514,6 @@ window.onresize = function (event) {
 ///#source 1 1 /Scripts/mixerp/master-page/updater.js
 $(document).ready(function() {
     if (update === "1") {
-        addNotification(updateLocalized, "document.location = \"/Modules/Update.aspx\";");
+        addNotification(Resources.Titles.Update(), "document.location = \"/Modules/Update.aspx\";");
     };
 });

@@ -17,10 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
 using Microsoft.AspNet.SignalR;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.FrontEnd.Cache;
+using MixER.Net.ApplicationState.Cache;
+using System;
 
 namespace MixERP.Net.FrontEnd.Hubs
 {

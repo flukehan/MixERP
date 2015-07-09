@@ -17,21 +17,24 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Transactions;
+using System;
+using System.Collections.Generic;
 
 namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data.Helpers
 {
     public static class CustomerReceipts
     {
-        public static IEnumerable<DbGetReceiptViewResult> GetView(string catalog, int userId, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string user, string referenceNumber, string statementReference)
+        public static IEnumerable<DbGetReceiptViewResult> GetView(string catalog, int userId, int officeId,
+            DateTime dateFrom, DateTime dateTo, string office, string party, string user, string referenceNumber,
+            string statementReference)
         {
             const string sql =
                 "SELECT * FROM transactions.get_receipt_view(@0::integer, @1::integer, @2::date, @3::date, @4::national character varying(12), @5::text, @6::national character varying(50), @7::national character varying(24), @8::text);";
 
-            return Factory.Get<DbGetReceiptViewResult>(catalog, sql, userId, officeId, dateFrom, dateTo, office, party, user, referenceNumber, statementReference);
+            return Factory.Get<DbGetReceiptViewResult>(catalog, sql, userId, officeId, dateFrom, dateTo, office, party,
+                user, referenceNumber, statementReference);
         }
     }
 }

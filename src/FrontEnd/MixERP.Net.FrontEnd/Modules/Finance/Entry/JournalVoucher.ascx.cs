@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.AttachmentFactory;
+using System;
 
 namespace MixERP.Net.Core.Modules.Finance.Entry
 {
@@ -50,10 +50,10 @@ namespace MixERP.Net.Core.Modules.Finance.Entry
             this.CreditTotalLiteral.Text = Titles.CreditTotal;
             this.PostTransactionLiteral.Text = Titles.PostTransaction;
             this.AddInputButton.Value = Titles.Add;
-            this.ValueDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            this.BookDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            this.ValueDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
+            this.BookDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
-            using (Attachment attachment = new Attachment())
+            using (Attachment attachment = new Attachment(AppUsers.GetCurrentUserDB()))
             {
                 this.Placeholder1.Controls.Add(attachment);
             }

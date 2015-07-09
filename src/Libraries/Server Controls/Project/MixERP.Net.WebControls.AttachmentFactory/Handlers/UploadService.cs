@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MixER.Net.ApplicationState.Cache;
+using System;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Security.Permissions;
@@ -19,7 +20,9 @@ namespace MixERP.Net.WebControls.AttachmentFactory.Handlers
         public IHttpHandler GetHandler(HttpContext context, string requestType, string url, string pathTranslated)
         {
             WebServiceHandlerFactory factory = new WebServiceHandlerFactory();
-            MethodInfo method = typeof (WebServiceHandlerFactory).GetMethod("CoreGetHandler", BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] {typeof (Type), typeof (HttpContext), typeof (HttpRequest), typeof (HttpResponse)}, null);
+            MethodInfo method = typeof (WebServiceHandlerFactory).GetMethod("CoreGetHandler",
+                BindingFlags.NonPublic | BindingFlags.Instance, null,
+                new Type[] {typeof (Type), typeof (HttpContext), typeof (HttpRequest), typeof (HttpResponse)}, null);
 
             return (IHttpHandler) method.Invoke(factory, new object[]
             {
@@ -40,7 +43,8 @@ namespace MixERP.Net.WebControls.AttachmentFactory.Handlers
         {
             Collection<Entities.Core.Attachment> uploads = GetAttachmentCollection(uploadedFilesJson);
 
-            string attachmentsDirectory = Helpers.ConfigurationHelper.GetAttachmentsDirectory();
+            string attachmentsDirectory =
+                Helpers.ConfigurationHelper.GetAttachmentsDirectory(AppUsers.GetCurrentUserDB());
 
             foreach (Entities.Core.Attachment upload in uploads)
             {

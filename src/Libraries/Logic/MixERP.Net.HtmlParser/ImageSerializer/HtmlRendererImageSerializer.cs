@@ -1,6 +1,5 @@
 ﻿using MixERP.Net.Common.Helpers;
 using System.Drawing;
-using System.Drawing.Text;
 using System.Threading;
 using TheArtOfDev.HtmlRenderer.WinForms;
 

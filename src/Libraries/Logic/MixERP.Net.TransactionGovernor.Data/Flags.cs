@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Collections.ObjectModel;
 using MixERP.Net.DbFactory;
 using Npgsql;
+using System.Collections.ObjectModel;
 
 namespace MixERP.Net.TransactionGovernor.Data
 {

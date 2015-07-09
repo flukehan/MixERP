@@ -17,20 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Web.Script.Services;
-using System.Web.Services;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.TransactionGovernor.Transactions;
 using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
 using Serilog;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Web.Script.Services;
+using System.Web.Services;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 {
@@ -41,7 +40,8 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
     public class Return : WebService
     {
         [WebMethod]
-        public long Save(long tranId, DateTime valueDate, int storeId, string partyCode, int priceTypeId, string referenceNumber, string data, string statementReference, string attachmentsJSON)
+        public long Save(long tranId, DateTime valueDate, int storeId, string partyCode, int priceTypeId,
+            string referenceNumber, string data, string statementReference, string attachmentsJSON)
         {
             try
             {
@@ -60,11 +60,12 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 
                 Collection<Attachment> attachments = CollectionHelper.GetAttachmentCollection(attachmentsJSON);
 
-                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-                long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
+                int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
+                int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+                long loginId = AppUsers.GetCurrent().View.LoginId.ToLong();
 
-                return Data.Transactions.Return.PostTransaction(AppUsers.GetCurrentUserDB(), tranId, valueDate, officeId, userId, loginId, storeId,
+                return Data.Transactions.Return.PostTransaction(AppUsers.GetCurrentUserDB(), tranId, valueDate, officeId,
+                    userId, loginId, storeId,
                     partyCode, priceTypeId, referenceNumber, statementReference, details, attachments);
             }
             catch (Exception ex)
@@ -73,6 +74,5 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                 throw;
             }
         }
-
     }
 }

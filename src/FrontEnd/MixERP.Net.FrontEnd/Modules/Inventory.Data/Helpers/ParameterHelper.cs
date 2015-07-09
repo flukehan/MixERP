@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using MixERP.Net.Entities;
+﻿using MixERP.Net.Entities;
 using MixERP.Net.Entities.Models.Transactions;
 using Npgsql;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
 
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).

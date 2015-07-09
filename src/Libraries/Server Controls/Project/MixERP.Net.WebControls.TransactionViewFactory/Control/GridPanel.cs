@@ -1,11 +1,10 @@
-﻿using System;
+﻿using MixERP.Net.Common;
+using MixERP.Net.WebControls.Common;
+using MixERP.Net.WebControls.TransactionViewFactory.Helpers;
+using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.WebControls.Common;
-using MixERP.Net.WebControls.TransactionViewFactory.Helpers;
 
 namespace MixERP.Net.WebControls.TransactionViewFactory
 {

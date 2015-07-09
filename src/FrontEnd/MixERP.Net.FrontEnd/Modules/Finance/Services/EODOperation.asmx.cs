@@ -17,16 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.ApplicationState;
+using MixERP.Net.Common.Extensions;
+using Serilog;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models;
-using MixERP.Net.FrontEnd.Cache;
-using Serilog;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
@@ -41,13 +40,13 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             try
             {
-                if (!AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
+                if (!AppUsers.GetCurrent().View.IsAdmin.ToBool())
                 {
                     return false;
                 }
 
-                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+                int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
                 Data.EODOperation.Initialize(AppUsers.GetCurrentUserDB(), userId, officeId);
 
@@ -78,16 +77,16 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
         private static void ForceLogOff(int officeId)
         {
-            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(AppUsers.GetCurrentUserDB());
+            Collection<FrequencyDates> applicationDates = Dates.GetFrequencyDates(AppUsers.GetCurrentUserDB());
             DateTime forcedLogOffOn = DateTime.Now.AddMinutes(2);
 
             if (applicationDates != null)
             {
-                ApplicationDateModel model = applicationDates.FirstOrDefault(c => c.OfficeId.Equals(officeId));
+                FrequencyDates model = applicationDates.FirstOrDefault(c => c.OfficeId.Equals(officeId));
 
                 if (model != null)
                 {
-                    ApplicationDateModel item = model.Clone() as ApplicationDateModel;
+                    FrequencyDates item = model.Clone() as FrequencyDates;
                     if (item != null)
                     {
                         item.ForcedLogOffTimestamp = forcedLogOffOn;
@@ -98,22 +97,22 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                     }
 
 
-                    CacheFactory.SetApplicationDates(AppUsers.GetCurrentUserDB(), applicationDates);
+                    Dates.SetApplicationDates(AppUsers.GetCurrentUserDB(), applicationDates);
                 }
             }
         }
 
         private static void SuggestDateReload()
         {
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(AppUsers.GetCurrentUserDB());
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
+            Collection<FrequencyDates> applicationDates = Dates.GetFrequencyDates(AppUsers.GetCurrentUserDB());
 
             if (applicationDates != null)
             {
-                ApplicationDateModel model = applicationDates.FirstOrDefault(c => c.OfficeId.Equals(officeId));
+                FrequencyDates model = applicationDates.FirstOrDefault(c => c.OfficeId.Equals(officeId));
                 if (model != null)
                 {
-                    ApplicationDateModel item = model.Clone() as ApplicationDateModel;
+                    FrequencyDates item = model.Clone() as FrequencyDates;
                     if (item != null)
                     {
                         item.NewDayStarted = true;
@@ -123,7 +122,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                     }
 
 
-                    CacheFactory.SetApplicationDates(AppUsers.GetCurrentUserDB(), applicationDates);
+                    Dates.SetApplicationDates(AppUsers.GetCurrentUserDB(), applicationDates);
                 }
             }
         }

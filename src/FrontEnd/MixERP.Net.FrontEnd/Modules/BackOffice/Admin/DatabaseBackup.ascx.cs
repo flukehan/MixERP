@@ -17,24 +17,23 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models;
+using MixERP.Net.Framework.Controls;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.WebControls.Common;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 using System.Web.Hosting;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Domains;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Admin
 {
@@ -113,7 +112,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
         {
             using (HtmlGenericControl field = HtmlControlHelper.GetField())
             {
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.EnterBackupName, "BackupNameInputText"))
+                using (
+                    HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.EnterBackupName, "BackupNameInputText")
+                    )
                 {
                     field.Controls.Add(label);
                 }
@@ -124,7 +125,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                     backupNameInputText.ID = "BackupNameInputText";
                     if (this.server.IsValid)
                     {
-                        backupNameInputText.Value = string.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}.{3}", this.server.DatabaseName, AppUsers.GetCurrentLogin().View.OfficeId.ToInt(), AppUsers.GetCurrentLogin().View.UserName, DateTime.Now.ToFileTime());
+                        backupNameInputText.Value = string.Format(CultureInfo.InvariantCulture, "{0}.{1}.{2}.{3}",
+                            this.server.DatabaseName, AppUsers.GetCurrent().View.OfficeId.ToInt(),
+                            AppUsers.GetCurrent().View.UserName, DateTime.Now.ToFileTime());
                     }
 
                     field.Controls.Add(backupNameInputText);
@@ -182,9 +185,11 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
                         if (fileInfo != null)
                         {
                             BackupFile file = new BackupFile();
-                            string downloadPath = this.ResolveUrl(Path.Combine(this.server.DatabaseBackupDirectory, fileInfo.Name));
+                            string downloadPath =
+                                this.ResolveUrl(Path.Combine(this.server.DatabaseBackupDirectory, fileInfo.Name));
 
-                            file.Name = string.Format(CultureInfo.InvariantCulture, "<a href='{0}' target='_blank'>{1}</a>", downloadPath, fileInfo.Name);
+                            file.Name = string.Format(CultureInfo.InvariantCulture,
+                                "<a href='{0}' target='_blank'>{1}</a>", downloadPath, fileInfo.Name);
                             file.CreatedOn = fileInfo.CreationTime;
                             file.LastWrittenOn = fileInfo.LastWriteTime;
                             file.LastAccessedOn = fileInfo.LastAccessTime;

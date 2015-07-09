@@ -17,17 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Web.UI.HtmlControls;
-using MixERP.Net.Common;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.TransactionViewFactory;
+using System;
+using System.Web.UI.HtmlControls;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
@@ -50,10 +49,10 @@ namespace MixERP.Net.Core.Modules.Finance
                 view.DateToFrequencyType = FrequencyType.Today;
                 view.Status = "Unverified";
 
-                view.OfficeName = AppUsers.GetCurrentLogin().View.OfficeName;
+                view.OfficeName = AppUsers.GetCurrent().View.OfficeName;
 
-                view.UserId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-                view.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                view.UserId = AppUsers.GetCurrent().View.UserId.ToInt();
+                view.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
                 view.Catalog = AppUsers.GetCurrentUserDB();
 
                 this.Controls.Add(view);
@@ -151,21 +150,10 @@ namespace MixERP.Net.Core.Modules.Finance
                 this.AddHeader(modal);
                 this.AddContent(modal);
                 this.AddActions(modal);
-                this.AddLocalizedVariables();
 
                 this.Controls.Add(modal);
             }
         }
         #endregion
-
-        private void AddLocalizedVariables()
-        {
-
-            string javascript = JSUtility.GetVar("approvedLocalized", Titles.ApproveThisTransaction);
-            javascript += JSUtility.GetVar("rejectLocalized", Titles.RejectThisTransaction);
-            javascript += JSUtility.GetVar("tranIdLocalized", Titles.TranIdParameter);
-
-            PageUtility.RegisterJavascript("VoucherVerification_LocalizedVariables", javascript, this.Page, true);
-        }
     }
 }

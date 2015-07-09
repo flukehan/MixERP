@@ -32,11 +32,11 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var priceTo = parseFloat2(priceToTextbox.val());
 
         if (validTill < validFrom) {
-            displayMessage(window.dateErrorMessageLocalized);
+            displayMessage(Resources.Warnings.DateErrorMessage());
             return false;
         };
         if (priceTo <= priceFrom) {
-            displayMessage(window.comparePriceErrorMessageLocalized);
+            displayMessage(Resources.Warnings.ComparePriceErrorMessage());
             return false;
         };
 

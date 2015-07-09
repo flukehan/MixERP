@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MixER.Net.ApplicationState.Cache;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -10,6 +11,13 @@ namespace MixERP.Net.WebControls.AttachmentFactory
 {
     public class FileUploadHanlder : IHttpHandler
     {
+        public string Catalog { get; set; }
+
+        public FileUploadHanlder(string catalog)
+        {
+            this.Catalog = catalog;
+        }
+
         /// <summary>
         ///     You will need to configure this handler in the Web.config file of your
         ///     web and register it with IIS before being able to use it. For more information
@@ -26,7 +34,7 @@ namespace MixERP.Net.WebControls.AttachmentFactory
 
         public void ProcessRequest(HttpContext context)
         {
-            string attachmentsDirectory = Helpers.ConfigurationHelper.GetAttachmentsDirectory();
+            string attachmentsDirectory = Helpers.ConfigurationHelper.GetAttachmentsDirectory(AppUsers.GetCurrentUserDB());
             Collection<string> uploadedFiles = new Collection<string>();
 
             if (context.Request.Files.Count > 0)
@@ -54,7 +62,7 @@ namespace MixERP.Net.WebControls.AttachmentFactory
 
         private List<string> GetAllowedExtensions()
         {
-            return Helpers.ConfigurationHelper.GetAllowedExtensions().Split(',').ToList();
+            return Helpers.ConfigurationHelper.GetAllowedExtensions(this.Catalog).Split(',').ToList();
         }
 
         private int RandomNumber()

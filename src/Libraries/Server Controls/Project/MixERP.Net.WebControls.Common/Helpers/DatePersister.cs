@@ -17,23 +17,22 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.ApplicationState;
 using System.Collections.ObjectModel;
 using System.Linq;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models;
 
 namespace MixERP.Net.WebControls.Common.Helpers
 {
     public static class DatePersister
     {
-        public static ApplicationDateModel GetApplicationDates(string catalog, int officeId)
+        public static FrequencyDates GetFrequencyDates(string catalog, int officeId)
         {
-            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(catalog);
+            Collection<FrequencyDates> applicationDates = Dates.GetFrequencyDates(catalog);
             bool persist = false;
 
             if (applicationDates == null || applicationDates.Count.Equals(0))
             {
-                applicationDates = Data.Frequency.GetApplicationDates(catalog);
+                applicationDates = Data.Frequency.GetFrequencyDates(catalog);
                 persist = true;
             }
             else
@@ -45,7 +44,7 @@ namespace MixERP.Net.WebControls.Common.Helpers
                         int modelOfficeId = applicationDates[i].OfficeId;
 
                         applicationDates.Remove(applicationDates[i]);
-                        applicationDates.Add(Data.Frequency.GetApplicationDates(catalog, modelOfficeId));
+                        applicationDates.Add(Data.Frequency.GetFrequencyDates(catalog, modelOfficeId));
                         persist = true;
                     }
                 }
@@ -53,7 +52,7 @@ namespace MixERP.Net.WebControls.Common.Helpers
 
             if (persist)
             {
-                CacheFactory.SetApplicationDates(catalog, applicationDates);
+                Dates.SetApplicationDates(catalog, applicationDates);
             }
 
             return applicationDates.FirstOrDefault(c => c.OfficeId.Equals(officeId));

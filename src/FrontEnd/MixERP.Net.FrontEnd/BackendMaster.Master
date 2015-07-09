@@ -1,5 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="BackendMaster.master.cs" Inherits="MixERP.Net.FrontEnd.BackendMaster" %>
 
+<%@ Import Namespace="System.Globalization" %>
+
 <!DOCTYPE html>
 <html>
 <head runat="server">
@@ -7,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>MixERP: ASP.net ERP</title>
-    <link href="/bundles/stylesheets/master-page.min.css" rel="stylesheet"/>
+    <link href="/bundles/stylesheets/master-page.min.css" rel="stylesheet" />
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -17,199 +19,203 @@
             .grid3 td { padding-left: 1px !important; }
         </style>
     <![endif]-->
-    <link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css' />
     <asp:ContentPlaceHolder ID="ScriptContentPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
     <asp:ContentPlaceHolder ID="StyleSheetContentPlaceholder" runat="server">
     </asp:ContentPlaceHolder>
-    <meta name="description" content="MixERP"/>
+    <meta name="description" content="MixERP" />
     <style>
         #right {
             padding: 0;
             margin: 0;
         }
 
-        .widget { cursor: move; }
+        .widget {
+            cursor: move;
+        }
 
-        .widget i { cursor: pointer; }
+            .widget i {
+                cursor: pointer;
+            }
     </style>
 </head>
 <body>
-<form id="form1" runat="server" enctype="multipart/form-data" method="post" submitdisabledcontrols="true" defaultbutton="SwallowSubmit">
-    <script src="/bundles/scripts/master-page.js"></script>
-    <asp:Button runat="server" ID="SwallowSubmit" OnClientClick=" return false; " Style="display: none;"/>
-    <asp:ScriptManager runat="server" ID="ScriptManager1"/>
-    <div id="wrapper">
-        <div class="brand theme">
-            <div class="logo">
-                <a href="/">
-                    <img src="/Static/images/mixerp-logo.png" alt="MixERP"/>
-                </a>
+    <form id="form1" runat="server" enctype="multipart/form-data" method="post" submitdisabledcontrols="true" defaultbutton="SwallowSubmit">
+        <script src="/Resources.js?Culture=<%= CultureInfo.CurrentCulture.TwoLetterISOLanguageName %>"></script>
+        <script src="/bundles/scripts/master-page.js"></script>
+        <asp:Button runat="server" ID="SwallowSubmit" OnClientClick=" return false; " Style="display: none;" />
+        <asp:ScriptManager runat="server" ID="ScriptManager1" />
+        <div id="wrapper">
+            <div class="brand theme">
+                <div class="logo">
+                    <a href="/">
+                        <img src="/Static/images/mixerp-logo.png" alt="MixERP" />
+                    </a>
 
 
-                <%--Right Menu Start--%>
-                <div class="right-menu">
+                    <%--Right Menu Start--%>
+                    <div class="right-menu">
 
-                    <div class="ui inverted contrast theme menu">
-                        <a class="item">
-                            <i class="database icon"></i>
-                            <asp:Literal runat="server" ID="CatalogLiteral"/>
-                        </a>
-                        <a class="item">
-                            <i class="home icon"></i>
-                            <asp:Literal runat="server" ID="BranchNameLiteral"/>
-                        </a>
-                        <div class="ui simple dropdown item" id="NotificationMenu">
-                            <i class="mail icon"></i>
-                            <asp:Literal runat="server" ID="NotificationLiteral"/>
-                            <span></span>
-                            <i class="dropdown icon"></i>
-                            <div id="Notification" class="ui vertical menu">
-                            </div>
-                        </div>
-                        <a class="item" href="http://docs.mixerp.org/" target="_blank">
-                            <i class="book basic icon"></i>
-                            <asp:Literal runat="server" ID="MixERPDocumentationLiteral"/>
-                        </a>
-                        <div class="right menu">
-                            <div class="ui simple dropdown item">
-                                <i class="icon smile"></i>
-                                <asp:Literal runat="server" ID="UserGreetingLiteral"/>
+                        <div class="ui inverted contrast theme menu">
+                            <a class="item">
+                                <i class="database icon"></i>
+                                <asp:Literal runat="server" ID="CatalogLiteral" />
+                            </a>
+                            <a class="item">
+                                <i class="home icon"></i>
+                                <asp:Literal runat="server" ID="BranchNameLiteral" />
+                            </a>
+                            <div class="ui simple dropdown item" id="NotificationMenu">
+                                <i class="mail icon"></i>
+                                <asp:Literal runat="server" ID="NotificationLiteral" />
+                                <span></span>
                                 <i class="dropdown icon"></i>
-                                <div class="ui menu">
-                                    <a class="item" href="/Site/Account/ChangePassword.aspx">
-                                        <i class="flag icon"></i>
-                                        <asp:Literal runat="server" ID="ChangePasswordLiteral"/>
-                                    </a>
-                                    <a class="item" href="/Site/Account/UserProfile.aspx">
-                                        <i class="edit icon"></i>
-                                        <asp:Literal runat="server" ID="ManageProfileLiteral"/>
-                                    </a>
-                                    <a class="item" href="/Site/Account/SignOut.aspx">
-                                        <i class="sign out icon"></i>
-                                        <asp:Literal runat="server" ID="SignOutLiteral"/>
-                                    </a>
+                                <div id="Notification" class="ui vertical menu">
+                                </div>
+                            </div>
+                            <a class="item" href="http://docs.mixerp.org/" target="_blank">
+                                <i class="book basic icon"></i>
+                                <asp:Literal runat="server" ID="MixERPDocumentationLiteral" />
+                            </a>
+                            <div class="right menu">
+                                <div class="ui simple dropdown item">
+                                    <i class="icon smile"></i>
+                                    <asp:Literal runat="server" ID="UserGreetingLiteral" />
+                                    <i class="dropdown icon"></i>
+                                    <div class="ui menu">
+                                        <a class="item" href="/Site/Account/ChangePassword.aspx">
+                                            <i class="flag icon"></i>
+                                            <asp:Literal runat="server" ID="ChangePasswordLiteral" />
+                                        </a>
+                                        <a class="item" href="/Site/Account/UserProfile.aspx">
+                                            <i class="edit icon"></i>
+                                            <asp:Literal runat="server" ID="ManageProfileLiteral" />
+                                        </a>
+                                        <a class="item" href="/Site/Account/SignOut.aspx">
+                                            <i class="sign out icon"></i>
+                                            <asp:Literal runat="server" ID="SignOutLiteral" />
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <%--Right Menu End--%>
                 </div>
-                <%--Right Menu End--%>
-            </div>
-            <div style="clear: both;"></div>
-            <%--Top Menu Start--%>
-            <div id="top-menu" class="ui attached menu">
-                <a class="item" onclick=" toggleSidebar(this); ">
-                    <i class="options icon"></i>
-                </a>
-                <a class='initially hidden item' id="reset-menu" href="javascript:void(0);">
-                    <i class='red remove icon'></i>
-                </a>
-            </div>
-            <%--Top Menu End--%>
+                <div style="clear: both;"></div>
+                <%--Top Menu Start--%>
+                <div id="top-menu" class="ui attached menu">
+                    <a class="item" onclick=" toggleSidebar(this); ">
+                        <i class="options icon"></i>
+                    </a>
+                    <a class='initially hidden item' id="reset-menu" href="javascript:void(0);">
+                        <i class='red remove icon'></i>
+                    </a>
+                </div>
+                <%--Top Menu End--%>
 
-            <div class="sidebar">
-                <div id="search">
-                    <div class="ui icon  input" style="width: 100%;">
-                        <input type="text" id="SearchInput" autocomplete="off">
-                        <i class="search link icon"></i>
-                    </div>
-                </div>
-                <div id="tree" style='display: none;'>
-                    <ul id='treeData'></ul>
-                </div>
-            </div>
-        </div>
-        <div id="page-wrapper">
-            <div class="ui grid">
-                <div class="one column row">
-                    <div class="column">
-                        <div id="MainContent">
-                            <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
-                            </asp:ContentPlaceHolder>
+                <div class="sidebar">
+                    <div id="search">
+                        <div class="ui icon  input" style="width: 100%;">
+                            <input type="text" id="SearchInput" autocomplete="off">
+                            <i class="search link icon"></i>
                         </div>
                     </div>
-                </div>
-                <footer class="one column row">
-                    <p class="column">
-                        Copyright © 2013-2105, MixERP Inc. All rights reserved. Powered by <a href="http://mixerp.org/" target="_blank">
-                            MixERP Community Edition
-                            <asp:Literal ID="VersionLiteral" runat="server"/>
-                        </a>.
-                    </p>
-                </footer>
-
-            </div>
-        </div>
-
-    </div>
-
-    <asp:ContentPlaceHolder ID="BottomScriptContentPlaceholder" runat="server">
-    </asp:ContentPlaceHolder>
-    <div class="ui small modal" id="EODModal">
-        <i class="close icon"></i>
-        <div class="ui icon header">
-            <i class="loading spinner icon"></i>
-            <%= MixERP.Net.i18n.Resources.Titles.EODBegun %>
-        </div>
-        <div class="content">
-            <p>
-                <%= MixERP.Net.i18n.Resources.Labels.EODBegunSaveYourWork %>
-            </p>
-            <div style="margin-left: 150px;">
-                <div class="ui circular segment" style="width: 120px; height: 120px;">
-                    <h2 class="ui large header" style="font-size: 36px;"></h2>
+                    <div id="tree" style='display: none;'>
+                        <ul id='treeData'></ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="actions">
-            <div class="ui button">
-                <%= MixERP.Net.i18n.Resources.Titles.Cancel %>
+            <div id="page-wrapper">
+                <div class="ui grid">
+                    <div class="one column row">
+                        <div class="column">
+                            <div id="MainContent">
+                                <asp:ContentPlaceHolder ID="BodyContentPlaceholder" runat="server">
+                                </asp:ContentPlaceHolder>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="one column row">
+                        <p class="column">
+                            Copyright © 2013-2105, MixERP Inc. All rights reserved. Powered by <a href="http://mixerp.org/" target="_blank">MixERP Community Edition
+                            <asp:Literal ID="VersionLiteral" runat="server" />
+                            </a>.
+                        </p>
+                    </footer>
+
+                </div>
             </div>
-            <div class="ui button">
-                <%= MixERP.Net.i18n.Resources.Titles.OK %>
+
+        </div>
+
+        <asp:ContentPlaceHolder ID="BottomScriptContentPlaceholder" runat="server">
+        </asp:ContentPlaceHolder>
+        <div class="ui small modal" id="EODModal">
+            <i class="close icon"></i>
+            <div class="ui icon header">
+                <i class="loading spinner icon"></i>
+                <%= MixERP.Net.i18n.Resources.Titles.EODBegun %>
+            </div>
+            <div class="content">
+                <p>
+                    <%= MixERP.Net.i18n.Resources.Labels.EODBegunSaveYourWork %>
+                </p>
+                <div style="margin-left: 150px;">
+                    <div class="ui circular segment" style="width: 120px; height: 120px;">
+                        <h2 class="ui large header" style="font-size: 36px;"></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div class="ui button">
+                    <%= MixERP.Net.i18n.Resources.Titles.Cancel %>
+                </div>
+                <div class="ui button">
+                    <%= MixERP.Net.i18n.Resources.Titles.OK %>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script src="/signalr/hubs"></script>
-    <script type="text/javascript">
-        $(function() {
-            var started = false;
+        <script src="/signalr/hubs"></script>
+        <script type="text/javascript">
+            $(function () {
+                var started = false;
 
-            $.connection.baseHub.client.terminate = function(c, cat) {
-                if (top.catalog !== cat) {
-                    return;
+                $.connection.baseHub.client.terminate = function (c, cat) {
+                    if (top.catalog !== cat) {
+                        return;
+                    };
+
+                    if (typeof terminateListener === "function") {
+                        terminateListener(c);
+                    };
+
+                    $("#EODModal .circular.segment h2").html(c + "%");
+
+                    if (!started) {
+                        $("#EODModal").modal("show");
+
+                        var message = "<%= MixERP.Net.i18n.Resources.Titles.EODBegun %>";
+                        var action = "$('#EODModal').modal('show');";
+                        addNotification(message, action);
+                        started = true;
+                    };
+
+                    if (c === 100) {
+                        window.location = "/Site/Account/SignOut.aspx";
+                    };
                 };
 
-                if (typeof terminateListener === "function") {
-                    terminateListener(c);
-                };
+                $.connection.hub.start().done(function () {
+                    if (typeof connectionListener === "function") {
+                        connectionListener();
+                    };
+                });;
+            });
+        </script>
 
-                $("#EODModal .circular.segment h2").html(c + "%");
-
-                if (!started) {
-                    $("#EODModal").modal("show");
-
-                    var message = "<%= MixERP.Net.i18n.Resources.Titles.EODBegun %>";
-                    var action = "$('#EODModal').modal('show');";
-                    addNotification(message, action);
-                    started = true;
-                };
-
-                if (c === 100) {
-                    window.location = "/Site/Account/SignOut.aspx";
-                };
-            };
-
-            $.connection.hub.start().done(function() {
-                if (typeof connectionListener === "function") {
-                    connectionListener();
-                };
-            });;
-        });
-    </script>
-
-</form>
+    </form>
 </body>
 </html>

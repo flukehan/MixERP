@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Entities.Models.Transactions;
+using Npgsql;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using MixERP.Net.Entities.Models.Transactions;
-using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Sales.Data
 {

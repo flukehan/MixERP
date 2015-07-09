@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Linq;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Data.Office;
 using MixERP.Net.i18n.Resources;
+using System;
+using System.Linq;
 
 namespace MixERP.Net.FrontEnd
 {

@@ -104,7 +104,7 @@ namespace MixERP.Net.i18n
         private static void InitializeResources()
         {
             IDictionary<string, string> resources = DbResources.GetLocalizedResources();
-            CacheProvider.AddToDefaultCache("Resources", resources);
+            CacheFactory.AddToDefaultCache("Resources", resources);
         }
     }
 }

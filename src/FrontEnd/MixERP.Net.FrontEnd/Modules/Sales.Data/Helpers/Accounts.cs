@@ -17,12 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Office;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {
@@ -83,6 +82,5 @@ namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
                 "SELECT * FROM core.merchant_fee_setup WHERE merchant_account_id=@0 AND payment_card_id=@1;";
             return Factory.Get<MerchantFeeSetup>(catalog, sql, merchantAccountId, paymentCardId).FirstOrDefault();
         }
-
     }
 }

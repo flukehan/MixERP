@@ -17,15 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.i18n;
 using System;
 using System.Globalization;
 using System.Threading;
 using System.Web.UI;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.FrontEnd.Base
 {
@@ -46,60 +46,25 @@ namespace MixERP.Net.FrontEnd.Base
             script += JSUtility.GetVar("today", DateTime.Now.ToShortDateString());
             script += JSUtility.GetVar("now", DateTime.Now.ToString(CultureInfo.InvariantCulture));
 
-            script += JSUtility.GetVar("user", AppUsers.GetCurrentLogin().View.UserName);
-            script += JSUtility.GetVar("office", AppUsers.GetCurrentLogin().View.OfficeName);
+            script += JSUtility.GetVar("user", AppUsers.GetCurrent().View.UserName);
+            script += JSUtility.GetVar("office", AppUsers.GetCurrent().View.OfficeName);
 
-            script += JSUtility.GetVar("shortDateFormat", LocalizationHelper.GetShortDateFormat());
-            script += JSUtility.GetVar("longDateFormat", LocalizationHelper.GetLongDateFormat());
+            script += JSUtility.GetVar("shortDateFormat", CurrentCulture.GetShortDateFormat());
+            script += JSUtility.GetVar("longDateFormat", CurrentCulture.GetLongDateFormat());
 
-            script += JSUtility.GetVar("thousandSeparator", LocalizationHelper.GetThousandSeparator());
-            script += JSUtility.GetVar("decimalSeparator", LocalizationHelper.GetDecimalSeparator());
-            script += JSUtility.GetVar("currencyDecimalPlaces", LocalizationHelper.GetCurrencyDecimalPlaces());
-            script += JSUtility.GetVar("currencySymbol", LocalizationHelper.GetCurrencySymbol());
-
-            script += JSUtility.GetVar("duplicateEntryLocalized", Warnings.DuplicateEntry);
-            script += JSUtility.GetVar("selectLocalized", Titles.Select);
-            script += JSUtility.GetVar("noneLocalized", Titles.None);
-            script += JSUtility.GetVar("invalidDateWarningLocalized", Warnings.InvalidDate);
-            script += JSUtility.GetVar("actionsLocalized", Titles.Actions);
-            script += JSUtility.GetVar("areYouSureLocalized", Questions.AreYouSure);
-            script += JSUtility.GetVar("nothingSelectedLocalized", Warnings.NothingSelected);
-            script += JSUtility.GetVar("yesLocalized", Titles.Yes);
-            script += JSUtility.GetVar("noLocalized", Titles.No);
-
-            script += JSUtility.GetVar("daysLowerCaseLocalized", Labels.DaysLowerCase);
-            script += JSUtility.GetVar("gridViewEmptyWarningLocalized", Warnings.GridViewEmpty);
-
-            script += JSUtility.GetVar("duplicateFileLocalized", Warnings.DuplicateFiles);
-
-            script += JSUtility.GetVar("taskCompletedSuccessfullyLocalized", Labels.TaskCompletedSuccessfully);
+            script += JSUtility.GetVar("thousandSeparator", CurrentCulture.GetThousandSeparator());
+            script += JSUtility.GetVar("decimalSeparator", CurrentCulture.GetDecimalSeparator());
+            script += JSUtility.GetVar("currencyDecimalPlaces", CurrentCulture.GetCurrencyDecimalPlaces());
+            script += JSUtility.GetVar("currencySymbol", CurrentCulture.GetCurrencySymbol());
 
 
             script += JSUtility.GetVar("today", DateTime.Now.ToShortDateString());
-            script += JSUtility.GetVar("shortDateFormat", LocalizationHelper.GetShortDateFormat());
-            script += JSUtility.GetVar("thousandSeparator", LocalizationHelper.GetThousandSeparator());
-            script += JSUtility.GetVar("decimalSeparator", LocalizationHelper.GetDecimalSeparator());
-            script += JSUtility.GetVar("currencyDecimalPlaces", LocalizationHelper.GetCurrencyDecimalPlaces());
+            script += JSUtility.GetVar("shortDateFormat", CurrentCulture.GetShortDateFormat());
+            script += JSUtility.GetVar("thousandSeparator", CurrentCulture.GetThousandSeparator());
+            script += JSUtility.GetVar("decimalSeparator", CurrentCulture.GetDecimalSeparator());
+            script += JSUtility.GetVar("currencyDecimalPlaces", CurrentCulture.GetCurrencyDecimalPlaces());
+            script += JSUtility.GetVar("baseCurrencyCode", AppUsers.GetCurrent().View.CurrencyCode);
 
-            script += JSUtility.GetVar("duplicateEntryLocalized", Warnings.DuplicateEntry);
-
-            script += JSUtility.GetVar("selectLocalized", Titles.Select);
-            script += JSUtility.GetVar("noneLocalized", Titles.None);
-            script += JSUtility.GetVar("invalidDateWarningLocalized", Warnings.InvalidDate);
-            script += JSUtility.GetVar("areYouSureLocalized", Questions.AreYouSure);
-            script += JSUtility.GetVar("nothingSelectedLocalized", Warnings.NothingSelected);
-            script += JSUtility.GetVar("yesLocalized", Titles.Yes);
-            script += JSUtility.GetVar("noLocalized", Titles.No);
-
-            script += JSUtility.GetVar("daysLowerCaseLocalized", Labels.DaysLowerCase);
-            script += JSUtility.GetVar("gridViewEmptyWarningLocalized", Warnings.GridViewEmpty);
-
-            script += JSUtility.GetVar("duplicateFileLocalized", Warnings.DuplicateFiles);
-            script += JSUtility.GetVar("taskCompletedSuccessfullyLocalized", Labels.TaskCompletedSuccessfully);
-            script += JSUtility.GetVar("itemsLocalized", Titles.Items);
-            script += JSUtility.GetVar("compoundItemsLocalized", Titles.CompoundItems);
-            script += JSUtility.GetVar("addLocalized", Titles.Add);
-            script += JSUtility.GetVar("updateLocalized", Titles.Update);
 
             script += JSUtility.GetVar("catalog", AppUsers.GetCurrentUserDB());
 
@@ -110,7 +75,8 @@ namespace MixERP.Net.FrontEnd.Base
 
         private int Update()
         {
-            if (Conversion.TryCastBoolean(Application["UpdateAvailable"]) && AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
+            if (Conversion.TryCastBoolean(Application["UpdateAvailable"]) &&
+                AppUsers.GetCurrent().View.IsAdmin.ToBool())
             {
                 return 1;
             }

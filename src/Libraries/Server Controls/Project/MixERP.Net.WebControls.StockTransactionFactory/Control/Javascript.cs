@@ -17,13 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Security.Permissions;
-using System.Web;
-using System.Web.UI;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities;
-using MixERP.Net.i18n.Resources;
+using System.Security.Permissions;
+using System.Web;
+using System.Web.UI;
 
 [assembly: WebResource("MixERP.Net.WebControls.StockTransactionFactory.Includes.Script.StockTransactionForm.js", "application/x-javascript", PerformSubstitution = true)]
 
@@ -41,14 +40,6 @@ namespace MixERP.Net.WebControls.StockTransactionFactory
             js += JSUtility.GetVar("isSales", isSales, false);
             js += JSUtility.GetVar("tranBook", tranBook);
             js += JSUtility.GetVar("verifyStock", verifyStock, false);
-            js += JSUtility.GetVar("insufficientStockWarningLocalized", Warnings.InsufficientStockWarning);
-            js += JSUtility.GetVar("invalidPartyWarningLocalized", Warnings.InvalidParty);
-            js += JSUtility.GetVar("invalidPriceTypeWarningLocalized", Warnings.InvalidPriceType);
-            js += JSUtility.GetVar("invalidStoreWarningLocalized", Warnings.InvalidStore);
-            js += JSUtility.GetVar("invalidShippingCompanyWarningLocalized", Warnings.InvalidShippingCompany);
-            js += JSUtility.GetVar("invalidCostCenterWarningLocalized", Warnings.InvalidCostCenter);
-            js += JSUtility.GetVar("invalidSalesPersonWarningLocalized", Warnings.InvalidSalesPerson);
-            js += JSUtility.GetVar("invalidPaymentTermLocalized", Warnings.InvalidPaymentTerm);
 
             PageUtility.RegisterJavascript("StockTransactionForm_Vars", js, this.Page, true);
         }

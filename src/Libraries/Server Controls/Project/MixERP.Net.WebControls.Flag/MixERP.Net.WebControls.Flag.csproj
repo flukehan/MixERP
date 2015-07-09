@@ -72,6 +72,10 @@
       <Project>{2ECD1C2E-D7D0-4A24-896A-E625B0566DB5}</Project>
       <Name>MixERP.Net.i18n</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Logic\PetaPoco\PetaPoco.csproj">
+      <Project>{969d7960-52e2-40fc-91e5-1393b71e23b0}</Project>
+      <Name>PetaPoco</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Data\MixERP.Net.WebControls.Flag.Data\MixERP.Net.WebControls.Flag.Data.csproj">
       <Project>{0e76ec47-151a-481a-82a6-fc0c3d81f7c0}</Project>
       <Name>MixERP.Net.WebControls.Flag.Data</Name>

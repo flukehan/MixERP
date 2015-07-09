@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using Serilog;
 using System;
 using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixERP.Net.FrontEnd.Cache;
-using Serilog;
 
 namespace MixERP.Net.FrontEnd.Services
 {

@@ -18,41 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 /*jshint -W032, -W098, -W020 */
-/*global addDanger, ajaxDataBind, ajaxUpdateVal, appendParameter, fadeThis, getAjax, getColumnText, getData, getFormattedNumber, gridViewEmptyWarningLocalized, insufficientStockWarningLocalized, invalidCostCenterWarningLocalized, invalidDateWarningLocalized, invalidPartyWarningLocalized,invalidPriceTypeWarningLocalized, invalidSalesPersonWarningLocalized, invalidShippingCompanyWarningLocalized, invalidStoreWarningLocalized, isDate, isNullOrWhiteSpace, isSales, logError, makeDirty, parseFloat, parseFormattedNumber, removeDirty, repaint, rowData, selectDropDownListByValue, setColumnText, shortcut, showWindow, sumOfColumn, tableToJSON, tranBook, unitId, uploadedFilesHidden, verifyStock, parseInt */
-
-
-
-if (typeof insufficientStockWarningLocalized === "undefined") {
-    insufficientStockWarningLocalized = "Only {0} {1} of {2} left in stock.";
-};
-
-if (typeof invalidPartyWarningLocalized === "undefined") {
-    invalidPartyWarningLocalized = "Invalid party.";
-};
-
-if (typeof invalidPriceTypeWarningLocalized === "undefined") {
-    invalidPriceTypeWarningLocalized = "Invalid price type.";
-};
-
-if (typeof invalidStoreWarningLocalized === "undefined") {
-    invalidStoreWarningLocalized = "Invalid store.";
-};
-
-if (typeof invalidShippingCompanyWarningLocalized === "undefined") {
-    invalidShippingCompanyWarningLocalized = "Invalid shipping company.";
-};
-
-if (typeof invalidCostCenterWarningLocalized === "undefined") {
-    invalidCostCenterWarningLocalized = "Invalid cost center.";
-};
-
-if (typeof invalidSalesPersonWarningLocalized === "undefined") {
-    invalidSalesPersonWarningLocalized = "Invalid salesperson.";
-};
-
-if (typeof invalidPaymentTermLocalized === "undefined") {
-    invalidPaymentTermLocalized = "Invalid payment term.";
-};
+/*global addDanger, ajaxDataBind, ajaxUpdateVal, appendParameter, fadeThis, getAjax, getColumnText, getData, getFormattedNumber, Resources, Resources, isDate, isNullOrWhiteSpace, isSales, logError, makeDirty, parseFloat, parseFormattedNumber, removeDirty, repaint, rowData, selectDropDownListByValue, setColumnText, shortcut, showWindow, sumOfColumn, tableToJSON, tranBook, unitId, uploadedFilesHidden, verifyStock, parseInt */
 
 //Controls
 var addButton = $("#AddButton");
@@ -520,14 +486,14 @@ var validateProductControl = function () {
 
     if (!isDate(valueDate)) {
         makeDirty(dateTextBox);
-        errorLabelBottom.html(invalidDateWarningLocalized);
+        errorLabelBottom.html(Resources.Warnings.InvalidDate());
         return false;
     };
 
     if (storeSelect.length) {
         if (parseInt(storeSelect.getSelectedValue() || 0) <= 0) {
             makeDirty(storeSelect);
-            errorLabelBottom.html(invalidStoreWarningLocalized);
+            errorLabelBottom.html(Resources.Warnings.InvalidStore());
             return false;
         };
     };
@@ -535,7 +501,7 @@ var validateProductControl = function () {
     if (paymentTermSelect.length && paymentTermSelect.is(":visible")) {
         if (parseInt(paymentTermSelect.getSelectedValue() || 0) <= 0) {
             makeDirty(paymentTermSelect);
-            errorLabelBottom.html(invalidPaymentTermLocalized);
+            errorLabelBottom.html(Resources.Warnings.InvalidPaymentTerm());
             return false;
         };
     };
@@ -543,7 +509,7 @@ var validateProductControl = function () {
     removeDirty(paymentTermSelect);
 
     if (isNullOrWhiteSpace(partyCodeInputText.val())) {
-        errorLabelBottom.html(invalidPartyWarningLocalized);
+        errorLabelBottom.html(Resources.Warnings.InvalidParty());
         makeDirty(partyCodeInputText);
         makeDirty(partySelect);
         return false;
@@ -552,20 +518,20 @@ var validateProductControl = function () {
     if (priceTypeSelect.length) {
         if (parseInt(priceTypeSelect.getSelectedValue() || 0) <= 0) {
             makeDirty(priceTypeSelect);
-            errorLabelBottom.html(invalidPriceTypeWarningLocalized);
+            errorLabelBottom.html(Resources.Warnings.InvalidPriceType());
             return false;
         };
     };
 
     if (productGridView.find("tr").length === 2) {
-        errorLabelBottom.html(gridViewEmptyWarningLocalized);
+        errorLabelBottom.html(Resources.Warnings.GridViewEmpty());
         return false;
     };
 
     if (shippingCompanySelect.length) {
         if (parseInt(shippingCompanySelect.getSelectedValue() || 0) <= 0) {
             makeDirty(shippingCompanySelect);
-            errorLabelBottom.html(invalidShippingCompanyWarningLocalized);
+            errorLabelBottom.html(Resources.Warnings.InvalidShippingCompany());
             return false;
         };
     };
@@ -573,7 +539,7 @@ var validateProductControl = function () {
     if (costCenterSelect.length) {
         if (parseInt(costCenterSelect.getSelectedValue() || 0) <= 0) {
             makeDirty(costCenterSelect);
-            errorLabelBottom.html(invalidCostCenterWarningLocalized);
+            errorLabelBottom.html(Resources.Warnings.InvalidCostCenter());
             return false;
         };
     };
@@ -581,7 +547,7 @@ var validateProductControl = function () {
     if (salesPersonSelect.length) {
         if (parseInt(salesPersonSelect.getSelectedValue() || 0) <= 0) {
             makeDirty(salesPersonSelect);
-            errorLabelBottom.html(invalidSalesPersonWarningLocalized);
+            errorLabelBottom.html(Resources.Warnings.InvalidSalesPerson());
             return false;
         };
     };
@@ -676,12 +642,12 @@ function loadItems() {
     var ajax = getAjax(url, data);
 
     ajax.success(function (msg) {
-        itemSelect.html("<option>" + selectLocalized + "</option>");
+        itemSelect.html("<option>" + Resources.Titles.Select() + "</option>");
         var itemGroup = $("<optgroup/>");
         var compoundItemGroup = $("<optgroup/>");
 
-        itemGroup.prop("label", itemsLocalized);
-        compoundItemGroup.prop("label", compoundItemsLocalized);
+        itemGroup.prop("label", Resources.Titles.Items());
+        compoundItemGroup.prop("label", Resources.Titles.CompoundItems());
         compoundItemGroup.attr("data-compound-item", "true");
 
         var items = msg.d;
@@ -859,14 +825,14 @@ var addRow = function () {
 
     removeDirty(discountInputText);
 
-    if (taxRequired() && tax === selectLocalized) {
+    if (taxRequired() && tax === Resources.Titles.Select()) {
         makeDirty(taxSelect);
         return;
     };
 
     removeDirty(taxSelect);
 
-    if (tax === selectLocalized || tax === noneLocalized) {
+    if (tax === Resources.Titles.Select() || tax === Resources.Titles.None()) {
         tax = "";
         computedTax = 0;
     };
@@ -916,7 +882,7 @@ var addRow = function () {
 
                     if (quantity > itemInStock) {
                         makeDirty(quantityInputText);
-                        errorLabel.html(String.format(insufficientStockWarningLocalized, itemInStock, unitName, itemName));
+                        errorLabel.html(String.format(Resources.Warnings.InsufficientStockWarning(), itemInStock, unitName, itemName));
                         return;
                     };
 
@@ -950,7 +916,7 @@ function addCompoundItems() {
 };
 
 var addRowToTable = function (itemCode, itemName, quantity, unitName, price, discount, shippingCharge, tax, computedTax) {
-    var editMode = (addButton.val() === window.updateLocalized);
+    var editMode = (addButton.val() === Resources.Titles.Update());
     var updateIndex = parseInt(addButton.attr("data-update-index") || 0);
     var rows = $("#ProductGridView").find("tbody tr:not(:last-child)");
     var amount = price * quantity;
@@ -994,7 +960,7 @@ var addRowToTable = function (itemCode, itemName, quantity, unitName, price, dis
             deleteAnchor.removeClass("no-pointer-events");
 
             target.html(html);
-            addButton.val(window.addLocalized);
+            addButton.val(Resources.Titles.Add());
             $("#ProductGridView").find("tr").removeClass("active");
             addButton.removeAttr("data-update-index");
             target.addClass("warning");
@@ -1032,7 +998,7 @@ var getPrice = function () {
 
     if (tranBook.toLowerCase() === "sales") {
         if (priceTypeId <= 0) {
-            $.notify(invalidPriceTypeWarningLocalized, "error");
+            $.notify(Resources.Warnings.InvalidPriceType(), "error");
             priceTypeSelect.focus();
             return;
         };
@@ -1265,7 +1231,7 @@ function editRow(el) {
     selectedRow.addClass("active");
     footerRow.addClass("active");
 
-    addButton.val(updateLocalized);
+    addButton.val(Resources.Titles.Update());
 
     addButton.attr("data-update-index", selectedIndex);
 };

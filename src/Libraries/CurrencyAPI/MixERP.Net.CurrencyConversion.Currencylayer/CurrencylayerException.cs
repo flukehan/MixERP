@@ -1,4 +1,5 @@
-﻿using MixERP.Net.Common.Base;
+﻿
+using MixERP.Net.Framework;
 
 namespace MixERP.Net.CurrencyConversion.Currencylayer
 {

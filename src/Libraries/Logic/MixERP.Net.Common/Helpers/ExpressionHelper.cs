@@ -100,7 +100,7 @@ namespace MixERP.Net.Common.Helpers
                     object output = info.Invoke(assemblyInstance, null);
                     return output.ToString();
                 }
-                catch (NotImplementedException)
+                catch
                 {
                     //Swallow
                 }

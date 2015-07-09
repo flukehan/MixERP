@@ -73,13 +73,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Serilog, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\packages\Serilog.1.4.155\lib\net45\Serilog.dll</HintPath>
+    <Reference Include="Serilog">
+      <HintPath>..\..\..\..\packages\Serilog.1.5.7\lib\net45\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.FullNetFx, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\packages\Serilog.1.4.155\lib\net45\Serilog.FullNetFx.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Serilog.1.5.7\lib\net45\Serilog.FullNetFx.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.IO.Compression" />
@@ -111,7 +110,15 @@
     </Content>
     <Content Include="Industries.ascx" />
     <Content Include="Mix Open Foundation.snk" />
+    <Content Include="OTS\AttachmentParameters.ascx" />
+    <Content Include="OTS\CurrencylayerParameters.ascx" />
+    <Content Include="OTS\DatabaseParameters.ascx" />
+    <Content Include="OTS\MessagingParameters.ascx" />
+    <Content Include="OTS\MixERPParameters.ascx" />
+    <Content Include="OTS\OpenExchangeRatesParameters.ascx" />
     <Content Include="OTS\OpeningInventory.ascx" />
+    <Content Include="OTS\ScrudFactoryParameters.ascx" />
+    <Content Include="OTS\Switches.ascx" />
     <Content Include="Policy\ApiAccess.ascx" />
     <Content Include="Scripts\Admin\ReportWriter.ascx..js" />
     <Content Include="Scripts\Admin\DatabaseBackup.ascx.js" />
@@ -318,12 +325,68 @@
     <Compile Include="Offices.ascx.designer.cs">
       <DependentUpon>Offices.ascx</DependentUpon>
     </Compile>
+    <Compile Include="OTS\AttachmentParameters.ascx.cs">
+      <DependentUpon>AttachmentParameters.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OTS\AttachmentParameters.ascx.designer.cs">
+      <DependentUpon>AttachmentParameters.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OTS\CurrencylayerParameters.ascx.cs">
+      <DependentUpon>CurrencylayerParameters.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OTS\CurrencylayerParameters.ascx.designer.cs">
+      <DependentUpon>CurrencylayerParameters.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OTS\DatabaseParameters.ascx.cs">
+      <DependentUpon>DatabaseParameters.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OTS\DatabaseParameters.ascx.designer.cs">
+      <DependentUpon>DatabaseParameters.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OTS\MessagingParameters.ascx.cs">
+      <DependentUpon>MessagingParameters.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OTS\MessagingParameters.ascx.designer.cs">
+      <DependentUpon>MessagingParameters.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OTS\MixERPParameters.ascx.cs">
+      <DependentUpon>MixERPParameters.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OTS\MixERPParameters.ascx.designer.cs">
+      <DependentUpon>MixERPParameters.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OTS\OpenExchangeRatesParameters.ascx.cs">
+      <DependentUpon>OpenExchangeRatesParameters.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OTS\OpenExchangeRatesParameters.ascx.designer.cs">
+      <DependentUpon>OpenExchangeRatesParameters.ascx</DependentUpon>
+    </Compile>
     <Compile Include="OTS\OpeningInventory.ascx.cs">
       <DependentUpon>OpeningInventory.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OTS\OpeningInventory.ascx.designer.cs">
       <DependentUpon>OpeningInventory.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OTS\ScrudFactoryParameters.ascx.cs">
+      <DependentUpon>ScrudFactoryParameters.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OTS\ScrudFactoryParameters.ascx.designer.cs">
+      <DependentUpon>ScrudFactoryParameters.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OTS\Switches.ascx.cs">
+      <DependentUpon>Switches.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OTS\Switches.ascx.designer.cs">
+      <DependentUpon>Switches.ascx</DependentUpon>
     </Compile>
     <Compile Include="Policy\ApiAccess.ascx.cs">
       <DependentUpon>ApiAccess.ascx</DependentUpon>
@@ -494,13 +557,25 @@
     <Folder Include="Reports\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixER.Net.StateServer\MixER.Net.ApplicationState.csproj">
+      <Project>{61AB8B69-2097-4595-97B7-4A930A70163D}</Project>
+      <Name>MixER.Net.ApplicationState</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
       <Project>{bde918b1-dd9b-41c9-a41f-f3ddec18b6d8}</Project>
       <Name>MixERP.Net.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.Framework\MixERP.Net.Framework.csproj">
+      <Project>{1509332F-AE98-44D9-9072-5BBC59A65FC4}</Project>
+      <Name>MixERP.Net.Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.i18n\MixERP.Net.i18n.csproj">
       <Project>{2ECD1C2E-D7D0-4A24-896A-E625B0566DB5}</Project>
       <Name>MixERP.Net.i18n</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\PetaPoco\PetaPoco.csproj">
+      <Project>{969d7960-52e2-40fc-91e5-1393b71e23b0}</Project>
+      <Name>PetaPoco</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Server Controls\Project\MixERP.Net.WebControls.AttachmentFactory\MixERP.Net.WebControls.AttachmentFactory.csproj">
       <Project>{403f308d-10e7-4c70-9360-1027ee541495}</Project>

@@ -54,9 +54,11 @@
       <Private>True</Private>
       <HintPath>..\..\..\packages\Npgsql.2.2.3\lib\net45\Npgsql.dll</HintPath>
     </Reference>
-    <Reference Include="Serilog, Version=1.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Serilog.1.4.155\lib\net45\Serilog.dll</HintPath>
+    <Reference Include="Serilog">
+      <HintPath>..\..\..\packages\Serilog.1.5.7\lib\net45\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.FullNetFx">
+      <HintPath>..\..\..\packages\Serilog.1.5.7\lib\net45\Serilog.FullNetFx.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Aliases>global</Aliases>
@@ -83,6 +85,10 @@
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.Framework\MixERP.Net.Framework.csproj">
+      <Project>{1509332F-AE98-44D9-9072-5BBC59A65FC4}</Project>
+      <Name>MixERP.Net.Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MixERP.Net.i18n\MixERP.Net.i18n.csproj">
       <Project>{2ECD1C2E-D7D0-4A24-896A-E625B0566DB5}</Project>
       <Name>MixERP.Net.i18n</Name>
@@ -92,6 +98,7 @@
     <None Include="..\..\..\mixerp.licenseheader">
       <Link>mixerp.licenseheader</Link>
     </None>
+    <None Include="app.config" />
     <None Include="Mix Open Foundation.snk" />
     <None Include="packages.config" />
   </ItemGroup>

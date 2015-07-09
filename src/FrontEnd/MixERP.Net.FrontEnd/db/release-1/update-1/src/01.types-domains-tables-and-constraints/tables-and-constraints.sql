@@ -148,7 +148,10 @@ BEGIN
         CREATE TABLE config.attachment_factory
         (
             key                 text PRIMARY KEY,
-            value               text
+            value               text,
+            audit_user_id       integer NULL REFERENCES office.users(user_id),
+            audit_ts            TIMESTAMP WITH TIME ZONE NULL 
+                                DEFAULT(NOW())
         );
 
         INSERT INTO config.attachment_factory
@@ -171,7 +174,10 @@ BEGIN
         (
             key                 text PRIMARY KEY,
             value               text,
-            description         text
+            description         text,
+            audit_user_id       integer NULL REFERENCES office.users(user_id),
+            audit_ts            TIMESTAMP WITH TIME ZONE NULL 
+                                DEFAULT(NOW())
         );
 
         INSERT INTO config.currency_layer
@@ -201,7 +207,10 @@ BEGIN
         CREATE TABLE config.db_paramters
         (
             key                 text PRIMARY KEY,
-            value               text
+            value               text,
+            audit_user_id       integer NULL REFERENCES office.users(user_id),
+            audit_ts            TIMESTAMP WITH TIME ZONE NULL 
+                                DEFAULT(NOW())
         );
 
         INSERT INTO config.db_paramters
@@ -275,7 +284,10 @@ BEGIN
         CREATE TABLE config.messaging
         (
             key                 text PRIMARY KEY,
-            value               text
+            value               text,
+            audit_user_id       integer NULL REFERENCES office.users(user_id),
+            audit_ts            TIMESTAMP WITH TIME ZONE NULL 
+                                DEFAULT(NOW())
         );
 
         INSERT INTO config.messaging
@@ -303,7 +315,10 @@ BEGIN
         (
             key                 text PRIMARY KEY,
             value               text,
-            description         text
+            description         text,
+            audit_user_id       integer NULL REFERENCES office.users(user_id),
+            audit_ts            TIMESTAMP WITH TIME ZONE NULL 
+                                DEFAULT(NOW())
         );
 
         INSERT INTO config.mixerp
@@ -325,7 +340,10 @@ BEGIN
         (
             key                 text PRIMARY KEY,
             value               text,
-            description         text
+            description         text,
+            audit_user_id       integer NULL REFERENCES office.users(user_id),
+            audit_ts            TIMESTAMP WITH TIME ZONE NULL 
+                                DEFAULT(NOW())
         );
 
         INSERT INTO config.open_exchange_rates
@@ -353,7 +371,10 @@ BEGIN
         CREATE TABLE config.scrud_factory
         (
             key                 text PRIMARY KEY,
-            value               text
+            value               text,
+            audit_user_id       integer NULL REFERENCES office.users(user_id),
+            audit_ts            TIMESTAMP WITH TIME ZONE NULL 
+                                DEFAULT(NOW())
         );
 
         INSERT INTO config.scrud_factory
@@ -412,7 +433,10 @@ BEGIN
         CREATE TABLE config.switches
         (
             key                 text PRIMARY KEY,
-            value               boolean
+            value               boolean,
+            audit_user_id       integer NULL REFERENCES office.users(user_id),
+            audit_ts            TIMESTAMP WITH TIME ZONE NULL 
+                                DEFAULT(NOW())
         );
 
         INSERT INTO config.switches

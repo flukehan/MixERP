@@ -17,12 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
@@ -30,11 +25,16 @@ using MixERP.Net.Core.Modules.Finance.Data.Helpers;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.TransactionGovernor;
 using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.Flag;
+using System;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
 {
@@ -120,7 +120,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             const string resource = "account_statement";
             const string resourceKey = "transaction_code";
 
-            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+            int userId = AppUsers.GetCurrent().View.UserId.ToInt();
 
             Flags.CreateFlag(AppUsers.GetCurrentUserDB(), userId, flagTypeId, resource, resourceKey,
                 this.GetSelectedValues());
@@ -460,7 +460,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.fromDateTextBox.ID = "FromDateTextBox";
             this.fromDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
             this.fromDateTextBox.Catalog = AppUsers.GetCurrentUserDB();
-            this.fromDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            this.fromDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
             using (HtmlGenericControl field = this.GetDateField(Titles.From, this.fromDateTextBox))
             {
@@ -494,7 +494,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.toDateTextBox.ID = "ToDateTextBox";
             this.toDateTextBox.Mode = FrequencyType.FiscalYearEndDate;
             this.toDateTextBox.Catalog = AppUsers.GetCurrentUserDB();
-            this.toDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            this.toDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
             using (HtmlGenericControl field = this.GetDateField(Titles.To, this.toDateTextBox))
             {
@@ -506,9 +506,9 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             DateTime from = Conversion.TryCastDate(this.fromDateTextBox.Text);
             DateTime to = Conversion.TryCastDate(this.toDateTextBox.Text);
-            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
+            int userId = AppUsers.GetCurrent().View.UserId.ToInt();
             string accountNumber = this.accountNumberInputText.Value;
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
             this.statementGridView.DataSource =
                 Data.Reports.AccountStatement.GetAccountStatement(AppUsers.GetCurrentUserDB(), from, to, userId,
@@ -747,7 +747,9 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                     modal.Controls.Add(closeIcon);
                 }
 
-                using (HtmlGenericControl header = HtmlControlHelper.GetModalHeader(Titles.Reconcile, "circle notched icon"))
+                using (
+                    HtmlGenericControl header = HtmlControlHelper.GetModalHeader(Titles.Reconcile, "circle notched icon")
+                    )
                 {
                     modal.Controls.Add(header);
                 }

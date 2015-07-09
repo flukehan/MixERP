@@ -17,18 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.ApplicationState;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Core.Modules.Finance.Data.Helpers;
+using MixERP.Net.Framework;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.WebControls.Common.Helpers;
+using Serilog;
 using System;
 using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Models;
-using MixERP.Net.Core.Modules.Finance.Data.Helpers;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.Common.Helpers;
-using Serilog;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
@@ -43,9 +43,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             try
             {
-                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-                long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
+                int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
+                int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+                long loginId = AppUsers.GetCurrent().View.LoginId.ToLong();
                 const int verificationStatusId = 2;
 
                 Transaction.Verify(AppUsers.GetCurrentUserDB(), tranId, officeId, userId, loginId, verificationStatusId,
@@ -62,7 +62,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod]
         public decimal GetExchangeRate(string currencyCode)
         {
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
             decimal exchangeRate = Transaction.GetExchangeRate(AppUsers.GetCurrentUserDB(), officeId, currencyCode);
 
             return exchangeRate;
@@ -73,9 +73,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             try
             {
-                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-                long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
+                int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
+                int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+                long loginId = AppUsers.GetCurrent().View.LoginId.ToLong();
                 const int verificationStatusId = -3;
 
                 Transaction.Verify(AppUsers.GetCurrentUserDB(), tranId, officeId, userId, loginId, verificationStatusId,
@@ -94,9 +94,9 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             DateTime bookDate = new DateTime(year, month, day);
             string catalog = AppUsers.GetCurrentUserDB();
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
-            ApplicationDateModel model = DatePersister.GetApplicationDates(catalog, officeId);
+            FrequencyDates model = DatePersister.GetFrequencyDates(catalog, officeId);
 
 
             if (bookDate > model.FiscalYearEndDate)

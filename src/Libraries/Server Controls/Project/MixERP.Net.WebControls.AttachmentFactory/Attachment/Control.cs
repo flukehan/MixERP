@@ -6,6 +6,11 @@ namespace MixERP.Net.WebControls.AttachmentFactory
     [ToolboxData("<{0}:Attachment runat=server></{0}:DateTextBox>")]
     public sealed partial class Attachment : CompositeControl
     {
+        public Attachment(string catalog)
+        {
+            this.Catalog = catalog;
+        }
+
         protected override void CreateChildControls()
         {
             this.placeHolder = new PlaceHolder();

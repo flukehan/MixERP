@@ -17,18 +17,17 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common;
+using MixERP.Net.Framework;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.i18n.Resources;
+using Serilog;
 using System.ComponentModel;
 using System.Threading;
 using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.i18n.Resources;
-using Serilog;
 
 namespace MixERP.Net.FrontEnd.Services
 {
@@ -39,7 +38,8 @@ namespace MixERP.Net.FrontEnd.Services
     public class User : WebService
     {
         [WebMethod(EnableSession = true)]
-        public string Authenticate(string catalog, string username, string password, bool rememberMe, string language, int branchId)
+        public string Authenticate(string catalog, string username, string password, bool rememberMe, string language,
+            int branchId)
         {
             Thread.Sleep(this.GetDelay());
 
@@ -50,7 +50,6 @@ namespace MixERP.Net.FrontEnd.Services
                 return Titles.AccessIsDenied;
             }
 
-            CatalogHelper.ValidateCatalog(catalog);
             return this.Login(catalog, branchId, username, password, language, rememberMe, challenge, this.Context);
         }
 
@@ -60,19 +59,22 @@ namespace MixERP.Net.FrontEnd.Services
 
             if (attempts > 3)
             {
-                return attempts * 10000;
+                return attempts*10000;
             }
 
             return 1000;
         }
 
-        private string Login(string catalog, int officeId, string userName, string password, string culture, bool rememberMe, string challenge, HttpContext context)
+        private string Login(string catalog, int officeId, string userName, string password, string culture,
+            bool rememberMe, string challenge, HttpContext context)
         {
             try
             {
-                long globalLoginId = Data.Office.User.SignIn(catalog, officeId, userName, password, culture, rememberMe, challenge, context);
+                long globalLoginId = Data.Office.User.SignIn(catalog, officeId, userName, password, culture, rememberMe,
+                    challenge, context);
 
-                Log.Information("{UserName} signed in to office : #{OfficeId} from {IP}.", userName, officeId, context.Request.ServerVariables["REMOTE_ADDR"]);
+                Log.Information("{UserName} signed in to office : #{OfficeId} from {IP}.", userName, officeId,
+                    context.Request.ServerVariables["REMOTE_ADDR"]);
 
                 if (globalLoginId > 0)
                 {
@@ -88,7 +90,8 @@ namespace MixERP.Net.FrontEnd.Services
             }
             catch (MixERPException ex)
             {
-                Log.Warning("{UserName} could not sign in to office : #{OfficeId} from {IP}.", userName, officeId, context.Request.ServerVariables["REMOTE_ADDR"]);
+                Log.Warning("{UserName} could not sign in to office : #{OfficeId} from {IP}.", userName, officeId,
+                    context.Request.ServerVariables["REMOTE_ADDR"]);
 
                 this.LogInvalidSignIn();
                 return ex.Message;

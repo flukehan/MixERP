@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.StockAdjustmentFactory;
+using System;
 
 namespace MixERP.Net.Core.Modules.Inventory.Entry
 {
@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Entry
                 form.ValidateSides = false;
                 form.HideSides = true;
                 form.Catalog = AppUsers.GetCurrentUserDB();
-                form.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                form.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
                 this.Placeholder1.Controls.Add(form);
             }

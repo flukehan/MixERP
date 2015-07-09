@@ -17,16 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using MixERP.Net.Common.Domains;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities;
+using MixERP.Net.Framework.Controls;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
+using System;
+using System.Collections.Generic;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Policy
 {
@@ -41,7 +40,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         {
             using (Scrud scrud = new Scrud())
             {
-                bool denyToNonAdmins = !AppUsers.GetCurrentLogin().View.IsAdmin.ToBool();
+                bool denyToNonAdmins = !AppUsers.GetCurrent().View.IsAdmin.ToBool();
 
                 scrud.DenyAdd = denyToNonAdmins;
                 scrud.DenyEdit = denyToNonAdmins;
@@ -64,18 +63,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
 
                 scrud.Text = Titles.AutoVerificationPolicy;
 
-                this.AddScrudCustomValidatorErrorMessages();
 
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-        }
-
-        private void AddScrudCustomValidatorErrorMessages()
-        {
-            string javascript = JSUtility.GetVar("dateErrorMessageLocalized", Warnings.DateErrorMessage);
-
-            Common.PageUtility.RegisterJavascript("AutoVerification_ScrudCustomValidatorMessages", javascript, this.Page,
-                true);
         }
 
         private static string GetDisplayFields()

@@ -4453,6 +4453,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Key
+		/// </summary>
+		public static string key 
+		{
+			get
+			{
+				return Get("key");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Last Analyze On
 		/// </summary>
 		public static string last_analyze 
@@ -7540,6 +7551,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Attachment Parameters
+		/// </summary>
+		public static string AttachmentParameters 
+		{
+			get
+			{
+				return Get("AttachmentParameters");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Attachments (+)
 		/// </summary>
 		public static string AttachmentsPlus 
@@ -8343,6 +8365,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Currencylayer Parameters
+		/// </summary>
+		public static string CurrencylayerParameters 
+		{
+			get
+			{
+				return Get("CurrencylayerParameters");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Current Book Date
 		/// </summary>
 		public static string CurrentBookDate 
@@ -8449,6 +8482,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("DatabaseBackups");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Database Parameters
+		/// </summary>
+		public static string DatabaseParameters 
+		{
+			get
+			{
+				return Get("DatabaseParameters");
 			}
 		}
 		
@@ -9938,6 +9982,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Messaging Parameters
+		/// </summary>
+		public static string MessagingParameters 
+		{
+			get
+			{
+				return Get("MessagingParameters");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for MixERP Documentation
 		/// </summary>
 		public static string MixERPDocumentation 
@@ -9967,6 +10022,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("MixERPOnFacebook");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for MixERP Parameters
+		/// </summary>
+		public static string MixERPParameters 
+		{
+			get
+			{
+				return Get("MixERPParameters");
 			}
 		}
 		
@@ -10187,6 +10253,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("OnlyNumbersAllowed");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for OpenExchangeRates Parameters
+		/// </summary>
+		public static string OpenExchangeRatesParameters 
+		{
+			get
+			{
+				return Get("OpenExchangeRatesParameters");
 			}
 		}
 		
@@ -11346,6 +11423,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for ScrudFactory Parameters
+		/// </summary>
+		public static string ScrudFactoryParameters 
+		{
+			get
+			{
+				return Get("ScrudFactoryParameters");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Select
 		/// </summary>
 		public static string Select 
@@ -11881,6 +11969,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("Support");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Switches
+		/// </summary>
+		public static string Switches 
+		{
+			get
+			{
+				return Get("Switches");
 			}
 		}
 		

@@ -31,12 +31,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var lateFeePostingFrequency = parseInt2(lateFeePostingFrequencyIdDropdownlist.getSelectedValue());
 
         if (!dueFrequency && dueDays === 0 || dueFrequency && dueDays > 0) {
-            displayMessage(window.dueFrequencyErrorMessageLocalized);
+            displayMessage(Resources.Warnings.DueFrequencyErrorMessage());
             return false;
         };
         
         if (!lateFee && lateFeePostingFrequency || lateFee && !lateFeePostingFrequency) {
-           displayMessage(window.lateFeeErrorMessageLocalized);
+           displayMessage(Resources.Warnings.LateFeeErrorMessage());
            return false;
        };
         return true;

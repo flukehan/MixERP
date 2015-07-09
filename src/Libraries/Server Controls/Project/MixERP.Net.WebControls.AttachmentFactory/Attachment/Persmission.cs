@@ -1,6 +1,6 @@
-﻿using System;
+﻿using MixERP.Net.Common.Helpers;
+using System;
 using System.Globalization;
-using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.WebControls.AttachmentFactory
 {
@@ -8,7 +8,7 @@ namespace MixERP.Net.WebControls.AttachmentFactory
     {
         private void CheckPermission()
         {
-            var folder = Helpers.ConfigurationHelper.GetAttachmentsDirectory();
+            var folder = Helpers.ConfigurationHelper.GetAttachmentsDirectory(this.Catalog);
             var writable = FileSystemHelper.IsDirectoryWritable(folder);
 
             if (!writable)

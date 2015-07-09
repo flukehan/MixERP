@@ -81,6 +81,14 @@
       <Project>{bde918b1-dd9b-41c9-a41f-f3ddec18b6d8}</Project>
       <Name>MixERP.Net.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Logic\MixERP.Net.Framework\MixERP.Net.Framework.csproj">
+      <Project>{1509332F-AE98-44D9-9072-5BBC59A65FC4}</Project>
+      <Name>MixERP.Net.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Logic\PetaPoco\PetaPoco.csproj">
+      <Project>{969d7960-52e2-40fc-91e5-1393b71e23b0}</Project>
+      <Name>PetaPoco</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\mixerp.licenseheader">

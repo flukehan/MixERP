@@ -4,5 +4,6 @@
     {
         public bool ShowSaveButton { get; set; }
         public int Count { get; set; }
+        public string Catalog { get; set; }
     }
 }

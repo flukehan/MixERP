@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MixERP.Net.WebControls.Common;
+using System;
 using System.Security.Permissions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.WebControls.StockAdjustmentFactory
 {

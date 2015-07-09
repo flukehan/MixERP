@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.Framework.Contracts.Currency;
 
 namespace MixERP.Net.CurrencyConversion.Currencylayer
 {

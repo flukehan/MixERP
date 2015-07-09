@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Messaging.Email.Helpers;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +26,6 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading;
-using MixERP.Net.Messaging.Email.Helpers;
-using Serilog;
 
 namespace MixERP.Net.Messaging.Email
 {

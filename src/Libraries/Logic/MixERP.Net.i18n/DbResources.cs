@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Npgsql;
+using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Threading;
-using Npgsql;
 
 namespace MixERP.Net.i18n
 {
@@ -34,16 +33,50 @@ namespace MixERP.Net.i18n
             return resources;
         }
 
-
         internal static IEnumerable<LocalizedResource> GetLocalizationTable(string language)
         {
-            const string sql = "SELECT * FROM localization.get_localization_table(@0);";
-            return Factory.Get<LocalizedResource>(string.Empty, sql, language);
-        }        
+            List<LocalizedResource> resources = new List<LocalizedResource>();
+            const string sql = "SELECT * FROM localization.get_localization_table(@Language);";
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(ConnectionStringHelper.GetConnectionString()))
+            {
+                using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Language", language);
+
+                    using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
+                    {
+                        using (DataTable dataTable = new DataTable())
+                        {
+                            dataTable.Locale = Thread.CurrentThread.CurrentCulture;
+                            adapter.Fill(dataTable);
+
+                            if (dataTable.Rows.Count > 0)
+                            {
+                                foreach (DataRow row in dataTable.Rows)
+                                {
+                                    LocalizedResource resource = new LocalizedResource();
+
+                                    resource.Id = long.Parse(row["id"].ToString());
+                                    resource.ResourceClass = row["resource_class"].ToString();
+                                    resource.Key = row["key"].ToString();
+                                    resource.Original = row["original"].ToString();
+                                    resource.Translated = row["translated"].ToString();
+
+                                    resources.Add(resource);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return resources;
+        }
 
         private static DataTable GetDataTable(NpgsqlCommand command)
         {
-            string connectionString = ConfigurationHelper.GetConnectionString();
+            string connectionString = ConnectionStringHelper.GetConnectionString();
 
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
             {

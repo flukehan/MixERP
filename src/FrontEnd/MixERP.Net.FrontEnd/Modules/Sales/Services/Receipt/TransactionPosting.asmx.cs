@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Web.Services;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using Serilog;
+using System;
+using System.Web.Services;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 {
@@ -93,9 +93,9 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
             int costCenterId, int cashRepositoryId, DateTime? postedDate, long bankAccountId, int paymentCardId,
             string bankInstrumentCode, string bankTransactionCode)
         {
-            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
+            int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
+            long loginId = AppUsers.GetCurrent().View.LoginId.ToLong();
 
             long transactionMasterID = Data.Transactions.Receipt.PostTransaction(AppUsers.GetCurrentUserDB(), userId,
                 officeId, loginId, partyCode, currencyCode, amount, debitExchangeRate, creditExchangeRate,

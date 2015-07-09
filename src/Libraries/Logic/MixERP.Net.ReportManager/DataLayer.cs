@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using MixERP.Net.Common.Helpers;
+﻿using MixERP.Net.Common.Helpers;
 using MixERP.Net.DbFactory;
 using Npgsql;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MixERP.Net.ReportManager
 {

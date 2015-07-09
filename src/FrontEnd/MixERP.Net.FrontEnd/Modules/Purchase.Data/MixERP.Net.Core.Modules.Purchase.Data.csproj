@@ -97,6 +97,10 @@
       <Project>{0aacf4db-8332-4c4b-96df-2bf6aea68473}</Project>
       <Name>MixERP.Net.TransactionGovernor</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\PetaPoco\PetaPoco.csproj">
+      <Project>{969d7960-52e2-40fc-91e5-1393b71e23b0}</Project>
+      <Name>PetaPoco</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

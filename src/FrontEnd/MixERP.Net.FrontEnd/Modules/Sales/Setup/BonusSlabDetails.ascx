@@ -29,7 +29,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var to = parseFloat2(amountToTextBox.val());
 
         if (to <= from) {
-            displayMessage(window.compareAmountErrorMessageLocalized);
+            displayMessage(Resources.Warnings.CompareAmountErrorMessage());
             return false;
         };
 

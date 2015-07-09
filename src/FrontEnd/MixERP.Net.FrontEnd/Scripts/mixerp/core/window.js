@@ -1,3 +1,3 @@
 var confirmAction = function () {
-    return confirm(areYouSureLocalized);
+    return confirm(Resources.Questions.AreYouSure());
 };

@@ -25,18 +25,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     }
 </style>
 <script type="text/javascript">
-    if (typeof perviousPeriodLocalized === "undefined") {
-        perviousPeriodLocalized = "Previous Period";
-    };
-
-    if (typeof currentPeriodLocalized === "undefined") {
-        currentPeriodLocalized = "Current Period";
-    };
-
-    if (typeof closingLocalized === "undefined") {
-        closingLocalized = "Closing";
-    };
-
     var grid = $("#TrialBalanceGridView");
     var compactCheckBox = $("#CompactCheckBox");
     var zeroBalanceCheckBox = $("#ZeroBalanceCheckBox");
@@ -47,7 +35,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     var changeSideWhenNegativeHidden = $("#ChangeSideWhenNegativeHidden");
 
     $(document).ready(function () {
-        var html = "<tr><th></th><th></th><th colspan='2'>" + perviousPeriodLocalized + "</th><th colspan='2'>" + currentPeriodLocalized + "</th><th colspan='2'>" + closingLocalized + "</th></tr>";
+        var html = "<tr><th></th><th></th><th colspan='2'>" + Resources.Titles.PreviousPeriod() + "</th><th colspan='2'>" + Resources.Titles.CurrentPeriod() + "</th><th colspan='2'>" + Resources.Titles.ClosingBalance() + "</th></tr>";
         var thead = grid.find("thead");
         thead.prepend(html);
 

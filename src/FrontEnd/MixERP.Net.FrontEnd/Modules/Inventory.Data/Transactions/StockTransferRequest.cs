@@ -1,4 +1,9 @@
-﻿/********************************************************************************
+﻿using MixERP.Net.Common;
+using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
+using MixERP.Net.DbFactory;
+using MixERP.Net.Entities.Models.Transactions;
+using Npgsql;
+/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -20,11 +25,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using MixERP.Net.Common;
-using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
-using MixERP.Net.DbFactory;
-using MixERP.Net.Entities.Models.Transactions;
-using Npgsql;
 
 namespace MixERP.Net.Core.Modules.Inventory.Data.Transactions
 {

@@ -17,17 +17,17 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Models.Transactions;
+using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
+using Serilog;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Entities.Core;
-using MixERP.Net.Entities.Models.Transactions;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.WebControls.StockTransactionFactory.Helpers;
-using Serilog;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Entry
 {
@@ -55,9 +55,9 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Entry
                     }
                 }
 
-                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-                int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-                long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
+                int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
+                int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+                long loginId = AppUsers.GetCurrent().View.LoginId.ToLong();
 
                 return Data.Transactions.Quotation.Add(AppUsers.GetCurrentUserDB(), officeId, userId, loginId, valueDate, partyCode, priceTypeId, details, referenceNumber, statementReference, tranIds, attachments, nonTaxable, salespersonId, shipperId, shippingAddressCode, storeId);
             }

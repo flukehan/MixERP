@@ -17,16 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.Entities.Transactions;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.WebControls.Common;
+using System;
+using System.Collections.Generic;
 
 namespace MixERP.Net.Core.Modules.Inventory
 {
@@ -34,8 +34,8 @@ namespace MixERP.Net.Core.Modules.Inventory
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            this.DateFromDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            this.DateToDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            this.DateFromDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
+            this.DateToDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
             this.AddGridView();
             this.BindGridView();
         }
@@ -63,9 +63,9 @@ namespace MixERP.Net.Core.Modules.Inventory
         {
             string catalog = AppUsers.GetCurrentUserDB();
 
-            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-            long loginId = AppUsers.GetCurrentLogin().View.LoginId.ToLong();
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+            long loginId = AppUsers.GetCurrent().View.LoginId.ToLong();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
             DateTime from = Conversion.TryCastDate(this.DateFromDateTextBox.Text);
             DateTime to = Conversion.TryCastDate(this.DateToDateTextBox.Text);

@@ -17,15 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.ApplicationState;
+using MixERP.Net.Common.jQueryHelper;
+using MixERP.Net.Entities;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.WebControls.Common.Helpers;
 using System;
 using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common.jQueryHelper;
-using MixERP.Net.Common.Models;
-using MixERP.Net.Entities;
-using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.Common.Helpers;
 
 namespace MixERP.Net.WebControls.Common
 {
@@ -162,7 +162,7 @@ namespace MixERP.Net.WebControls.Common
                 return;
             }
 
-            ApplicationDateModel model = DatePersister.GetApplicationDates(this.Catalog, this.officeId);
+            FrequencyDates model = DatePersister.GetFrequencyDates(this.Catalog, this.officeId);
 
             DateTime date = model.Today;
 

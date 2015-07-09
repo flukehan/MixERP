@@ -18,11 +18,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.i18n;
 using System;
 using System.Threading;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.WebControls.ReportEngine
 {
@@ -89,7 +90,7 @@ namespace MixERP.Net.WebControls.ReportEngine
 
                     string className = ConfigurationHelper.GetReportParameter("ResourceClassName");
 
-                    string localized = LocalizationHelper.GetResourceString(className, cellText);
+                    string localized = ResourceManager.GetString(className, cellText);
 
                     cellText = localized;
                     e.Row.Cells[i].Text = cellText;

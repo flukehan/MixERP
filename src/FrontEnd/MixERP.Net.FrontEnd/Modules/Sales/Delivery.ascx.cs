@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.StockTransactionViewFactory;
+using System;
 
 namespace MixERP.Net.Core.Modules.Sales
 {
@@ -46,8 +46,8 @@ namespace MixERP.Net.Core.Modules.Sales
                 view.DbTableName = "transactions.transaction_master";
                 view.PrimaryKey = "transaction_master_id";
 
-                view.UserId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-                view.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                view.UserId = AppUsers.GetCurrent().View.UserId.ToInt();
+                view.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
                 view.Catalog = AppUsers.GetCurrentUserDB();
 
                 this.Placeholder1.Controls.Add(view);

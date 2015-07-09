@@ -17,19 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.BackOffice.Data.Admin;
+using MixERP.Net.Framework;
+using MixERP.Net.Framework.Controls;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.i18n.Resources;
+using Serilog;
 using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Domains;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Data.Admin;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.i18n.Resources;
-using Serilog;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Admin
 {
@@ -37,10 +37,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
     {
         public override AccessLevel AccessLevel
         {
-            get
-            {
-                return AccessLevel.LocalhostAdmin;
-            }
+            get { return AccessLevel.LocalhostAdmin; }
         }
 
         public override void OnControlLoad(object sender, EventArgs e)
@@ -135,7 +132,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
         {
             using (HtmlGenericControl field = HtmlControlHelper.GetField())
             {
-                using (HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.EnterNewPassword, "PasswordInputPassword"))
+                using (
+                    HtmlGenericControl label = HtmlControlHelper.GetLabel(Titles.EnterNewPassword,
+                        "PasswordInputPassword"))
                 {
                     field.Controls.Add(label);
                 }
@@ -182,7 +181,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Admin
             {
                 User user = new User();
 
-                user.SetNewPassword(AppUsers.GetCurrentUserDB(), AppUsers.GetCurrentLogin().View.UserId.ToInt(), username, password);
+                user.SetNewPassword(AppUsers.GetCurrentUserDB(), AppUsers.GetCurrent().View.UserId.ToInt(), username,
+                    password);
 
                 this.messageLabel.InnerText = Titles.PasswordUpdated;
             }

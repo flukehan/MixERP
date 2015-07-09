@@ -1,3 +1,5 @@
+using MixERP.Net.Common;
+using MixERP.Net.Core.Modules.BackOffice.Data;
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
@@ -21,8 +23,6 @@ using System.Linq;
 using System.Text;
 using System.Web.Hosting;
 using System.Xml;
-using MixERP.Net.Common;
-using MixERP.Net.Core.Modules.BackOffice.Data;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Models
 {

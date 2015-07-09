@@ -17,18 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.Common;
+using System;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
 {
@@ -179,7 +179,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.fromDateTextBox.ID = "FromDateTextBox";
                 this.fromDateTextBox.Mode = FrequencyType.FiscalYearStartDate;
                 this.fromDateTextBox.Catalog = AppUsers.GetCurrentUserDB();
-                this.fromDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                this.fromDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.fromDateTextBox);
 
@@ -224,7 +224,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.toDateTextBox.ID = "ToDateTextBox";
                 this.toDateTextBox.Mode = FrequencyType.FiscalYearEndDate;
                 this.toDateTextBox.Catalog = AppUsers.GetCurrentUserDB();
-                this.toDateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                this.toDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.toDateTextBox);
 
@@ -240,8 +240,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
             bool compact = this.ShowCompact();
 
-            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
             this.plAccountGridView.DataSource = Data.Reports.ProfitAndLossAccount.GetPLAccount(AppUsers.GetCurrentUserDB(), from, to, userId, officeId, compact, factor);
             this.plAccountGridView.DataBind();

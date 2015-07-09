@@ -17,18 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Framework;
+using MixERP.Net.i18n;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Web;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {
@@ -106,7 +106,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
 
             string logo = ConfigurationHelper.GetReportParameter("LogoPath");
             expression = expression.Replace("{LogoPath}", PageUtility.GetCurrentDomainName() + PageUtility.ResolveUrl(logo)); //Or else logo will not be exported into excel.
-            expression = expression.Replace("{PrintDate}", DateTime.Now.ToString(LocalizationHelper.GetCurrentUICulture()));
+            expression = expression.Replace("{PrintDate}", DateTime.Now.ToString(CurrentCulture.GetCurrentUICulture()));
 
             foreach (var match in Regex.Matches(expression, "{.*?}"))
             {
@@ -129,7 +129,7 @@ namespace MixERP.Net.WebControls.ReportEngine.Helpers
 
                     string key = resource[2];
 
-                    expression = expression.Replace(word, LocalizationHelper.GetResourceString(resource[1], key));
+                    expression = expression.Replace(word, ResourceManager.GetString(resource[1], key));
                 }
                 else if (word.StartsWith("{DataSource", StringComparison.OrdinalIgnoreCase) && word.ToLower(CultureInfo.InvariantCulture).Contains("runningtotalfieldvalue"))
                 {

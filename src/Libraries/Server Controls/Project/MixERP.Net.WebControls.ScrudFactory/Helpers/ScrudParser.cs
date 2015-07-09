@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Linq;
 using MixERP.Net.Common;
+using System.Linq;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Helpers
 {

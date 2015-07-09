@@ -8,7 +8,6 @@
 
 $(document).ready(function () {
     loadDatePickerLocale();
-    loadResources();
 });
 
 function loadDatePickerLocale() {
@@ -24,13 +23,6 @@ function loadDatePickerLocale() {
 
     if (window.datepickerLanguagePath) {
         addScriptReference(window.datepickerLanguagePath);
-    };
-};
-
-function loadResources() {
-    if (window.language) {
-        var url = sprintf("/Resources.js?culture=%s", window.language);
-        addScriptReference(url);
     };
 };
 

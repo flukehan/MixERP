@@ -17,13 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Resources;
 using MixERP.Net.Common;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Helpers;
+using MixERP.Net.Framework;
 using MixERP.Net.i18n.Resources;
 using Serilog;
+using System.Resources;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {

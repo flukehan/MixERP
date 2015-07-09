@@ -17,16 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Helpers;
 using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.StockTransactionViewFactory.Data.Helpers;
 using MixERP.Net.WebControls.StockTransactionViewFactory.Helpers;
+using System;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.WebControls.StockTransactionViewFactory
 {

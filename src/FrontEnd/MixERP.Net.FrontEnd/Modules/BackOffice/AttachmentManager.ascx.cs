@@ -17,12 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.AttachmentFactory;
+using System;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
@@ -34,26 +33,16 @@ namespace MixERP.Net.Core.Modules.BackOffice
             {
                 this.TitleLiteral.Text = Titles.UploadAttachments;
 
-                using (Attachment attachment = new Attachment())
+                using (Attachment attachment = new Attachment(AppUsers.GetCurrentUserDB()))
                 {
                     attachment.ShowSaveButton = true;
                     this.Placeholder1.Controls.Add(attachment);
                 }
             }
 
-            this.RegisterJavascript();
             this.SubTitleLiteral.Text = Titles.ViewAttachments;
             this.OKLiteral.Text = Titles.OK;
             this.SetOverridePath();
-        }
-
-        private void RegisterJavascript()
-        {
-            string script = JSUtility.GetVar("viewLocalized", Titles.View);
-            script += JSUtility.GetVar("downloadLocalized", Titles.Download);
-            script += JSUtility.GetVar("deleteLocalized", Titles.Delete);
-
-            PageUtility.RegisterJavascript("AttachmentManager_Localized", script, this.Page, true);
         }
 
         private void SetOverridePath()

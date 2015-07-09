@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
 using System;
 using System.Net.Mail;
 using System.Security;
 using System.Web.Hosting;
-using MixERP.Net.Common;
-using MixERP.Net.Entities;
 
 namespace MixERP.Net.Messaging.Email.Helpers
 {

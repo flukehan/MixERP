@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Xml;
 using Serilog;
+using System.Xml;
 
 namespace MixERP.Net.WebControls.ReportEngine.Helpers
 {

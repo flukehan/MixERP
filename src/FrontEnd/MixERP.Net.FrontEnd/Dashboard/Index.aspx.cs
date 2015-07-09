@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Framework.Controls;
+using MixERP.Net.FrontEnd.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Entities.Core;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.FrontEnd.Dashboard
 {
@@ -34,7 +34,6 @@ namespace MixERP.Net.FrontEnd.Dashboard
         {
             this.IsLandingPage = true;
         }
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -59,13 +58,14 @@ namespace MixERP.Net.FrontEnd.Dashboard
                 return;
             }
 
-            var groups = widgetModels.OrderBy(x => x.RowNumber).ThenBy(x => x.ColumnNumber).GroupBy(x => new {x.RowNumber});
+            var groups =
+                widgetModels.OrderBy(x => x.RowNumber).ThenBy(x => x.ColumnNumber).GroupBy(x => new {x.RowNumber});
 
             foreach (var group in groups)
             {
                 foreach (Widget item in group)
                 {
-                    using (MixERPWidgetBase widget = page.LoadControl(item.WidgetSource) as MixERPWidgetBase)
+                    using (MixERPWidget widget = page.LoadControl(item.WidgetSource) as MixERPWidget)
                     {
                         if (widget != null)
                         {

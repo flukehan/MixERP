@@ -17,26 +17,32 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Framework;
+using MixERP.Net.i18n.Resources;
 using System.Collections.Generic;
 using System.Linq;
-using MixERP.Net.Common.Base;
-using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Common.Helpers
 {
     public static class CatalogHelper
     {
-        public static bool ValidateCatalog(string catalog)
+        public static void ValidateCatalog(string catalog)
         {
+            if (string.IsNullOrWhiteSpace(catalog))
+            {
+                return;
+            }
+
             string catalogs = ConfigurationHelper.GetDbServerParameter("Catalogs");
+            string meta = ConfigurationHelper.GetDbServerParameter("MetaDatabase");
+
             List<string> list = catalogs.Split(',').Select(p => p.Trim()).ToList();
+            list.Add(meta);
 
             if (!list.Contains(catalog))
             {
                 throw new MixERPException(Titles.AccessIsDenied);
             }
-
-            return true;
         }
     }
 }

@@ -17,18 +17,17 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using MixERP.Net.Common;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.Core.Modules.Finance.Data;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
+using System;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
@@ -49,19 +48,11 @@ namespace MixERP.Net.Core.Modules.Finance
             this.CreateProgress(this.Placeholder1);
             this.CreateEODConsole(this.Placeholder1);
             this.CreateList(this.Placeholder1);
-            this.RegisterJavascript();
-        }
-
-        private void RegisterJavascript()
-        {
-            string script = JSUtility.GetVar("accessIsDeniedLocalized", Warnings.AccessIsDenied);
-
-            PageUtility.RegisterJavascript("EODOperation_Vars", script, this.Page, true);
         }
 
         private void InitializeEODStatus()
         {
-            this.officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            this.officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
             status = Data.EODOperation.GetStatus(AppUsers.GetCurrentUserDB(), officeId);
         }
 

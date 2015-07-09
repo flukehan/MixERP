@@ -72,7 +72,7 @@ goButton.click(function () {
     partyCode = partyDropDownList.getSelectedValue();
 
     if (isNullOrWhiteSpace(partyCode)) {
-        $.notify(nothingSelectedLocalized, "error");
+        $.notify(Resources.Titles.NothingSelected(), "error");
         return;
     };
 
@@ -116,7 +116,7 @@ goButton.click(function () {
         sSTNumberSpan.html(partyView.SSTNumber);
         cSTNumberSpan.html(partyView.CSTNumber);
         creditAllowedSpan.html(localizeBool(partyView.AllowCredit));
-        maxCreditPeriodSpan.html(partyView.MaximumCreditPeriod + "&nbsp;" + daysLowerCaseLocalized);
+        maxCreditPeriodSpan.html(partyView.MaximumCreditPeriod + "&nbsp;" + Resources.Labels.DaysLowerCase());
         maxCreditAmountSpan.html(getFormattedCurrency(partyCurrencySymbol, partyView.MaximumCreditAmount));
 
         gLHeadSpan.html(partyView.GLHead);
@@ -206,10 +206,10 @@ function getFormattedCurrency(symbol, value) {
 
 function localizeBool(val) {
     if (val) {
-        return yesLocalized;
+        return Resources.Titles.Yes();
     };
 
-    return noLocalized;
+    return Resources.Titles.No();
 };
 
 function getPartyView(partyCode) {

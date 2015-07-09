@@ -17,18 +17,19 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.WebControls.ReportEngine.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.FrontEnd.Controls;
-using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.ReportEngine.Helpers;
 
 namespace MixERP.Net.FrontEnd.Reports
 {
@@ -99,11 +100,9 @@ namespace MixERP.Net.FrontEnd.Reports
                 using (TextBox textBox = new TextBox())
                 {
                     textBox.ID = parameter.Key.Replace("@", "") + "_text_box";
+                    string resource = ResourceManager.GetString(ConfigurationHelper.GetReportParameter("ResourceClassName"), parameter.Key.Replace("@", ""));
 
-                    string label = "<label for='" + textBox.ID + "'>" +
-                                   LocalizationHelper.GetDefaultAssemblyResourceString(
-                                       ConfigurationHelper.GetReportParameter("ResourceClassName"),
-                                       parameter.Key.Replace("@", "")) + "</label>";
+                    string label = "<label for='" + textBox.ID + "'>" + resource + "</label>";
 
                     if (parameter.Value.Equals("Date"))
                     {

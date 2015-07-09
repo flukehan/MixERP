@@ -17,18 +17,17 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Framework;
+using MixERP.Net.i18n;
+using MixERP.Net.i18n.Resources;
+using Npgsql;
+using Serilog;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.i18n.Resources;
-using Npgsql;
-using Serilog;
 
 namespace MixERP.Net.DbFactory
 {
@@ -397,7 +396,7 @@ namespace MixERP.Net.DbFactory
 
                 if (!match)
                 {
-                    throw new InvalidOperationException(string.Format(LocalizationHelper.GetCurrentUICulture(),
+                    throw new InvalidOperationException(string.Format(CurrentCulture.GetCurrentUICulture(),
                         Warnings.InvalidParameterName, npgsqlParameter.ParameterName));
                 }
             }

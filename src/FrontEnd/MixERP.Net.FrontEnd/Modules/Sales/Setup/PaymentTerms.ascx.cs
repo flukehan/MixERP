@@ -17,14 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
+using System;
+using System.Collections.Generic;
 
 namespace MixERP.Net.Core.Modules.Sales.Setup
 {
@@ -44,19 +43,8 @@ namespace MixERP.Net.Core.Modules.Sales.Setup
                 scrud.DisplayFields = GetDisplayFields();
                 scrud.DisplayViews = GetDisplayViews();
 
-                this.AddScrudCustomValidatorErrorMessages();
-
                 this.ScrudPlaceholder.Controls.Add(scrud);
             }
-        }
-
-        private void AddScrudCustomValidatorErrorMessages()
-        {
-            string javascript = JSUtility.GetVar("dueFrequencyErrorMessageLocalized", Warnings.DueFrequencyErrorMessage);
-            javascript += JSUtility.GetVar("lateFeeErrorMessageLocalized", Warnings.LateFeeErrorMessage);
-
-            Common.PageUtility.RegisterJavascript("PaymentTerm_ScrudCustomValidatorErrorMessages", javascript, this.Page,
-                true);
         }
 
         private static string GetDisplayFields()

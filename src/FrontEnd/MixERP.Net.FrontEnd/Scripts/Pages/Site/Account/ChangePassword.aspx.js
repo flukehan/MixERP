@@ -5,7 +5,7 @@
             rules: [
                 {
                     type: 'empty',
-                    prompt: enterCurrentPasswordLocalized
+                    prompt: Resources.Warnings.PleaseEnterCurrentPassword()
                 }
             ]
         },
@@ -14,11 +14,11 @@
             rules: [
                 {
                     type: 'not_matches[PasswordInputPassword]',
-                    prompt: newPasswordCannotBeOldPasswordLocalized
+                    prompt: Resources.Warnings.NewPasswordCannotBeOldPassword()
                 },
                 {
                     type: 'empty',
-                    prompt: enterNewPasswordLocalized
+                    prompt: Resources.Warnings.PleaseEnterNewPassword()
                 }
             ]
         },
@@ -27,7 +27,7 @@
             rules: [
                 {
                     type: 'match[NewPasswordInputPassword]',
-                    prompt: confirmationPasswordDoesNotMatchLocalized
+                    prompt: Resources.Warnings.ConfirmationPasswordDoesNotMatch()
                 }
             ]
         }

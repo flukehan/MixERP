@@ -70,6 +70,10 @@
       <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>
       <Name>MixERP.Net.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.Framework\MixERP.Net.Framework.csproj">
+      <Project>{1509332F-AE98-44D9-9072-5BBC59A65FC4}</Project>
+      <Name>MixERP.Net.Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MixERP.Net.i18n\MixERP.Net.i18n.csproj">
       <Project>{2ECD1C2E-D7D0-4A24-896A-E625B0566DB5}</Project>
       <Name>MixERP.Net.i18n</Name>

@@ -32,13 +32,13 @@ var scrudConfirmAction = function () {
     var retVal = false;
     var selectedItemValue;
 
-    var confirmed = confirm(scrudAreYouSureLocalized);
+    var confirmed = confirm(Resources.Questions.AreYouSure());
 
     if (confirmed) {
         selectedItemValue = scrudGetSelectedRadioValue();
 
         if (selectedItemValue == undefined) {
-            alert(scrudNothingSelectedLocalized);
+            alert(Resources.Titles.NothingSelected());
             retVal = false;
         } else {
             retVal = true;
@@ -267,7 +267,7 @@ $(document).ready(function () {
             return;
         };
 
-        var result = confirm(scrudAreYouSureLocalized);
+        var result = confirm(Resources.Questions.AreYouSure());
         if (result) {
             $('#' + cancelButtonId).click();
         }

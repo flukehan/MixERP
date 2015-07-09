@@ -1,6 +1,6 @@
+using MixERP.Net.Common;
 using System;
 using System.Collections.Generic;
-using MixERP.Net.Common;
 
 namespace MixERP.Net.Updater.Api
 {

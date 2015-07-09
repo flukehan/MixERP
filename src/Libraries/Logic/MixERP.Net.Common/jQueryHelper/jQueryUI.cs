@@ -17,12 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.i18n;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Web;
 using System.Web.UI;
-using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.Common.jQueryHelper
 {
@@ -150,13 +151,13 @@ namespace MixERP.Net.Common.jQueryHelper
 
         public static string GetDatePickerFormat()
         {
-            string datePattern = LocalizationHelper.GetCurrentUICulture().DateTimeFormat.ShortDatePattern;
+            string datePattern = CurrentCulture.GetCurrentUICulture().DateTimeFormat.ShortDatePattern;
             return ConvertDateFormat(datePattern);
         }
 
         public static string GetDatePickerLocale()
         {
-            return LocalizationHelper.GetCurrentUICulture().TwoLetterISOLanguageName;
+            return CurrentCulture.GetCurrentUICulture().TwoLetterISOLanguageName;
         }
 
         public static string GetNumberOfMonths()
@@ -166,7 +167,7 @@ namespace MixERP.Net.Common.jQueryHelper
 
         public static int GetWeekStartDay()
         {
-            return (int)LocalizationHelper.GetCurrentUICulture().DateTimeFormat.FirstDayOfWeek;
+            return (int)CurrentCulture.GetCurrentUICulture().DateTimeFormat.FirstDayOfWeek;
         }
 
         public static bool ShowWeekNumber()

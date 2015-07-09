@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.i18n.Resources;
+using Serilog;
 using System;
 using System.Configuration;
 using System.Globalization;
@@ -25,8 +27,6 @@ using System.Web;
 using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using MixERP.Net.i18n.Resources;
-using Serilog;
 
 namespace MixERP.Net.Common
 {

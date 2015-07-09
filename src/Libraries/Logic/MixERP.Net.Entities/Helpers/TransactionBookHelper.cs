@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Helpers;
+﻿using MixERP.Net.Common.Helpers;
+using MixERP.Net.Framework;
 using MixERP.Net.i18n.Resources;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MixERP.Net.Entities.Helpers
 {

@@ -1,5 +1,5 @@
-﻿using System;
-using MixERP.Net.Common;
+﻿using MixERP.Net.Common;
+using System;
 
 namespace MixERP.Net.Updater.Api
 {

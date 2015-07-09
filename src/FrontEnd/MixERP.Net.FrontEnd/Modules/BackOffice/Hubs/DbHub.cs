@@ -17,6 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using Microsoft.AspNet.SignalR;
+using Microsoft.VisualBasic.FileIO;
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common.Models;
+using MixERP.Net.i18n.Resources;
+using Serilog;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -25,13 +33,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using System.Web.Hosting;
-using Microsoft.AspNet.SignalR;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.i18n.Resources;
-using Serilog;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Hubs
 {
@@ -162,7 +163,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
             string source = ConfigurationHelper.GetResourceDirectory();
             string destination = Path.Combine(backupDirectory, new DirectoryInfo(source).Name);
 
-            Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(source, destination);
+            FileSystem.CopyDirectory(source, destination);
         }
 
         private void CreateBatchFile(PostgreSQLServer server, string pgDumpPath, string fileName)

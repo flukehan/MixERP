@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Data;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Events;
 using MixERP.Net.DbFactory;
 using Npgsql;
+using System;
+using System.Data;
 
 namespace MixERP.Net.Core.Modules.Finance.Data
 {

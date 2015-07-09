@@ -1,6 +1,6 @@
-﻿using System;
+﻿using MixERP.Net.WebControls.Flag;
+using System;
 using System.Web.UI.WebControls;
-using MixERP.Net.WebControls.Flag;
 
 namespace MixERP.Net.WebControls.TransactionViewFactory
 {

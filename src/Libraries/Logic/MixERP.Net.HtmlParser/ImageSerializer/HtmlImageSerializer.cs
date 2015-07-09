@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MixERP.Net.Framework;
+using MixERP.Net.i18n.Resources;
+using System;
 using System.Drawing.Imaging;
 using System.Web.Hosting;
-using MixERP.Net.Common.Base;
-using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.HtmlParser.ImageSerializer
 {

@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
+using MixERP.Net.i18n.Resources;
 using System;
 using System.Globalization;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common;
-using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.Common
 {

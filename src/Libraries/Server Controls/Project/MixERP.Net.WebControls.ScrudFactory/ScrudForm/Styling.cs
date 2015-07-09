@@ -19,7 +19,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities;
 
 namespace MixERP.Net.WebControls.ScrudFactory
 {

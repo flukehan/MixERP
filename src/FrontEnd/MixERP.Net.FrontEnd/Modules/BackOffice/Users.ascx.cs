@@ -17,16 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using MixERP.Net.Common.Domains;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities;
+using MixERP.Net.Framework.Controls;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.FrontEnd.Controls;
 using MixERP.Net.i18n.Resources;
+using System;
+using System.Collections.Generic;
 
 namespace MixERP.Net.Core.Modules.BackOffice
 {
@@ -52,7 +51,7 @@ namespace MixERP.Net.Core.Modules.BackOffice
                 scrud.DisplayViews = GetDisplayViews();
                 scrud.ExcludeEdit = "password, user_name";
 
-                bool denyToNonAdmins = !AppUsers.GetCurrentLogin().View.IsAdmin.ToBool();
+                bool denyToNonAdmins = !AppUsers.GetCurrent().View.IsAdmin.ToBool();
 
                 scrud.DenyAdd = denyToNonAdmins;
                 scrud.DenyEdit = denyToNonAdmins;

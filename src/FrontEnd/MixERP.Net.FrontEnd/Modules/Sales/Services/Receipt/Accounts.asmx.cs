@@ -17,16 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Office;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Entities.Core;
-using MixERP.Net.Entities.Office;
-using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 {
@@ -39,7 +39,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         [WebMethod]
         public Collection<ListItem> GetBankAccounts()
         {
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
             Collection<ListItem> values = new Collection<ListItem>();
 
@@ -81,7 +81,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         [WebMethod]
         public Collection<ListItem> GetCashRepositories()
         {
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
             Collection<ListItem> values = new Collection<ListItem>();
 
             foreach (CashRepository cashRepository in Data.Helpers.Accounts.GetCashRepositories(AppUsers.GetCurrentUserDB(), officeId))

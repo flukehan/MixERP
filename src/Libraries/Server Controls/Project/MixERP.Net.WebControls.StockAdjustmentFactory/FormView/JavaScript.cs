@@ -1,8 +1,7 @@
-﻿using System.Globalization;
-using System.Web.UI;
-using MixERP.Net.Common;
+﻿using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
-using MixERP.Net.i18n.Resources;
+using System.Globalization;
+using System.Web.UI;
 
 [assembly: WebResource("MixERP.Net.WebControls.StockAdjustmentFactory.FormView.js", "application/x-javascript")]
 namespace MixERP.Net.WebControls.StockAdjustmentFactory
@@ -13,7 +12,6 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
         {
             string script = string.Empty;
 
-            script += JSUtility.GetVar("referencingSidesNotEqualErrorLocalized", Errors.ReferencingSidesNotEqual);
             script += JSUtility.GetVar("storeServiceUrl", this.StoreServiceUrl);
             script += JSUtility.GetVar("itemServiceUrl", this.ItemServiceUrl);
             script += JSUtility.GetVar("unitServiceUrl", this.UnitServiceUrl);

@@ -18,11 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 /*jshint -W032 */
-/*global addDanger, ajaxDataBind, appendItem, appendParameter, duplicateEntryLocalized, getAjax, getAjaxErrorMessage, getColumnText, getData, gridViewEmptyWarningLocalized, invalidCostCenterWarningLocalized, invalidDateWarningLocalized, isDate, isNullOrWhiteSpace, logError, makeDirty, removeDirty, repaint, sumOfColumn, tableToJSON, uploadedFilesHidden, shortcut, parseFloat2 */
-
-if (typeof invalidCostCenterWarningLocalized == "undefined") {
-    invalidCostCenterWarningLocalized = "Invalid cost center.";
-};
+/*global addDanger, ajaxDataBind, appendItem, appendParameter, Resources, getAjax, getAjaxErrorMessage, getColumnText, getData, Resources, Resources, isDate, isNullOrWhiteSpace, logError, makeDirty, removeDirty, repaint, sumOfColumn, tableToJSON, uploadedFilesHidden, shortcut, parseFloat2 */
 
 //Controls
 var addInputButton = $("#AddInputButton");
@@ -342,7 +338,7 @@ var addRow = function(statementReference, accountNumber, account, cashRepository
 
         if (!isCash) {
             if (getColumnText(row, 1) === accountNumber) {
-                $.notify(duplicateEntryLocalized);
+                $.notify(Resources.Warnings.DuplicateEntry());
                 makeDirty(accountNumberInputText);
                 duplicateEntry = true;
                 return;
@@ -351,7 +347,7 @@ var addRow = function(statementReference, accountNumber, account, cashRepository
 
         if (isCash) {
             if (getColumnText(row, 3) === cashRepository) {
-                $.notify(duplicateEntryLocalized);
+                $.notify(Resources.Warnings.DuplicateEntry());
                 makeDirty(accountNumberInputText);
                 duplicateEntry = true;
             };
@@ -485,19 +481,19 @@ var validate = function() {
 
     if (!isDate(valueDate)) {
         makeDirty(valueDateTextBox);
-        errorLabelBottom.html(invalidDateWarningLocalized);
+        errorLabelBottom.html(Resources.Warnings.InvalidDate());
         return false;
     };
 
     if (parseInt(costCenterDropDownList.getSelectedValue() || 0) <= 0) {
         makeDirty(costCenterDropDownList);
-        errorLabelBottom.html(invalidCostCenterWarningLocalized);
+        errorLabelBottom.html(Resources.Warnings.InvalidCostCenter());
         return false;
     };
 
 
     if (transactionGridView.find("tr").length === 2) {
-        errorLabelBottom.html(gridViewEmptyWarningLocalized);
+        errorLabelBottom.html(Resources.Warnings.GridViewEmpty());
         return false;
     };
 

@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.TransactionViewFactory;
+using System;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
@@ -45,12 +45,12 @@ namespace MixERP.Net.Core.Modules.Finance
                 view.DateToFrequencyType = FrequencyType.FiscalYearEndDate;
 
                 view.Book = "Journal";
-                view.PostedBy = AppUsers.GetCurrentLogin().View.UserName;
-                view.OfficeName = AppUsers.GetCurrentLogin().View.OfficeName;
+                view.PostedBy = AppUsers.GetCurrent().View.UserName;
+                view.OfficeName = AppUsers.GetCurrent().View.OfficeName;
                 view.Status = "Approved";
 
-                view.UserId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-                view.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                view.UserId = AppUsers.GetCurrent().View.UserId.ToInt();
+                view.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
                 view.Catalog = AppUsers.GetCurrentUserDB();
 
                 this.Controls.Add(view);

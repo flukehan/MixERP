@@ -3,7 +3,7 @@ function displayMessage(a, b) {
 };
 
 function displaySucess() {
-    $.notify(taskCompletedSuccessfullyLocalized, "success");
+    $.notify(Resources.Labels.TaskCompletedSuccessfully(), "success");
 };
 
 var logError = function (a, b) {

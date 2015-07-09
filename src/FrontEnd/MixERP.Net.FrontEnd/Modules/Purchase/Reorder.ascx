@@ -205,7 +205,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             });
 
             if (details.length === 0) {
-                $.notify(nothingSelectedLocalized);
+                $.notify(Resources.Titles.NothingSelected());
                 return;
             };
             var confirmLocalized = "This action will create purchase orders automatically for you. Would you like to continue?";

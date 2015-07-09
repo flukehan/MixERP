@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
+using MixERP.Net.i18n;
+using MixERP.Net.i18n.Resources;
 using System.Globalization;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.WebControls.TransactionChecklist
 {
@@ -47,16 +47,16 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             {
                 case -3:
                     label.CssClass = "ui block message red";
-                    label.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionWithdrawnMessage, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentUICulture()), model.VerificationReason);
+                    label.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionWithdrawnMessage, model.VerifierName, model.VerifiedDate.ToString(CurrentCulture.GetCurrentUICulture()), model.VerificationReason);
                     break;
 
                 case -2:
                     label.CssClass = "ui block message yellow";
-                    label.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionClosedDetails, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentUICulture()), model.VerificationReason);
+                    label.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionClosedDetails, model.VerifierName, model.VerifiedDate.ToString(CurrentCulture.GetCurrentUICulture()), model.VerificationReason);
                     break;
 
                 case -1:
-                    label.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionWithdrawnDetails, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentUICulture()), model.VerificationReason);
+                    label.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionWithdrawnDetails, model.VerifierName, model.VerifiedDate.ToString(CurrentCulture.GetCurrentUICulture()), model.VerificationReason);
                     label.CssClass = "ui block message yellow";
                     break;
 
@@ -66,12 +66,12 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                     break;
 
                 case 1:
-                    label.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionApprovedDetails, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentUICulture()));
+                    label.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionApprovedDetails, model.VerifierName, model.VerifiedDate.ToString(CurrentCulture.GetCurrentUICulture()));
                     label.CssClass = "ui block message green";
                     break;
 
                 case 2:
-                    label.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionAutoApprovedDetails, model.VerifierName, model.VerifiedDate.ToString(LocalizationHelper.GetCurrentUICulture()));
+                    label.Text = string.Format(CultureInfo.CurrentCulture, Labels.TransactionAutoApprovedDetails, model.VerifierName, model.VerifiedDate.ToString(CurrentCulture.GetCurrentUICulture()));
                     label.CssClass = "ui block message green";
                     break;
             }

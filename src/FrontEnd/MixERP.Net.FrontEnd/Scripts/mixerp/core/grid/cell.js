@@ -33,7 +33,7 @@ var toggleSuccess = function (cell) {
 };
 
 var removeRow = function (cell) {
-    var result = confirm(areYouSureLocalized);
+    var result = confirm(Resources.Questions.AreYouSure());
 
     if (result) {
         cell.closest("tr").remove();

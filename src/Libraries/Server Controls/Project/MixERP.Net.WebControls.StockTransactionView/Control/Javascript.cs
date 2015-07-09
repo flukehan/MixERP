@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common.Helpers;
 using System.Security.Permissions;
 using System.Web;
 using System.Web.UI;
-using MixERP.Net.Common.Helpers;
 
 [assembly: WebResource("MixERP.Net.WebControls.StockTransactionViewFactory.StockTransactionView.js", "application/x-javascript", PerformSubstitution = true)]
 

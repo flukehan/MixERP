@@ -67,7 +67,7 @@ function createMap() {
                 return ['<div class="ui compact segment">' +
                     '<div class="ui small header"><i class="' + data.isoCode.toLowerCase() + ' flag"></i><div class="content">'
                     + geo.properties.name + '</div>',
-                    '<div class="sub header">' + totalSalesLocalized + " " + baseCurrencyCode + data.sales,
+                    '<div class="sub header">' + Resources.Titles.TotalSales() + " " + baseCurrencyCode + data.sales,
                     '</div></div>'].join('');
                 }
             }

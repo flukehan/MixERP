@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Base;
+﻿using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Framework;
 using MixERP.Net.i18n.Resources;
 using Npgsql;
 using PetaPoco;
+using System.Collections.Generic;
 
 namespace MixERP.Net.Entities
 {
@@ -117,6 +112,8 @@ namespace MixERP.Net.Entities
 
         public static string GetConnectionString(string catalog = "")
         {
+            CatalogHelper.ValidateCatalog(catalog);
+
             string database = ConfigurationHelper.GetDbServerParameter("Database");
 
             if (!string.IsNullOrWhiteSpace(catalog))

@@ -66,13 +66,13 @@
     <Compile Include="UrlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FrontEnd\MixERP.net.FrontEnd\MixERP.Net.FrontEnd.csproj">
-      <Project>{ace1017d-71bc-4417-a906-72c4b9c55823}</Project>
-      <Name>MixERP.Net.FrontEnd</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logic\MixERP.Net.Framework\MixERP.Net.Framework.csproj">
+      <Project>{1509332F-AE98-44D9-9072-5BBC59A65FC4}</Project>
+      <Name>MixERP.Net.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

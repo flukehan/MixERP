@@ -17,6 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.Finance.Data.Helpers;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Office;
+using MixERP.Net.Framework;
+using MixERP.Net.i18n.Resources;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -24,14 +32,6 @@ using System.Globalization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Core.Modules.Finance.Data.Helpers;
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Core;
-using MixERP.Net.Entities.Office;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
@@ -66,7 +66,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             if (allowParentAccountInGlTransaction)
             {
-                if (AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
+                if (AppUsers.GetCurrent().View.IsAdmin.ToBool())
                 {
                     return GetValues(AccountHelper.GetAccounts(AppUsers.GetCurrentUserDB()));
                 }
@@ -75,7 +75,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
                 return GetValues(AccountHelper.GetNonConfidentialAccounts(AppUsers.GetCurrentUserDB()));
             }
 
-            if (AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
+            if (AppUsers.GetCurrent().View.IsAdmin.ToBool())
             {
                 return GetValues(AccountHelper.GetChildAccounts(AppUsers.GetCurrentUserDB()));
             }
@@ -88,7 +88,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         {
             Collection<ListItem> values = new Collection<ListItem>();
 
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
             foreach (
                 CashRepository cashRepository in
@@ -107,7 +107,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
 
             if (AccountHelper.IsCashAccount(AppUsers.GetCurrentUserDB(), accountNumber))
             {
-                int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
                 foreach (
                     CashRepository cashRepository in
                         CashRepositories.GetCashRepositories(AppUsers.GetCurrentUserDB(), officeId))
@@ -212,7 +212,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod]
         public Collection<ListItem> ListAccounts()
         {
-            if (AppUsers.GetCurrentLogin().View.IsAdmin.ToBool())
+            if (AppUsers.GetCurrent().View.IsAdmin.ToBool())
             {
                 return GetValues(AccountHelper.GetAccounts(AppUsers.GetCurrentUserDB()));
             }

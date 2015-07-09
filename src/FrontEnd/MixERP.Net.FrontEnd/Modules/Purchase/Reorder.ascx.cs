@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
+using System;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MixERP.Net.Core.Modules.Purchase
 {
@@ -44,7 +44,7 @@ namespace MixERP.Net.Core.Modules.Purchase
 
         private void AddBoundField(GridView grid, string text, string dataField)
         {
-            BoundField field = new BoundField { HeaderText = text, DataField = dataField };
+            BoundField field = new BoundField {HeaderText = text, DataField = dataField};
 
             grid.Columns.Add(field);
         }
@@ -69,7 +69,7 @@ namespace MixERP.Net.Core.Modules.Purchase
 
         private void AddGridView()
         {
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
             using (GridView grid = new GridView())
             {

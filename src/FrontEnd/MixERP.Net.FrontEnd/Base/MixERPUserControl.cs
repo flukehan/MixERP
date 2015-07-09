@@ -17,15 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Domains;
 using MixERP.Net.Common.Extensions;
-using MixERP.Net.Entities;
+using MixERP.Net.Common.Helpers;
 using MixERP.Net.Entities.Contracts;
-using MixERP.Net.FrontEnd.Cache;
+using MixERP.Net.Framework.Controls;
 using Serilog;
+using System;
 
 namespace MixERP.Net.FrontEnd.Base
 {
@@ -40,7 +39,7 @@ namespace MixERP.Net.FrontEnd.Base
 
         public bool IsRestrictedMode
         {
-            get { return !AppUsers.GetCurrentLogin().View.AllowTransactionPosting.ToBool(); }
+            get { return !AppUsers.GetCurrent().View.AllowTransactionPosting.ToBool(); }
         }
 
         public void Initialize()
@@ -56,7 +55,7 @@ namespace MixERP.Net.FrontEnd.Base
         {
             if (this is ITransaction)
             {
-                if (!AppUsers.GetCurrentLogin().View.AllowTransactionPosting.ToBool())
+                if (!AppUsers.GetCurrent().View.AllowTransactionPosting.ToBool())
                 {
                     this.Server.Transfer("~/Site/Exceptions/RestrictedTransactionMode.aspx");
                 }
@@ -65,7 +64,7 @@ namespace MixERP.Net.FrontEnd.Base
 
         private void CheckAccessLevel()
         {
-            var login = AppUsers.GetCurrentLogin();
+            var login = AppUsers.GetCurrent();
             bool hasAccess = true;
             string userName = string.Empty;
             string ipAddress = string.Empty;
@@ -76,8 +75,8 @@ namespace MixERP.Net.FrontEnd.Base
             }
             else
             {
-                userName = AppUsers.GetCurrentLogin().View.UserName;
-                ipAddress = AppUsers.GetCurrentLogin().View.IpAddress;
+                userName = AppUsers.GetCurrent().View.UserName;
+                ipAddress = AppUsers.GetCurrent().View.IpAddress;
 
                 bool isDevelopmentMode =
                     DbConfig.GetMixERPParameter(AppUsers.GetCurrentUserDB(), "Mode")
@@ -90,7 +89,7 @@ namespace MixERP.Net.FrontEnd.Base
 
                 if (adminOnly)
                 {
-                    hasAccess = AppUsers.GetCurrentLogin().View.IsAdmin.ToBool();
+                    hasAccess = AppUsers.GetCurrent().View.IsAdmin.ToBool();
                 }
 
                 if (hasAccess && isDevelopmentMode)

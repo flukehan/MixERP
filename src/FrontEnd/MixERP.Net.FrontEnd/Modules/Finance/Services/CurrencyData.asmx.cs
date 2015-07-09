@@ -17,6 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Core.Modules.Finance.Data.Core;
+using MixERP.Net.Core.Modules.Finance.Data.Helpers;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Framework.Contracts.Currency;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,12 +31,6 @@ using System.Linq;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Core.Modules.Finance.Data.Core;
-using MixERP.Net.Core.Modules.Finance.Data.Helpers;
-using MixERP.Net.Entities.Core;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
 
 namespace MixERP.Net.Core.Modules.Finance.Services
 {
@@ -43,7 +43,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         [WebMethod]
         public IEnumerable<Currency> GetExchangeCurrencies()
         {
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
             return Currencies.GetExchangeCurrencies(AppUsers.GetCurrentUserDB(), officeId);
         }
 
@@ -73,7 +73,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             CurrencyData currencyData = new CurrencyData();
             IEnumerable<string> currencies = currencyData.GetExchangeCurrencies().Select(c => c.CurrencyCode);
 
-            converter.BaseCurrency = AppUsers.GetCurrentLogin().View.CurrencyCode;
+            converter.BaseCurrency = AppUsers.GetCurrent().View.CurrencyCode;
             converter.CurrencyCodes = currencies.ToList();
             return converter.GetResult();
         }
@@ -100,8 +100,8 @@ namespace MixERP.Net.Core.Modules.Finance.Services
             }
 
             string catalog = AppUsers.GetCurrentUserDB();
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            string baseCurrency = AppUsers.GetCurrentLogin().View.CurrencyCode;
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
+            string baseCurrency = AppUsers.GetCurrent().View.CurrencyCode;
 
 
             ExchangeRates.SaveExchangeRates(catalog, officeId, baseCurrency, exchangeRates);

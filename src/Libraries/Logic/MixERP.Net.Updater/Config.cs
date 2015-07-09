@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using MixERP.Net.Common.Helpers;
+﻿using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.Updater
 {

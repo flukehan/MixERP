@@ -17,16 +17,16 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.FrontEnd.Controls;
+using MixERP.Net.i18n.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.FrontEnd.Controls;
-using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
 {
@@ -38,8 +38,8 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             DateTime from = Conversion.TryCastDate(this.Page.Request["From"]);
             DateTime to = Conversion.TryCastDate(this.Page.Request["To"]);
 
-            int userId = AppUsers.GetCurrentLogin().View.UserId.ToInt();
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
 
             Collection<KeyValuePair<string, object>> parameter1 = new Collection<KeyValuePair<string, object>>();

@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using Npgsql;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Threading;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using Npgsql;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Data
 {
@@ -59,6 +59,8 @@ namespace MixERP.Net.Core.Modules.BackOffice.Data
 
         public static string GetConnectionString(string catalog)
         {
+            CatalogHelper.ValidateCatalog(catalog);
+
             string host = ConfigurationHelper.GetDbServerParameter("Server");
             int port = Conversion.TryCastInteger(ConfigurationHelper.GetDbServerParameter("Port"));
             string userName = ConfigurationHelper.GetDbServerParameter("ReportUserId");

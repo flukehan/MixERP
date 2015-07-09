@@ -27,7 +27,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var compareUnit = parseInt2(compareUnitIdDropdownlist.getSelectedValue());
 
         if (baseUnit === compareUnit) {
-            displayMessage(window.compareCompoundUnitOfMeasureErrorMessageLocalized);
+            displayMessage(Resources.Errors.CompoundUnitOfMeasureErrorMessage());
             return false;
         };
         return true;

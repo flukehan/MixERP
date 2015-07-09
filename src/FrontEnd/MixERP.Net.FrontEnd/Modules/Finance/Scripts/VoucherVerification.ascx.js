@@ -49,12 +49,12 @@ $(document).ready(function () {
         var header = modal.find(".ui.massive.header");
         var subheader = modal.find(".ui.dividing.header");
 
-        header.html(window.rejectLocalized);
-        subheader.html(String.format(window.tranIdLocalized, tranId));
+        header.html(Resources.Titles.RejectThisTransaction());
+        subheader.html(String.format(Resources.Titles.TranIdParameter(), tranId));
         header.removeClass("green").addClass("red");
 
         if (approve) {
-            header.html(window.approvedLocalized);
+            header.html(Resources.Titles.ApproveThisTransaction());
             header.removeClass("red").addClass("green");
         };
 

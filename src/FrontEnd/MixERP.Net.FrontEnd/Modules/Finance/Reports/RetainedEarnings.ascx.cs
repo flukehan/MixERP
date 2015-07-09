@@ -17,20 +17,20 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.WebControls.Common;
 using System;
 using System.Data;
 using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.Common;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
 {
@@ -203,7 +203,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.dateTextBox.ID = "DateTextBox";
                 this.dateTextBox.Mode = FrequencyType.FiscalYearEndDate;
                 this.dateTextBox.Catalog = AppUsers.GetCurrentUserDB();
-                this.dateTextBox.OfficeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+                this.dateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
                 field.Controls.Add(this.dateTextBox);
 
@@ -254,7 +254,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
         {
             DateTime date = Conversion.TryCastDate(this.dateTextBox.Text);
             int factor = Conversion.TryCastInteger(this.factorInputText.Value);
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
             using (DataTable table = Data.Reports.RetainedEarnings.GetRetainedEarningStatementDataTable(AppUsers.GetCurrentUserDB(), date, officeId, factor))
             {

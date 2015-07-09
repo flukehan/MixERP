@@ -17,6 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities.Office;
+using MixERP.Net.FrontEnd.Data.Helpers;
+using MixERP.Net.FrontEnd.Data.Office;
+using MixERP.Net.i18n;
+using MixERP.Net.i18n.Resources;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,14 +34,6 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities.Office;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.FrontEnd.Data.Helpers;
-using MixERP.Net.FrontEnd.Data.Office;
-using MixERP.Net.i18n.Resources;
-using Serilog;
 
 namespace MixERP.Net.FrontEnd
 {
@@ -139,10 +140,10 @@ namespace MixERP.Net.FrontEnd
             this.Session["Challenge"] = challenge;
 
             string script = JSUtility.GetVar("challenge", challenge);
-            script += JSUtility.GetVar("shortDateFormat", LocalizationHelper.GetShortDateFormat());
-            script += JSUtility.GetVar("thousandSeparator", LocalizationHelper.GetThousandSeparator());
-            script += JSUtility.GetVar("decimalSeparator", LocalizationHelper.GetDecimalSeparator());
-            script += JSUtility.GetVar("currencyDecimalPlaces", LocalizationHelper.GetCurrencyDecimalPlaces());
+            script += JSUtility.GetVar("shortDateFormat", CurrentCulture.GetShortDateFormat());
+            script += JSUtility.GetVar("thousandSeparator", CurrentCulture.GetThousandSeparator());
+            script += JSUtility.GetVar("decimalSeparator", CurrentCulture.GetDecimalSeparator());
+            script += JSUtility.GetVar("currencyDecimalPlaces", CurrentCulture.GetCurrencyDecimalPlaces());
 
 
             PageUtility.RegisterJavascript("SignInPage_Vars", script, this.Page, true);

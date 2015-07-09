@@ -55,7 +55,7 @@ function getSelectedItems() {
         $("#SelectedValuesHidden").val(selection.join(','));
         return true;
     } else {
-        $.notify(nothingSelectedLocalized, "error");
+        $.notify(Resources.Titles.NothingSelected(), "error");
         return false;
     }
 };

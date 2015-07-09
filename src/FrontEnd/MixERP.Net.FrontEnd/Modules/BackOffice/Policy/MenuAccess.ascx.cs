@@ -17,18 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Core.Modules.BackOffice.Data.Admin;
+using MixERP.Net.Framework.Controls;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.WebControls.Common;
 using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Domains;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Core.Modules.BackOffice.Data.Admin;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.Common;
 using Menu = MixERP.Net.Core.Modules.BackOffice.Data.Policy.Menu;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Policy
@@ -189,7 +189,7 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
         {
             int userId = Conversion.TryCastInteger(this.userSelect.SelectedValue);
             int officeId = Conversion.TryCastInteger(this.officeSelect.SelectedValue);
-            string culture = AppUsers.GetCurrentLogin().View.Culture;
+            string culture = AppUsers.GetCurrent().View.Culture;
 
             if (userId.Equals(0) || officeId.Equals(0))
             {

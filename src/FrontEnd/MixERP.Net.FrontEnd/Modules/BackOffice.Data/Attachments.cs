@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using MixERP.Net.Common;
+﻿using MixERP.Net.Common;
 using MixERP.Net.DbFactory;
 using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
 using Npgsql;
 using Serilog;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Data
 {

@@ -28,7 +28,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         var toDays = parseInt2(toDaysTextbox.val());
 
         if (toDays <= fromDays) {
-            displayMessage(window.compareDaysErrorMessageLocalized);
+            displayMessage(Resources.Warnings.CompareDaysErrorMessage());
             return false;
         };
         return true;

@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Entities.Contracts;
 using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
+using System;
 
 namespace MixERP.Net.Core.Modules.Finance
 {
@@ -28,8 +28,8 @@ namespace MixERP.Net.Core.Modules.Finance
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {
-            this.OfficeInputText.Value = AppUsers.GetCurrentLogin().View.OfficeName;
-            this.CurrencyInputText.Value = AppUsers.GetCurrentLogin().View.CurrencyCode;
+            this.OfficeInputText.Value = AppUsers.GetCurrent().View.OfficeName;
+            this.CurrencyInputText.Value = AppUsers.GetCurrent().View.CurrencyCode;
         }
     }
 }

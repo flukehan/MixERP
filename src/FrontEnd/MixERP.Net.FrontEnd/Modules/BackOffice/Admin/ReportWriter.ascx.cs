@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System;
-using MixERP.Net.Common.Domains;
+using MixERP.Net.Framework.Controls;
 using MixERP.Net.FrontEnd.Base;
+using System;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Admin
 {

@@ -17,11 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Web.Script.Services;
-using System.Web.Services;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Entities.Core;
-using MixERP.Net.FrontEnd.Cache;
+using System.Web.Script.Services;
+using System.Web.Services;
+
 
 namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
 {
@@ -62,7 +63,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
                 return 1;
             }
 
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
 
             decimal exchangeRate = Data.Helpers.Transaction.GetExchangeRate(AppUsers.GetCurrentUserDB(), officeId, sourceCurrencyCode, destinationCurrencyCode);
 
@@ -72,7 +73,7 @@ namespace MixERP.Net.Core.Modules.Sales.Services.Receipt
         [WebMethod]
         public string GetHomeCurrency()
         {
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
             return Data.Helpers.Currencies.GetHomeCurrency(AppUsers.GetCurrentUserDB(), officeId);
         }
     }

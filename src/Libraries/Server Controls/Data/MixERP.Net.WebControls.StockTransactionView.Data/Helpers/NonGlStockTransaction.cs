@@ -17,12 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.Entities;
+using MixERP.Net.Entities.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Transactions;
 
 namespace MixERP.Net.WebControls.StockTransactionViewFactory.Data.Helpers
 {

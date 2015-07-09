@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MixERP.Net.Updater.Api;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MixERP.Net.Updater.Api;
 
 namespace MixERP.Net.Updater
 {

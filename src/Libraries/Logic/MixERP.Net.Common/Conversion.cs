@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixERP.Net.i18n;
+using Serilog;
 using System;
 using System.Drawing.Imaging;
 using System.Globalization;
@@ -26,8 +28,6 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MixERP.Net.Common.Helpers;
-using Serilog;
 using Image = System.Drawing.Image;
 
 namespace MixERP.Net.Common
@@ -58,7 +58,7 @@ namespace MixERP.Net.Common
         {
             TimeZoneInfo zone = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
             DateTime time = TimeZoneInfo.ConvertTimeFromUtc(utc, zone);
-            return String.Format(LocalizationHelper.GetCurrentUICulture(), "{0} {1} {2}", time.ToLongDateString(), time.ToLongTimeString(), zone.DisplayName);
+            return String.Format(CurrentCulture.GetCurrentUICulture(), "{0} {1} {2}", time.ToLongDateString(), time.ToLongTimeString(), zone.DisplayName);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]

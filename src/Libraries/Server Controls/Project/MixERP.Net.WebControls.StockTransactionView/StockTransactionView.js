@@ -18,7 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 /*jshint -W098*/
-/*global createFlaggedRows, getSelectedCheckBoxItemIds, nothingSelectedLocalized, popUnder, shortcut, toogleSelection*/
+/*global createFlaggedRows, getSelectedCheckBoxItemIds, Resources, popUnder, shortcut, toogleSelection*/
 
 var printButton = $("#PrintButton");
 
@@ -61,7 +61,7 @@ var getSelectedItems = function () {
         $("#SelectedValuesHidden").val(selection.join(','));
         return true;
     } else {
-        $.notify(nothingSelectedLocalized, "error");
+        $.notify(Resources.Titles.NothingSelected(), "error");
         return false;
     }
 };

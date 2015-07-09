@@ -17,23 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-/*global allowedExtensions, appendParameter, areYouSureLocalized, duplicateFileLocalized, getAjax, getData, invalidFileLocalized, uploadedFilesDeletedLocalized */
-
-if (typeof areYouSureLocalized == "undefined") {
-    areYouSureLocalized = "Are you sure?";
-};
-
-if (typeof duplicateFileLocalized == "undefined") {
-    duplicateFileLocalized = "Duplicate file.";
-};
-
-if (typeof invalidFileLocalized == "undefined") {
-    invalidFileLocalized = "Invalid file.";
-};
-
-if (typeof uploadedFilesDeletedLocalized == "undefined") {
-    uploadedFilesDeletedLocalized = "The uploaded files were successfully deleted.";
-};
+/*global allowedExtensions, appendParameter, Resources, getAjax, getData */
 
 var undoButton = $("#UndoButton");
 var uploadedFilesHidden = $("#UploadedFilesHidden");
@@ -63,7 +47,7 @@ $(function () {
                 return;
             };
 
-            $(filePathSelector).html(invalidFileLocalized + " " + fileName);
+            $(filePathSelector).html(Resources.Messages.InvalidFile() + " " + fileName);
             $(filePathSelector).addClass("big error");
             $(this).val("");
         };
@@ -92,7 +76,7 @@ $.fn.enable = function () {
 undoButton.on("click", function () {
     $(".browse").prop('disabled', false);
     if (uploadedFilesHidden.val() !== "") {
-        if (confirm(areYouSureLocalized)) {
+        if (confirm(Resources.Questions.AreYouSure())) {
             $.post(undoUploadServiceUrl, {
                 uploadedFilesJson: uploadedFilesHidden.val()
             }, function (data) {
@@ -100,7 +84,7 @@ undoButton.on("click", function () {
 
                 if (result) {
                     resetAttachmentForm();
-                    $.notify(uploadedFilesDeletedLocalized, "success");
+                    $.notify(Resources.Messages.UploadFilesDeleted(), "success");
                 };
             });
         };
@@ -145,7 +129,7 @@ var hasFile = function () {
 uploadButton.on("click", function () {
     if (hasFile()) {
         if (validateDuplicates()) {
-            if (confirm(areYouSureLocalized)) {
+            if (confirm(Resources.Questions.AreYouSure())) {
                 var uploads = [];
 
                 $(".upload").each(function () {
@@ -206,7 +190,7 @@ var validateDuplicates = function () {
         warningLabel.html("");
         return true;
     } else {
-        warningLabel.html(duplicateFileLocalized + " : " + duplicates.join());
+        warningLabel.html(Resources.Warnings.DuplicateFiles() + " : " + duplicates.join());
         return false;
     }
 };

@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.AspNet.SignalR;
+﻿using Microsoft.AspNet.SignalR;
+using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Events;
 using MixERP.Net.Common.Extensions;
-using MixERP.Net.FrontEnd.Cache;
 using MixERP.Net.i18n.Resources;
+using System;
 
 namespace MixERP.Net.Core.Modules.Finance.Hubs
 {
@@ -32,7 +32,7 @@ namespace MixERP.Net.Core.Modules.Finance.Hubs
 
             string catalog = AppUsers.GetCurrentUserDB();
 
-            operation.Perform(catalog, AppUsers.GetCurrentLogin().View.LoginId.ToLong());
+            operation.Perform(catalog, AppUsers.GetCurrent().View.LoginId.ToLong());
         }
 
         private void EOD_NotificationReceived(object sender, MixERPPGEventArgs e)

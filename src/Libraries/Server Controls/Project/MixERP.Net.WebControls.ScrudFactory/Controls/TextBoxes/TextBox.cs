@@ -17,12 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using System.Reflection;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.WebControls.ScrudFactory.Helpers;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using MixERP.Net.i18n.Resources;
-using MixERP.Net.WebControls.ScrudFactory.Helpers;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
 {
@@ -40,7 +39,7 @@ namespace MixERP.Net.WebControls.ScrudFactory.Controls.TextBoxes
                 return;
             }
 
-            bool isPasswordField = columnName.ToUpperInvariant().Equals("PASSWORD");
+            bool isPasswordField = columnName.ToUpperInvariant().Contains("PASSWORD");
 
             if (isPasswordField && disabled)
             {

@@ -1,16 +1,4 @@
-﻿if (typeof viewLocalized == "undefined") {
-    viewLocalized = "View";
-};
-
-if (typeof downloadLocalized == "undefined") {
-    downloadLocalized = "Download";
-};
-
-if (typeof deleteLocalized == "undefined") {
-    deleteLocalized = "Delete";
-};
-
-var images = $("#images");
+﻿var images = $("#images");
 var saveButton = $("#SaveButton");
 
 
@@ -82,9 +70,9 @@ function LoadImageGroup(file) {
         '<div class="description">' + file.Comment + '<br />' + parseSerializedDate(file.AddedOn) + '<br />' + '<br />' + '</div>' +
         '</div>' +
         '<div class="ui bottom attached button">' +
-        "<a class='ui positive button' data-toggle='modal' data-target='#opener' onclick=\"initializeModal('" + file.FilePath + "', '" + file.OriginalFileName + "', '" + file.Comment + "');\">" + viewLocalized + "</a>&nbsp;" +
-        "<a class='ui blue button' target='_blank' href='" + file.FilePath + "'>" + downloadLocalized + "</a>&nbsp;" +
-        "<a class='ui negative button' onclick=\"removeAttachment('" + file.AttachmentId + "');\">" + deleteLocalized + "</a>&nbsp;" +
+        "<a class='ui positive button' data-toggle='modal' data-target='#opener' onclick=\"initializeModal('" + file.FilePath + "', '" + file.OriginalFileName + "', '" + file.Comment + "');\">" + Resources.Titles.View() + "</a>&nbsp;" +
+        "<a class='ui blue button' target='_blank' href='" + file.FilePath + "'>" + Resources.Titles.Download() + "</a>&nbsp;" +
+        "<a class='ui negative button' onclick=\"removeAttachment('" + file.AttachmentId + "');\">" + Resources.Warnings.AccessIsDenied() + "</a>&nbsp;" +
         '</div>' +
         '</div>';
 
@@ -106,7 +94,7 @@ function initializeModal(filePath, originalFileName, comment, initializer) {
 };
 
 function removeAttachment(id) {
-    if (confirm(areYouSureLocalized)) {
+    if (confirm(Resources.Questions.AreYouSure())) {
         var ajaxDeleteAttachment = deleteAttachment(id);
 
         ajaxDeleteAttachment.success(function () {

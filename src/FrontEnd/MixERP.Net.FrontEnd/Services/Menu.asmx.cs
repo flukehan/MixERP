@@ -17,14 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.FrontEnd.Models;
+using Newtonsoft.Json;
 using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Entities.Office;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.FrontEnd.Models;
-using Newtonsoft.Json;
 
 namespace MixERP.Net.FrontEnd.Services
 {
@@ -37,7 +36,7 @@ namespace MixERP.Net.FrontEnd.Services
         [WebMethod]
         public string GetMenus()
         {
-            SignInView view = AppUsers.GetCurrentLogin().View;
+            LoginView view = AppUsers.GetCurrent().View;
 
             string catalog = AppUsers.GetCurrentUserDB();
             int userId = view.UserId.ToInt();

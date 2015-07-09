@@ -17,6 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.ApplicationState;
+using MixERP.Net.Common.Extensions;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Framework.Controls;
+using Serilog;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -25,15 +31,6 @@ using System.Threading;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Base;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Common.Helpers;
-using MixERP.Net.Common.Models;
-using MixERP.Net.FrontEnd.Cache;
-using Serilog;
-using Menu = MixERP.Net.Entities.Core.Menu;
 
 namespace MixERP.Net.FrontEnd.Base
 {
@@ -48,9 +45,9 @@ namespace MixERP.Net.FrontEnd.Base
         /// </summary>
         public virtual string OverridePath { get; set; }
 
-
         /// <summary>
-        /// The pages which do not have actual entry on database menu table, but rather serve as placeholders are landing pages.
+        ///     The pages which do not have actual entry on database menu table, but rather serve as placeholders are landing
+        ///     pages.
         /// </summary>
         public virtual bool IsLandingPage { get; set; }
 
@@ -66,9 +63,9 @@ namespace MixERP.Net.FrontEnd.Base
         }
 
         public void RequestLoginPage()
-        {            
+        {
             FormsAuthentication.SignOut();
-            Log.Information("User {UserName} was signed off.", AppUsers.GetCurrentLogin().View.UserName);
+            Log.Information("User {UserName} was signed off.", AppUsers.GetCurrent().View.UserName);
 
             Log.Debug("Clearing Http Cookies.");
             foreach (string cookie in HttpContext.Current.Request.Cookies.AllKeys)
@@ -130,10 +127,10 @@ namespace MixERP.Net.FrontEnd.Base
             {
                 if (this.Request.IsAuthenticated)
                 {
-                    if (AppUsers.GetCurrentLogin().View.LoginId.ToLong().Equals(0))
+                    if (AppUsers.GetCurrent().View.LoginId.ToLong().Equals(0))
                     {
                         AppUsers.SetCurrentLogin();
-                        if (AppUsers.GetCurrentLogin().View.LoginId.ToLong().Equals(0))
+                        if (AppUsers.GetCurrent().View.LoginId.ToLong().Equals(0))
                         {
                             this.RequestLoginPage();
                         }
@@ -163,7 +160,8 @@ namespace MixERP.Net.FrontEnd.Base
 
             foreach (Menu menu in this.menus)
             {
-                if (menu != null && !string.IsNullOrWhiteSpace(menu.Url) && menu.Url.Replace("~", "").Equals(this.OverridePath))
+                if (menu != null && !string.IsNullOrWhiteSpace(menu.Url) &&
+                    menu.Url.Replace("~", "").Equals(this.OverridePath))
                 {
                     policyExists = true;
                     break;
@@ -244,7 +242,7 @@ namespace MixERP.Net.FrontEnd.Base
 
         private static void SetCulture()
         {
-            var logins = AppUsers.GetCurrentLogin();
+            var logins = AppUsers.GetCurrent();
 
             if (logins == null || logins.View == null)
             {
@@ -267,19 +265,20 @@ namespace MixERP.Net.FrontEnd.Base
 
         private void CheckForceLogOffFlags()
         {
-            int officeId = AppUsers.GetCurrentLogin().View.OfficeId.ToInt();
-            Collection<ApplicationDateModel> applicationDates = CacheFactory.GetApplicationDates(AppUsers.GetCurrentUserDB());
+            int officeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
+            Collection<FrequencyDates> applicationDates =
+                Dates.GetFrequencyDates(AppUsers.GetCurrentUserDB());
 
             if (applicationDates != null)
             {
-                ApplicationDateModel model = applicationDates.FirstOrDefault(c => c.OfficeId.Equals(officeId));
+                FrequencyDates model = applicationDates.FirstOrDefault(c => c.OfficeId.Equals(officeId));
 
                 if (model != null)
                 {
                     if (model.ForcedLogOffTimestamp != null && !model.ForcedLogOffTimestamp.Equals(DateTime.MinValue))
                     {
                         if (model.ForcedLogOffTimestamp <= DateTime.Now &&
-                            model.ForcedLogOffTimestamp >= AppUsers.GetCurrentLogin().View.LoginDateTime)
+                            model.ForcedLogOffTimestamp >= AppUsers.GetCurrent().View.LoginDateTime)
                         {
                             this.RequestLoginPage();
                         }

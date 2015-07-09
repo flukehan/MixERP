@@ -130,4 +130,12 @@ UNION ALL SELECT 'Report Writer', '~/Modules/BackOffice/Admin/ReportWriter.mix',
 UNION ALL SELECT 'Change User Password', '~/Modules/BackOffice/Admin/ChangePassword.mix', 'PWD', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'Check Updates', '~/Modules/BackOffice/Admin/CheckUpdates.mix', 'UPD', 2, core.get_menu_id('SAT')
 UNION ALL SELECT 'One Time Setup', NULL, 'OTS', 1, core.get_menu_id('BO')
-UNION ALL SELECT 'Opening Inventory', '~/Modules/BackOffice/OTS/OpeningInventory.mix', 'OTSI', 2, core.get_menu_id('OTS');
+UNION ALL SELECT 'Opening Inventory', '~/Modules/BackOffice/OTS/OpeningInventory.mix', 'OTSI', 2, core.get_menu_id('OTS')
+UNION ALL SELECT 'Attachment Parameters', '~/Modules/BackOffice/OTS/AttachmentParameters.mix', 'OTSAP', 2, core.get_menu_id('OTS')
+UNION ALL SELECT 'Currencylayer Parameters', '~/Modules/BackOffice/OTS/CurrencylayerParameters.mix', 'OTSCLP', 2, core.get_menu_id('OTS')
+UNION ALL SELECT 'Database Parameters', '~/Modules/BackOffice/OTS/DatabaseParameters.mix', 'OTSDBP', 2, core.get_menu_id('OTS')
+UNION ALL SELECT 'Messaging Parameters', '~/Modules/BackOffice/OTS/MessagingParameters.mix', 'OTSMSG', 2, core.get_menu_id('OTS')
+UNION ALL SELECT 'MixERP Parameters', '~/Modules/BackOffice/OTS/MixERPParameters.mix', 'OTSMIX', 2, core.get_menu_id('OTS')
+UNION ALL SELECT 'OpenExchangeRates Parameters', '~/Modules/BackOffice/OTS/OpenExchangeRatesParameters.mix', 'OTSOER', 2, core.get_menu_id('OTS')
+UNION ALL SELECT 'ScrudFactory Parameters', '~/Modules/BackOffice/OTS/ScrudFactoryParameters.mix', 'OTSSFP', 2, core.get_menu_id('OTS')
+UNION ALL SELECT 'Switches', '~/Modules/BackOffice/OTS/Switches.mix', 'OTSSW', 2, core.get_menu_id('OTS');

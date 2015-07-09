@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.i18n.Resources;
 using System;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.FrontEnd.Cache;
-using MixERP.Net.i18n.Resources;
 
 namespace MixERP.Net.FrontEnd
 {
@@ -32,10 +32,10 @@ namespace MixERP.Net.FrontEnd
         protected void Page_Load(object sender, EventArgs e)
         {
             this.CatalogLiteral.Text = AppUsers.GetCurrentUserDB();
-            this.BranchNameLiteral.Text = AppUsers.GetCurrentLogin().View.OfficeName;
+            this.BranchNameLiteral.Text = AppUsers.GetCurrent().View.OfficeName;
             this.SignOutLiteral.Text = Titles.SignOut;
             this.UserGreetingLiteral.Text = String.Format(CultureInfo.CurrentCulture, Labels.UserGreeting,
-                AppUsers.GetCurrentLogin().View.UserName);
+                AppUsers.GetCurrent().View.UserName);
             this.ChangePasswordLiteral.Text = Titles.ChangePassword;
             this.ManageProfileLiteral.Text = Titles.ManageProfile;
             this.MixERPDocumentationLiteral.Text = Titles.MixERPDocumentation;

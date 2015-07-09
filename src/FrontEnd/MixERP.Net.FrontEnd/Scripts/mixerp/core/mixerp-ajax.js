@@ -28,12 +28,12 @@ jQuery.fn.bindAjaxData = function (ajaxData, skipSelect, selectedValue, dataValu
 
 
     if (ajaxData.length === 0) {
-        appendItem(targetControl, "", window.noneLocalized);
+        appendItem(targetControl, "", Resources.Titles.None());
         return;
     };
 
     if (!skipSelect) {
-        appendItem(targetControl, "", window.selectLocalized);
+        appendItem(targetControl, "", Resources.Titles.Select());
     }
    
     if (!dataValueField) {
