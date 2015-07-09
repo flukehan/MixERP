@@ -94,11 +94,21 @@ BEGIN
             login_id                                    bigint NOT NULL REFERENCES audit.logins(login_id),
             store_id                                    integer NOT NULL REFERENCES office.stores(store_id),
             value_date                                  date NOT NULL,
+            transaction_ts                              TIMESTAMP WITH TIME ZONE DEFAULT(now()),
             reference_number                            national character varying(24) NOT NULL,
             statement_reference                         text,
             authorized                                  boolean NOT NULL DEFAULT(false),
+            authorized_by_user_id                       integer REFERENCES office.users(user_id),
+            authorized_on                               TIMESTAMP WITH TIME ZONE,
             acknowledged                                boolean NOT NULL DEFAULT(FALSE),
-            withdrawn                                   boolean NOT NULL DEFAULT(FALSE),
+            acknowledged_by_user_id                     integer REFERENCES office.users(user_id),
+            acknowledged_on                             TIMESTAMP WITH TIME ZONE,
+            withdrawn                                   boolean NOT NULL DEFAULT(FALSE)
+                                                        CONSTRAINT inventory_transfer_requests_withdrawn_chk
+                                                        CHECK(CASE WHEN withdrawn THEN authorized=false AND acknowledged=false END),
+            withdrawn_on                                TIMESTAMP WITH TIME ZONE,
+            withdrawn_by_user_id                        integer REFERENCES office.users(user_id),
+            withdrawal_reason                           national character varying(100) NOT NULL DEFAULT(''),
             audit_ts                                    TIMESTAMP WITH TIME ZONE DEFAULT(now())
         );
     END IF;    

@@ -72,7 +72,7 @@ function LoadImageGroup(file) {
         '<div class="ui bottom attached button">' +
         "<a class='ui positive button' data-toggle='modal' data-target='#opener' onclick=\"initializeModal('" + file.FilePath + "', '" + file.OriginalFileName + "', '" + file.Comment + "');\">" + Resources.Titles.View() + "</a>&nbsp;" +
         "<a class='ui blue button' target='_blank' href='" + file.FilePath + "'>" + Resources.Titles.Download() + "</a>&nbsp;" +
-        "<a class='ui negative button' onclick=\"removeAttachment('" + file.AttachmentId + "');\">" + Resources.Warnings.AccessIsDenied() + "</a>&nbsp;" +
+        "<a class='ui negative button' onclick=\"removeAttachment('" + file.AttachmentId + "');\">" + Resources.Titles.Delete() + "</a>&nbsp;" +
         '</div>' +
         '</div>';
 

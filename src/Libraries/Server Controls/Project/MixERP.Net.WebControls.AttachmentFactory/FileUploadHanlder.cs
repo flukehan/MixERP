@@ -11,13 +11,6 @@ namespace MixERP.Net.WebControls.AttachmentFactory
 {
     public class FileUploadHanlder : IHttpHandler
     {
-        public string Catalog { get; set; }
-
-        public FileUploadHanlder(string catalog)
-        {
-            this.Catalog = catalog;
-        }
-
         /// <summary>
         ///     You will need to configure this handler in the Web.config file of your
         ///     web and register it with IIS before being able to use it. For more information
@@ -62,7 +55,7 @@ namespace MixERP.Net.WebControls.AttachmentFactory
 
         private List<string> GetAllowedExtensions()
         {
-            return Helpers.ConfigurationHelper.GetAllowedExtensions(this.Catalog).Split(',').ToList();
+            return Helpers.ConfigurationHelper.GetAllowedExtensions(AppUsers.GetCurrentUserDB()).Split(',').ToList();
         }
 
         private int RandomNumber()

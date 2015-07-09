@@ -39,7 +39,10 @@ namespace MixERP.Net.Core.Modules.Inventory.Confirmation
                 checklist.DisplayWithdrawButton = true;
                 checklist.DisplayViewReportButton = true;
                 checklist.DisplayAttachmentButton = true;
-                checklist.ReportPath = "~/Modules/Inventory/Reports/InventoryTransferRequest.mix";
+
+                checklist.IsStockTransferRequest = true;
+                
+                checklist.ReportPath = "~/Modules/Inventory/Reports/InventoryTransferRequestReport.mix";
                 checklist.ViewPath = "/Modules/Inventory/TransferRequest.mix";
                 checklist.AddNewPath = "/Modules/Inventory/Entry/TransferRequest.mix";
                 checklist.UserId = AppUsers.GetCurrent().View.UserId.ToInt();

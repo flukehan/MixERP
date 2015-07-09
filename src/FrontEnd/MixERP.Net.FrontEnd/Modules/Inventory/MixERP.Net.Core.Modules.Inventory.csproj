@@ -94,7 +94,7 @@
     <Content Include="Reports\AccountStatementReport.ascx" />
     <Content Include="Reports\InventoryAdjustmentReport.ascx" />
     <Content Include="Reports\InventoryAdvice.ascx" />
-    <Content Include="Reports\InventoryTransferReport.ascx" />
+    <Content Include="Reports\InventoryTransferRequestReport.ascx" />
     <Content Include="Reports\Source\Inventory.AccountStatement.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -104,14 +104,19 @@
     <Content Include="Reports\Source\Inventory.Adjustment.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Reports\Source\Inventory.Transfer.Request.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Reports\Source\Inventory.Transfer.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Scripts\TransferRequest.js" />
     <Content Include="Scripts\Reports\AccountStatement.js" />
     <Content Include="Scripts\Setup\Parties.js" />
     <Content Include="Services\Entry\Adjustment.asmx" />
     <Content Include="Services\Entry\Transfer.asmx" />
     <Content Include="Services\Entry\TransferRequest.asmx" />
+    <Content Include="Services\TransferAuthorization.asmx" />
     <Content Include="Setup\CompoundItemDetails.ascx" />
     <Content Include="Setup\CompoundItems.ascx" />
     <Content Include="Setup\ItemTypes.ascx" />
@@ -135,6 +140,7 @@
     <Content Include="Setup\ShippingAddresses.ascx" />
     <Content Include="Setup\UOM.ascx" />
     <Content Include="Transfer.ascx" />
+    <Content Include="TransferAuthorization.ascx" />
     <Content Include="TransferRequest.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -219,12 +225,12 @@
     <Compile Include="Reports\InventoryAdvice.ascx.designer.cs">
       <DependentUpon>InventoryAdvice.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Reports\InventoryTransferReport.ascx.cs">
-      <DependentUpon>InventoryTransferReport.ascx</DependentUpon>
+    <Compile Include="Reports\InventoryTransferRequestReport.ascx.cs">
+      <DependentUpon>InventoryTransferRequestReport.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Reports\InventoryTransferReport.ascx.designer.cs">
-      <DependentUpon>InventoryTransferReport.ascx</DependentUpon>
+    <Compile Include="Reports\InventoryTransferRequestReport.ascx.designer.cs">
+      <DependentUpon>InventoryTransferRequestReport.ascx</DependentUpon>
     </Compile>
     <Compile Include="Services\Entry\Adjustment.asmx.cs">
       <DependentUpon>Adjustment.asmx</DependentUpon>
@@ -244,6 +250,10 @@
     </Compile>
     <Compile Include="Services\PartyData.asmx.cs">
       <DependentUpon>PartyData.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\TransferAuthorization.asmx.cs">
+      <DependentUpon>TransferAuthorization.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Setup\Brands.ascx.cs">
@@ -364,6 +374,9 @@
     </Compile>
     <Compile Include="Transfer.ascx.designer.cs">
       <DependentUpon>Transfer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TransferAuthorization.ascx.designer.cs">
+      <DependentUpon>TransferAuthorization.ascx</DependentUpon>
     </Compile>
     <Compile Include="TransferRequest.ascx.cs">
       <DependentUpon>TransferRequest.ascx</DependentUpon>

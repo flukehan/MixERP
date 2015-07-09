@@ -24,12 +24,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 <div class="basic ui buttons">
     <input id="AddNewButton" value="<%= Titles.AddNew %>" class="ui button" onclick=" window.location = 'Entry/TransferRequest.mix' " type="button">
     <input id="FlagButton" value="<%= Titles.Flag %>" class="ui button" type="button">
-    <input id="AuthorizeButton" value="<%=Titles.Authorize %>" class="ui button" type="button">
-    <input id="SendButton" value="<%=Titles.Send %>" class="ui button" type="button">
-    <input id="EditButton" value="<%=Titles.EditAndSend %>" class="ui button" type="button">
-    <input id="ReceiveButton" value="<%=Titles.Receive %>" class="ui button" type="button">
-    <input id="EditReceiveButton" value="<%=Titles.EditAndReceive %>" class="ui button" type="button">
-    <input id="PrintButton" value="<%= Titles.Print %>" class="ui button" type="button">
 </div>
 
 <div id="FilterDiv" class="ui segment">
@@ -53,7 +47,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             </div>
             <div class="field">
                 <label><%=Titles.Authorized %></label>
-                <input id="AuthorizedTextBox" type="text" value="false" runat="server"/>
+                <input id="AuthorizedTextBox" type="text" value="" runat="server"/>
             </div>
             <div class="field">
                 <label><%=Titles.Acknowledged %></label>
@@ -84,45 +78,4 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 </div>
 
 <asp:PlaceHolder ID="GridViewPlaceholder" runat="server"/>
-<script type="text/javascript">
-
-    $(window).load(function () {
-        var grid = $("#TransferRequestGridView");
-        var header = grid.find("thead tr");
-        var rows = grid.find("tbody tr");
-
-
-
-        var iconTemplate = "<a href=\"Confirmation/TransferRequest.mix?TranId=%s\" title=\"%s\">" +
-                                "<i class=\"list icon\"></i>" +
-                            "</a>" +
-                            "<a title=\"%s\" onclick=\"showWindow('Reports/TransferRequestReport.mix?TranId=%1$s');\">" +
-                                "<i class=\"print icon\"></i>" +
-                            "</a>" +
-                            "<a title=\"%s\" onclick=\"window.scroll(0);\">" +
-                                "<i class=\"arrow up icon\"></i>" +
-                            "</a>";
-
-        if (header.length) {
-            header.prepend("<th>" + Resources.Titles.Actions() + "</th><th>" + Resources.Titles.Select() + "</th>");
-            rows.prepend("<td></td><td><div class='ui toggle checkbox'><input type='checkbox' /><label></label></div></td>");
-
-            rows.click(function () {
-                var el = $(this);
-                toogleSelection(el.find("input"));
-            });
-
-
-            rows.each(function () {
-                var iconCell = $(this).find("td:first-child");
-                var tranId = $(this).find("td:nth-child(3)").html();
-
-                var template = sprintf(iconTemplate, tranId, Resources.Labels.GoToChecklistWindow(), Resources.Titles.Print(), Resources.Labels.GoToTop());
-
-                iconCell.html(template);
-
-            });
-
-        };
-    });
-</script>
+<script src="Scripts/TransferRequest.js"></script>

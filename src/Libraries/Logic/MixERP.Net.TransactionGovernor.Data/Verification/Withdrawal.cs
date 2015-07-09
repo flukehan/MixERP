@@ -24,9 +24,25 @@ namespace MixERP.Net.TransactionGovernor.Data.Verification
 {
     public static class Withdrawal
     {
-        public static bool WithdrawTransaction(string catalog, long transactionMasterId, int userId, string reason, short status)
+        public static bool WithdrawTransaction(string catalog, bool isStockTransferRequest, long transactionMasterId, int userId, string reason, short status)
         {
-            const string sql = "UPDATE transactions.transaction_master SET verification_status_id=@Status, verified_by_user_id=@UserId, verification_reason=@Reason WHERE transactions.transaction_master.transaction_master_id=@TransactionMasterId;";
+            string sql = @"UPDATE transactions.transaction_master SET 
+                                verification_status_id=@Status, 
+                                verified_by_user_id=@UserId, 
+                                verification_reason=@Reason,
+                                last_verified_on = NOW()
+                                WHERE transactions.transaction_master.transaction_master_id=@TransactionMasterId;";
+
+            if (isStockTransferRequest)
+            {
+                sql = @"UPDATE transactions.inventory_transfer_requests SET 
+                        withdrawn=CASE @Status WHEN -1 THEN true ELSE false END, 
+                        withdrawn_by_user_id=@UserId,
+                        withdrawal_reason=@Reason,
+                        withdrawn_on = NOW()
+                        WHERE transactions.inventory_transfer_requests.inventory_transfer_request_id=@TransactionMasterId;";
+            }
+
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@Status", status);

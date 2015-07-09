@@ -658,6 +658,7 @@ SELECT localization.add_localized_resource('Titles', '', 'AccountNumber', 'Accou
 SELECT localization.add_localized_resource('Titles', '', 'AccountOverview', 'Account Overview');
 SELECT localization.add_localized_resource('Titles', '', 'AccountStatement', 'Account Statement');
 SELECT localization.add_localized_resource('Titles', '', 'Acknowledged', 'Acknowledged');
+SELECT localization.add_localized_resource('Titles', '', 'AcknowledgedBy', 'Acknowledged By');
 SELECT localization.add_localized_resource('Titles', '', 'Action', 'Action');
 SELECT localization.add_localized_resource('Titles', '', 'Actions', 'Actions');
 SELECT localization.add_localized_resource('Titles', '', 'Actual', 'Actual');
@@ -682,6 +683,7 @@ SELECT localization.add_localized_resource('Titles', '', 'AttachmentParameters',
 SELECT localization.add_localized_resource('Titles', '', 'AttachmentsPlus', 'Attachments (+)');
 SELECT localization.add_localized_resource('Titles', '', 'Authorize', 'Authorize');
 SELECT localization.add_localized_resource('Titles', '', 'Authorized', 'Authorized');
+SELECT localization.add_localized_resource('Titles', '', 'AuthorizedBy', 'Authorized By');
 SELECT localization.add_localized_resource('Titles', '', 'AutoVerificationPolicy', 'Autoverification Policy');
 SELECT localization.add_localized_resource('Titles', '', 'AutomaticallyApprovedByWorkflow', 'Automatically Approved by Workflow');
 SELECT localization.add_localized_resource('Titles', '', 'Back', 'Back');

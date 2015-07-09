@@ -69,7 +69,6 @@
     <Compile Include="TransactionCheckList\Styling.cs" />
     <Compile Include="TransactionCheckList\Events.cs" />
     <Compile Include="TransactionCheckList\Properties.cs" />
-    <Compile Include="Verification.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\mixerp.licenseheader">

@@ -42,7 +42,9 @@ RETURNS TABLE
     statement_reference     text,
     authorized              text,
     acknowledged            text,
-    withdrawn               text
+    withdrawn               text,
+    flag_background_color   text,
+    flag_foreground_color   text
 )
 AS
 $$
@@ -68,7 +70,9 @@ BEGIN
             transactions.inventory_transfer_requests.statement_reference::text,
             transactions.inventory_transfer_requests.authorized::text,
             transactions.inventory_transfer_requests.acknowledged::text,
-            transactions.inventory_transfer_requests.withdrawn::text
+            transactions.inventory_transfer_requests.withdrawn::text,
+            core.get_flag_background_color(core.get_flag_type_id(_user_id, 'transactions.inventory_transfer_requests', 'inventory_transfer_request_id', transactions.inventory_transfer_requests.inventory_transfer_request_id::text)) AS flag_bg,
+            core.get_flag_foreground_color(core.get_flag_type_id(_user_id, 'transactions.inventory_transfer_requests', 'inventory_transfer_request_id', transactions.inventory_transfer_requests.inventory_transfer_request_id::text)) AS flag_fg            
         FROM transactions.inventory_transfer_requests
         INNER JOIN office.offices
         ON transactions.inventory_transfer_requests.office_id = office.offices.office_id
@@ -86,7 +90,6 @@ BEGIN
         AND lower(transactions.inventory_transfer_requests.authorized::text) LIKE '%' || lower(_authorized) || '%'
         AND lower(transactions.inventory_transfer_requests.acknowledged::text) LIKE '%' || lower(_acknowledged) || '%'
         AND lower(transactions.inventory_transfer_requests.withdrawn::text) LIKE '%' || lower(_withdrawn) || '%';
-
         RETURN;
     END IF;
 
@@ -100,7 +103,9 @@ BEGIN
         transactions.inventory_transfer_requests.reference_number::text,
         transactions.inventory_transfer_requests.statement_reference::text,
         transactions.inventory_transfer_requests.authorized::text,
-        transactions.inventory_transfer_requests.acknowledged::text
+        transactions.inventory_transfer_requests.acknowledged::text,
+        core.get_flag_background_color(core.get_flag_type_id(_user_id, 'transactions.inventory_transfer_requests', 'inventory_transfer_request_id', transactions.inventory_transfer_requests.inventory_transfer_request_id::text)) AS flag_bg,
+        core.get_flag_foreground_color(core.get_flag_type_id(_user_id, 'transactions.inventory_transfer_requests', 'inventory_transfer_request_id', transactions.inventory_transfer_requests.inventory_transfer_request_id::text)) AS flag_fg            
     FROM transactions.inventory_transfer_requests
     INNER JOIN office.offices
     ON transactions.inventory_transfer_requests.office_id = office.offices.office_id

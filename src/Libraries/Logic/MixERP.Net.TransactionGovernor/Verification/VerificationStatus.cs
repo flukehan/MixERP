@@ -21,14 +21,14 @@ namespace MixERP.Net.TransactionGovernor.Verification
 {
     public static class VerificationStatus
     {
-        public static Entities.Models.Transactions.Verification GetVerificationStatus(string catalog, long transactionMasterId)
+        public static Entities.Models.Transactions.Verification GetVerificationStatus(string catalog, long transactionMasterId, bool isStockTransferRequest)
         {
             if (transactionMasterId <= 0)
             {
                 return null;
             }
 
-            return Data.Verification.VerificationStatus.GetVerificationStatus(catalog, transactionMasterId);
+            return Data.Verification.VerificationStatus.GetVerificationStatus(catalog, transactionMasterId, isStockTransferRequest);
         }
     }
 }

@@ -22,6 +22,7 @@ using MixERP.Net.i18n;
 using MixERP.Net.i18n.Resources;
 using System.Globalization;
 using System.Web.UI.WebControls;
+using MixERP.Net.TransactionGovernor.Verification;
 
 namespace MixERP.Net.WebControls.TransactionChecklist
 {
@@ -29,6 +30,11 @@ namespace MixERP.Net.WebControls.TransactionChecklist
     {
         private void ShowVerificationStatus(string tranId, Label label)
         {
+            if (this.HideVerificationMessage)
+            {
+                return;
+            }
+
             if (this.IsNonGlTransaction)
             {
                 return;
@@ -41,7 +47,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
                 return;
             }
 
-            Entities.Models.Transactions.Verification model = Verification.GetVerificationStatus(this.Catalog, transactionMasterId);
+            Entities.Models.Transactions.Verification model = VerificationStatus.GetVerificationStatus(this.Catalog, transactionMasterId, this.IsStockTransferRequest);
 
             switch (model.VerificationStatusId)
             {

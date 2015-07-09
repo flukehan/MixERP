@@ -27,6 +27,14 @@ using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.WebControls.Common;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Web.UI.WebControls;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Framework;
+using MixERP.Net.i18n.Resources;
+using MixERP.Net.TransactionGovernor;
+using MixERP.Net.WebControls.Flag;
 
 namespace MixERP.Net.Core.Modules.Inventory
 {
@@ -38,8 +46,83 @@ namespace MixERP.Net.Core.Modules.Inventory
             this.DateToDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
             this.AddGridView();
             this.BindGridView();
+            this.AddFlagControl();
+            this.AddHiddenField();
         }
 
+        private void AddHiddenField()
+        {
+            this.selectedValuesHidden = new HiddenField();
+            this.selectedValuesHidden.ID = "SelectedValuesHidden";
+            this.GridViewPlaceholder.Controls.Add(selectedValuesHidden);
+        }
+
+        #region Flag
+
+        private void AddFlagControl()
+        {
+            this.flag = new FlagControl();
+
+            this.flag.ID = "FlagPopUnder";
+            this.flag.AssociatedControlId = "FlagButton";
+            this.flag.OnClientClick = "return getSelectedItems();";
+            this.flag.CssClass = "ui form segment initially hidden";
+            this.flag.Updated += this.Flag_Updated;
+            this.flag.Catalog = AppUsers.GetCurrentUserDB();
+
+
+            this.GridViewPlaceholder.Controls.Add(flag);
+        }
+
+        private void Flag_Updated(object sender, FlagUpdatedEventArgs e)
+        {
+            int flagTypeId = e.FlagId;
+
+            const string resource = "transactions.inventory_transfer_requests";
+            const string resourceKey = "inventory_transfer_request_id";
+
+            if (string.IsNullOrWhiteSpace(resource))
+            {
+                throw new MixERPException(Warnings.CannotCreateFlagTransactionTableNull);
+            }
+
+
+            Flags.CreateFlag(AppUsers.GetCurrentUserDB(), AppUsers.GetCurrent().View.UserId.ToInt(), flagTypeId, resource, resourceKey, this.GetSelectedValues().Select(t => Conversion.TryCastString(t)).ToList().ToCollection());
+
+            this.BindGridView();
+        }
+
+        private Collection<long> GetSelectedValues()
+        {
+            string selectedValues = this.selectedValuesHidden.Value;
+
+            //Check if something was selected.
+            if (string.IsNullOrWhiteSpace(selectedValues))
+            {
+                return new Collection<long>();
+            }
+
+            //Create a collection object to store the IDs.
+            Collection<long> values = new Collection<long>();
+
+            //Iterate through each value in the selected values
+            //and determine if each value is a number.
+            foreach (string value in selectedValues.Split(','))
+            {
+                //Parse the value to integer.
+                int val = Conversion.TryCastInteger(value);
+
+                if (val > 0)
+                {
+                    values.Add(val);
+                }
+            }
+
+            return values;
+        }
+
+
+        #endregion
         private void AddGridView()
         {
             this.grid = new MixERPGridView();
@@ -50,7 +133,6 @@ namespace MixERP.Net.Core.Modules.Inventory
         protected void ShowButton_Click(object sender, EventArgs e)
         {
             this.BindGridView();
-            ;
         }
 
         private void BindGridView()
@@ -89,6 +171,8 @@ namespace MixERP.Net.Core.Modules.Inventory
 
         private bool disposed;
         private MixERPGridView grid;
+        private FlagControl flag;
+        private HiddenField selectedValuesHidden;
 
         public override void Dispose()
         {
@@ -110,6 +194,18 @@ namespace MixERP.Net.Core.Modules.Inventory
             {
                 this.grid.Dispose();
                 this.grid = null;
+            }
+
+            if (this.flag != null)
+            {
+                this.flag.Dispose();
+                this.flag = null;
+            }
+
+            if (this.selectedValuesHidden != null)
+            {
+                this.selectedValuesHidden.Dispose();
+                this.selectedValuesHidden = null;
             }
 
             this.disposed = true;

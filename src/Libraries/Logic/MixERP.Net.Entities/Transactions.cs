@@ -2,6 +2,9 @@
 using MixERP.Net.Entities.Contracts;
 using PetaPoco;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
 namespace MixERP.Net.Entities.Transactions
 {
@@ -1057,6 +1060,27 @@ namespace MixERP.Net.Entities.Transactions
         [Column("audit_ts")] 
         public DateTime? AuditTs { get; set; }
 
+        [Column("transaction_ts")] 
+        public DateTime? TransactionTs { get; set; }
+
+        [Column("authorized_by_user_id")] 
+        public int? AuthorizedByUserId { get; set; }
+
+        [Column("acknowledged_by_user_id")] 
+        public int? AcknowledgedByUserId { get; set; }
+
+        [Column("authorized_on")] 
+        public DateTime? AuthorizedOn { get; set; }
+
+        [Column("withdrawn_by_user_id")] 
+        public int? WithdrawnByUserId { get; set; }
+
+        [Column("withdrawal_reason")] 
+        public string WithdrawalReason { get; set; }
+
+        [Column("withdrawn_on")] 
+        public DateTime? WithdrawnOn { get; set; }
+
     }
 
     [TableName("transactions.inventory_transfer_request_details")]
@@ -1312,6 +1336,12 @@ namespace MixERP.Net.Entities.Transactions
 
         [Column("withdrawn")] 
         public string Withdrawn { get; set; }
+
+        [Column("flag_background_color")] 
+        public string FlagBackgroundColor { get; set; }
+
+        [Column("flag_foreground_color")] 
+        public string FlagForegroundColor { get; set; }
 
     }
 
