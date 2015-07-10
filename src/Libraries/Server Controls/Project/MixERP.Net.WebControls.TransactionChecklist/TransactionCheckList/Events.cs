@@ -84,7 +84,7 @@ namespace MixERP.Net.WebControls.TransactionChecklist
             if (
                 model.VerificationStatusId.Equals(0) //Awaiting verification
                 ||
-                model.VerificationStatusId.Equals(2) //Automatically Approved by Workflow
+                model.VerificationStatusId.Equals(1) //Automatically Approved by Workflow
                 )
             {
                 //Withdraw this transaction.

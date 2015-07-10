@@ -4,5 +4,6 @@
     {
         public string Catalog { get; set; }
         public int OfficeId { get; set; }
+        public bool DisplayShipper { get; set; }
     }
 }

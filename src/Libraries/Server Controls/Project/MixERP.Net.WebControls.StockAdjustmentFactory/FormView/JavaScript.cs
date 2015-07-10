@@ -13,6 +13,7 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             string script = string.Empty;
 
             script += JSUtility.GetVar("storeServiceUrl", this.StoreServiceUrl);
+            script += JSUtility.GetVar("shippingCompanyServiceUrl", this.ShippingCompanyServiceUrl);
             script += JSUtility.GetVar("itemServiceUrl", this.ItemServiceUrl);
             script += JSUtility.GetVar("unitServiceUrl", this.UnitServiceUrl);
             script += JSUtility.GetVar("itemPopupUrl", this.ItemPopupUrl);

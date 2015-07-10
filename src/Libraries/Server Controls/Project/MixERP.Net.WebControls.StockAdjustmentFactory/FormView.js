@@ -13,12 +13,15 @@ var transactionTypeSelect = $("#TransactionTypeSelect");
 var transferGridView = $("#TransferGridView");
 var unitSelect = $("#UnitSelect");
 var valueDateTextBox = $("#ValueDateTextBox");
+var shippingCompanySelect = $("#ShippingCompanySelect");
+
 var url = "";
 var data = "";
 
 $(document).ready(function () {
     loadStores();
     loadItems();
+    loadShippers();
 });
 
 addButton.click(function () {
@@ -261,6 +264,14 @@ function loadStores() {
     if (storeSelect.length) {
         url = storeServiceUrl;
         ajaxDataBind(url, storeSelect);
+    };
+};
+
+//Ajax Data-binding
+function loadShippers() {
+    if (shippingCompanySelect.length) {
+        url = shippingCompanyServiceUrl;
+        ajaxDataBind(url, shippingCompanySelect);
     };
 };
 

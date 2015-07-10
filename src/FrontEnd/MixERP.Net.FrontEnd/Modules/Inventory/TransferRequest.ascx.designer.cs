@@ -58,22 +58,22 @@ namespace MixERP.Net.Core.Modules.Inventory {
         protected global::System.Web.UI.HtmlControls.HtmlInputText AuthorizedTextBox;
         
         /// <summary>
-        /// AcknowledgedTextBox control.
+        /// DeliveredTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText AcknowledgedTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText DeliveredTextBox;
         
         /// <summary>
-        /// WithdrawnTextBox control.
+        /// ReceivedTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText WithdrawnTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText ReceivedTextBox;
         
         /// <summary>
         /// UserTextBox control.

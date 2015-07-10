@@ -7331,6 +7331,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Acknowledged By
+		/// </summary>
+		public static string AcknowledgedBy 
+		{
+			get
+			{
+				return Get("AcknowledgedBy");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Action
 		/// </summary>
 		public static string Action 
@@ -7591,6 +7602,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("Authorized");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Authorized By
+		/// </summary>
+		public static string AuthorizedBy 
+		{
+			get
+			{
+				return Get("AuthorizedBy");
 			}
 		}
 		
@@ -8629,6 +8651,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Deliver
+		/// </summary>
+		public static string Deliver 
+		{
+			get
+			{
+				return Get("Deliver");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Deliver To
 		/// </summary>
 		public static string DeliverTo 
@@ -8636,6 +8669,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("DeliverTo");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Delivered
+		/// </summary>
+		public static string Delivered 
+		{
+			get
+			{
+				return Get("Delivered");
 			}
 		}
 		

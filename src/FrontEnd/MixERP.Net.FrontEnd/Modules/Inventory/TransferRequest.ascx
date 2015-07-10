@@ -50,12 +50,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                 <input id="AuthorizedTextBox" type="text" value="" runat="server"/>
             </div>
             <div class="field">
-                <label><%=Titles.Acknowledged %></label>
-                <input id="AcknowledgedTextBox" type="text" value="false" runat="server"/>
+                <label><%=Titles.Delivered %></label>
+                <input id="DeliveredTextBox" type="text" value="false" runat="server"/>
             </div>
             <div class="field">
-                <label><%=Titles.Withdrawn %></label>
-                <input id="WithdrawnTextBox" type="text" value="false" runat="server"/>
+                <label><%=Titles.Received %></label>
+                <input id="ReceivedTextBox" type="text" value="false" runat="server"/>
             </div>
             <div class="field">
                 <label><%=Titles.User %></label>

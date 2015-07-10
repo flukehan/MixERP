@@ -53,5 +53,25 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
             StockTransfer.Authorize(AppUsers.GetCurrentUserDB(), userId, tranId);
             return "OK";
         }
+
+        [WebMethod]
+        public string Reject(long tranId)
+        {
+            bool isAdmin = AppUsers.GetCurrent().View.IsAdmin.ToBool();
+
+            if (!isAdmin)
+            {
+                throw new MixERPException(Warnings.AccessIsDenied);
+            }
+
+            if (tranId <= 0)
+            {
+            }
+
+            int userId = AppUsers.GetCurrent().View.UserId.ToInt();
+
+            StockTransfer.Reject(AppUsers.GetCurrentUserDB(), userId, tranId);
+            return "OK";
+        }
     }
 }

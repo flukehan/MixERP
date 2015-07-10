@@ -97,17 +97,19 @@ BEGIN
             transaction_ts                              TIMESTAMP WITH TIME ZONE DEFAULT(now()),
             reference_number                            national character varying(24) NOT NULL,
             statement_reference                         text,
-            authorized                                  boolean NOT NULL DEFAULT(false),
+            authorization_status_id                     smallint NOT NULL REFERENCES core.verification_statuses(verification_status_id)
+                                                        DEFAULT(0)
+                                                        CONSTRAINT inventory_transfer_requests_withdrawn_chk
+                                                        CHECK(CASE WHEN authorization_status_id = -1 THEN delivered=false AND received=false AND user_id = authorized_by_user_id END),
             authorized_by_user_id                       integer REFERENCES office.users(user_id),
             authorized_on                               TIMESTAMP WITH TIME ZONE,
-            acknowledged                                boolean NOT NULL DEFAULT(FALSE),
-            acknowledged_by_user_id                     integer REFERENCES office.users(user_id),
-            acknowledged_on                             TIMESTAMP WITH TIME ZONE,
-            withdrawn                                   boolean NOT NULL DEFAULT(FALSE)
-                                                        CONSTRAINT inventory_transfer_requests_withdrawn_chk
-                                                        CHECK(CASE WHEN withdrawn THEN authorized=false AND acknowledged=false END),
-            withdrawn_on                                TIMESTAMP WITH TIME ZONE,
-            withdrawn_by_user_id                        integer REFERENCES office.users(user_id),
+            authorization_reason                        national character varying(128),
+            received                                    boolean NOT NULL DEFAULT(FALSE),
+            received_by_user_id                         integer REFERENCES office.users(user_id),
+            received_on                                 TIMESTAMP WITH TIME ZONE,
+            delivered                                   boolean NOT NULL DEFAULT(FALSE),
+            delivered_by_user_id                        integer REFERENCES office.users(user_id),
+            delivered_on                                TIMESTAMP WITH TIME ZONE,
             withdrawal_reason                           national character varying(100) NOT NULL DEFAULT(''),
             audit_ts                                    TIMESTAMP WITH TIME ZONE DEFAULT(now())
         );

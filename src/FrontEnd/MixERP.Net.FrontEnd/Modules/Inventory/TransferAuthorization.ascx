@@ -24,10 +24,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 <div class="basic ui buttons">
     <input id="FlagButton" value="<%= Titles.Flag %>" class="ui button" type="button">
     <input id="AuthorizeButton" value="<%=Titles.Authorize %>" class="ui button" type="button">
-    <input id="SendButton" value="<%=Titles.Send %>" class="ui button" type="button">
-    <input id="EditButton" value="<%=Titles.EditAndSend %>" class="ui button" type="button">
-    <input id="ReceiveButton" value="<%=Titles.Receive %>" class="ui button" type="button">
-    <input id="EditReceiveButton" value="<%=Titles.EditAndReceive %>" class="ui button" type="button">
+    <input id="RejectButton" value="<%=Titles.Reject %>" class="ui button" type="button">
     <input id="PrintButton" value="<%= Titles.Print %>" class="ui button" type="button">
 </div>
 
@@ -55,12 +52,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                 <input id="AuthorizedTextBox" type="text" value="false" runat="server"/>
             </div>
             <div class="field">
-                <label><%=Titles.Acknowledged %></label>
-                <input id="AcknowledgedTextBox" type="text" value="false" runat="server"/>
+                <label><%=Titles.Delivered %></label>
+                <input id="DeliveredTextBox" type="text" value="false" runat="server"/>
             </div>
             <div class="field">
-                <label><%=Titles.Withdrawn %></label>
-                <input id="WithdrawnTextBox" type="text" value="false" runat="server"/>
+                <label><%=Titles.Received %></label>
+                <input id="ReceivedTextBox" type="text" value="false" runat="server"/>
             </div>
             <div class="field">
                 <label><%=Titles.User %></label>
@@ -86,6 +83,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 <script src="Scripts/TransferRequest.js"></script>
 <script type="text/javascript">
     var authorizeButton = $("#AuthorizeButton");
+    var rejectButton = $("#RejectButton");
 
     authorizeButton.click(function () {
         getSelectedItems();
@@ -96,13 +94,19 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             return;
         };
 
+        var confirmed = confirm(Resources.Questions.AreYouSure());
+
+        if (!confirmed) {
+            return;
+        };
+
         var ajaxAuthorize = Authorize(tranId);
 
         ajaxAuthorize.success(function () {
             window.location = window.location;
         });
 
-        ajaxAuthorize.fail(function(xhr) {
+        ajaxAuthorize.fail(function (xhr) {
             logAjaxErrorMessage(xhr);
         });
 
@@ -111,6 +115,44 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
     function Authorize(tranId) {
 
         url = "/Modules/Inventory/Services/TransferAuthorization.asmx/Authorize";
+
+        data = appendParameter("", "tranId", tranId);
+
+        data = getData(data);
+
+        return getAjax(url, data);
+    };
+
+    rejectButton.click(function () {
+        getSelectedItems();
+        var tranId = parseFloat($("#SelectedValuesHidden").val().split(",")[0] || 0);
+
+        if (!tranId) {
+            displayMessage(Resources.Warnings.NothingSelected(), "error");
+            return;
+        };
+
+        var confirmed = confirm(Resources.Questions.AreYouSure());
+
+        if (!confirmed) {
+            return;
+        };
+
+        var ajaxReject = Reject(tranId);
+
+        ajaxReject.success(function () {
+            window.location = window.location;
+        });
+
+        ajaxReject.fail(function (xhr) {
+            logAjaxErrorMessage(xhr);
+        });
+
+    });
+
+    function Reject(tranId) {
+
+        url = "/Modules/Inventory/Services/TransferAuthorization.asmx/Reject";
 
         data = appendParameter("", "tranId", tranId);
 

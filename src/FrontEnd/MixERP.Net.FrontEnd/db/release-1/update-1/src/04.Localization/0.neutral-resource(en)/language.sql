@@ -778,6 +778,8 @@ SELECT localization.add_localized_resource('Titles', '', 'DefaultReorderQuantity
 SELECT localization.add_localized_resource('Titles', '', 'Definition', 'Definition');
 SELECT localization.add_localized_resource('Titles', '', 'Delete', 'Delete');
 SELECT localization.add_localized_resource('Titles', '', 'DeleteSelected', 'Delete Selected');
+SELECT localization.add_localized_resource('Titles', '', 'Deliver', 'Deliver');
+SELECT localization.add_localized_resource('Titles', '', 'Delivered', 'Delivered');
 SELECT localization.add_localized_resource('Titles', '', 'DeliverTo', 'Deliver To');
 SELECT localization.add_localized_resource('Titles', '', 'Department', 'Department');
 SELECT localization.add_localized_resource('Titles', '', 'Departments', 'Departments');
@@ -983,6 +985,7 @@ SELECT localization.add_localized_resource('Titles', '', 'ReceiptCurrency', 'Rec
 SELECT localization.add_localized_resource('Titles', '', 'ReceiptType', 'Receipt Type');
 SELECT localization.add_localized_resource('Titles', '', 'Receive', 'Receive');
 SELECT localization.add_localized_resource('Titles', '', 'Received', 'Received');
+SELECT localization.add_localized_resource('Titles', '', 'ReceivedBy', 'Received By');
 SELECT localization.add_localized_resource('Titles', '', 'ReceivedAmountInaboveCurrency', 'Received Amount (In above Currency)');
 SELECT localization.add_localized_resource('Titles', '', 'ReceivedCurrency', 'Received Currency');
 SELECT localization.add_localized_resource('Titles', '', 'Reconcile', 'Reconcile');

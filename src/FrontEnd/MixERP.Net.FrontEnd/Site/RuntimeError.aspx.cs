@@ -83,7 +83,6 @@ namespace MixERP.Net.FrontEnd.Site
 
                 Log.Verbose("Exception displayed to user.");
 
-                s.Append(string.Format(Thread.CurrentThread.CurrentCulture, "<hr class='hr' />"));
                 s.Append(string.Format(Thread.CurrentThread.CurrentCulture, "<h2>{0}</h2>", ex.Message));
 
                 Log.Warning("{Exception}.", ex);

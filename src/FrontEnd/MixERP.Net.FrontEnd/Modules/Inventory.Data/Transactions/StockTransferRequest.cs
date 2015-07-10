@@ -25,6 +25,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using PetaPoco;
 
 namespace MixERP.Net.Core.Modules.Inventory.Data.Transactions
 {
@@ -51,6 +52,19 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Transactions
                 long tranId = Conversion.TryCastLong(DbOperation.GetScalarValue(catalog, command));
                 return tranId;
             }
+        }
+
+        public static bool IsValidStockTransferRequestId(string catalog, long requestId)
+        {
+            const string sql = @"SELECT COUNT(*) 
+                                FROM transactions.inventory_transfer_requests 
+                                WHERE inventory_transfer_request_id = @0 
+                                AND authorization_status_id > 0 
+                                AND NOT delivered 
+                                AND NOT received;";
+            long count = Factory.Scalar<long>(catalog, sql, requestId);
+
+            return count.Equals(1);
         }
     }
 }

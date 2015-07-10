@@ -55,7 +55,15 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Transactions
         public static void Authorize(string catalog, int userId, long tranId)
         {
             const string sql =
-                "UPDATE transactions.inventory_transfer_requests SET authorized = true, authorized_by_user_id=@0, authorized_on=NOW() WHERE inventory_transfer_request_ID=@1";
+                "UPDATE transactions.inventory_transfer_requests SET authorization_status_id = 2, authorized_by_user_id=@0, authorized_on=NOW() WHERE inventory_transfer_request_ID=@1";
+
+            Factory.NonQuery(catalog, sql, userId, tranId);
+        }
+
+        public static void Reject(string catalog, int userId, long tranId)
+        {
+            const string sql =
+                "UPDATE transactions.inventory_transfer_requests SET authorization_status_id = -3, authorized_by_user_id=@0, authorized_on=NOW() WHERE inventory_transfer_request_ID=@1";
 
             Factory.NonQuery(catalog, sql, userId, tranId);
         }

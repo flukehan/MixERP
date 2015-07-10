@@ -36,11 +36,11 @@ namespace MixERP.Net.TransactionGovernor.Data.Verification
             if (isStockTransferRequest)
             {
                 sql = @"UPDATE transactions.inventory_transfer_requests SET 
-                        withdrawn=CASE @Status WHEN -1 THEN true ELSE false END, 
-                        withdrawn_by_user_id=@UserId,
-                        withdrawal_reason=@Reason,
-                        withdrawn_on = NOW()
-                        WHERE transactions.inventory_transfer_requests.inventory_transfer_request_id=@TransactionMasterId;";
+                                authorization_status_id=@Status, 
+                                authorized_by_user_id=@UserId, 
+                                authorization_reason=@Reason,
+                                authorized_on = NOW()
+                                WHERE transactions.inventory_transfer_requests.inventory_transfer_request_id=@TransactionMasterId;";
             }
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))

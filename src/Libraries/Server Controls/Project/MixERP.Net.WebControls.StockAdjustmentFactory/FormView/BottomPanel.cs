@@ -52,6 +52,34 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             }
         }
 
+        private void AddShippingCompanySelect(HtmlGenericControl fields)
+        {
+            if (!this.DisplayShipper)
+            {
+                return;
+            }
+
+            using (HtmlGenericControl field = FormHelper.GetField())
+            {
+                using (HtmlGenericControl label = new HtmlGenericControl())
+                {
+                    label.TagName = "label";
+                    label.Attributes.Add("for", "ShippingCompanySelect");
+                    label.InnerText = Titles.ShippingCompany;
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlSelect shippingCompanySelect = new HtmlSelect())
+                {
+                    shippingCompanySelect.ID = "ShippingCompanySelect";
+
+                    field.Controls.Add(shippingCompanySelect);
+                }
+
+                fields.Controls.Add(field);
+            }
+        }
+
         private void CreateBottomPanel()
         {
             using (HtmlGenericControl fields = FormHelper.GetFields())
@@ -60,6 +88,7 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
                 fields.Attributes.Add("class", "ui form");
                 fields.Attributes.Add("style", "width:290px;");
 
+                this.AddShippingCompanySelect(fields);
                 this.AddStatementReferenceTextArea(fields);
                 this.AddSaveButton(fields);
 

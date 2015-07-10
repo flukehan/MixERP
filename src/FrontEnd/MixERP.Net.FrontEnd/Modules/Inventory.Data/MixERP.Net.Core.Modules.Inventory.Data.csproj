@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domains\SalesItem.cs" />
+    <Compile Include="Domains\StockTransferDeliveryModel.cs" />
     <Compile Include="Helpers\Salespersons.cs" />
     <Compile Include="Helpers\Items.cs" />
     <Compile Include="Helpers\ParameterHelper.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Helpers\Units.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\ShippingAddresses.cs" />
+    <Compile Include="Transactions\StockTransferDelivery.cs" />
     <Compile Include="Transactions\StockTransferRequest.cs" />
   </ItemGroup>
   <ItemGroup>

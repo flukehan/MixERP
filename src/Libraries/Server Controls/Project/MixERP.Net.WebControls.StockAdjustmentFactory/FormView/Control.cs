@@ -18,6 +18,7 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
         public string ItemPopupUrl { get; set; }
         public string ItemServiceUrl { get; set; }
         public string StoreServiceUrl { get; set; }
+        public string ShippingCompanyServiceUrl { get; set; }
         public string Text { get; set; }
         public string UnitServiceUrl { get; set; }
         public bool ValidateSides { get; set; }

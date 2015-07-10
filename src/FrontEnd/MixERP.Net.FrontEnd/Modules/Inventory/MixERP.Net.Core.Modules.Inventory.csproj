@@ -74,6 +74,7 @@
     </Content>
     <Content Include="Confirmation\Adjustment.ascx" />
     <Content Include="Confirmation\TransferRequest.ascx" />
+    <Content Include="Entry\TransferDelivery.ascx" />
     <Content Include="Entry\TransferRequest.ascx" />
     <Content Include="Mix Open Foundation.snk" />
     <Content Include="packages.config" />
@@ -115,6 +116,7 @@
     <Content Include="Scripts\Setup\Parties.js" />
     <Content Include="Services\Entry\Adjustment.asmx" />
     <Content Include="Services\Entry\Transfer.asmx" />
+    <Content Include="Services\Entry\TransferDelivery.asmx" />
     <Content Include="Services\Entry\TransferRequest.asmx" />
     <Content Include="Services\TransferAuthorization.asmx" />
     <Content Include="Setup\CompoundItemDetails.ascx" />
@@ -141,6 +143,7 @@
     <Content Include="Setup\UOM.ascx" />
     <Content Include="Transfer.ascx" />
     <Content Include="TransferAuthorization.ascx" />
+    <Content Include="TransferDelivery.ascx" />
     <Content Include="TransferRequest.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -181,6 +184,13 @@
     </Compile>
     <Compile Include="Entry\Transfer.ascx.designer.cs">
       <DependentUpon>Transfer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Entry\TransferDelivery.ascx.cs">
+      <DependentUpon>TransferDelivery.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entry\TransferDelivery.ascx.designer.cs">
+      <DependentUpon>TransferDelivery.ascx</DependentUpon>
     </Compile>
     <Compile Include="Entry\TransferRequest.ascx.cs">
       <DependentUpon>TransferRequest.ascx</DependentUpon>
@@ -238,6 +248,10 @@
     </Compile>
     <Compile Include="Services\Entry\Transfer.asmx.cs">
       <DependentUpon>Transfer.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Entry\TransferDelivery.asmx.cs">
+      <DependentUpon>TransferDelivery.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\Entry\TransferRequest.asmx.cs">
@@ -377,6 +391,9 @@
     </Compile>
     <Compile Include="TransferAuthorization.ascx.designer.cs">
       <DependentUpon>TransferAuthorization.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TransferDelivery.ascx.designer.cs">
+      <DependentUpon>TransferDelivery.ascx</DependentUpon>
     </Compile>
     <Compile Include="TransferRequest.ascx.cs">
       <DependentUpon>TransferRequest.ascx</DependentUpon>
