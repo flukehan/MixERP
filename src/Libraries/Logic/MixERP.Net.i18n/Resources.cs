@@ -451,6 +451,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Stock transfer delivery details can only contain credit entries.
+		/// </summary>
+		public static string P5004 
+		{
+			get
+			{
+				return Get("P5004");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Past dated transactions are not allowed.
 		/// </summary>
 		public static string P5010 
@@ -8662,6 +8673,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Deliver From
+		/// </summary>
+		public static string DeliverFrom 
+		{
+			get
+			{
+				return Get("DeliverFrom");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Deliver To
 		/// </summary>
 		public static string DeliverTo 
@@ -10935,6 +10957,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("ReceivedAmountInaboveCurrency");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Received By
+		/// </summary>
+		public static string ReceivedBy 
+		{
+			get
+			{
+				return Get("ReceivedBy");
 			}
 		}
 		
@@ -13395,6 +13428,28 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("InvalidReceiptMode");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Invalid Request.
+		/// </summary>
+		public static string InvalidRequest 
+		{
+			get
+			{
+				return Get("InvalidRequest");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Invalid RequestId.
+		/// </summary>
+		public static string InvalidRequestId 
+		{
+			get
+			{
+				return Get("InvalidRequestId");
 			}
 		}
 		

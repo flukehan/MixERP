@@ -52,12 +52,28 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         <td> {DataSource[0].authorization_reason}</td>
       </tr>
       <tr>
+        <td>{Resources.Titles.Delivered}</td>
+        <td> {DataSource[0].Delivered}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.DeliveredBy}</td>
+        <td> {DataSource[0].Delivered_by}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.DeliveredOn}</td>
+        <td> {DataSource[0].Delivered_on}</td>
+      </tr>
+      <tr>
         <td>{Resources.Titles.Received}</td>
         <td> {DataSource[0].received}</td>
       </tr>
       <tr>
         <td>{Resources.Titles.ReceivedBy}</td>
         <td> {DataSource[0].received_by}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.ReceivedOn}</td>
+        <td> {DataSource[0].received_on}</td>
       </tr>
       <tr>
         <td>{Resources.Titles.Office}</td>
@@ -98,8 +114,12 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         core.verification_statuses.verification_status_name AS status,
         verified_by_user.user_name AS verified_by,
         transactions.inventory_transfer_requests.authorization_reason,
-        received_by_user.user_name AS received_by,
         transactions.inventory_transfer_requests.received,
+        received_by_user.user_name AS received_by,
+        transactions.inventory_transfer_requests.received_on,
+        transactions.inventory_transfer_requests.delivered,
+        delivered_by_user.user_name AS delivered_by,
+        transactions.inventory_transfer_requests.delivered_on,
         office.offices.office_name,
         transactions.inventory_transfer_requests.reference_number,
         transactions.inventory_transfer_requests.statement_reference,
@@ -117,6 +137,8 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         ON transactions.inventory_transfer_requests.authorized_by_user_id = verified_by_user.user_id
         LEFT JOIN office.users AS received_by_user
         ON transactions.inventory_transfer_requests.received_by_user_id = received_by_user.user_id
+        LEFT JOIN office.users AS delivered_by_user
+        ON transactions.inventory_transfer_requests.delivered_by_user_id = delivered_by_user.user_id
         WHERE transactions.inventory_transfer_requests.inventory_transfer_request_id=@id;
       </Query>
       <Parameters>

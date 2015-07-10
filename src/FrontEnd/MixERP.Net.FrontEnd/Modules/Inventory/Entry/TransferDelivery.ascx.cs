@@ -57,6 +57,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Entry
                 form.ItemIdQuerySericeUrl = "/Modules/Inventory/Services/ItemData.asmx/GetItemCodeByItemId";
                 form.ShippingCompanyServiceUrl = "/Modules/Inventory/Services/ItemData.asmx/GetShippers";
                 form.DisplayShipper = true;
+                form.DisplaySourceStore = true;
                 form.ValidateSides = false;
                 form.HideSides = true;
                 form.Catalog = AppUsers.GetCurrentUserDB();

@@ -1,9 +1,4 @@
-﻿using MixERP.Net.Common;
-using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
-using MixERP.Net.DbFactory;
-using MixERP.Net.Entities.Models.Transactions;
-using Npgsql;
-/********************************************************************************
+﻿/********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
 
 This file is part of MixERP.
@@ -21,10 +16,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
+
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using MixERP.Net.Common;
+using MixERP.Net.Core.Modules.Inventory.Data.Helpers;
+using MixERP.Net.DbFactory;
+using MixERP.Net.Entities.Models.Transactions;
+using Npgsql;
 using PetaPoco;
 
 namespace MixERP.Net.Core.Modules.Inventory.Data.Transactions

@@ -14,6 +14,7 @@ var transferGridView = $("#TransferGridView");
 var unitSelect = $("#UnitSelect");
 var valueDateTextBox = $("#ValueDateTextBox");
 var shippingCompanySelect = $("#ShippingCompanySelect");
+var sourceStoreSelect = $("#SourceStoreSelect");
 
 var url = "";
 var data = "";
@@ -264,6 +265,11 @@ function loadStores() {
     if (storeSelect.length) {
         url = storeServiceUrl;
         ajaxDataBind(url, storeSelect);
+    };
+
+    if (sourceStoreSelect.length) {
+        url = storeServiceUrl;
+        ajaxDataBind(url, sourceStoreSelect);
     };
 };
 

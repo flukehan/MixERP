@@ -37,6 +37,7 @@ SELECT localization.add_localized_resource('DbErrors', '', 'P5000', 'Referencing
 SELECT localization.add_localized_resource('DbErrors', '', 'P5001', 'Negative stock is not allowed.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5002', 'Posting this transaction would produce a negative cash balance.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5003', 'Stock transfer request can only contain debit entries.');
+SELECT localization.add_localized_resource('DbErrors', '', 'P5004', 'Stock transfer delivery can only contain credit entries.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5010', 'Past dated transactions are not allowed.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5100', 'This establishment does not allow transaction posting.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5101', 'Cannot post transaction during restricted transaction mode.');
@@ -52,6 +53,8 @@ SELECT localization.add_localized_resource('DbErrors', '', 'P5202', 'An item can
 SELECT localization.add_localized_resource('DbErrors', '', 'P5203', 'The returned quantity cannot be greater than actual quantity.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5204', 'The returned amount cannot be greater than actual amount.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5205', 'You cannot provide more than one store for this transaction.');
+SELECT localization.add_localized_resource('DbErrors', '', 'P5206', 'You cannot provide more than one delivery destination store for this transaction.');
+SELECT localization.add_localized_resource('DbErrors', '', 'P5207', 'The source and the destination stores can not be the same.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5301', 'Invalid or rejected transaction.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5500', 'Insufficient item quantity.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5800', 'Deleting a transaction is not allowed. Mark the transaction as rejected instead.');
@@ -780,7 +783,13 @@ SELECT localization.add_localized_resource('Titles', '', 'Delete', 'Delete');
 SELECT localization.add_localized_resource('Titles', '', 'DeleteSelected', 'Delete Selected');
 SELECT localization.add_localized_resource('Titles', '', 'Deliver', 'Deliver');
 SELECT localization.add_localized_resource('Titles', '', 'Delivered', 'Delivered');
+SELECT localization.add_localized_resource('Titles', '', 'DeliveredBy', 'Delivered By');
+SELECT localization.add_localized_resource('Titles', '', 'DeliveredFrom', 'Delivered From');
+SELECT localization.add_localized_resource('Titles', '', 'DeliverFrom', 'Deliver From');
+SELECT localization.add_localized_resource('Titles', '', 'DeliveredOn', 'Delivered On');
+SELECT localization.add_localized_resource('Titles', '', 'DeliveredTo', 'Delivered To');
 SELECT localization.add_localized_resource('Titles', '', 'DeliverTo', 'Deliver To');
+SELECT localization.add_localized_resource('Titles', '', 'DeliveredTo', 'Delivered To');
 SELECT localization.add_localized_resource('Titles', '', 'Department', 'Department');
 SELECT localization.add_localized_resource('Titles', '', 'Departments', 'Departments');
 SELECT localization.add_localized_resource('Titles', '', 'Difference', 'Difference');
@@ -986,6 +995,7 @@ SELECT localization.add_localized_resource('Titles', '', 'ReceiptType', 'Receipt
 SELECT localization.add_localized_resource('Titles', '', 'Receive', 'Receive');
 SELECT localization.add_localized_resource('Titles', '', 'Received', 'Received');
 SELECT localization.add_localized_resource('Titles', '', 'ReceivedBy', 'Received By');
+SELECT localization.add_localized_resource('Titles', '', 'ReceivedOn', 'Received On');
 SELECT localization.add_localized_resource('Titles', '', 'ReceivedAmountInaboveCurrency', 'Received Amount (In above Currency)');
 SELECT localization.add_localized_resource('Titles', '', 'ReceivedCurrency', 'Received Currency');
 SELECT localization.add_localized_resource('Titles', '', 'Reconcile', 'Reconcile');
@@ -1211,6 +1221,8 @@ SELECT localization.add_localized_resource('Warnings', '', 'InvalidParty', 'Inva
 SELECT localization.add_localized_resource('Warnings', '', 'InvalidPaymentTerm', 'Invalid payment term.');
 SELECT localization.add_localized_resource('Warnings', '', 'InvalidPriceType', 'Invalid price type.');
 SELECT localization.add_localized_resource('Warnings', '', 'InvalidReceiptMode', 'Invalid receipt mode.');
+SELECT localization.add_localized_resource('Warnings', '', 'InvalidRequest', 'Invalid Request.');
+SELECT localization.add_localized_resource('Warnings', '', 'InvalidRequestId', 'Invalid RequestId.');
 SELECT localization.add_localized_resource('Warnings', '', 'InvalidSalesPerson', 'Invalid salesperson.');
 SELECT localization.add_localized_resource('Warnings', '', 'InvalidShippingCompany', 'Invalid shipping company.');
 SELECT localization.add_localized_resource('Warnings', '', 'InvalidStockTransaction', 'Invalid stock transaction.');

@@ -52,6 +52,34 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
             }
         }
 
+        private void AddSourceStoreSelect(HtmlGenericControl fields)
+        {
+            if (!this.DisplaySourceStore)
+            {
+                return;
+            }
+
+            using (HtmlGenericControl field = FormHelper.GetField())
+            {
+                using (HtmlGenericControl label = new HtmlGenericControl())
+                {
+                    label.TagName = "label";
+                    label.Attributes.Add("for", "SourceStoreSelect");
+                    label.InnerText = Titles.DeliverFrom;
+                    field.Controls.Add(label);
+                }
+
+                using (HtmlSelect sourceStoreSelect = new HtmlSelect())
+                {
+                    sourceStoreSelect.ID = "SourceStoreSelect";
+
+                    field.Controls.Add(sourceStoreSelect);
+                }
+
+                fields.Controls.Add(field);
+            }
+        }
+
         private void AddShippingCompanySelect(HtmlGenericControl fields)
         {
             if (!this.DisplayShipper)
@@ -88,6 +116,7 @@ namespace MixERP.Net.WebControls.StockAdjustmentFactory
                 fields.Attributes.Add("class", "ui form");
                 fields.Attributes.Add("style", "width:290px;");
 
+                this.AddSourceStoreSelect(fields);
                 this.AddShippingCompanySelect(fields);
                 this.AddStatementReferenceTextArea(fields);
                 this.AddSaveButton(fields);

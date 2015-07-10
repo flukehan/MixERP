@@ -110,7 +110,6 @@ BEGIN
             delivered                                   boolean NOT NULL DEFAULT(FALSE),
             delivered_by_user_id                        integer REFERENCES office.users(user_id),
             delivered_on                                TIMESTAMP WITH TIME ZONE,
-            withdrawal_reason                           national character varying(100) NOT NULL DEFAULT(''),
             audit_ts                                    TIMESTAMP WITH TIME ZONE DEFAULT(now())
         );
     END IF;    
@@ -455,6 +454,64 @@ BEGIN
         SELECT 'AllowParentAccountInGLTransaction', false UNION ALL
         SELECT 'AllowMultipleOpeningInventory', false;
     END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'transactions'
+        AND    c.relname = 'inventory_transfer_deliveries'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE transactions.inventory_transfer_deliveries
+        (
+            inventory_transfer_delivery_id              BIGSERIAL NOT NULL PRIMARY KEY,
+            inventory_transfer_request_id               bigint NOT NULL REFERENCES transactions.inventory_transfer_requests(inventory_transfer_request_id),
+            office_id                                   integer NOT NULL REFERENCES office.offices(office_id),
+            user_id                                     integer NOT NULL REFERENCES office.users(user_id),
+            login_id                                    bigint NOT NULL REFERENCES audit.logins(login_id),
+            source_store_id                             integer NOT NULL REFERENCES office.stores(store_id),
+            destination_store_id                        integer NOT NULL REFERENCES office.stores(store_id),
+            value_date                                  date NOT NULL,
+            transaction_ts                              TIMESTAMP WITH TIME ZONE DEFAULT(now()),
+            reference_number                            national character varying(24) NOT NULL,
+            statement_reference                         text,
+            audit_ts                                    TIMESTAMP WITH TIME ZONE DEFAULT(now())
+        );
+    END IF;    
+END
+$$
+LANGUAGE plpgsql;
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM   pg_catalog.pg_class c
+        JOIN   pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE  n.nspname = 'transactions'
+        AND    c.relname = 'inventory_transfer_delivery_details'
+        AND    c.relkind = 'r'
+    ) THEN
+        CREATE TABLE transactions.inventory_transfer_delivery_details
+        (
+            inventory_transfer_delivery_detail_id       BIGSERIAL NOT NULL PRIMARY KEY,
+            inventory_transfer_delivery_id              bigint NOT NULL REFERENCES transactions.inventory_transfer_deliveries(inventory_transfer_delivery_id),
+            value_date                                  date NOT NULL,
+            item_id                                     integer NOT NULL REFERENCES core.items(item_id),
+            quantity                                    integer NOT NULL,
+            unit_id                                     integer NOT NULL REFERENCES core.units(unit_id),
+            base_quantity                               numeric NOT NULL,
+            base_unit_id                                integer NOT NULL REFERENCES core.units(unit_id)
+        );
+    END IF;    
 END
 $$
 LANGUAGE plpgsql;

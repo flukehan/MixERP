@@ -65,4 +65,62 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
         data = getData(data);
         return getAjax(url, data);
     };
+
+
+    function StockAdjustmentFactory_FormvView_SaveButton_Callback() {
+        var valueDate = Date.parseExact(valueDateTextBox.val(), window.shortDateFormat);
+        var referenceNumber = referenceNumberInputText.val();
+        var statementReference = statementReferenceTextArea.val();
+        var requestId = parseFloat(getQueryStringByName("RequestId") || 0);
+        var sourceStoreId = parseFloat($("#SourceStoreSelect").val() || 0);
+        var shipperId = parseFloat($("#ShippingCompanySelect").val() || 0);
+
+
+        if (!requestId) {
+            displayMessage(Resources.Warnings.InvalidRequestId(), "error");
+            return;
+        };
+
+        if (!sourceStoreId) {
+            displayMessage(Resources.Warnings.InvalidStore(), "error");
+            makeDirty($("#SourceStoreSelect"));
+            return;
+        };
+
+        if (!shipperId) {
+            displayMessage(Resources.Warnings.InvalidShippingCompany(), "error");
+            makeDirty($("#ShippingCompanySelect"));
+            return;
+        };
+
+
+        var tableData = tableToJSON(transferGridView);
+
+        var ajaxSaveDelivery = SaveDelivery(valueDate, referenceNumber, statementReference, requestId, sourceStoreId, shipperId, tableData);
+
+        ajaxSaveDelivery.success(function (msg) {
+            var id = msg.d;
+            window.location = "/Modules/Inventory/Confirmation/TransferDelivery.mix?TranId=" + id;
+        });
+
+        ajaxSaveDelivery.fail(function (xhr) {
+            logAjaxErrorMessage(xhr);
+        });
+    };
+
+    function SaveDelivery(valueDate, referenceNumber, statementReference, requestId, sourceStoreId, shipperId, tableData) {
+
+        url = "/Modules/Inventory/Services/Entry/TransferDelivery.asmx/Save";
+
+        data = appendParameter("", "valueDate", valueDate);
+        data = appendParameter(data, "referenceNumber", referenceNumber);
+        data = appendParameter(data, "statementReference", statementReference);
+        data = appendParameter(data, "requestId", requestId);
+        data = appendParameter(data, "sourceStoreId", sourceStoreId);
+        data = appendParameter(data, "shipperId", shipperId);
+        data = appendParameter(data, "data", tableData);
+        data = getData(data);
+        return getAjax(url, data);
+    };
+
 </script>

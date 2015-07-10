@@ -73,6 +73,7 @@
       <Link>mixerp.licenseheader</Link>
     </Content>
     <Content Include="Confirmation\Adjustment.ascx" />
+    <Content Include="Confirmation\TransferDelivery.ascx" />
     <Content Include="Confirmation\TransferRequest.ascx" />
     <Content Include="Entry\TransferDelivery.ascx" />
     <Content Include="Entry\TransferRequest.ascx" />
@@ -170,6 +171,13 @@
     </Compile>
     <Compile Include="Confirmation\Transfer.ascx.designer.cs">
       <DependentUpon>Transfer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Confirmation\TransferDelivery.ascx.cs">
+      <DependentUpon>TransferDelivery.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Confirmation\TransferDelivery.ascx.designer.cs">
+      <DependentUpon>TransferDelivery.ascx</DependentUpon>
     </Compile>
     <Compile Include="Confirmation\TransferRequest.ascx.cs">
       <DependentUpon>TransferRequest.ascx</DependentUpon>
