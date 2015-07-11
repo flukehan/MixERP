@@ -17,6 +17,13 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using MixER.Net.ApplicationState.Cache;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
@@ -30,13 +37,7 @@ using MixERP.Net.i18n.Resources;
 using MixERP.Net.TransactionGovernor;
 using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.Flag;
-using System;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
+using PetaPoco;
 
 namespace MixERP.Net.Core.Modules.Inventory.Reports
 {
@@ -123,7 +124,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
 
             int userId = AppUsers.GetCurrent().View.UserId.ToInt();
 
-            Flags.CreateFlag(AppUsers.GetCurrentUserDB(), userId, flagTypeId, resource, resourceKey, this.GetSelectedValues());
+            Flags.CreateFlag(AppUsers.GetCurrentUserDB(), userId, flagTypeId, resource, resourceKey,
+                this.GetSelectedValues());
 
             this.BindGridView();
             this.CreateAccountOverviewPanel(this.accountOverviewTab);
@@ -327,7 +329,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
                 return;
             }
 
-            ItemView view = Factory.Get<ItemView>(AppUsers.GetCurrentUserDB(), "SELECT * FROM core.item_view WHERE item_code=@0", this.itemCodeInputText.Value).FirstOrDefault();
+            ItemView view =
+                Factory.Get<ItemView>(AppUsers.GetCurrentUserDB(), "SELECT * FROM core.item_view WHERE item_code=@0",
+                    this.itemCodeInputText.Value).FirstOrDefault();
 
             if (view == null)
             {
@@ -510,7 +514,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
                 return;
             }
 
-            this.statementGridView.DataSource = StockItems.GetAccountStatement(AppUsers.GetCurrentUserDB(), from, to, userId, itemCode, storeId);
+            this.statementGridView.DataSource = StockItems.GetAccountStatement(AppUsers.GetCurrentUserDB(), from, to,
+                userId, itemCode, storeId);
             this.statementGridView.DataBound += this.StatementGridViewDataBound;
             this.statementGridView.DataBind();
         }
@@ -550,7 +555,8 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
                     using (HtmlGenericControl icon = new HtmlGenericControl("i"))
                     {
                         icon.Attributes.Add("class", "icon calendar pointer");
-                        icon.Attributes.Add("onclick", string.Format(CultureInfo.InvariantCulture, "$('#{0}').datepicker('show');", dateTextBox.ID));
+                        icon.Attributes.Add("onclick",
+                            string.Format(CultureInfo.InvariantCulture, "$('#{0}').datepicker('show');", dateTextBox.ID));
                     }
 
                     field.Controls.Add(iconInput);

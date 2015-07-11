@@ -3,12 +3,21 @@
     var header = grid.find("thead tr");
     var rows = grid.find("tbody tr");
 
+    var checkListUrl = "Confirmation/TransferRequest.mix?TranId=%s";
+    var reportUrl = "Reports/InventoryTransferRequestReport.mix?TranId=%1$s";
 
+    if (window.checkListUrlOverride) {
+        checkListUrl = window.checkListUrlOverride;
+    };
 
-    var iconTemplate = "<a href=\"Confirmation/TransferRequest.mix?TranId=%s\" title=\"%s\">" +
+    if (window.reportUrlOverride) {
+        reportUrl = window.reportUrlOverride;
+    };
+
+    var iconTemplate = "<a href=\"" + checkListUrl + "\" title=\"%s\">" +
                             "<i class=\"list icon\"></i>" +
                         "</a>" +
-                        "<a title=\"%s\" onclick=\"showWindow('Reports/InventoryTransferRequestReport.mix?TranId=%1$s');\">" +
+                        "<a title=\"%s\" onclick=\"showWindow('" + reportUrl + "');\">" +
                             "<i class=\"print icon\"></i>" +
                         "</a>" +
                         "<a title=\"%s\" onclick=\"window.scroll(0);\">" +

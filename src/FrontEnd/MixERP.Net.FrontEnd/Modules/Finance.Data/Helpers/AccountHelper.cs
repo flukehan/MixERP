@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Core;
 using System.Collections.Generic;
 using System.Linq;
+using MixERP.Net.Entities.Core;
+using PetaPoco;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
@@ -52,7 +52,8 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static IEnumerable<Account> GetChildAccounts(string catalog)
         {
-            const string sql = "SELECT * FROM core.accounts WHERE is_transaction_node AND NOT sys_type OR account_master_id IN(10101, 10102) ORDER BY account_id;";
+            const string sql =
+                "SELECT * FROM core.accounts WHERE is_transaction_node AND NOT sys_type OR account_master_id IN(10101, 10102) ORDER BY account_id;";
             return Factory.Get<Account>(catalog, sql);
         }
 
@@ -64,7 +65,8 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static IEnumerable<Account> GetNonConfidentialChildAccounts(string catalog)
         {
-            const string sql = "SELECT * FROM core.accounts WHERE is_transaction_node AND NOT confidential AND (NOT sys_type OR account_master_id IN(10101, 10102));";
+            const string sql =
+                "SELECT * FROM core.accounts WHERE is_transaction_node AND NOT confidential AND (NOT sys_type OR account_master_id IN(10101, 10102));";
             return Factory.Get<Account>(catalog, sql);
         }
 

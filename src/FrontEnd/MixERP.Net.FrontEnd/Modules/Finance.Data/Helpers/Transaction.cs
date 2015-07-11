@@ -17,18 +17,18 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using MixERP.Net.Common;
 using MixERP.Net.DbFactory;
-using MixERP.Net.Entities;
 using MixERP.Net.Entities.Core;
 using MixERP.Net.Entities.Models.Transactions;
 using MixERP.Net.i18n;
 using MixERP.Net.i18n.Resources;
 using Npgsql;
+using PetaPoco;
 using Serilog;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 {
@@ -48,7 +48,8 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static long GetTranIdByTranCode(string catalog, string tranCode)
         {
-            const string sql = "SELECT transaction_master_id FROM transactions.transaction_master WHERE transaction_code=@TranCode;";
+            const string sql =
+                "SELECT transaction_master_id FROM transactions.transaction_master WHERE transaction_code=@TranCode;";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@TranCode", tranCode);
@@ -59,14 +60,17 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
         public static bool Reconcile(string catalog, string tranCode, DateTime bookDate)
         {
-            const string sql = "UPDATE transactions.transaction_master SET book_date=@0::date WHERE transaction_code=@1::national character varying(50);";
+            const string sql =
+                "UPDATE transactions.transaction_master SET book_date=@0::date WHERE transaction_code=@1::national character varying(50);";
             Factory.NonQuery(catalog, sql, bookDate, tranCode);
             return true;
         }
 
-        public static void Verify(string catalog, long tranId, int officeId, int userId, long loginId, short verificationStatusId, string reason)
+        public static void Verify(string catalog, long tranId, int officeId, int userId, long loginId,
+            short verificationStatusId, string reason)
         {
-            const string sql = "SELECT * FROM transactions.verify_transaction(@TranId::bigint, @OfficeId::integer, @UserId::integer, @LoginId::bigint, @VerificationStatusId::smallint, @Reason::national character varying);";
+            const string sql =
+                "SELECT * FROM transactions.verify_transaction(@TranId::bigint, @OfficeId::integer, @UserId::integer, @LoginId::bigint, @VerificationStatusId::smallint, @Reason::national character varying);";
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
                 command.Parameters.AddWithValue("@TranId", tranId);
@@ -80,7 +84,9 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             }
         }
 
-        public static long Add(string catalog, DateTime valueDate, DateTime bookDate, int officeId, int userId, long loginId, int costCenterId, string referenceNumber, Collection<JournalDetail> details, Collection<Attachment> attachments)
+        public static long Add(string catalog, DateTime valueDate, DateTime bookDate, int officeId, int userId,
+            long loginId, int costCenterId, string referenceNumber, Collection<JournalDetail> details,
+            Collection<Attachment> attachments)
         {
             if (details == null)
             {
@@ -103,7 +109,11 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
             var decimalPlaces = CurrentCulture.GetCurrencyDecimalPlaces();
 
             if ((from detail in details
-                where Decimal.Round(detail.Credit*detail.ExchangeRate, decimalPlaces) != Decimal.Round(detail.LocalCurrencyCredit, decimalPlaces) || Decimal.Round(detail.Debit*detail.ExchangeRate, decimalPlaces) != Decimal.Round(detail.LocalCurrencyDebit, decimalPlaces)
+                where
+                    Decimal.Round(detail.Credit*detail.ExchangeRate, decimalPlaces) !=
+                    Decimal.Round(detail.LocalCurrencyCredit, decimalPlaces) ||
+                    Decimal.Round(detail.Debit*detail.ExchangeRate, decimalPlaces) !=
+                    Decimal.Round(detail.LocalCurrencyDebit, decimalPlaces)
                 select detail).Any())
             {
                 throw new InvalidOperationException(Errors.ReferencingSidesNotEqual);
@@ -117,7 +127,8 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                 {
                     try
                     {
-                        string sql = "INSERT INTO transactions.transaction_master(transaction_master_id, transaction_counter, transaction_code, book, value_date, book_date, user_id, login_id, office_id, cost_center_id, reference_number) SELECT nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), transactions.get_new_transaction_counter(@ValueDate), transactions.get_transaction_code(@ValueDate, @OfficeId, @UserId, @LoginId), @Book, @ValueDate, @BookDate, @UserId, @LoginId, @OfficeId, @CostCenterId, @ReferenceNumber;SELECT currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));";
+                        string sql =
+                            "INSERT INTO transactions.transaction_master(transaction_master_id, transaction_counter, transaction_code, book, value_date, book_date, user_id, login_id, office_id, cost_center_id, reference_number) SELECT nextval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id')), transactions.get_new_transaction_counter(@ValueDate), transactions.get_transaction_code(@ValueDate, @OfficeId, @UserId, @LoginId), @Book, @ValueDate, @BookDate, @UserId, @LoginId, @OfficeId, @CostCenterId, @ReferenceNumber;SELECT currval(pg_get_serial_sequence('transactions.transaction_master', 'transaction_master_id'));";
                         long transactionMasterId;
                         using (NpgsqlCommand master = new NpgsqlCommand(sql, connection))
                         {
@@ -135,8 +146,9 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
 
                         foreach (JournalDetail model in details)
                         {
-                            sql = "INSERT INTO transactions.transaction_details(value_date, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
-                                  "SELECT @ValueDate, @TransactionMasterId, @TranType, core.get_account_id_by_account_number(@AccountNumber::text), @StatementReference, office.get_cash_repository_id_by_cash_repository_code(@CashRepositoryCode), @CurrencyCode, @AmountInCurrency, transactions.get_default_currency_code_by_office_id(@OfficeId), @Er, @AmountInLocalCurrency;";
+                            sql =
+                                "INSERT INTO transactions.transaction_details(value_date, transaction_master_id, tran_type, account_id, statement_reference, cash_repository_id, currency_code, amount_in_currency, local_currency_code, er, amount_in_local_currency) " +
+                                "SELECT @ValueDate, @TransactionMasterId, @TranType, core.get_account_id_by_account_number(@AccountNumber::text), @StatementReference, office.get_cash_repository_id_by_cash_repository_code(@CashRepositoryCode), @CurrencyCode, @AmountInCurrency, transactions.get_default_currency_code_by_office_id(@OfficeId), @Er, @AmountInLocalCurrency;";
 
                             if (model.Credit > 0 && model.Debit > 0)
                             {
@@ -172,13 +184,16 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                                 transactionDetail.Parameters.AddWithValue("@TransactionMasterId", transactionMasterId);
                                 transactionDetail.Parameters.AddWithValue("@TranType", tranType);
                                 transactionDetail.Parameters.AddWithValue("@AccountNumber", model.AccountNumber);
-                                transactionDetail.Parameters.AddWithValue("@StatementReference", model.StatementReference);
-                                transactionDetail.Parameters.AddWithValue("@CashRepositoryCode", model.CashRepositoryCode);
+                                transactionDetail.Parameters.AddWithValue("@StatementReference",
+                                    model.StatementReference);
+                                transactionDetail.Parameters.AddWithValue("@CashRepositoryCode",
+                                    model.CashRepositoryCode);
                                 transactionDetail.Parameters.AddWithValue("@CurrencyCode", model.CurrencyCode);
                                 transactionDetail.Parameters.AddWithValue("@AmountInCurrency", amountInCurrency);
                                 transactionDetail.Parameters.AddWithValue("@OfficeId", officeId);
                                 transactionDetail.Parameters.AddWithValue("@Er", model.ExchangeRate);
-                                transactionDetail.Parameters.AddWithValue("@AmountInLocalCurrency", amountInLocalCurrency);
+                                transactionDetail.Parameters.AddWithValue("@AmountInLocalCurrency",
+                                    amountInLocalCurrency);
                                 transactionDetail.ExecuteNonQuery();
                             }
                         }
@@ -189,15 +204,19 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                         {
                             foreach (Attachment attachment in attachments)
                             {
-                                sql = "INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) SELECT @UserId, @Resource, @ResourceKey, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment;";
+                                sql =
+                                    "INSERT INTO core.attachments(user_id, resource, resource_key, resource_id, original_file_name, file_extension, file_path, comment) SELECT @UserId, @Resource, @ResourceKey, @ResourceId, @OriginalFileName, @FileExtension, @FilePath, @Comment;";
                                 using (NpgsqlCommand attachmentCommand = new NpgsqlCommand(sql, connection))
                                 {
                                     attachmentCommand.Parameters.AddWithValue("@UserId", userId);
-                                    attachmentCommand.Parameters.AddWithValue("@Resource", "transactions.transaction_master");
+                                    attachmentCommand.Parameters.AddWithValue("@Resource",
+                                        "transactions.transaction_master");
                                     attachmentCommand.Parameters.AddWithValue("@ResourceKey", "transaction_master_id");
                                     attachmentCommand.Parameters.AddWithValue("@ResourceId", transactionMasterId);
-                                    attachmentCommand.Parameters.AddWithValue("@OriginalFileName", attachment.OriginalFileName);
-                                    attachmentCommand.Parameters.AddWithValue("@FileExtension", System.IO.Path.GetExtension(attachment.OriginalFileName));
+                                    attachmentCommand.Parameters.AddWithValue("@OriginalFileName",
+                                        attachment.OriginalFileName);
+                                    attachmentCommand.Parameters.AddWithValue("@FileExtension",
+                                        System.IO.Path.GetExtension(attachment.OriginalFileName));
                                     attachmentCommand.Parameters.AddWithValue("@FilePath", attachment.FilePath);
                                     attachmentCommand.Parameters.AddWithValue("@Comment", attachment.Comment);
 
@@ -226,13 +245,19 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Helpers
                     }
                     catch (NpgsqlException ex)
                     {
-                        Log.Warning(@"Could not post transaction. ValueDate: {ValueDate}, OfficeId: {OfficeId}, UserId: {UserId}, LoginId: {LoginId}, CostCenterId:{CostCenterId}, ReferenceNumber: {ReferenceNumber}, Details: {Details}, Attachments: {Attachments}. {Exception}.", valueDate, officeId, userId, loginId, costCenterId, referenceNumber, details, attachments, ex);
+                        Log.Warning(
+                            @"Could not post transaction. ValueDate: {ValueDate}, OfficeId: {OfficeId}, UserId: {UserId}, LoginId: {LoginId}, CostCenterId:{CostCenterId}, ReferenceNumber: {ReferenceNumber}, Details: {Details}, Attachments: {Attachments}. {Exception}.",
+                            valueDate, officeId, userId, loginId, costCenterId, referenceNumber, details, attachments,
+                            ex);
                         transaction.Rollback();
                         throw;
                     }
                     catch (InvalidOperationException ex)
                     {
-                        Log.Warning(@"Could not post transaction. ValueDate: {ValueDate}, OfficeId: {OfficeId}, UserId: {UserId}, LoginId: {LoginId}, CostCenterId:{CostCenterId}, ReferenceNumber: {ReferenceNumber}, Details: {Details}, Attachments: {Attachments}. {Exception}.", valueDate, officeId, userId, loginId, costCenterId, referenceNumber, details, attachments, ex);
+                        Log.Warning(
+                            @"Could not post transaction. ValueDate: {ValueDate}, OfficeId: {OfficeId}, UserId: {UserId}, LoginId: {LoginId}, CostCenterId:{CostCenterId}, ReferenceNumber: {ReferenceNumber}, Details: {Details}, Attachments: {Attachments}. {Exception}.",
+                            valueDate, officeId, userId, loginId, costCenterId, referenceNumber, details, attachments,
+                            ex);
                         transaction.Rollback();
                         throw;
                     }

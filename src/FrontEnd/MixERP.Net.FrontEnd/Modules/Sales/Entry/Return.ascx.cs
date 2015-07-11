@@ -34,6 +34,7 @@ namespace MixERP.Net.Core.Modules.Sales.Entry
         public override void OnControlLoad(object sender, EventArgs e)
         {
             long tranId = Conversion.TryCastLong(this.Request.QueryString["TranId"]);
+            
             if (tranId <= 0)
             {
                 this.Response.Redirect("~/Modules/Sales/Return.mix");

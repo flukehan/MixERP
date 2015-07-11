@@ -17,19 +17,23 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Transactions;
 using System;
 using System.Collections.Generic;
+using MixERP.Net.Entities.Transactions;
+using PetaPoco;
 
 namespace MixERP.Net.WebControls.TransactionViewFactory.Data
 {
     public static class Journal
     {
-        public static IEnumerable<DbGetJournalViewResult> GetJournalView(string catalog, int userId, int officeId, DateTime from, DateTime to, long tranId, string tranCode, string book, string referenceNumber, string statementReference, string postedBy, string office, string status, string verifiedBy, string reason)
+        public static IEnumerable<DbGetJournalViewResult> GetJournalView(string catalog, int userId, int officeId,
+            DateTime from, DateTime to, long tranId, string tranCode, string book, string referenceNumber,
+            string statementReference, string postedBy, string office, string status, string verifiedBy, string reason)
         {
-            const string sql = "SELECT * FROM transactions.get_journal_view(@0::integer, @1::integer, @2::date, @3::date, @4::bigint, @5::national character varying(50), @6::national character varying(50), @7::national character varying(50), @8::national character varying(50), @9::national character varying(50), @10::national character varying(50), @11::national character varying(50), @12::national character varying(50), @13::national character varying(50));";
-            return Factory.Get<DbGetJournalViewResult>(catalog, sql, userId, officeId, from, to, tranId, tranCode, book, referenceNumber, statementReference, postedBy, office, status, verifiedBy, reason);
+            const string sql =
+                "SELECT * FROM transactions.get_journal_view(@0::integer, @1::integer, @2::date, @3::date, @4::bigint, @5::national character varying(50), @6::national character varying(50), @7::national character varying(50), @8::national character varying(50), @9::national character varying(50), @10::national character varying(50), @11::national character varying(50), @12::national character varying(50), @13::national character varying(50));";
+            return Factory.Get<DbGetJournalViewResult>(catalog, sql, userId, officeId, from, to, tranId, tranCode, book,
+                referenceNumber, statementReference, postedBy, office, status, verifiedBy, reason);
         }
     }
 }

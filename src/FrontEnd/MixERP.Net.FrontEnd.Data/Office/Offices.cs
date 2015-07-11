@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Office;
 using System;
 using System.Collections.Generic;
+using MixERP.Net.Entities.Office;
+using PetaPoco;
 
 namespace MixERP.Net.FrontEnd.Data.Office
 {
@@ -31,7 +31,8 @@ namespace MixERP.Net.FrontEnd.Data.Office
             return Factory.Get<DbGetOfficesResult>(catalog, "SELECT * FROM office.get_offices();");
         }
 
-        public static void SaveOffice(string catalog, string officeCode, string officeName, string nickName, DateTime registrationDate,
+        public static void SaveOffice(string catalog, string officeCode, string officeName, string nickName,
+            DateTime registrationDate,
             string currencyCode, string currencySymbol, string currencyName, string hundredthName, string adminName,
             string username, string password)
         {

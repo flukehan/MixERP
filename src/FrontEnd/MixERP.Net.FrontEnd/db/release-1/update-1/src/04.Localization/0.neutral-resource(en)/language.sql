@@ -38,6 +38,7 @@ SELECT localization.add_localized_resource('DbErrors', '', 'P5001', 'Negative st
 SELECT localization.add_localized_resource('DbErrors', '', 'P5002', 'Posting this transaction would produce a negative cash balance.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5003', 'Stock transfer request can only contain debit entries.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5004', 'Stock transfer delivery can only contain credit entries.');
+SELECT localization.add_localized_resource('DbErrors', '', 'P5005', 'Cannot receive a stock transfer because the delivery contains no item.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5010', 'Past dated transactions are not allowed.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5100', 'This establishment does not allow transaction posting.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5101', 'Cannot post transaction during restricted transaction mode.');
@@ -83,6 +84,7 @@ SELECT localization.add_localized_resource('DbErrors', '', 'P9015', 'Access is d
 SELECT localization.add_localized_resource('DbErrors', '', 'P9016', 'Access is denied. You don''''t have the right to verify the transaction.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P9017', 'Access is denied. You don''''t have the right to withdraw the transaction.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P9201', 'Acess is denied. You cannot update the "transaction_details" table.');
+SELECT localization.add_localized_resource('DbErrors', '', 'P9250', 'Acess is denied. This transaction was rejected by administrator.');
 SELECT localization.add_localized_resource('DbResource', '', 'actions', 'Actions');
 SELECT localization.add_localized_resource('DbResource', '', 'amount', 'Amount');
 SELECT localization.add_localized_resource('DbResource', '', 'currency', 'Currency');
@@ -792,6 +794,7 @@ SELECT localization.add_localized_resource('Titles', '', 'DeliverTo', 'Deliver T
 SELECT localization.add_localized_resource('Titles', '', 'DeliveredTo', 'Delivered To');
 SELECT localization.add_localized_resource('Titles', '', 'Department', 'Department');
 SELECT localization.add_localized_resource('Titles', '', 'Departments', 'Departments');
+SELECT localization.add_localized_resource('Titles', '', 'DestinationStore', 'Destination Store');
 SELECT localization.add_localized_resource('Titles', '', 'Difference', 'Difference');
 SELECT localization.add_localized_resource('Titles', '', 'DirectPurchase', 'Direct Purchase');
 SELECT localization.add_localized_resource('Titles', '', 'DirectSales', 'Direct Sales');
@@ -1074,6 +1077,7 @@ SELECT localization.add_localized_resource('Titles', '', 'ShowCompact', 'Show Co
 SELECT localization.add_localized_resource('Titles', '', 'SignIn', 'Sign In');
 SELECT localization.add_localized_resource('Titles', '', 'SignOut', 'Sign Out');
 SELECT localization.add_localized_resource('Titles', '', 'SigningIn', 'Signing In');
+SELECT localization.add_localized_resource('Titles', '', 'SourceStore', 'Source Store');
 SELECT localization.add_localized_resource('Titles', '', 'Start', 'Start');
 SELECT localization.add_localized_resource('Titles', '', 'StateSalesTaxes', 'State Sales Taxes');
 SELECT localization.add_localized_resource('Titles', '', 'StatementOfCashFlows', 'Statement of Cash Flows');

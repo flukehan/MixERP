@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MixERP.Net.Entities.Core;
+using PetaPoco;
 
 namespace MixERP.Net.FrontEnd.Models
 {
@@ -38,7 +38,6 @@ namespace MixERP.Net.FrontEnd.Models
             this.Culture = culture;
         }
 
-
         public string Catalog { get; private set; }
         public int UserId { get; private set; }
         public int OfficeId { get; private set; }
@@ -54,7 +53,10 @@ namespace MixERP.Net.FrontEnd.Models
             }).ToList();
 
 
-            if (navs.Count <= 0) return navs;
+            if (navs.Count <= 0)
+            {
+                return navs;
+            }
 
             foreach (NavigationMenu nav in navs)
             {
@@ -80,7 +82,10 @@ namespace MixERP.Net.FrontEnd.Models
                     Menu = menu
                 }));
 
-            if (children.Count <= 0) return children;
+            if (children.Count <= 0)
+            {
+                return children;
+            }
 
             foreach (NavigationMenu t in children)
             {
@@ -91,9 +96,9 @@ namespace MixERP.Net.FrontEnd.Models
 
         private static IEnumerable<Menu> GetMenuCollection(string catalog, int officeId, int userId, string culture)
         {
-            return Factory.Get<Menu>(catalog, "SELECT * FROM policy.get_menu(@0, @1, @2) ORDER BY menu_id;", userId, officeId,
+            return Factory.Get<Menu>(catalog, "SELECT * FROM policy.get_menu(@0, @1, @2) ORDER BY menu_id;", userId,
+                officeId,
                 culture);
         }
     }
-
 }

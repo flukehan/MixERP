@@ -46,6 +46,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
 
             if (tranId <= 0)
             {
+                throw new MixERPException(Warnings.AccessIsDenied);
             }
 
             int userId = AppUsers.GetCurrent().View.UserId.ToInt();
@@ -66,6 +67,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Services
 
             if (tranId <= 0)
             {
+                throw new MixERPException(Warnings.AccessIsDenied);
             }
 
             int userId = AppUsers.GetCurrent().View.UserId.ToInt();

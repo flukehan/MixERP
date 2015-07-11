@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.DbFactory;
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Public;
-using Npgsql;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading;
+using MixERP.Net.DbFactory;
+using MixERP.Net.Entities.Public;
+using Npgsql;
+using PetaPoco;
 
 namespace MixERP.Net.WebControls.ScrudFactory.Data
 {
@@ -37,10 +37,14 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             if (!string.IsNullOrWhiteSpace(exclusion))
             {
                 var exclusions = exclusion.Split(',');
-                var paramNames = exclusions.Select((s, i) => "@Parameter" + i.ToString(Thread.CurrentThread.CurrentCulture).Trim()).ToArray();
+                var paramNames =
+                    exclusions.Select((s, i) => "@Parameter" + i.ToString(Thread.CurrentThread.CurrentCulture).Trim())
+                        .ToArray();
                 var inClause = string.Join(",", paramNames);
 
-                sql = string.Format(Thread.CurrentThread.CurrentCulture, @"SELECT * FROM scrud.mixerp_table_view WHERE table_schema=@Schema AND table_name=@TableName AND column_name NOT IN({0}) ORDER BY ordinal_position ASC;", inClause);
+                sql = string.Format(Thread.CurrentThread.CurrentCulture,
+                    @"SELECT * FROM scrud.mixerp_table_view WHERE table_schema=@Schema AND table_name=@TableName AND column_name NOT IN({0}) ORDER BY ordinal_position ASC;",
+                    inClause);
 
                 using (var command = new NpgsqlCommand(sql))
                 {
@@ -56,7 +60,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
                 }
             }
 
-            sql = "select * from scrud.mixerp_table_view where table_schema=@Schema AND table_name=@TableName ORDER BY ordinal_position ASC;";
+            sql =
+                "select * from scrud.mixerp_table_view where table_schema=@Schema AND table_name=@TableName ORDER BY ordinal_position ASC;";
 
             using (var command = new NpgsqlCommand(sql))
             {
@@ -67,7 +72,8 @@ namespace MixERP.Net.WebControls.ScrudFactory.Data
             }
         }
 
-        public static IEnumerable<DbPocoGetTableFunctionDefinitionResult> GetColumns(string catalog, string schema, string table)
+        public static IEnumerable<DbPocoGetTableFunctionDefinitionResult> GetColumns(string catalog, string schema,
+            string table)
         {
             const string sql = "SELECT * FROM public.poco_get_table_function_definition(@0::text, @1::text)";
             return Factory.Get<DbPocoGetTableFunctionDefinitionResult>(catalog, sql, schema, table);

@@ -477,14 +477,19 @@ BEGIN
             user_id                                     integer NOT NULL REFERENCES office.users(user_id),
             login_id                                    bigint NOT NULL REFERENCES audit.logins(login_id),
             source_store_id                             integer NOT NULL REFERENCES office.stores(store_id),
-            destination_store_id                        integer NOT NULL REFERENCES office.stores(store_id),
+            destination_store_id                        integer NOT NULL REFERENCES office.stores(store_id)
+                                                        CONSTRAINT inventory_transfer_deliveries_store_chk
+                                                        CHECK(source_store_id <> destination_store_id),
             value_date                                  date NOT NULL,
             transaction_ts                              TIMESTAMP WITH TIME ZONE DEFAULT(now()),
             reference_number                            national character varying(24) NOT NULL,
             statement_reference                         text,
             audit_ts                                    TIMESTAMP WITH TIME ZONE DEFAULT(now())
         );
-    END IF;    
+    END IF;
+    
+    CREATE UNIQUE INDEX inventory_transfer_deliveries_inventory_transfer_request_id_uix
+    ON transactions.inventory_transfer_deliveries(inventory_transfer_request_id);
 END
 $$
 LANGUAGE plpgsql;

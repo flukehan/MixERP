@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Core;
 using System.Collections.Generic;
+using MixERP.Net.Entities.Core;
+using PetaPoco;
 
 namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
 {
@@ -27,7 +27,9 @@ namespace MixERP.Net.Core.Modules.Inventory.Data.Helpers
     {
         public static IEnumerable<ShippingAddressView> GetShippingAddressView(string catalog, string partyCode)
         {
-            return Factory.Get<ShippingAddressView>(catalog, "SELECT * FROM core.shipping_address_view WHERE party_id = core.get_party_id_by_party_code(@0);", partyCode);
+            return Factory.Get<ShippingAddressView>(catalog,
+                "SELECT * FROM core.shipping_address_view WHERE party_id = core.get_party_id_by_party_code(@0);",
+                partyCode);
         }
     }
 }

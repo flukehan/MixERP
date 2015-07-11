@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Core;
-using MixERP.Net.Entities.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Transactions;
+using PetaPoco;
 
 namespace MixERP.Net.Core.Modules.Finance.Data.Reports
 {
@@ -34,14 +34,16 @@ namespace MixERP.Net.Core.Modules.Finance.Data.Reports
             return Factory.Get<AccountView>(catalog, sql, accountNumber).FirstOrDefault();
         }
 
-        public static IEnumerable<DbGetAccountStatementResult> GetAccountStatement(string catalog, DateTime from, DateTime to, int userId, string accountNumber, int officeId)
+        public static IEnumerable<DbGetAccountStatementResult> GetAccountStatement(string catalog, DateTime from,
+            DateTime to, int userId, string accountNumber, int officeId)
         {
             if (to < from)
             {
                 return null;
             }
 
-            const string sql = "SELECT * FROM transactions.get_account_statement(@0::date, @1::date, @2::integer, core.get_account_id_by_account_number(@3)::bigint, @4::integer) ORDER BY id;";
+            const string sql =
+                "SELECT * FROM transactions.get_account_statement(@0::date, @1::date, @2::integer, core.get_account_id_by_account_number(@3)::bigint, @4::integer) ORDER BY id;";
             return Factory.Get<DbGetAccountStatementResult>(catalog, sql, from, to, userId, accountNumber, officeId);
         }
     }

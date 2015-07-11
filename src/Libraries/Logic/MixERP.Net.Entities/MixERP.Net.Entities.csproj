@@ -99,7 +99,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Factory.cs" />
     <Compile Include="Helpers\TransactionBookHelper.cs" />
     <Compile Include="Policy.cs">
       <DependentUpon>Policy.tt</DependentUpon>

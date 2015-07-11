@@ -11,7 +11,7 @@ namespace MixERP.Net.Core.Modules.Inventory.Reports
 {
 
 
-    public partial class InventoryTransferReport
+    public partial class InventoryTransferRequestReport
     {
     }
 }

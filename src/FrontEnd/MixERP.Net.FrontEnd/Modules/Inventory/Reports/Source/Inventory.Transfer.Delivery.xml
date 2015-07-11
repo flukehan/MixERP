@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<MixERPReport>
+  <Title>{Resources.Titles.StockTransferRequest}</Title>
+  <TopSection>
+    <table class="table horizontal">
+      <tr>
+        <td>{Resources.Titles.TranId}</td>
+        <td>{DataSource[0].inventory_transfer_delivery_id}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.TransactionDate}</td>
+        <td>{DataSource[0].transaction_ts}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.ValueDate}</td>
+        <td>{DataSource[0].value_date}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.EnteredBy}</td>
+        <td> {DataSource[0].entered_by}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.DeliveredBy}</td>
+        <td> {DataSource[0].Delivered_by}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.Office}</td>
+        <td>{DataSource[0].office_name}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.ReferenceNumber}</td>
+        <td>{DataSource[0].reference_number}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.StatementReference}</td>
+        <td>{DataSource[0].statement_reference}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.SourceStore}</td>
+        <td>{DataSource[0].source_store}</td>
+      </tr>
+      <tr>
+        <td>{Resources.Titles.DestinationStore}</td>
+        <td>{DataSource[0].destination_store}</td>
+      </tr>
+    </table>
+    <br />
+  </TopSection>
+  <Body>
+    <Content>
+      <h2>{Resources.Titles.TransferDetails}</h2>
+    </Content>
+    <GridViews>
+      <GridView>
+        <GridViewDataSource Index="1">
+        </GridViewDataSource>
+      </GridView>
+    </GridViews>
+  </Body>
+  <BottomSection>
+  </BottomSection>
+  <DataSources>
+    <DataSource>
+      <Query>
+        SELECT
+        transactions.inventory_transfer_deliveries.inventory_transfer_delivery_id,
+        transactions.inventory_transfer_deliveries.transaction_ts,
+        transactions.inventory_transfer_deliveries.value_date,
+        office.users.user_name AS entered_by,
+        delivered_by_user.user_name AS delivered_by,
+        office.offices.office_name,
+        transactions.inventory_transfer_deliveries.reference_number,
+        transactions.inventory_transfer_deliveries.statement_reference,
+        source_store.store_name AS source_store,
+        destination_store.store_name AS destination_store
+        FROM transactions.inventory_transfer_deliveries
+        INNER JOIN office.offices
+        ON transactions.inventory_transfer_deliveries.office_id = office.offices.office_id
+        INNER JOIN office.users
+        ON transactions.inventory_transfer_deliveries.user_id = office.users.user_id
+        INNER JOIN office.stores AS source_store
+        ON transactions.inventory_transfer_deliveries.source_store_id = source_store.store_id
+        INNER JOIN office.stores AS destination_store
+        ON transactions.inventory_transfer_deliveries.destination_store_id = destination_store.store_id
+        LEFT JOIN office.users AS delivered_by_user
+        ON transactions.inventory_transfer_deliveries.user_id = delivered_by_user.user_id
+        WHERE transactions.inventory_transfer_deliveries.inventory_transfer_delivery_id=@id;
+      </Query>
+      <Parameters>
+        <Parameter Name="@id" Type="Number" />
+      </Parameters>
+    </DataSource>
+    <DataSource>
+      <Query>
+        SELECT
+        core.items.item_code,
+        core.items.item_name,
+        transactions.inventory_transfer_delivery_details.quantity,
+        core.units.unit_name
+        FROM transactions.inventory_transfer_delivery_details
+        INNER JOIN transactions.inventory_transfer_deliveries
+        ON transactions.inventory_transfer_delivery_details.inventory_transfer_delivery_id = transactions.inventory_transfer_deliveries.inventory_transfer_delivery_id
+        INNER JOIN core.items
+        ON transactions.inventory_transfer_delivery_details.item_id = core.items.item_id
+        INNER JOIN core.units
+        ON transactions.inventory_transfer_delivery_details.unit_id = core.units.unit_id
+        WHERE transactions.inventory_transfer_deliveries.inventory_transfer_delivery_id = @id
+        ORDER BY transactions.inventory_transfer_deliveries.inventory_transfer_delivery_id;
+      </Query>
+      <Parameters>
+        <Parameter Name="@id" Type="Number" />
+      </Parameters>
+    </DataSource>
+  </DataSources>
+</MixERPReport>

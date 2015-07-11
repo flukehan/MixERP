@@ -17,24 +17,24 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixER.Net.ApplicationState.Cache;
-using MixERP.Net.Common;
-using MixERP.Net.Common.Extensions;
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Contracts;
-using MixERP.Net.Entities.Transactions;
-using MixERP.Net.FrontEnd.Base;
-using MixERP.Net.WebControls.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web.UI.WebControls;
+using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.Common;
+using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.Entities.Contracts;
+using MixERP.Net.Entities.Transactions;
 using MixERP.Net.Framework;
+using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.TransactionGovernor;
+using MixERP.Net.WebControls.Common;
 using MixERP.Net.WebControls.Flag;
+using PetaPoco;
 
 namespace MixERP.Net.Core.Modules.Inventory
 {
@@ -57,72 +57,6 @@ namespace MixERP.Net.Core.Modules.Inventory
             this.GridViewPlaceholder.Controls.Add(selectedValuesHidden);
         }
 
-        #region Flag
-
-        private void AddFlagControl()
-        {
-            this.flag = new FlagControl();
-
-            this.flag.ID = "FlagPopUnder";
-            this.flag.AssociatedControlId = "FlagButton";
-            this.flag.OnClientClick = "return getSelectedItems();";
-            this.flag.CssClass = "ui form segment initially hidden";
-            this.flag.Updated += this.Flag_Updated;
-            this.flag.Catalog = AppUsers.GetCurrentUserDB();
-
-
-            this.GridViewPlaceholder.Controls.Add(flag);
-        }
-
-        private void Flag_Updated(object sender, FlagUpdatedEventArgs e)
-        {
-            int flagTypeId = e.FlagId;
-
-            const string resource = "transactions.inventory_transfer_requests";
-            const string resourceKey = "inventory_transfer_request_id";
-
-            if (string.IsNullOrWhiteSpace(resource))
-            {
-                throw new MixERPException(Warnings.CannotCreateFlagTransactionTableNull);
-            }
-
-
-            Flags.CreateFlag(AppUsers.GetCurrentUserDB(), AppUsers.GetCurrent().View.UserId.ToInt(), flagTypeId, resource, resourceKey, this.GetSelectedValues().Select(t => Conversion.TryCastString(t)).ToList().ToCollection());
-
-            this.BindGridView();
-        }
-
-        private Collection<long> GetSelectedValues()
-        {
-            string selectedValues = this.selectedValuesHidden.Value;
-
-            //Check if something was selected.
-            if (string.IsNullOrWhiteSpace(selectedValues))
-            {
-                return new Collection<long>();
-            }
-
-            //Create a collection object to store the IDs.
-            Collection<long> values = new Collection<long>();
-
-            //Iterate through each value in the selected values
-            //and determine if each value is a number.
-            foreach (string value in selectedValues.Split(','))
-            {
-                //Parse the value to integer.
-                int val = Conversion.TryCastInteger(value);
-
-                if (val > 0)
-                {
-                    values.Add(val);
-                }
-            }
-
-            return values;
-        }
-
-
-        #endregion
         private void AddGridView()
         {
             this.grid = new MixERPGridView();
@@ -166,6 +100,74 @@ namespace MixERP.Net.Core.Modules.Inventory
             return Factory.Get<DbGetInventoryTransferRequestViewResult>(catalog, sql, userId, loginId, officeId, from,
                 to, office, store, authorized, delivered, received, user, referenceNumber, statementReference);
         }
+
+        #region Flag
+
+        private void AddFlagControl()
+        {
+            this.flag = new FlagControl();
+
+            this.flag.ID = "FlagPopUnder";
+            this.flag.AssociatedControlId = "FlagButton";
+            this.flag.OnClientClick = "return getSelectedItems();";
+            this.flag.CssClass = "ui form segment initially hidden";
+            this.flag.Updated += this.Flag_Updated;
+            this.flag.Catalog = AppUsers.GetCurrentUserDB();
+
+
+            this.GridViewPlaceholder.Controls.Add(flag);
+        }
+
+        private void Flag_Updated(object sender, FlagUpdatedEventArgs e)
+        {
+            int flagTypeId = e.FlagId;
+
+            const string resource = "transactions.inventory_transfer_requests";
+            const string resourceKey = "inventory_transfer_request_id";
+
+            if (string.IsNullOrWhiteSpace(resource))
+            {
+                throw new MixERPException(Warnings.CannotCreateFlagTransactionTableNull);
+            }
+
+
+            Flags.CreateFlag(AppUsers.GetCurrentUserDB(), AppUsers.GetCurrent().View.UserId.ToInt(), flagTypeId,
+                resource, resourceKey,
+                this.GetSelectedValues().Select(t => Conversion.TryCastString(t)).ToList().ToCollection());
+
+            this.BindGridView();
+        }
+
+        private Collection<long> GetSelectedValues()
+        {
+            string selectedValues = this.selectedValuesHidden.Value;
+
+            //Check if something was selected.
+            if (string.IsNullOrWhiteSpace(selectedValues))
+            {
+                return new Collection<long>();
+            }
+
+            //Create a collection object to store the IDs.
+            Collection<long> values = new Collection<long>();
+
+            //Iterate through each value in the selected values
+            //and determine if each value is a number.
+            foreach (string value in selectedValues.Split(','))
+            {
+                //Parse the value to integer.
+                int val = Conversion.TryCastInteger(value);
+
+                if (val > 0)
+                {
+                    values.Add(val);
+                }
+            }
+
+            return values;
+        }
+
+        #endregion
 
         #region IDisposable
 

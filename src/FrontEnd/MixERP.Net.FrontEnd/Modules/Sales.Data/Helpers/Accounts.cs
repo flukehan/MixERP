@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Core;
-using MixERP.Net.Entities.Office;
 using System.Collections.Generic;
 using System.Linq;
+using MixERP.Net.Entities.Core;
+using MixERP.Net.Entities.Office;
+using PetaPoco;
 
 namespace MixERP.Net.Core.Modules.Sales.Data.Helpers
 {

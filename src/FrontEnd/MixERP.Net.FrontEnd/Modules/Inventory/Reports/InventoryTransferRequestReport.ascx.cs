@@ -25,7 +25,7 @@ using System.Collections.ObjectModel;
 
 namespace MixERP.Net.Core.Modules.Inventory.Reports
 {
-    public partial class InventoryTransferReport : MixERPUserControl
+    public partial class InventoryTransferRequestReport : MixERPUserControl
     {
         public override void OnControlLoad(object sender, EventArgs e)
         {

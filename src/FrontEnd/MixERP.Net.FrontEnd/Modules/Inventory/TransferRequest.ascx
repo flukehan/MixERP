@@ -51,7 +51,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
             </div>
             <div class="field">
                 <label><%=Titles.Delivered %></label>
-                <input id="DeliveredTextBox" type="text" value="false" runat="server"/>
+                <input id="DeliveredTextBox" type="text" value="" runat="server"/>
             </div>
             <div class="field">
                 <label><%=Titles.Received %></label>

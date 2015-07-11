@@ -17,14 +17,15 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Entities;
 using System.Linq;
+using PetaPoco;
 
 namespace MixERP.Net.TransactionGovernor.Data.Verification
 {
     public static class VerificationStatus
     {
-        public static Entities.Models.Transactions.Verification GetVerificationStatus(string catalog, long transactionMasterId, bool isStockTransferRequest)
+        public static Entities.Models.Transactions.Verification GetVerificationStatus(string catalog,
+            long transactionMasterId, bool isStockTransferRequest)
         {
             string sql = @"SELECT 
                              verification_status_id, 
@@ -48,7 +49,9 @@ namespace MixERP.Net.TransactionGovernor.Data.Verification
             }
 
 
-            return Factory.Get<Entities.Models.Transactions.Verification>(catalog, sql, transactionMasterId).SingleOrDefault();
+            return
+                Factory.Get<Entities.Models.Transactions.Verification>(catalog, sql, transactionMasterId)
+                    .SingleOrDefault();
         }
     }
 }

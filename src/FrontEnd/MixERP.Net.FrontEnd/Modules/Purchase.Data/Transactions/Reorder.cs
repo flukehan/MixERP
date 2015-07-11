@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.DbFactory;
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Transactions;
-using Npgsql;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using MixERP.Net.DbFactory;
+using MixERP.Net.Entities.Transactions;
+using Npgsql;
+using PetaPoco;
 
 namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
 {
@@ -60,7 +60,9 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
             Collection<string> detailCollection = new Collection<string>();
             for (int i = 0; i < details.Count; i++)
             {
-                detailCollection.Add(string.Format(CultureInfo.InvariantCulture, "ROW(@ItemId{0}, @SupplierCode{0}, @UnitId{0}, @Price{0},@Tax{0}, @OrderQuantity{0})::transactions.purchase_reorder_type", i.ToString(CultureInfo.InvariantCulture)));
+                detailCollection.Add(string.Format(CultureInfo.InvariantCulture,
+                    "ROW(@ItemId{0}, @SupplierCode{0}, @UnitId{0}, @Price{0},@Tax{0}, @OrderQuantity{0})::transactions.purchase_reorder_type",
+                    i.ToString(CultureInfo.InvariantCulture)));
             }
 
             return string.Join(",", detailCollection);
@@ -72,9 +74,12 @@ namespace MixERP.Net.Core.Modules.Purchase.Data.Transactions
             return Factory.Get<DbGetReorderViewFunctionResult>(catalog, sql, officeId);
         }
 
-        public static bool Save(string catalog, long loginId, int userId, int officeId, Collection<Models.Reorder> details)
+        public static bool Save(string catalog, long loginId, int userId, int officeId,
+            Collection<Models.Reorder> details)
         {
-            string sql = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM transactions.post_purhcase_reorder(transactions.get_value_date(@OfficeId::integer)::date, @LoginId::bigint, @UserId::integer, @OfficeId::integer, ARRAY[{0}]);", CreatePurchaseReorderTypeParameter(details));
+            string sql = string.Format(CultureInfo.InvariantCulture,
+                "SELECT * FROM transactions.post_purhcase_reorder(transactions.get_value_date(@OfficeId::integer)::date, @LoginId::bigint, @UserId::integer, @OfficeId::integer, ARRAY[{0}]);",
+                CreatePurchaseReorderTypeParameter(details));
 
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {

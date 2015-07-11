@@ -32,16 +32,16 @@ namespace MixERP.Net.Core.Modules.Inventory.Confirmation
         {
             using (Checklist checklist = new Checklist())
             {
-                checklist.ViewReportButtonText = Titles.ViewThisRequest;
-                checklist.Text = Titles.StockTransferRequest;
+                checklist.ViewReportButtonText = Titles.ViewThisDelivery;
+                checklist.Text = Titles.StockTransferDelivery;
                 checklist.AttachmentBookName = "inventory.transfer.delivery";
-                checklist.OverridePath = "/Modules/Inventory/TransferRequest.mix";
+                checklist.OverridePath = "/Modules/Inventory/TransferDelivery.mix";
                 checklist.DisplayViewReportButton = true;
                 checklist.DisplayAttachmentButton = true;
                 checklist.HideVerificationMessage = true;
-                checklist.ReportPath = "~/Modules/Inventory/Reports/InventoryTransferRequestReport.mix";
-                checklist.ViewPath = "/Modules/Inventory/TransferRequest.mix";
-                checklist.AddNewPath = "/Modules/Inventory/Entry/TransferRequest.mix";
+                checklist.ReportPath = "~/Modules/Inventory/Reports/InventoryTransferDeliveryReport.mix";
+                checklist.ViewPath = "/Modules/Inventory/TransferDelivery.mix";
+                checklist.AddNewPath = "/Modules/Inventory/Entry/TransferDelivery.mix";
                 checklist.UserId = AppUsers.GetCurrent().View.UserId.ToInt();
                 checklist.RestrictedTransactionMode = this.IsRestrictedMode;
 

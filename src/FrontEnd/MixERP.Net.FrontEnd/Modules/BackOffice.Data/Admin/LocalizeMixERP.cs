@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.Entities;
-using MixERP.Net.Entities.Localization;
 using System.Collections.Generic;
+using MixERP.Net.Entities.Localization;
+using PetaPoco;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Data.Admin
 {
