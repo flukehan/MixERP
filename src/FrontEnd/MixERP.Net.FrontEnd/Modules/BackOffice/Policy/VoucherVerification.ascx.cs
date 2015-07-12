@@ -46,9 +46,9 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
                 scrud.DenyEdit = denyToNonAdmins;
                 scrud.DenyDelete = denyToNonAdmins;
 
-                scrud.ExcludeEdit = "user_id";
+                scrud.ExcludeEdit = "policy_id";
 
-                scrud.KeyColumn = "user_id";
+                scrud.KeyColumn = "policy_id";
 
                 scrud.TableSchema = "policy";
                 scrud.Table = "voucher_verification_policy";

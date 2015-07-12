@@ -62,7 +62,7 @@ namespace MixERP.Net.Core.Modules.Finance.Services
         public Collection<ListItem> GetAccounts()
         {
             bool allowParentAccountInGlTransaction = DbConfig.GetSwitch(AppUsers.GetCurrentUserDB(),
-                "AllowParentAccountInGlTransaction");
+                "AllowParentAccountInGLTransaction");
 
             if (allowParentAccountInGlTransaction)
             {
