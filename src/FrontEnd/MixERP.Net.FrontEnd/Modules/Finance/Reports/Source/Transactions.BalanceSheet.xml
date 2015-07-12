@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses />.
+-->
+
+<MixERPReport>
+  <Title>{Resources.Titles.BalanceSheet}</Title>
+  <TopSection>
+
+  </TopSection>
+  <Body>
+    <Content>
+    </Content>
+    <GridViews>
+      <GridView>
+        <GridViewDataSource Index="0">
+        </GridViewDataSource>
+      </GridView>
+    </GridViews>
+  </Body>
+  <BottomSection>
+  </BottomSection>
+  <DataSources>
+    <DataSource>
+      <Query>
+        SELECT
+        id,
+        previous_period,
+        current_period
+        FROM transactions.get_balance_sheet(@PreviousPeriod::date, @CurrentPeriod::date, @UserId::integer, @OfficeId::integer, @Factor);
+      </Query>
+      <Parameters>
+        <Parameter Name="@PreviousPeriod" Type="Date" />
+        <Parameter Name="@CurrentPeriod" Type="Date" />
+        <Parameter Name="@UserId" Type="Number" />
+        <Parameter Name="@Factor" Type="Number" />
+        <Parameter Name="@OfficeId" Type="Number" />
+       
+      </Parameters>
+      <RunningTotalTextColumnIndex>0</RunningTotalTextColumnIndex>
+      <RunningTotalFieldIndices>1,2</RunningTotalFieldIndices>
+    </DataSource>
+  </DataSources>
+</MixERPReport>

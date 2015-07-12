@@ -103,9 +103,13 @@
     <Content Include="EODOperation.ascx" />
     <Content Include="Mix Open Foundation.snk" />
     <Content Include="Reports\AccountStatementPopup.ascx" />
+    <Content Include="Reports\BalanceSheetReport.ascx" />
     <Content Include="Reports\RetainedEarnings.ascx" />
     <Content Include="Reports\RetainedEarningsPopup.ascx" />
     <Content Include="packages.config" />
+    <Content Include="Reports\Source\Transactions.BalanceSheet.xml" />
+    <Content Include="Reports\Source\Transactions.TrialBalance.xml" />
+    <Content Include="Reports\TrialBalanceReport.ascx" />
     <Content Include="Scripts\UpdateExchangeRates.js" />
     <Content Include="Services\Transactions.asmx" />
     <Content Include="Setup\MerchantFeeSetup.ascx" />
@@ -227,6 +231,13 @@
     <Compile Include="Reports\BalanceSheet.ascx.designer.cs">
       <DependentUpon>BalanceSheet.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\BalanceSheetReport.ascx.cs">
+      <DependentUpon>BalanceSheetReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\BalanceSheetReport.ascx.designer.cs">
+      <DependentUpon>BalanceSheetReport.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\CashFlow.ascx.cs">
       <DependentUpon>CashFlow.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -268,6 +279,13 @@
     </Compile>
     <Compile Include="Reports\TrialBalance.ascx.designer.cs">
       <DependentUpon>TrialBalance.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\TrialBalanceReport.ascx.cs">
+      <DependentUpon>TrialBalanceReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\TrialBalanceReport.ascx.designer.cs">
+      <DependentUpon>TrialBalanceReport.ascx</DependentUpon>
     </Compile>
     <Compile Include="Services\AccountData.asmx.cs">
       <DependentUpon>AccountData.asmx</DependentUpon>

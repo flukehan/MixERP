@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This file is part of MixERP.
+
+MixERP is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MixERP is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MixERP.  If not, see <http://www.gnu.org/licenses />.
+-->
+
+<MixERPReport>
+  <Title>{Resources.Titles.TrialBalance}</Title>
+  <TopSection>
+
+  </TopSection>
+  <Body>
+    <Content>
+    </Content>
+    <GridViews>
+      <GridView>
+        <GridViewDataSource Index="0">
+        </GridViewDataSource>
+      </GridView>
+    </GridViews>
+  </Body>
+  <BottomSection>
+  </BottomSection>
+  <DataSources>
+    <DataSource>
+      <Query>
+        SELECT 
+        account_number,
+        account,
+        previous_debit,
+        previous_credit,
+        debit,
+        credit,
+        closing_debit,
+        closing_credit
+        FROM transactions.get_trial_balance(@From::date, @To::date, @UserId::integer, @OfficeId::integer, @Compact::boolean, @Factor::decimal(24,4), @ChangeSideWhenNegative::boolean, @IncludeZeroBalanceAccounts::boolean) ORDER BY id;
+      </Query>
+      <Parameters>
+        <Parameter Name="@From" Type="Date" />
+        <Parameter Name="@To" Type="Date" />
+        <Parameter Name="@UserId" Type="Number" />
+        <Parameter Name="@Factor" Type="Number" />
+        <Parameter Name="@OfficeId" Type="Number" />
+
+        <Parameter Name="@ChangeSideWhenNegative" Type="Bool" />
+        <Parameter Name="@IncludeZeroBalanceAccounts" Type="Bool" />
+        <Parameter Name="@Compact" Type="Bool" />
+      </Parameters>
+      <RunningTotalTextColumnIndex>1</RunningTotalTextColumnIndex>
+      <RunningTotalFieldIndices>2,3,6,7</RunningTotalFieldIndices>
+    </DataSource>
+  </DataSources>
+</MixERPReport>

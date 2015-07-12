@@ -246,6 +246,8 @@ SELECT localization.add_localized_resource('ScrudResource', '', 'check_nexus', '
 SELECT localization.add_localized_resource('ScrudResource', '', 'checking_frequency', 'Checking Frequency');
 SELECT localization.add_localized_resource('ScrudResource', '', 'checking_frequency_id', 'Checking Frequency Id');
 SELECT localization.add_localized_resource('ScrudResource', '', 'city', 'City');
+SELECT localization.add_localized_resource('ScrudResource', '', 'closing_credit', 'Closing Credit');
+SELECT localization.add_localized_resource('ScrudResource', '', 'closing_debit', 'Closing Debit');
 SELECT localization.add_localized_resource('ScrudResource', '', 'collecting_account', 'Collecting Account');
 SELECT localization.add_localized_resource('ScrudResource', '', 'collecting_account_id', 'Collecting Account Id');
 SELECT localization.add_localized_resource('ScrudResource', '', 'collecting_tax_authority', 'Collecting Tax Authority');
@@ -305,6 +307,7 @@ SELECT localization.add_localized_resource('ScrudResource', '', 'currency', 'Cur
 SELECT localization.add_localized_resource('ScrudResource', '', 'currency_code', 'Currency Code');
 SELECT localization.add_localized_resource('ScrudResource', '', 'currency_name', 'Currency Name');
 SELECT localization.add_localized_resource('ScrudResource', '', 'currency_symbol', 'Currency Symbol');
+SELECT localization.add_localized_resource('ScrudResource', '', 'current_period', 'Current Period');
 SELECT localization.add_localized_resource('ScrudResource', '', 'customer_pays_fee', 'Customer Pays Fee');
 SELECT localization.add_localized_resource('ScrudResource', '', 'date_of_birth', 'Date Of Birth');
 SELECT localization.add_localized_resource('ScrudResource', '', 'debit', 'Debit');
@@ -485,6 +488,9 @@ SELECT localization.add_localized_resource('ScrudResource', '', 'preferred_shipp
 SELECT localization.add_localized_resource('ScrudResource', '', 'preferred_shipping_package_shape', 'Preferred Shipping Package Shape');
 SELECT localization.add_localized_resource('ScrudResource', '', 'preferred_supplier', 'Preferred Supplier');
 SELECT localization.add_localized_resource('ScrudResource', '', 'preferred_supplier_id', 'Preferred Supplier Id');
+SELECT localization.add_localized_resource('ScrudResource', '', 'previous_credit', 'Previous Credit');
+SELECT localization.add_localized_resource('ScrudResource', '', 'previous_debit', 'Previous Debit');
+SELECT localization.add_localized_resource('ScrudResource', '', 'previous_period', 'Previous Period');
 SELECT localization.add_localized_resource('ScrudResource', '', 'price', 'Price');
 SELECT localization.add_localized_resource('ScrudResource', '', 'price_from', 'Price From');
 SELECT localization.add_localized_resource('ScrudResource', '', 'price_to', 'Price To');

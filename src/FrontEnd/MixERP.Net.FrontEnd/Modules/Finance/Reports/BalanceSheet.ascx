@@ -26,13 +26,15 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 <asp:PlaceHolder runat="server" ID="Placeholder1"></asp:PlaceHolder>
 
 <script type="text/javascript">
-    $(function () {
-        var balanceSheetGridView = $("#BalanceSheetGridView");
-        var previousPeriodDateTextBox = $("#PreviousPeriodDateTextBox");
-        var currentPeriodDateTextBox = $("#CurrentPeriodDateTextBox");
-        var factorInputText = $("#FactorInputText");
-        var printButton = $("#PrintButton");
 
+    var previousPeriodDateTextBox = $("#PreviousPeriodDateTextBox");
+    var currentPeriodDateTextBox = $("#CurrentPeriodDateTextBox");
+    var factorInputText = $("#FactorInputText");
+    var printButton = $("#PrintButton");
+
+    $(function () {
+
+        var balanceSheetGridView = $("#BalanceSheetGridView");
         var previousPeriod = Date.parseExact(previousPeriodDateTextBox.val(), window.shortDateFormat);
         var currentPeriod = Date.parseExact(currentPeriodDateTextBox.val(), window.shortDateFormat);
         var factor = parseInt2(factorInputText.val());
@@ -114,6 +116,16 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         createLinkedBalances();
         createVisualHint();
 
+    });
+
+    printButton.click(function () {
+        var report = "BalanceSheetReport.mix?PreviousPeriod={0}&CurrentPeriod={1}&Factor={2}";
+        var previousPeriod = Date.parseExact(previousPeriodDateTextBox.val(), window.shortDateFormat).toDateString();
+        var currentPeriod = Date.parseExact(currentPeriodDateTextBox.val(), window.shortDateFormat).toDateString();
+        var factor = factorInputText.val();
+
+        report = String.format(report, previousPeriod, currentPeriod, factor);
+        showWindow(report);
     });
 </script>
 
