@@ -294,28 +294,18 @@
     <Content Include="db\beta-1\v2\mixerp-incremental-sample.sql" />
     <Content Include="db\beta-1\v2\mixerp-patch-for-v1.sql" />
     <Content Include="db\index.html" />
+    <Content Include="db\release-1\update-1\mixerp-incremental-blank-db.sql" />
+    <Content Include="db\release-1\update-1\mixerp-incremental-sample.sql" />
+    <Content Include="db\release-1\update-1\mixerp-patch-for-rc.sql" />
     <Content Include="Install.aspx" />
     <Content Include="License.txt" />
     <Content Include="Modules\Default.aspx" />
-    <Content Include="Backups\web.config" />
     <Content Include="db\web.config" />
     <Content Include="Modules\Update.aspx" />
     <Content Include="Modules\web.config" />
     <Content Include="MixERP.Installation.config" />
-    <Content Include="Resource\Configs\Updater.config" />
-    <None Include="Resource\Configs\ReportApiConfiguration.config" />
-    <None Include="Resource\Configs\StockTransactionFactoryParameters.config" />
-    <None Include="Resource\Configs\DbServer.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Resource\Configs\Parameters.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Resource\Configs\ReportParameters.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Resource\Configs\TransactionChecklistParameters.config" />
     <Content Include="Resource\Configs\index.html" />
+    <Content Include="Resource\Configs\Updater.config" />
     <Content Include="Resource\CustomReports\index.html" />
     <Content Include="Resource\index.html" />
     <Content Include="Resource\Static\Attachments\index.html" />
@@ -412,6 +402,19 @@
     <Content Include="BackendMaster.Master" />
     <Content Include="Resource\web.config" />
     <Content Include="Resource\Static\Attachments\web.config" />
+    <Content Include="Resource\Configs\DbServer.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resource\Configs\Parameters.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resource\Configs\ReportApiConfiguration.config" />
+    <Content Include="Resource\Configs\ReportParameters.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resource\Configs\StockTransactionFactoryParameters.config" />
+    <Content Include="Resource\Configs\TransactionChecklistParameters.config" />
+    <Content Include="Backups\web.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\colorpicker\.gitignore" />
