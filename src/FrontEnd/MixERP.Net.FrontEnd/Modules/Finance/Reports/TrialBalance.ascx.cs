@@ -17,7 +17,11 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixER.Net.ApplicationState.Cache;
+using System;
+using System.Data;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;
@@ -25,11 +29,7 @@ using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.Common;
-using System;
-using System.Data;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
+using MixER.Net.ApplicationState.Cache;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
 {
@@ -40,11 +40,20 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             this.CreateHeader(this.Placeholder1);
             this.CreateForm(this.Placeholder1);
             this.CreateGrid(this.Placeholder1);
-
+            this.RegisterJavascript();
             if (!this.Page.IsPostBack)
             {
                 this.BindGrid();
             }
+        }
+
+        private void RegisterJavascript()
+        {
+            string script = JSUtility.GetVar("perviousPeriodLocalized", Titles.PreviousPeriod);
+            script += JSUtility.GetVar("currentPeriodLocalized", Titles.CurrentPeriod);
+            script += JSUtility.GetVar("closingLocalized", Titles.ClosingBalance);
+
+            PageUtility.RegisterJavascript("TrialBalance_Vars", script, this.Page, true);
         }
 
         private void CreateHeader(Control container)
@@ -96,10 +105,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         private void TrialBalanceGridView_DataBound(object sender, EventArgs eventArgs)
         {
-            if (this.trialBalanceGridView.HeaderRow != null)
-            {
-                this.trialBalanceGridView.HeaderRow.TableSection = TableRowSection.TableHeader;
-            }
+            this.trialBalanceGridView.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
 
         #endregion
@@ -178,7 +184,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
                 this.fromDateTextBox.ID = "FromDateTextBox";
                 this.fromDateTextBox.Mode = FrequencyType.QuarterStartDate;
                 this.fromDateTextBox.Catalog = AppUsers.GetCurrentUserDB();
-                this.fromDateTextBox.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
+                this.fromDateTextBox.OfficeId = AppUsers.GetCurrent().View.UserId.ToInt();
 
 
                 field.Controls.Add(this.fromDateTextBox);

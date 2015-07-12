@@ -25,17 +25,36 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     }
 </style>
 <script type="text/javascript">
+    if (typeof perviousPeriodLocalized === "undefined") {
+        perviousPeriodLocalized = "Previous Period";
+    };
+
+    if (typeof currentPeriodLocalized === "undefined") {
+        currentPeriodLocalized = "Current Period";
+    };
+
+    if (typeof closingLocalized === "undefined") {
+        closingLocalized = "Closing";
+    };
+
     var grid = $("#TrialBalanceGridView");
+    var fromDateTextBox = $("#FromDateTextBox");
+    var toDateTextBox = $("#ToDateTextBox");
     var compactCheckBox = $("#CompactCheckBox");
     var zeroBalanceCheckBox = $("#ZeroBalanceCheckBox");
     var changeSideCheckBox = $("#ChangeSideCheckBox");
+    var factorInputText = $("#FactorInputText");
+    var compact = $("#CompactCheckBox");
+    var changeSideCheckBox = $("#ChangeSideCheckBox");
+    var zeroBalanceCheckBox = $("#ZeroBalanceCheckBox");
 
     var isCompactHiddenField = $("#IsCompactHidden");
     var includeZeroBalanceAccountHidden = $("#IncludeZeroBalanceAccountHidden");
     var changeSideWhenNegativeHidden = $("#ChangeSideWhenNegativeHidden");
+    var printButton = $("#PrintButton");
 
     $(document).ready(function () {
-        var html = "<tr><th></th><th></th><th colspan='2'>" + Resources.Titles.PreviousPeriod() + "</th><th colspan='2'>" + Resources.Titles.CurrentPeriod() + "</th><th colspan='2'>" + Resources.Titles.ClosingBalance() + "</th></tr>";
+        var html = "<tr><th></th><th></th><th colspan='2'>" + perviousPeriodLocalized + "</th><th colspan='2'>" + currentPeriodLocalized + "</th><th colspan='2'>" + closingLocalized + "</th></tr>";
         var thead = grid.find("thead");
         thead.prepend(html);
 
@@ -56,7 +75,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
 
         var closingDebit = sumOfColumn(grid, 6);
         var closingCredit = sumOfColumn(grid, 7);
-        
+
         var tfoot = "<tr class='active strong text-right'><td colspan='2'>Total</td><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td></tr>";
         tfoot = String.format(tfoot, previousDebit, previousCredit, debit, credit, closingDebit, closingCredit);
 
@@ -89,5 +108,18 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         };
 
         changeSideWhenNegativeHidden.val("0");
+    });
+
+    printButton.click(function () {
+        var report = "TrialBalanceReport.mix?FromDate={0}&ToDate={1}&Factor={2}&Compact={3}&ChangeSide={4}&IncludeZeroBalanceAccounts={5}";
+        var fromDate = Date.parseExact(fromDateTextBox.val(), window.shortDateFormat).toDateString();
+        var toDate = Date.parseExact(toDateTextBox.val(), window.shortDateFormat).toDateString();
+        var factor = factorInputText.val();
+        var compact = compactCheckBox.is(":checked");
+        var changeSide = changeSideCheckBox.is(":checked");
+        var includeZeroBalanceAccounts = zeroBalanceCheckBox.is("checked");
+
+        report = String.format(report, fromDate, toDate,factor,compact,changeSide,includeZeroBalanceAccounts);
+        showWindow(report);
     });
 </script>
