@@ -107,6 +107,7 @@
     <Content Include="Reports\RetainedEarnings.ascx" />
     <Content Include="Reports\RetainedEarningsPopup.ascx" />
     <Content Include="packages.config" />
+    <Content Include="Reports\RetainedEarningsReport.ascx" />
     <Content Include="Reports\Source\Transactions.BalanceSheet.xml" />
     <Content Include="Reports\Source\Transactions.TrialBalance.xml" />
     <Content Include="Reports\TrialBalanceReport.ascx" />
@@ -265,6 +266,13 @@
     </Compile>
     <Compile Include="Reports\RetainedEarnings.ascx.designer.cs">
       <DependentUpon>RetainedEarnings.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RetainedEarningsReport.ascx.cs">
+      <DependentUpon>RetainedEarningsReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\RetainedEarningsReport.ascx.designer.cs">
+      <DependentUpon>RetainedEarningsReport.ascx</DependentUpon>
     </Compile>
     <Compile Include="Reports\StockTransactionReport.ascx.cs">
       <DependentUpon>StockTransactionReport.ascx</DependentUpon>

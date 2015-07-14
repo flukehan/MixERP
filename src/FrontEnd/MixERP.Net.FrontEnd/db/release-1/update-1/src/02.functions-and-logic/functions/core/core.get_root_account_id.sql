@@ -14,7 +14,7 @@ BEGIN
     FROM core.accounts
     WHERE account_id=$1;
 
-    RAISE exception '%', _parent_account_id;
+    
 
     IF(_parent_account_id IS NULL) THEN
         RETURN $1;
