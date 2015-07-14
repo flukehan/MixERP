@@ -1026,7 +1026,7 @@ SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectStore',
 SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectSupplier', 'Wähle Lieferant');
 SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectUnit', 'Wähle Einheit');
 SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectUser', 'Wähle Benutzer');
-SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectYourBranch', 'Wählen Sie Ihre Branche');
+SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectYourBranch', 'Wählen Sie Ihre Niederlassung');
 SELECT * FROM localization.add_localized_resource('Titles', 'de', 'Shipper', 'Spediteur');
 SELECT * FROM localization.add_localized_resource('Titles', 'de', 'Shippers', 'Speditionen');
 SELECT * FROM localization.add_localized_resource('Titles', 'de', 'ShippingAddress', 'Versandadresse');
