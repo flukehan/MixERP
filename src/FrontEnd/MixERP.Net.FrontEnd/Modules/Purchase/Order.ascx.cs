@@ -39,6 +39,7 @@ namespace MixERP.Net.Core.Modules.Purchase
                 view.AddNewUrl = "~/Modules/Purchase/Entry/Order.mix";
                 view.PreviewUrl = "~/Modules/Purchase/Reports/PurchaseOrderReport.mix";
                 view.ChecklistUrl = "~/Modules/Purchase/Confirmation/Order.mix";
+                view.MergeToGRNButtonUrl = "~/Modules/Purchase/Entry/GRN.mix";
 
                 view.IsNonGlTransaction = true;
                 view.ShowMergeToGRNButton = true;

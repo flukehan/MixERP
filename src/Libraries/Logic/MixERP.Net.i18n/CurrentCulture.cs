@@ -38,6 +38,12 @@ namespace MixERP.Net.i18n
         public static CultureInfo GetCurrentUICulture()
         {
             CultureInfo culture = CultureInfo.DefaultThreadCurrentUICulture ?? CultureInfo.CurrentUICulture;
+            var cultureString = culture.ToString();
+            if (cultureString.Equals("fr") || cultureString.Equals("ru"))
+            {
+                culture.NumberFormat.CurrencyGroupSeparator = "\x0020";
+                culture.NumberFormat.NumberGroupSeparator = "\x0020";
+            }
             return culture;
         }
 
