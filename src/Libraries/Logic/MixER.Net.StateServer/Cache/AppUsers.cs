@@ -54,18 +54,24 @@ namespace MixER.Net.ApplicationState.Cache
 
         public static MetaLogin GetCurrent()
         {
-            MetaLogin login = new MetaLogin();
-
-            string globalLoginId = string.Empty;
+            long globalLoginId = 0;
 
             if (HttpContext.Current.User != null)
             {
-                globalLoginId = HttpContext.Current.User.Identity.Name;
+                long.TryParse(HttpContext.Current.User.Identity.Name, out globalLoginId);
             }
 
-            if (!string.IsNullOrWhiteSpace(globalLoginId))
+            return GetCurrent(globalLoginId);
+        }
+
+        public static MetaLogin GetCurrent(long globalLoginId)
+        {
+            MetaLogin login = new MetaLogin();
+
+
+            if (globalLoginId != 0)
             {
-                login = CacheFactory.GetFromDefaultCacheByKey(globalLoginId) as MetaLogin;
+                login = CacheFactory.GetFromDefaultCacheByKey(globalLoginId.ToString(CultureInfo.InvariantCulture)) as MetaLogin;
             }
 
             if (login == null)

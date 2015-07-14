@@ -33,6 +33,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using System.Web.Hosting;
+using MixERP.Net.Common.Extensions;
 
 namespace MixERP.Net.Core.Modules.BackOffice.Hubs
 {
@@ -44,6 +45,12 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
 
         public void BackupDatabase(string fileName)
         {
+            if (!this.IsValidRequest())
+            {
+                this.Clients.Caller.getNotification(Warnings.AccessIsDenied, Warnings.AccessIsDenied);
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(fileName))
             {
                 this.Clients.Caller.backupFailed(Warnings.NoFileSpecified);
@@ -205,5 +212,37 @@ namespace MixERP.Net.Core.Modules.BackOffice.Hubs
                 Log.Warning("Could not delete file: {FileName}.", fileName);
             }
         }
+
+        private bool IsValidRequest()
+        {
+            System.Threading.Thread.Sleep(2000);
+
+            if (this.Context == null)
+            {
+                this.Clients.Caller.getNotification(Warnings.AccessIsDenied);
+                return false;
+            }
+
+            long globalLoginId = Conversion.TryCastLong(this.Context.User.Identity.Name);
+
+            if (globalLoginId <= 0)
+            {
+                this.Clients.Caller.getNotification(Warnings.AccessIsDenied);
+                return false;
+            }
+
+            if (!AppUsers.GetCurrent(globalLoginId).View.IsAdmin.ToBool())
+            {
+                return false;
+            }
+
+            if (!AppUsers.GetCurrent(globalLoginId).View.Elevated.ToBool())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
     }
 }

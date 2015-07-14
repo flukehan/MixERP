@@ -166,7 +166,7 @@ BEGIN
         );
 
         INSERT INTO config.attachment_factory
-        SELECT 'AttachmentsDirectory',              '~/Resource/Static/Attachments/' UNION ALL
+        SELECT 'AttachmentsDirectory',              '/Resource/Static/Attachments/' UNION ALL
         SELECT 'UploadHandlerUrl',                  '~/FileUploadHanlder.ashx' UNION ALL
         SELECT 'UndoUploadServiceUrl',              '~/FileUploadHanlder.asmx/UndoUpload' UNION ALL
         SELECT 'AllowedExtensions',                 'jpg,jpeg,gif,png,tif,doc,docx,xls,xlsx,pdf';
@@ -486,10 +486,11 @@ BEGIN
             statement_reference                         text,
             audit_ts                                    TIMESTAMP WITH TIME ZONE DEFAULT(now())
         );
-    END IF;
-    
-    CREATE UNIQUE INDEX inventory_transfer_deliveries_inventory_transfer_request_id_uix
-    ON transactions.inventory_transfer_deliveries(inventory_transfer_request_id);
+
+        CREATE UNIQUE INDEX inventory_transfer_deliveries_inventory_transfer_request_id_uix
+        ON transactions.inventory_transfer_deliveries(inventory_transfer_request_id);
+
+    END IF;    
 END
 $$
 LANGUAGE plpgsql;

@@ -33,8 +33,8 @@ BEGIN
 
     SELECT resource_id INTO _resource_id
     FROM localization.resources
-    WHERE resource_class = _resource_class
-    AND key = _key;
+    WHERE UPPER(resource_class) = UPPER(_resource_class)
+    AND UPPER(key) = UPPER(_key);
 
     IF(_resource_id IS NOT NULL) THEN
         IF EXISTS

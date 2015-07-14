@@ -17,15 +17,51 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.FrontEnd.Base;
 using System;
+using System.Linq;
+using MixERP.Net.FrontEnd.Base;
+using MixERP.Net.Updater;
+using MixERP.Net.Updater.Api;
 
 namespace MixERP.Net.FrontEnd.Modules
 {
     public partial class Update : MixERPWebpage
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected string _downloadUrl = string.Empty;
+        protected Release _release;
+
+        protected async void Page_Init(object sender, EventArgs e)
         {
+            try
+            {
+                UpdateManager updater = new UpdateManager();
+                this._release = await updater.GetLatestRelease();
+            }
+            catch
+            {
+                this._release = new Release();
+                this.ReleasePanel.Visible = false;
+                this.UpToDatePanel.Visible = true;
+                return;
+            }
+
+
+            string keyword = Config.UpdateKeyword;
+
+            Asset ass =
+                this._release.Assets.FirstOrDefault(a => a.Name.ToUpperInvariant().Contains(keyword.ToUpperInvariant()));
+
+            if (ass != null)
+            {
+                this._downloadUrl = ass.DownloadUrl;
+            }
+
+            if (string.IsNullOrWhiteSpace(this._downloadUrl))
+            {
+                this.ErrorLabel.Text = "This release does not contain any update.";
+            }
+
+            this.OverridePath = "/Dashboard/Index.aspx";
         }
     }
 }

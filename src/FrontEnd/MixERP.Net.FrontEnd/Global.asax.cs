@@ -91,7 +91,7 @@ namespace MixERP.Net.FrontEnd
                 Log.Error("Inner Exception. {InnerException}.", ex.InnerException);
             }
 
-            throw ex;
+            p:throw ex;
         }
 
         private void Application_Start(object sender, EventArgs e)
@@ -111,12 +111,19 @@ namespace MixERP.Net.FrontEnd
 
             if (autoSuggestUpdate)
             {
-                UpdateManager updater = new UpdateManager();
-                Release release = await updater.GetLatestRelease();
-
-                if (release != null)
+                try
                 {
-                    Application["UpdateAvailable"] = true;
+                    UpdateManager updater = new UpdateManager();
+                    Release release = await updater.GetLatestRelease();
+
+                    if (release != null)
+                    {
+                        Application["UpdateAvailable"] = true;
+                    }
+                }
+                catch
+                {
+                    //Eat the exception.
                 }
             }
         }

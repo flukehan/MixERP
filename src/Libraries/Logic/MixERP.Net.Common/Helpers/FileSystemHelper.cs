@@ -18,6 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using System;
+using System.IO.Compression;
 using System.Security;
 using System.Security.Permissions;
 using System.Web.Hosting;
@@ -38,6 +39,11 @@ namespace MixERP.Net.Common.Helpers
             permissionSet.AddPermission(permission);
 
             return permissionSet.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet);
+        }
+
+        public static void Unzip(string archive, string destnation)
+        {
+            ZipFile.ExtractToDirectory(archive, destnation);
         }
     }
 }

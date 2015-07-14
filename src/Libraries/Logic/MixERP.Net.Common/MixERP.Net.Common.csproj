@@ -45,6 +45,7 @@
     <AssemblyOriginatorKeyFile>Mix Open Foundation.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\..\..\packages\Npgsql.2.2.3\lib\net45\Mono.Security.dll</HintPath>
@@ -69,6 +70,8 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -89,6 +92,7 @@
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Helpers\DbConfig.cs" />
+    <Compile Include="Helpers\DirectoryHelper.cs" />
     <Compile Include="Helpers\DropDownListHelper.cs" />
     <Compile Include="Helpers\ExpressionHelper.cs" />
     <Compile Include="Helpers\FileSystemHelper.cs" />
@@ -97,6 +101,7 @@
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\JSUtility.cs" />
     <Compile Include="Helpers\JSONHelper.cs" />
+    <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="Helpers\ScrudHelper.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="jQueryHelper\jQueryUI.cs" />

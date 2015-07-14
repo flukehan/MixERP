@@ -22,8 +22,10 @@ using Serilog;
 using System;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Net;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -89,6 +91,17 @@ namespace MixERP.Net.Common
                 }
             }
         }
+
+        public static string MapPath(string path)
+        {
+            if (Path.IsPathRooted(path))
+            {
+                return path;
+            }
+
+            return HostingEnvironment.MapPath(path);
+        }
+
 
         /// <summary>
         ///     Check if the input is a valid url.
