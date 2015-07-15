@@ -30,14 +30,20 @@ var updatePreviewButtons = function () {
     grid.find("tbody tr").each(function () {
         var row = $(this);
         var book = row.find("td:nth-child(5)").html();
+        var glReportIcon = row.find("td:first-child").find(".icon.print");
         var icon = row.find("td:first-child").find(".icon.grid.layout");
-
         if (!
-            (book.substring(0, 5).toLowerCase() === "sales"
-                || book.substring(0, 8).toLowerCase() === "purchase" || book.toLowerCase() === "opening.inventory"
-            )) {
+     (book.substring(0, 5).toLowerCase() === "sales"
+         || book.substring(0, 8).toLowerCase() === "purchase")) {
             icon.hide();
-        };
+        }
+        if (book.substring(0, 9).toLowerCase() === "inventory" || book.toLowerCase() === "opening.inventory") {
+            icon.show();
+            glReportIcon.hide();
+        }
+        if (book.substring(0, 16).toLowerCase() === "purchase.payment" || book.substring(0, 13).toLowerCase() === "sales.receipt") {
+            icon.hide();
+        }
     });
 };
 
