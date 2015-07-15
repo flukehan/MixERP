@@ -1,9 +1,9 @@
--- View: core.party_scrud_view
+DROP VIEW IF EXISTS core.party_scrud_view;
 
--- DROP VIEW core.party_scrud_view;
-
-CREATE OR REPLACE VIEW core.party_scrud_view AS 
- SELECT parties.party_id,
+CREATE VIEW core.party_scrud_view
+AS 
+SELECT 
+    parties.party_id,
     party_types.party_type_id,
     party_types.is_supplier,
     ((party_types.party_type_code::text || ' ('::text) || party_types.party_type_name::text) || ')'::text AS party_type,
@@ -36,12 +36,8 @@ CREATE OR REPLACE VIEW core.party_scrud_view AS
     accounts.account_id,
     accounts.account_number,
     ((accounts.account_number::text || ' ('::text) || accounts.account_name::text) || ')'::text AS gl_head
-   FROM core.parties
-     JOIN core.party_types ON parties.party_type_id = party_types.party_type_id
-     JOIN core.accounts ON parties.account_id = accounts.account_id;
-
-ALTER TABLE core.party_scrud_view
-  OWNER TO postgres;
-GRANT ALL ON TABLE core.party_scrud_view TO postgres;
-GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE core.party_scrud_view TO mix_erp;
-GRANT SELECT ON TABLE core.party_scrud_view TO report_user;
+FROM core.parties
+INNER JOIN core.party_types 
+ON parties.party_type_id = party_types.party_type_id
+INNER JOIN core.accounts 
+ON parties.account_id = accounts.account_id;

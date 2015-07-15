@@ -19564,6 +19564,51 @@ INNER JOIN office.offices
 ON core.bank_accounts.office_id = office.offices.office_id;
 
 
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/05.scrud-views/core/core.party_scrud_view.sql --<--<--
+DROP VIEW IF EXISTS core.party_scrud_view;
+
+CREATE VIEW core.party_scrud_view
+AS 
+SELECT 
+    parties.party_id,
+    party_types.party_type_id,
+    party_types.is_supplier,
+    ((party_types.party_type_code::text || ' ('::text) || party_types.party_type_name::text) || ')'::text AS party_type,
+    parties.party_code,
+    parties.first_name,
+    parties.middle_name,
+    parties.last_name,
+    CASE WHEN parties.company_name IS NULL THEN
+    parties.party_name 
+    ELSE
+    parties.company_name  END AS party_name,
+    parties.zip_code,
+    parties.address_line_1,
+    parties.address_line_2,
+    parties.street,
+    parties.city,
+    core.get_state_name_by_state_id(parties.state_id) AS state,
+    core.get_country_name_by_country_id(parties.country_id) AS country,
+    parties.allow_credit,
+    parties.maximum_credit_period,
+    parties.maximum_credit_amount,
+    parties.pan_number,
+    parties.sst_number,
+    parties.cst_number,
+    parties.phone,
+    parties.fax,
+    parties.cell,
+    parties.email,
+    parties.url,
+    accounts.account_id,
+    accounts.account_number,
+    ((accounts.account_number::text || ' ('::text) || accounts.account_name::text) || ')'::text AS gl_head
+FROM core.parties
+INNER JOIN core.party_types 
+ON parties.party_type_id = party_types.party_type_id
+INNER JOIN core.accounts 
+ON parties.account_id = accounts.account_id;
+
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/05.scrud-views/policy/policy.voucher_verification_policy_scrud_view.sql --<--<--
 
 DROP VIEW IF EXISTS policy.voucher_verification_policy_scrud_view CASCADE;
@@ -19641,3 +19686,111 @@ CREATE TRIGGER party_after_insert_trigger
 AFTER INSERT
 ON core.parties
 FOR EACH ROW EXECUTE PROCEDURE core.party_after_insert_trigger();
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/ownership.sql --<--<--
+DO
+$$
+    DECLARE this record;
+BEGIN
+    IF(CURRENT_USER = 'mix_erp') THEN
+        RETURN;
+    END IF;
+
+    FOR this IN 
+    SELECT * FROM pg_tables 
+    WHERE NOT schemaname = ANY(ARRAY['pg_catalog', 'information_schema'])
+    AND tableowner <> 'mix_erp'
+    LOOP
+        EXECUTE 'ALTER TABLE '|| this.schemaname || '.' || this.tablename ||' OWNER TO mix_erp;';
+    END LOOP;
+END
+$$
+LANGUAGE plpgsql;
+
+DO
+$$
+    DECLARE this record;
+BEGIN
+    IF(CURRENT_USER = 'mix_erp') THEN
+        RETURN;
+    END IF;
+
+    FOR this IN 
+    SELECT 'ALTER '
+        || CASE WHEN p.proisagg THEN 'AGGREGATE ' ELSE 'FUNCTION ' END
+        || quote_ident(n.nspname) || '.' || quote_ident(p.proname) || '(' 
+        || pg_catalog.pg_get_function_identity_arguments(p.oid) || ') OWNER TO mix_erp;' AS sql
+    FROM   pg_catalog.pg_proc p
+    JOIN   pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+    WHERE  NOT n.nspname = ANY(ARRAY['pg_catalog', 'information_schema'])
+    LOOP        
+        EXECUTE this.sql;
+    END LOOP;
+END
+$$
+LANGUAGE plpgsql;
+
+
+DO
+$$
+    DECLARE this record;
+BEGIN
+    IF(CURRENT_USER = 'mix_erp') THEN
+        RETURN;
+    END IF;
+
+    FOR this IN 
+    SELECT * FROM pg_views
+    WHERE NOT schemaname = ANY(ARRAY['pg_catalog', 'information_schema'])
+    AND viewowner <> 'mix_erp'
+    LOOP
+        EXECUTE 'ALTER VIEW '|| this.schemaname || '.' || this.viewname ||' OWNER TO mix_erp;';
+    END LOOP;
+END
+$$
+LANGUAGE plpgsql;
+
+
+DO
+$$
+    DECLARE this record;
+BEGIN
+    IF(CURRENT_USER = 'mix_erp') THEN
+        RETURN;
+    END IF;
+
+    FOR this IN 
+    SELECT 'ALTER SCHEMA ' || nspname || ' OWNER TO mix_erp;' AS sql FROM pg_namespace
+    WHERE nspname NOT LIKE 'pg_%'
+    AND nspname <> 'information_schema'
+    LOOP
+        EXECUTE this.sql;
+    END LOOP;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+DO
+$$
+    DECLARE this record;
+BEGIN
+    IF(CURRENT_USER = 'mix_erp') THEN
+        RETURN;
+    END IF;
+
+    FOR this IN 
+    SELECT      'ALTER TYPE ' || n.nspname || '.' || t.typname || ' OWNER TO mix_erp;' AS sql
+    FROM        pg_type t 
+    LEFT JOIN   pg_catalog.pg_namespace n ON n.oid = t.typnamespace 
+    WHERE       (t.typrelid = 0 OR (SELECT c.relkind = 'c' FROM pg_catalog.pg_class c WHERE c.oid = t.typrelid)) 
+    AND         NOT EXISTS(SELECT 1 FROM pg_catalog.pg_type el WHERE el.oid = t.typelem AND el.typarray = t.oid)
+    AND         typtype NOT IN ('b')
+    AND         n.nspname NOT IN ('pg_catalog', 'information_schema')
+    LOOP
+        EXECUTE this.sql;
+    END LOOP;
+END
+$$
+LANGUAGE plpgsql;
