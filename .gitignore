@@ -2,6 +2,7 @@ bin
 obj
 *.pdb
 src/FrontEnd/MixERP.Net.FrontEnd/Backups
+src/FrontEnd/MixERP.Net.FrontEnd/update.zip
 src/FrontEnd/MixERP.Net.FrontEnd/Resource/Static/Attachments
 src/FrontEnd/MixERP.Net.FrontEnd/Resource/Static/Emails
 src/FrontEnd/MixERP.Net.FrontEnd/Resource/Temp
