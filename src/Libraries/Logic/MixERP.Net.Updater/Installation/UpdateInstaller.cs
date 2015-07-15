@@ -48,10 +48,10 @@ namespace MixERP.Net.Updater.Installation
             tasks.Add(new BackupDirectories(config));
             tasks.Add(new DownloadUpdate(config));
             tasks.Add(new ExtractDownload(config));
+            tasks.Add(new RestoreDirectories(config));
+            tasks.Add(new RunPatch(config));
             tasks.Add(new RemoveApplication(config));
             tasks.Add(new CopyUpdate(config));
-            tasks.Add(new RestoreDirectories(config));
-
 
             return tasks;
         }
@@ -71,7 +71,6 @@ namespace MixERP.Net.Updater.Installation
             config.Migrate = Config.Migrate;
             config.TempPath = Config.TempPath;
             config.DirectoriesToBackup = this.ToBackup;
-
             return config;
         }
 

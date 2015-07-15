@@ -95,7 +95,8 @@ namespace MixERP.Net.Utility.Installer.Installer
                 ExtractDirectory = ConfigurationHelper.GetExtractDirectory(),
                 DatabaseName = this.DatabaseName,
                 Office = this.Office,
-                Password = this.Password
+                Password = this.Password,
+                MixERPRolePassword = this.MixERPPassword
             });
 
             this.Installers = installer;

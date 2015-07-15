@@ -1616,6 +1616,28 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Patched the database.
+		/// </summary>
+		public static string PatchedDatabase 
+		{
+			get
+			{
+				return Get("PatchedDatabase");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Patching the database.
+		/// </summary>
+		public static string PatchingDatabase 
+		{
+			get
+			{
+				return Get("PatchingDatabase");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for {0} percent completed.
 		/// </summary>
 		public static string PercentCompleted 
@@ -11837,6 +11859,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("RowNumber");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Running Database Patch
+		/// </summary>
+		public static string RunningDatabasePatch 
+		{
+			get
+			{
+				return Get("RunningDatabasePatch");
 			}
 		}
 		

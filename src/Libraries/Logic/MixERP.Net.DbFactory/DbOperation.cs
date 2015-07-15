@@ -75,6 +75,17 @@ namespace MixERP.Net.DbFactory
             }
         }
 
+        [CLSCompliant(false)]
+        public static bool ExecuteNonQuery(string catalog, string sql)
+        {
+            if (string.IsNullOrWhiteSpace(sql))
+            {
+                return false;
+            }
+
+            return ExecuteNonQuery(catalog, new NpgsqlCommand(sql));
+        }
+
         private static string GetDBErrorResource(NpgsqlException ex)
         {
             string message = DbErrors.Get(ex.Code);

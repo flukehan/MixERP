@@ -19,3 +19,10 @@ http://www.mixerp.org/documentation/database/sample-data
 * **Incremental blank SQL script** is blank database generation script of current version which includes past versions as well.
 * **Incremental sample SQL script** is sample database generation script of current version which includes past versions as well.
 * **Patch SQL script** upgrdes past versions of database
+
+#Remember
+These are the latest database scripts:
+
+* blank-db.sql (for creating a blank database)
+* sample-db.sql (for creating a sample database)
+* patch.sql (for updating the previous database version)

@@ -142,6 +142,8 @@ SELECT localization.add_localized_resource('Labels', '', 'JustAMomentPlease', 'J
 SELECT localization.add_localized_resource('Labels', '', 'NumRowsAffected', '{0} rows affected.');
 SELECT localization.add_localized_resource('Labels', '', 'OpeningInventoryAlreadyEntered', 'Opening inventory has already been entered for this office.');
 SELECT localization.add_localized_resource('Labels', '', 'PartyDescription', 'Parties collectively refer to suppliers, customers, agents, and dealers.');
+SELECT localization.add_localized_resource('Labels', '', 'PatchedDatabase', 'Patched the database.');
+SELECT localization.add_localized_resource('Labels', '', 'PatchingDatabase', 'Patching the database.');
 SELECT localization.add_localized_resource('Labels', '', 'PercentCompleted', '{0} percent completed.');
 SELECT localization.add_localized_resource('Labels', '', 'ReleaseContainsNoUpdates', 'This release does not contain any update.');
 SELECT localization.add_localized_resource('Labels', '', 'RestoringDirectory', 'Restoring directory : {0}.');
@@ -1071,6 +1073,7 @@ SELECT localization.add_localized_resource('Titles', '', 'Role', 'Role');
 SELECT localization.add_localized_resource('Titles', '', 'Roles', 'Roles');
 SELECT localization.add_localized_resource('Titles', '', 'RowNumber', 'Row Number');
 SELECT localization.add_localized_resource('Titles', '', 'RunningTotal', 'Running Total');
+SELECT localization.add_localized_resource('Titles', '', 'RunningDatabasePatch', 'Running Database Patch');
 SELECT localization.add_localized_resource('Titles', '', 'SSTNumber', 'SST Number');
 SELECT localization.add_localized_resource('Titles', '', 'SalesByMonthInThousands', 'Sales By Month (In Thousands)');
 SELECT localization.add_localized_resource('Titles', '', 'SalesByOfficeInThousands', 'Sales By Office (In Thousands)');

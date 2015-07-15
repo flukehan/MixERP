@@ -14,6 +14,7 @@ namespace MixERP.Net.Utility.Installer.Installer
         public string ExtractDirectory { get; set; }
         public string DatabaseName { get; set; }
         public string Password { get; set; }
+        public string MixERPRolePassword { get; set; }
         public Office Office { get; set; }
 
         public void Install()
@@ -48,7 +49,7 @@ namespace MixERP.Net.Utility.Installer.Installer
             string sql = FileHelper.ReadSqlResource("drop-office.sql");
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                DatabaseHelper helper = new DatabaseHelper(this.DatabaseName, this.Password);
+                DatabaseHelper helper = new DatabaseHelper(this.DatabaseName, "mix_erp", this.MixERPRolePassword);
                 helper.ExecuteNonQuery(command);
             }
         }
@@ -58,7 +59,7 @@ namespace MixERP.Net.Utility.Installer.Installer
             string sql = FileHelper.ReadSqlResource("office.sql");
             using (NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                DatabaseHelper helper = new DatabaseHelper(this.DatabaseName, this.Password);
+                DatabaseHelper helper = new DatabaseHelper(this.DatabaseName, "mix_erp", this.MixERPRolePassword);
                 helper.ExecuteNonQuery(command);
             }
         }
@@ -81,7 +82,7 @@ namespace MixERP.Net.Utility.Installer.Installer
                 command.Parameters.AddWithValue("@UserName", this.Office.UserName);
                 command.Parameters.AddWithValue("@Password", this.Office.Password);
 
-                DatabaseHelper helper = new DatabaseHelper(this.DatabaseName, this.Password);
+                DatabaseHelper helper = new DatabaseHelper(this.DatabaseName, "mix_erp", this.MixERPRolePassword);
 
                 helper.ExecuteNonQuery(command);
             }
@@ -94,7 +95,7 @@ namespace MixERP.Net.Utility.Installer.Installer
 
             string sql = File.ReadAllText(path, Encoding.UTF8);
 
-            DatabaseHelper helper = new DatabaseHelper(this.DatabaseName, this.Password);
+            DatabaseHelper helper = new DatabaseHelper(this.DatabaseName, "mix_erp", this.MixERPRolePassword);
             helper.ExecuteNonQuery(new NpgsqlCommand(sql));
         }
 

@@ -44,9 +44,17 @@
     <Reference Include="MarkdownDeep">
       <HintPath>..\..\..\packages\MarkdownDeep.NET-Signed.1.5\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Npgsql.2.2.3\lib\net45\Mono.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.2.3.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Npgsql.2.2.3\lib\net45\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -70,6 +78,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Installation\IUpdateTask.cs" />
     <Compile Include="Installation\Models\MigrationFile.cs" />
+    <Compile Include="Installation\Tasks\RunPatch.cs" />
     <Compile Include="Installation\Tasks\RestoreDirectories.cs" />
     <Compile Include="Installation\Tasks\BackupDirectories.cs" />
     <Compile Include="Installation\Tasks\CopyUpdate.cs" />
@@ -85,9 +94,17 @@
     <Compile Include="Installation\UpdateTask.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MixER.Net.StateServer\MixER.Net.ApplicationState.csproj">
+      <Project>{61AB8B69-2097-4595-97B7-4A930A70163D}</Project>
+      <Name>MixER.Net.ApplicationState</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixERP.Net.DbFactory\MixERP.Net.DbFactory.csproj">
+      <Project>{8fd9661c-2473-4581-8722-18b08d4db252}</Project>
+      <Name>MixERP.Net.DbFactory</Name>
     </ProjectReference>
     <ProjectReference Include="..\MixERP.Net.Framework\MixERP.Net.Framework.csproj">
       <Project>{1509332F-AE98-44D9-9072-5BBC59A65FC4}</Project>

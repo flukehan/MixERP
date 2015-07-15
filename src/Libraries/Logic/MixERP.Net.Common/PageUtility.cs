@@ -29,6 +29,7 @@ using System.Web.Hosting;
 using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using MixERP.Net.Common.Helpers;
 
 namespace MixERP.Net.Common
 {
@@ -96,7 +97,7 @@ namespace MixERP.Net.Common
         {
             if (Path.IsPathRooted(path))
             {
-                return path;
+                return PathHelper.NormalizePhysicalPath(path);
             }
 
             return HostingEnvironment.MapPath(path);

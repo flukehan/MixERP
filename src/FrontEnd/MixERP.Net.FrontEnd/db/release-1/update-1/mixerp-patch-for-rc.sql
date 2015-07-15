@@ -1,5 +1,5 @@
 ﻿-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/00.db core/2.mixerp-db-schema.sql --<--<--
-CREATE SCHEMA IF NOT EXISTS config;
+CREATE SCHEMA IF NOT EXISTS config AUTHORIZATION mix_erp;
 COMMENT ON SCHEMA config IS 'Contains configuration objects.';
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/release-1/update-1/src/00.db core/plpgunit-privileges.sql --<--<--
@@ -587,7 +587,7 @@ BEGIN
     FROM core.accounts
     WHERE account_id=$1;
 
-    RAISE exception '%', _parent_account_id;
+    
 
     IF(_parent_account_id IS NULL) THEN
         RETURN $1;
@@ -2343,6 +2343,8 @@ SELECT localization.add_localized_resource('Labels', '', 'JustAMomentPlease', 'J
 SELECT localization.add_localized_resource('Labels', '', 'NumRowsAffected', '{0} rows affected.');
 SELECT localization.add_localized_resource('Labels', '', 'OpeningInventoryAlreadyEntered', 'Opening inventory has already been entered for this office.');
 SELECT localization.add_localized_resource('Labels', '', 'PartyDescription', 'Parties collectively refer to suppliers, customers, agents, and dealers.');
+SELECT localization.add_localized_resource('Labels', '', 'PatchedDatabase', 'Patched the database.');
+SELECT localization.add_localized_resource('Labels', '', 'PatchingDatabase', 'Patching the database.');
 SELECT localization.add_localized_resource('Labels', '', 'PercentCompleted', '{0} percent completed.');
 SELECT localization.add_localized_resource('Labels', '', 'ReleaseContainsNoUpdates', 'This release does not contain any update.');
 SELECT localization.add_localized_resource('Labels', '', 'RestoringDirectory', 'Restoring directory : {0}.');
@@ -3272,6 +3274,7 @@ SELECT localization.add_localized_resource('Titles', '', 'Role', 'Role');
 SELECT localization.add_localized_resource('Titles', '', 'Roles', 'Roles');
 SELECT localization.add_localized_resource('Titles', '', 'RowNumber', 'Row Number');
 SELECT localization.add_localized_resource('Titles', '', 'RunningTotal', 'Running Total');
+SELECT localization.add_localized_resource('Titles', '', 'RunningDatabasePatch', 'Running Database Patch');
 SELECT localization.add_localized_resource('Titles', '', 'SSTNumber', 'SST Number');
 SELECT localization.add_localized_resource('Titles', '', 'SalesByMonthInThousands', 'Sales By Month (In Thousands)');
 SELECT localization.add_localized_resource('Titles', '', 'SalesByOfficeInThousands', 'Sales By Office (In Thousands)');
@@ -4542,7 +4545,7 @@ SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectStore',
 SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectSupplier', 'Wähle Lieferant');
 SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectUnit', 'Wähle Einheit');
 SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectUser', 'Wähle Benutzer');
-SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectYourBranch', 'Wählen Sie Ihre Branche');
+SELECT * FROM localization.add_localized_resource('Titles', 'de', 'SelectYourBranch', 'Wählen Sie Ihre Niederlassung');
 SELECT * FROM localization.add_localized_resource('Titles', 'de', 'Shipper', 'Spediteur');
 SELECT * FROM localization.add_localized_resource('Titles', 'de', 'Shippers', 'Speditionen');
 SELECT * FROM localization.add_localized_resource('Titles', 'de', 'ShippingAddress', 'Versandadresse');
