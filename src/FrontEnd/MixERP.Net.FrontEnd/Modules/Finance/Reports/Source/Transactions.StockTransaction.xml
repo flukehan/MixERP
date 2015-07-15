@@ -139,17 +139,17 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
         FROM transactions.transaction_master
         INNER JOIN office.offices
         ON transactions.transaction_master.office_id = office.offices.office_id
-        INNER JOIN office.cost_centers
+        LEFT JOIN office.cost_centers
         ON transactions.transaction_master.cost_center_id = office.cost_centers.cost_center_id
         INNER JOIN transactions.stock_master
         ON transactions.transaction_master.transaction_master_id = transactions.stock_master.transaction_master_id
         INNER JOIN office.users
         ON transactions.transaction_master.user_id = office.users.user_id
-        INNER JOIN core.parties
+        LEFT JOIN core.parties
         ON transactions.stock_master.party_id = core.parties.party_id
         INNER JOIN core.verification_statuses
         ON transactions.transaction_master.verification_status_id = core.verification_statuses.verification_status_id
-        INNER JOIN core.price_types
+        LEFT JOIN core.price_types
         ON transactions.stock_master.price_type_id = core.price_types.price_type_id
         LEFT JOIN office.users AS verified_by_user
         ON transactions.transaction_master.verified_by_user_id = verified_by_user.user_id
