@@ -57,7 +57,7 @@ CREATE EXTENSION IF NOT EXISTS hstore;
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/00.db core/1.scrud.sql --<--<--
 DROP SCHEMA IF EXISTS scrud CASCADE;
-CREATE SCHEMA scrud AUTHORIZATION mix_erp;
+CREATE SCHEMA scrud;
 
 COMMENT ON SCHEMA scrud IS 'Contains objects related to MixERP''s ScrudFactory project.';
 
@@ -881,28 +881,28 @@ DROP SCHEMA IF EXISTS policy CASCADE;
 DROP SCHEMA IF EXISTS transactions CASCADE;
 DROP SCHEMA IF EXISTS crm CASCADE;
 
-CREATE SCHEMA audit AUTHORIZATION mix_erp;
+CREATE SCHEMA audit;
 COMMENT ON SCHEMA audit IS 'Contains audit-related objects.';
 
-CREATE SCHEMA core AUTHORIZATION mix_erp;
+CREATE SCHEMA core;
 COMMENT ON SCHEMA core IS 'Contains objects related to the core module. The core module is the default MixERP schema.';
 
-CREATE SCHEMA crm AUTHORIZATION mix_erp;
+CREATE SCHEMA crm;
 COMMENT ON SCHEMA crm IS 'Contains objects related to customer relationship management.';
 
-CREATE SCHEMA localization AUTHORIZATION mix_erp;
+CREATE SCHEMA localization;
 COMMENT ON SCHEMA localization IS 'Contains objects related to localizing MixERP.';
 
-CREATE SCHEMA mrp AUTHORIZATION mix_erp;
+CREATE SCHEMA mrp;
 COMMENT ON SCHEMA mrp IS 'Contains objects related to material resource planning.';
 
-CREATE SCHEMA office AUTHORIZATION mix_erp;
+CREATE SCHEMA office;
 COMMENT ON SCHEMA office IS 'Contains objects related to office.';
 
-CREATE SCHEMA policy AUTHORIZATION mix_erp;
+CREATE SCHEMA policy;
 COMMENT ON SCHEMA policy IS 'Contains objects related to MixERP''s policy engine and workflow.';
 
-CREATE SCHEMA transactions AUTHORIZATION mix_erp;
+CREATE SCHEMA transactions;
 COMMENT ON SCHEMA transactions IS 'Contains objects related to transaction posting.';
 
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/00.db core/3.roles-and-priviledge.sql --<--<--

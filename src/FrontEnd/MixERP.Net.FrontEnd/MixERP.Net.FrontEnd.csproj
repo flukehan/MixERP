@@ -794,9 +794,6 @@
     <Content Include="Reports\Assets\Header.html" />
     <Content Include="Reports\ReportMaster.aspx" />
     <Content Include="Reports\ReportViewer.aspx" />
-    <Content Include="Resource\CustomReports\Office.Login.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Site\AccessIsDenied.aspx" />
     <Content Include="Site\RuntimeError.aspx" />
     <Content Include="Scripts\chartjs\Chart.min.js" />
