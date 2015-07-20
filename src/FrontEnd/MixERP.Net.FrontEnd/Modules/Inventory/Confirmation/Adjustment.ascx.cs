@@ -18,7 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 
-using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;

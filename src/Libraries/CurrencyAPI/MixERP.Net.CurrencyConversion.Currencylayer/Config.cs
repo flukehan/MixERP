@@ -1,7 +1,7 @@
 ﻿using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.ApplicationState;
-using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.ApplicationState.Cache;
 
 namespace MixERP.Net.CurrencyConversion.Currencylayer
 {

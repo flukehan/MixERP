@@ -1,6 +1,6 @@
 ﻿using PetaPoco;
 
-namespace MixER.Net.ApplicationState.Cache
+namespace MixERP.Net.ApplicationState.Cache
 {
     [ExplicitColumns]
     public class MetaLogin

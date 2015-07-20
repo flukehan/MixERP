@@ -20,7 +20,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Inventory.Data.Transactions;
 using MixERP.Net.Framework;

@@ -1,4 +1,4 @@
-﻿using MixER.Net.ApplicationState.Cache;
+﻿using MixERP.Net.ApplicationState.Cache;
 using MixERP.Net.Common.Helpers;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.FrontEnd.Controls;

@@ -66,6 +66,10 @@
     <Compile Include="UrlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Logic\MixER.Net.StateServer\MixERP.Net.ApplicationState.csproj">
+      <Project>{61AB8B69-2097-4595-97B7-4A930A70163D}</Project>
+      <Name>MixERP.Net.ApplicationState</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>
       <Name>MixERP.Net.Common</Name>

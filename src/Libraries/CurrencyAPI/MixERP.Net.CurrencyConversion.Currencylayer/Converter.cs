@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using MixERP.Net.Framework.Contracts.Currency;
-using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.ApplicationState.Cache;
 
 namespace MixERP.Net.CurrencyConversion.Currencylayer
 {

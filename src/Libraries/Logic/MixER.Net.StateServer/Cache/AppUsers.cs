@@ -25,7 +25,7 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Web;
 
-namespace MixER.Net.ApplicationState.Cache
+namespace MixERP.Net.ApplicationState.Cache
 {
     public static class AppUsers
     {

@@ -18,7 +18,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
 using Microsoft.AspNet.SignalR;
-using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.ApplicationState.Cache;
 using System;
 
 namespace MixERP.Net.FrontEnd.Hubs

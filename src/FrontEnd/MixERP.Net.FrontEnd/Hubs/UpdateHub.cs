@@ -21,7 +21,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
-using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.ApplicationState.Cache;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Common.Helpers;

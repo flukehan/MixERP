@@ -61,9 +61,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Logic\MixER.Net.StateServer\MixER.Net.ApplicationState.csproj">
+    <ProjectReference Include="..\..\..\Logic\MixER.Net.StateServer\MixERP.Net.ApplicationState.csproj">
       <Project>{61AB8B69-2097-4595-97B7-4A930A70163D}</Project>
-      <Name>MixER.Net.ApplicationState</Name>
+      <Name>MixERP.Net.ApplicationState</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{D5A09C22-8F48-4FB2-A14D-C62C8C8FCEC0}</Project>

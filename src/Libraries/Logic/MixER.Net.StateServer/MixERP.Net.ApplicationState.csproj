@@ -7,8 +7,8 @@
     <ProjectGuid>{61AB8B69-2097-4595-97B7-4A930A70163D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MixER.Net.ApplicationState</RootNamespace>
-    <AssemblyName>MixER.Net.ApplicationState</AssemblyName>
+    <RootNamespace>MixERP.Net.ApplicationState</RootNamespace>
+    <AssemblyName>MixERP.Net.ApplicationState</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>

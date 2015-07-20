@@ -1,7 +1,7 @@
 ﻿using PetaPoco;
 using System;
 
-namespace MixER.Net.ApplicationState.Cache
+namespace MixERP.Net.ApplicationState.Cache
 {
     [TableName("office.sign_in_view")]
     [ExplicitColumns]

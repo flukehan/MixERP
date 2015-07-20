@@ -473,9 +473,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixER.Net.StateServer\MixER.Net.ApplicationState.csproj">
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixER.Net.StateServer\MixERP.Net.ApplicationState.csproj">
       <Project>{61AB8B69-2097-4595-97B7-4A930A70163D}</Project>
-      <Name>MixER.Net.ApplicationState</Name>
+      <Name>MixERP.Net.ApplicationState</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
       <Project>{BDE918B1-DD9B-41C9-A41F-F3DDEC18B6D8}</Project>

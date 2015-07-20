@@ -557,9 +557,9 @@
     <Folder Include="Reports\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixER.Net.StateServer\MixER.Net.ApplicationState.csproj">
+    <ProjectReference Include="..\..\..\..\Libraries\Logic\MixER.Net.StateServer\MixERP.Net.ApplicationState.csproj">
       <Project>{61AB8B69-2097-4595-97B7-4A930A70163D}</Project>
-      <Name>MixER.Net.ApplicationState</Name>
+      <Name>MixERP.Net.ApplicationState</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Libraries\Logic\MixERP.Net.Entities\MixERP.Net.Entities.csproj">
       <Project>{bde918b1-dd9b-41c9-a41f-f3ddec18b6d8}</Project>

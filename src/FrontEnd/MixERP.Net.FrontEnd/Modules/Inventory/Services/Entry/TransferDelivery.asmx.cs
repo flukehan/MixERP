@@ -24,7 +24,7 @@ using System.ComponentModel;
 using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
-using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.ApplicationState.Cache;
 using MixERP.Net.Common;
 using MixERP.Net.Common.Extensions;
 using MixERP.Net.Core.Modules.Inventory.Data.Domains;

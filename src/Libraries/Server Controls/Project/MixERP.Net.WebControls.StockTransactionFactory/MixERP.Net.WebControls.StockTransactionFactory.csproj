@@ -133,9 +133,9 @@
     <None Include="Mix Open Foundation.snk" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Logic\MixER.Net.StateServer\MixER.Net.ApplicationState.csproj">
+    <ProjectReference Include="..\..\..\Logic\MixER.Net.StateServer\MixERP.Net.ApplicationState.csproj">
       <Project>{61ab8b69-2097-4595-97b7-4a930a70163d}</Project>
-      <Name>MixER.Net.ApplicationState</Name>
+      <Name>MixERP.Net.ApplicationState</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Logic\MixERP.net.Common\MixERP.Net.Common.csproj">
       <Project>{d5a09c22-8f48-4fb2-a14d-c62c8c8fcec0}</Project>

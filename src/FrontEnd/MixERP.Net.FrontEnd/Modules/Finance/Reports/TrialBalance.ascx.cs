@@ -29,7 +29,7 @@ using MixERP.Net.Entities;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.i18n.Resources;
 using MixERP.Net.WebControls.Common;
-using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.ApplicationState.Cache;
 
 namespace MixERP.Net.Core.Modules.Finance.Reports
 {

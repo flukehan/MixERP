@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixER.Net.ApplicationState.Cache;
+using MixERP.Net.ApplicationState.Cache;
 using MixERP.Net.Core.Modules.BackOffice.Data.Admin;
 using MixERP.Net.Framework.Controls;
 using MixERP.Net.FrontEnd.Base;

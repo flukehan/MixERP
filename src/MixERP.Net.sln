@@ -144,7 +144,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.CurrencyConversi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.CurrencyConversion.OpenExchangeRates", "Libraries\CurrencyAPI\MixERP.Net.CurrencyConversion.OpenExchangeRates\MixERP.Net.CurrencyConversion.OpenExchangeRates.csproj", "{3690D4C3-E5CF-4EAD-8E1C-9D7222DE8077}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixER.Net.ApplicationState", "Libraries\Logic\MixER.Net.StateServer\MixER.Net.ApplicationState.csproj", "{61AB8B69-2097-4595-97B7-4A930A70163D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.ApplicationState", "Libraries\Logic\MixER.Net.StateServer\MixERP.Net.ApplicationState.csproj", "{61AB8B69-2097-4595-97B7-4A930A70163D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixERP.Net.Framework", "Libraries\Logic\MixERP.Net.Framework\MixERP.Net.Framework.csproj", "{1509332F-AE98-44D9-9072-5BBC59A65FC4}"
 EndProject
