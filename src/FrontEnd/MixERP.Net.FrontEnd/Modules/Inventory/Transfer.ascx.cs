@@ -40,6 +40,9 @@ namespace MixERP.Net.Core.Modules.Inventory
                 view.PreviewUrl = "~/Modules/Inventory/Reports/InventoryTransferReport.mix";
                 view.ChecklistUrl = "~/Modules/Inventory/Confirmation/Transfer.mix";
 
+                view.DbTableName = "transactions.transaction_master";
+                view.PrimaryKey = "transaction_master_id";
+
                 view.UserId = AppUsers.GetCurrent().View.UserId.ToInt();
                 view.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
                 view.Catalog = AppUsers.GetCurrentUserDB();
