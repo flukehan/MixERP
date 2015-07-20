@@ -7,11 +7,22 @@ var currencyCodeInputText = $("#CurrencyCodeInputText");
 var currencySymbolInputText = $("#CurrencySymbolInputText");
 var currencyNameInputText = $("#CurrencyNameInputText");
 var hundredthNameInputText = $("#HundredthNameInputText");
+var fiscalYearCodeInputText = $("#FiscalYearCodeInputText");
+var fiscalYearNameInputText = $("#FiscalYearNameInputText");
+var startsFromInputText = $("#StartsFromInputText");
+var endsOnInputText = $("#EndsOnInputText");
 var adminNameInputText = $("#AdminNameInputText");
 var usernameInputText = $("#UsernameInputText");
 var passwordInputPassword = $("#PasswordInputPassword");
 var confirmPasswordInputPassword = $("#ConfirmPasswordInputPassword");
 var saveButton = $("#SaveButton");
+
+$(document).ready(function() {
+    var year = new Date().getYear() + 1900;
+
+    fiscalYearCodeInputText.val("FY-" + year.toString().slice(-2));
+    fiscalYearNameInputText.val("FY-" + year);
+});
 
 var validateFields = function() {
     if (isNullOrWhiteSpace(officeNameInputText.val()) ||
@@ -22,6 +33,10 @@ var validateFields = function() {
         isNullOrWhiteSpace(currencySymbolInputText.val()) ||
         isNullOrWhiteSpace(currencyNameInputText.val()) ||
         isNullOrWhiteSpace(hundredthNameInputText.val()) ||
+        isNullOrWhiteSpace(fiscalYearCodeInputText.val()) ||
+        isNullOrWhiteSpace(fiscalYearNameInputText.val()) ||
+        isNullOrWhiteSpace(startsFromInputText.val()) ||
+        isNullOrWhiteSpace(endsOnInputText.val()) ||
         isNullOrWhiteSpace(adminNameInputText.val()) ||
         isNullOrWhiteSpace(usernameInputText.val()) ||
         isNullOrWhiteSpace(passwordInputPassword.val()) ||
@@ -54,9 +69,9 @@ saveButton.click(function() {
         $(".form").addClass("loading");
         $(".dimmer").dimmer("show");
 
-        var ajaxSaveOffice = saveOffice(officeCodeInputText.val(), officeNameInputText.val(), nickNameInputText.val(), registrationDateInputText.val(), currencyCodeInputText.val(), currencySymbolInputText.val(), currencyNameInputText.val(), hundredthNameInputText.val(), adminNameInputText.val(), usernameInputText.val(), passwordInputPassword.val(), confirmPasswordInputPassword.val());
+        var ajaxSaveOffice = saveOffice(officeCodeInputText.val(), officeNameInputText.val(), nickNameInputText.val(), registrationDateInputText.val(), currencyCodeInputText.val(), currencySymbolInputText.val(), currencyNameInputText.val(), hundredthNameInputText.val(), fiscalYearCodeInputText.val(), fiscalYearNameInputText.val(), startsFromInputText.val(), endsOnInputText.val(), adminNameInputText.val(), usernameInputText.val(), passwordInputPassword.val(), confirmPasswordInputPassword.val());
 
-        ajaxSaveOffice.success(function (msg) {
+        ajaxSaveOffice.success(function(msg) {
             if (msg.d) {
                 window.location = "/SignIn.aspx";
             } else {
@@ -64,7 +79,7 @@ saveButton.click(function() {
             };
         });
 
-        ajaxSaveOffice.error(function (xhr) {
+        ajaxSaveOffice.error(function(xhr) {
             $(".form").removeClass("loading");
             $(".dimmer").dimmer("hide");
             alert(xhr.responseText);
@@ -72,7 +87,7 @@ saveButton.click(function() {
     };
 });
 
-function saveOffice(officeCode, officeName, nickName, registrationDate, currencyCode, currencySymbol, currencyName, hundredthName, adminName, username, password, confirmPassword) {
+function saveOffice(officeCode, officeName, nickName, registrationDate, currencyCode, currencySymbol, currencyName, hundredthName, fiscalYearCode, fiscalYearName, startsFrom, endsOn, adminName, username, password, confirmPassword) {
     var url = "/Services/Install.asmx/SaveOffice";
 
     var data = appendParameter("", "officeCode", officeCode);
@@ -83,6 +98,10 @@ function saveOffice(officeCode, officeName, nickName, registrationDate, currency
     data = appendParameter(data, "currencySymbol", currencySymbol);
     data = appendParameter(data, "currencyName", currencyName);
     data = appendParameter(data, "hundredthName", hundredthName);
+    data = appendParameter(data, "fiscalYearCode", fiscalYearCode);
+    data = appendParameter(data, "fiscalYearName", fiscalYearName);
+    data = appendParameter(data, "startsFrom", startsFrom);
+    data = appendParameter(data, "endsOn", endsOn);
     data = appendParameter(data, "adminName", adminName);
     data = appendParameter(data, "username", username);
     data = appendParameter(data, "password", password);

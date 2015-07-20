@@ -660,6 +660,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for The start date cannot be greater than end date.
+		/// </summary>
+		public static string P5208 
+		{
+			get
+			{
+				return Get("P5208");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Invalid or rejected transaction.
 		/// </summary>
 		public static string P5301 
@@ -14506,6 +14517,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("ReturnButtonUrlNull");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for The start date cannot be greater than end date.
+		/// </summary>
+		public static string StartDateGreaterThanEndDate 
+		{
+			get
+			{
+				return Get("StartDateGreaterThanEndDate");
 			}
 		}
 		

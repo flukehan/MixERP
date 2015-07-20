@@ -19,6 +19,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Install.aspx.cs" Inherits="MixERP.Net.FrontEnd.Install" Culture="auto" UICulture="auto" %>
 
+<%@ Import Namespace="MixERP.Net.FrontEnd.Controls" %>
 <%@ Import Namespace="MixERP.Net.i18n.Resources" %>
 
 <!DOCTYPE html>
@@ -40,7 +41,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
     <form id="form1" runat="server">
         <div class="ui page grid">
             <div class="column">
-                <img src="Resource/Static/images/mixerp-logo-light.png" />
+                <img src="/Static/images/mixerp-logo-light.png" />
                 <div class="ui header">
                     <div class="content">
                         <%=Titles.InstallMixERP %>
@@ -77,10 +78,9 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                             <label for="RegistrationDateInputText">
                                 <%= Titles.RegistrationDate %>
                             </label>
-                            <input type="text" maxlength="50" id="RegistrationDateInputText" />
+                            <input type="text" maxlength="50" id="RegistrationDateInputText" placeholder="yyyy-mm-dd" />
                         </div>
                     </div>
-
                     <div class="ui header">
                         <div class="content">
                             <%= Questions.WhatIsYourHomeCurrency %>
@@ -113,6 +113,42 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
                             <input type="text" maxlength="48" id="HundredthNameInputText" />
                         </div>
                     </div>
+
+                    
+                    
+                    <div class="ui header">
+                        <div class="content">
+                            <%= Titles.FiscalYear %>
+                        </div>
+                    </div>
+                    <div class="ui divider"></div>
+                    <div class="four fields">
+                        <div class="field">
+                            <label for="FiscalYearCodeInputText">
+                                <%=ScrudResource.fiscal_year_code %>
+                            </label>
+                            <input type="text" maxlength="12" id="FiscalYearCodeInputText" />
+                        </div>
+                        <div class="field">
+                            <label for="FiscalYearNameInputText">
+                                <%=ScrudResource.fiscal_year_name %>
+                            </label>
+                            <input type="text" maxlength="48" id="FiscalYearNameInputText" />
+                        </div>
+                        <div class="field">
+                            <label for="StartsFromInputText">
+                                <%=ScrudResource.starts_from %>
+                            </label>
+                            <input type="text" maxlength="48" id="StartsFromInputText" placeholder="yyyy-mm-dd" />
+                        </div>
+                        <div class="field">
+                            <label for="EndsOnInputText">
+                                <%=ScrudResource.ends_on %>
+                            </label>
+                            <input type="text" maxlength="48" id="EndsOnInputText" placeholder="yyyy-mm-dd" />
+                        </div>
+                    </div>
+                    
 
                     <div class="ui header">
                         <div class="content">

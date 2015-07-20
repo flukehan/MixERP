@@ -63,9 +63,6 @@ BEGIN
         SELECT 3, 'GODOW-2', 'Godown 2',    'Office', 1, false, 3, 4,   core.get_account_id_by_account_number('10100')  UNION ALL
         SELECT 4, 'STORE-3', 'Store 3',     'Office', 2, true,  5, 5,   core.get_account_id_by_account_number('10200')  UNION ALL
         SELECT 4, 'GODOW-3', 'Godown 3',    'Office', 1, false, 5, 6,   core.get_account_id_by_account_number('10100');
-
-        INSERT INTO core.shippers(company_name, account_id)
-        SELECT 'Default', core.get_account_id_by_account_number('20110');
     END IF;
 END
 $$

@@ -21119,7 +21119,7 @@ $$
 LANGUAGE plpgsql;
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/04.default-values/01. frequencies-payment-terms-late-fee.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/04.default-values/01. frequencies.sql --<--<--
 DO
 $$
 BEGIN
@@ -21129,37 +21129,7 @@ BEGIN
         SELECT 3, 'EOQ', 'End of Quarter'               UNION ALL
         SELECT 4, 'EOH', 'End of Half'                  UNION ALL
         SELECT 5, 'EOY', 'End of Year';
-
-        INSERT INTO core.fiscal_year (fiscal_year_code, fiscal_year_name, starts_from, ends_on) 
-        VALUES ('FY1415', 'FY 2014/2015', '2014-07-17'::date, '2015-07-16'::date);
-
-        INSERT INTO core.frequency_setups (fiscal_year_code, frequency_setup_code, value_date, frequency_id) 
-        SELECT 'FY1415', 'Jul-Aug', '2014-08-16'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Aug-Sep', '2014-09-16'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Sep-Oc',  '2014-10-17'::date, 3 UNION ALL
-        SELECT 'FY1415', 'Oct-Nov', '2014-11-16'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Nov-Dec', '2014-12-15'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Dec-Jan', '2015-01-14'::date, 4 UNION ALL
-        SELECT 'FY1415', 'Jan-Feb', '2015-02-12'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Feb-Mar', '2015-03-14'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Mar-Apr', '2015-04-13'::date, 3 UNION ALL
-        SELECT 'FY1415', 'Apr-May', '2015-05-14'::date, 2 UNION ALL
-        SELECT 'FY1415', 'May-Jun', '2015-06-15'::date, 2 UNION ALL
-        SELECT 'FY1415', 'Jun-Jul', '2015-07-16'::date, 5;
-
-
-        INSERT INTO core.late_fee(late_fee_code, late_fee_name, is_flat_amount, rate)
-        SELECT '9%', '9% Fine', false, 9.00; 
-
-        INSERT INTO core.payment_terms(payment_term_code, payment_term_name, due_on_date, due_days, due_frequency_id, grace_peiod, late_fee_id, late_fee_posting_frequency_id)
-        SELECT '07-D',  'Due in next 7 days',                   false,  7,  NULL::integer,  1,  1, 2    UNION ALL
-        SELECT '15-D',  'Due in next 15 days',                  false,  15, NULL::integer,  2,  1, 2    UNION ALL
-        SELECT '30-D',  'Due in next 30 days',                  false,  30, NULL::integer,  4,  1, 2    UNION ALL
-        SELECT 'D-EOM', 'Due in the next month end',            false,  0,  2,              4,  1, 2    UNION ALL
-        SELECT 'D-EOQ', 'Due in the next quarter end',          false,  0,  3,              4,  1, 2    UNION ALL
-        SELECT 'D-EOH', 'Due in the next fiscal half end',      false,  0,  4,              4,  1, 2    UNION ALL
-        SELECT 'D-EOY', 'Due in the next fiscal year end',      false,  0,  5,              4,  1, 2;
-    END IF;
+     END IF;
 END
 $$
 LANGUAGE plpgsql;
@@ -21272,32 +21242,7 @@ WHERE parent_office_id IS NOT NULL;
 
 
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/04.default-values/stores-types-cost-centers.sql --<--<--
-DO
-$$
-BEGIN
-    IF(core.get_locale() = 'en-US') THEN
-        INSERT INTO office.store_types(store_type_code,store_type_name)
-        SELECT 'GOD', 'Godown'                              UNION ALL
-        SELECT 'SAL', 'Sales Center'                        UNION ALL
-        SELECT 'WAR', 'Warehouse'                           UNION ALL
-        SELECT 'PRO', 'Production';
-
-        INSERT INTO office.cost_centers(cost_center_code, cost_center_name)
-        SELECT 'DEF', 'Default'                             UNION ALL
-        SELECT 'GEN', 'General Administration'              UNION ALL
-        SELECT 'HUM', 'Human Resources'                     UNION ALL
-        SELECT 'SCC', 'Support & Customer Care'             UNION ALL
-        SELECT 'GAE', 'Guest Accomodation & Entertainment'  UNION ALL
-        SELECT 'MKT', 'Marketing & Promotion'               UNION ALL
-        SELECT 'SAL', 'Sales & Billing'                     UNION ALL
-        SELECT 'FIN', 'Finance & Accounting';
-    END IF;
-END
-$$
-LANGUAGE plpgsql;
-
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/04.default-values/tax-item-groups-brands-shipping.sql --<--<--
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/04.default-values/sales-tax-type-industries-entitites-brands-shipping.sql --<--<--
 DO
 $$
 BEGIN
@@ -21387,68 +21332,6 @@ BEGIN
         SELECT 'EXS', 'Exempt (Industry)' UNION ALL
         SELECT 'EXE', 'Exempt (Entity)';
 
-        INSERT INTO core.tax_master(tax_master_code, tax_master_name)
-        SELECT 'UST', 'United States Taxation' UNION ALL
-        SELECT 'NPT', 'Nepal Taxation';
-
-        INSERT INTO core.tax_authorities(tax_master_id, tax_authority_code, tax_authority_name, country_id, state_id, zip_code, address_line_1, address_line_2, street, city, phone, fax, email, url)
-        SELECT 1, 'IRS', 'Internal Revenue Service', core.get_country_id_by_country_code('US'), core.get_state_id_by_state_code('NY'), '11201', '2 Metro Tech', '1st floor', '', 'Brooklyn', '(718) 834-6559', '', '', 'http://www.irs.gov' UNION ALL
-        SELECT 1, 'IRD', 'Inland Revenue Department', core.get_country_id_by_country_code('NP'), NULL, '', 'INLAND REVENUE DEPARTMENT', 'Large Taxpayers Office', 'Hariharbhawan', 'Kathmandu', '5010049, 5010050, 5010051, 5010052, 5010053', '4411788', 'iro52@ird.gov.np', 'www.ird.gov.np/';
-
-
-        INSERT INTO core.state_sales_taxes(state_sales_tax_code, state_sales_tax_name, state_id, rate) VALUES
-        ('AL-STT', 'Alabama State Tax',             core.get_state_id_by_state_name('Alabama'),                 4), 
-        ('AZ-STT', 'Arizona State Tax',             core.get_state_id_by_state_name('Arizona'),                 5.6), 
-        ('AR-STT', 'Arkansas State Tax',            core.get_state_id_by_state_name('Arkansas'),                6.5), 
-        ('CA-STT', 'California State Tax',          core.get_state_id_by_state_name('California'),              7.5), 
-        ('CO-STT', 'Colorado State Tax',            core.get_state_id_by_state_name('Colorado'),                2.9), 
-        ('CT-STT', 'Connecticut State Tax',         core.get_state_id_by_state_name('Connecticut'),             6.35), 
-        ('DE-STT', 'Delaware State Tax',            core.get_state_id_by_state_name('Delaware'),                0), 
-        ('DC-TAX', 'District of Columbia Tax',      core.get_state_id_by_state_name('District of Columbia'),    5.75), 
-        ('FL-STT', 'Florida State Tax',             core.get_state_id_by_state_name('Florida'),                 6), 
-        ('GA-STT', 'Georgia State Tax',             core.get_state_id_by_state_name('Georgia'),                 4), 
-        ('HI-STT', 'Hawaii State Tax',              core.get_state_id_by_state_name('Hawaii'),                  4), 
-        ('ID-STT', 'Idaho State Tax',               core.get_state_id_by_state_name('Idaho'),                   6), 
-        ('IL-STT', 'Illinois State Tax',            core.get_state_id_by_state_name('Illinois'),                6.25), 
-        ('IN-STT', 'Indiana State Tax',             core.get_state_id_by_state_name('Indiana'),                 7), 
-        ('IA-STT', 'Iowa State Tax',                core.get_state_id_by_state_name('Iowa'),                    6), 
-        ('KS-STT', 'Kansas State Tax',              core.get_state_id_by_state_name('Kansas'),                  6.15), 
-        ('KY-STT', 'Kentucky State Tax',            core.get_state_id_by_state_name('Kentucky'),                6), 
-        ('LA-STT', 'Louisiana State Tax',           core.get_state_id_by_state_name('Louisiana'),               4), 
-        ('ME-STT', 'Maine State Tax',               core.get_state_id_by_state_name('Maine'),                   5.5), 
-        ('MD-STT', 'Maryland State Tax',            core.get_state_id_by_state_name('Maryland'),                6), 
-        ('MA-STT', 'Massachusetts State Tax',       core.get_state_id_by_state_name('Massachusetts'),           6.25), 
-        ('MI-STT', 'Michigan State Tax',            core.get_state_id_by_state_name('Michigan'),                6), 
-        ('MN-STT', 'Minnesota State Tax',           core.get_state_id_by_state_name('Minnesota'),               6.875), 
-        ('MS-STT', 'Mississippi State Tax',         core.get_state_id_by_state_name('Mississippi'),             7), 
-        ('MO-STT', 'Missouri State Tax',            core.get_state_id_by_state_name('Missouri'),                4.225), 
-        ('NE-STT', 'Nebraska State Tax',            core.get_state_id_by_state_name('Nebraska'),                5.5), 
-        ('NV-STT', 'Nevada State Tax',              core.get_state_id_by_state_name('Nevada'),                  6.85), 
-        ('NJ-STT', 'New Jersey State Tax',          core.get_state_id_by_state_name('New Jersey'),              7), 
-        ('NM-STT', 'New Mexico State Tax',          core.get_state_id_by_state_name('New Mexico'),              5.125), 
-        ('NY-STT', 'New York State Tax',            core.get_state_id_by_state_name('New York'),                4), 
-        ('NC-STT', 'North Carolina State Tax',      core.get_state_id_by_state_name('North Carolina'),          4.75), 
-        ('ND-STT', 'North Dakota State Tax',        core.get_state_id_by_state_name('North Dakota'),            5), 
-        ('OH-STT', 'Ohio State Tax',                core.get_state_id_by_state_name('Ohio'),                    5.75), 
-        ('OK-STT', 'Oklahoma State Tax',            core.get_state_id_by_state_name('Oklahoma'),                4.5), 
-        ('PA-STT', 'Pennsylvania State Tax',        core.get_state_id_by_state_name('Pennsylvania'),            6), 
-        ('RI-STT', 'Rhode Island State Tax',        core.get_state_id_by_state_name('Rhode Island'),            7), 
-        ('SC-STT', 'South Carolina State Tax',      core.get_state_id_by_state_name('South Carolina'),          6), 
-        ('SD-STT', 'South Dakota State Tax',        core.get_state_id_by_state_name('South Dakota'),            4), 
-        ('TN-STT', 'Tennessee State Tax',           core.get_state_id_by_state_name('Tennessee'),               7), 
-        ('TX-STT', 'Texas State Tax',               core.get_state_id_by_state_name('Texas'),                   6.25), 
-        ('UT-STT', 'Utah State Tax',                core.get_state_id_by_state_name('Utah'),                    4.7), 
-        ('VT-STT', 'Vermont State Tax',             core.get_state_id_by_state_name('Vermont'),                 6), 
-        ('VA-STT', 'Virginia State Tax',            core.get_state_id_by_state_name('Virginia'),                4.3), 
-        ('WA-STT', 'Washington State Tax',          core.get_state_id_by_state_name('Washington'),              6.5), 
-        ('WV-STT', 'West Virginia State Tax',       core.get_state_id_by_state_name('West Virginia'),           6), 
-        ('WI-STT', 'Wisconsin State Tax',           core.get_state_id_by_state_name('Wisconsin'),               5), 
-        ('WY-STT', 'Wyoming State Tax',             core.get_state_id_by_state_name('Wyoming'),                 4);
-
-        INSERT INTO core.county_sales_taxes(county_id, county_sales_tax_code, county_sales_tax_name, rate)
-        SELECT core.get_county_id_by_county_code('36047'), '36047-STX', 'Kings County Sales Tax', 4.875 UNION ALL
-        SELECT core.get_county_id_by_county_code('6095'), '6095-STX', 'Solano County Sales Tax', 0.125;
-
         INSERT INTO core.brands(brand_code, brand_name)
         SELECT 'DEF', 'Default';
 
@@ -21467,6 +21350,31 @@ BEGIN
         INSERT INTO core.shipping_package_shapes(shipping_package_shape_code, is_rectangular, shipping_package_shape_name)
         SELECT 'REC',   true,   'Rectangular Box Packaging'         UNION ALL
         SELECT 'IRR',   false,  'Irregular Packaging';
+    END IF;
+END
+$$
+LANGUAGE plpgsql;
+
+-->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/04.default-values/stores-types-cost-centers.sql --<--<--
+DO
+$$
+BEGIN
+    IF(core.get_locale() = 'en-US') THEN
+        INSERT INTO office.store_types(store_type_code,store_type_name)
+        SELECT 'GOD', 'Godown'                              UNION ALL
+        SELECT 'SAL', 'Sales Center'                        UNION ALL
+        SELECT 'WAR', 'Warehouse'                           UNION ALL
+        SELECT 'PRO', 'Production';
+
+        INSERT INTO office.cost_centers(cost_center_code, cost_center_name)
+        SELECT 'DEF', 'Default'                             UNION ALL
+        SELECT 'GEN', 'General Administration'              UNION ALL
+        SELECT 'HUM', 'Human Resources'                     UNION ALL
+        SELECT 'SCC', 'Support & Customer Care'             UNION ALL
+        SELECT 'GAE', 'Guest Accomodation & Entertainment'  UNION ALL
+        SELECT 'MKT', 'Marketing & Promotion'               UNION ALL
+        SELECT 'SAL', 'Sales & Billing'                     UNION ALL
+        SELECT 'FIN', 'Finance & Accounting';
     END IF;
 END
 $$

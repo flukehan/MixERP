@@ -1,3 +1,9 @@
+DROP INDEX IF EXISTS policy.menu_access_uix;
+
+
+CREATE UNIQUE INDEX menu_access_uix
+ON policy.menu_access(office_id, menu_id, user_id);
+
 ALTER TABLE policy.auto_verification_policy
 DROP CONSTRAINT IF EXISTS auto_verification_policy_pkey;
 

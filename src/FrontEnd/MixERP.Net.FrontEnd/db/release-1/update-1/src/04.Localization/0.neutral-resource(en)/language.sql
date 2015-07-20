@@ -56,6 +56,7 @@ SELECT localization.add_localized_resource('DbErrors', '', 'P5204', 'The returne
 SELECT localization.add_localized_resource('DbErrors', '', 'P5205', 'You cannot provide more than one store for this transaction.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5206', 'You cannot provide more than one delivery destination store for this transaction.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5207', 'The source and the destination stores cannot be the same.');
+SELECT localization.add_localized_resource('DbErrors', '', 'P5208', 'The start date cannot be greater than end date.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5301', 'Invalid or rejected transaction.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5500', 'Insufficient item quantity.');
 SELECT localization.add_localized_resource('DbErrors', '', 'P5800', 'Deleting a transaction is not allowed. Mark the transaction as rejected instead.');
@@ -1313,4 +1314,5 @@ SELECT localization.add_localized_resource('Warnings', '', 'RecurringAmountError
 SELECT localization.add_localized_resource('Warnings', '', 'ReferencingSidesNotEqual', 'The referencing sides are not equal.');
 SELECT localization.add_localized_resource('Warnings', '', 'RestrictedTransactionMode', 'This establishment does not allow transaction posting.');
 SELECT localization.add_localized_resource('Warnings', '', 'ReturnButtonUrlNull', 'Cannot return this entry. The return url was not provided.');
+SELECT localization.add_localized_resource('Warnings', '', 'StartDateGreaterThanEndDate', 'The start date cannot be greater than end date.');
 SELECT localization.add_localized_resource('Warnings', '', 'UserIdOrPasswordIncorrect', 'User id or password incorrect.');

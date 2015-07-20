@@ -17,12 +17,14 @@ You should have received a copy of the GNU General Public License
 along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 ***********************************************************************************/
 
-using MixERP.Net.ApplicationState.Cache;
-using Serilog;
 using System;
 using System.ComponentModel;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.ApplicationState.Cache;
+using MixERP.Net.Framework;
+using MixERP.Net.i18n.Resources;
+using Serilog;
 
 namespace MixERP.Net.FrontEnd.Services
 {
@@ -34,29 +36,42 @@ namespace MixERP.Net.FrontEnd.Services
     {
         [WebMethod]
         public bool SaveOffice(string officeCode, string officeName, string nickName, string registrationDate,
-            string currencyCode, string currencySymbol, string currencyName, string hundredthName, string adminName,
+            string currencyCode, string currencySymbol, string currencyName, string hundredthName, string fiscalYearCode,
+            string fiscalYearName, string startsFrom, string endsOn, string adminName,
             string username, string password, string confirmPassword)
         {
             if (string.IsNullOrWhiteSpace(officeName) || string.IsNullOrWhiteSpace(officeCode) ||
                 string.IsNullOrWhiteSpace(nickName) || string.IsNullOrWhiteSpace(registrationDate) ||
                 string.IsNullOrWhiteSpace(currencyCode) || string.IsNullOrWhiteSpace(currencySymbol) ||
                 string.IsNullOrWhiteSpace(currencyName) || string.IsNullOrWhiteSpace(hundredthName) ||
+                string.IsNullOrWhiteSpace(fiscalYearCode) || string.IsNullOrWhiteSpace(fiscalYearName) ||
+                string.IsNullOrWhiteSpace(startsFrom) || string.IsNullOrWhiteSpace(endsOn) ||
                 string.IsNullOrWhiteSpace(adminName) || string.IsNullOrWhiteSpace(username) ||
                 string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirmPassword))
             {
-                return false;
+                throw new MixERPException(Labels.AllFieldsRequired);
             }
 
             if (password != confirmPassword)
             {
-                return false;
+                throw new MixERPException(Warnings.ConfirmationPasswordDoesNotMatch);
+            }
+
+
+            DateTime dateOfRegistration = Convert.ToDateTime(registrationDate);
+            DateTime fiscalYearStartDate = Convert.ToDateTime(startsFrom);
+            DateTime fiscalYearEndDate = Convert.ToDateTime(endsOn);
+
+            if (fiscalYearStartDate > fiscalYearEndDate)
+            {
+                throw new MixERPException(Warnings.StartDateGreaterThanEndDate);
             }
 
             try
             {
                 Data.Office.Offices.SaveOffice(AppUsers.GetCurrentUserDB(), officeCode, officeName, nickName,
-                    Convert.ToDateTime(registrationDate), currencyCode,
-                    currencySymbol, currencyName, hundredthName, adminName, username, password);
+                    dateOfRegistration, currencyCode,
+                    currencySymbol, currencyName, hundredthName, fiscalYearCode, fiscalYearName, fiscalYearStartDate, fiscalYearEndDate, adminName, username, password);
 
                 return true;
             }

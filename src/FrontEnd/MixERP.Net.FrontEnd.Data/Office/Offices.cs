@@ -32,15 +32,16 @@ namespace MixERP.Net.FrontEnd.Data.Office
         }
 
         public static void SaveOffice(string catalog, string officeCode, string officeName, string nickName,
-            DateTime registrationDate,
-            string currencyCode, string currencySymbol, string currencyName, string hundredthName, string adminName,
+            DateTime registrationDate, string currencyCode, string currencySymbol, string currencyName,
+            string hundredthName, string fiscalYearCode,
+            string fiscalYearName, DateTime startsFrom, DateTime endsOn, string adminName,
             string username, string password)
         {
             const string sql =
-                "SELECT * FROM office.add_office(@0::varchar(12), @1::varchar(150), @2::varchar(50), @3::date, @4::varchar(12), @5::varchar(12), @6::varchar(48), @7::varchar(48), @8::varchar(100), @9::varchar(50), @10::varchar(48));";
+                "SELECT * FROM office.add_office(@0::varchar(12), @1::varchar(150), @2::varchar(50), @3::date, @4::varchar(12), @5::varchar(12), @6::varchar(48), @7::varchar(48), @8::varchar(12), @9::varchar(50), @10::date,@11::date, @12::varchar(100), @13::varchar(50), @14::varchar(48));";
 
             Factory.NonQuery(catalog, sql, officeCode, officeName, nickName, registrationDate, currencyCode,
-                currencySymbol, currencyName, hundredthName, adminName, username, password);
+                currencySymbol, currencyName, hundredthName, fiscalYearCode, fiscalYearName, startsFrom, endsOn, adminName, username, password);
         }
     }
 }
