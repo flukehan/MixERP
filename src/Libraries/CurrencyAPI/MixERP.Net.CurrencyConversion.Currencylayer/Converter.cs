@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MixERP.Net.Framework.Contracts.Currency;
+using MixER.Net.ApplicationState.Cache;
 
 namespace MixERP.Net.CurrencyConversion.Currencylayer
 {
@@ -18,7 +19,7 @@ namespace MixERP.Net.CurrencyConversion.Currencylayer
             get
             {
                 return
-                    Common.Helpers.ConfigurationHelper.GetConfigurationValue(this.ConfigFileName, "Enabled")
+                    MixERP.Net.Common.Helpers.DbConfig.GetCurrencylayerParameter(AppUsers.GetCurrentUserDB(), "Enabled")
                         .ToUpperInvariant()
                         .Equals("TRUE");
             }

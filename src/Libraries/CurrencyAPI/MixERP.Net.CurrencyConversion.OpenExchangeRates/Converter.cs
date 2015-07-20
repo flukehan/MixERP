@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using MixERP.Net.Framework.Contracts.Currency;
+using MixERP.Net.Common.Helpers;
+using MixER.Net.ApplicationState.Cache;
 
 namespace MixERP.Net.CurrencyConversion.OpenExchangeRates
 {
@@ -18,7 +20,7 @@ namespace MixERP.Net.CurrencyConversion.OpenExchangeRates
             get
             {
                 return
-                    Common.Helpers.ConfigurationHelper.GetConfigurationValue(this.ConfigFileName, "Enabled")
+                    DbConfig.GetOpenExchangeRatesParameter(AppUsers.GetCurrentUserDB(), "Enabled")
                         .ToUpperInvariant()
                         .Equals("TRUE");
             }

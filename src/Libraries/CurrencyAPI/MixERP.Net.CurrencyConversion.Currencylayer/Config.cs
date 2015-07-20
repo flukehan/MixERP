@@ -1,22 +1,24 @@
 ﻿using MixERP.Net.Common;
 using MixERP.Net.Common.Helpers;
+using MixERP.Net.ApplicationState;
+using MixER.Net.ApplicationState.Cache;
 
 namespace MixERP.Net.CurrencyConversion.Currencylayer
 {
     internal static class Config
     {        
         internal const string ConfigFileName = "CurrencylayerConfigFile";
-        internal static readonly string UserAgent = ConfigurationHelper.GetConfigurationValue(ConfigFileName, "UserAgent");
-        internal static readonly string MediaType = ConfigurationHelper.GetConfigurationValue(ConfigFileName, "MediaType");
-        internal static readonly string AccessKey = ConfigurationHelper.GetConfigurationValue(ConfigFileName, "APIAccessKey");
-        internal static readonly string ApiUrl = ConfigurationHelper.GetConfigurationValue(ConfigFileName, "APIUrl");
-        internal static readonly string AccessKeyName = ConfigurationHelper.GetConfigurationValue(ConfigFileName, "AccessKeyName");
-        internal static readonly string CurrenciesKey = ConfigurationHelper.GetConfigurationValue(ConfigFileName, "CurrenciesKey");
-        internal static readonly string SourceKey = ConfigurationHelper.GetConfigurationValue(ConfigFileName, "SourceKey");
-        internal static readonly int DecimalPlaces = Conversion.TryCastInteger(ConfigurationHelper.GetConfigurationValue(ConfigFileName, "DecimalPlaces"));
-        internal static readonly string FormatKey = ConfigurationHelper.GetConfigurationValue(ConfigFileName, "FormatKey");
-        internal static readonly string DefaultFormat = ConfigurationHelper.GetConfigurationValue(ConfigFileName, "DefaultFormat");
-        internal static readonly string ResultSubKey = ConfigurationHelper.GetConfigurationValue(ConfigFileName, "ResultSubKey");
-        internal static readonly bool RemoveSourceCurrencyFromResult = ConfigurationHelper.GetConfigurationValue(ConfigFileName, "RemoveSourceCurrencyFromResult").ToUpperInvariant().Equals("TRUE");
+        internal static readonly string UserAgent = DbConfig.GetCurrencylayerParameter(AppUsers.GetCurrentUserDB(), "UserAgent");
+        internal static readonly string MediaType = DbConfig.GetCurrencylayerParameter(AppUsers.GetCurrentUserDB(), "MediaType");
+        internal static readonly string AccessKey = DbConfig.GetCurrencylayerParameter(AppUsers.GetCurrentUserDB(), "APIAccessKey");
+        internal static readonly string ApiUrl = DbConfig.GetCurrencylayerParameter(AppUsers.GetCurrentUserDB(), "APIUrl");
+        internal static readonly string AccessKeyName = DbConfig.GetCurrencylayerParameter(AppUsers.GetCurrentUserDB(), "AccessKeyName");
+        internal static readonly string CurrenciesKey = DbConfig.GetCurrencylayerParameter(AppUsers.GetCurrentUserDB(), "CurrenciesKey");
+        internal static readonly string SourceKey= DbConfig.GetCurrencylayerParameter(AppUsers.GetCurrentUserDB(), "SourceKey");
+        internal static readonly int DecimalPlaces = Conversion.TryCastInteger(DbConfig.GetCurrencylayerParameter(AppUsers.GetCurrentUserDB(), "DecimalPlaces"));
+        internal static readonly string FormatKey = DbConfig.GetCurrencylayerParameter(AppUsers.GetCurrentUserDB(), "FormatKey");
+        internal static readonly string DefaultFormat = DbConfig.GetCurrencylayerParameter(AppUsers.GetCurrentUserDB(), "DefaultFormat");
+        internal static readonly string ResultSubKey = DbConfig.GetCurrencylayerParameter(AppUsers.GetCurrentUserDB(), "ResultSubKey");
+        internal static readonly bool RemoveSourceCurrencyFromResult = DbConfig.GetCurrencylayerParameter(AppUsers.GetCurrentUserDB(), "RemoveSourceCurrencyFromResult").ToUpperInvariant().Equals("TRUE");
     }
 }

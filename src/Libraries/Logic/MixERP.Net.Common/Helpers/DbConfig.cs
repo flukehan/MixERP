@@ -35,6 +35,17 @@ namespace MixERP.Net.Common.Helpers
             return Factory.Scalar<string>(catalog, sql, key);
         }
 
+        public static string GetCurrencylayerParameter(string catalog, string key)
+        {
+            const string sql = "SELECT value FROM config.currency_layer WHERE key=@0";
+            return Factory.Scalar<string>(catalog, sql, key);
+        }
+
+        public static string GetOpenExchangeRatesParameter(string catalog, string key)
+        {
+            const string sql = "SELECT value FROM config.open_exchange_rates WHERE key=@0"; 
+            return Factory.Scalar<string>(catalog, sql, key);
+        }
 
         public static string GetDbParameter(string catalog, string key)
         {
