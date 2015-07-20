@@ -39,13 +39,15 @@ namespace MixERP.Net.Core.Modules.Purchase
                 view.PreviewUrl = "~/Modules/Purchase/Reports/PurchaseReturnReport.mix";
                 view.ChecklistUrl = "~/Modules/Purchase/Confirmation/Return.mix";
 
+                view.DbTableName = "transactions.transaction_master";
+                view.PrimaryKey = "transaction_master_id";
+
                 view.UserId = AppUsers.GetCurrent().View.UserId.ToInt();
                 view.OfficeId = AppUsers.GetCurrent().View.OfficeId.ToInt();
                 view.Catalog = AppUsers.GetCurrentUserDB();
 
                 this.Placeholder1.Controls.Add(view);
             }
-            
         }
     }
 }
