@@ -31,6 +31,7 @@ var setNumberFormat = function () {
     };
 
     $('input.decimal').number(true, currencyDecimalPlaces, decimalSeparator, thousandSeparator);
+    $('input.decimal4').number(true, 4, decimalSeparator, thousandSeparator);
     $('input.integer').number(true, 0, decimalSeparator, thousandSeparator);
 };
 
