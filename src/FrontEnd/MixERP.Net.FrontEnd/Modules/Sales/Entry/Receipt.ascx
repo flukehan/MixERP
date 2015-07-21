@@ -20,7 +20,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
     OverridePath="/Modules/Sales/Receipt.mix" %>
 <%@ Register TagPrefix="mixerp" Namespace="MixERP.Net.WebControls.Common" Assembly="MixERP.Net.WebControls.Common, Version=1.2.0.1, Culture=neutral, PublicKeyToken=a724a47a0879d02f" %>
 
-
 <h2>
     <asp:Literal runat="server" ID="TitleLiteral" />
 </h2>
@@ -61,7 +60,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <label for="DebitExchangeRateInputText">
                     <asp:Literal runat="server" ID="DebitExchangeRateLiteral" />
                 </label>
-                <input type="text" id="DebitExchangeRateInputText" class="decimal text-right" />
+                <input type="text" id="DebitExchangeRateInputText" class="decimal4 text-right" />
             </div>
             <div class="field">
                 <label for="AmountInHomeCurrencyInputText">
@@ -74,7 +73,7 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                 <label for="CreditExchangeRateInputText">
                     <asp:Literal runat="server" ID="CreditExchangeRateLiteral" />
                 </label>
-                <input type="text" id="CreditExchangeRateInputText" class="decimal text-right" />
+                <input type="text" id="CreditExchangeRateInputText" class="decimal4 text-right" />
             </div>
             <div class="field">
                 <label for="BaseAmountInputText">
@@ -139,7 +138,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
                     <div class="field">
                         <label for="MerchantFeeInputText">
                             <asp:Literal ID="MerchantFeeLiteral" runat="server" />
-
                         </label>
                         <input type="text" id="MerchantFeeInputText" readonly="readonly" />
                     </div>
@@ -190,7 +188,6 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses />.
             <div class="field">
                 <label for="StatementReferenceTextArea">
                     <asp:Literal runat="server" ID="StatementReferenceLiteral" />
-
                 </label>
                 <textarea id="StatementReferenceTextArea" rows="3"></textarea>
             </div>
