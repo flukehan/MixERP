@@ -26882,42 +26882,6 @@ END
 $$
 LANGUAGE plpgsql;
 
--->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/99.sample-data/30.exchange-rates.sql.sample --<--<--
-DO
-$$
-BEGIN
-    IF(core.get_locale() = 'en-US') THEN
-        INSERT INTO core.exchange_rates(office_id)
-        SELECT 1;
-
-        INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
-        SELECT 1, 'NPR', 'USD', 1, 100.00; 
-
-        INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
-        SELECT 1, 'NPR', 'INR', 1, 1.6; 
-
-        INSERT INTO core.exchange_rates(office_id)
-        SELECT 2;
-
-        INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
-        SELECT 2, 'NPR', 'USD', 1, 100.00; 
-
-        INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
-        SELECT 2, 'NPR', 'INR', 1, 1.6; 
-
-        INSERT INTO core.exchange_rates(office_id)
-        SELECT 3;
-
-        INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
-        SELECT 3, 'NPR', 'USD', 1, 100.00; 
-
-        INSERT INTO core.exchange_rate_details(exchange_rate_id, local_currency_code, foreign_currency_code, unit, exchange_rate)
-        SELECT 3, 'NPR', 'INR', 1, 1.6; 
-    END IF;
-END
-$$
-LANGUAGE plpgsql;
-
 -->-->-- C:/Users/nirvan/Desktop/mixerp/0. GitHub/src/FrontEnd/MixERP.Net.FrontEnd/db/beta-1/v1/src/99.sample-data/40.party-sample.sql.sample --<--<--
 /********************************************************************************
 Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).

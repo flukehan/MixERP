@@ -7,8 +7,8 @@ var signInButton = $("#SignInButton");
 var companySelect = $("#CompanySelect");
 
 $(document).ready(function () {
-    usernameInputText.val('binod');
-    passwordInputPassword.val('binod');
+    //usernameInputText.val('binod');
+    //passwordInputPassword.val('binod');
 
     var languageSelect = $("#LanguageSelect");
 
