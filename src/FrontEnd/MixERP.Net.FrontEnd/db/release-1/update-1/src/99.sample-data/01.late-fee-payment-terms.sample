@@ -2,8 +2,8 @@ DO
 $$
 BEGIN
     IF(core.get_locale() = 'en-US') THEN
-        INSERT INTO core.late_fee(late_fee_code, late_fee_name, is_flat_amount, rate)
-        SELECT '9%', '9% Fine', false, 9.00; 
+        INSERT INTO core.late_fee(late_fee_code, late_fee_name, is_flat_amount, rate, account_id)
+        SELECT '9%', '9% Fine', false, 9.00, core.get_account_id_by_account_number('30300'); 
 
         INSERT INTO core.payment_terms(payment_term_code, payment_term_name, due_on_date, due_days, due_frequency_id, grace_period, late_fee_id, late_fee_posting_frequency_id)
         SELECT '07-D',  'Due in next 7 days',                   false,  7,  NULL::integer,  1,  1, 2    UNION ALL

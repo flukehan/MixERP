@@ -114,7 +114,7 @@ CREATE TABLE core.flags
     user_id                                 integer NOT NULL REFERENCES office.users(user_id),
     flag_type_id                            integer NOT NULL REFERENCES core.flag_types(flag_type_id),
     resource                                text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
-    resource_key                            text, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
+    resource_key                            text, --The unique identifier for lookup. Example: non_gl_stock_master_id,
     resource_id                             text, --The value of the unique identifier to lookup for,
     flagged_on                              TIMESTAMP WITH TIME ZONE NULL 
                                             DEFAULT(NOW())
@@ -224,7 +224,7 @@ CREATE TABLE core.attachments
     user_id                                 integer NOT NULL 
                                             REFERENCES office.users(user_id),
     resource                                text NOT NULL, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
-    resource_key                            text NOT NULL, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
+    resource_key                            text NOT NULL, --The unique identifier for lookup. Example: non_gl_stock_master_id,
     resource_id                             bigint NOT NULL, --The value of the unique identifier to lookup for,
     original_file_name                      text NOT NULL,
     file_extension                          national character varying(12) NOT NULL,

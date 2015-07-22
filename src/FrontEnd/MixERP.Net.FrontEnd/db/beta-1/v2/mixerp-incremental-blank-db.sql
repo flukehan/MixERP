@@ -1484,7 +1484,7 @@ CREATE TABLE core.flags
     user_id                                 integer NOT NULL REFERENCES office.users(user_id),
     flag_type_id                            integer NOT NULL REFERENCES core.flag_types(flag_type_id),
     resource                                text, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
-    resource_key                            text, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
+    resource_key                            text, --The unique identifier for lookup. Example: non_gl_stock_master_id,
     resource_id                             text, --The value of the unique identifier to lookup for,
     flagged_on                              TIMESTAMP WITH TIME ZONE NULL 
                                             DEFAULT(NOW())
@@ -1594,7 +1594,7 @@ CREATE TABLE core.attachments
     user_id                                 integer NOT NULL 
                                             REFERENCES office.users(user_id),
     resource                                text NOT NULL, --Fully qualified resource name. Example: transactions.non_gl_stock_master.
-    resource_key                            text NOT NULL, --The unique idenfier for lookup. Example: non_gl_stock_master_id,
+    resource_key                            text NOT NULL, --The unique identifier for lookup. Example: non_gl_stock_master_id,
     resource_id                             bigint NOT NULL, --The value of the unique identifier to lookup for,
     original_file_name                      text NOT NULL,
     file_extension                          national character varying(12) NOT NULL,
@@ -29003,9 +29003,7 @@ BEGIN
     ) THEN
         ALTER TABLE core.bonus_slabs
         ADD COLUMN account_id bigint NOT NULL 
-        REFERENCES core.accounts(account_id)
-        CONSTRAINT bonus_slab_account_id_df
-        DEFAULT(core.get_account_id_by_account_number('40230'));
+        REFERENCES core.accounts(account_id);
     END IF;
 
     IF NOT EXISTS
@@ -29106,10 +29104,15 @@ BEGIN
         AND    NOT attisdropped
     ) THEN
         ALTER TABLE core.late_fee
-        ADD COLUMN account_id bigint NOT NULL 
-        REFERENCES core.accounts(account_id)
-        CONSTRAINT late_fee_account_id_df
-        DEFAULT(core.get_account_id_by_account_number('30300'));
+        ADD COLUMN account_id bigint NULL 
+        REFERENCES core.accounts(account_id);
+        
+        UPDATE core.late_fee
+        SET account_id = core.get_account_id_by_account_number('30300')
+        WHERE account_id IS NULL;
+        
+        ALTER TABLE core.late_fee
+        ALTER COLUMN account_id SET NOT NULL;
     END IF;
 END
 $$
@@ -29394,29 +29397,6 @@ CREATE TABLE localization.localized_resources
 CREATE UNIQUE INDEX localized_resources_culture_key_uix
 ON localization.localized_resources
 (resource_id, UPPER(culture_code));
-
-
-ALTER TABLE core.item_groups
-ALTER COLUMN sales_account_id SET DEFAULT(core.get_account_id_by_account_number('30100'));
-
-ALTER TABLE core.item_groups
-ALTER COLUMN sales_discount_account_id SET DEFAULT(core.get_account_id_by_account_number('40270'));
-
-ALTER TABLE core.item_groups
-ALTER COLUMN sales_return_account_id SET DEFAULT(core.get_account_id_by_account_number('20701'));
-
-ALTER TABLE core.item_groups
-ALTER COLUMN purchase_account_id SET DEFAULT(core.get_account_id_by_account_number('40100'));
-
-ALTER TABLE core.item_groups
-ALTER COLUMN purchase_discount_account_id SET DEFAULT(core.get_account_id_by_account_number('30700'));
-
-ALTER TABLE core.item_groups
-ALTER COLUMN inventory_account_id SET DEFAULT(core.get_account_id_by_account_number('10700'));
-
-ALTER TABLE core.item_groups
-ALTER COLUMN cost_of_goods_sold_account_id SET DEFAULT(core.get_account_id_by_account_number('40200'));
-
 
 DO
 $$
