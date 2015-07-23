@@ -649,7 +649,7 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
-		///   Localized string for The source and the destination stores can not be the same.
+		///   Localized string for The source and the destination stores cannot be the same.
 		/// </summary>
 		public static string P5207 
 		{
@@ -979,7 +979,7 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
-		///   Localized string for Acess is denied. This transaction was rejected by administrator.
+		///   Localized string for Access is denied. This transaction was rejected by administrator.
 		/// </summary>
 		public static string P9250 
 		{
@@ -1308,6 +1308,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Create users and define various policies such as menu access policy and verification policy.
+		/// </summary>
+		public static string AddNewUsersDescription 
+		{
+			get
+			{
+				return Get("AddNewUsersDescription");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for All fields are required.
 		/// </summary>
 		public static string AllFieldsRequired 
@@ -1381,6 +1392,61 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("ConfirmedPasswordDoesNotMatch");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Cash repository is a place where you store your cash and valuables. Example: Cash in Vault, Cash in Drawers.
+		/// </summary>
+		public static string CreateCashRepositoriesDescription 
+		{
+			get
+			{
+				return Get("CreateCashRepositoriesDescription");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for The term "party" collectively refers to customer, supplier, or agent you have business with.
+		/// </summary>
+		public static string CreatePartiesDescription 
+		{
+			get
+			{
+				return Get("CreatePartiesDescription");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Store is a place where you keep your goods. Example: Shop, Go-down, Warehouse.
+		/// </summary>
+		public static string CreateStoresDescription 
+		{
+			get
+			{
+				return Get("CreateStoresDescription");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Tax authority is the government body or agency to whom you file your periodic tax reports to.
+		/// </summary>
+		public static string CreateTaxAuthorityDescription 
+		{
+			get
+			{
+				return Get("CreateTaxAuthorityDescription");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Tax master is a category to group your taxes logically. Example: [Country] Taxation.
+		/// </summary>
+		public static string CreateTaxMasterDescription 
+		{
+			get
+			{
+				return Get("CreateTaxMasterDescription");
 			}
 		}
 		
@@ -1594,6 +1660,149 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Menu access policy enables you to define permission for a user to access menu item(s).
+		/// </summary>
+		public static string MenuAccessPolicyDescription 
+		{
+			get
+			{
+				return Get("MenuAccessPolicyDescription");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for There are {0} cash repositories in this office.
+		/// </summary>
+		public static string NCashRepositoriesInThisOffice 
+		{
+			get
+			{
+				return Get("NCashRepositoriesInThisOffice");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for {0} parties found.
+		/// </summary>
+		public static string NPartiesFound 
+		{
+			get
+			{
+				return Get("NPartiesFound");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for There are {0} stores in this office.
+		/// </summary>
+		public static string NStoresInThisOffice 
+		{
+			get
+			{
+				return Get("NStoresInThisOffice");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for {0} tax authorities found.
+		/// </summary>
+		public static string NTaxAuthoritiesFound 
+		{
+			get
+			{
+				return Get("NTaxAuthoritiesFound");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for {0} tax master(s) found.
+		/// </summary>
+		public static string NTaxMasterFound 
+		{
+			get
+			{
+				return Get("NTaxMasterFound");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for No additional user found.
+		/// </summary>
+		public static string NoAdditionalUserFound 
+		{
+			get
+			{
+				return Get("NoAdditionalUserFound");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for No cash repository defined.
+		/// </summary>
+		public static string NoCashRepositoryDefnied 
+		{
+			get
+			{
+				return Get("NoCashRepositoryDefnied");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for No party found.
+		/// </summary>
+		public static string NoPartyFound 
+		{
+			get
+			{
+				return Get("NoPartyFound");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for No store present.
+		/// </summary>
+		public static string NoStorePresent 
+		{
+			get
+			{
+				return Get("NoStorePresent");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for No tax authority defined.
+		/// </summary>
+		public static string NoTaxAuthorityDefined 
+		{
+			get
+			{
+				return Get("NoTaxAuthorityDefined");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for No tax master defined.
+		/// </summary>
+		public static string NoTaxMasterDefined 
+		{
+			get
+			{
+				return Get("NoTaxMasterDefined");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Not defined for {0} users.
+		/// </summary>
+		public static string NotDefinedForNUsers 
+		{
+			get
+			{
+				return Get("NotDefinedForNUsers");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for {0} rows affected.
 		/// </summary>
 		public static string NumRowsAffected 
@@ -1704,6 +1913,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for {0} out of {1} tasks completed.
+		/// </summary>
+		public static string TaskCompletedProgress 
+		{
+			get
+			{
+				return Get("TaskCompletedProgress");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Task completed successfully.
 		/// </summary>
 		public static string TaskCompletedSuccessfully 
@@ -1733,6 +1953,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("ThisFieldIsRequired");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Total users : {0}.
+		/// </summary>
+		public static string TotalUsersN 
+		{
+			get
+			{
+				return Get("TotalUsersN");
 			}
 		}
 		
@@ -7782,6 +8013,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Add New Users
+		/// </summary>
+		public static string AddNewUsers 
+		{
+			get
+			{
+				return Get("AddNewUsers");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Address
 		/// </summary>
 		public static string Address 
@@ -8636,6 +8878,61 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("CreateBackupFirst");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Create Cash Repositories
+		/// </summary>
+		public static string CreateCashRepositories 
+		{
+			get
+			{
+				return Get("CreateCashRepositories");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Create Party
+		/// </summary>
+		public static string CreateParties 
+		{
+			get
+			{
+				return Get("CreateParties");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Create Stores
+		/// </summary>
+		public static string CreateStores 
+		{
+			get
+			{
+				return Get("CreateStores");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Create Tax Authority
+		/// </summary>
+		public static string CreateTaxAuthority 
+		{
+			get
+			{
+				return Get("CreateTaxAuthority");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Create Tax Master
+		/// </summary>
+		public static string CreateTaxMaster 
+		{
+			get
+			{
+				return Get("CreateTaxMaster");
 			}
 		}
 		
@@ -9663,6 +9960,28 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for First Steps
+		/// </summary>
+		public static string FirstSteps 
+		{
+			get
+			{
+				return Get("FirstSteps");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for First Tasks
+		/// </summary>
+		public static string FirstTasks 
+		{
+			get
+			{
+				return Get("FirstTasks");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Fiscal Year
 		/// </summary>
 		public static string FiscalYear 
@@ -9857,6 +10176,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("GrandTotal");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for Hide for Now
+		/// </summary>
+		public static string HideForNow 
+		{
+			get
+			{
+				return Get("HideForNow");
 			}
 		}
 		
@@ -12138,6 +12468,17 @@ namespace MixERP.Net.i18n.Resources
 		}
 		
 		/// <summary>
+		///   Localized string for Search
+		/// </summary>
+		public static string Search 
+		{
+			get
+			{
+				return Get("Search");
+			}
+		}
+		
+		/// <summary>
 		///   Localized string for Select
 		/// </summary>
 		public static string Select 
@@ -13278,6 +13619,17 @@ namespace MixERP.Net.i18n.Resources
 			get
 			{
 				return Get("UserId");
+			}
+		}
+		
+		/// <summary>
+		///   Localized string for User Management
+		/// </summary>
+		public static string UserManagement 
+		{
+			get
+			{
+				return Get("UserManagement");
 			}
 		}
 		

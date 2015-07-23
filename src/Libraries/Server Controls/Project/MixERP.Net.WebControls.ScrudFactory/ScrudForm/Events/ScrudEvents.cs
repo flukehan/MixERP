@@ -142,6 +142,13 @@ namespace MixERP.Net.WebControls.ScrudFactory
                             this.LoadForm(this.formContainer, table);
                         }
 
+
+                        if (this.Page.Request.QueryString["ReturnUrl"] != null)
+                        {
+                            this.Page.Response.Redirect(this.Page.Request.QueryString["ReturnUrl"]);
+                            return;
+                        }
+
                         //Refresh the grid.
                         this.BindGridView();
                         this.DisplaySuccess();

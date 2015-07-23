@@ -168,6 +168,13 @@ namespace MixERP.Net.Core.Modules.BackOffice.Policy
             }
 
             Menu.SaveMenuPolicy(AppUsers.GetCurrentUserDB(), userId, officeId, menus);
+
+            if (this.Page.Request.QueryString["ReturnUrl"] != null)
+            {
+                this.Page.Response.Redirect(this.Page.Request.QueryString["ReturnUrl"]);
+                return;
+            }
+
             this.BindGrid();
         }
 

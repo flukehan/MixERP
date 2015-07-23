@@ -1,0 +1,50 @@
+﻿<div data-ng-controller="CheckListController">
+    <div class="ui purple large header">
+        <i class="tasks icon"></i>
+        {{i18n.FirstSteps}}
+    </div>
+
+    <div class="ui icon input">
+        <input id="SearchInputText" placeholder="{{i18n.Search}}" type="text" data-ng-model="searchByName" />
+        <i class="search icon"></i>
+    </div>
+
+    <a data-ng-hide="!filters.Category" class="ui purple right labeled icon button" data-ng-click="filters.Category='';">
+        {{filters.Category}}
+        <i class="remove icon"></i>
+    </a>
+
+    <h3 class="ui purple sub header">
+        {{i18n.TaskCompletedProgress}}
+    </h3>
+    <div data-percent="{{percent}}" class="ui indicating progress active">
+        <div style="transition-duration: 300ms; width: {{percent}}%;" class="bar"></div>
+    </div>
+
+    <div class="ui four doubling stackable cards">
+        <div class="card" data-ng-repeat="task in checklist | filter:filters | filter:searchByName">
+            <div class="content">
+                <i class="right floated {{task.Status ? 'purple' : 'pink'}}  {{ task.Icon }}"></i>
+                <div class="ui {{task.Status ? 'purple' : 'pink'}} header">
+                    {{task.Name}}
+                </div>
+                <a class="meta" data-ng-click="filters.Category=task.Category;">{{task.Category}}</a>
+                <div class="to whitespace description">
+                    {{task.Description}}
+                </div>
+            </div>
+            <div class="extra content">
+                <div class="ui buttons">
+                    <a class="ui basic purple button" href="{{task.NavigateUrl}}?ReturnUrl={{documentLocation}}">{{i18n.Start}}</a>
+                    <a class="ui basic pink button" data-ng-click="remove(task)">{{i18n.HideForNow}}</a>
+                </div>
+            </div>
+            <div class="extra content">
+                <i class="{{task.Status ? 'green check' : 'red warning sign'}} icon"></i>
+                {{task.Message}}
+            </div>
+        </div>
+    </div>
+</div>
+
+

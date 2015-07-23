@@ -3,7 +3,7 @@
 <%@ Import Namespace="System.Globalization" %>
 
 <!DOCTYPE html>
-<html>
+<html data-ng-app="MixERPApp">
 <head runat="server">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,6 +58,12 @@
                     <div class="right-menu">
 
                         <div class="ui inverted contrast theme menu">
+                            <a class="item" href="http://mixerp.org/" target="_blank">
+                                <i class="anchor icon"></i>
+                                MixERP
+                                <asp:Literal ID="VersionLiteral" runat="server" />
+
+                            </a>
                             <a class="item">
                                 <i class="database icon"></i>
                                 <asp:Literal runat="server" ID="CatalogLiteral" />
@@ -137,14 +143,6 @@
                             </div>
                         </div>
                     </div>
-                    <footer class="one column row">
-                        <p class="column">
-                            Copyright © 2013-2105, MixERP Inc. All rights reserved. Powered by <a href="http://mixerp.org/" target="_blank">MixERP Community Edition
-                            <asp:Literal ID="VersionLiteral" runat="server" />
-                            </a>.
-                        </p>
-                    </footer>
-
                 </div>
             </div>
 

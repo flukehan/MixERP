@@ -91,6 +91,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\FirstSteps.cs" />
+    <Compile Include="Application\LogManager.cs" />
+    <Compile Include="Application\Routes.cs" />
+    <Compile Include="Application\UpdateManager.cs" />
     <Compile Include="BackendMaster.Master.cs">
       <DependentUpon>BackendMaster.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -98,6 +102,7 @@
     <Compile Include="BackendMaster.Master.designer.cs">
       <DependentUpon>BackendMaster.Master</DependentUpon>
     </Compile>
+    <Compile Include="Application\ApplicationError.cs" />
     <Compile Include="Base\MixERPMasterPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -166,6 +171,13 @@
     <Compile Include="Modules\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Modules\FirstSteps.aspx.cs">
+      <DependentUpon>FirstSteps.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\FirstSteps.aspx.designer.cs">
+      <DependentUpon>FirstSteps.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Update.aspx.cs">
       <DependentUpon>Update.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -201,6 +213,10 @@
     </Compile>
     <Compile Include="Reports\ReportViewer.aspx.designer.cs">
       <DependentUpon>ReportViewer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Checklists.asmx.cs">
+      <DependentUpon>Checklists.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\Install.asmx.cs">
       <DependentUpon>Install.asmx</DependentUpon>
@@ -305,6 +321,7 @@
     <Content Include="License.txt" />
     <Content Include="Modules\Default.aspx" />
     <Content Include="db\web.config" />
+    <Content Include="Modules\FirstSteps.aspx" />
     <Content Include="Modules\Update.aspx" />
     <Content Include="Modules\web.config" />
     <Content Include="MixERP.Installation.config" />
@@ -317,12 +334,39 @@
     <Content Include="Resource\Static\index.html" />
     <Content Include="Resource\Temp\Images\index.html" />
     <Content Include="Resource\Temp\index.html" />
+    <Content Include="Scripts\angular\angular.min.js" />
     <Content Include="Scripts\d3.min.js" />
     <Content Include="Scripts\Datamaps\topojson.js" />
     <Content Include="Scripts\mixerp\core\browser.js" />
-    <Content Include="Scripts\mixerp\master-page\updater.js" />
+    <Content Include="Scripts\mixerp\master-page\notification.js" />
     <Content Include="Scripts\mixerp\master-page\menu.js" />
+    <Content Include="Scripts\Pages\Modules\Checklists.aspx.js" />
     <Content Include="Scripts\sprintf\sprintf.min.js" />
+    <Content Include="Scripts\underscore\.gitignore" />
+    <Content Include="Scripts\underscore\docs\docco.css" />
+    <Content Include="Scripts\underscore\docs\favicon.ico" />
+    <Content Include="Scripts\underscore\docs\images\background.png" />
+    <Content Include="Scripts\underscore\docs\images\underscore.png" />
+    <Content Include="Scripts\underscore\docs\public\stylesheets\normalize.css" />
+    <Content Include="Scripts\underscore\docs\underscore.html" />
+    <Content Include="Scripts\underscore\favicon.ico" />
+    <Content Include="Scripts\underscore\index.html" />
+    <Content Include="Scripts\underscore\karma.conf-sauce.js" />
+    <Content Include="Scripts\underscore\karma.conf.js" />
+    <Content Include="Scripts\underscore\test\arrays.js" />
+    <Content Include="Scripts\underscore\test\chaining.js" />
+    <Content Include="Scripts\underscore\test\collections.js" />
+    <Content Include="Scripts\underscore\test\cross-document.js" />
+    <Content Include="Scripts\underscore\test\functions.js" />
+    <Content Include="Scripts\underscore\test\index.html" />
+    <Content Include="Scripts\underscore\test\objects.js" />
+    <Content Include="Scripts\underscore\test\utility.js" />
+    <Content Include="Scripts\underscore\test\vendor\qunit-extras.js" />
+    <Content Include="Scripts\underscore\test\vendor\qunit.css" />
+    <Content Include="Scripts\underscore\test\vendor\qunit.js" />
+    <Content Include="Scripts\underscore\underscore-min.js" />
+    <Content Include="Scripts\underscore\underscore.js" />
+    <Content Include="Services\Checklists.asmx" />
     <Content Include="Services\Menu.asmx" />
     <Content Include="Static\Icons\bottom-16.png" />
     <Content Include="Static\Icons\calendar-16.png" />
@@ -827,6 +871,7 @@
     <Content Include="App_Themes\MixERP\Skin1.skin" />
     <Content Include="MixERPMaster.Master" />
     <Content Include="Tests\transaction.js" />
+    <Content Include="Views\Modules\Checklists.aspx.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -895,6 +940,26 @@
     </Content>
     <Content Include="Scripts\sprintf\LICENSE" />
     <Content Include="Scripts\sprintf\sprintf.min.map" />
+    <Content Include="Scripts\underscore\.eslintrc" />
+    <Content Include="Scripts\underscore\.travis.yml" />
+    <Content Include="Scripts\underscore\bower.json" />
+    <Content Include="Scripts\underscore\CNAME" />
+    <Content Include="Scripts\underscore\component.json" />
+    <Content Include="Scripts\underscore\CONTRIBUTING.md" />
+    <Content Include="Scripts\underscore\docs\public\fonts\aller-bold.eot" />
+    <Content Include="Scripts\underscore\docs\public\fonts\aller-bold.ttf" />
+    <Content Include="Scripts\underscore\docs\public\fonts\aller-bold.woff" />
+    <Content Include="Scripts\underscore\docs\public\fonts\aller-light.eot" />
+    <Content Include="Scripts\underscore\docs\public\fonts\aller-light.ttf" />
+    <Content Include="Scripts\underscore\docs\public\fonts\aller-light.woff" />
+    <Content Include="Scripts\underscore\docs\public\fonts\roboto-black.eot" />
+    <Content Include="Scripts\underscore\docs\public\fonts\roboto-black.ttf" />
+    <Content Include="Scripts\underscore\docs\public\fonts\roboto-black.woff" />
+    <Content Include="Scripts\underscore\LICENSE" />
+    <Content Include="Scripts\underscore\package.json" />
+    <Content Include="Scripts\underscore\README.md" />
+    <Content Include="Scripts\underscore\test\.eslintrc" />
+    <Content Include="Scripts\underscore\underscore-min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

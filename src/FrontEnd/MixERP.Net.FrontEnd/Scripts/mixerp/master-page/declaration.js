@@ -7,3 +7,5 @@ var fullWidthContainer = $(".full.width");
 var topMenu = $("#TopMenu");
 var datepickerLanguagePath;
 var searchInput = $("#SearchInput");
+
+var MixERPApp = angular.module('MixERPApp', []);

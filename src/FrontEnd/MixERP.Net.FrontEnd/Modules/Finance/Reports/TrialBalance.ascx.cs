@@ -67,7 +67,7 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
 
         #region GridView
 
-        private GridView trialBalanceGridView;
+        private MixERPGridView trialBalanceGridView;
 
         private void CreateColumns()
         {
@@ -89,11 +89,10 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             {
                 gridPanel.Attributes.Add("style", "width:100%;");
 
-                this.trialBalanceGridView = new GridView();
+                this.trialBalanceGridView = new MixERPGridView();
                 this.trialBalanceGridView.ID = "TrialBalanceGridView";
                 this.trialBalanceGridView.GridLines = GridLines.None;
                 this.trialBalanceGridView.CssClass = "ui celled segment table nowrap";
-                this.trialBalanceGridView.DataBound += this.TrialBalanceGridView_DataBound;
 
                 this.CreateColumns();
 
@@ -103,10 +102,6 @@ namespace MixERP.Net.Core.Modules.Finance.Reports
             }
         }
 
-        private void TrialBalanceGridView_DataBound(object sender, EventArgs eventArgs)
-        {
-            this.trialBalanceGridView.HeaderRow.TableSection = TableRowSection.TableHeader;
-        }
 
         #endregion
 

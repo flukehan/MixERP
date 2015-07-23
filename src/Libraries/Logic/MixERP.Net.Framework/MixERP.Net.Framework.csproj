@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheFactory.cs" />
+    <Compile Include="Contracts\Checklist\FirstStep.cs" />
     <Compile Include="Contracts\Currency\CurrencyConversionResult.cs" />
     <Compile Include="Contracts\Currency\CurrencyConverter.cs" />
     <Compile Include="Contracts\Currency\ICurrencyConverter.cs" />

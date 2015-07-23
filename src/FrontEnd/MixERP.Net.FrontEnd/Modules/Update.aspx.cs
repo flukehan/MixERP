@@ -19,19 +19,56 @@ along with MixERP.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Linq;
+using System.Threading;
 using MixERP.Net.FrontEnd.Base;
 using MixERP.Net.Updater;
 using MixERP.Net.Updater.Api;
+using MixERP.Net.Common.Helpers;
+using MixERP.Net.Common;
+using MixERP.Net.ApplicationState.Cache;
+using MixERP.Net.Common.Extensions;
+using Serilog;
 
 namespace MixERP.Net.FrontEnd.Modules
 {
     public partial class Update : MixERPWebpage
     {
         protected string _downloadUrl = string.Empty;
-        protected Release _release;
+        protected Release _release = new Release();
 
         protected async void Page_Init(object sender, EventArgs e)
         {
+            string userName = AppUsers.GetCurrent().View.UserName;
+            string ipAddress = AppUsers.GetCurrent().View.IpAddress;
+
+            bool isDevelopmentMode = DbConfig.GetMixERPParameter(AppUsers.GetCurrentUserDB(), "Mode").ToUpperInvariant().Equals("DEVELOPMENT");
+            bool isLocalHost = PageUtility.IsLocalhost(this.Page);
+            bool isAdmin = AppUsers.GetCurrent().View.IsAdmin.ToBool();
+
+            bool hasAccess = false;
+
+            if (isAdmin)
+            {
+                if (isDevelopmentMode && isLocalHost)
+                {
+                    hasAccess = true;
+                }
+
+                if (!isDevelopmentMode)
+                {
+                    hasAccess = true;
+                }
+            }
+
+            if (!hasAccess)
+            {
+                Log.Information("Access to {Page} is denied to {User} from {IP}.", this,
+                    userName, ipAddress);
+
+                this.Page.Server.Execute("~/Site/AccessIsDenied.aspx", false);
+                return;
+            }
+
             try
             {
                 UpdateManager updater = new UpdateManager();
@@ -39,7 +76,6 @@ namespace MixERP.Net.FrontEnd.Modules
             }
             catch
             {
-                this._release = new Release();
                 this.ReleasePanel.Visible = false;
                 this.UpToDatePanel.Visible = true;
                 return;

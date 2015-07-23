@@ -13,6 +13,7 @@
     <!--Libraries Start -->
 
     <file>/Scripts/jquery-1.9.1.js</file>
+    <file>/Scripts/angular/angular.min.js</file>
     <file>/Scripts/jquery.address.js</file>
     <file>/Scripts/jquery-ui.js</file>
     <file>/Scripts/shortcut.js</file>
@@ -39,6 +40,6 @@
     <file>/Scripts/mixerp/master-page/sortable.js</file>
     <file>/Scripts/mixerp/master-page/semantic.js</file>
     <file>/Scripts/mixerp/master-page/menu.js</file>
-    <file>/Scripts/mixerp/master-page/updater.js</file>
+    <file>/Scripts/mixerp/master-page/notification.js</file>
   </files>
 </bundle>

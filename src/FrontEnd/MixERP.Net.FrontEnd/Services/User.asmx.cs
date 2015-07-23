@@ -28,6 +28,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
+using MixERP.Net.FrontEnd.Application;
 
 namespace MixERP.Net.FrontEnd.Services
 {
@@ -59,7 +60,7 @@ namespace MixERP.Net.FrontEnd.Services
 
             if (attempts > 3)
             {
-                return attempts*10000;
+                return attempts * 10000;
             }
 
             return 1000;
@@ -80,6 +81,8 @@ namespace MixERP.Net.FrontEnd.Services
                 {
                     AppUsers.SetCurrentLogin(globalLoginId);
                     MixERPWebpage.SetAuthenticationTicket(this.Context.Response, globalLoginId, rememberMe);
+
+                    this.Context.Session["FirstStepsPending"] = FirstSteps.CheckIfPending(globalLoginId);
 
 
                     return "OK";

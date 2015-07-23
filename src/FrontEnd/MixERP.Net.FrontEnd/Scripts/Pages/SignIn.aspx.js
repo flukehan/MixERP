@@ -10,6 +10,7 @@ $(document).ready(function () {
     //usernameInputText.val('binod');
     //passwordInputPassword.val('binod');
 
+    usernameInputText.focus();
     var languageSelect = $("#LanguageSelect");
 
     var userLang = navigator.language || navigator.userLanguage;
@@ -28,8 +29,7 @@ $(document).ready(function () {
     };
 });
 
-signInButton.click(function() {
-    $(".dimmer").dimmer('show');
+signInButton.click(function () {
 
     var catalog = companySelect.getSelectedValue();
     var username = usernameInputText.val();
@@ -37,7 +37,18 @@ signInButton.click(function() {
     var branchId = parseInt2(branchSelect.getSelectedValue());
     var language = languageSelect.getSelectedValue();
     var password = getPassword(username, passwordInputPassword.val(), challenge);
-    
+
+    if (isNullOrWhiteSpace(catalog) ||
+            isNullOrWhiteSpace(username) ||
+            branchId <= 0 ||
+            isNullOrWhiteSpace(language) ||
+            isNullOrWhiteSpace(password)
+    ) {
+        return;
+    }
+
+    $(".dimmer").dimmer('show');
+
     var ajaxAuthenticate = authenticate(catalog, username, password, rememberMe, language, branchId);
 
     $(".form").addClass("loading");
@@ -51,14 +62,14 @@ signInButton.click(function() {
         window.location = window.location.href.split('?')[0] + "?Message=" + msg.d;
     });
 
-    ajaxAuthenticate.fail(function(xhr) {
+    ajaxAuthenticate.fail(function (xhr) {
         logAjaxErrorMessage(xhr);
         makeDirty();
         $(".dimmer").dimmer('hide');
     });
 });
 
-companySelect.change(function() {
+companySelect.change(function () {
     $(".form").addClass("loading");
 
     var catalog = $(this).getSelectedValue();
@@ -70,7 +81,7 @@ companySelect.change(function() {
         $(".form").removeClass("loading");
     });
 
-    ajaxGetOffices.fail(function(xhr) {
+    ajaxGetOffices.fail(function (xhr) {
         $(".form").removeClass("loading");
         window.location = window.location.href.split('?')[0] + "?Message=" + JSON.parse(xhr.responseText).Message;
     });

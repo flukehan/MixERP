@@ -70,6 +70,8 @@ namespace MixERP.Net.FrontEnd.Base
 
             script += JSUtility.GetVar("update", this.Update());
 
+            script += JSUtility.GetVar("firstStepsPending", this.Context.Session["FirstStepsPending"]);
+
             PageUtility.RegisterJavascript("MixERPMasterPage", script, this.Page, true);
         }
 
